@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>聯盟商店 | Myx Shop</title>
+    <title>聯盟商店 - 建設中 | Myx Shop</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -12,104 +12,113 @@
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh; 
             color: #333;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
-        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+        .container { 
+            max-width: 600px; 
+            margin: 0 auto; 
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .construction-card {
+            background: rgba(255,255,255,0.95);
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        
+        .construction-icon {
+            font-size: 4rem;
+            color: #667eea;
+            margin-bottom: 1rem;
+        }
+        
+        h1 { 
+            color: #2d3748; 
+            font-size: 2.5rem; 
+            margin-bottom: 1rem; 
+        }
+        
+        .message {
+            color: #666;
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
         
         .nav-buttons {
             display: flex;
             gap: 1rem;
-            margin-bottom: 2rem;
+            justify-content: center;
             flex-wrap: wrap;
+            margin-top: 2rem;
         }
         
         .nav-btn {
-            background: rgba(255,255,255,0.95);
+            background: #667eea;
+            color: white;
             padding: 1rem 2rem;
             border-radius: 50px;
             text-decoration: none;
-            color: #333;
             font-weight: 600;
             transition: all 0.3s ease;
         }
         
-        .platform-buttons {
-            display: flex;
-            gap: 1rem;
-            margin: 1rem 0;
-            flex-wrap: wrap;
+        .nav-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
         }
         
-        .platform-btn {
-            background: #ff6b35;
-            color: white;
-            padding: 0.8rem 1.5rem;
-            border-radius: 25px;
-            text-decoration: none;
-            font-weight: 600;
+        .progress {
+            margin: 2rem 0;
         }
         
-        .product-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2rem;
+        .progress-bar {
+            background: #e2e8f0;
+            border-radius: 10px;
+            height: 10px;
+            overflow: hidden;
         }
         
-        .product-card {
-            background: rgba(255,255,255,0.95);
-            padding: 1.5rem;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        .progress-fill {
+            background: #48bb78;
+            height: 100%;
+            width: 30%;
+            border-radius: 10px;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="nav-buttons">
-            <a href="index.html" class="nav-btn">
-                <i class="fas fa-home"></i> 回到主頁
-            </a>
-            <a href="stocks.html" class="nav-btn">
-                <i class="fas fa-chart-line"></i> AI選股
-            </a>
-            <a href="vehicles.html" class="nav-btn">
-                <i class="fas fa-car"></i> 二手車輛
-            </a>
-        </div>
-
-        <div style="background: rgba(255,255,255,0.95); padding: 2rem; border-radius: 20px; margin-bottom: 2rem;">
-            <h1><i class="fas fa-shopping-bag"></i> 聯盟商店 - 熱門產品</h1>
-            <p>精選各大平台熱銷商品</p>
-            
-            <div class="platform-buttons">
-                <a href="#" class="platform-btn">
-                    <i class="fas fa-shopping-cart"></i> Shopee
-                </a>
-                <a href="#" class="platform-btn">
-                    <i class="fas fa-tag"></i> Lazada
-                </a>
-                <a href="#" class="platform-btn">
-                    <i class="fas fa-bolt"></i> Temu
-                </a>
-            </div>
-        </div>
-
-        <div class="product-grid">
-            <div class="product-card">
-                <h3>🎧 無線耳機</h3>
-                <p>高品質音效，降噪功能</p>
-                <p style="color: #ff6b35; font-weight: bold;">熱銷產品</p>
+        <div class="construction-card">
+            <div class="construction-icon">
+                <i class="fas fa-tools"></i>
             </div>
             
-            <div class="product-card">
-                <h3>📱 手機配件</h3>
-                <p>保護殼、充電器、線材</p>
-                <p style="color: #ff6b35; font-weight: bold;">熱銷產品</p>
+            <h1>🚧 頁面建設中</h1>
+            
+            <div class="message">
+                <p>很抱歉，聯盟商店頁面正在積極開發中！</p>
+                <p>我們正在為您準備最熱門的產品推薦和優惠資訊。</p>
             </div>
             
-            <div class="product-card">
-                <h3>🏠 家居用品</h3>
-                <p>創意家居裝飾與實用工具</p>
-                <p style="color: #ff6b35; font-weight: bold;">熱銷產品</p>
+            <div class="progress">
+                <div class="progress-bar">
+                    <div class="progress-fill"></div>
+                </div>
+                <p>開發進度：30%</p>
+            </div>
+            
+            <div class="nav-buttons">
+                <a href="./index.html" class="nav-btn">
+                    <i class="fas fa-home"></i> 返回主頁
+                </a>
+                <a href="./stocks.html" class="nav-btn">
+                    <i class="fas fa-chart-line"></i> 查看AI選股
+                </a>
             </div>
         </div>
     </div>
