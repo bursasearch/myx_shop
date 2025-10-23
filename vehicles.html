@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>二手車輛 | Myx Shop</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Segoe UI', sans-serif; 
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh; 
+            color: #333;
+        }
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+        
+        .nav-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+        
+        .nav-btn {
+            background: rgba(255,255,255,0.95);
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            color: #333;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .vehicle-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .vehicle-card {
+            background: rgba(255,255,255,0.95);
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        .price { color: #ff6b35; font-size: 1.5rem; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="nav-buttons">
+            <a href="index.html" class="nav-btn">
+                <i class="fas fa-home"></i> 回到主頁
+            </a>
+            <a href="stocks.html" class="nav-btn">
+                <i class="fas fa-chart-line"></i> AI選股
+            </a>
+            <a href="products.html" class="nav-btn">
+                <i class="fas fa-shopping-bag"></i> 聯盟商店
+            </a>
+        </div>
+
+        <div style="background: rgba(255,255,255,0.95); padding: 2rem; border-radius: 20px; margin-bottom: 2rem;">
+            <h1><i class="fas fa-car"></i> 二手車輛資訊</h1>
+            <p>車輛推薦與市場行情分析</p>
+        </div>
+
+        <div class="vehicle-grid">
+            <div class="vehicle-card">
+                <h3>🚗 家庭轎車</h3>
+                <p>適合家庭使用的經濟型轎車</p>
+                <p>市場價: <span class="price">RM 45,000 - 85,000</span></p>
+                <p>推薦指數: ⭐⭐⭐⭐☆</p>
+            </div>
+            
+            <div class="vehicle-card">
+                <h3>🚙 SUV 休旅車</h3>
+                <p>空間寬敞，適合長途旅行</p>
+                <p>市場價: <span class="price">RM 65,000 - 120,000</span></p>
+                <p>推薦指數: ⭐⭐⭐⭐⭐</p>
+            </div>
+            
+            <div class="vehicle-card">
+                <h3>⚡ 混合動力車</h3>
+                <p>節能環保，維護成本低</p>
+                <p>市場價: <span class="price">RM 75,000 - 150,000</span></p>
+                <p>推薦指數: ⭐⭐⭐⭐☆</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
