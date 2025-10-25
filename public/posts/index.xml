@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Posts on My New Hugo Site</title>
+    <link>//localhost:1313/posts/</link>
+    <description>Recent content in Posts on My New Hugo Site</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 01 Jan 2024 00:00:00 +0000</lastBuildDate>
+    <atom:link href="//localhost:1313/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Hello World!</title>
+      <link>//localhost:1313/posts/hello-world/</link>
+      <pubDate>Mon, 01 Jan 2024 00:00:00 +0000</pubDate>
+      <guid>//localhost:1313/posts/hello-world/</guid>
+      <description>&lt;h2 id=&#34;我的第一篇文章&#34;&gt;我的第一篇文章&lt;/h2&gt;&#xA;&lt;p&gt;这是我的第一篇 Hugo 博客文章！&lt;/p&gt;&#xA;&lt;p&gt;正在使用 Termux 在 Android 手机上搭建网站。&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

@@ -1,0 +1,30 @@
+{{ define "main" }}
+<div class="container">
+  <header>
+    <div class="logo">
+      <i class="fas fa-store"></i>
+    </div>
+    <h1>{{ .Site.Title }}</h1>
+    <p class="tagline">SSM註冊企業 | 多元化服務平台</p>
+    <div class="ssm-badge">
+      <i class="fas fa-certificate"></i> SSM註冊: {{ .Site.Params.ssm_id }} ({{ .Site.Params.ssm_code }})
+    </div>
+    <a href="/verification.html" class="ssm-badge">驗證商業資訊</a>
+    <p>歡迎來到 Myx Shop - 您的一站式服務平台</p>
+  </header>
+
+  <div class="nav-grid">
+    {{ partial "nav-card.html" (dict "url" "stocks.html" "icon" "fa-chart-line" "title" "AI選股分析" "desc" "智能選股策略與市場分析" "cta" "查看分析報告") }}
+    {{ partial "nav-card.html" (dict "url" "products.html" "icon" "fa-shopping-bag" "title" "聯盟商店" "desc" "熱門產品推薦與優惠" "cta" "瀏覽產品") }}
+    {{ partial "nav-card.html" (dict "url" "vehicles.html" "icon" "fa-car" "title" "二手車輛" "desc" "車輛資訊與市場分析" "cta" "查看車輛") }}
+  </div>
+
+  <footer>
+    <div class="company-info">
+      <p><strong>{{ .Site.Title }}</strong></p>
+      <p>SSM Reg No: {{ .Site.Params.ssm_id }} ({{ .Site.Params.ssm_code }}) | Registered in Malaysia</p>
+      <p>© {{ now.Year }} Myx Shop. All rights reserved.</p>
+    </div>
+  </footer>
+</div>
+{{ end }}

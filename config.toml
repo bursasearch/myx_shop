@@ -1,0 +1,8 @@
+baseURL = "https://myxshop.com/"
+title = "Myx Shop"
+languageCode = "zh"
+theme = "開張大吉"
+
+[params]
+ssm_id = "202510210078"
+ssm_code = "JM1034075-K"

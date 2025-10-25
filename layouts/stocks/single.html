@@ -1,0 +1,43 @@
+{{ define "main" }}
+<div class="container">
+  <div class="nav-buttons">
+    <a href="{{ "/" | relLangURL }}" class="nav-btn">
+      <i class="fas fa-home"></i> {{ i18n "back_home" }}
+    </a>
+    <a href="{{ "products.html" | relLangURL }}" class="nav-btn">
+      <i class="fas fa-shopping-bag"></i> {{ i18n "affiliate_store" }}
+    </a>
+    <a href="{{ "vehicles.html" | relLangURL }}" class="nav-btn">
+      <i class="fas fa-car"></i> {{ i18n "used_vehicles" }}
+    </a>
+  </div>
+
+  <div class="page-header">
+    <h1><i class="fas fa-robot"></i> {{ i18n "aistocktitle" }}</h1>
+    <p>{{ i18n "aistocksubtitle" }}</p>
+  </div>
+
+  <div class="video-section">
+    <h2><i class="fas fa-play-circle"></i> {{ i18n "latest_videos" }}</h2>
+    <div class="video-container">
+      {{ partial "video-card.html" (dict "id" "YOURVIDEOID" "title" "今日AI選股策略" "date" "2023年11月15日") }}
+      {{ partial "video-card.html" (dict "id" "dARJurGc3s0" "title" "本週AI選股回顧" "date" "2023年11月14日") }}
+    </div>
+
+    <div class="social-links">
+      <a href="https://www.youtube.com/@bursasearch" class="social-btn" target="_blank">
+        <i class="fab fa-youtube"></i> {{ i18n "subscribe_youtube" }}
+      </a>
+      <a href="https://www.tiktok.com/@bursasearch" class="social-btn tiktok" target="_blank">
+        <i class="fab fa-tiktok"></i> {{ i18n "follow_tiktok" }}
+      </a>
+    </div>
+  </div>
+
+  <div class="stock-grid">
+    {{ partial "stock-card.html" (dict "title" "💹 科技股推薦" "performance" "+15.2%" "risk" "中" "riskClass" "risk-medium" "score" "88") }}
+    {{ partial "stock-card.html" (dict "title" "🏦 金融股分析" "performance" "+8.7%" "risk" "低" "riskClass" "risk-low" "score" "92") }}
+    {{ partial "stock-card.html" (dict "title" "⚡ 新能源趨勢" "performance" "+22.1%" "risk" "高" "riskClass" "risk-high" "score" "76") }}
+  </div>
+</div>
+{{ end }}
