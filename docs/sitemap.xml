@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <url>
+    <loc>/</loc>
+    <lastmod>2025-10-25T17:07:54+00:00</lastmod>
+  </url><url>
+    <loc>/posts/</loc>
+    <lastmod>2025-10-25T17:07:54+00:00</lastmod>
+  </url><url>
+    <loc>/posts/%E6%96%B0%E6%96%87%E7%AB%A0/</loc>
+    <lastmod>2025-10-25T17:07:54+00:00</lastmod>
+  </url><url>
+    <loc>/posts/hello-world/</loc>
+    <lastmod>2024-01-01T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/stocks/</loc>
+  </url><url>
+    <loc>/zh/stock/</loc>
+  </url><url>
+    <loc>/categories/</loc>
+  </url><url>
+    <loc>/tags/</loc>
+  </url><url>
+    <loc>/zh/</loc>
+  </url>
+</urlset>
