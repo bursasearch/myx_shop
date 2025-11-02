@@ -1,0 +1,9 @@
+baseURL = "http://localhost:1313/"
+languageCode = "en-us"
+title = "My Hugo Site - LOCAL"
+theme = "ananke"
+
+# 开发环境特定设置
+enableRobotsTXT = false  # 本地开发禁用 robots.txt
+buildDrafts = true       # 本地显示草稿
+buildFuture = true

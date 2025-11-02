@@ -1,0 +1,13 @@
+baseURL = "https://bursasearch.github.io/myx_shop/"
+languageCode = "zh-tw"
+title = "SSM Reg. Biz |
+Affiliate Shop |
+( 联盟商店)"
+theme = "mytheme"
+
+[params]
+description = "联盟商店"
+author = "Myx Shop"
+
+# 啟用相關功能
+disableKinds = ["RSS", "taxonomy", "term"]

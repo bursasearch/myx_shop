@@ -1,0 +1,14 @@
+# Hugo
+/public/
+/resources/_gen/
+/.hugo_build.lock
+
+# macOS
+.DS_Store
+
+# IDE
+.vscode/
+.idea/
+
+# Backup files
+*.backup

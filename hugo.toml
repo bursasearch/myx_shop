@@ -1,0 +1,20 @@
+baseURL = "https://bursasearch.github.io/myx_shop/"
+languageCode = "en-us"
+title = "My Hugo Site"
+theme = "ananke"
+
+# 建议添加的配置
+enableRobotsTXT = true
+metaDataFormat = "yaml"
+buildFuture = false
+buildDrafts = false
+buildExpired = false
+
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
+
+[services]
+  [services.rss]
+    limit = 10
