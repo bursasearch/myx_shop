@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>二手車輛 - 建設中 | Myx Shop</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Segoe UI', sans-serif; 
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh; 
+            color: #333;
+            line-height: 1.6;
+        }
+        .container { max-width: 1000px; margin: 0 auto; padding: 20px; }
+        
+        .nav-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+        
+        .nav-btn {
+            background: rgba(255,255,255,0.95);
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            color: #333;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .nav-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .construction-card {
+            background: rgba(255,255,255,0.95);
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        
+        .construction-icon {
+            font-size: 4rem;
+            color: #f59e0b;
+            margin-bottom: 1.5rem;
+        }
+        
+        .progress-bar {
+            background: #e5e7eb;
+            border-radius: 10px;
+            height: 20px;
+            margin: 2rem 0;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            background: linear-gradient(90deg, #f59e0b, #fbbf24);
+            height: 100%;
+            border-radius: 10px;
+            transition: width 0.5s ease;
+        }
+        
+        .progress-30 { width: 30%; }
+        .progress-25 { width: 25%; }
+        
+        .action-links {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+        
+        .action-link {
+            padding: 0.8rem 1.5rem;
+            background: #667eea;
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .action-link:hover {
+            background: #5a6fd8;
+            transform: translateY(-2px);
+        }
+        
+        .feature-list {
+            text-align: left;
+            max-width: 500px;
+            margin: 2rem auto;
+        }
+        
+        .feature-list li {
+            margin-bottom: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="nav-buttons">
+            <a href="/myx_shop/" class="nav-btn">
+                <i class="fas fa-home"></i> 回到主頁
+            </a>
+            <a href="/stocks/" class="nav-btn">
+                <i class="fas fa-chart-line"></i> 股票分析
+            </a>
+            <a href="/vehicles/" class="nav-btn">
+                <i class="fas fa-car"></i> 二手車輛
+            </a>
+        </div>
+
+        <div class="construction-card">
+            <div class="construction-icon">
+                <i class="fas fa-tools"></i>
+            </div>
+            
+            <div>
+                <h2 id="-頁面建設中">🚧 頁面建設中</h2>
+<p>很抱歉，二手車輛頁面正在積極開發中！</p>
+<p>我們正在為您整理最新的車輛資訊和市場分析。</p>
+<p><strong>開發進度：25%</strong></p>
+<h3 id="即將推出的功能">即將推出的功能：</h3>
+<ul>
+<li>🚗 二手私家車估值</li>
+<li>🚜 插車市場分析</li>
+<li>📊 車輛投資建議</li>
+<li>🔍 購買時機分析</li>
+<li>💰 價格趨勢預測</li>
+</ul>
+<p>感謝您的耐心等待！我們會盡快為您提供專業的車輛資訊。</p>
+<p><a href="/myx_shop/">← 返回主頁</a> | <a href="/stocks/">查看AI選股分析</a></p>
+
+            </div>
+            
+            <div class="action-links">
+                <a href="/myx_shop/" class="action-link">
+                    <i class="fas fa-arrow-left"></i> 返回主頁
+                </a>
+                <a href="/stocks/" class="action-link">
+                    <i class="fas fa-chart-line"></i> 查看AI選股分析
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            const progressFill = document.querySelector('.progress-fill');
+            if (progressFill) {
+                setTimeout(() => {
+                    progressFill.style.width = progressFill.classList.contains('progress-30') ? '30%' : '25%';
+                }, 500);
+            }
+        });
+    </script>
+</body>
+</html>

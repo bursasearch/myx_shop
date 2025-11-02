@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>商業資訊驗證 on My Hugo Site - LOCAL</title>
+    <link>http://localhost:1313/myx_shop/verification/</link>
+    <description>Recent content in 商業資訊驗證 on My Hugo Site - LOCAL</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <lastBuildDate></lastBuildDate>
+    <atom:link href="http://localhost:1313/myx_shop/verification/index.xml" rel="self" type="application/rss+xml" />
+  </channel>
+</rss>

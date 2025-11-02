@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>我的投資分析網站 on My Hugo Site</title>
+    <link>https://bursasearch.github.io/myx_shop/</link>
+    <description>Recent content in 我的投資分析網站 on My Hugo Site</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 01 Nov 2025 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://bursasearch.github.io/myx_shop/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>我的投資分析網站</title>
+      <link>https://bursasearch.github.io/myx_shop/_index_backup/</link>
+      <pubDate>Sat, 01 Nov 2025 00:00:00 +0000</pubDate>
+      <guid>https://bursasearch.github.io/myx_shop/_index_backup/</guid>
+      <description>&lt;p&gt;歡迎來到我的投資分析平台！這裡提供最新的股票分析和投資建議。&lt;/p&gt;&#xA;&lt;h2 id=&#34;網站功能&#34;&gt;網站功能&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;📈 AI股票分析&lt;/li&gt;&#xA;&lt;li&gt;📊 市場數據&lt;/li&gt;&#xA;&lt;li&gt;🎥 最新視頻更新&lt;/li&gt;&#xA;&lt;li&gt;🚙 二手私家車輛&lt;/li&gt;&#xA;&lt;li&gt;🚜 二手插車&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;p&gt;每日開盤前更新，助您做出明智的投資決策！&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://bursasearch.github.io/sitemap.xml
