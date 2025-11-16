@@ -249,9 +249,34 @@
       // const videoId = "YOUR_SPECIFIC_VIDEO_ID";
       // document.querySelector('iframe').src = `https://www.youtube.com/embed/${videoId}`;
     });
+
+    </div>
+  </div>
+
+  <!-- 原有脚本 -->
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      console.log("AI選股分析頁面已載入完成");
+    });
   </script>
+
+  <!-- 新增：股票更新功能 -->
+  <script src="js/update_stocks.js"></script>
+
+<!-- 新增：股票自动更新功能 -->
+  <script src="js/auto_update_stocks.js"></script>
+  
+  <script>
+    // 浏览器兼容性检查
+    if (typeof(Storage) !== "undefined") {
+        console.log("本地存储支持已启用");
+    } else {
+        console.warn("浏览器不支持本地存储，部分功能可能无法使用");
+    }
+  </script>
+
 </body>
-</html>
+</html> 
 
 
 
