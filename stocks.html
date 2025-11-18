@@ -1,572 +1,70 @@
-<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI选股回测系统 - Myx Shop</title>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+import yfinance as yf
+import pandas as pd
+from datetime import datetime, timedelta
+import os
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            color: #333;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            padding: 20px;
-        }
+# ===== 自訂參數（請修改這裡） =====
+STOCK_TICKERS = ['1155.KL', '0328.KL', '1295.KL']  # 示例：Maybank, 3REN, Top Glove。添加更多如 '6869.KL' 等
+START_DATE = '2025-11-01'  # 開始日期 (YYYY-MM-DD)
+END_DATE = '2025-11-19'    # 結束日期 (YYYY-MM-DD)
+OUTPUT_DIR = './bursa_csvs'  # 輸出資料夾
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
+# ===== 步驟 1: 獲取所有股票的資訊（公司名稱） =====
+stock_info = {}
+for ticker in STOCK_TICKERS:
+    try:
+        info = yf.Ticker(ticker).info
+        clean_code = ticker.replace('.KL', '')  # 去除 .KL
+        stock_info[clean_code] = info.get('longName', 'Unknown Stock')
+        print(f"下載 {clean_code}: {stock_info[clean_code]}")
+    except Exception as e:
+        print(f"錯誤 - {ticker}: {e}")
 
-        .header {
-            text-align: center;
-            margin-bottom: 30px;
-            color: white;
-        }
+# ===== 步驟 2: 下載歷史數據 =====
+data = yf.download(STOCK_TICKERS, start=START_DATE, end=END_DATE, progress=False)
+# data 是 MultiIndex DataFrame: columns = [('Adj Close', '1155.KL'), ('Volume', '1155.KL'), ...]
 
-        .header h1 {
-            font-size: 2.2rem;
-            margin-bottom: 10px;
-        }
+# 創建輸出資料夾
+os.makedirs(OUTPUT_DIR, exist_ok=True)
 
-        .data-info {
-            background: rgba(255,255,255,0.2);
-            padding: 8px 15px;
-            border-radius: 8px;
-            margin-top: 10px;
-            font-size: 0.9rem;
-        }
-
-        .card {
-            background: white;
-            border-radius: 12px;
-            padding: 20px;
-            margin-bottom: 20px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
-
-        .stock-controls {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 15px;
-            flex-wrap: wrap;
-        }
-
-        .stock-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-            gap: 10px;
-            max-height: 300px;
-            overflow-y: auto;
-            padding: 10px;
-            border: 1px solid #e2e8f0;
-            border-radius: 8px;
-        }
-
-        .stock-item {
-            display: flex;
-            align-items: center;
-            padding: 10px;
-            background: #f8fafc;
-            border: 1px solid #e2e8f0;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-
-        .stock-item.selected {
-            border-color: #667eea;
-            background: #667eea;
-            color: white;
-        }
-
-        .stock-checkbox {
-            margin-right: 8px;
-        }
-
-        .stock-info {
-            flex: 1;
-            min-width: 0;
-        }
-
-        .stock-code {
-            font-weight: bold;
-            font-size: 0.9rem;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        .stock-price {
-            font-size: 0.8rem;
-            color: #666;
-        }
-
-        .stock-item.selected .stock-price {
-            color: rgba(255,255,255,0.8);
-        }
-
-        .stock-tag {
-            font-size: 0.7rem;
-            padding: 2px 6px;
-            border-radius: 4px;
-            margin-left: 5px;
-            white-space: nowrap;
-        }
-
-        .tag-up { background: #48bb78; color: white; }
-        .tag-strong { background: #ed8936; color: white; }
-        .tag-hot { background: #f56565; color: white; }
-
-        .btn {
-            padding: 10px 16px;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: 600;
-            font-size: 0.9rem;
-            transition: all 0.2s ease;
-            flex: 1;
-            min-width: 120px;
-        }
-
-        .btn-primary { background: #667eea; color: white; }
-        .btn-success { background: #48bb78; color: white; }
-        .btn-warning { background: #ed8936; color: white; }
-        .btn-secondary { background: #e2e8f0; color: #333; }
-
-        .btn:active {
-            transform: translateY(1px);
-        }
-
-        .control-panel {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 12px;
-            margin-bottom: 15px;
-        }
-
-        .control-group {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .control-group label {
-            margin-bottom: 5px;
-            font-weight: 600;
-            font-size: 0.9rem;
-        }
-
-        .control-group input, .control-group select {
-            padding: 8px;
-            border: 1px solid #e2e8f0;
-            border-radius: 4px;
-            font-size: 0.9rem;
-        }
-
-        .metrics-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-            gap: 12px;
-            margin-bottom: 20px;
-        }
-
-        .metric-card {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-            padding: 15px;
-            border-radius: 8px;
-            text-align: center;
-        }
-
-        .metric-value {
-            font-size: 1.4rem;
-            font-weight: bold;
-            margin: 5px 0;
-        }
-
-        .metric-label {
-            font-size: 0.8rem;
-            opacity: 0.9;
-        }
-
-        .chart-container {
-            height: 280px;
-            margin-bottom: 15px;
-        }
-
-        .loading {
-            display: none;
-            text-align: center;
-            padding: 30px;
-        }
-
-        .spinner {
-            border: 3px solid #f3f3f3;
-            border-top: 3px solid #667eea;
-            border-radius: 50%;
-            width: 30px;
-            height: 30px;
-            animation: spin 1s linear infinite;
-            margin: 0 auto 15px;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        .disclaimer {
-            background: #fff3cd;
-            border: 1px solid #ffeaa7;
-            border-radius: 6px;
-            padding: 12px;
-            margin-top: 15px;
-            font-size: 0.8rem;
-        }
-
-        @media (max-width: 768px) {
-            .stock-grid {
-                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-            }
-            .stock-controls {
-                flex-direction: column;
-            }
-            .btn {
-                min-width: auto;
-            }
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <div class="header">
-            <h1>📊 AI选股回测系统</h1>
-            <p>基于Bursa Malaysia数据的智能选股验证</p>
-            <div class="data-info" id="dataInfo">加载中...</div>
-        </div>
-
-        <div class="card">
-            <h2>📈 AI精选股票池</h2>
-            <div class="stock-controls">
-                <button class="btn btn-secondary" onclick="selectAllStocks()">📋 全选股票</button>
-                <button class="btn btn-secondary" onclick="clearAllStocks()">🗑️ 清空选择</button>
-                <button class="btn btn-success" onclick="loadPythonStocks()">🔄 加载AI选股</button>
-            </div>
-            <div class="stock-grid" id="stockGrid">
-                <div style="text-align: center; padding: 20px; color: #666;">
-                    点击"加载AI选股"按钮获取股票数据
-                </div>
-            </div>
-        </div>
-
-        <div class="card">
-            <h2>⚙️ 回测参数设置</h2>
-            <div class="control-panel">
-                <div class="control-group">
-                    <label for="initialCapital">初始资金 (RM)</label>
-                    <input type="number" id="initialCapital" value="10000" min="1000">
-                </div>
-                <div class="control-group">
-                    <label for="period">回测周期</label>
-                    <select id="period">
-                        <option value="1">1个月</option>
-                        <option value="3" selected>3个月</option>
-                        <option value="6">6个月</option>
-                    </select>
-                </div>
-            </div>
-            <button class="btn btn-primary" onclick="runBacktest()" style="width: 100%;">
-                🚀 开始回测分析
-            </button>
-        </div>
-
-        <div class="loading" id="loading">
-            <div class="spinner"></div>
-            <p>正在计算回测结果，请稍候...</p>
-        </div>
-
-        <div class="card results-section" id="resultsSection" style="display: none;">
-            <h2>📊 回测结果分析</h2>
-            <div class="metrics-grid" id="metricsGrid"></div>
-            <div class="chart-container">
-                <canvas id="performanceChart"></canvas>
-            </div>
-        </div>
-
-        <div class="disclaimer">
-            <strong>⚠️ 风险提示：</strong> 本回测结果基于历史数据，仅供参考。投资有风险，入市需谨慎。SSM: 202510210078
-        </div>
-    </div>
-
-    <script>
-        // 预定义的股票数据（备用）
-        const defaultStocks = [
-            { code: '2429', name: 'TANCO', price: 0.95, tag: '📈低价股资金流入' },
-            { code: '5398', name: 'GAMUDA', price: 5.17, tag: '💪强势股' },
-            { code: '0652NP', name: 'HSI-PWNP', price: 0.56, tag: '🔥超跌反弹' },
-            { code: '5326', name: '99SMART', price: 3.23, tag: '💪强势股' },
-            { code: '5296', name: 'MRDIY', price: 1.54, tag: '🔥超跌反弹' }
-        ];
-
-        // 初始化股票网格
-        function initializeStockGrid() {
-            const stockGrid = document.getElementById('stockGrid');
-            stockGrid.innerHTML = '';
+# ===== 步驟 3: 為每個交易日生成 CSV =====
+dates = data.index.strftime('%Y-%m-%d').unique()  # 實際交易日
+for date_str in sorted(dates):
+    date_obj = pd.to_datetime(date_str)
+    filename = date_obj.strftime('%Y%m%d') + '.csv'
+    filepath = os.path.join(OUTPUT_DIR, filename)
+    
+    rows = []
+    for ticker in STOCK_TICKERS:
+        clean_code = ticker.replace('.KL', '')
+        stock_name = stock_info.get(clean_code, 'Unknown')
+        
+        try:
+            # 當日數據
+            close = data['Close'][ticker].loc[date_str] if date_str in data['Close'][ticker].index else 0
+            volume = data['Volume'][ticker].loc[date_str] if date_str in data['Volume'][ticker].index else 0
             
-            defaultStocks.forEach(stock => {
-                const stockItem = document.createElement('div');
-                stockItem.className = 'stock-item';
-                stockItem.innerHTML = `
-                    <input type="checkbox" class="stock-checkbox" id="stock-${stock.code}" value="${stock.code}">
-                    <div class="stock-info">
-                        <div class="stock-code">${stock.code} ${stock.name}</div>
-                        <div class="stock-price">RM${stock.price}</div>
-                    </div>
-                    <span class="stock-tag ${getTagClass(stock.tag)}">${stock.tag}</span>
-                `;
-                stockGrid.appendChild(stockItem);
-            });
-        }
-
-        // 加载Python选股结果
-        async function loadPythonStocks() {
-            const loading = document.getElementById('loading');
-            loading.style.display = 'block';
+            # 前一日數據（計算 Chg）
+            prev_date = date_obj - timedelta(days=1)
+            prev_close = data['Close'][ticker].loc[prev_date.strftime('%Y-%m-%d')] if prev_date.strftime('%Y-%m-%d') in data['Close'][ticker].index else close
+            chg = close - prev_close if close > 0 else 0
             
-            try {
-                // 添加超时控制
-                const controller = new AbortController();
-                const timeoutId = setTimeout(() => controller.abort(), 5000);
-                
-                const response = await fetch('js/ai_stocks.json?t=' + new Date().getTime(), {
-                    signal: controller.signal
-                });
-                clearTimeout(timeoutId);
-                
-                if (!response.ok) throw new Error('网络请求失败');
-                
-                const result = await response.json();
-                
-                if (result.success) {
-                    updateStocksFromPython(result);
-                    showMessage('success', `AI选股加载成功！选中 ${result.total_selected} 只股票`);
-                } else {
-                    throw new Error(result.error || '数据加载失败');
-                }
-            } catch (error) {
-                console.log('使用备用数据:', error);
-                updateStocksFromPython({
-                    selected_stocks: defaultStocks,
-                    total_selected: defaultStocks.length,
-                    data_source: '备用数据',
-                    analysis_date: new Date().toISOString().split('T')[0]
-                });
-                showMessage('warning', '使用备用股票数据');
-            } finally {
-                loading.style.display = 'none';
-            }
-        }
+            rows.append({
+                'Code': clean_code,
+                'Stock': stock_name,
+                'Last': round(close, 3),
+                'Chg': round(chg, 3),
+                'Vol': int(volume),
+                'Prv Close': round(prev_close, 3)
+            })
+        except Exception as e:
+            print(f"跳過 {ticker} 在 {date_str}: {e}")
+            continue
+    
+    # 寫入 CSV
+    if rows:
+        df = pd.DataFrame(rows)
+        df.to_csv(filepath, index=False)
+        print(f"生成 {filename} ({len(rows)} 隻股票)")
 
-        // 更新股票显示
-        function updateStocksFromPython(result) {
-            const stockGrid = document.getElementById('stockGrid');
-            stockGrid.innerHTML = '';
-            
-            result.selected_stocks.forEach(stock => {
-                const stockItem = document.createElement('div');
-                stockItem.className = 'stock-item';
-                stockItem.innerHTML = `
-                    <input type="checkbox" class="stock-checkbox" id="stock-${stock.code}" value="${stock.code}" checked>
-                    <div class="stock-info">
-                        <div class="stock-code">${stock.code} ${stock.name}</div>
-                        <div class="stock-price">RM${stock.price}</div>
-                    </div>
-                    <span class="stock-tag ${getTagClass(stock.tag)}">${stock.tag}</span>
-                `;
-                stockGrid.appendChild(stockItem);
-            });
-
-            // 更新数据信息
-            document.getElementById('dataInfo').innerHTML = 
-                `数据来源: ${result.data_source || 'Bursa Malaysia'} | 更新于: ${result.analysis_date}`;
-        }
-
-        // 显示消息
-        function showMessage(type, message) {
-            alert(message);
-        }
-
-        // 获取标签CSS类
-        function getTagClass(tag) {
-            if (tag.includes('📈')) return 'tag-up';
-            if (tag.includes('💪')) return 'tag-strong';
-            if (tag.includes('🔥')) return 'tag-hot';
-            return 'tag-up';
-        }
-
-        // 全选股票 - 优化版本
-        function selectAllStocks() {
-            let checkedCount = 0;
-            document.querySelectorAll('.stock-checkbox').forEach(checkbox => {
-                checkbox.checked = true;
-                checkbox.closest('.stock-item').classList.add('selected');
-                checkedCount++;
-            });
-            
-            if (checkedCount > 0) {
-                showMessage('success', `已全选 ${checkedCount} 只股票`);
-            } else {
-                showMessage('warning', '请先加载股票数据');
-            }
-        }
-
-        // 清空选择
-        function clearAllStocks() {
-            document.querySelectorAll('.stock-checkbox').forEach(checkbox => {
-                checkbox.checked = false;
-                checkbox.closest('.stock-item').classList.remove('selected');
-            });
-        }
-
-        // 获取选中的股票
-        function getSelectedStocks() {
-            const selected = [];
-            document.querySelectorAll('.stock-checkbox:checked').forEach(checkbox => {
-                selected.push(checkbox.value);
-            });
-            return selected;
-        }
-
-        // 运行回测
-        function runBacktest() {
-            const selectedStocks = getSelectedStocks();
-            if (selectedStocks.length === 0) {
-                showMessage('warning', '请先选择要分析的股票！');
-                return;
-            }
-
-            const loading = document.getElementById('loading');
-            const resultsSection = document.getElementById('resultsSection');
-            
-            loading.style.display = 'block';
-            
-            // 模拟计算过程
-            setTimeout(() => {
-                const results = performBacktest(selectedStocks);
-                displayResults(results);
-                loading.style.display = 'none';
-                resultsSection.style.display = 'block';
-                
-                // 滚动到结果区域
-                resultsSection.scrollIntoView({ behavior: 'smooth' });
-            }, 1000);
-        }
-
-        // 执行回测计算
-        function performBacktest(selectedStocks) {
-            const initialCapital = parseInt(document.getElementById('initialCapital').value);
-            const period = parseInt(document.getElementById('period').value);
-            
-            // 基于选中股票数量生成更合理的结果
-            const baseReturn = 0.08 + (selectedStocks.length * 0.02); // 股票越多，收益越高
-            const volatility = 0.15 - (selectedStocks.length * 0.01); // 股票越多，波动越低
-            
-            const finalValue = initialCapital * (1 + baseReturn + (Math.random() * 0.1 - 0.05));
-            const totalReturn = ((finalValue - initialCapital) / initialCapital * 100);
-            
-            return {
-                metrics: {
-                    totalReturn: totalReturn.toFixed(2),
-                    annualizedReturn: (totalReturn * (12/period)).toFixed(2),
-                    maxDrawdown: (volatility * 8).toFixed(2),
-                    finalValue: finalValue.toFixed(0),
-                    initialCapital: initialCapital,
-                    stocksCount: selectedStocks.length
-                },
-                portfolioValues: Array.from({length: 30}, (_, i) => ({
-                    date: `11-${i+1}`,
-                    value: initialCapital * (1 + baseReturn * (i/30) + (Math.random() * volatility - volatility/2))
-                }))
-            };
-        }
-
-        // 显示结果
-        function displayResults(results) {
-            const metricsGrid = document.getElementById('metricsGrid');
-            metricsGrid.innerHTML = `
-                <div class="metric-card">
-                    <div class="metric-label">总收益率</div>
-                    <div class="metric-value">${results.metrics.totalReturn}%</div>
-                </div>
-                <div class="metric-card">
-                    <div class="metric-label">年化收益率</div>
-                    <div class="metric-value">${results.metrics.annualizedReturn}%</div>
-                </div>
-                <div class="metric-card">
-                    <div class="metric-label">最大回撤</div>
-                    <div class="metric-value">${results.metrics.maxDrawdown}%</div>
-                </div>
-                <div class="metric-card">
-                    <div class="metric-label">最终资产</div>
-                    <div class="metric-value">RM${results.metrics.finalValue}</div>
-                </div>
-            `;
-
-            // 绘制图表
-            const ctx = document.getElementById('performanceChart').getContext('2d');
-            new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: results.portfolioValues.map(p => p.date),
-                    datasets: [{
-                        label: '组合净值',
-                        data: results.portfolioValues.map(p => p.value),
-                        borderColor: '#667eea',
-                        backgroundColor: 'rgba(102, 126, 234, 0.1)',
-                        borderWidth: 2,
-                        fill: true,
-                        tension: 0.4
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: {
-                            display: false
-                        }
-                    },
-                    scales: {
-                        y: {
-                            beginAtZero: false,
-                            grid: {
-                                color: 'rgba(0,0,0,0.1)'
-                            }
-                        },
-                        x: {
-                            grid: {
-                                display: false
-                            }
-                        }
-                    }
-                }
-            });
-        }
-
-        // 初始化页面
-        document.addEventListener('DOMContentLoaded', function() {
-            initializeStockGrid();
-            setTimeout(loadPythonStocks, 500);
-        });
-    </script>
-</body>
-</html>
+print("完成！CSV 檔案在資料夾:", OUTPUT_DIR)
