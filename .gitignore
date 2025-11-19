@@ -7,3 +7,4 @@ security-check.sh
 .DS_Store
 Thumbs.db
 *.log
+.env
