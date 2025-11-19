@@ -1,70 +1,433 @@
-import yfinance as yf
-import pandas as pd
-from datetime import datetime, timedelta
-import os
-
-# ===== 自訂參數（請修改這裡） =====
-STOCK_TICKERS = ['1155.KL', '0328.KL', '1295.KL']  # 示例：Maybank, 3REN, Top Glove。添加更多如 '6869.KL' 等
-START_DATE = '2025-11-01'  # 開始日期 (YYYY-MM-DD)
-END_DATE = '2025-11-19'    # 結束日期 (YYYY-MM-DD)
-OUTPUT_DIR = './bursa_csvs'  # 輸出資料夾
-
-# ===== 步驟 1: 獲取所有股票的資訊（公司名稱） =====
-stock_info = {}
-for ticker in STOCK_TICKERS:
-    try:
-        info = yf.Ticker(ticker).info
-        clean_code = ticker.replace('.KL', '')  # 去除 .KL
-        stock_info[clean_code] = info.get('longName', 'Unknown Stock')
-        print(f"下載 {clean_code}: {stock_info[clean_code]}")
-    except Exception as e:
-        print(f"錯誤 - {ticker}: {e}")
-
-# ===== 步驟 2: 下載歷史數據 =====
-data = yf.download(STOCK_TICKERS, start=START_DATE, end=END_DATE, progress=False)
-# data 是 MultiIndex DataFrame: columns = [('Adj Close', '1155.KL'), ('Volume', '1155.KL'), ...]
-
-# 創建輸出資料夾
-os.makedirs(OUTPUT_DIR, exist_ok=True)
-
-# ===== 步驟 3: 為每個交易日生成 CSV =====
-dates = data.index.strftime('%Y-%m-%d').unique()  # 實際交易日
-for date_str in sorted(dates):
-    date_obj = pd.to_datetime(date_str)
-    filename = date_obj.strftime('%Y%m%d') + '.csv'
-    filepath = os.path.join(OUTPUT_DIR, filename)
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>AI選股分析 | Myx Shop</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      color: #333;
+      line-height: 1.6;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    .nav-buttons {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .nav-btn {
+      background: rgba(255,255,255,0.95);
+      padding: 1rem 2rem;
+      border-radius: 50px;
+      text-decoration: none;
+      color: #333;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      border: 2px solid transparent;
+    }
     
-    rows = []
-    for ticker in STOCK_TICKERS:
-        clean_code = ticker.replace('.KL', '')
-        stock_name = stock_info.get(clean_code, 'Unknown')
+    /* 导航按钮特定样式 */
+    .nav-btn.home-btn {
+      background: linear-gradient(135deg, #28a745, #20c997);
+      color: white;
+    }
+    .nav-btn.stocks-btn {
+      background: linear-gradient(135deg, #3498db, #2980b9);
+      color: white;
+    }
+    .nav-btn.shop-btn {
+      background: linear-gradient(135deg, #ff6b6b, #ee5a52);
+      color: white;
+    }
+    .nav-btn.car-btn {
+      background: linear-gradient(135deg, #8e44ad, #9b59b6);
+      color: white;
+    }
+    .nav-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+      border-color: rgba(255,255,255,0.5);
+    }
+    
+    .page-header {
+      background: rgba(255,255,255,0.95);
+      padding: 2rem;
+      border-radius: 20px;
+      text-align: center;
+      margin-bottom: 2rem;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    }
+    .page-header h1 {
+      color: #2c3e50;
+      margin-bottom: 0.5rem;
+      font-size: 2.5rem;
+    }
+    .page-header p {
+      color: #7f8c8d;
+      font-size: 1.1rem;
+    }
+    .video-section {
+      background: rgba(255,255,255,0.95);
+      padding: 2rem;
+      border-radius: 20px;
+      margin-bottom: 2rem;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    }
+    .video-section h2 {
+      margin-bottom: 1.5rem;
+      color: #4a5568;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 1.8rem;
+    }
+    .video-wrapper {
+      position: relative;
+      padding-bottom: 56.25%;
+      height: 0;
+      overflow: hidden;
+      margin-bottom: 1rem;
+      border-radius: 15px;
+      background: #f7fafc;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+    .video-wrapper iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+      border-radius: 15px;
+    }
+    .video-placeholder {
+      text-align: center;
+      padding: 3rem;
+      color: #718096;
+    }
+    .video-placeholder i {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      color: #cbd5e0;
+    }
+    .social-links {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      margin-top: 2rem;
+      flex-wrap: wrap;
+    }
+    .social-btn {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.8rem 1.5rem;
+      background: red;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 50px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      border: 2px solid transparent;
+    }
+    .social-btn.tiktok {
+      background: #000;
+    }
+    .social-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+      border-color: rgba(255,255,255,0.3);
+    }
+    .update-time {
+      text-align: center;
+      color: #718096;
+      font-size: 0.9rem;
+      margin-top: 1rem;
+      padding: 0.5rem;
+      background: rgba(0,0,0,0.05);
+      border-radius: 10px;
+    }
+    .stock-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+    .stock-card {
+      background: rgba(255,255,255,0.95);
+      padding: 2rem;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease;
+      border: 1px solid rgba(0,0,0,0.1);
+    }
+    .stock-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+    }
+    .stock-card h3 {
+      margin-bottom: 1.5rem;
+      color: #4a5568;
+      font-size: 1.4rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .performance {
+      color: #48bb78;
+      font-weight: 700;
+      font-size: 1.1rem;
+    }
+    .risk-high {
+      color: #e53e3e;
+      font-weight: 700;
+    }
+    .risk-medium {
+      color: #ed8936;
+      font-weight: 700;
+    }
+    .risk-low {
+      color: #38a169;
+      font-weight: 700;
+    }
+    .ai-score {
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: white;
+      padding: 0.3rem 0.8rem;
+      border-radius: 20px;
+      font-weight: bold;
+      display: inline-block;
+      margin-top: 0.5rem;
+    }
+    
+    /* 最新影片区块样式 */
+    .latest-video {
+      background: rgba(255,255,255,0.95);
+      padding: 2rem;
+      border-radius: 20px;
+      margin-bottom: 2rem;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+    .latest-video h2 {
+      color: #4a5568;
+      margin-bottom: 1.5rem;
+      font-size: 1.8rem;
+    }
+    .video-block {
+      max-width: 560px;
+      margin: 0 auto;
+      border: 1px solid #e2e8f0;
+      padding: 15px;
+      border-radius: 12px;
+      background: #f8fafc;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+    .video-block h3 {
+      font-size: 1.2em;
+      margin-bottom: 10px;
+      color: #2d3748;
+      line-height: 1.4;
+    }
+    .video-block p {
+      font-size: 0.9em;
+      color: #718096;
+      margin-bottom: 15px;
+    }
+    .video-block img {
+      width: 100%;
+      border-radius: 8px;
+      margin-bottom: 10px;
+      transition: transform 0.3s ease;
+    }
+    .video-block img:hover {
+      transform: scale(1.02);
+    }
+    
+    @media(max-width:768px) {
+      .nav-buttons { 
+        justify-content: center; 
+        gap: 0.8rem;
+      }
+      .nav-btn {
+        padding: 0.8rem 1.5rem;
+        font-size: 0.9rem;
+      }
+      .social-links { 
+        flex-direction: column; 
+        align-items: center; 
+      }
+      .page-header h1 {
+        font-size: 2rem;
+      }
+      .stock-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    
+    @media(max-width:480px) {
+      .container {
+        padding: 10px;
+      }
+      .nav-btn {
+        padding: 0.7rem 1.2rem;
+        font-size: 0.85rem;
+      }
+      .page-header {
+        padding: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- 导航栏 -->
+    <div class="nav-buttons">
+      <a href="./index.html" class="nav-btn home-btn">
+        <i class="fas fa-home"></i> 回到主頁
+      </a>
+      <a href="./retail-inv" class="nav-btn stocks-btn">
+        <i class="fas fa-chart-line"></i> 散戶特區
+      </a>
+      <a href="./products.html" class="nav-btn shop-btn">
+        <i class="fas fa-shopping-bag"></i> 聯盟商店
+      </a>
+      <a href="./vehicles.html" class="nav-btn car-btn">
+        <i class="fas fa-car"></i> 二手車輛
+      </a>
+    </div>
+
+    <!-- 页面标题 -->
+    <div class="page-header">
+      <h1><i class="fas fa-robot"></i> AI選股成績與分析</h1>
+      <p>基於人工智能算法的股票分析與推薦 - 每日開盤前更新</p>
+    </div>
+
+    <!-- 最新影片区块 -->
+    <div class="latest-video">
+      <h2><i class="fas fa-video"></i> 最新AI選股影片</h2>
+      <div class="video-block" id="video-AxlIA-OivOs">
+        <h3>【 Ai 選股 】2025年 11月 6日 成績揭曉。 # Ai # 選股 # Bursa # KLSE #被动收入 #賺錢 #超跌反弹 #逆向操作</h3>
+        <p>更新日期：2025年11月06日</p>
+        <a href="https://www.youtube.com/watch?v=AxlIA-OivOs" target="_blank">
+          <img src="https://img.youtube.com/vi/AxlIA-OivOs/maxresdefault.jpg" 
+               onerror="this.onerror=null;this.src='https://img.youtube.com/vi/AxlIA-OivOs/hqdefault.jpg';" 
+               alt="影片縮圖">
+        </a>
+        <iframe width="100%" height="315" src="https://www.youtube.com/embed/AxlIA-OivOs" 
+                title="YouTube video player" frameborder="0" 
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
+        </iframe>
+      </div>
+    </div>
+
+    <!-- 视频和社交媒体部分 -->
+    <div class="video-section">
+      <h2><i class="fas fa-play-circle"></i> 更多AI選股內容</h2>
+      <div class="video-wrapper">
+        <iframe 
+          src="https://www.youtube.com/embed/latest?channel=UCbursasearch" 
+          title="最新AI選股影片" 
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+          allowfullscreen>
+        </iframe>
+      </div>
+
+      <div class="social-links">
+        <a href="https://www.youtube.com/@bursasearch" class="social-btn" target="_blank">
+          <i class="fab fa-youtube"></i> 訂閱YouTube頻道
+        </a>
+        <a href="https://www.tiktok.com/@bursasearch" class="social-btn tiktok" target="_blank">
+          <i class="fab fa-tiktok"></i> 關注TikTok
+        </a>
+      </div>
+
+      <div class="update-time">
+        <i class="fas fa-sync-alt"></i> 最後更新: 
+        <script>document.write(new Date().toLocaleDateString("zh-Hans-CN"))</script>
+      </div>
+    </div>
+
+    <!-- 股票推荐网格 -->
+    <div class="stock-grid">
+      <div class="stock-card">
+        <h3><i class="fas fa-microchip"></i> 科技股推薦</h3>
+        <p>近期表現: <span class="performance">+15.2%</span></p>
+        <p>風險等級: <span class="risk-medium">中</span></p>
+        <p>AI評分: <span class="ai-score">88/100</span></p>
+        <p>適合追求高成長的投資者</p>
+      </div>
+      <div class="stock-card">
+        <h3><i class="fas fa-university"></i> 金融股分析</h3>
+        <p>近期表現: <span class="performance">+8.7%</span></p>
+        <p>風險等級: <span class="risk-low">低</span></p>
+        <p>AI評分: <span class="ai-score">92/100</span></p>
+        <p>穩健投資首選</p>
+      </div>
+      <div class="stock-card">
+        <h3><i class="fas fa-bolt"></i> 新能源趨勢</h3>
+        <p>近期表現: <span class="performance">+22.1%</span></p>
+        <p>風險等級: <span class="risk-high">高</span></p>
+        <p>AI評分: <span class="ai-score">76/100</span></p>
+        <p>高風險高回報選擇</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- JavaScript -->
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      console.log("AI選股分析頁面已載入完成");
+      
+      // 添加页面加载动画效果
+      const elements = document.querySelectorAll('.stock-card, .video-section, .latest-video');
+      elements.forEach((element, index) => {
+        element.style.opacity = '0';
+        element.style.transform = 'translateY(20px)';
         
-        try:
-            # 當日數據
-            close = data['Close'][ticker].loc[date_str] if date_str in data['Close'][ticker].index else 0
-            volume = data['Volume'][ticker].loc[date_str] if date_str in data['Volume'][ticker].index else 0
-            
-            # 前一日數據（計算 Chg）
-            prev_date = date_obj - timedelta(days=1)
-            prev_close = data['Close'][ticker].loc[prev_date.strftime('%Y-%m-%d')] if prev_date.strftime('%Y-%m-%d') in data['Close'][ticker].index else close
-            chg = close - prev_close if close > 0 else 0
-            
-            rows.append({
-                'Code': clean_code,
-                'Stock': stock_name,
-                'Last': round(close, 3),
-                'Chg': round(chg, 3),
-                'Vol': int(volume),
-                'Prv Close': round(prev_close, 3)
-            })
-        except Exception as e:
-            print(f"跳過 {ticker} 在 {date_str}: {e}")
-            continue
-    
-    # 寫入 CSV
-    if rows:
-        df = pd.DataFrame(rows)
-        df.to_csv(filepath, index=False)
-        print(f"生成 {filename} ({len(rows)} 隻股票)")
+        setTimeout(() => {
+          element.style.transition = 'all 0.6s ease';
+          element.style.opacity = '1';
+          element.style.transform = 'translateY(0)';
+        }, index * 200);
+      });
 
-print("完成！CSV 檔案在資料夾:", OUTPUT_DIR)
+      // 如果您有特定的视频ID，可以在这里替换
+      // const videoId = "YOUR_SPECIFIC_VIDEO_ID";
+      // document.querySelector('iframe').src = `https://www.youtube.com/embed/${videoId}`;
+    });
+
+    // 浏览器兼容性检查
+    if (typeof(Storage) !== "undefined") {
+        console.log("本地存储支持已启用");
+    } else {
+        console.warn("浏览器不支持本地存储，部分功能可能无法使用");
+    }
+  </script>
+
+  <!-- 股票更新功能 -->
+  <script src="js/update_stocks.js"></script>
+  <script src="js/auto_update_stocks.js"></script>
+
+</body>
+</html>
