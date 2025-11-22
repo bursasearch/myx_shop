@@ -443,39 +443,54 @@
         renderProducts();
     }
 
-    // 默認商品數據（備用）
-    function getDefaultProducts() {
-        return [
-            {
-                id: 1,
-                name: "白花蛇舌草 Hedyotis diffusa (100G)",
-                price: 5.50,
-                image: "https://via.placeholder.com/280/48bb78/white?text=保健商品",
-                category: "health",
-                commission: "5%",
-                sold: "89 sold",
-                link: "https://shope.ee/您的備用連結1",
-                rating: "★★★★★",
-                status: "active",
-                stock: 50,
-                sales: 89
-            },
-            {
-                id: 2,
-                name: "優質普洱茶餅 357g 陳年熟茶",
-                price: 45.00,
-                image: "https://via.placeholder.com/280/00A650/white?text=普洱茶",
-                category: "health",
-                commission: "3%",
-                sold: "156 sold",
-                link: "https://shope.ee/您的備用連結2",
-                rating: "★★★★☆",
-                status: "active",
-                stock: 25,
-                sales: 156
-            }
-        ];
-    }
+// 默認商品數據（備用） - 使用實際商品數據
+function getDefaultProducts() {
+    return [
+        {
+            id: 1,
+            name: "白花蛇舌草 Hedyotis diffusa (100G)",
+            price: 5.50,
+            image: "images/products/1000055447.jpg",
+            category: "health",
+            commission: "5%",
+            sold: "89 sold",
+            link: "https://shope.ee/your-actual-link-1", // 替換為實際連結
+            rating: "★★★★★",
+            status: "active",
+            stock: 50,
+            sales: 89
+        },
+        {
+            id: 2,
+            name: "優質普洱茶餅 357g 陳年熟茶",
+            price: 45.00,
+            image: "images/products/1000055448.jpg",
+            category: "health",
+            commission: "3%",
+            sold: "156 sold", 
+            link: "https://shope.ee/your-actual-link-2", // 替換為實際連結
+            rating: "★★★★☆",
+            status: "active",
+            stock: 25,
+            sales: 156
+        },
+        {
+            id: 3,
+            name: "半枝蓮 - 100 gm",
+            price: 5.50,
+            image: "images/products/1000055448.jpg", // 使用適當的圖片
+            category: "health",
+            commission: "5%",
+            sold: "0 sold",
+            link: "http://localhost:8000/sl", // 本地測試連結
+            rating: "暫無評分",
+            status: "active",
+            stock: 51,
+            sales: 0
+        }
+        // 可以在這裡添加更多商品
+    ];
+}
 
     // 渲染商品 (修改篩選邏輯)
     function renderProducts() {
