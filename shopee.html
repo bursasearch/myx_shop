@@ -18,6 +18,7 @@
             min-height: 100vh;
             color: #333;
             line-height: 1.6;
+            font-size: 16px; /* 增加基础字体大小 */
         }
         
         .container {
@@ -26,315 +27,336 @@
             padding: 20px;
         }
         
-        /* 导航按钮 */
+        /* 导航栏样式 */
         .nav-buttons {
             display: flex;
-            gap: 1rem;
-            margin-bottom: 2rem;
             flex-wrap: wrap;
-            justify-content: center;
+            gap: 10px;
+            margin-bottom: 30px;
         }
         
         .nav-btn {
-            background: rgba(255,255,255,0.95);
-            padding: 1rem 2rem;
-            border-radius: 50px;
-            text-decoration: none;
-            color: #333;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            border: 2px solid transparent;
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 8px;
+            padding: 12px 20px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            font-size: 16px; /* 增加导航字体大小 */
         }
         
         .nav-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
         }
         
-        .nav-btn.shopee-btn {
-            background: linear-gradient(135deg, #FF5311, #ff7733);
-            color: white;
+        .shopee-btn {
+            background: linear-gradient(135deg, #f53d2d, #ff6633);
         }
         
         /* 页面标题 */
         .page-header {
-            background: rgba(255,255,255,0.95);
-            padding: 2rem;
-            border-radius: 20px;
             text-align: center;
-            margin-bottom: 2rem;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+            color: white;
         }
         
         .page-header h1 {
-            color: #2c3e50;
-            margin-bottom: 0.5rem;
-            font-size: 2.5rem;
+            font-size: 2.5rem; /* 增加标题字体大小 */
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
         }
         
         .page-header p {
-            color: #7f8c8d;
-            font-size: 1.1rem;
+            font-size: 1.2rem; /* 增加副标题字体大小 */
+            opacity: 0.9;
         }
         
         /* 商店横幅 */
         .store-banner {
-            background: linear-gradient(135deg, #FF5311, #ff7733);
-            color: white;
-            padding: 2rem;
-            border-radius: 15px;
-            margin-bottom: 2rem;
-            text-align: center;
-            box-shadow: 0 5px 15px rgba(255,83,17,0.3);
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
         }
         
         .store-banner h2 {
-            font-size: 2rem;
-            margin-bottom: 0.5rem;
+            font-size: 1.8rem; /* 增加横幅标题字体大小 */
+            margin-bottom: 8px;
+            color: #333;
+        }
+        
+        .store-banner p {
+            margin-bottom: 15px;
+            font-size: 1.1rem; /* 增加横幅描述字体大小 */
         }
         
         .commission-notice {
-            background: rgba(255,255,255,0.2);
-            padding: 1rem;
-            border-radius: 10px;
-            margin-top: 1rem;
-            font-size: 0.9rem;
+            background: #e3f2fd;
+            padding: 12px 15px;
+            border-radius: 8px;
+            font-size: 1rem; /* 增加通知字体大小 */
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
         
         /* 搜索和筛选 */
         .search-filter {
-            background: rgba(255,255,255,0.95);
-            padding: 1.5rem;
-            border-radius: 15px;
-            margin-bottom: 2rem;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
         }
         
         .search-box {
             display: flex;
-            gap: 1rem;
-            margin-bottom: 1rem;
+            margin-bottom: 20px;
         }
         
         .search-box input {
             flex: 1;
-            padding: 0.8rem 1rem;
-            border: 2px solid #e2e8f0;
-            border-radius: 10px;
-            font-size: 1rem;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px 0 0 8px;
+            font-size: 16px; /* 增加搜索框字体大小 */
         }
         
         .search-box button {
-            background: #FF5311;
+            padding: 12px 20px;
+            background: #4a90e2;
             color: white;
             border: none;
-            padding: 0.8rem 1.5rem;
-            border-radius: 10px;
+            border-radius: 0 8px 8px 0;
             cursor: pointer;
-            font-weight: 600;
+            font-size: 16px; /* 增加搜索按钮字体大小 */
+            transition: background 0.3s;
+        }
+        
+        .search-box button:hover {
+            background: #3a7bc8;
         }
         
         .category-filters {
             display: flex;
-            gap: 0.5rem;
             flex-wrap: wrap;
+            gap: 10px;
         }
         
         .category-btn {
-            background: #f7fafc;
-            border: 2px solid #e2e8f0;
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
+            padding: 10px 15px;
+            background: #f5f5f5;
+            border: none;
+            border-radius: 8px;
             cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 0.9rem;
+            transition: all 0.3s;
+            font-size: 15px; /* 增加分类按钮字体大小 */
         }
         
-        .category-btn.active,
-        .category-btn:hover {
-            background: #FF5311;
+        .category-btn.active {
+            background: #4a90e2;
             color: white;
-            border-color: #FF5311;
         }
         
         /* 商品网格 */
         .products-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 2rem;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); /* 调整商品卡片最小宽度 */
+            gap: 25px;
+            margin-bottom: 30px;
         }
         
         .product-card {
             background: white;
-            border-radius: 15px;
+            border-radius: 12px;
             overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
             position: relative;
         }
         
         .product-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
         }
         
         .product-badge {
             position: absolute;
             top: 10px;
             left: 10px;
-            background: #FF5311;
+            background: #ff4757;
             color: white;
-            padding: 0.3rem 0.7rem;
-            border-radius: 15px;
+            padding: 5px 10px;
+            border-radius: 4px;
             font-size: 0.8rem;
-            font-weight: 600;
-            z-index: 2;
+            z-index: 1;
         }
         
         .product-image {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-            background: #f7fafc;
+            height: 200px; /* 固定图片高度，避免过大 */
+            overflow: hidden;
         }
         
         .product-image img {
             width: 100%;
             height: 100%;
-            object-fit: cover;
+            object-fit: cover; /* 保持图片比例 */
+            transition: transform 0.5s;
+        }
+        
+        .product-card:hover .product-image img {
+            transform: scale(1.05);
         }
         
         .product-info {
-            padding: 1.2rem;
+            padding: 20px;
         }
         
         .product-title {
-            font-size: 1rem;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-            color: #2d3748;
+            font-size: 1.2rem; /* 增加商品标题字体大小 */
+            margin-bottom: 10px;
             line-height: 1.4;
+            height: 3.2em; /* 固定标题高度，避免布局跳动 */
+            overflow: hidden;
             display: -webkit-box;
             -webkit-line-clamp: 2;
             -webkit-box-orient: vertical;
-            overflow: hidden;
         }
         
         .product-price {
-            color: #FF5311;
-            font-size: 1.2rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
+            font-size: 1.5rem; /* 增加价格字体大小 */
+            font-weight: bold;
+            color: #ff4757;
+            margin-bottom: 10px;
         }
         
         .product-meta {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            font-size: 0.85rem;
-            color: #718096;
-            margin-bottom: 1rem;
+            margin-bottom: 15px;
         }
         
         .product-rating {
-            color: #f59e0b;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 0.9rem;
+        }
+        
+        .product-rating i {
+            color: #ffc107;
         }
         
         .commission-rate {
-            background: #edf2f7;
-            padding: 0.2rem 0.6rem;
-            border-radius: 12px;
-            font-size: 0.75rem;
-            font-weight: 600;
+            background: #e3f2fd;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.9rem;
         }
         
         .shopee-link {
             display: block;
-            background: #FF5311;
-            color: white;
             text-align: center;
-            padding: 0.8rem;
-            border-radius: 10px;
+            padding: 10px;
+            background: linear-gradient(135deg, #f53d2d, #ff6633);
+            color: white;
             text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s ease;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.3s;
+            font-size: 1rem; /* 增加购买按钮字体大小 */
         }
         
         .shopee-link:hover {
-            background: #e04a0f;
-            transform: translateY(-2px);
+            background: linear-gradient(135deg, #e03525, #e55a2e);
         }
         
+        /* 加载状态 */
+        .loading {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 40px;
+            font-size: 1.2rem; /* 增加加载状态字体大小 */
+        }
+        
+        /* 載入更多 */
         .load-more {
             text-align: center;
-            margin: 2rem 0;
         }
         
         .load-more-btn {
-            background: #FF5311;
+            padding: 12px 30px;
+            background: #4a90e2;
             color: white;
             border: none;
-            padding: 1rem 2rem;
-            border-radius: 10px;
-            font-size: 1rem;
-            font-weight: 600;
+            border-radius: 8px;
             cursor: pointer;
-            transition: all 0.3s ease;
+            font-size: 1rem; /* 增加加载更多按钮字体大小 */
+            transition: all 0.3s;
         }
         
-        .load-more-btn:hover {
-            background: #e04a0f;
-            transform: translateY(-2px);
+        .load-more-btn:hover:not(:disabled) {
+            background: #3a7bc8;
         }
         
         .load-more-btn:disabled {
-            background: #cbd5e0;
+            background: #cccccc;
             cursor: not-allowed;
-            transform: none;
         }
         
-        .loading {
-            text-align: center;
-            padding: 2rem;
-            color: #718096;
-            grid-column: 1 / -1;
-        }
-        
-        .hidden {
-            display: none !important;
-        }
-
         /* 响应式设计 */
         @media (max-width: 768px) {
-            .products-grid {
-                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            }
-            
             .nav-buttons {
-                gap: 0.8rem;
-            }
-            
-            .nav-btn {
-                padding: 0.8rem 1.5rem;
-                font-size: 0.9rem;
+                flex-direction: column;
             }
             
             .page-header h1 {
-                font-size: 2rem;
+                font-size: 2rem; /* 移动端标题字体大小 */
+            }
+            
+            .page-header p {
+                font-size: 1rem; /* 移动端副标题字体大小 */
+            }
+            
+            .products-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+                gap: 20px;
+            }
+            
+            .category-filters {
+                justify-content: center;
+            }
+            
+            .product-title {
+                font-size: 1.1rem; /* 移动端商品标题字体大小 */
             }
         }
         
         @media (max-width: 480px) {
+            .container {
+                padding: 15px;
+            }
+            
             .products-grid {
                 grid-template-columns: 1fr;
             }
             
-            .container {
-                padding: 10px;
+            .page-header h1 {
+                font-size: 1.8rem; /* 小屏幕标题字体大小 */
+            }
+            
+            .store-banner h2 {
+                font-size: 1.5rem; /* 小屏幕横幅标题字体大小 */
             }
         }
     </style>
@@ -415,27 +437,29 @@
     let shopeeProducts = [];
     let currentCategory = 'all';
     let displayedProducts = 6;
-    let originalProducts = []; // 用於保存原始數據，以便篩選和搜索
+    let originalProducts = [];
 
-    // ** 核心同步函數：從 LocalStorage 讀取數據 **
+    // 從 LocalStorage 讀取數據
     function loadProductsFromLocalStorage() {
-        const STORAGE_KEY = 'shopeeProducts_V2'; // 必須與管理後台的 KEY 一致
+        const STORAGE_KEY = 'shopeeProducts_V2';
         const storedProducts = localStorage.getItem(STORAGE_KEY);
 
+        console.log('🔍 调试信息 - 从LocalStorage读取:');
+        console.log('键名:', STORAGE_KEY);
+        console.log('原始数据:', storedProducts);
+        
         if (storedProducts) {
             try {
-                // 解析儲存在管理後台的產品數據
                 shopeeProducts = JSON.parse(storedProducts);
-                // 將數據備份，用於搜索和篩選的基準
                 originalProducts = [...shopeeProducts]; 
-                console.log(`從 LocalStorage 加載了 ${shopeeProducts.length} 個商品 (與管理後台同步)`);
+                console.log(`✅ 成功加载了 ${shopeeProducts.length} 个商品`, shopeeProducts);
             } catch (e) {
-                console.error("解析 LocalStorage 數據失敗:", e);
+                console.error("❌ 解析 LocalStorage 数据失败:", e);
                 shopeeProducts = getDefaultProducts();
                 originalProducts = [...shopeeProducts];
             }
         } else {
-            console.log('LocalStorage 中沒有找到產品數據，使用默認備用數據。');
+            console.log('⚠️ LocalStorage 中没有找到产品数据');
             shopeeProducts = getDefaultProducts();
             originalProducts = [...shopeeProducts];
         }
@@ -443,137 +467,114 @@
         renderProducts();
     }
 
-// 默認商品數據（備用） - 使用實際商品數據
-function getDefaultProducts() {
-    return [
-        {
-            id: 1,
-            name: "白花蛇舌草 Hedyotis diffusa (100G)",
-            price: 5.50,
-            image: "images/products/1000055447.jpg",
-            category: "health",
-            commission: "5%",
-            sold: "89 sold",
-            link: "https://shope.ee/your-actual-link-1", // 替換為實際連結
-            rating: "★★★★★",
-            status: "active",
-            stock: 50,
-            sales: 89
-        },
-        {
-            id: 2,
-            name: "優質普洱茶餅 357g 陳年熟茶",
-            price: 45.00,
-            image: "images/products/1000055448.jpg",
-            category: "health",
-            commission: "3%",
-            sold: "156 sold", 
-            link: "https://shope.ee/your-actual-link-2", // 替換為實際連結
-            rating: "★★★★☆",
-            status: "active",
-            stock: 25,
-            sales: 156
-        },
-        {
-            id: 3,
-            name: "半枝蓮 - 100 gm",
-            price: 5.50,
-            image: "images/products/1000055448.jpg", // 使用適當的圖片
-            category: "health",
-            commission: "5%",
-            sold: "0 sold",
-            link: "http://localhost:8000/sl", // 本地測試連結
-            rating: "暫無評分",
-            status: "active",
-            stock: 51,
-            sales: 0
-        }
-        // 可以在這裡添加更多商品
-    ];
-}
+    function getDefaultProducts() {
+        return []; // 空数组，等待后台数据
+    }
 
-    // 渲染商品 (修改篩選邏輯)
+    // 渲染商品 - 修复版本，匹配后台数据结构
     function renderProducts() {
-        const grid = document.getElementById('productsGrid');
-        
-        // ** 同步優化點：只顯示 'active' 且 'stock > 0' 的商品 **
-        let filteredProducts = originalProducts.filter(product => {
-            // 確保只顯示已上架且有庫存的商品
-            const isActive = product.status === 'active';
-            const hasStock = product.stock > 0;
-
-            // 應用分類篩選
-            const matchesCategory = currentCategory === 'all' || product.category === currentCategory;
-            
-            return isActive && hasStock && matchesCategory;
-        });
-
-        // 應用搜索篩選 (如果搜索框有內容)
+        const productsGrid = document.getElementById('productsGrid');
         const searchTerm = document.getElementById('searchInput').value.toLowerCase();
-        if (searchTerm) {
-            filteredProducts = filteredProducts.filter(product => 
-                product.name.toLowerCase().includes(searchTerm)
-            );
-        }
-
-        const productsToShow = filteredProducts.slice(0, displayedProducts);
-
+        
+        console.log('🔄 开始渲染商品，总数:', shopeeProducts.length);
+        
+        // 筛选商品 - 只显示已上架的商品
+        let filteredProducts = originalProducts.filter(product => {
+            // 分类筛选
+            const categoryMatch = currentCategory === 'all' || product.category === currentCategory;
+            
+            // 搜索筛选 - 使用后台的 name 字段
+            const searchMatch = !searchTerm || 
+                product.name.toLowerCase().includes(searchTerm);
+            
+            // 状态筛选 - 只显示 active 状态且库存 > 0 的商品
+            const statusMatch = product.status === 'active' && product.stock > 0;
+            
+            return categoryMatch && searchMatch && statusMatch;
+        });
+        
+        // 更新商品数组
+        shopeeProducts = filteredProducts;
+        
+        // 显示商品数量
+        const productsToShow = shopeeProducts.slice(0, displayedProducts);
+        
+        // 清空网格
+        productsGrid.innerHTML = '';
+        
+        // 如果没有商品
         if (productsToShow.length === 0) {
-            grid.innerHTML = '<div class="loading">暫無符合條件的商品。</div>';
-            document.querySelector('.load-more').classList.add('hidden');
+            productsGrid.innerHTML = `
+                <div class="loading" style="grid-column: 1 / -1;">
+                    <i class="fas fa-search"></i> 沒有找到商品，請在管理後台添加商品
+                </div>
+            `;
             return;
         }
         
-        document.querySelector('.load-more').classList.remove('hidden');
-
-        grid.innerHTML = productsToShow.map(product => {
-            // 判斷是否顯示 '熱賣' 標籤 - 根據銷售量
-            const badge = product.sales && parseInt(product.sales) >= 100 ? 
-                `<div class="product-badge">熱賣</div>` : 
-                (product.stock <= 10 ? `<div class="product-badge" style="background: #f59e0b;">庫存少</div>` : '');
-
-            // 處理價格顯示，確保數據存在
-            const priceDisplay = product.price ? `RM${parseFloat(product.price).toFixed(2)}` : '價格待定';
+        // 渲染商品 - 使用后台的数据结构
+        productsToShow.forEach(product => {
+            const productCard = document.createElement('div');
+            productCard.className = 'product-card';
             
-            // 處理銷售量顯示
-            const soldDisplay = product.sales ? `${product.sales} sold` : '0 sold';
-     
-            // 處理評分顯示
-            const ratingDisplay = product.rating || '暫無評分';    
-
-return `
-
-  <div class="product-card" data-category="${product.category}">
-        ${badge}
-        <div class="product-image">
-            <img src="${product.image}" alt="${product.name}" 
-                 onerror="this.src='https://via.placeholder.com/280/e2e8f0/718096?text=圖片加載失敗'">
-        </div>
-        <div class="product-info">
-            <div class="product-title">${product.name}</div>
-            <div class="product-price">${priceDisplay}</div>
-            <div class="product-meta">
-                <div class="product-rating">${ratingDisplay}</div>
-                <div>${soldDisplay}</div>
-            </div>
-            <!-- 佣金顯示已移除 -->
-            <a href="${product.link}" class="shopee-link" target="_blank" onclick="trackClick(${product.id})">
-                <i class="fas fa-external-link-alt"></i> 前往購買
-            </a>
-        </div>
-    </div>
-`;        
-        }).join('');
+            // 根据后台数据结构调整字段名称
+            productCard.innerHTML = `
+                ${product.badge ? `<div class="product-badge">${product.badge}</div>` : ''}
+                <div class="product-image">
+                    <img src="${product.image || 'https://via.placeholder.com/300x200?text=商品圖片'}" 
+                         alt="${product.name}" 
+                         onerror="this.src='https://via.placeholder.com/300x200?text=圖片加載失敗'">
+                </div>
+                <div class="product-info">
+                    <h3 class="product-title">${product.name}</h3>
+                    <div class="product-price">RM${parseFloat(product.price).toFixed(2)}</div>
+                    <div class="product-meta">
+                        <div class="product-rating">
+                            ${generateStarRating(product.rating || 4)}
+                            <span>(${product.reviews || product.sales || 0})</span>
+                        </div>
+                        <div class="commission-rate">${product.commission || 5}%佣金</div>
+                    </div>
+                    <a href="${product.link || '#'}" class="shopee-link" target="_blank" onclick="trackClick('${product.id}')">
+                        <i class="fas fa-external-link-alt"></i> 前往購買
+                    </a>
+                </div>
+            `;
+            
+            productsGrid.appendChild(productCard);
+        });
         
-        // 檢查是否還有更多商品可載入
+        // 更新"加载更多"按钮状态
         const loadMoreBtn = document.querySelector('.load-more-btn');
-        if (displayedProducts >= filteredProducts.length) {
+        if (displayedProducts >= shopeeProducts.length) {
             loadMoreBtn.disabled = true;
-            loadMoreBtn.textContent = '已載入所有商品';
+            loadMoreBtn.innerHTML = '<i class="fas fa-check"></i> 已顯示所有商品';
         } else {
             loadMoreBtn.disabled = false;
             loadMoreBtn.innerHTML = '<i class="fas fa-redo"></i> 載入更多商品';
         }
+    }
+
+    // 生成星级评分
+    function generateStarRating(rating) {
+        let stars = '';
+        const fullStars = Math.floor(rating);
+        const halfStar = rating % 1 >= 0.5;
+        
+        for (let i = 0; i < fullStars; i++) {
+            stars += '<i class="fas fa-star"></i>';
+        }
+        
+        if (halfStar) {
+            stars += '<i class="fas fa-star-half-alt"></i>';
+        }
+        
+        const emptyStars = 5 - fullStars - (halfStar ? 1 : 0);
+        for (let i = 0; i < emptyStars; i++) {
+            stars += '<i class="far fa-star"></i>';
+        }
+        
+        return stars;
     }
 
     // 設置分類篩選
@@ -605,7 +606,6 @@ return `
     // 點擊追蹤
     function trackClick(productId) {
         console.log(`商品 ${productId} 被點擊`);
-        // 這裡可以添加點擊追蹤邏輯，比如發送到 Google Analytics
     }
 
     // 按Enter搜索
@@ -625,63 +625,17 @@ return `
     document.addEventListener('DOMContentLoaded', function() {
         loadProductsFromLocalStorage();
         setupCategoryFilters();
+        
+        // 添加调试信息
+        console.log('✅ 页面初始化完成');
     });
 
-    // 添加監聽 LocalStorage 變化，實現實時同步
+    // 添加監聽 LocalStorage 變化
     window.addEventListener('storage', function(e) {
         if (e.key === 'shopeeProducts_V2') {
-            console.log('檢測到商品數據更新，重新加載...');
+            console.log('🔄 检测到商品數據更新，重新加載...');
             loadProductsFromLocalStorage();
         }
-    });
-</script>
-<script>
-    // Initialize with your actual product data
-    document.addEventListener('DOMContentLoaded', function() {
-        // Check if products already exist in localStorage
-        const existingProducts = localStorage.getItem('shopeeProducts_V2');
-        
-        if (!existingProducts) {
-            // Add your actual product data
-            const actualProducts = [
-                {
-                    id: 1,
-                    name: "白花蛇舌草 Hedyotis diffusa (100G)",
-                    price: 5.50,
-                    image: "images/products/1000055447.jpg", // or your actual image path
-                    category: "health",
-                    commission: "5%",
-                    sold: "89 sold",
-                    link: "https://shope.ee/your-actual-link-1",
-                    rating: "★★★★★",
-                    status: "active",
-                    stock: 50,
-                    sales: 89
-                },
-                {
-                    id: 2,
-                    name: "優質普洱茶餅 357g 陳年熟茶",
-                    price: 45.00,
-                    image: "images/products/1000055448.jpg", // or your actual image path
-                    category: "health", 
-                    commission: "3%",
-                    sold: "156 sold",
-                    link: "https://shope.ee/your-actual-link-2",
-                    rating: "★★★★☆",
-                    status: "active",
-                    stock: 25,
-                    sales: 156
-                }
-                // Add more products as needed
-            ];
-            
-            localStorage.setItem('shopeeProducts_V2', JSON.stringify(actualProducts));
-            console.log('Product data initialized in localStorage');
-        }
-        
-        // Then load the products
-        loadProductsFromLocalStorage();
-        setupCategoryFilters();
     });
 </script>
 </body>

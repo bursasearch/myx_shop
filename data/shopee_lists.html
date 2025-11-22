@@ -1,0 +1,1009 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopee产品管理 | Myx Shop - V2.2 修复版</title>
+    <meta name="description" content="Myx Shop 内部产品管理后台 - 已修复图片URL问题">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" 
+          integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" 
+          crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <style>
+        /* ==================== 颜色与变数 V2 ==================== */
+        :root {
+            --primary: #667eea;
+            --primary-dark: #5a6fd8;
+            --danger: #f56565;
+            --success: #48bb78;
+            --warning: #f6ad55;
+            --info: #4299e1;
+            --gray-100: #f7fafc;
+            --gray-200: #e2e8f0;
+            --gray-600: #4a5568;
+            --gray-800: #2d3748;
+            --radius: 12px;
+            --shadow: 0 5px 15px rgba(0,0,0,0.1);
+            --transition: all 0.3s ease;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            min-height: 100vh;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        /* ------------------ 通用布局 ------------------ */
+        .hidden { display: none !important; }
+
+        .admin-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+            display: grid;
+            grid-template-columns: 260px 1fr;
+            gap: 24px;
+        }
+
+        /* ------------------ 侧边栏 ------------------ */
+        .sidebar {
+            background: rgba(255,255,255,0.97);
+            border-radius: var(--radius);
+            padding: 1.5rem 0.5rem; 
+            box-shadow: var(--shadow);
+            height: fit-content;
+            position: sticky;
+            top: 20px;
+        }
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 0.9rem 1.2rem;
+            color: var(--gray-600);
+            text-decoration: none;
+            border-radius: 10px;
+            transition: var(--transition);
+            font-weight: 500;
+            margin: 0.2rem 0.5rem;
+        }
+        .nav-item:hover, .nav-item.active {
+            background: var(--primary);
+            color: white;
+            transform: translateX(4px);
+        }
+        .logout-btn {
+            margin-top: 2rem;
+            color: var(--danger);
+            border-top: 1px solid var(--gray-200);
+            padding-top: 1rem;
+        }
+
+        .main-content {
+            background: rgba(255,255,255,0.97);
+            border-radius: var(--radius);
+            padding: 2rem;
+            box-shadow: var(--shadow);
+        }
+        
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--gray-200);
+        }
+        .page-title { font-size: 1.9rem; color: var(--gray-800); }
+
+        /* ------------------ 按钮与输入框 ------------------ */
+        .btn {
+            padding: 0.75rem 1.4rem;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: var(--transition);
+            white-space: nowrap; 
+        }
+        .btn-primary { background: var(--primary); color: white; }
+        .btn-success { background: var(--success); color: white; }
+        .btn-danger { background: var(--danger); color: white; }
+        .btn-warning { background: var(--warning); color: white; }
+        .btn-info { background: var(--info); color: white; }
+        .btn:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0,0,0,0.15); }
+        .btn:disabled { opacity: 0.6; cursor: not-allowed; }
+
+        .input-group { margin-bottom: 1rem; }
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--gray-800);
+        }
+        .input-control {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid var(--gray-200);
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+        .input-control:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2); }
+        
+        /* ------------------ 统计卡片 ------------------ */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        .stat-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: var(--radius);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            border-left: 5px solid var(--primary);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .stat-icon { font-size: 2.5rem; color: var(--primary); opacity: 0.7; }
+        .stat-info > p { font-size: 0.9rem; color: var(--gray-600); margin-bottom: 0.2rem; }
+        .stat-info > .stat-number { font-size: 1.8rem; font-weight: 700; color: var(--gray-800); }
+
+        /* ------------------ 控制面板与表格 ------------------ */
+        .control-panel {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+        .control-panel > * { flex-grow: 1; min-width: 200px; }
+        .control-row { display: flex; gap: 1rem; margin-bottom: 1rem; }
+        .control-row > * { flex-grow: 1; }
+
+        .product-table { margin-top: 1rem; }
+        .table-header, .table-row {
+            display: grid;
+            grid-template-columns: 0.3fr 2fr 1fr 1fr 1fr 1fr 120px;
+            padding: 0.8rem 0;
+            align-items: center;
+            border-bottom: 1px solid var(--gray-200);
+        }
+        .table-header {
+            font-weight: 600;
+            background-color: var(--gray-100);
+            border-radius: 8px 8px 0 0;
+            padding: 0.8rem 1rem;
+        }
+        .table-row {
+            padding: 1rem;
+            transition: background-color 0.3s;
+        }
+        .table-row:hover { background-color: var(--gray-100); }
+        .table-body { border-radius: 0 0 8px 8px; overflow: hidden; }
+
+        .product-name-cell { display: flex; align-items: center; gap: 10px; }
+        .product-thumb { width: 40px; height: 40px; object-fit: cover; border-radius: 6px; }
+
+        .status-tag {
+            padding: 0.3rem 0.6rem;
+            border-radius: 5px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            text-align: center;
+        }
+        .tag-success { background: #d0f8d0; color: var(--success); } /* 已上架 */
+        .tag-danger { background: #ffe4e6; color: var(--danger); } /* 已售罄/已下架 */
+        .tag-warning { background: #fffde0; color: var(--warning); } /* 库存低 */
+        .tag-info { background: #e0f2ff; color: var(--info); } /* 待审核 */
+
+        /* ------------------ 密码保护 V2 ------------------ */
+        #passwordProtection {
+            position: fixed;
+            inset: 0;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease;
+        }
+        .password-box {
+            background: white;
+            padding: 3rem 2.5rem;
+            border-radius: 20px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+            text-align: center;
+            max-width: 420px;
+            width: 90%;
+            animation: slideDown 0.6s ease;
+        }
+        .password-input {
+            width: 100%;
+            padding: 1rem;
+            margin: 1.5rem 0;
+            border: 2px solid var(--gray-200);
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+        .password-input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+        .password-btn {
+            width: 100%;
+            padding: 1rem;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .password-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+        .lock-icon {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        .error-message {
+            margin-top: 1rem;
+            padding: 0.8rem;
+            background: #fff5f5;
+            color: #c53030;
+            border-radius: 8px;
+            border-left: 4px solid #f56565;
+            display: none;
+            animation: shake 0.5s ease;
+        }
+        /* Loading 状态 */
+        .loading-spinner {
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-top: 4px solid #fff;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            animation: spin 1s linear infinite;
+            margin-right: 10px;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        @keyframes shake {
+            0%,100%{transform:translateX(0)}
+            25%{transform:translateX(-8px)}
+            75%{transform:translateX(8px)}
+        }
+
+        /* ------------------ 模态框 (Modal) ------------------ */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s;
+        }
+        .modal-overlay.open { opacity: 1; visibility: visible; }
+        .modal-content {
+            background: white;
+            padding: 2rem;
+            border-radius: var(--radius);
+            max-width: 600px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            transform: translateY(-50px);
+            transition: transform 0.3s;
+        }
+        .modal-overlay.open .modal-content { transform: translateY(0); }
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--gray-200);
+            padding-bottom: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        .modal-close-btn {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--gray-600);
+        }
+
+        /* ------------------ Toast 通知 ------------------ */
+        #toastContainer {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 2000;
+        }
+        .toast {
+            background: white;
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-left: 5px solid;
+            transform: translateX(100%);
+            opacity: 0;
+            transition: all 0.5s ease;
+        }
+        .toast.show { transform: translateX(0); opacity: 1; }
+        .toast-success { border-color: var(--success); }
+        .toast-danger { border-color: var(--danger); }
+        .toast-info { border-color: var(--info); }
+    
+        /* ------------------ 媒体查询 ------------------ */
+        @media (max-width: 1024px) {
+            .admin-container { grid-template-columns: 1fr; padding: 10px; }
+            .sidebar { display: none; } 
+            .table-header, .table-row {
+                grid-template-columns: 0.3fr 2.5fr 1fr 100px; 
+            }
+            .table-header > div:nth-child(4),
+            .table-header > div:nth-child(5),
+            .table-row > div:nth-child(4),
+            .table-row > div:nth-child(5) { display: none; } /* 隐藏库存和销量 */
+        }
+
+        @media (max-width: 640px) {
+            .stats-grid { grid-template-columns: 1fr; }
+            .page-header { flex-direction: column; align-items: flex-start; gap: 1rem; }
+            .control-panel { flex-direction: column; }
+            .control-row { flex-direction: column; }
+        }
+
+    </style>
+</head>
+<body>
+
+    <div id="passwordProtection">
+        <div class="password-box">
+            <div class="lock-icon"><i class="fas fa-shield-alt"></i></div>
+            <h2>管理后台登录</h2>
+            <p>请输入管理员密码进入 Myx Shop 产品管理系统</p>
+            <input type="password" id="passwordInput" class="password-input" placeholder="建议密码: 123456" autocomplete="off">
+            <button id="authBtn" class="password-btn">
+                <i class="fas fa-sign-in-alt"></i> 进入后台
+            </button>
+            <div id="errorMessage" class="error-message">
+                <i class="fas fa-exclamation-triangle"></i> 登录失败：请检查密码或网络连线
+            </div>
+        </div>
+    </div>
+
+    <div id="mainContent" class="hidden">
+        <div class="admin-container">
+            <div class="sidebar">
+                <div class="admin-nav">
+                    <a href="../index.html" class="nav-item"><i class="fas fa-home"></i> 回到首页</a>
+                    <a href="../shopee.html" class="nav-item"><i class="fas fa-store"></i> 商店前台 (同步)</a> 
+                    <a href="#" class="nav-item active"><i class="fas fa-boxes"></i> 产品管理</a>
+                    <a href="#" class="nav-item"><i class="fas fa-chart-bar"></i> 销售统计</a>
+                    <a href="#" class="nav-item"><i class="fas fa-link"></i> 推广连结</a>
+                    <a href="#" class="nav-item logout-btn"><i class="fas fa-sign-out-alt"></i> 登出</a>
+                </div>
+            </div>
+
+            <div class="main-content">
+                <div class="page-header">
+                    <h1 class="page-title"><i class="fab fa-shopee"></i> Shopee 产品管理</h1>
+                    <button class="btn btn-primary">
+                        <i class="fas fa-plus"></i> 添加新产品
+                    </button>
+                </div>
+
+                <div id="statsGrid" class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-info">
+                            <p>总产品数</p>
+                            <span class="stat-number" id="statTotalProducts">0</span>
+                        </div>
+                        <i class="fas fa-cubes stat-icon"></i>
+                    </div>
+                    <div class="stat-card" style="border-left-color: var(--success);">
+                        <div class="stat-info">
+                            <p>已上架</p>
+                            <span class="stat-number" id="statActiveProducts">0</span>
+                        </div>
+                        <i class="fas fa-check-circle stat-icon" style="color: var(--success);"></i>
+                    </div>
+                    <div class="stat-card" style="border-left-color: var(--danger);">
+                        <div class="stat-info">
+                            <p>库存不足 (<10)</p>
+                            <span class="stat-number" id="statLowStock">0</span>
+                        </div>
+                        <i class="fas fa-exclamation-triangle stat-icon" style="color: var(--danger);"></i>
+                    </div>
+                    <div class="stat-card" style="border-left-color: var(--warning);">
+                        <div class="stat-info">
+                            <p>总销量 (30天)</p>
+                            <span class="stat-number" id="statTotalSales">0</span>
+                        </div>
+                        <i class="fas fa-money-bill-wave stat-icon" style="color: var(--warning);"></i>
+                    </div>
+                </div>
+
+                <div class="control-panel">
+                    <div class="control-row">
+                        <input type="text" id="searchBar" class="input-control" placeholder="🔍 搜索产品名称或 ID...">
+                        <select id="statusFilter" class="input-control">
+                            <option value="all">所有状态</option>
+                            <option value="active">已上架 (有库存)</option>
+                            <option value="inactive">已下架/售罄</option>
+                            <option value="low-stock">库存不足</option>
+                        </select>
+                        <select id="sortOption" class="input-control">
+                            <option value="id-desc">预设排序 (ID 降)</option>
+                            <option value="stock-desc">库存 (高到低)</option>
+                            <option value="price-desc">价格 (高到低)</option>
+                            <option value="sales-desc">销量 (高到低)</option>
+                        </select>
+                    </div>
+                    <div class="control-row">
+                        <button class="btn btn-warning" id="clearAllBtn">
+                            <i class="fas fa-eraser"></i> 清空所有产品 (用于除错/重置)
+                        </button>
+                        <button class="btn btn-danger" id="batchDeleteBtn" disabled>
+                            <i class="fas fa-trash"></i> 批量删除 (未启用)
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="product-table">
+                    <div class="table-header">
+                        <div><input type="checkbox" id="selectAll"></div>
+                        <div>产品名称</div>
+                        <div>价格</div>
+                        <div>库存</div>
+                        <div>销量</div>
+                        <div>状态</div>
+                        <div>操作</div>
+                    </div>
+                    <div id="productTableBody" class="table-body">
+                        <!-- 产品列表将在这里动态生成 -->
+                    </div>
+                </div>
+
+                <p id="noProductsMessage" class="hidden" style="text-align: center; margin-top: 3rem; color: var(--gray-600);">
+                    <i class="fas fa-info-circle"></i> 目前没有符合条件的产品。
+                </p>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- 产品编辑/添加模态框 -->
+    <div id="productModal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalTitle">添加新产品</h3>
+                <button class="modal-close-btn"><i class="fas fa-times"></i></button>
+            </div>
+            <form id="productForm">
+                <input type="hidden" id="productId">
+
+                <div class="input-group">
+                    <label for="productName">产品名称</label>
+                    <input type="text" id="productName" class="input-control" required>
+                </div>
+
+                <div class="input-group">
+                    <label for="productPrice">价格 (RM)</label>
+                    <input type="number" id="productPrice" class="input-control" min="0" step="0.01" required>
+                </div>
+
+                <div class="input-group">
+                    <label for="productStock">库存数量</label>
+                    <input type="number" id="productStock" class="input-control" min="0" required>
+                </div>
+                
+                <div class="input-group">
+                    <label for="productImage">图片 URL 或路径</label>
+                    <!-- 修复：改为 text 类型，允许任何图片路径 -->
+                    <input type="text" id="productImage" class="input-control" 
+                           placeholder="https://example.com/image.jpg 或 images/product.png">
+                    <small style="color: var(--gray-600); margin-top: 5px; display: block;">
+                        提示：可直接使用在线图片URL或相对路径
+                    </small>
+                </div>
+
+                <div class="input-group">
+                    <label for="productStatus">状态</label>
+                    <select id="productStatus" class="input-control">
+                        <option value="active">已上架</option>
+                        <option value="inactive">已下架</option>
+                    </select>
+                </div>
+                
+                <div class="input-group">
+                    <label for="productLink">Shopee 推广连结</label>
+                    <input type="url" id="productLink" class="input-control" placeholder="https://shope.ee/您的连结">
+                </div>
+                
+                 <div class="input-group">
+                    <label for="productCategory">分类 (用于前台筛选)</label>
+                    <select id="productCategory" class="input-control">
+                        <option value="health">保健养生</option>
+                        <option value="home">家居生活</option>
+                        <option value="electronic">电子产品</option>
+                        <option value="book">图书文具</option>
+                    </select>
+                </div>
+
+                <div class="modal-footer" style="margin-top: 2rem; text-align: right;">
+                    <button type="button" class="btn">取消</button>
+                    <button type="submit" class="btn btn-success" id="saveProductBtn">
+                        <i class="fas fa-save"></i> 储存产品
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="toastContainer"></div>
+
+    <script>
+        // ==================== 模块化 JavaScript (已修复图片URL问题) ====================
+        
+        // --- 1. 授权模块 (Auth.js) ---
+        const Auth = (() => {
+            const AUTH_KEY = 'adminAuthenticated';
+            const AUTH_TIME = 'authTime';
+            const MOCK_PASSWORD = "123456"; // 模拟密码
+
+            const setAuthStatus = (status) => {
+                const protection = document.getElementById('passwordProtection');
+                const mainContent = document.getElementById('mainContent');
+                
+                if (status) {
+                    protection.style.opacity = '0';
+                    setTimeout(() => {
+                        protection.classList.add('hidden');
+                        mainContent.classList.remove('hidden');
+                        productManager.init();
+                    }, 500);
+                } else {
+                    mainContent.classList.add('hidden');
+                    protection.classList.remove('hidden');
+                    protection.style.opacity = '1';
+                }
+            };
+
+            const checkSession = () => {
+                const auth = sessionStorage.getItem(AUTH_KEY);
+                const time = sessionStorage.getItem(AUTH_TIME);
+                if (auth === 'true' && time) {
+                    const elapsed = Date.now() - parseInt(time);
+                    const TWO_HOURS = 2 * 60 * 60 * 1000;
+                    if (elapsed < TWO_HOURS) { 
+                        setAuthStatus(true);
+                        return true;
+                    } else {
+                        sessionStorage.clear();
+                    }
+                }
+                setAuthStatus(false);
+                return false;
+            };
+
+            const checkPassword = async () => {
+                const input = document.getElementById('passwordInput').value.trim();
+                const error = document.getElementById('errorMessage');
+                const authBtn = document.getElementById('authBtn');
+                
+                error.style.display = 'none';
+                authBtn.innerHTML = `<span class="loading-spinner"></span> 验证中...`;
+                authBtn.disabled = true;
+
+                // 模拟后端 API 呼叫延迟
+                await new Promise(resolve => setTimeout(resolve, 1000)); 
+
+                if (input === MOCK_PASSWORD) {
+                    sessionStorage.setItem(AUTH_KEY, 'true');
+                    sessionStorage.setItem(AUTH_TIME, Date.now().toString());
+                    Toast.show('success', '登录成功！欢迎使用后台。');
+                    setAuthStatus(true);
+                } else {
+                    error.style.display = 'block';
+                    document.getElementById('passwordInput').value = '';
+                    Toast.show('danger', '密码错误或登录超时。');
+                }
+
+                authBtn.innerHTML = `<i class="fas fa-sign-in-alt"></i> 进入后台`;
+                authBtn.disabled = false;
+            };
+
+            const logout = () => {
+                sessionStorage.clear();
+                setAuthStatus(false);
+                Toast.show('info', '您已安全登出。');
+            };
+
+            return { checkSession, checkPassword, logout };
+        })();
+
+        // --- 2. 产品管理器模块 (ProductManager.js) ---
+        const productManager = (() => {
+            const STORAGE_KEY = 'shopeeProducts_V2';
+            let products = [];
+            let nextProductId = 1;
+
+            // 初始数据：用于 Local Storage 完全为空时填充
+            const mockProducts = [
+                { 
+                    id: 1, 
+                    name: "极速快充 Type-C 线", 
+                    price: 150.00, 
+                    stock: 120, 
+                    sales: 85, 
+                    image: "https://via.placeholder.com/40/667eea/ffffff?text=C", 
+                    status: "active", 
+                    link: "https://shope.ee/link1", 
+                    category: "electronic" 
+                },
+                { 
+                    id: 2, 
+                    name: "降噪无线蓝牙耳机", 
+                    price: 1299.00, 
+                    stock: 5, 
+                    sales: 150, 
+                    image: "https://via.placeholder.com/40/48bb78/ffffff?text=E", 
+                    status: "active", 
+                    link: "https://shope.ee/link2", 
+                    category: "electronic" 
+                },
+                { 
+                    id: 3, 
+                    name: "多功能桌面收纳盒", 
+                    price: 280.50, 
+                    stock: 0, 
+                    sales: 300, 
+                    image: "https://via.placeholder.com/40/f56565/ffffff?text=B", 
+                    status: "inactive", 
+                    link: "https://shope.ee/link3", 
+                    category: "home" 
+                },
+                { 
+                    id: 4, 
+                    name: "高透光防蓝光屏幕贴", 
+                    price: 80.00, 
+                    stock: 95, 
+                    sales: 22, 
+                    image: "https://via.placeholder.com/40/4a5568/ffffff?text=S", 
+                    status: "active", 
+                    link: "https://shope.ee/link4", 
+                    category: "electronic" 
+                },
+            ];
+            
+            const init = () => {
+                loadProducts();
+                setupEventListeners();
+            };
+            
+            const loadProducts = () => {
+                const storedProducts = JSON.parse(localStorage.getItem(STORAGE_KEY));
+                
+                if (storedProducts !== null) { 
+                    products = storedProducts;
+                    if (products.length > 0) {
+                        nextProductId = Math.max(...products.map(p => p.id)) + 1;
+                    } else {
+                        nextProductId = 1; 
+                    }
+                } else {
+                    products = mockProducts;
+                    nextProductId = mockProducts.length + 1;
+                    saveProducts();
+                }
+
+                renderProducts(products);
+                updateStats(products);
+            };
+
+            const saveProducts = () => {
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(products));
+            };
+            
+            const clearAllProducts = () => {
+                if (!confirm('🚨 警告：确定要清空 Local Storage 中所有产品数据吗？此操作不可逆，且会影响前台同步显示！')) return;
+                
+                products = []; 
+                saveProducts();
+                loadProducts();
+                Toast.show('danger', '已清空 Local Storage 中所有产品数据！');
+            };
+
+            const getStatusTag = (product) => {
+                const isSoldOut = product.stock <= 0;
+                const isLowStock = product.stock > 0 && product.stock <= 10;
+
+                if (isSoldOut) {
+                    return { text: '已售罄', class: 'tag-danger' };
+                } else if (product.status === 'inactive') {
+                    return { text: '已下架', class: 'tag-danger' };
+                } else if (isLowStock) {
+                    return { text: '库存低', class: 'tag-warning' };
+                } else if (product.status === 'active') {
+                    return { text: '已上架', class: 'tag-success' };
+                } else {
+                    return { text: '未知', class: 'tag-info' };
+                }
+            };
+            
+            const renderProducts = (productList) => {
+                const body = document.getElementById('productTableBody');
+                body.innerHTML = '';
+                
+                if (productList.length === 0) {
+                    document.getElementById('noProductsMessage').classList.remove('hidden');
+                    return;
+                }
+                document.getElementById('noProductsMessage').classList.add('hidden');
+
+                productList.forEach(product => {
+                    const tag = getStatusTag(product);
+
+                    const row = document.createElement('div');
+                    row.className = 'table-row';
+                    row.dataset.id = product.id;
+                    row.innerHTML = `
+                        <div><input type="checkbox" class="product-checkbox" data-id="${product.id}"></div>
+                        <div class="product-name-cell">
+                            <img src="${product.image}" alt="${product.name}" class="product-thumb" 
+                                onerror="this.src='https://via.placeholder.com/40/cccccc/000000?text=Err'">
+                            <span>${product.name}</span>
+                        </div>
+                        <div>RM${parseFloat(product.price).toFixed(2)}</div>
+                        <div>${product.stock}</div>
+                        <div>${product.sales}</div>
+                        <div><span class="status-tag ${tag.class}">${tag.text}</span></div>
+                        <div>
+                            <button class="btn btn-primary edit-btn" style="padding: 0.5rem 0.8rem;" data-id="${product.id}">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button class="btn btn-danger delete-btn" style="padding: 0.5rem 0.8rem;" data-id="${product.id}">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    `;
+                    body.appendChild(row);
+                });
+                
+                // 添加事件监听器
+                document.querySelectorAll('.edit-btn').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const id = parseInt(e.currentTarget.dataset.id);
+                        openEditModal(id);
+                    });
+                });
+                
+                document.querySelectorAll('.delete-btn').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const id = parseInt(e.currentTarget.dataset.id);
+                        deleteProduct(id);
+                    });
+                });
+            };
+
+            const updateStats = (data) => {
+                document.getElementById('statTotalProducts').textContent = data.length;
+                document.getElementById('statActiveProducts').textContent = data.filter(p => p.status === 'active' && p.stock > 0).length;
+                document.getElementById('statLowStock').textContent = data.filter(p => p.stock > 0 && p.stock <= 10).length;
+                document.getElementById('statTotalSales').textContent = data.reduce((sum, p) => sum + p.sales, 0);
+            };
+            
+            const addProduct = (data) => {
+                const newProduct = {
+                    id: nextProductId++,
+                    sales: 0,
+                    ...data
+                };
+                products.push(newProduct);
+                saveProducts();
+                loadProducts();
+                Toast.show('success', `产品「${newProduct.name}」添加成功！`);
+            };
+
+            const editProduct = (id, data) => {
+                const index = products.findIndex(p => p.id === id);
+                if (index !== -1) {
+                    // 保持原有 ID，只更新其他字段
+                    products[index] = { 
+                        ...products[index], 
+                        ...data 
+                    };
+                    
+                    // 库存状态自动更新
+                    if (products[index].stock <= 0) {
+                        products[index].status = 'inactive';
+                    } else if (products[index].stock > 0 && products[index].status === 'inactive') {
+                        products[index].status = 'active';
+                    }
+
+                    saveProducts();
+                    loadProducts();
+                    Toast.show('success', `产品 ID:${id} 更新成功！`);
+                }
+            };
+
+            const deleteProduct = (id) => {
+                if (!confirm('确认要删除此产品吗？此操作不可逆！')) return;
+                products = products.filter(p => p.id !== id);
+                saveProducts();
+                loadProducts();
+                Toast.show('danger', `产品 ID:${id} 已删除。`);
+            };
+
+            const openEditModal = (id) => {
+                const product = products.find(p => p.id === parseInt(id));
+                
+                if (!product) {
+                    alert('错误：找不到产品 ID: ' + id);
+                    return;
+                }
+                
+                // 设置编辑模式标题和表单数据
+                document.getElementById('modalTitle').textContent = `编辑产品 ID: ${id}`;
+                document.getElementById('productId').value = product.id;
+                document.getElementById('productName').value = product.name;
+                document.getElementById('productPrice').value = product.price;
+                document.getElementById('productStock').value = product.stock;
+                document.getElementById('productImage').value = product.image;
+                document.getElementById('productStatus').value = product.status;
+                document.getElementById('productLink').value = product.link || '';
+                document.getElementById('productCategory').value = product.category || 'electronic';
+                
+                Modal.open('productModal');
+            };
+
+            const openAddModal = () => {
+                document.getElementById('modalTitle').textContent = '添加新产品';
+                document.getElementById('productId').value = '';
+                document.getElementById('productForm').reset();
+                Modal.open('productModal');
+            };
+
+            const handleFormSubmit = (e) => {
+                e.preventDefault();
+                
+                const productData = {
+                    name: document.getElementById('productName').value,
+                    price: parseFloat(document.getElementById('productPrice').value),
+                    stock: parseInt(document.getElementById('productStock').value),
+                    image: document.getElementById('productImage').value,
+                    status: document.getElementById('productStatus').value,
+                    link: document.getElementById('productLink').value,
+                    category: document.getElementById('productCategory').value
+                };
+                
+                const productId = document.getElementById('productId').value;
+                
+                if (productId) {
+                    // 编辑现有产品
+                    editProduct(parseInt(productId), productData);
+                } else {
+                    // 添加新产品
+                    addProduct(productData);
+                }
+                
+                Modal.close('productModal');
+            };
+
+            const setupEventListeners = () => {
+                // 添加产品按钮
+                document.querySelector('.btn-primary').addEventListener('click', openAddModal);
+                
+                // 清空所有产品按钮
+                document.getElementById('clearAllBtn').addEventListener('click', clearAllProducts);
+                
+                // 表单提交
+                document.getElementById('productForm').addEventListener('submit', handleFormSubmit);
+                
+                // 登出按钮
+                document.querySelector('.logout-btn').addEventListener('click', Auth.logout);
+            };
+
+            return { 
+                init, 
+                addProduct, 
+                editProduct, 
+                deleteProduct, 
+                openEditModal,
+                openAddModal,
+                handleFormSubmit, 
+                loadProducts, 
+                clearAllProducts 
+            };
+        })(); // ← productManager 模块结束
+
+        // --- 3. Modal 模块 ---
+        const Modal = (() => {
+            const open = (modalId) => {
+                const modal = document.getElementById(modalId);
+                modal.classList.add('open');
+            };
+
+            const close = (modalId) => {
+                document.getElementById(modalId).classList.remove('open');
+            };
+
+            return { open, close };
+        })();
+
+        // --- 4. Toast 通知模块 (Toast.js) ---
+        const Toast = (() => {
+            const container = document.getElementById('toastContainer');
+            const icons = {
+                success: 'fas fa-check-circle',
+                danger: 'fas fa-times-circle',
+                info: 'fas fa-info-circle'
+            };
+
+            const show = (type, message) => {
+                const toast = document.createElement('div');
+                toast.className = `toast toast-${type}`;
+                toast.innerHTML = `
+                    <i class="${icons[type]} toast-icon"></i>
+                    <span>${message}</span>
+                `;
+                container.appendChild(toast);
+
+                setTimeout(() => toast.classList.add('show'), 10);
+
+                setTimeout(() => {
+                    toast.classList.remove('show');
+                    setTimeout(() => toast.remove(), 500);
+                }, 3000); 
+            };
+
+            return { show };
+        })();
+
+        // --- 5. 全局事件监听 ---
+        document.getElementById('passwordInput').addEventListener('keypress', e => {
+            if (e.key === 'Enter') Auth.checkPassword();
+        });
+
+        document.getElementById('authBtn').addEventListener('click', Auth.checkPassword);
+
+        document.querySelector('.modal-close-btn').addEventListener('click', () => {
+            Modal.close('productModal');
+        });
+
+        document.querySelector('.modal-footer .btn').addEventListener('click', () => {
+            Modal.close('productModal');
+        });
+
+        // 页面加载时检查登录状态
+        window.addEventListener('load', Auth.checkSession);
+    </script>
+</body>
+</html>
