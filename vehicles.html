@@ -98,37 +98,6 @@
         }
         .whatsapp-global:hover { background: #1da851; transform: translateY(-2px); }
 
-        /* 管理员入口样式 */
-        .admin-entry { text-align: center; margin: 40px 0; }
-        .admin-access-btn {
-            display: inline-flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.2); 
-            color: white; padding: 12px 25px; border-radius: 25px; text-decoration: none;
-            border: 1px solid rgba(255,255,255,0.3); transition: all 0.3s ease;
-        }
-        .admin-access-btn:hover { 
-            background: rgba(255,255,255,0.3); 
-            transform: translateY(-2px); 
-            box-shadow: 0 6px 20px rgba(0,0,0,0.2);
-        }
-
-        /* 模态框样式 */
-        .modal {
-            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
-            background: rgba(0,0,0,0.5); z-index: 1000; align-items: center; justify-content: center;
-        }
-        .modal.show { display: flex; }
-        .modal-content {
-            background: white; padding: 30px; border-radius: 15px; max-width: 400px; width: 90%;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
-        }
-        .form-group { margin-bottom: 15px; }
-        .form-group label { display: block; margin-bottom: 5px; font-weight: bold; }
-        .form-group input { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; }
-        .form-actions { display: flex; gap: 10px; justify-content: flex-end; margin-top: 20px; }
-        .modal-btn { padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; }
-        .modal-btn.cancel { background: #6c757d; color: white; }
-        .modal-btn.submit { background: #667eea; color: white; }
-
         @media (max-width: 768px) {
             .header h1 { font-size: 2.2em; }
             .vehicles-grid { grid-template-columns: 1fr; }
@@ -136,6 +105,47 @@
             .filter-btn, .sell-btn { width: 220px; justify-content: center; }
             .card-actions { flex-direction: column; }
         }
+/* Admin Entry */
+.admin-entry {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    z-index: 1000;
+}
+.admin-entry-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(231, 76, 60, 0.8);
+    color: white;
+    padding: 8px 15px;
+    border-radius: 20px;
+    text-decoration: none;
+    font-size: 0.8em;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.2);
+    cursor: pointer;
+    font-family: 'Microsoft JhengHei', sans-serif;
+}
+.admin-entry-btn:hover {
+    background: rgba(192, 57, 43, 0.9);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+/* 屏幕閱讀器專用 */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
     </style>
 </head>
 <body>
@@ -149,7 +159,8 @@
 
         <!-- SEARCH -->
         <div class="search-box">
-            <input type="text" id="searchInput" placeholder="搜索車輛型號、品牌或特點...">
+            <label for="searchInput" class="sr-only">搜索車輛</label>
+            <input type="text" id="searchInput" placeholder="搜索車輛型號、品牌或特點..." aria-label="搜索車輛">
             <i class="fas fa-search"></i>
         </div>
 
@@ -170,14 +181,7 @@
         <!-- VEHICLES GRID -->
         <div class="vehicles-grid" id="vehiclesGrid"></div>
 
-        <!-- 管理员入口 -->
-        <div class="admin-entry">
-            <a href="#" onclick="showAdminLogin()" class="admin-access-btn">
-                <i class="fas fa-lock"></i> 管理員入口
-            </a>
-        </div>
-
-        <!-- FOOTER -->
+                <!-- FOOTER -->
         <div class="footer">
             <p>© 2025 Myx Shop | 專業二手車買賣平台</p>
             <p style="margin-top: 10px; font-size: 0.9em;">
@@ -189,26 +193,9 @@
         </div>
     </div>
 
-    <!-- 管理员登录模态框 -->
-    <div class="modal" id="adminLoginModal">
-        <div class="modal-content">
-            <h3 style="margin-bottom: 20px; text-align: center;">管理員驗證</h3>
-            <form id="adminLoginForm">
-                <div class="form-group">
-                    <label>密碼</label>
-                    <input type="password" id="adminPassword" placeholder="輸入管理員密碼" required>
-                </div>
-                <div class="form-actions">
-                    <button type="button" class="modal-btn cancel" onclick="hideAdminLogin()">取消</button>
-                    <button type="submit" class="modal-btn submit">登入</button>
-                </div>
-            </form>
-        </div>
-    </div>
-
     <script>
-        // 从 localStorage 加载数据或使用默认数据
-        let vehicles = JSON.parse(localStorage.getItem('vehiclesData')) || [
+        // 車輛數據
+        const vehicles = [
             {
                 id: "Daihatsu",
                 model: "Daihatsu Feroza",
@@ -268,6 +255,15 @@
             return encodeURIComponent(`我對您擺放在 Myx Shop 的《${vehicle.model}》有興趣，請提供更多詳情和試車。`);
         }
 
+        // 圖片錯誤處理
+        function handleImageError(img) {
+            img.style.display = 'none';
+            const placeholder = img.nextElementSibling;
+            if (placeholder && placeholder.classList.contains('vehicle-placeholder')) {
+                placeholder.style.display = 'flex';
+            }
+        }
+
         // 渲染車輛列表
         function renderVehicles(list = vehicles) {
             const grid = document.getElementById('vehiclesGrid');
@@ -293,7 +289,7 @@
                 card.innerHTML = `
                     <div class="card-header">
                         <img src="${vehicle.image}" alt="${vehicle.model}" class="vehicle-image"
-                             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                             onerror="handleImageError(this)">
                         <div class="vehicle-placeholder" style="display:none;">車</div>
                         <div class="plate-badge">${vehicle.plate}</div>
                     </div>
@@ -319,15 +315,19 @@
             });
         }
 
-        // 搜索功能
+        // 搜索功能（帶防抖）
+        let searchTimeout;
         function searchVehicles() {
-            const term = document.getElementById('searchInput').value.toLowerCase().trim();
-            const filtered = vehicles.filter(vehicle =>
-                vehicle.model.toLowerCase().includes(term) ||
-                vehicle.description.toLowerCase().includes(term) ||
-                vehicle.features.some(feature => feature.toLowerCase().includes(term))
-            );
-            renderVehicles(filtered);
+            clearTimeout(searchTimeout);
+            searchTimeout = setTimeout(() => {
+                const term = document.getElementById('searchInput').value.toLowerCase().trim();
+                const filtered = vehicles.filter(vehicle =>
+                    vehicle.model.toLowerCase().includes(term) ||
+                    vehicle.description.toLowerCase().includes(term) ||
+                    vehicle.features.some(feature => feature.toLowerCase().includes(term))
+                );
+                renderVehicles(filtered);
+            }, 300);
         }
 
         // 篩選功能
@@ -336,7 +336,13 @@
             if (category === 'available') filtered = vehicles.filter(v => v.status === 'available');
             else if (category === 'suv') filtered = vehicles.filter(v => v.category.includes('suv'));
             else if (category === 'sedan') filtered = vehicles.filter(v => v.category.includes('sedan'));
-            else if (category === 'budget') filtered = vehicles.filter(v => v.category.includes('budget'));
+            else if (category === 'budget') {
+                // 定義經濟實惠為價格低於 20,000
+                filtered = vehicles.filter(v => {
+                    const price = parseInt(v.price.replace(/[^\d]/g, ''));
+                    return price < 20000;
+                });
+            }
             renderVehicles(filtered);
             document.getElementById('searchInput').value = '';
         }
@@ -346,14 +352,28 @@
             if (link && link !== '#') window.location.href = link;
         }
 
-        // 管理员登录功能
-        function showAdminLogin() {
-            document.getElementById('adminLoginModal').classList.add('show');
+        // 管理員訪問檢查
+        function checkAdminAccess() {
+            const password = prompt('請輸入管理員密碼:');
+            // 請更改這個密碼為您想要的密碼
+            if (password === 'admin123') {
+                window.location.href = 'data/admin_vehicles.html';
+            } else if (password !== null) {
+                alert('密碼錯誤！');
+            }
         }
 
-        function hideAdminLogin() {
-            document.getElementById('adminLoginModal').classList.remove('show');
-            document.getElementById('adminPassword').value = '';
+        // 添加管理員入口到頁面
+        function addAdminEntry() {
+            const adminBtn = document.createElement('div');
+            adminBtn.className = 'admin-entry';
+            adminBtn.innerHTML = `
+                <a href="javascript:void(0)" onclick="checkAdminAccess()" class="admin-entry-btn">
+                    <i class="fas fa-user-shield"></i>
+                    <span>管理員</span>
+                </a>
+            `;
+            document.body.appendChild(adminBtn);
         }
 
         // 初始化
@@ -375,27 +395,9 @@
                     filterVehicles(this.dataset.category);
                 });
             });
-
-            // 管理员登录表单提交
-            document.getElementById('adminLoginForm').addEventListener('submit', function(e) {
-                e.preventDefault();
-                const password = document.getElementById('adminPassword').value;
-                
-                // 简单密码验证 - 您可以根据需要修改密码
-                if (password === '1497198') { // 默认密码，建议修改
-                    window.location.href = 'admin.html';
-                } else {
-                    alert('密碼錯誤！');
-                    document.getElementById('adminPassword').value = '';
-                }
-            });
-
-            // 点击模态框外部关闭
-            document.getElementById('adminLoginModal').addEventListener('click', function(e) {
-                if (e.target === this) {
-                    hideAdminLogin();
-                }
-            });
+            
+            // 添加管理員入口
+            addAdminEntry();
         });
     </script>
 </body>

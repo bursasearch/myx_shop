@@ -8,3 +8,12 @@ security-check.sh
 Thumbs.db
 *.log
 .env
+# AI核心算法和數據 - 商業機密
+ai_stock_picker.py
+bursa_ai_stock_picker.py
+bursa_ai_選股.py
+ai_stock_seleector.py
+ai_stocks.json
+ai_stocks_last_week.json
+app.py
+requirements.txt
