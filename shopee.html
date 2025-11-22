@@ -620,5 +620,54 @@ return `
         }
     });
 </script>
+<script>
+    // Initialize with your actual product data
+    document.addEventListener('DOMContentLoaded', function() {
+        // Check if products already exist in localStorage
+        const existingProducts = localStorage.getItem('shopeeProducts_V2');
+        
+        if (!existingProducts) {
+            // Add your actual product data
+            const actualProducts = [
+                {
+                    id: 1,
+                    name: "白花蛇舌草 Hedyotis diffusa (100G)",
+                    price: 5.50,
+                    image: "images/products/1000055447.jpg", // or your actual image path
+                    category: "health",
+                    commission: "5%",
+                    sold: "89 sold",
+                    link: "https://shope.ee/your-actual-link-1",
+                    rating: "★★★★★",
+                    status: "active",
+                    stock: 50,
+                    sales: 89
+                },
+                {
+                    id: 2,
+                    name: "優質普洱茶餅 357g 陳年熟茶",
+                    price: 45.00,
+                    image: "images/products/1000055448.jpg", // or your actual image path
+                    category: "health", 
+                    commission: "3%",
+                    sold: "156 sold",
+                    link: "https://shope.ee/your-actual-link-2",
+                    rating: "★★★★☆",
+                    status: "active",
+                    stock: 25,
+                    sales: 156
+                }
+                // Add more products as needed
+            ];
+            
+            localStorage.setItem('shopeeProducts_V2', JSON.stringify(actualProducts));
+            console.log('Product data initialized in localStorage');
+        }
+        
+        // Then load the products
+        loadProductsFromLocalStorage();
+        setupCategoryFilters();
+    });
+</script>
 </body>
 </html>
