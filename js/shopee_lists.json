@@ -1,0 +1,39 @@
+{
+  "lastUpdated": "2025-11-22T22:56:33.558Z",
+  "totalProducts": 3,
+  "products": [
+    {
+      "id": 3,
+      "sales": 0,
+      "name": "红糖/黄糖/黑糖 - 250 gm",
+      "price": 2.5,
+      "stock": 99999,
+      "image": "images//products/shopee/sh-61_1112.png",
+      "status": "active",
+      "link": "https://s.shopee.com.my/60JwZnRk6G",
+      "category": "health"
+    },
+    {
+      "id": 4,
+      "sales": 0,
+      "name": "白花蛇舌草 -100 gm",
+      "price": 5.5,
+      "stock": 99999,
+      "image": "sh-61_1111.png",
+      "status": "active",
+      "link": "https://s.shopee.com.my/6pt3uich6K",
+      "category": "health"
+    },
+    {
+      "id": 5,
+      "sales": 0,
+      "name": "半枝蓮 - 100 gm",
+      "price": 5.5,
+      "stock": 99999,
+      "image": "images/products/shopee/sh-61_1113.png",
+      "status": "active",
+      "link": "https://s.shopee.com.my/7KpKVl2HPk",
+      "category": "health"
+    }
+  ]
+}
