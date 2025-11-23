@@ -17,5 +17,10 @@ ai_stocks.json
 ai_stocks_last_week.json
 app.py
 requirements.txt
-/data/
-/data/
+# Ignore admin dashboards
+data/
+# Ignore admin dashboards
+admin/
+admin/
+api.py
+images/products/shopee/
