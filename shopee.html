@@ -460,7 +460,7 @@
             }
             
             // 使用相对于服务器根目录的路径
-            return '/images/products/shopee/' + imagePath;
+            return 'images/products/shopee/' + imagePath;
         }
 
         // ==================== 分类标签映射 ====================
@@ -483,7 +483,7 @@
                     console.log('开始加载产品数据...');
                     
                     // 使用正确的JSON文件路径
-                    const response = await fetch('/js/shopee_lists.json');
+                    const response = await fetch('js/shopee_lists.json');
                     
                     if (!response.ok) {
                         throw new Error(`HTTP错误! 状态: ${response.status}`);
@@ -657,8 +657,8 @@
                         <div style="margin-top: 1rem; text-align: left; background: rgba(255,255,255,0.1); padding: 1rem; border-radius: 8px;">
                             <p style="margin-bottom: 0.5rem;"><strong>解决方案:</strong></p>
                             <ol style="text-align: left; padding-left: 1.5rem;">
-                                <li>检查 JSON 文件路径: <code>/js/shopee_lists.json</code></li>
-                                <li>确认图片文件夹: <code>/images/products/shopee/</code></li>
+                                <li>检查 JSON 文件路径: <code>js/shopee_lists.json</code></li>
+                                <li>确认图片文件夹: <code>images/products/shopee/</code></li>
                                 <li>检查文件权限和格式</li>
                                 <li>查看浏览器控制台错误信息</li>
                             </ol>
