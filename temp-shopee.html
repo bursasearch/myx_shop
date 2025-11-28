@@ -21,7 +21,6 @@
             --gray-800: #2d3748;
             --radius: 12px;
             --shadow: 0 5px 15px rgba(0,0,0,0.1);
-            --transition: all 0.3s ease;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -80,7 +79,6 @@
             border-radius: 8px;
             background: white;
             font-size: 0.9rem;
-            cursor: pointer;
         }
 
         .search-box {
@@ -105,14 +103,13 @@
             border-radius: var(--radius);
             overflow: hidden;
             box-shadow: var(--shadow);
-            transition: var(--transition);
+            transition: transform 0.3s ease;
             display: flex;
             flex-direction: column;
         }
 
         .product-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
         }
 
         .product-image {
@@ -120,11 +117,6 @@
             height: 200px;
             object-fit: cover;
             background: var(--gray-100);
-            transition: var(--transition);
-        }
-
-        .product-card:hover .product-image {
-            transform: scale(1.05);
         }
 
         .product-info {
@@ -183,21 +175,17 @@
             text-decoration: none;
             border-radius: 8px;
             font-weight: 600;
-            transition: var(--transition);
+            transition: background 0.3s;
             margin-top: auto;
-            border: none;
-            cursor: pointer;
         }
 
         .buy-btn:hover {
             background: var(--primary-dark);
-            transform: translateY(-2px);
         }
 
         .buy-btn:disabled {
             background: var(--gray-600);
             cursor: not-allowed;
-            transform: none;
         }
 
         /* 空状态 */
@@ -262,7 +250,6 @@
         .admin-link:hover {
             background: var(--primary);
             color: white;
-            transform: translateY(-2px);
         }
 
         /* 产品统计 */
@@ -349,43 +336,13 @@
         .category-home { background: #fffaf0; color: #744210; }
         .category-electronic { background: #ebf8ff; color: #1a365d; }
         .category-book { background: #faf5ff; color: #44337a; }
-
-        /* 状态标签 */
-        .status-badge {
-            display: inline-block;
-            padding: 0.2rem 0.6rem;
-            border-radius: 12px;
-            font-size: 0.7rem;
-            font-weight: 500;
-            margin-left: 0.5rem;
-        }
-
-        .status-active { background: #e6fffa; color: #234e52; }
-        .status-inactive { background: #fed7d7; color: #c53030; }
-
-        /* 刷新按钮 */
-        .refresh-btn {
-            background: var(--success);
-            color: white;
-            border: none;
-            padding: 0.5rem 1rem;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: var(--transition);
-        }
-
-        .refresh-btn:hover {
-            background: #38a169;
-            transform: translateY(-2px);
-        }
     </style>
 </head>
 <body>
     <!-- 管理后台链接 -->
-<a href="http://127.0.0.1:5000/admin/shopee_dashboard.html" class="admin-link">
-    <i class="fas fa-cog"></i> 管理后台
-</a>
+    <a href="/admin/shopee_dashboard.html" class="admin-link">
+        <i class="fas fa-cog"></i> 管理后台
+    </a>
 
     <div class="container">
         <div class="header">
@@ -407,9 +364,6 @@
                 <i class="fas fa-sync-alt"></i>
                 <span>最后更新: <span class="stat-number" id="lastUpdated">-</span></span>
             </div>
-            <button class="refresh-btn" onclick="ProductStore.loadProducts()">
-                <i class="fas fa-redo"></i> 刷新数据
-            </button>
         </div>
 
         <!-- 筛选器 -->
@@ -459,8 +413,8 @@
                 return imagePath;
             }
             
-            // 使用相对于服务器根目录的路径
-            return '/images/products/shopee/' + imagePath;
+            // 使用正确的图片路径：images/products/shopee/
+            return 'images/products/shopee/' + imagePath;
         }
 
         // ==================== 分类标签映射 ====================
@@ -482,8 +436,8 @@
                 try {
                     console.log('开始加载产品数据...');
                     
-                    // 使用正确的JSON文件路径
-                    const response = await fetch('/js/shopee_lists.json');
+                    // 使用您指定的路径
+                    const response = await fetch('js/shopee_lists.json');
                     
                     if (!response.ok) {
                         throw new Error(`HTTP错误! 状态: ${response.status}`);
@@ -500,14 +454,13 @@
                         console.log(`✅ 成功加载 ${this.products.length} 个产品`);
                         this.updateStats();
                         this.renderProducts();
-                        this.showToast('✅ 数据加载成功', 'success');
                     } else {
                         throw new Error('JSON文件格式不正确');
                     }
                     
                 } catch (error) {
                     console.error('❌ 加载产品数据失败:', error);
-                    this.showError('加载产品数据失败: ' + error.message);
+                    this.showError('加载产品数据失败，请检查JSON文件是否存在');
                 }
             },
             
@@ -532,11 +485,6 @@
                 const sortBy = document.getElementById('sortFilter').value;
                 
                 let filtered = this.products.filter(product => {
-                    // 状态筛选（如果有status字段）
-                    if (product.status === 'inactive') {
-                        return false;
-                    }
-                    
                     // 分类筛选
                     if (category !== 'all' && product.category !== category) {
                         return false;
@@ -581,7 +529,7 @@
                             <p>没有找到符合条件的产品，请尝试其他筛选条件</p>
                             <p style="margin-top: 1rem; font-size: 0.9rem;">
                                 <i class="fas fa-info-circle"></i> 
-                                请确保 JSON 文件存在且格式正确
+                                请确保已从管理后台导出 JSON 文件并放置在 js/ 文件夹中
                             </p>
                         </div>
                     `;
@@ -602,28 +550,21 @@
                                  class="product-image"
                                  onerror="this.src='https://via.placeholder.com/300x200/cccccc/000000?text=图片加载失败'">
                             <div class="product-info">
-                                <div style="display: flex; justify-content: space-between; align-items: flex-start;">
-                                    <span class="category-tag ${categoryInfo.class}">${categoryInfo.name}</span>
-                                    ${product.status ? 
-                                        `<span class="status-badge ${product.status === 'active' ? 'status-active' : 'status-inactive'}">
-                                            ${product.status === 'active' ? '上架' : '下架'}
-                                        </span>` : ''
-                                    }
-                                </div>
+                                <span class="category-tag ${categoryInfo.class}">${categoryInfo.name}</span>
                                 <h3 class="product-name">${product.name}</h3>
                                 <div class="product-price">RM ${parseFloat(product.price).toFixed(2)}</div>
                                 <div class="product-meta">
                                     <span class="stock ${stockStatus.class}">
                                         <i class="fas ${stockStatus.icon}"></i> ${stockStatus.text}
                                     </span>
-                                    <span>销量: ${product.sales || 0}</span>
+                                    <span>销量: ${product.sales}</span>
                                 </div>
-                                ${product.stock > 0 && product.status !== 'inactive' ? 
-                                    `<a href="${product.link || '#'}" class="buy-btn" target="_blank" rel="noopener">
+                                ${product.stock > 0 ? 
+                                    `<a href="${product.link || '#'}" class="buy-btn" target="_blank">
                                         <i class="fas fa-shopping-cart"></i> 立即购买
                                     </a>` :
                                     `<button class="buy-btn" disabled>
-                                        <i class="fas fa-times-circle"></i> ${product.status === 'inactive' ? '已下架' : '已售罄'}
+                                        <i class="fas fa-times-circle"></i> 已售罄
                                     </button>`
                                 }
                             </div>
@@ -657,15 +598,13 @@
                         <div style="margin-top: 1rem; text-align: left; background: rgba(255,255,255,0.1); padding: 1rem; border-radius: 8px;">
                             <p style="margin-bottom: 0.5rem;"><strong>解决方案:</strong></p>
                             <ol style="text-align: left; padding-left: 1.5rem;">
-                                <li>检查 JSON 文件路径: <code>/js/shopee_lists.json</code></li>
-                                <li>确认图片文件夹: <code>/images/products/shopee/</code></li>
-                                <li>检查文件权限和格式</li>
-                                <li>查看浏览器控制台错误信息</li>
+                                <li>打开 <strong>shopee_lists.html</strong> 管理后台</li>
+                                <li>添加或编辑产品数据</li>
+                                <li>点击 <strong>"导出到 JSON 文件"</strong> 按钮</li>
+                                <li>将下载的 <strong>shopee_lists.json</strong> 文件放到 <strong>js/</strong> 文件夹中</li>
+                                <li>刷新本页面</li>
                             </ol>
                         </div>
-                        <button class="refresh-btn" onclick="ProductStore.loadProducts()" style="margin-top: 1rem;">
-                            <i class="fas fa-redo"></i> 重试加载
-                        </button>
                     </div>
                 `;
             },
@@ -695,20 +634,11 @@
                         this.showToast('🔄 数据已刷新', 'info');
                     }
                 });
-
-                console.log('✅ Myx Shop 初始化完成');
             },
 
             // 显示Toast通知
             showToast(message, type = 'info') {
-                // 移除现有的toast
-                const existingToast = document.querySelector('.custom-toast');
-                if (existingToast) {
-                    existingToast.remove();
-                }
-
                 const toast = document.createElement('div');
-                toast.className = 'custom-toast';
                 toast.style.cssText = `
                     position: fixed;
                     top: 20px;
@@ -721,7 +651,6 @@
                     z-index: 1000;
                     transition: transform 0.3s ease;
                     border-left: 4px solid ${type === 'info' ? 'var(--primary)' : type === 'success' ? 'var(--success)' : 'var(--danger)'};
-                    font-weight: 600;
                 `;
                 toast.innerHTML = `
                     <i class="fas ${type === 'info' ? 'fa-info-circle' : type === 'success' ? 'fa-check-circle' : 'fa-exclamation-triangle'}"></i>
@@ -753,10 +682,16 @@
             });
         });
 
-        // 错误处理
-        window.addEventListener('error', function(e) {
-            console.error('全局错误:', e.error);
-        });
+        // 添加简单的服务工作者缓存（可选）
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register('/sw.js').then(function(registration) {
+                    console.log('ServiceWorker 注册成功: ', registration.scope);
+                }, function(err) {
+                    console.log('ServiceWorker 注册失败: ', err);
+                });
+            });
+        }
     </script>
 </body>
 </html>

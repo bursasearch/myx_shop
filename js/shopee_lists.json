@@ -1,50 +1,68 @@
 {
-  "lastUpdated": "2025-11-23T17:59:21.080070",
-  "totalProducts": 4,
   "products": [
     {
-      "id": 2,
-      "sales": 0,
-      "name": "红糖/黄糖/黑糖 - 250 gm",
-      "price": 2.5,
-      "stock": 99999,
-      "image": "sh-61_1112.png",
-      "status": "inactive",
-      "link": "https://s.shopee.com.my/60JwZnRk6G",
-      "category": "health"
-    },
-    {
+      "category": "health",
       "id": 1,
-      "sales": 0,
+      "image": "sh-61_1111.png",
+      "link": "https://s.shopee.com.my/6pt3uich6K",
       "name": "白花蛇舌草 -100 gm",
       "price": 5.5,
-      "stock": 99999,
-      "image": "sh-61_1111.png",
-      "status": "active",
-      "link": "https://s.shopee.com.my/6pt3uich6K",
-      "category": "health"
+      "sales": 0,
+      "stock": 99999
     },
     {
-      "id": 3,
+      "category": "health",
+      "id": 2,
+      "image": "sh-61_1112.png",
+      "link": "https://s.shopee.com.my/60JwZnRk6G",
+      "name": "红糖/黄糖/黑糖 - 250 gm",
+      "price": 2.5,
       "sales": 0,
+      "stock": 99996
+    },
+    {
+      "category": "health",
+      "id": 3,
+      "image": "sh-61_1113.png",
+      "link": "https://s.shopee.com.my/7KpKVl2HPk",
       "name": "半枝蓮 - 100 gm",
       "price": 5.5,
-      "stock": 99999,
-      "image": "sh-61_1113.png",
-      "status": "active",
-      "link": "https://s.shopee.com.my/7KpKVl2HPk",
-      "category": "health"
+      "sales": 0,
+      "stock": 99995
     },
     {
+      "category": "home",
       "id": 4,
-      "sales": 0,
+      "image": "sh-51_1111.jpg",
+      "link": "https://s.shopee.com.my/50RSHc60hM",
       "name": "藍牙耳机 - Bluetooth Earphone with LED Touch Control",
       "price": 6.99,
-      "stock": 99999,
-      "image": "sh-4_2111.jpg",
+      "sales": 0,
+      "stock": 99994
+    },
+    {
+      "category": "home",
+      "id": 5,
+      "image": "sh-11_1111.jpg",
+      "link": "https://s.shopee.com.my/6pt6RqNW9g?share_channel_code=1",
+      "name": "Dayoni 韩国女式文字图案宽松休闲长袖毛衣",
+      "price": 15,
+      "sales": 0,
       "status": "active",
-      "link": "https://s.shopee.com.my/50RSHc60hM",
-      "category": "electronic"
+      "stock": 99993
+    },
+    {
+      "category": "book",
+      "id": 6,
+      "image": "sh-41_1111.jpg",
+      "link": "https://s.shopee.com.my/6KwptJRN1z",
+      "name": "CaPybaRa 儿童背包大容量书包",
+      "price": 18.9,
+      "sales": 0,
+      "status": "active",
+      "stock": 9992
     }
-  ]
+  ],
+  "totalProducts": 6,
+  "lastUpdated": "2025-11-28T16:20:21.960138"
 }
