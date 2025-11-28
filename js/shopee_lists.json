@@ -50,8 +50,19 @@
       "sales": 0,
       "status": "active",
       "stock": 9995
+    },
+    {
+      "category": "home",
+      "id": 6,
+      "image": "sh-31_1111.jpg",
+      "link": "https://s.shopee.com.my/5VNrZgmDt3",
+      "name": "电飯煲 1.8L Rice Cooker",
+      "price": 20.69,
+      "sales": 0,
+      "status": "active",
+      "stock": 9994
     }
   ],
-  "totalProducts": 5,
-  "lastUpdated": "2025-11-28T18:48:04.578212"
+  "totalProducts": 6,
+  "lastUpdated": "2025-11-28T20:30:05.862578"
 }
