@@ -88,6 +88,41 @@
             font-size: 3em;
             margin-bottom: 20px;
         }
+        
+        /* 新增：Shopee 引导区块样式 */
+        .shopee-redirect {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+            color: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin-top: 30px;
+            border-left: 5px solid #ff9ff3;
+        }
+        .shopee-redirect h3 {
+            font-size: 1.4em;
+            margin-bottom: 10px;
+        }
+        .shopee-redirect p {
+            font-size: 1em;
+            margin-bottom: 15px;
+            opacity: 0.9;
+        }
+        .shopee-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: white;
+            color: #ee5a24;
+            padding: 12px 25px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 700;
+            transition: all 0.3s ease;
+        }
+        .shopee-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(238, 90, 36, 0.3);
+        }
     </style>
 </head>
 <body>
@@ -110,6 +145,16 @@
         </div>
         
         <a href="#" class="more-products">更多商品</a>
+        
+        <!-- 新增：Shopee 引导区块 -->
+        <div class="shopee-redirect">
+            <h3>🚀 不想等待？</h3>
+            <p>我們精心準備的 Shopee 商店已經全面上線，海量精選好物等您來發現！</p>
+            <a href="https://bursasearch.github.io/myx_shop/shopee.html" class="shopee-button">
+                前往 Shopee 
+                <span style="font-size: 1.2em;">👉</span>
+            </a>
+        </div>
     </div>
 
     <script>
