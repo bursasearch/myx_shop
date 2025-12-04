@@ -24,3 +24,23 @@ admin/
 admin/
 api.py
 # js/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+.venv
+.env
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+*.log
+ai_stocks_last_week.json
+*.backup
+*.bak
+EOF

@@ -1,0 +1,730 @@
+from flask import Flask, jsonify, request, send_from_directory
+from flask_cors import CORS
+import subprocess
+import os
+import json
+from datetime import datetime, timedelta
+import shutil
+import requests
+import csv
+import io
+
+app = Flask(__name__)
+CORS(app, resources={r"/*": {"origins": "*"}})
+
+# ==================== 静态文件服务配置 ====================
+@app.route('/')
+def serve_index():
+    """服务主页面"""
+    try:
+        return send_from_directory('.', 'index.html')
+    except FileNotFoundError:
+        return "主页未找到", 404
+
+@app.route('/<path:filename>')
+def serve_static_files(filename):
+    """服务所有静态文件"""
+    try:
+        return send_from_directory('.', filename)
+    except FileNotFoundError:
+        return f"文件未找到: {filename}", 404
+
+# 专门为 admin 文件夹提供服务
+@app.route('/admin/<path:filename>')
+def serve_admin_files(filename):
+    """服务 admin 文件夹中的文件"""
+    try:
+        return send_from_directory('admin', filename)
+    except FileNotFoundError:
+        return f"管理文件未找到: {filename}", 404
+
+@app.route('/images/<path:filename>')
+def serve_images(filename):
+    """服务图片文件"""
+    try:
+        return send_from_directory('images', filename)
+    except FileNotFoundError:
+        return f"图片未找到: {filename}", 404
+
+@app.route('/js/<path:filename>')
+def serve_js(filename):
+    """服务JS文件"""
+    try:
+        return send_from_directory('js', filename)
+    except FileNotFoundError:
+        return f"JS文件未找到: {filename}", 404
+
+# 专门为Shopee产品图片提供服务
+@app.route('/images/products/shopee/<path:filename>')
+def serve_shopee_images(filename):
+    """服务Shopee产品图片"""
+    try:
+        return send_from_directory('images/products/shopee', filename)
+    except FileNotFoundError:
+        return f"产品图片未找到: {filename}", 404
+
+# ==================== Shopee产品数据API ====================
+@app.route('/api/shopee/products')
+def get_shopee_products():
+    """获取Shopee产品数据"""
+    try:
+        with open('js/shopee_lists.json', 'r', encoding='utf-8') as f:
+            data = json.load(f)
+        
+        # 添加服务器信息
+        data['server_info'] = {
+            'host': request.host,
+            'timestamp': datetime.now().isoformat(),
+            'version': '1.0.0'
+        }
+        
+        return jsonify(data)
+    except FileNotFoundError:
+        return jsonify({
+            'error': '产品数据文件未找到',
+            'message': '请确保js/shopee_lists.json文件存在'
+        }), 404
+    except Exception as e:
+        return jsonify({
+            'error': '读取产品数据失败',
+            'message': str(e)
+        }), 500
+
+@app.route('/api/shopee/update', methods=['POST'])
+def update_shopee_products():
+    """更新Shopee产品数据（从管理后台）"""
+    try:
+        data = request.json
+        
+        # 验证数据
+        if not data or 'products' not in data:
+            return jsonify({'error': '无效的数据格式'}), 400
+        
+        # 添加更新时间
+        data['lastUpdated'] = datetime.now().isoformat()
+        
+        # 保存到文件
+        with open('js/shopee_lists.json', 'w', encoding='utf-8') as f:
+            json.dump(data, f, ensure_ascii=False, indent=2)
+        
+        return jsonify({
+            'success': True,
+            'message': f'成功更新 {len(data["products"])} 个产品',
+            'lastUpdated': data['lastUpdated']
+        })
+        
+    except Exception as e:
+        return jsonify({
+            'success': False,
+            'error': str(e)
+        }), 500
+
+# ==================== 股票相关API ====================
+
+def get_stock_data_yahoo(symbol, start_date, end_date=None):
+    """直接从Yahoo Finance获取股票数据"""
+    import requests
+    import csv
+    import io
+    from datetime import datetime
+    
+    if end_date is None:
+        end_date = datetime.now().strftime("%Y-%m-%d")
+    
+    print(f"获取股票数据: {symbol}, {start_date} 至 {end_date}")
+    
+    # 转换日期格式
+    try:
+        start_dt = datetime.strptime(start_date, "%Y-%m-%d")
+        end_dt = datetime.strptime(end_date, "%Y-%m-%d")
+        
+        if end_dt > datetime.now():
+            end_dt = datetime.now()
+            end_date = end_dt.strftime("%Y-%m-%d")
+            
+        if start_dt > end_dt:
+            start_dt, end_dt = end_dt, start_dt
+            start_date, end_date = end_date, start_date
+    
+    except Exception as e:
+        print(f"日期格式错误: {e}")
+        return None
+    
+    # 马来西亚股票代码映射
+    malaysia_map = {
+        "1155": "MAYBANK.KL",
+        "1295": "PBBANK.KL", 
+        "6012": "TENAGA.KL",
+        "5183": "PCHEM.KL",
+        "1066": "RHBANK.KL",
+        "1023": "CIMB.KL",
+        "3034": "GENM.KL",
+        "4715": "GENTING.KL"
+    }
+    
+    # 尝试不同的符号格式
+    symbols_to_try = []
+    original_symbol = symbol
+    
+    # 1. 如果已经有.KL后缀
+    if symbol.endswith('.KL'):
+        symbols_to_try.append(symbol)
+    
+    # 2. 从映射表获取
+    code = symbol.replace('.KL', '')
+    if code in malaysia_map:
+        symbols_to_try.append(malaysia_map[code])
+    
+    # 3. 尝试添加.KL
+    symbols_to_try.append(f"{code}.KL")
+    
+    # 4. 尝试原始代码
+    symbols_to_try.append(code)
+    
+    print(f"尝试的股票符号: {symbols_to_try}")
+    
+    for yf_symbol in symbols_to_try:
+        try:
+            # 方法1：使用 yfinance（如果已安装）
+            try:
+                import yfinance as yf
+                print(f"使用 yfinance 尝试: {yf_symbol}")
+                ticker = yf.Ticker(yf_symbol)
+                df = ticker.history(start=start_date, end=end_date)
+                
+                if not df.empty:
+                    prices = []
+                    for date, row in df.iterrows():
+                        prices.append({
+                            "date": date.strftime("%Y-%m-%d"),
+                            "price": float(row["Close"])
+                        })
+                    print(f"yfinance 成功获取 {len(prices)} 个数据点")
+                    return prices
+            except Exception as e:
+                print(f"yfinance 失败: {e}")
+            
+            # 方法2：使用 Yahoo Finance CSV API
+            try:
+                start_ts = int(start_dt.timestamp())
+                end_ts = int(end_dt.timestamp())
+                
+                url = f"https://query1.finance.yahoo.com/v7/finance/download/{yf_symbol}?period1={start_ts}&period2={end_ts}&interval=1d&events=history&includeAdjustedClose=true"
+                
+                print(f"尝试URL: {url}")
+                
+                headers = {
+                    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
+                }
+                
+                response = requests.get(url, headers=headers, timeout=30)
+                
+                if response.status_code == 200 and "Date" in response.text:
+                    csv_data = response.text
+                    reader = csv.DictReader(io.StringIO(csv_data))
+                    
+                    prices = []
+                    for row in reader:
+                        if row.get("Adj Close") and row["Adj Close"] != "null":
+                            try:
+                                price = float(row["Adj Close"])
+                                if price > 0:
+                                    prices.append({
+                                        "date": row["Date"],
+                                        "price": price
+                                    })
+                            except:
+                                continue
+                    
+                    if prices:
+                        print(f"Yahoo CSV API 成功获取 {len(prices)} 个数据点")
+                        return prices
+                    
+            except Exception as e:
+                print(f"Yahoo CSV API 失败: {e}")
+            
+            # 方法3：使用 chart API
+            try:
+                url = f"https://query1.finance.yahoo.com/v8/finance/chart/{yf_symbol}?period1={start_ts}&period2={end_ts}&interval=1d"
+                
+                response = requests.get(url, headers=headers, timeout=30)
+                
+                if response.status_code == 200:
+                    data = response.json()
+                    
+                    if "chart" in data and "result" in data["chart"]:
+                        result = data["chart"]["result"][0]
+                        timestamps = result.get("timestamp", [])
+                        quotes = result.get("indicators", {}).get("quote", [{}])[0]
+                        closes = quotes.get("close", [])
+                        
+                        prices = []
+                        for i, timestamp in enumerate(timestamps):
+                            if i < len(closes) and closes[i] is not None:
+                                date_str = datetime.fromtimestamp(timestamp).strftime("%Y-%m-%d")
+                                prices.append({
+                                    "date": date_str,
+                                    "price": closes[i]
+                                })
+                        
+                        if prices:
+                            print(f"Yahoo Chart API 成功获取 {len(prices)} 个数据点")
+                            return prices
+                            
+            except Exception as e:
+                print(f"Yahoo Chart API 失败: {e}")
+                
+        except Exception as e:
+            print(f"尝试 {yf_symbol} 时失败: {e}")
+            continue
+    
+    print(f"所有方法都失败，无法获取 {original_symbol} 的数据")
+    return None
+
+
+# ==================== 单股票回测API ====================
+@app.route('/single-stock-backtest', methods=['POST'])
+def single_stock_backtest():
+    """单股票回测 - 对应零售投资者工具"""
+    try:
+        data = request.json
+        
+        # 验证必需参数
+        required_fields = ['stock_code', 'start_date', 'end_date', 'initial_investment']
+        for field in required_fields:
+            if field not in data:
+                print(f"缺少参数: {field}")
+                print(f"接收到的数据: {data}")
+                return jsonify({
+                    'success': False, 
+                    'error': f'缺少必要参数: {field}'
+                }), 400
+        
+        # 获取并清理参数
+        stock_code = data['stock_code'].strip()
+        start_date = data['start_date']
+        end_date = data['end_date']
+        
+        try:
+            initial_investment = float(data['initial_investment'])
+            if initial_investment < 1000:
+                return jsonify({
+                    'success': False,
+                    'error': '初始投资金额至少需要 RM 1000'
+                }), 400
+        except ValueError:
+            return jsonify({
+                'success': False,
+                'error': '初始投资金额必须是有效的数字'
+            }), 400
+        
+        print(f"单股票回测请求: {stock_code}, {start_date} 至 {end_date}, RM {initial_investment}")
+        
+        # 转换为Yahoo Finance格式（马来西亚股票）
+        if not stock_code.endswith('.KL'):
+            yf_symbol = stock_code + '.KL'
+        else:
+            yf_symbol = stock_code
+        
+        # 获取股票数据
+        print(f"获取数据: {yf_symbol}")
+        prices = get_stock_data_yahoo(yf_symbol, start_date, end_date)
+        
+        if not prices:
+            return jsonify({
+                'success': False,
+                'error': f'无法获取股票 {stock_code} 的数据，请检查股票代码是否正确'
+            })
+        
+        if len(prices) < 2:
+            return jsonify({
+                'success': False,
+                'error': f'股票 {stock_code} 数据不足，无法进行回测'
+            })
+        
+        print(f"获取到 {len(prices)} 个价格数据点")
+        
+        # 计算回测结果
+        start_price_obj = prices[0]
+        end_price_obj = prices[-1]
+        
+        start_price = start_price_obj['price']
+        end_price = end_price_obj['price']
+        
+        if start_price <= 0:
+            return jsonify({
+                'success': False,
+                'error': f'股票 {stock_code} 的起始价格无效'
+            })
+        
+        # 计算持有股数（向下取整）
+        shares = int(initial_investment / start_price)
+        
+        if shares <= 0:
+            return jsonify({
+                'success': False,
+                'error': f'初始投资金额不足购买至少1股'
+            })
+        
+        # 实际使用的投资金额（考虑不能买小数股）
+        actual_investment = shares * start_price
+        
+        # 计算最终价值
+        final_value = shares * end_price
+        
+        # 计算盈亏
+        profit_loss = final_value - actual_investment
+        profit_loss_percent = (profit_loss / actual_investment) * 100
+        
+        # 计算持有天数
+        try:
+            start_dt = datetime.strptime(start_price_obj['date'], '%Y-%m-%d')
+            end_dt = datetime.strptime(end_price_obj['date'], '%Y-%m-%d')
+            holding_days = (end_dt - start_dt).days
+        except:
+            holding_days = len(prices)  # 如果日期解析失败，用数据点数
+        
+        # 计算年化收益率
+        if holding_days > 0:
+            annual_return = ((final_value / actual_investment) ** (365 / holding_days) - 1) * 100
+        else:
+            annual_return = 0
+        
+        # 计算最高和最低价格
+        all_prices = [p['price'] for p in prices]
+        highest_price = max(all_prices)
+        lowest_price = min(all_prices)
+        highest_date = next(p['date'] for p in prices if p['price'] == highest_price)
+        lowest_date = next(p['date'] for p in prices if p['price'] == lowest_price)
+        
+        # 计算最大回撤
+        peak = all_prices[0]
+        max_drawdown = 0
+        max_drawdown_start_date = start_price_obj['date']
+        max_drawdown_end_date = start_price_obj['date']
+        
+        for i, price in enumerate(all_prices):
+            if price > peak:
+                peak = price
+            else:
+                drawdown = (peak - price) / peak * 100
+                if drawdown > max_drawdown:
+                    max_drawdown = drawdown
+                    max_drawdown_start_date = prices[all_prices.index(peak)]['date']
+                    max_drawdown_end_date = prices[i]['date']
+        
+        result = {
+            'success': True,
+            'stock_code': stock_code,
+            'stock_name': f"{stock_code} - 马来西亚股票",
+            'start_date': start_price_obj['date'],
+            'end_date': end_price_obj['date'],
+            'start_price': round(start_price, 3),
+            'end_price': round(end_price, 3),
+            'highest_price': round(highest_price, 3),
+            'highest_date': highest_date,
+            'lowest_price': round(lowest_price, 3),
+            'lowest_date': lowest_date,
+            'initial_investment': round(initial_investment, 2),
+            'actual_investment': round(actual_investment, 2),
+            'shares': shares,
+            'final_value': round(final_value, 2),
+            'profit_loss': round(profit_loss, 2),
+            'profit_loss_percent': round(profit_loss_percent, 2),
+            'annual_return': round(annual_return, 2),
+            'holding_days': holding_days,
+            'data_points': len(prices),
+            'max_drawdown': round(max_drawdown, 2),
+            'max_drawdown_period': f"{max_drawdown_start_date} 至 {max_drawdown_end_date}",
+            'data_source': 'Yahoo Finance'
+        }
+        
+        print(f"单股票回测完成:")
+        print(f"  股票: {stock_code}")
+        print(f"  起始价格: RM {start_price:.3f}")
+        print(f"  结束价格: RM {end_price:.3f}")
+        print(f"  最终价值: RM {final_value:.2f}")
+        print(f"  盈亏: RM {profit_loss:.2f} ({profit_loss_percent:.2f}%)")
+        
+        return jsonify(result)
+        
+    except Exception as e:
+        print(f"单股票回测出错: {str(e)}")
+        import traceback
+        traceback.print_exc()
+        
+        return jsonify({
+            'success': False,
+            'error': f'回测过程中出错: {str(e)}'
+        }), 500
+
+@app.route('/run-backtest', methods=['POST'])
+def run_backtest():
+    """运行真实回测"""
+    try:
+        data = request.json
+        stocks = data.get('stocks', [])
+        start_date = data.get('start_date')
+        capital = data.get('capital', 100000)
+        
+        if not stocks or not start_date:
+            return jsonify({'success': False, 'error': '缺少必要参数'})
+        
+        print(f"开始回测: {stocks}, 开始日期: {start_date}, 资金: {capital}")
+        
+        stock_data = {}
+        valid_stocks = []
+        
+        for stock_code in stocks:
+            try:
+                if not stock_code.endswith('.KL'):
+                    yf_symbol = stock_code + '.KL'
+                else:
+                    yf_symbol = stock_code
+                
+                print(f"获取 {yf_symbol} 数据...")
+                prices = get_stock_data_yahoo(yf_symbol, start_date)
+                
+                if not prices:
+                    print(f"无法获取 {yf_symbol} 的数据")
+                    continue
+                
+                stock_data[yf_symbol] = prices
+                valid_stocks.append(yf_symbol)
+                print(f"成功获取 {yf_symbol}: {len(prices)} 个数据点")
+                
+            except Exception as e:
+                print(f"获取 {stock_code} 数据时出错: {e}")
+                continue
+        
+        if not valid_stocks:
+            return jsonify({'success': False, 'error': '无法获取任何股票数据'})
+        
+        try:
+            print("获取 KLCI 大盘数据...")
+            klse_prices = get_stock_data_yahoo('^KLSE', start_date)
+            if klse_prices:
+                stock_data['^KLSE'] = klse_prices
+                valid_stocks.append('^KLSE')
+                print(f"成功获取 KLCI 大盘数据: {len(klse_prices)} 个数据点")
+        except Exception as e:
+            print(f"获取 KLCI 数据时出错: {e}")
+        
+        result = calculate_backtest(stock_data, valid_stocks, capital)
+        result['success'] = True
+        result['valid_stocks'] = valid_stocks
+        
+        print("回测完成")
+        return jsonify(result)
+        
+    except Exception as e:
+        print(f"回测过程出错: {e}")
+        return jsonify({'success': False, 'error': str(e)})
+
+def calculate_backtest(stock_data, valid_stocks, capital):
+    """计算回测结果"""
+    common_dates = None
+    for symbol in valid_stocks:
+        if symbol == '^KLSE':
+            continue
+        dates = [p['date'] for p in stock_data[symbol]]
+        if common_dates is None:
+            common_dates = set(dates)
+        else:
+            common_dates = common_dates.intersection(set(dates))
+    
+    if not common_dates:
+        return {'error': '没有共同的交易日'}
+    
+    common_dates = sorted(list(common_dates))
+    print(f"共同交易日数量: {len(common_dates)}")
+    
+    portfolio = [capital]
+    current_value = capital
+    peak = capital
+    
+    stock_symbols = [s for s in valid_stocks if s != '^KLSE']
+    
+    for i in range(1, len(common_dates)):
+        date = common_dates[i]
+        prev_date = common_dates[i-1]
+        
+        total_return = 0
+        valid_count = 0
+        
+        for symbol in stock_symbols:
+            current_price_obj = next((p for p in stock_data[symbol] if p['date'] == date), None)
+            prev_price_obj = next((p for p in stock_data[symbol] if p['date'] == prev_date), None)
+            
+            if current_price_obj and prev_price_obj and prev_price_obj['price'] > 0:
+                daily_return = current_price_obj['price'] / prev_price_obj['price']
+                total_return += daily_return
+                valid_count += 1
+        
+        if valid_count > 0:
+            avg_return = total_return / valid_count
+            current_value *= avg_return
+            portfolio.append(current_value)
+            peak = max(peak, current_value)
+        else:
+            portfolio.append(portfolio[-1])
+    
+    benchmark = [100]
+    bench_value = 100
+    
+    if '^KLSE' in stock_data:
+        klse_prices = stock_data['^KLSE']
+        for i in range(1, len(common_dates)):
+            date = common_dates[i]
+            prev_date = common_dates[i-1]
+            
+            current_price = next((p['price'] for p in klse_prices if p['date'] == date), None)
+            prev_price = next((p['price'] for p in klse_prices if p['date'] == prev_date), None)
+            
+            if current_price and prev_price and prev_price > 0:
+                bench_value *= current_price / prev_price
+            benchmark.append(bench_value)
+    
+    total_return_pct = ((portfolio[-1] / capital) - 1) * 100
+    days = (datetime.strptime(common_dates[-1], '%Y-%m-%d') - datetime.strptime(common_dates[0], '%Y-%m-%d')).days
+    annual_return_pct = (pow(portfolio[-1] / capital, 365 / days) - 1) * 100 if days > 0 else 0
+    
+    max_drawdown = 0
+    for i in range(len(portfolio)):
+        current_peak = max(portfolio[:i+1])
+        drawdown = ((current_peak - portfolio[i]) / current_peak) * 100
+        max_drawdown = max(max_drawdown, drawdown)
+    
+    return {
+        'portfolio': portfolio,
+        'benchmark': benchmark,
+        'dates': common_dates,
+        'metrics': {
+            'total_return': total_return_pct,
+            'annual_return': annual_return_pct,
+            'max_drawdown': max_drawdown,
+            'final_value': portfolio[-1]
+        }
+    }
+
+# ==================== AI选股功能 ====================
+@app.route('/run-ai-selection', methods=['POST'])
+def run_ai_selection():
+    """运行AI选股脚本"""
+    try:
+        if os.path.exists('ai_stocks.json'):
+            shutil.copy('ai_stocks.json', 'ai_stocks_last_week.json')
+        
+        result = subprocess.run(
+            ['python', 'bursa_ai_stock_picker.py'], 
+            capture_output=True, 
+            text=True, 
+            cwd=os.getcwd(),
+            timeout=300
+        )
+        
+        if result.returncode == 0:
+            with open('ai_stocks.json', 'r', encoding='utf-8') as f:
+                stock_data = json.load(f)
+                
+            return jsonify({
+                'status': 'success', 
+                'output': result.stdout,
+                'stocks_selected': len(stock_data.get('selected_stocks', [])),
+                'analysis_date': stock_data.get('analysis_date', 'N/A')
+            })
+        else:
+            return jsonify({
+                'status': 'error', 
+                'output': result.stderr
+            }), 500
+            
+    except Exception as e:
+        return jsonify({
+            'status': 'error', 
+            'message': str(e)
+        }), 500
+
+@app.route('/get-stocks/<type>')
+def get_stocks(type):
+    """获取选股数据"""
+    try:
+        if type == 'current':
+            filename = 'ai_stocks.json'
+        elif type == 'last_week':
+            filename = 'ai_stocks_last_week.json'
+        else:
+            return jsonify({'error': 'Invalid type'}), 400
+            
+        with open(filename, 'r', encoding='utf-8') as f:
+            data = json.load(f)
+        
+        formatted_data = {
+            'analysis_date': data.get('analysis_date', 'N/A'),
+            'strategy': data.get('strategy', '多因子AI选股'),
+            'total_selected': len(data.get('selected_stocks', [])),
+            'selected_stocks': data.get('selected_stocks', []),
+            'timestamp': data.get('timestamp', datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
+        }
+            
+        return jsonify(formatted_data)
+        
+    except FileNotFoundError:
+        return jsonify({'error': 'File not found'}), 404
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+# ==================== 系统信息API ====================
+@app.route('/api/system/info')
+def get_system_info():
+    """获取系统信息"""
+    return jsonify({
+        'status': 'running',
+        'server_time': datetime.now().isoformat(),
+        'working_directory': os.getcwd(),
+        'files': {
+            'shopee_data': os.path.exists('js/shopee_lists.json'),
+            'ai_stocks': os.path.exists('ai_stocks.json'),
+            'images_directory': os.path.exists('images/products/shopee'),
+            'admin_directory': os.path.exists('admin')
+        }
+    })
+
+@app.route('/health')
+def health():
+    """健康检查"""
+    return jsonify({
+        'status': 'healthy', 
+        'timestamp': datetime.now().isoformat(),
+        'version': '1.0.0',
+        'services': {
+            'shopee': 'active',
+            'stocks': 'active',
+            'images': 'active',
+            'admin': 'active'
+        }
+    })
+
+# ==================== 错误处理 ====================
+@app.errorhandler(404)
+def not_found(error):
+    return jsonify({'error': '接口未找到', 'path': request.path}), 404
+
+@app.errorhandler(500)
+def internal_error(error):
+    return jsonify({'error': '服务器内部错误'}), 500
+
+if __name__ == '__main__':
+    print("=" * 50)
+    print("Myx Shop 服务器启动中...")
+    print(f"工作目录: {os.getcwd()}")
+    print("可用服务:")
+    print("  - 主页面: http://127.0.0.1:5000/")
+    print("  - Shopee产品: http://127.0.0.1:5000/shopee.html")
+    print("  - 管理后台: http://127.0.0.1:5000/admin/shopee_dashboard.html")
+    print("  - 产品API: http://127.0.0.1:5000/api/shopee/products")
+    print("  - 系统信息: http://127.0.0.1:5000/api/system/info")
+    print("  - 健康检查: http://127.0.0.1:5000/health")
+    print("=" * 50)
+    
+    app.run(debug=True, host='127.0.0.1', port=5000)
