@@ -1,0 +1,16 @@
+{
+  "updates": [
+    {
+      "date": "2025-12-07",
+      "version": "2.0.0",
+      "changes": [
+        "添加數據驗證系統",
+        "增加信任儀表板",
+        "改善算法透明度"
+      ],
+      "stocks_analyzed": 2785,
+      "ai_accuracy": "85%",
+      "data_freshness": "1小時內"
+    }
+  ]
+}

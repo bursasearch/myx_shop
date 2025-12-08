@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>📱 大马股票分析 | 手机录屏专用版</title>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --secondary: #7c3aed;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Noto Sans SC', sans-serif;
+            background: linear-gradient(135deg, #0f172a, #1e293b);
+            color: #f8fafc;
+            min-height: 100vh;
+            padding: 0;
+            overflow-x: hidden;
+        }
+        
+        /* 录屏优化标志 */
+        .recording-badge {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            background: #ef4444;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: bold;
+            z-index: 1000;
+            animation: pulse 1.5s infinite;
+            box-shadow: 0 0 20px rgba(239, 68, 68, 0.5);
+        }
+        
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.7; }
+            100% { opacity: 1; }
+        }
+        
+        /* 头部 */
+        .mobile-header {
+            padding: 20px 15px;
+            text-align: center;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-bottom-left-radius: 25px;
+            border-bottom-right-radius: 25px;
+            position: relative;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        .header-title {
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 5px;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+        
+        .header-subtitle {
+            font-size: 16px;
+            opacity: 0.9;
+            margin-bottom: 15px;
+        }
+        
+        /* 日期时间显示 */
+        .datetime-display {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 10px 20px;
+            border-radius: 15px;
+            display: inline-block;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            font-family: 'Courier New', monospace;
+        }
+        
+        /* 快速操作按钮 */
+        .quick-actions {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            padding: 0 15px;
+            margin-bottom: 20px;
+        }
+        
+        .action-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            padding: 15px 10px;
+            color: white;
+            font-size: 14px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            backdrop-filter: blur(10px);
+        }
+        
+        .action-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+        
+        .action-btn .icon {
+            font-size: 24px;
+        }
+        
+        /* 主内容区域 */
+        .main-content {
+            padding: 0 15px;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        
+        /* 股票推荐卡片 */
+        .stock-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .stock-card.hot {
+            border-color: var(--warning);
+            background: linear-gradient(135deg, 
+                rgba(245, 158, 11, 0.1), 
+                rgba(255, 255, 255, 0.1));
+        }
+        
+        .stock-card.hot::before {
+            content: '🔥 热门';
+            position: absolute;
+            top: 10px;
+            right: -25px;
+            background: var(--warning);
+            color: white;
+            padding: 5px 30px;
+            transform: rotate(45deg);
+            font-size: 12px;
+            font-weight: bold;
+        }
+        
+        .stock-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .stock-name {
+            font-size: 22px;
+            font-weight: bold;
+        }
+        
+        .stock-code {
+            font-size: 16px;
+            opacity: 0.8;
+            margin-top: 3px;
+        }
+        
+        .stock-price {
+            font-size: 28px;
+            font-weight: bold;
+            color: var(--success);
+        }
+        
+        /* 技术指标 */
+        .indicators {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .indicator {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 15px;
+            border-radius: 15px;
+            text-align: center;
+        }
+        
+        .indicator-value {
+            font-size: 24px;
+            font-weight: bold;
+            margin: 5px 0;
+        }
+        
+        .indicator-label {
+            font-size: 12px;
+            opacity: 0.8;
+        }
+        
+        /* 分析按钮 */
+        .analyze-btn {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border: none;
+            border-radius: 15px;
+            font-size: 18px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin: 20px 0;
+        }
+        
+        .analyze-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(37, 99, 235, 0.3);
+        }
+        
+        /* 图表区域 */
+        .chart-container {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 20px;
+            padding: 20px;
+            margin: 20px 0;
+            min-height: 250px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+        
+        /* 底部导航 */
+        .mobile-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(20px);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 10px 15px;
+            display: flex;
+            justify-content: space-around;
+            z-index: 1000;
+        }
+        
+        .nav-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 10px;
+            color: #94a3b8;
+            text-decoration: none;
+            font-size: 12px;
+            transition: all 0.3s;
+        }
+        
+        .nav-btn.active {
+            color: white;
+        }
+        
+        .nav-btn .icon {
+            font-size: 20px;
+            margin-bottom: 5px;
+        }
+        
+        /* 响应式调整 */
+        @media (max-width: 380px) {
+            .header-title { font-size: 24px; }
+            .stock-price { font-size: 24px; }
+            .quick-actions { grid-template-columns: repeat(2, 1fr); }
+        }
+        
+        /* 录屏提示 */
+        .recording-tips {
+            position: fixed;
+            bottom: 70px;
+            left: 15px;
+            right: 15px;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 15px;
+            border-radius: 15px;
+            font-size: 12px;
+            opacity: 0;
+            transition: opacity 0.3s;
+            z-index: 999;
+        }
+        
+        .recording-tips.show {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <!-- 录屏标志 -->
+    <div class="recording-badge" id="recordingBadge">
+        ● 录制中
+    </div>
+    
+    <!-- 头部 -->
+    <div class="mobile-header">
+        <div class="header-title">📱 大马股票分析</div>
+        <div class="header-subtitle">手机录屏专用版 | 为短视频优化</div>
+        <div class="datetime-display" id="datetime">
+            2024-12-04 14:30:00
+        </div>
+    </div>
+    
+    <!-- 快速操作 -->
+    <div class="quick-actions">
+        <div class="action-btn" onclick="analyzeStock('GENTING')">
+            <div class="icon">🎰</div>
+            <div>分析云顶</div>
+        </div>
+        <div class="action-btn" onclick="analyzeStock('MAYBANK')">
+            <div class="icon">🏦</div>
+            <div>分析马银行</div>
+        </div>
+        <div class="action-btn" onclick="analyzeStock('TENAGA')">
+            <div class="icon">⚡</div>
+            <div>分析国能</div>
+        </div>
+    </div>
+    
+    <!-- 主内容 -->
+    <div class="main-content">
+        <!-- 今日重点 -->
+        <div class="stock-card hot" id="hotStock">
+            <div class="stock-header">
+                <div>
+                    <div class="stock-name">GENTING</div>
+                    <div class="stock-code">云顶集团 (4715)</div>
+                </div>
+                <div class="stock-price" id="gentingPrice">RM 4.85</div>
+            </div>
+            
+            <div class="indicators">
+                <div class="indicator">
+                    <div class="indicator-label">今日涨幅</div>
+                    <div class="indicator-value" style="color: var(--success);">+2.1%</div>
+                </div>
+                <div class="indicator">
+                    <div class="indicator-label">成交量</div>
+                    <div class="indicator-value">1.5M</div>
+                </div>
+                <div class="indicator">
+                    <div class="indicator-label">RSI指标</div>
+                    <div class="indicator-value">62.5</div>
+                </div>
+                <div class="indicator">
+                    <div class="indicator-label">机构流入</div>
+                    <div class="indicator-value" style="color: var(--success);">+25.8M</div>
+                </div>
+            </div>
+            
+            <button class="analyze-btn" onclick="showFullAnalysis('GENTING')">
+                📊 深度分析此股票
+            </button>
+        </div>
+        
+        <!-- 图表区域 -->
+        <div class="chart-container" id="chartContainer">
+            <div style="text-align: center;">
+                <div style="font-size: 48px; margin-bottom: 20px;">📈</div>
+                <div>点击上方按钮查看详细图表</div>
+                <div style="font-size: 12px; opacity: 0.7; margin-top: 10px;">
+                    (图表会在分析时动态生成)
+                </div>
+            </div>
+        </div>
+        
+        <!-- 其他推荐 -->
+        <div class="stock-card" onclick="selectStock('MAYBANK')">
+            <div class="stock-header">
+                <div>
+                    <div class="stock-name">MAYBANK</div>
+                    <div class="stock-code">马来亚银行 (1155)</div>
+                </div>
+                <div class="stock-price" style="color: var(--success);">RM 9.42</div>
+            </div>
+        </div>
+        
+        <div class="stock-card" onclick="selectStock('PCHEM')">
+            <div class="stock-header">
+                <div>
+                    <div class="stock-name">PCHEM</div>
+                    <div class="stock-code">国油化学 (5183)</div>
+                </div>
+                <div class="stock-price" style="color: var(--success);">RM 6.78</div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 底部导航 -->
+    <div class="mobile-nav">
+        <a href="#" class="nav-btn active">
+            <div class="icon">🏠</div>
+            <div>首页</div>
+        </a>
+        <a href="#" class="nav-btn" onclick="showAnalysis()">
+            <div class="icon">📊</div>
+            <div>分析</div>
+        </a>
+        <a href="#" class="nav-btn" onclick="showRanking()">
+            <div class="icon">🏆</div>
+            <div>排行</div>
+        </a>
+        <a href="#" class="nav-btn" onclick="showSettings()">
+            <div class="icon">⚙️</div>
+            <div>设置</div>
+        </a>
+    </div>
+    
+    <!-- 录屏提示 -->
+    <div class="recording-tips" id="recordingTips">
+        💡 录屏提示：横屏录制效果更好！确保所有动画完整显示。
+    </div>
+    
+    <script>
+        // 当前选中的股票
+        let currentStock = 'GENTING';
+        
+        // 更新日期时间
+        function updateDateTime() {
+            const now = new Date();
+            const dateStr = now.toLocaleDateString('zh-MY', {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit'
+            });
+            const timeStr = now.toLocaleTimeString('zh-MY', {
+                hour12: false,
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+            });
+            document.getElementById('datetime').textContent = `${dateStr} ${timeStr}`;
+        }
+        
+        // 分析股票
+        function analyzeStock(stockCode) {
+            currentStock = stockCode;
+            
+            // 更新选中状态
+            document.querySelectorAll('.stock-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+            event.target.closest('.stock-card')?.classList.add('selected');
+            
+            // 显示分析过程动画
+            showAnalyzingAnimation(stockCode);
+            
+            // 录屏时显示清晰的操作反馈
+            highlightElement(event.target);
+        }
+        
+        // 显示分析动画
+        function showAnalyzingAnimation(stockCode) {
+            const chartContainer = document.getElementById('chartContainer');
+            
+            // 清空容器
+            chartContainer.innerHTML = '';
+            
+            // 添加加载动画
+            chartContainer.innerHTML = `
+                <div style="text-align: center; width: 100%;">
+                    <div style="font-size: 36px; margin-bottom: 20px;">⏳</div>
+                    <div style="font-size: 18px; margin-bottom: 10px;">正在分析 ${stockCode}...</div>
+                    <div style="height: 4px; background: rgba(255,255,255,0.2); border-radius: 2px; overflow: hidden; margin: 20px auto; max-width: 200px;">
+                        <div id="progressBar" style="height: 100%; background: var(--primary); width: 0%; transition: width 0.3s;"></div>
+                    </div>
+                </div>
+            `;
+            
+            // 模拟分析进度
+            let progress = 0;
+            const interval = setInterval(() => {
+                progress += 10;
+                document.getElementById('progressBar').style.width = progress + '%';
+                
+                if (progress >= 100) {
+                    clearInterval(interval);
+                    setTimeout(() => {
+                        showAnalysisResults(stockCode);
+                    }, 500);
+                }
+            }, 200);
+        }
+        
+        // 显示分析结果
+        function showAnalysisResults(stockCode) {
+            const chartContainer = document.getElementById('chartContainer');
+            
+            // 模拟图表数据
+            const stockData = {
+                'GENTING': {
+                    name: '云顶集团',
+                    price: 4.85,
+                    change: '+2.1%',
+                    chart: '📈📊📈📉📈',
+                    analysis: '技术突破形态，资金流入明显'
+                },
+                'MAYBANK': {
+                    name: '马来亚银行',
+                    price: 9.42,
+                    change: '+0.8%',
+                    chart: '📊📈📊📈📊',
+                    analysis: '稳定上升趋势，股息率吸引'
+                },
+                'TENAGA': {
+                    name: '国家能源',
+                    price: 11.25,
+                    change: '+1.5%',
+                    chart: '📈📈📉📈📈',
+                    analysis: '突破关键阻力位'
+                }
+            };
+            
+            const data = stockData[stockCode] || stockData['GENTING'];
+            
+            chartContainer.innerHTML = `
+                <div style="width: 100%;">
+                    <div style="text-align: center; margin-bottom: 20px;">
+                        <div style="font-size: 24px; font-weight: bold;">${data.name} 分析报告</div>
+                        <div style="font-size: 16px; opacity: 0.8; margin-top: 5px;">${stockCode}</div>
+                    </div>
+                    
+                    <div style="display: flex; justify-content: center; gap: 20px; margin: 20px 0;">
+                        <div style="text-align: center;">
+                            <div style="font-size: 12px; opacity: 0.8;">当前价格</div>
+                            <div style="font-size: 32px; font-weight: bold; color: var(--success);">RM ${data.price}</div>
+                        </div>
+                        <div style="text-align: center;">
+                            <div style="font-size: 12px; opacity: 0.8;">今日变化</div>
+                            <div style="font-size: 32px; font-weight: bold; color: var(--success);">${data.change}</div>
+                        </div>
+                    </div>
+                    
+                    <div style="background: rgba(0,0,0,0.3); padding: 20px; border-radius: 15px; margin: 20px 0;">
+                        <div style="font-size: 24px; text-align: center; letter-spacing: 10px; margin-bottom: 10px;">
+                            ${data.chart}
+                        </div>
+                        <div style="font-size: 12px; text-align: center; opacity: 0.7;">
+                            模拟价格走势图
+                        </div>
+                    </div>
+                    
+                    <div style="background: rgba(37, 99, 235, 0.1); padding: 15px; border-radius: 10px; margin-top: 20px; border-left: 4px solid var(--primary);">
+                        <div style="font-weight: bold; margin-bottom: 10px;">📋 分析结论：</div>
+                        <div>${data.analysis}</div>
+                    </div>
+                </div>
+            `;
+            
+            // 滚动到图表区域
+            chartContainer.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            
+            // 录屏提示
+            showRecordingTip('分析完成！这个动画效果很适合短视频。');
+        }
+        
+        // 显示完整分析
+        function showFullAnalysis(stockCode) {
+            // 这里可以跳转到详细分析页面
+            alert(`正在加载 ${stockCode} 的完整分析报告...\n\n(短视频中可以展示完整分析过程)`);
+            
+            // 对于录屏，我们可以展示更多动画
+            simulateAdvancedAnalysis(stockCode);
+        }
+        
+        // 模拟高级分析
+        function simulateAdvancedAnalysis(stockCode) {
+            const steps = [
+                '🔍 获取历史数据...',
+                '📈 计算技术指标...',
+                '💰 分析资金流向...',
+                '🎯 生成投资建议...',
+                '✅ 分析完成！'
+            ];
+            
+            let currentStep = 0;
+            const interval = setInterval(() => {
+                if (currentStep < steps.length) {
+                    // 更新界面显示当前步骤
+                    const analyzingDiv = document.createElement('div');
+                    analyzingDiv.innerHTML = `
+                        <div style="text-align: center; padding: 20px;">
+                            <div style="font-size: 36px; margin-bottom: 10px;">${steps[currentStep].split(' ')[0]}</div>
+                            <div>${steps[currentStep]}</div>
+                        </div>
+                    `;
+                    
+                    // 添加到图表容器
+                    const chartContainer = document.getElementById('chartContainer');
+                    chartContainer.innerHTML = '';
+                    chartContainer.appendChild(analyzingDiv);
+                    
+                    currentStep++;
+                } else {
+                    clearInterval(interval);
+                    setTimeout(() => {
+                        showAnalysisResults(stockCode);
+                    }, 1000);
+                }
+            }, 1000);
+        }
+        
+        // 高亮元素（录屏时更明显）
+        function highlightElement(element) {
+            element.style.transform = 'scale(1.05)';
+            element.style.boxShadow = '0 0 30px rgba(37, 99, 235, 0.5)';
+            
+            setTimeout(() => {
+                element.style.transform = '';
+                element.style.boxShadow = '';
+            }, 500);
+        }
+        
+        // 显示录屏提示
+        function showRecordingTip(message) {
+            const tips = document.getElementById('recordingTips');
+            tips.innerHTML = `💡 ${message}`;
+            tips.classList.add('show');
+            
+            setTimeout(() => {
+                tips.classList.remove('show');
+            }, 3000);
+        }
+        
+        // 模拟价格更新（让录屏更生动）
+        function simulatePriceUpdates() {
+            const prices = {
+                'GENTING': 4.85,
+                'MAYBANK': 9.42,
+                'PCHEM': 6.78
+            };
+            
+            // 随机更新价格
+            for (const [stock, basePrice] of Object.entries(prices)) {
+                const change = (Math.random() * 0.02 - 0.01); // -1% 到 +1%
+                const newPrice = basePrice * (1 + change);
+                
+                // 更新显示
+                const elements = document.querySelectorAll(`[onclick*="${stock}"] .stock-price, #gentingPrice`);
+                elements.forEach(el => {
+                    if (el.id === 'gentingPrice' && stock === 'GENTING') {
+                        el.textContent = `RM ${newPrice.toFixed(2)}`;
+                        el.style.color = change >= 0 ? 'var(--success)' : 'var(--danger)';
+                    }
+                });
+            }
+        }
+        
+        // 初始化
+        window.onload = function() {
+            // 更新时间
+            updateDateTime();
+            setInterval(updateDateTime, 1000);
+            
+            // 每30秒更新价格（模拟实时效果）
+            setInterval(simulatePriceUpdates, 30000);
+            
+            // 初始显示热门股票分析
+            setTimeout(() => {
+                showAnalyzingAnimation('GENTING');
+            }, 2000);
+            
+            // 显示录屏提示
+            setTimeout(() => {
+                showRecordingTip('开始录屏吧！所有动画都为短视频优化。');
+            }, 5000);
+            
+            // 追踪访问
+            console.log('📱 手机录屏版已加载');
+            console.log('🎥 专为CapCut + 数字人视频制作优化');
+        };
+        
+        // 底部导航功能
+        function showAnalysis() {
+            showRecordingTip('切换到分析页面，展示更多技术指标');
+        }
+        
+        function showRanking() {
+            showRecordingTip('显示股票排行榜，适合制作对比视频');
+        }
+        
+        function showSettings() {
+            showRecordingTip('调整显示设置，让录屏效果更好');
+        }
+        
+        // 横屏检测
+        function checkOrientation() {
+            if (window.innerHeight > window.innerWidth) {
+                showRecordingTip('建议横屏录制，显示内容更完整！');
+            }
+        }
+        
+        window.addEventListener('resize', checkOrientation);
+        checkOrientation();
+    </script>
+</body>
+</html>

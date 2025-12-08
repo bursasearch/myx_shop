@@ -1,0 +1,28 @@
+{
+  "totalProducts": 2,
+  "lastUpdated": "2025-11-23T16:51:00Z",
+  "products": [
+    {
+      "id": 1,
+      "name": "红糖/黄糖/黑糖 - 250 gm",
+      "price": 2.50,
+      "stock": 99999,
+      "sales": 0,
+      "image": "images/sh-61_1112.png",
+      "status": "active",
+      "link": "https://s.shopee.com.my/60JwZnRk6G",
+      "category": "保健"
+    },
+    {
+      "id": 2,
+      "name": "Test Product",
+      "price": 9.99,
+      "stock": 100,
+      "sales": 0,
+      "image": "images/test.png",
+      "status": "active",
+      "link": "https://s.shopee.com.my/test",
+      "category": "misc"
+    }
+  ]
+}

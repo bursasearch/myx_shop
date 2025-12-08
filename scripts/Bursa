@@ -1,0 +1,147 @@
+#!/bin/bash
+# 智能Bursa管理器 - 自動檢測所在目錄並提供相應功能
+
+echo "🤖 Bursa AI選股系統 - 智能管理器"
+echo "================================="
+
+# 檢測當前目錄
+CURRENT_DIR=$(basename "$(pwd)")
+
+case "$CURRENT_DIR" in
+    "myx_shop")
+        echo "📍 位置: 主目錄"
+        echo ""
+        echo "可選操作："
+        echo "1. 🌐 打開網站頁面"
+        echo "2. 🤖 運行AI分析"
+        echo "3. 📁 瀏覽文件"
+        echo ""
+        read -p "請選擇 (1-3): " choice
+        
+        case $choice in
+            1)
+                echo "請選擇頁面："
+                select page in "首頁 (index.html)" "AI選股 (bursa.html)" "散戶專區 (web/retail-inv.html)" "AI報告 (web/ai_analysis_preview.html)"; do
+                    case $REPLY in
+                        1) target="index.html"; break ;;
+                        2) target="bursa.html"; break ;;
+                        3) target="web/retail-inv.html"; break ;;
+                        4) target="web/ai_analysis_preview.html"; break ;;
+                    esac
+                done
+                
+                if [ -f "$target" ]; then
+                    open_file "$target"
+                else
+                    echo "❌ 文件不存在: $target"
+                fi
+                ;;
+            2)
+                cd scripts && ./Bursa
+                ;;
+            3)
+                echo ""
+                echo "📁 目錄結構："
+                find . -maxdepth 2 -type f -name "*.html" -o -name "*.json" | sort
+                echo ""
+                ;;
+        esac
+        ;;
+        
+    "web")
+        echo "📍 位置: web目錄 (網站文件)"
+        echo ""
+        echo "📊 可訪問文件："
+        echo ""
+        ls -la *.html *.json 2>/dev/null | awk 'NR==1 {print "權限 大小 日期 名稱"; print "====================="} NR>1 {printf "%-10s %-8s %-12s %s\n", $1, $5, $6" "$7, $9}'
+        echo ""
+        echo "💡 提示：輸入文件名直接打開，或按回車查看詳情"
+        read -p "輸入文件名 (或回車查看幫助): " filename
+        
+        if [ -n "$filename" ] && [ -f "$filename" ]; then
+            open_file "$filename"
+        elif [ -z "$filename" ]; then
+            echo ""
+            echo "幫助："
+            echo "• ai_analysis_preview.html - AI完整報告"
+            echo "• retail-inv.html - 散戶專區"
+            echo "• picks.json - AI選股數據"
+            echo "• 直接輸入 ./Bursa 查看此菜單"
+        else
+            echo "❌ 文件不存在: $filename"
+        fi
+        ;;
+        
+    "scripts")
+        echo "📍 位置: scripts目錄 (AI分析引擎)"
+        echo ""
+        echo "可執行操作："
+        echo "1. 🚀 運行AI選股分析"
+        echo "2. 🔄 更新網站數據"
+        echo "3. 📊 檢查數據源"
+        echo ""
+        read -p "請選擇 (1-3): " choice
+        
+        case $choice in
+            1)
+                # 自動查找最新CSV
+                CSV_DIR="/storage/emulated/0/eskay9761/stock_data/Myx_Data/EOD"
+                LATEST_CSV=$(ls -t "$CSV_DIR"/*.csv 2>/dev/null | head -1)
+                
+                if [ -z "$LATEST_CSV" ]; then
+                    echo "❌ 找不到CSV文件"
+                    echo "請檢查: $CSV_DIR"
+                    exit 1
+                fi
+                
+                echo "📊 使用數據: $(basename "$LATEST_CSV")"
+                echo "正在運行AI分析..."
+                python3 ai_stock_picker.py "$LATEST_CSV"
+                ;;
+            2)
+                echo "🔄 更新網站數據..."
+                ./update_web.sh
+                ;;
+            3)
+                echo "🔍 檢查數據源..."
+                if [ -d "/storage/emulated/0/eskay9761/stock_data/Myx_Data/EOD" ]; then
+                    echo "✅ CSV數據目錄存在"
+                    ls -la "/storage/emulated/0/eskay9761/stock_data/Myx_Data/EOD"/*.csv 2>/dev/null | head -5
+                else
+                    echo "❌ CSV數據目錄不存在"
+                fi
+                ;;
+        esac
+        ;;
+        
+    *)
+        echo "📍 位置: 其他目錄 ($CURRENT_DIR)"
+        echo ""
+        echo "💡 導航到Myx Shop目錄："
+        echo "1. 進入myx_shop主目錄"
+        echo "2. 進入web目錄"
+        echo "3. 進入scripts目錄"
+        echo ""
+        read -p "請選擇 (1-3): " choice
+        
+        case $choice in
+            1) cd /storage/emulated/0/bursasearch/myx_shop && ./Bursa ;;
+            2) cd /storage/emulated/0/bursasearch/myx_shop/web && ./Bursa ;;
+            3) cd /storage/emulated/0/bursasearch/myx_shop/scripts && ./Bursa ;;
+        esac
+        ;;
+esac
+
+# 打開文件的函數
+open_file() {
+    local file="$1"
+    echo "✅ 正在打開: $file"
+    
+    if command -v termux-open &> /dev/null; then
+        termux-open "$file" 2>/dev/null
+        echo "🚀 已嘗試通過Termux打開"
+    else
+        echo "🌐 請手動訪問:"
+        echo "file://$(pwd)/$file"
+    fi
+}

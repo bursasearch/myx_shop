@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8" />
+  <title>Shopee 管理后台 - 增强版</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    body { font-family: system-ui, Arial; margin: 16px; background:#f7f7f7; color:#222; }
+    header { display:flex; flex-wrap:wrap; align-items:center; gap:12px; margin-bottom:16px; }
+    header h1 { margin:0; font-size:20px; }
+    .stats { font-size:14px; color:#555; }
+    .toolbar { display:flex; gap:8px; flex-wrap:wrap; }
+    .card { background:#fff; border:1px solid #ddd; border-radius:8px; padding:12px; margin-bottom:16px; }
+    .grid { overflow-x:auto; }
+    table { width:100%; border-collapse:collapse; }
+    th, td { border-bottom:1px solid #eee; padding:8px; text-align:left; font-size:14px; }
+    th { background:#fafafa; }
+    button { padding:6px 10px; border:1px solid #ccc; border-radius:6px; background:#fff; cursor:pointer; }
+    button.primary { background:#0b74de; color:#fff; border-color:#0b74de; }
+    button.warn { background:#b00020; color:#fff; border-color:#b00020; }
+    button.success { background:#28a745; color:#fff; border-color:#28a745; }
+    input, select { padding:6px 8px; border:1px solid #ccc; border-radius:6px; font-size:14px; width:100%; }
+    form .row { display:flex; gap:8px; flex-wrap:wrap; margin-top:8px; }
+    form .row > * { flex:1 1 160px; }
+    .duplicate-warning { background:#fff3cd; border:1px solid #ffeaa7; border-radius:4px; padding:8px; margin:8px 0; font-size:13px; }
+    .error-input { border-color:#dc3545 !important; background-color:#f8d7da; }
+    .validation-info { font-size:12px; color:#666; margin-top:4px; }
+    .status-badge { padding:2px 6px; border-radius:10px; font-size:11px; font-weight:500; }
+    .status-active { background:#d4edda; color:#155724; }
+    .status-inactive { background:#f8d7da; color:#721c24; }
+    .search-box { margin-bottom:12px; padding:6px 8px; border:1px solid #ccc; border-radius:6px; width:200px; }
+    .filter-bar { display:flex; gap:8px; margin-bottom:12px; flex-wrap:wrap; }
+    .link-cell { max-width:200px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+    .modal { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:1000; }
+    .modal-content { position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); background:white; padding:20px; border-radius:8px; width:90%; max-width:500px; }
+    .modal-buttons { display:flex; gap:8px; justify-content:flex-end; margin-top:16px; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>🛍️ Shopee 管理后台 - 增强版</h1>
+    <div class="stats">总数: <span id="totalCount">—</span> · 最后更新: <span id="lastUpdated">—</span></div>
+    <div class="toolbar">
+      <button id="refreshBtn">🔄 刷新</button>
+      <button id="prettifyBtn" class="primary">💾 保存数据</button>
+      <button id="checkDuplicatesBtn" class="warn">🔍 检查重复</button>
+    </div>
+  </header>
+
+  <section class="card">
+    <h2 style="margin:0 0 8px;">➕ 添加新产品</h2>
+    <div id="duplicateAlert" class="duplicate-warning" style="display:none;">
+      ⚠️ <strong>重复数据警告:</strong> <span id="duplicateMessage"></span>
+    </div>
+    <form id="addForm">
+      <div class="row">
+        <div>
+          <input name="name" placeholder="产品名称 *" required />
+          <div class="validation-info">必填字段，自动检查重复</div>
+        </div>
+        <div>
+          <input name="price" type="number" step="0.01" placeholder="价格 (RM) *" required />
+        </div>
+        <div>
+          <input name="stock" type="number" placeholder="库存数量 *" required />
+        </div>
+        <div>
+          <input name="image" placeholder="图片文件名" id="imageInput" />
+          <div class="validation-info">例如: sh-61_1112.png，自动检查重复</div>
+        </div>
+        <div>
+          <input name="link" placeholder="Shopee商品链接" id="linkInput" />
+          <div class="validation-info">自动检查链接重复</div>
+        </div>
+        <div>
+          <select name="category" required>
+            <option value="">选择分类 *</option>
+            <option value="health">保健养生</option>
+            <option value="home">家居生活</option>
+            <option value="electronic">电子产品</option>
+            <option value="book">图书文具</option>
+          </select>
+        </div>
+      </div>
+      <div class="row">
+        <button type="submit" class="primary">✅ 添加产品</button>
+        <button type="button" onclick="clearForm()">🗑️ 清空表单</button>
+      </div>
+    </form>
+  </section>
+
+  <section class="card">
+    <div class="filter-bar">
+      <input type="text" id="searchInput" placeholder="🔍 搜索产品名称..." class="search-box" />
+      <select id="statusFilter">
+        <option value="all">所有状态</option>
+        <option value="active">仅上架</option>
+        <option value="inactive">仅下架</option>
+      </select>
+      <select id="categoryFilter">
+        <option value="all">所有分类</option>
+        <option value="health">保健养生</option>
+        <option value="home">家居生活</option>
+        <option value="electronic">电子产品</option>
+        <option value="book">图书文具</option>
+      </select>
+    </div>
+    
+    <div class="grid">
+      <table id="productTable">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>名称</th>
+            <th>价格</th>
+            <th>库存</th>
+            <th>状态</th>
+            <th>分类</th>
+            <th>图片</th>
+            <th>Shopee链接</th>
+            <th>操作</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- 编辑产品模态框 -->
+  <div id="editModal" class="modal">
+    <div class="modal-content">
+      <h3>编辑产品</h3>
+      <form id="editForm">
+        <input type="hidden" id="editId" name="id">
+        <div class="row">
+          <div>
+            <label>产品名称 *</label>
+            <input type="text" id="editName" name="name" required>
+          </div>
+          <div>
+            <label>价格 (RM) *</label>
+            <input type="number" step="0.01" id="editPrice" name="price" required>
+          </div>
+          <div>
+            <label>库存数量 *</label>
+            <input type="number" id="editStock" name="stock" required>
+          </div>
+        </div>
+        <div class="row">
+          <div>
+            <label>图片文件名</label>
+            <input type="text" id="editImage" name="image">
+            <div class="validation-info">自动检查重复</div>
+          </div>
+          <div>
+            <label>Shopee商品链接</label>
+            <input type="text" id="editLink" name="link">
+            <div class="validation-info">自动检查链接重复</div>
+          </div>
+          <div>
+            <label>分类 *</label>
+            <select id="editCategory" name="category" required>
+              <option value="health">保健养生</option>
+              <option value="home">家居生活</option>
+              <option value="electronic">电子产品</option>
+              <option value="book">图书文具</option>
+            </select>
+          </div>
+        </div>
+        <div id="editDuplicateAlert" class="duplicate-warning" style="display:none; margin-top:12px;">
+          ⚠️ <strong>重复数据警告:</strong> <span id="editDuplicateMessage"></span>
+        </div>
+        <div class="modal-buttons">
+          <button type="button" onclick="closeEditModal()">取消</button>
+          <button type="submit" class="primary">保存更改</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    const API_BASE = 'http://127.0.0.1:5000';
+    let allProducts = [];
+
+    // 重复检查函数
+    function checkDuplicates(newProduct, currentProducts) {
+      const duplicates = {
+        name: false,
+        image: false,
+        link: false,
+        messages: []
+      };
+
+      const nameDuplicate = currentProducts.find(p => 
+        p.name.toLowerCase() === newProduct.name.toLowerCase() && p.id !== newProduct.id
+      );
+      if (nameDuplicate) {
+        duplicates.name = true;
+        duplicates.messages.push(`产品名称重复: "${newProduct.name}" (ID: ${nameDuplicate.id})`);
+      }
+
+      if (newProduct.image) {
+        const imageDuplicate = currentProducts.find(p => 
+          p.image === newProduct.image && p.id !== newProduct.id
+        );
+        if (imageDuplicate) {
+          duplicates.image = true;
+          duplicates.messages.push(`图片文件名重复: "${newProduct.image}" (ID: ${imageDuplicate.id})`);
+        }
+      }
+
+      if (newProduct.link) {
+        const linkDuplicate = currentProducts.find(p => 
+          p.link === newProduct.link && p.id !== newProduct.id
+        );
+        if (linkDuplicate) {
+          duplicates.link = true;
+          duplicates.messages.push(`商品链接重复: "${newProduct.link}" (ID: ${linkDuplicate.id})`);
+        }
+      }
+
+      return duplicates;
+    }
+
+    // 实时输入验证
+    function setupRealTimeValidation() {
+      const nameInput = document.querySelector('input[name="name"]');
+      const imageInput = document.getElementById('imageInput');
+      const linkInput = document.getElementById('linkInput');
+
+      nameInput.addEventListener('blur', validateName);
+      imageInput.addEventListener('blur', validateImage);
+      linkInput.addEventListener('blur', validateLink);
+
+      // 编辑表单的实时验证
+      const editNameInput = document.getElementById('editName');
+      const editImageInput = document.getElementById('editImage');
+      const editLinkInput = document.getElementById('editLink');
+
+      editNameInput.addEventListener('blur', validateEditName);
+      editImageInput.addEventListener('blur', validateEditImage);
+      editLinkInput.addEventListener('blur', validateEditLink);
+    }
+
+    function validateName() {
+      const name = this.value.trim();
+      if (!name) return;
+      
+      const duplicate = allProducts.find(p => 
+        p.name.toLowerCase() === name.toLowerCase()
+      );
+      
+      if (duplicate) {
+        this.classList.add('error-input');
+        showDuplicateAlert(`产品名称重复: "${name}" (已存在于ID: ${duplicate.id})`);
+      } else {
+        this.classList.remove('error-input');
+        hideDuplicateAlert();
+      }
+    }
+
+    function validateImage() {
+      const image = this.value.trim();
+      if (!image) {
+        this.classList.remove('error-input');
+        hideDuplicateAlert();
+        return;
+      }
+      
+      const duplicate = allProducts.find(p => p.image === image);
+      
+      if (duplicate) {
+        this.classList.add('error-input');
+        showDuplicateAlert(`图片文件名重复: "${image}" (已存在于ID: ${duplicate.id})`);
+      } else {
+        this.classList.remove('error-input');
+        hideDuplicateAlert();
+      }
+    }
+
+    function validateLink() {
+      const link = this.value.trim();
+      if (!link) {
+        this.classList.remove('error-input');
+        hideDuplicateAlert();
+        return;
+      }
+      
+      const duplicate = allProducts.find(p => p.link === link);
+      
+      if (duplicate) {
+        this.classList.add('error-input');
+        showDuplicateAlert(`商品链接重复: "${link}" (已存在于ID: ${duplicate.id})`);
+      } else {
+        this.classList.remove('error-input');
+        hideDuplicateAlert();
+      }
+    }
+
+    // 编辑表单的验证函数
+    function validateEditName() {
+      const name = this.value.trim();
+      const editId = parseInt(document.getElementById('editId').value);
+      if (!name) return;
+      
+      const duplicate = allProducts.find(p => 
+        p.name.toLowerCase() === name.toLowerCase() && p.id !== editId
+      );
+      
+      if (duplicate) {
+        this.classList.add('error-input');
+        showEditDuplicateAlert(`产品名称重复: "${name}" (已存在于ID: ${duplicate.id})`);
+      } else {
+        this.classList.remove('error-input');
+        hideEditDuplicateAlert();
+      }
+    }
+
+    function validateEditImage() {
+      const image = this.value.trim();
+      const editId = parseInt(document.getElementById('editId').value);
+      if (!image) {
+        this.classList.remove('error-input');
+        hideEditDuplicateAlert();
+        return;
+      }
+      
+      const duplicate = allProducts.find(p => p.image === image && p.id !== editId);
+      
+      if (duplicate) {
+        this.classList.add('error-input');
+        showEditDuplicateAlert(`图片文件名重复: "${image}" (已存在于ID: ${duplicate.id})`);
+      } else {
+        this.classList.remove('error-input');
+        hideEditDuplicateAlert();
+      }
+    }
+
+    function validateEditLink() {
+      const link = this.value.trim();
+      const editId = parseInt(document.getElementById('editId').value);
+      if (!link) {
+        this.classList.remove('error-input');
+        hideEditDuplicateAlert();
+        return;
+      }
+      
+      const duplicate = allProducts.find(p => p.link === link && p.id !== editId);
+      
+      if (duplicate) {
+        this.classList.add('error-input');
+        showEditDuplicateAlert(`商品链接重复: "${link}" (已存在于ID: ${duplicate.id})`);
+      } else {
+        this.classList.remove('error-input');
+        hideEditDuplicateAlert();
+      }
+    }
+
+    function showDuplicateAlert(message) {
+      const alert = document.getElementById('duplicateAlert');
+      const messageSpan = document.getElementById('duplicateMessage');
+      messageSpan.textContent = message;
+      alert.style.display = 'block';
+    }
+
+    function hideDuplicateAlert() {
+      document.getElementById('duplicateAlert').style.display = 'none';
+    }
+
+    function showEditDuplicateAlert(message) {
+      const alert = document.getElementById('editDuplicateAlert');
+      const messageSpan = document.getElementById('editDuplicateMessage');
+      messageSpan.textContent = message;
+      alert.style.display = 'block';
+    }
+
+    function hideEditDuplicateAlert() {
+      document.getElementById('editDuplicateAlert').style.display = 'none';
+    }
+
+    async function loadData() {
+      try {
+        const res = await fetch(`${API_BASE}/api/shopee/products`);
+        if (!res.ok) throw new Error(`HTTP错误! 状态: ${res.status}`);
+        
+        const data = await res.json();
+        allProducts = data.products || [];
+        
+        updateDisplay(data);
+        setupRealTimeValidation();
+      } catch (error) {
+        console.error('加载数据失败:', error);
+        alert("错误: " + error.message);
+      }
+    }
+
+    function updateDisplay(data) {
+      document.getElementById("totalCount").textContent = data.totalProducts ?? allProducts.length;
+      document.getElementById("lastUpdated").textContent = data.lastUpdated ? 
+        new Date(data.lastUpdated).toLocaleString('zh-CN') : "—";
+
+      const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+      const statusFilter = document.getElementById('statusFilter').value;
+      const categoryFilter = document.getElementById('categoryFilter').value;
+
+      const filteredProducts = allProducts.filter(p => {
+        const matchesSearch = p.name.toLowerCase().includes(searchTerm);
+        const matchesStatus = statusFilter === 'all' || p.status === statusFilter;
+        const matchesCategory = categoryFilter === 'all' || p.category === categoryFilter;
+        return matchesSearch && matchesStatus && matchesCategory;
+      });
+
+      renderTable(filteredProducts);
+    }
+
+    function renderTable(products) {
+      const tbody = document.querySelector("#productTable tbody");
+      tbody.innerHTML = "";
+      
+      products.forEach(p => {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td>${p.id}</td>
+          <td>${p.name}</td>
+          <td>RM ${Number(p.price).toFixed(2)}</td>
+          <td>${p.stock}</td>
+          <td><span class="status-badge ${p.status === 'active' ? 'status-active' : 'status-inactive'}">${p.status === 'active' ? '上架' : '下架'}</span></td>
+          <td>${getCategoryName(p.category)}</td>
+          <td>${p.image ? `<small>${p.image}</small>` : '—'}</td>
+          <td class="link-cell">${p.link ? `<a href="${p.link}" target="_blank" title="${p.link}">查看链接</a>` : '—'}</td>
+          <td>
+            <button onclick="openEditModal(${p.id})">✏️ 编辑</button>
+            <button class="${p.status === 'active' ? 'warn' : 'success'}" onclick="toggleProductStatus(${p.id}, '${p.status || 'active'}')">
+              ${p.status === 'active' ? '⬇️ 下架' : '⬆️ 上架'}
+            </button>
+            <button class="warn" onclick="deleteProduct(${p.id})">🗑️ 删除</button>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function getCategoryName(category) {
+      const categoryMap = {
+        'health': '保健养生',
+        'home': '家居生活', 
+        'electronic': '电子产品',
+        'book': '图书文具'
+      };
+      return categoryMap[category] || category || '';
+    }
+
+    // 检查所有重复数据
+    async function checkAllDuplicates() {
+      const duplicates = [];
+      
+      allProducts.forEach((product, index) => {
+        const nameDuplicates = allProducts.filter((p, i) => 
+          i !== index && p.name.toLowerCase() === product.name.toLowerCase()
+        );
+        
+        const imageDuplicates = allProducts.filter((p, i) => 
+          i !== index && p.image && p.image === product.image
+        );
+        
+        const linkDuplicates = allProducts.filter((p, i) => 
+          i !== index && p.link && p.link === product.link
+        );
+
+        if (nameDuplicates.length > 0) {
+          duplicates.push(`ID ${product.id}: 名称重复 "${product.name}"`);
+        }
+        if (imageDuplicates.length > 0) {
+          duplicates.push(`ID ${product.id}: 图片重复 "${product.image}"`);
+        }
+        if (linkDuplicates.length > 0) {
+          duplicates.push(`ID ${product.id}: 链接重复 "${product.link}"`);
+        }
+      });
+
+      if (duplicates.length > 0) {
+        alert('🔍 发现重复数据:\n\n' + duplicates.join('\n'));
+      } else {
+        alert('✅ 没有发现重复数据！');
+      }
+    }
+
+    // 表单提交处理
+    document.getElementById("addForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const form = e.target;
+      
+      try {
+        const newId = Math.max(...allProducts.map(p => p.id), 0) + 1;
+        const newProduct = {
+          id: newId,
+          name: form.name.value.trim(),
+          price: parseFloat(form.price.value),
+          stock: parseInt(form.stock.value),
+          image: form.image.value.trim() || `sh-${newId}.png`,
+          link: form.link.value.trim(),
+          category: form.category.value || 'health',
+          status: "active",
+          sales: 0
+        };
+
+        // 提交前再次检查重复
+        const duplicates = checkDuplicates(newProduct, allProducts);
+        if (duplicates.messages.length > 0) {
+          if (!confirm(`发现重复数据:\n${duplicates.messages.join('\n')}\n\n仍然要添加吗？`)) {
+            return;
+          }
+        }
+
+        const updatedProducts = [...allProducts, newProduct];
+        await saveProducts(updatedProducts);
+        
+        form.reset();
+        alert("✅ 产品添加成功");
+        loadData();
+      } catch (error) {
+        console.error('添加失败:', error);
+        alert("错误: " + error.message);
+      }
+    });
+
+    // 保存产品数据
+    async function saveProducts(products) {
+      const updateRes = await fetch(`${API_BASE}/api/shopee/update`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          products: products,
+          totalProducts: products.length,
+          lastUpdated: new Date().toISOString()
+        })
+      });
+      return await updateRes.json();
+    }
+
+    // 打开编辑模态框
+    function openEditModal(id) {
+      const product = allProducts.find(p => p.id === id);
+      if (!product) return;
+
+      document.getElementById('editId').value = product.id;
+      document.getElementById('editName').value = product.name;
+      document.getElementById('editPrice').value = product.price;
+      document.getElementById('editStock').value = product.stock;
+      document.getElementById('editImage').value = product.image || '';
+      document.getElementById('editLink').value = product.link || '';
+      document.getElementById('editCategory').value = product.category || 'health';
+
+      // 清除之前的错误状态
+      hideEditDuplicateAlert();
+      document.querySelectorAll('#editForm .error-input').forEach(input => {
+        input.classList.remove('error-input');
+      });
+
+      document.getElementById('editModal').style.display = 'block';
+    }
+
+    // 关闭编辑模态框
+    function closeEditModal() {
+      document.getElementById('editModal').style.display = 'none';
+    }
+
+    // 编辑表单提交
+    document.getElementById('editForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      const id = parseInt(document.getElementById('editId').value);
+      const updates = {
+        name: document.getElementById('editName').value.trim(),
+        price: parseFloat(document.getElementById('editPrice').value),
+        stock: parseInt(document.getElementById('editStock').value),
+        image: document.getElementById('editImage').value.trim(),
+        link: document.getElementById('editLink').value.trim(),
+        category: document.getElementById('editCategory').value
+      };
+
+      await editProduct(id, updates);
+    });
+
+    async function editProduct(id, updates) {
+      const updatedProducts = allProducts.map(product => 
+        product.id === id ? { ...product, ...updates } : product
+      );
+
+      // 检查编辑后的重复数据
+      const editedProduct = updatedProducts.find(p => p.id === id);
+      const duplicates = checkDuplicates(editedProduct, updatedProducts.filter(p => p.id !== id));
+      
+      if (duplicates.messages.length > 0) {
+        if (!confirm(`发现重复数据:\n${duplicates.messages.join('\n')}\n\n仍然要更新吗？`)) {
+          return;
+        }
+      }
+
+      const result = await saveProducts(updatedProducts);
+      if (result.success) {
+        alert("✅ 产品更新成功");
+        closeEditModal();
+        loadData();
+      } else {
+        alert("错误: " + (result.error || "未知错误"));
+      }
+    }
+
+    async function toggleProductStatus(id, currentStatus) {
+      const newStatus = currentStatus === 'active' ? 'inactive' : 'active';
+      const confirmMessage = newStatus === 'inactive' ? '确定要下架这个产品吗？' : '确定要重新上架这个产品吗？';
+      
+      if (!confirm(confirmMessage)) return;
+
+      const updatedProducts = allProducts.map(product => 
+        product.id === id ? { ...product, status: newStatus } : product
+      );
+
+      const result = await saveProducts(updatedProducts);
+      if (result.success) {
+        alert(`产品已${newStatus === 'inactive' ? '下架' : '上架'}`);
+        loadData();
+      } else {
+        alert("错误: " + (result.error || "未知错误"));
+      }
+    }
+
+    async function deleteProduct(id) {
+      const product = allProducts.find(p => p.id === id);
+      if (!product) return;
+
+      if (!confirm(`确定要删除产品吗？\n\nID: ${product.id}\n名称: ${product.name}`)) return;
+
+      const updatedProducts = allProducts.filter(p => p.id !== id);
+      const result = await saveProducts(updatedProducts);
+      
+      if (result.success) {
+        alert("✅ 产品删除成功");
+        loadData();
+      } else {
+        alert("错误: " + (result.error || "未知错误"));
+      }
+    }
+
+    function clearForm() {
+      document.getElementById('addForm').reset();
+      hideDuplicateAlert();
+      // 清除输入框的错误样式
+      document.querySelectorAll('.error-input').forEach(input => {
+        input.classList.remove('error-input');
+      });
+    }
+
+    // 事件监听器
+    document.getElementById("refreshBtn").addEventListener("click", loadData);
+    document.getElementById("prettifyBtn").addEventListener("click", async () => {
+      await loadData();
+      alert("✅ 数据已刷新");
+    });
+    document.getElementById("checkDuplicatesBtn").addEventListener("click", checkAllDuplicates);
+    document.getElementById("searchInput").addEventListener("input", () => updateDisplay({products: allProducts}));
+    document.getElementById("statusFilter").addEventListener("change", () => updateDisplay({products: allProducts}));
+    document.getElementById("categoryFilter").addEventListener("change", () => updateDisplay({products: allProducts}));
+
+    // 点击模态框外部关闭
+    document.getElementById('editModal').addEventListener('click', (e) => {
+      if (e.target.id === 'editModal') {
+        closeEditModal();
+      }
+    });
+
+    // 初始加载
+    loadData();
+  </script>
+</body>
+</html>

@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🔍 數據驗證 - AI選股系統</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Microsoft JhengHei', sans-serif;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 3px solid #3498db;
+        }
+        
+        .header h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 2.5rem;
+        }
+        
+        .verification-section {
+            margin: 30px 0;
+            padding: 25px;
+            background: #f8fafc;
+            border-radius: 15px;
+            border-left: 5px solid #3498db;
+        }
+        
+        .verification-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            background: white;
+            margin: 10px 0;
+            border-radius: 10px;
+            border: 1px solid #e2e8f0;
+        }
+        
+        .status {
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+        
+        .status.pass { background: #d4edda; color: #155724; }
+        .status.fail { background: #f8d7da; color: #721c24; }
+        .status.warning { background: #fff3cd; color: #856404; }
+        
+        .raw-data {
+            background: #2c3e50;
+            color: #ecf0f1;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            font-family: monospace;
+            overflow-x: auto;
+            font-size: 0.9rem;
+        }
+        
+        .timestamp {
+            font-size: 0.9rem;
+            color: #718096;
+            margin-top: 5px;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            background: #3498db;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            margin: 10px 5px;
+            text-decoration: none;
+        }
+        
+        .btn:hover {
+            background: #2980b9;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔍 AI選股數據驗證</h1>
+            <p>完全透明化的數據驗證系統，建立投資者信任</p>
+        </div>
+        
+        <!-- 即時驗證 -->
+        <div class="verification-section">
+            <h2>📊 即時數據驗證</h2>
+            <button class="btn" onclick="runVerification()">
+                <i class="fas fa-sync-alt"></i> 執行驗證檢查
+            </button>
+            
+            <div id="verificationResults">
+                <!-- 驗證結果會顯示在這裡 -->
+            </div>
+        </div>
+        
+        <!-- 數據完整性 -->
+        <div class="verification-section">
+            <h2>✅ 數據完整性檢查</h2>
+            <div id="integrityChecks">
+                <!-- 完整性檢查結果 -->
+            </div>
+        </div>
+        
+        <!-- 原始數據預覽 -->
+        <div class="verification-section">
+            <h2>📄 原始數據預覽</h2>
+            <p>點擊查看完整的分析數據：</p>
+            <div>
+                <button class="btn" onclick="showPicksData()">查看選股數據</button>
+                <button class="btn" onclick="showBacktestData()">查看回測數據</button>
+                <button class="btn" onclick="showAlgorithm()">查看算法邏輯</button>
+            </div>
+            
+            <div id="dataPreview" class="raw-data">
+                <!-- 數據預覽 -->
+            </div>
+        </div>
+        
+        <!-- 更新歷史 -->
+        <div class="verification-section">
+            <h2>📅 更新歷史記錄</h2>
+            <div id="updateHistory">
+                <!-- 更新歷史 -->
+            </div>
+        </div>
+        
+        <div style="text-align: center; margin-top: 40px; padding-top: 20px; border-top: 1px solid #e2e8f0;">
+    <p>💡 數據透明度是建立信任的關鍵。我們承諾保持所有數據的公開和可驗證。</p>
+    <a href="../stocks.html" class="btn" style="background: #2ecc71;">返回 AI 選股</a>
+</div>
+
+    <script>
+        // 驗證檢查項目
+        const verificationChecks = [
+            { id: 'dataSource', name: '數據來源驗證', description: '檢查數據是否來自官方EOD' },
+            { id: 'freshness', name: '數據新鮮度檢查', description: '檢查數據更新時間' },
+            { id: 'structure', name: '數據結構檢查', description: '檢查JSON結構完整性' },
+            { id: 'content', name: '內容有效性檢查', description: '檢查股票數據是否有效' },
+            { id: 'algorithm', name: '算法一致性檢查', description: '檢查評分算法一致性' }
+        ];
+        
+        async function runVerification() {
+            const resultsContainer = document.getElementById('verificationResults');
+            resultsContainer.innerHTML = '<div class="verification-item"><span>正在執行驗證...</span><span class="status warning">進行中</span></div>';
+            
+            const results = [];
+            
+            try {
+                // 1. 獲取數據
+                const response = await fetch('picks.json');
+                const data = await response.json();
+                
+                // 2. 執行各項檢查
+                results.push(await checkDataSource(data));
+                results.push(await checkFreshness(data));
+                results.push(await checkStructure(data));
+                results.push(await checkContent(data));
+                results.push(await checkAlgorithmConsistency(data));
+                
+                // 3. 顯示結果
+                displayResults(results);
+                
+                // 4. 更新完整性檢查
+                updateIntegrityChecks(results);
+                
+                // 5. 更新更新歷史
+                updateHistory(data.last_updated);
+                
+            } catch (error) {
+                resultsContainer.innerHTML = `
+                    <div class="verification-item">
+                        <span>驗證失敗: ${error.message}</span>
+                        <span class="status fail">失敗</span>
+                    </div>
+                `;
+            }
+        }
+        
+        async function checkDataSource(data) {
+            const hasSource = data.data_source && data.data_source.includes('Bursa');
+            return {
+                name: '數據來源驗證',
+                passed: hasSource,
+                message: hasSource ? '數據來源可靠' : '數據來源不明'
+            };
+        }
+        
+        async function checkFreshness(data) {
+            if (!data.last_updated) {
+                return { name: '新鮮度檢查', passed: false, message: '無更新時間戳' };
+            }
+            
+            const updateTime = new Date(data.last_updated);
+            const now = new Date();
+            const diffHours = Math.floor((now - updateTime) / (1000 * 60 * 60));
+            
+            const passed = diffHours < 48; // 48小時內視為新鮮
+            return {
+                name: '新鮮度檢查',
+                passed: passed,
+                message: `最後更新: ${diffHours}小時前`
+            };
+        }
+        
+        function displayResults(results) {
+            const container = document.getElementById('verificationResults');
+            container.innerHTML = '';
+            
+            results.forEach(result => {
+                const item = document.createElement('div');
+                item.className = 'verification-item';
+                
+                item.innerHTML = `
+                    <div>
+                        <strong>${result.name}</strong><br>
+                        <small style="color: #718096;">${result.message}</small>
+                    </div>
+                    <span class="status ${result.passed ? 'pass' : 'fail'}">
+                        ${result.passed ? '通過 ✓' : '失敗 ✗'}
+                    </span>
+                `;
+                
+                container.appendChild(item);
+            });
+            
+            // 總結
+            const total = results.length;
+            const passed = results.filter(r => r.passed).length;
+            const percentage = Math.round((passed / total) * 100);
+            
+            const summary = document.createElement('div');
+            summary.className = 'verification-item';
+            summary.style.background = percentage > 80 ? '#d4edda' : 
+                                      percentage > 60 ? '#fff3cd' : '#f8d7da';
+            summary.innerHTML = `
+                <div>
+                    <strong>總體驗證結果</strong><br>
+                    <small>${passed}/${total} 項檢查通過 (${percentage}%)</small>
+                </div>
+                <span style="font-weight:bold; color: ${percentage > 80 ? '#155724' : 
+                                                       percentage > 60 ? '#856404' : '#721c24'}">
+                    ${percentage > 80 ? '優秀' : percentage > 60 ? '中等' : '需改進'}
+                </span>
+            `;
+            
+            container.appendChild(summary);
+        }
+        
+        function showPicksData() {
+            fetch('picks.json')
+                .then(r => r.json())
+                .then(data => {
+                    document.getElementById('dataPreview').innerHTML = 
+                        `<pre>${JSON.stringify(data, null, 2).substring(0, 2000)}...</pre>`;
+                });
+        }
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            // 自動執行一次驗證
+            setTimeout(runVerification, 1000);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>修复商品图片URL</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            color: white;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: rgba(255,255,255,0.95);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            color: #333;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+        }
+        .btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 8px;
+            font-size: 18px;
+            cursor: pointer;
+            margin: 10px;
+            transition: all 0.3s;
+        }
+        .btn:hover {
+            background: #5a6fd8;
+            transform: translateY(-2px);
+        }
+        .btn-fix {
+            background: #48bb78;
+        }
+        .btn-check {
+            background: #4299e1;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            background: #f7fafc;
+            border-left: 5px solid #4299e1;
+        }
+        .product-item {
+            padding: 10px;
+            border-bottom: 1px solid #e2e8f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .product-name {
+            font-weight: bold;
+        }
+        .product-image {
+            color: #666;
+            font-size: 14px;
+        }
+        .fixed {
+            color: #48bb78;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🛠️ 商品图片URL修复工具</h1>
+        
+        <div style="text-align: center; margin-bottom: 30px;">
+            <button class="btn btn-check" onclick="checkProducts()">
+                🔍 检查当前商品数据
+            </button>
+            <button class="btn btn-fix" onclick="fixProducts()">
+                🔧 一键修复图片URL
+            </button>
+        </div>
+
+        <div id="result"></div>
+    </div>
+
+    <script>
+        // 商品图片修复映射表
+        const imageFixMap = {
+            '白花蛇舌草': 'images/products/shopee/sh-61_1111.png',
+            '半枝莲': 'images/products/shopee/半枝莲的正确图片.png',
+            '红糖': 'images/products/shopee/红糖的正确图片.png',
+            '黄糖': 'images/products/shopee/黄糖的正确图片.png',
+            '黑糖': 'images/products/shopee/黑糖的正确图片.png'
+        };
+
+        function checkProducts() {
+            const products = JSON.parse(localStorage.getItem('shopeeProducts_V2') || '[]');
+            const resultDiv = document.getElementById('result');
+            
+            if (products.length === 0) {
+                resultDiv.innerHTML = '<div class="result">❌ 没有找到商品数据</div>';
+                return;
+            }
+
+            let html = '<div class="result"><h3>📋 当前商品列表 (' + products.length + '个)</h3>';
+            
+            products.forEach(product => {
+                const needsFix = Object.keys(imageFixMap).some(name => 
+                    product.name.includes(name)
+                );
+                
+                html += `
+                    <div class="product-item">
+                        <div>
+                            <span class="product-name">${product.name}</span>
+                            <div class="product-image">图片: ${product.image}</div>
+                        </div>
+                        <div>${needsFix ? '❌ 需要修复' : '✅ 正常'}</div>
+                    </div>
+                `;
+            });
+            
+            html += '</div>';
+            resultDiv.innerHTML = html;
+        }
+
+        function fixProducts() {
+            const products = JSON.parse(localStorage.getItem('shopeeProducts_V2') || '[]');
+            const resultDiv = document.getElementById('result');
+            
+            if (products.length === 0) {
+                resultDiv.innerHTML = '<div class="result">❌ 没有找到商品数据</div>';
+                return;
+            }
+
+            let fixedCount = 0;
+            const fixedProducts = products.map(product => {
+                let fixed = false;
+                
+                // 检查并修复每个商品
+                for (const [name, correctImage] of Object.entries(imageFixMap)) {
+                    if (product.name.includes(name)) {
+                        fixedCount++;
+                        fixed = true;
+                        return {
+                            ...product,
+                            image: correctImage
+                        };
+                    }
+                }
+                
+                return product;
+            });
+
+            // 保存修复后的数据
+            localStorage.setItem('shopeeProducts_V2', JSON.stringify(fixedProducts));
+            
+            // 显示修复结果
+            let html = `<div class="result">
+                <h3>✅ 修复完成！</h3>
+                <p>已修复 <strong>${fixedCount}</strong> 个商品的图片URL</p>
+                <h4>修复详情：</h4>`;
+            
+            fixedProducts.forEach(product => {
+                const wasFixed = Object.keys(imageFixMap).some(name => 
+                    product.name.includes(name)
+                );
+                
+                html += `
+                    <div class="product-item">
+                        <div>
+                            <span class="product-name">${product.name}</span>
+                            <div class="product-image ${wasFixed ? 'fixed' : ''}">
+                                图片: ${product.image} ${wasFixed ? '🔄 已修复' : ''}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            html += `
+                </div>
+                <div style="text-align: center; margin-top: 20px;">
+                    <button class="btn" onclick="location.href='shopee.html'">
+                        📱 查看前台效果
+                    </button>
+                </div>
+            `;
+            
+            resultDiv.innerHTML = html;
+        }
+
+        // 页面加载时自动检查
+        window.addEventListener('load', checkProducts);
+    </script>
+</body>
+</html>

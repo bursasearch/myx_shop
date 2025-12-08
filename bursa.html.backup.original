@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>AI選股分析系統 | Myx Shop</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Microsoft JhengHei', sans-serif;
+      background: #f5f7fa;
+      color: #333;
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+    
+    /* 移动端优化 */
+    @media (max-width: 768px) {
+      body {
+        font-size: 15px;
+      }
+    }
+    
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    
+    /* 顶部导航 */
+    .top-nav {
+      background: linear-gradient(135deg, #2c3e50, #34495e);
+      color: white;
+      padding: 15px 20px;
+      border-radius: 15px;
+      margin-bottom: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    
+    .nav-title {
+      font-size: 1.3rem;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .nav-links {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    
+    .nav-btn {
+      background: rgba(255,255,255,0.15);
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 20px;
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    
+    .nav-btn:hover {
+      background: rgba(255,255,255,0.25);
+      transform: translateY(-2px);
+    }
+    
+    /* 主要横幅 */
+    .main-banner {
+      background: linear-gradient(135deg, #4a6fa5, #2c3e50);
+      color: white;
+      padding: 30px;
+      border-radius: 15px;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    
+    .main-banner h1 {
+      font-size: 1.8rem;
+      margin-bottom: 10px;
+    }
+    
+    .main-banner p {
+      opacity: 0.9;
+      margin-bottom: 15px;
+    }
+    
+    .info-badge {
+      display: inline-block;
+      background: rgba(255,255,255,0.2);
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      margin: 5px;
+    }
+    
+    /* 统计卡片 */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+      margin: 20px 0;
+    }
+    
+    .stat-card {
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      text-align: center;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    }
+    
+    .stat-icon {
+      font-size: 2rem;
+      margin-bottom: 10px;
+    }
+    
+    .stat-number {
+      font-size: 1.8rem;
+      font-weight: bold;
+      color: #2c3e50;
+      margin: 10px 0;
+    }
+    
+    .stat-label {
+      color: #666;
+      font-size: 0.9rem;
+    }
+    
+    /* AI分析报告卡片 */
+    .ai-report-card {
+      background: linear-gradient(135deg, #28a745, #20c997);
+      color: white;
+      padding: 25px;
+      border-radius: 15px;
+      margin: 25px 0;
+      text-align: center;
+      box-shadow: 0 10px 30px rgba(40, 167, 69, 0.2);
+    }
+    
+    .ai-report-card h2 {
+      margin-bottom: 15px;
+      font-size: 1.5rem;
+    }
+    
+    .report-features {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin: 20px 0;
+    }
+    
+    .feature-item {
+      background: rgba(255,255,255,0.15);
+      padding: 10px 20px;
+      border-radius: 10px;
+      backdrop-filter: blur(10px);
+    }
+    
+    .view-report-btn {
+      display: inline-block;
+      background: white;
+      color: #28a745;
+      padding: 12px 30px;
+      border-radius: 25px;
+      text-decoration: none;
+      font-weight: bold;
+      margin-top: 15px;
+      transition: all 0.3s ease;
+    }
+    
+    .view-report-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(255,255,255,0.3);
+    }
+    
+    /* 视频板块 - 调整为次要内容 */
+    .video-section {
+      background: white;
+      padding: 20px;
+      border-radius: 15px;
+      margin: 20px 0;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    }
+    
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    
+    .section-title {
+      font-size: 1.3rem;
+      color: #2c3e50;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .update-frequency {
+      background: #e3f2fd;
+      color: #1976d2;
+      padding: 5px 15px;
+      border-radius: 15px;
+      font-size: 0.85rem;
+      font-weight: bold;
+    }
+    
+    /* 最新视频 */
+    .latest-video-container {
+      border: 2px solid #e0e0e0;
+      border-radius: 10px;
+      overflow: hidden;
+      margin-bottom: 20px;
+    }
+    
+    .video-thumbnail {
+      position: relative;
+      width: 100%;
+      padding-bottom: 56.25%;
+      background: #f5f5f5;
+      overflow: hidden;
+    }
+    
+    .video-thumbnail img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    
+    .video-info {
+      padding: 15px;
+      background: white;
+    }
+    
+    .video-title {
+      font-weight: bold;
+      margin-bottom: 8px;
+      font-size: 1.1rem;
+    }
+    
+    .video-meta {
+      color: #666;
+      font-size: 0.9rem;
+      display: flex;
+      justify-content: space-between;
+    }
+    
+    /* 历史视频列表 */
+    .video-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 15px;
+      margin-top: 20px;
+    }
+    
+    .video-item {
+      border: 1px solid #e0e0e0;
+      border-radius: 10px;
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+    
+    .video-item:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    }
+    
+    .item-thumbnail {
+      position: relative;
+      width: 100%;
+      padding-bottom: 60%;
+      background: #f5f5f5;
+      overflow: hidden;
+    }
+    
+    .item-thumbnail img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    
+    .item-info {
+      padding: 12px;
+    }
+    
+    .item-title {
+      font-weight: bold;
+      margin-bottom: 5px;
+      font-size: 0.95rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    
+    /* 特色功能 */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 15px;
+      margin: 25px 0;
+    }
+    
+    .feature-card {
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+      text-align: center;
+    }
+    
+    .feature-card h3 {
+      color: #2c3e50;
+      margin: 15px 0 10px;
+    }
+    
+    .feature-card p {
+      color: #666;
+      font-size: 0.9rem;
+    }
+    
+    /* 社交链接 */
+    .social-section {
+      background: white;
+      padding: 20px;
+      border-radius: 15px;
+      margin: 20px 0;
+      text-align: center;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    }
+    
+    .social-links {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      flex-wrap: wrap;
+      margin-top: 20px;
+    }
+    
+    .social-btn {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 20px;
+      border-radius: 25px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: all 0.3s ease;
+    }
+    
+    .social-youtube {
+      background: #ff0000;
+      color: white;
+    }
+    
+    .social-tiktok {
+      background: #000000;
+      color: white;
+    }
+    
+    .social-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    }
+    
+    /* 页脚 */
+    .footer {
+      text-align: center;
+      color: #666;
+      font-size: 0.9rem;
+      padding: 20px;
+      margin-top: 30px;
+      border-top: 1px solid #e0e0e0;
+    }
+    
+    /* 移动端适配 */
+    @media (max-width: 768px) {
+      .container {
+        padding: 15px;
+      }
+      
+      .top-nav {
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+      }
+      
+      .nav-links {
+        justify-content: center;
+      }
+      
+      .main-banner {
+        padding: 20px 15px;
+      }
+      
+      .main-banner h1 {
+        font-size: 1.5rem;
+      }
+      
+      .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      
+      .ai-report-card {
+        padding: 20px 15px;
+      }
+      
+      .video-list {
+        grid-template-columns: 1fr;
+      }
+      
+      .features-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .stats-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .report-features {
+        flex-direction: column;
+        align-items: center;
+      }
+      
+      .social-links {
+        flex-direction: column;
+        align-items: stretch;
+      }
+    }
+    
+    /* 实用工具类 */
+    .positive { color: #28a745; font-weight: bold; }
+    .negative { color: #dc3545; font-weight: bold; }
+    .highlight { background: #fff3cd; padding: 2px 6px; border-radius: 4px; }
+    
+    /* 加载动画 */
+    .loading {
+      text-align: center;
+      padding: 30px;
+      color: #666;
+    }
+    
+    .spinner {
+      display: inline-block;
+      width: 30px;
+      height: 30px;
+      border: 3px solid #f3f3f3;
+      border-top: 3px solid #3498db;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin-bottom: 10px;
+    }
+    
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- 顶部导航 -->
+    <div class="top-nav">
+      <div class="nav-title">
+        <span style="font-size: 1.5rem;">🤖</span>
+        <span>AI選股分析系統</span>
+      </div>
+      <div class="nav-links">
+        <a href="./index.html" class="nav-btn">
+          <span>🏠</span> 主頁
+        </a>
+        <a href="./web/retail-inv.html" class="nav-btn">
+          <span>📊</span> 回測工具
+        </a>
+        <a href="./admin/shopee_dashboard.html" class="nav-btn">
+          <span>🛍️</span> 商店管理
+        </a>
+        <a href="./vehicles.html" class="nav-btn">
+          <span>🚗</span> 二手車輛
+        </a>
+      </div>
+    </div>
+    
+    <!-- 主要横幅 -->
+    <div class="main-banner">
+      <h1>AI選股分析與投資系統</h1>
+      <p>基於機器學習算法的智能股票篩選與分析工具</p>
+      <div>
+        <span class="info-badge">📅 數據每日更新</span>
+        <span class="info-badge">⚡ 即時AI分析</span>
+        <span class="info-badge">📱 手機友好界面</span>
+      </div>
+    </div>
+    
+    <!-- 统计卡片 -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-icon">📈</div>
+        <div class="stat-number">93.7</div>
+        <div class="stat-label">平均AI評分</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">💰</div>
+        <div class="stat-number">+24.1%</div>
+        <div class="stat-label">平均30天回報</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">⚡</div>
+        <div class="stat-number">35.4</div>
+        <div class="stat-label">平均夏普比率</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">📊</div>
+        <div class="stat-number">10</div>
+        <div class="stat-label">今日推薦股票</div>
+      </div>
+    </div>
+    
+    <!-- AI分析报告卡片 -->
+    <div class="ai-report-card">
+      <h2>📊 最新AI選股分析報告</h2>
+      <p>基於今日市場數據生成的完整AI分析報告，包含詳細股票評分和投資建議</p>
+      
+      <div class="report-features">
+        <div class="feature-item">🏆 Top 10 推薦股票</div>
+        <div class="feature-item">📈 回測表現分析</div>
+        <div class="feature-item">⚡ AI算法詳解</div>
+      </div>
+      
+      <a href="web/ai_analysis_preview.html" class="view-report-btn">
+        查看完整分析報告 →
+      </a>
+      
+      <div style="margin-top: 15px; font-size: 0.9rem; opacity: 0.9;">
+        <p>💡 建議優先查看AI分析報告，獲得最新投資建議</p>
+      </div>
+    </div>
+    
+    <!-- 特色功能 -->
+    <div class="features-grid">
+      <div class="feature-card">
+        <div style="font-size: 2.5rem;">🤖</div>
+        <h3>AI智能選股</h3>
+        <p>基於機器學習算法，自動分析股票數據，提供客觀的投資建議</p>
+      </div>
+      
+      <div class="feature-card">
+        <div style="font-size: 2.5rem;">📊</div>
+        <h3>回測分析工具</h3>
+        <p>驗證投資策略有效性，分析歷史表現，優化投資決策</p>
+      </div>
+      
+      <div class="feature-card">
+        <div style="font-size: 2.5rem;">📱</div>
+        <h3>手機友好界面</h3>
+        <p>專為移動設備優化，隨時隨地查看分析報告和投資建議</p>
+      </div>
+    </div>
+    
+    <!-- 视频板块 - 调整为次要内容 -->
+    <div class="video-section">
+      <div class="section-header">
+        <div class="section-title">
+          <span>🎬</span> 精選AI選股影片
+        </div>
+        <div class="update-frequency">
+          ⏰ 不定期更新
+        </div>
+      </div>
+      
+      <div style="margin-bottom: 20px; padding: 15px; background: #f8f9fa; border-radius: 10px;">
+        <p style="color: #666; font-size: 0.95rem; text-align: center;">
+          <strong>📢 更新說明：</strong><br>
+          影片更新調整為<strong>不定期發布</strong>，重點將放在每日更新的AI分析報告上。<br>
+          重要市場分析或策略更新時會發布新影片。
+        </p>
+      </div>
+      
+      <!-- 最新视频 -->
+      <div class="latest-video-container">
+        <div class="video-thumbnail">
+          <img src="https://img.youtube.com/vi/AxlIA-OivOs/hqdefault.jpg" 
+               alt="最新AI選股影片"
+               onerror="this.onerror=null;this.src='https://via.placeholder.com/800x450/4a6fa5/ffffff?text=影片縮圖'">
+        </div>
+        <div class="video-info">
+          <div class="video-title">【AI選股】2025年11月6日成績揭曉與市場分析</div>
+          <div class="video-meta">
+            <span>2025年11月06日</span>
+            <span>🕐 15:24</span>
+          </div>
+        </div>
+      </div>
+      
+      <!-- 历史视频列表 -->
+      <div class="video-list">
+        <div class="video-item" onclick="window.open('https://youtu.be/dQw4w9WgXcQ', '_blank')">
+          <div class="item-thumbnail">
+            <img src="https://via.placeholder.com/400x240/3498db/ffffff?text=AI教學" 
+                 alt="AI選股基礎教學">
+          </div>
+          <div class="item-info">
+            <div class="item-title">AI選股基礎教學 - 新手入門指南</div>
+            <div class="video-meta">
+              <span>2025-11-05</span>
+            </div>
+          </div>
+        </div>
+        
+        <div class="video-item" onclick="window.open('https://youtu.be/9bZkp7q19f0', '_blank')">
+          <div class="item-thumbnail">
+            <img src="https://via.placeholder.com/400x240/2ecc71/ffffff?text=技術分析" 
+                 alt="技術分析進階策略">
+          </div>
+          <div class="item-info">
+            <div class="item-title">技術分析進階策略與實戰應用</div>
+            <div class="video-meta">
+              <span>2025-11-04</span>
+            </div>
+          </div>
+        </div>
+        
+        <div class="video-item" onclick="window.open('https://youtu.be/kJQP7kiw5Fk', '_blank')">
+          <div class="item-thumbnail">
+            <img src="https://via.placeholder.com/400x240/e74c3c/ffffff?text=風險管理" 
+                 alt="市場趨勢與風險管理">
+          </div>
+          <div class="item-info">
+            <div class="item-title">市場趨勢分析與風險管理技巧</div>
+            <div class="video-meta">
+              <span>2025-11-03</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- 社交链接 -->
+    <div class="social-section">
+      <h3>📱 關注我們獲取最新更新</h3>
+      <p>訂閱我們的社交媒體，獲取AI選股的最新資訊和重要更新</p>
+      
+      <div class="social-links">
+        <a href="https://www.youtube.com/@bursasearch" class="social-btn social-youtube" target="_blank">
+          <span>▶️</span> YouTube頻道
+        </a>
+        <a href="https://www.tiktok.com/@bursasearch" class="social-btn social-tiktok" target="_blank">
+          <span>🎵</span> TikTok賬號
+        </a>
+      </div>
+      
+      <p style="margin-top: 20px; color: #666; font-size: 0.9rem;">
+        💡 提醒：重要更新和市場分析會優先發布在AI分析報告中
+      </p>
+    </div>
+    
+    <!-- 页脚 -->
+    <div class="footer">
+      <p><strong>AI選股分析系統</strong> | 版本 v2.0</p>
+      <p style="margin-top: 10px; font-size: 0.85rem;">
+        📅 數據更新時間: <span id="current-time">載入中...</span><br>
+        ⚠️ 免責聲明: 此分析僅供參考，不構成投資建議
+      </p>
+    </div>
+  </div>
+
+  <script>
+    // 更新當前時間
+    function updateCurrentTime() {
+      const now = new Date();
+      const dateStr = now.toLocaleDateString('zh-TW', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+        weekday: 'long'
+      });
+      const timeStr = now.toLocaleTimeString('zh-TW', {
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: false
+      });
+      
+      document.getElementById('current-time').textContent = `${dateStr} ${timeStr}`;
+    }
+    
+    // 頁面加載完成後執行
+    document.addEventListener('DOMContentLoaded', function() {
+      // 更新時間
+      updateCurrentTime();
+      setInterval(updateCurrentTime, 1000);
+      
+      // 添加頁面動畫效果
+      const animatedElements = document.querySelectorAll('.stat-card, .feature-card, .video-section');
+      animatedElements.forEach((element, index) => {
+        element.style.opacity = '0';
+        element.style.transform = 'translateY(20px)';
+        
+        setTimeout(() => {
+          element.style.transition = 'all 0.6s ease';
+          element.style.opacity = '1';
+          element.style.transform = 'translateY(0)';
+        }, index * 150);
+      });
+      
+      // 添加視頻點擊效果
+      const videoItems = document.querySelectorAll('.video-item');
+      videoItems.forEach(item => {
+        item.addEventListener('click', function() {
+          this.style.transform = 'scale(0.98)';
+          setTimeout(() => {
+            this.style.transform = '';
+          }, 200);
+        });
+      });
+      
+      // 顯示頁面已載入
+      console.log('AI選股分析頁面已載入完成');
+    });
+    
+    // 手機菜單功能（如果需要）
+    function toggleMobileMenu() {
+      const navLinks = document.querySelector('.nav-links');
+      navLinks.classList.toggle('show');
+    }
+  </script>
+</body>
+</html>

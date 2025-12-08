@@ -1,0 +1,22 @@
+{
+  "analysis_date": "2025-11-18",
+  "strategy": "AI多因子選股",
+  "total_selected": 2,
+  "selected_stocks": [
+    {
+      "code": "1155",
+      "name": "MAYBANK",
+      "price": 8.95,
+      "reason": "AI分析：基本面強勁",
+      "tag": "AI推薦"
+    },
+    {
+      "code": "4863",
+      "name": "TELEKOM",
+      "price": 5.8,
+      "reason": "AI分析：通訊龍頭",
+      "tag": "AI推薦"
+    }
+  ],
+  "timestamp": "2025-11-18 17:50:51"
+}

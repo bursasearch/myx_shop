@@ -55,6 +55,34 @@
             opacity: 0.9;
         }
 
+        .header-nav {
+            margin-top: 1rem;
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .nav-btn {
+            background: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            text-decoration: none;
+            color: var(--primary);
+            font-weight: 600;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-btn:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-2px);
+        }
+
         /* 筛选器 */
         .filters {
             background: white;
@@ -243,28 +271,6 @@
             100% { transform: rotate(360deg); }
         }
 
-        /* 导航链接 */
-        .admin-link {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: white;
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
-            text-decoration: none;
-            color: var(--primary);
-            font-weight: 600;
-            box-shadow: var(--shadow);
-            z-index: 100;
-            transition: var(--transition);
-        }
-
-        .admin-link:hover {
-            background: var(--primary);
-            color: white;
-            transform: translateY(-2px);
-        }
-
         /* 产品统计 */
         .products-stats {
             background: white;
@@ -307,10 +313,15 @@
                 grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
             }
             
-            .admin-link {
-                position: static;
-                margin-bottom: 1rem;
-                display: inline-block;
+            .header-nav {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .nav-btn {
+                width: 100%;
+                max-width: 300px;
+                justify-content: center;
             }
             
             .products-stats {
@@ -373,24 +384,59 @@
             cursor: pointer;
             font-weight: 600;
             transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
         }
 
         .refresh-btn:hover {
             background: #38a169;
             transform: translateY(-2px);
         }
+
+        /* Toast通知 */
+        .custom-toast {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%) translateY(-100px);
+            background: white;
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            z-index: 1000;
+            transition: transform 0.3s ease;
+            border-left: 4px solid var(--primary);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .custom-toast.success { border-left-color: var(--success); }
+        .custom-toast.error { border-left-color: var(--danger); }
+        .custom-toast.info { border-left-color: var(--primary); }
     </style>
 </head>
 <body>
-    <!-- 管理后台链接 -->
-<a href="admin/shopee_dashboard.html" class="admin-link">
-    <i class="fas fa-cog"></i> 管理后台
-</a>
 
     <div class="container">
         <div class="header">
             <h1><i class="fab fa-shopify"></i> Myx Shop</h1>
             <p>精选 Shopee 优质产品 - 一站式购物体验</p>
+            
+            <!-- 导航链接 -->
+            <div class="header-nav">
+                <a href="admin/shopee_dashboard.html" class="nav-btn">
+                    <i class="fas fa-cog"></i> 管理后台
+                </a>
+                <a href="../index.html" class="nav-btn">
+                    <i class="fas fa-home"></i> 回到主頁
+                </a>
+                <a href="../bursa.html" class="nav-btn">
+                    <i class="fas fa-chart-line"></i> 回到AI選股
+                </a>
+            </div>
         </div>
 
         <!-- 产品统计 -->
@@ -708,21 +754,7 @@
                 }
 
                 const toast = document.createElement('div');
-                toast.className = 'custom-toast';
-                toast.style.cssText = `
-                    position: fixed;
-                    top: 20px;
-                    left: 50%;
-                    transform: translateX(-50%) translateY(-100px);
-                    background: white;
-                    padding: 1rem 1.5rem;
-                    border-radius: 8px;
-                    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-                    z-index: 1000;
-                    transition: transform 0.3s ease;
-                    border-left: 4px solid ${type === 'info' ? 'var(--primary)' : type === 'success' ? 'var(--success)' : 'var(--danger)'};
-                    font-weight: 600;
-                `;
+                toast.className = `custom-toast ${type}`;
                 toast.innerHTML = `
                     <i class="fas ${type === 'info' ? 'fa-info-circle' : type === 'success' ? 'fa-check-circle' : 'fa-exclamation-triangle'}"></i>
                     ${message}
@@ -757,6 +789,13 @@
         window.addEventListener('error', function(e) {
             console.error('全局错误:', e.error);
         });
+
+        // 调试：测试链接
+        console.log('当前页面路径:', window.location.pathname);
+        console.log('JSON文件路径:', 'js/shopee_lists.json');
+        console.log('管理后台链接:', 'admin/shopee_dashboard.html');
+        console.log('主页链接:', '../index.html');
+        console.log('AI选股链接:', '../bursa.html');
     </script>
 </body>
-</html># Fri Nov 28 19:01:40 +08 2025
+</html>

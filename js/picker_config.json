@@ -1,0 +1,21 @@
+{
+  "min_price": 0.10,
+  "min_vol": 10000,
+  "sector_max_weight": 0.30,
+  "weights": {
+    "momentum_pos": 1.0,
+    "chg_pct": 2.0,
+    "rsi_mid": 1.0,
+    "rsi_rising": 1.5,
+    "macd_pos": 1.5,
+    "near_yhigh": 1.0,
+    "vol_accel": 1.0,
+    "dy_bonus": 0.5,
+    "pe_reasonable": 0.5
+  },
+  "caps": {
+    "chg_pct_max": 15.0,
+    "yhigh_dist_max": 10.0,
+    "vol_accel_max": 5.0
+  }
+}

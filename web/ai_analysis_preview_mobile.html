@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>AI選股報告 - 手機版</title>
+    <style>
+        /* 超簡潔手機版樣式 */
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --success: #27ae60;
+            --warning: #f39c12;
+            --danger: #e74c3c;
+            --light: #ecf0f1;
+            --dark: #2c3e50;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Microsoft JhengHei', sans-serif;
+            font-size: 15px;
+            line-height: 1.5;
+            color: #333;
+            background: #f8f9fa;
+            padding-bottom: 60px;
+        }
+        
+        /* 頂部導航 - 固定在底部更方便手機操作 */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            display: flex;
+            border-top: 1px solid #ddd;
+            z-index: 1000;
+            padding: 8px 0;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .nav-item {
+            flex: 1;
+            text-align: center;
+            padding: 8px 5px;
+            text-decoration: none;
+            color: #666;
+            font-size: 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: all 0.2s;
+        }
+        
+        .nav-item.active,
+        .nav-item:hover {
+            color: var(--secondary);
+        }
+        
+        .nav-icon {
+            font-size: 20px;
+            margin-bottom: 4px;
+        }
+        
+        /* 主要內容 */
+        .container {
+            padding: 15px;
+            max-width: 100%;
+            overflow-x: hidden;
+        }
+        
+        /* 頂部信息卡片 */
+        .header-card {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        
+        .header-card h1 {
+            font-size: 1.4rem;
+            margin-bottom: 10px;
+        }
+        
+        .header-card p {
+            opacity: 0.9;
+            font-size: 0.9rem;
+        }
+        
+        /* 快速統計 */
+        .quick-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .stat-item {
+            background: white;
+            padding: 15px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+        }
+        
+        .stat-number {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--secondary);
+            margin: 5px 0;
+        }
+        
+        .stat-label {
+            font-size: 0.8rem;
+            color: #666;
+        }
+        
+        /* 表格卡片 */
+        .card {
+            background: white;
+            border-radius: 12px;
+            margin-bottom: 15px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+        }
+        
+        .card-header {
+            background: var(--light);
+            padding: 15px;
+            font-weight: bold;
+            color: var(--dark);
+            border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .card-body {
+            padding: 0;
+        }
+        
+        /* 手機友好表格 */
+        .mobile-table {
+            width: 100%;
+        }
+        
+        .table-row {
+            display: flex;
+            padding: 12px 15px;
+            border-bottom: 1px solid #eee;
+            align-items: center;
+        }
+        
+        .table-row:last-child {
+            border-bottom: none;
+        }
+        
+        .table-row:nth-child(even) {
+            background: #f9f9f9;
+        }
+        
+        .rank {
+            width: 40px;
+            font-weight: bold;
+            color: var(--secondary);
+        }
+        
+        .stock-info {
+            flex: 1;
+            min-width: 0;
+        }
+        
+        .stock-code {
+            font-weight: bold;
+            color: var(--dark);
+            margin-bottom: 3px;
+            font-size: 0.95rem;
+        }
+        
+        .stock-name {
+            color: #666;
+            font-size: 0.85rem;
+        }
+        
+        .stock-score {
+            width: 70px;
+            text-align: right;
+        }
+        
+        .score-badge {
+            background: var(--success);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 10px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            display: inline-block;
+        }
+        
+        /* 進度條 */
+        .progress-item {
+            margin-bottom: 15px;
+        }
+        
+        .progress-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+            font-size: 0.9rem;
+        }
+        
+        .progress-bar {
+            height: 8px;
+            background: #eee;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: var(--secondary);
+            border-radius: 4px;
+        }
+        
+        /* 按鈕 */
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 14px;
+            background: var(--secondary);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: bold;
+            text-align: center;
+            text-decoration: none;
+            margin: 10px 0;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .btn:hover {
+            background: #2980b9;
+            transform: translateY(-2px);
+        }
+        
+        .btn-secondary {
+            background: #95a5a6;
+        }
+        
+        /* 評分說明 */
+        .rating-list {
+            list-style: none;
+        }
+        
+        .rating-item {
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: center;
+        }
+        
+        .rating-item:last-child {
+            border-bottom: none;
+        }
+        
+        .rating-color {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+        
+        /* 免責聲明 */
+        .disclaimer {
+            background: #fff3cd;
+            border-left: 4px solid var(--warning);
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 8px;
+            font-size: 0.85rem;
+        }
+        
+        /* 載入動畫 */
+        .loading {
+            text-align: center;
+            padding: 40px 20px;
+            color: #666;
+        }
+        
+        .loading::after {
+            content: '';
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 2px solid #eee;
+            border-top-color: var(--secondary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-left: 10px;
+            vertical-align: middle;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        /* 響應式調整 */
+        @media (max-width: 360px) {
+            .quick-stats {
+                grid-template-columns: 1fr;
+            }
+            
+            .nav-item {
+                font-size: 11px;
+            }
+        }
+        
+        /* 打印樣式 */
+        @media print {
+            .bottom-nav {
+                display: none;
+            }
+            
+            body {
+                padding-bottom: 0;
+                background: white;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 主要內容 -->
+    <div class="container">
+        <!-- 頂部信息 -->
+        <div class="header-card">
+            <h1>🤖 AI選股分析</h1>
+            <p>智能股票篩選系統</p>
+            <p style="margin-top: 10px; font-size: 0.8rem;">
+                📅 2025-12-07 09:01:12<br>
+                💾 Bursa Malaysia 數據
+            </p>
+        </div>
+        
+        <!-- 快速統計 -->
+        <div class="quick-stats">
+            <div class="stat-item">
+                <div class="stat-number">10</div>
+                <div class="stat-label">推薦股票</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">93.7</div>
+                <div class="stat-label">平均評分</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">+24.1%</div>
+                <div class="stat-label">平均回報</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">35.4</div>
+                <div class="stat-label">夏普比率</div>
+            </div>
+        </div>
+        
+        <!-- Top 3 推薦股票 -->
+        <div class="card">
+            <div class="card-header">
+                🏆 Top 3 推薦股票
+                <span style="font-size: 0.8rem; color: var(--secondary);">點擊查看詳情</span>
+            </div>
+            <div class="card-body">
+                <div class="mobile-table">
+                    <!-- 股票1 -->
+                    <div class="table-row" onclick="showStockDetail('0225CJ')">
+                        <div class="rank">#1</div>
+                        <div class="stock-info">
+                            <div class="stock-code">0225CJ</div>
+                            <div class="stock-name">SCGBHD-CJ · Warrants</div>
+                            <div style="font-size: 0.8rem; color: var(--success);">
+                                📈 +13.4% · 💰 RM 0.12
+                            </div>
+                        </div>
+                        <div class="stock-score">
+                            <span class="score-badge">96.3</span>
+                        </div>
+                    </div>
+                    
+                    <!-- 股票2 -->
+                    <div class="table-row" onclick="showStockDetail('526348')">
+                        <div class="rank">#2</div>
+                        <div class="stock-info">
+                            <div class="stock-code">526348</div>
+                            <div class="stock-name">SUNCON-C48 · Warrants</div>
+                            <div style="font-size: 0.8rem; color: var(--success);">
+                                📈 +10.7% · 💰 RM 0.16
+                            </div>
+                        </div>
+                        <div class="stock-score">
+                            <span class="score-badge">96.2</span>
+                        </div>
+                    </div>
+                    
+                    <!-- 股票3 -->
+                    <div class="table-row" onclick="showStockDetail('530119')">
+                        <div class="rank">#3</div>
+                        <div class="stock-info">
+                            <div class="stock-code">530119</div>
+                            <div class="stock-name">CTOS-C19 · Warrants</div>
+                            <div style="font-size: 0.8rem; color: var(--success);">
+                                📈 +8.5% · 💰 RM 0.00
+                            </div>
+                        </div>
+                        <div class="stock-score">
+                            <span class="score-badge">95.1</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 查看完整列表按鈕 -->
+        <a href="javascript:void(0)" onclick="showAllStocks()" class="btn">
+            📋 查看完整10支股票列表
+        </a>
+        
+        <!-- AI算法權重 -->
+        <div class="card">
+            <div class="card-header">⚙️ AI算法權重</div>
+            <div class="card-body" style="padding: 15px;">
+                <div class="progress-item">
+                    <div class="progress-label">
+                        <span>動量指標</span>
+                        <span>25.0%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 25%"></div>
+                    </div>
+                </div>
+                
+                <div class="progress-item">
+                    <div class="progress-label">
+                        <span>RSI指標</span>
+                        <span>20.0%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 20%"></div>
+                    </div>
+                </div>
+                
+                <div class="progress-item">
+                    <div class="progress-label">
+                        <span>成交量指標</span>
+                        <span>20.0%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 20%"></div>
+                    </div>
+                </div>
+                
+                <div class="progress-item">
+                    <div class="progress-label">
+                        <span>趨勢指標</span>
+                        <span>20.0%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 20%"></div>
+                    </div>
+                </div>
+                
+                <div class="progress-item">
+                    <div class="progress-label">
+                        <span>風險指標</span>
+                        <span>15.0%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 15%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 評分標準 -->
+        <div class="card">
+            <div class="card-header">📊 評分標準</div>
+            <div class="card-body" style="padding: 15px;">
+                <ul class="rating-list">
+                    <li class="rating-item">
+                        <div class="rating-color" style="background: var(--success);"></div>
+                        <div>
+                            <strong>85-100分:</strong> 強力買入
+                            <div style="font-size: 0.8rem; color: #666;">市場表現極佳</div>
+                        </div>
+                    </li>
+                    <li class="rating-item">
+                        <div class="rating-color" style="background: var(--warning);"></div>
+                        <div>
+                            <strong>70-84分:</strong> 買入
+                            <div style="font-size: 0.8rem; color: #666;">表現良好</div>
+                        </div>
+                    </li>
+                    <li class="rating-item">
+                        <div class="rating-color" style="background: #95a5a6;"></div>
+                        <div>
+                            <strong>60-69分:</strong> 持有
+                            <div style="font-size: 0.8rem; color: #666;">中性觀察</div>
+                        </div>
+                    </li>
+                    <li class="rating-item">
+                        <div class="rating-color" style="background: #fd7e14;"></div>
+                        <div>
+                            <strong>50-59分:</strong> 觀望
+                            <div style="font-size: 0.8rem; color: #666;">謹慎對待</div>
+                        </div>
+                    </li>
+                    <li class="rating-item">
+                        <div class="rating-color" style="background: var(--danger);"></div>
+                        <div>
+                            <strong>0-49分:</strong> 賣出
+                            <div style="font-size: 0.8rem; color: #666;">考慮減倉</div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- 快速操作 -->
+        <a href="../index.html" class="btn">
+            🏠 回到主頁
+        </a>
+        
+        <a href="../bursa.html" class="btn btn-secondary">
+            📈 回到AI選股主頁
+        </a>
+        
+        <!-- 免責聲明 -->
+        <div class="disclaimer">
+            ⚠️ <strong>免責聲明:</strong><br>
+            此分析報告僅供參考，不構成投資建議。<br>
+            投資有風險，請謹慎決策。
+        </div>
+        
+        <!-- 頁尾信息 -->
+        <div style="text-align: center; color: #666; font-size: 0.8rem; margin-top: 20px; padding: 15px;">
+            🔄 更新頻率: 每日自動更新<br>
+            📱 版本: AI選股手機版 v1.0<br>
+            © 2025 AI選股分析系統
+        </div>
+    </div>
+    
+    <!-- 底部導航欄 -->
+    <div class="bottom-nav">
+        <a href="../index.html" class="nav-item">
+            <div class="nav-icon">🏠</div>
+            <div>主頁</div>
+        </a>
+        
+        <a href="../bursa.html" class="nav-item active">
+            <div class="nav-icon">📈</div>
+            <div>AI選股</div>
+        </a>
+        
+        <a href="retail-inv.html" class="nav-item">
+            <div class="nav-icon">📊</div>
+            <div>回測</div>
+        </a>
+        
+        <a href="mobile_recording.html" class="nav-item">
+            <div class="nav-icon">📱</div>
+            <div>錄屏</div>
+        </a>
+        
+        <a href="javascript:window.print()" class="nav-item">
+            <div class="nav-icon">🖨️</div>
+            <div>打印</div>
+        </a>
+    </div>
+    
+    <script>
+        // 簡單的交互功能
+        function showStockDetail(stockCode) {
+            alert('股票代碼: ' + stockCode + '\n\n詳細分析請查看AI選股主頁。\n\n即將跳轉...');
+            setTimeout(() => {
+                window.location.href = '../bursa.html?stock=' + stockCode;
+            }, 500);
+        }
+        
+        function showAllStocks() {
+            // 模擬載入動畫
+            const container = document.querySelector('.container');
+            const originalContent = container.innerHTML;
+            
+            container.innerHTML = `
+                <div class="loading">載入完整股票列表...</div>
+            `;
+            
+            setTimeout(() => {
+                container.innerHTML = originalContent;
+                
+                // 滾動到頂部
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+                
+                // 顯示所有10支股票
+                const stockListHTML = `
+                    <div class="card">
+                        <div class="card-header">🏆 Top 10 完整列表</div>
+                        <div class="card-body">
+                            ${generateStockList()}
+                        </div>
+                    </div>
+                `;
+                
+                const firstCard = document.querySelector('.card');
+                firstCard.insertAdjacentHTML('afterend', stockListHTML);
+            }, 800);
+        }
+        
+        function generateStockList() {
+            const stocks = [
+                { rank: 1, code: '0225CJ', name: 'SCGBHD-CJ', type: 'Warrants', change: '+13.4%', price: 'RM 0.12', score: '96.3' },
+                { rank: 2, code: '526348', name: 'SUNCON-C48', type: 'Warrants', change: '+10.7%', price: 'RM 0.16', score: '96.2' },
+                { rank: 3, code: '530119', name: 'CTOS-C19', type: 'Warrants', change: '+8.5%', price: 'RM 0.00', score: '95.1' },
+                { rank: 4, code: '0303', name: 'ALPHA', type: 'Other', change: '+9.2%', price: 'RM 0.30', score: '94.5' },
+                { rank: 5, code: '5323CJ', name: 'JPG-CJ', type: 'Warrants', change: '+13.3%', price: 'RM 0.13', score: '94.3' },
+                { rank: 6, code: '5264', name: 'MALAKOF', type: 'Other', change: '+14.3%', price: 'RM 0.85', score: '94.3' },
+                { rank: 7, code: '0652K1', name: 'HSI-CWK1', type: 'Warrants', change: '+13.4%', price: 'RM 0.09', score: '93.9' },
+                { rank: 8, code: '0215CW', name: 'SLVEST-CW', type: 'Warrants', change: '+10.6%', price: 'RM 0.00', score: '93.7' },
+                { rank: 9, code: '03030', name: 'IDBTECH', type: 'Tech', change: '+12.0%', price: 'RM 0.00', score: '93.5' },
+                { rank: 10, code: '0059', name: 'ECOHLDS', type: 'Other', change: '+8.5%', price: 'RM 0.00', score: '93.5' }
+            ];
+            
+            let html = '<div class="mobile-table">';
+            
+            stocks.forEach(stock => {
+                html += `
+                    <div class="table-row" onclick="showStockDetail('${stock.code}')">
+                        <div class="rank">#${stock.rank}</div>
+                        <div class="stock-info">
+                            <div class="stock-code">${stock.code}</div>
+                            <div class="stock-name">${stock.name} · ${stock.type}</div>
+                            <div style="font-size: 0.8rem; color: var(--success);">
+                                📈 ${stock.change} · 💰 ${stock.price}
+                            </div>
+                        </div>
+                        <div class="stock-score">
+                            <span class="score-badge">${stock.score}</span>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            html += '</div>';
+            return html;
+        }
+        
+        // 自動更新時間
+        function updateTime() {
+            const now = new Date();
+            const timeStr = now.toLocaleString('zh-TW', {
+                month: '2-digit',
+                day: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit',
+                hour12: false
+            });
+            
+            const timeElement = document.querySelector('.header-card p:nth-child(3)');
+            if (timeElement) {
+                timeElement.innerHTML = `
+                    📅 ${now.getFullYear()}-${(now.getMonth()+1).toString().padStart(2,'0')}-${now.getDate().toString().padStart(2,'0')} ${timeStr.split(' ')[1]}<br>
+                    💾 Bursa Malaysia 數據
+                `;
+            }
+        }
+        
+        // 每分鐘更新一次時間
+        setInterval(updateTime, 60000);
+        
+        // 頁面載入完成
+        document.addEventListener('DOMContentLoaded', function() {
+            updateTime();
+            
+            // 添加平滑滾動
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    if (targetId !== '#') {
+                        const targetElement = document.querySelector(targetId);
+                        if (targetElement) {
+                            targetElement.scrollIntoView({
+                                behavior: 'smooth'
+                            });
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

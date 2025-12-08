@@ -1,0 +1,108 @@
+{
+  "last_updated": "2025-12-07T09:01:12.611081",
+  "backtest_period": "30天模擬回測",
+  "initial_capital": 10000,
+  "results": [
+    {
+      "rank": 1,
+      "code": "0225CJ",
+      "name": "SCGBHD-CJ",
+      "return_30d": "+28.7%",
+      "annual_return": "+344.8%",
+      "volatility": "7.7%",
+      "sharpe_ratio": "44.78",
+      "max_drawdown": "17.0%"
+    },
+    {
+      "rank": 2,
+      "code": "526348",
+      "name": "SUNCON-C48",
+      "return_30d": "+26.0%",
+      "annual_return": "+312.2%",
+      "volatility": "9.9%",
+      "sharpe_ratio": "31.53",
+      "max_drawdown": "8.4%"
+    },
+    {
+      "rank": 3,
+      "code": "530119",
+      "name": "CTOS-C19",
+      "return_30d": "+25.1%",
+      "annual_return": "+301.6%",
+      "volatility": "7.3%",
+      "sharpe_ratio": "41.31",
+      "max_drawdown": "8.5%"
+    },
+    {
+      "rank": 4,
+      "code": "0303",
+      "name": "ALPHA",
+      "return_30d": "+22.2%",
+      "annual_return": "+266.4%",
+      "volatility": "11.7%",
+      "sharpe_ratio": "22.77",
+      "max_drawdown": "12.3%"
+    },
+    {
+      "rank": 5,
+      "code": "5323CJ",
+      "name": "JPG-CJ",
+      "return_30d": "+22.5%",
+      "annual_return": "+269.4%",
+      "volatility": "16.1%",
+      "sharpe_ratio": "16.73",
+      "max_drawdown": "6.0%"
+    },
+    {
+      "rank": 6,
+      "code": "5264",
+      "name": "MALAKOF",
+      "return_30d": "+24.1%",
+      "annual_return": "+289.2%",
+      "volatility": "9.3%",
+      "sharpe_ratio": "31.10",
+      "max_drawdown": "8.4%"
+    },
+    {
+      "rank": 7,
+      "code": "0652K1",
+      "name": "HSI-CWK1",
+      "return_30d": "+27.3%",
+      "annual_return": "+327.3%",
+      "volatility": "11.7%",
+      "sharpe_ratio": "27.97",
+      "max_drawdown": "8.8%"
+    },
+    {
+      "rank": 8,
+      "code": "0215CW",
+      "name": "SLVEST-CW",
+      "return_30d": "+18.7%",
+      "annual_return": "+224.9%",
+      "volatility": "6.6%",
+      "sharpe_ratio": "34.07",
+      "max_drawdown": "13.2%"
+    },
+    {
+      "rank": 9,
+      "code": "03030",
+      "name": "IDBTECH",
+      "return_30d": "+28.2%",
+      "annual_return": "+337.9%",
+      "volatility": "12.1%",
+      "sharpe_ratio": "27.93",
+      "max_drawdown": "6.5%"
+    },
+    {
+      "rank": 10,
+      "code": "0059",
+      "name": "ECOHLDS",
+      "return_30d": "+23.4%",
+      "annual_return": "+281.0%",
+      "volatility": "6.9%",
+      "sharpe_ratio": "40.73",
+      "max_drawdown": "19.0%"
+    }
+  ],
+  "disclaimer": "此為模擬回測結果，不代表未來表現。投資有風險，請謹慎決策。"
+}
