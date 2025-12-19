@@ -1,5 +1,5 @@
 {
-  "last_updated": "2025-12-12 10:14:39",
+  "last_updated": "2025-12-10 20:44:51",
   "data_source": "Bursa Malaysia EOD + AI精選",
   "algorithm_version": "2.0",
   "algorithm_description": {
@@ -20,7 +20,7 @@
   },
   "market": {
     "exchange": "Bursa Malaysia",
-    "date": "2025-12-12",
+    "date": "2025-12-10",
     "total_stocks_analyzed": 2759,
     "selected_potential_stocks": 10
   },

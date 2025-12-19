@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Bursa投资计算器 - 使用真实AI数据</title>
+    <title>Bursa投资计算器 - 手机版</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
@@ -22,8 +22,6 @@
             --shadow: 0 2px 10px rgba(0,0,0,0.1);
             --radius: 12px;
             --radius-sm: 8px;
-            --warrant-color: #9C27B0;
-            --warrant-bg: #F3E5F5;
         }
         
         * {
@@ -199,7 +197,7 @@
         
         /* 股票列表 */
         .stocks-list {
-            max-height: 500px;
+            max-height: 400px;
             overflow-y: auto;
         }
         
@@ -211,16 +209,6 @@
             border-left: 4px solid var(--primary);
             position: relative;
             transition: all 0.3s;
-        }
-        
-        .stock-item.warrant {
-            border-left-color: var(--warrant-color);
-            background: var(--warrant-bg);
-        }
-        
-        .stock-item.high-risk {
-            border-left-color: var(--danger);
-            background: linear-gradient(135deg, #FFEBEE 0%, #FFCDD2 100%);
         }
         
         .stock-item:hover {
@@ -249,14 +237,6 @@
             font-weight: bold;
         }
         
-        .stock-rank.warrant {
-            background: var(--warrant-color);
-        }
-        
-        .stock-rank.high-risk {
-            background: var(--danger);
-        }
-        
         .stock-basic {
             margin-bottom: 10px;
         }
@@ -265,14 +245,6 @@
             font-size: 16px;
             font-weight: bold;
             color: var(--primary);
-        }
-        
-        .stock-code.warrant {
-            color: var(--warrant-color);
-        }
-        
-        .stock-code.high-risk {
-            color: var(--danger);
         }
         
         .stock-name {
@@ -295,29 +267,19 @@
             font-weight: 500;
         }
         
-        .tag.strong-buy {
-            background: rgba(231, 76, 60, 0.1);
-            color: var(--danger);
-        }
-        
         .tag.buy {
-            background: rgba(39, 174, 96, 0.1);
+            background: #E8F5E9;
             color: var(--success);
         }
         
-        .tag.caution {
-            background: rgba(243, 156, 18, 0.1);
-            color: var(--warning);
-        }
-        
         .tag.warrant {
-            background: rgba(156, 39, 176, 0.1);
-            color: var(--warrant-color);
+            background: #E3F2FD;
+            color: var(--primary);
         }
         
         .tag.stock {
-            background: rgba(33, 150, 243, 0.1);
-            color: var(--primary);
+            background: #FFF3E0;
+            color: var(--warning);
         }
         
         .stock-price {
@@ -349,31 +311,6 @@
             color: var(--danger);
         }
         
-        .stock-ai-score {
-            display: flex;
-            gap: 10px;
-            margin-top: 10px;
-            font-size: 12px;
-        }
-        
-        .score-item {
-            flex: 1;
-            text-align: center;
-            padding: 5px;
-            background: white;
-            border-radius: 4px;
-        }
-        
-        .score-label {
-            color: var(--gray);
-            font-size: 10px;
-            margin-bottom: 2px;
-        }
-        
-        .score-value {
-            font-weight: bold;
-        }
-        
         .select-btn {
             width: 100%;
             padding: 12px;
@@ -388,10 +325,6 @@
             justify-content: center;
             gap: 8px;
             transition: all 0.3s;
-        }
-        
-        .select-btn.warrant {
-            background: var(--warrant-color);
         }
         
         .select-btn:hover {
@@ -450,6 +383,15 @@
         
         .input-group .form-input {
             flex: 1;
+        }
+        
+        .input-icon {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gray);
+            font-size: 14px;
         }
         
         /* 费用设置 */
@@ -639,59 +581,49 @@
             border-radius: 2px;
         }
         
-        /* 数据源选择 */
-        .data-source-selector {
-            background: var(--light);
-            padding: 12px;
-            border-radius: var(--radius-sm);
-            margin: 10px 0;
+        /* 状态指示器 */
+        .status-indicator {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 5px;
         }
         
-        .source-buttons {
+        .status-online {
+            background: var(--success);
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+        
+        /* 快捷按钮 */
+        .quick-actions {
             display: flex;
             gap: 10px;
-            margin-top: 10px;
+            margin: 15px 0;
         }
         
-        .source-btn {
+        .quick-btn {
             flex: 1;
             padding: 10px;
-            background: white;
+            background: var(--light);
             border: 1px solid #ddd;
             border-radius: var(--radius-sm);
-            font-size: 12px;
             text-align: center;
-            cursor: pointer;
+            font-size: 13px;
+            font-weight: 500;
             transition: all 0.3s;
         }
         
-        .source-btn.active {
+        .quick-btn:hover {
             background: var(--primary);
             color: white;
             border-color: var(--primary);
-        }
-        
-        /* 股票详情 */
-        .stock-detail-modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.5);
-            z-index: 1000;
-            padding: 20px;
-        }
-        
-        .stock-detail-content {
-            background: white;
-            border-radius: var(--radius);
-            padding: 20px;
-            max-width: 500px;
-            margin: 0 auto;
-            max-height: 80vh;
-            overflow-y: auto;
         }
     </style>
 </head>
@@ -703,14 +635,14 @@
                 <div>
                     <div class="app-title">
                         <i class="fas fa-chart-line"></i>
-                        <span>Bursa AI投资计算器</span>
-                        <span id="connectionStatus" style="font-size: 8px; background: #4CAF50; color: white; padding: 2px 6px; border-radius: 10px;">在线</span>
+                        <span>Bursa投资计算器</span>
+                        <span class="status-indicator status-online"></span>
                     </div>
-                    <div class="app-subtitle">真实AI数据 + 精确费用计算</div>
+                    <div class="app-subtitle">AI选股 + 费用计算 | 确保RM5净回酬</div>
                 </div>
                 <div style="font-size: 12px; opacity: 0.9;">
-                    <div>更新: <span id="dataUpdateDate">2025-12-18</span></div>
-                    <div>目标利润: RM5</div>
+                    <div>更新: <span id="dataUpdateDate">2025-12-12</span></div>
+                    <div>目标: RM5 利润</div>
                 </div>
             </div>
         </div>
@@ -735,72 +667,44 @@
                 <div class="card">
                     <div class="card-header">
                         <div class="card-title">
-                            <i class="fas fa-filter"></i> 数据源选择
-                        </div>
-                        <div style="font-size: 12px; color: var(--gray);">
-                            <i class="fas fa-database"></i> <span id="currentSource">本地JSON</span>
+                            <i class="fas fa-filter"></i> 数据筛选
                         </div>
                     </div>
                     
-                    <div class="data-source-selector">
-                        <label>选择数据来源:</label>
-                        <div class="source-buttons">
-                            <div class="source-btn active" onclick="setDataSource('local')">
-                                <i class="fas fa-file-alt"></i><br>
-                                本地JSON
-                            </div>
-                            <div class="source-btn" onclick="setDataSource('picks_latest')">
-                                <i class="fas fa-bolt"></i><br>
-                                picks_latest.json
-                            </div>
-                            <div class="source-btn" onclick="setDataSource('history')">
-                                <i class="fas fa-history"></i><br>
-                                历史数据
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="date-picker" id="datePickerSection">
-                        <label for="dateSelect"><i class="far fa-calendar-alt"></i> 选择日期:</label>
+                    <div class="date-picker">
+                        <label for="dateSelect"><i class="far fa-calendar-alt"></i> 日期:</label>
                         <select id="dateSelect">
-                            <!-- 日期选项会动态生成 -->
+                            <option value="2025-12-12">2025-12-12</option>
+                            <option value="2025-12-11">2025-12-11</option>
+                            <option value="2025-12-10">2025-12-10</option>
                         </select>
                     </div>
                     
-                    <div class="source-buttons">
-                        <div class="source-btn" onclick="loadAIData()" style="background: var(--secondary); color: white;">
-                            <i class="fas fa-sync-alt"></i> 加载AI数据
-                        </div>
-                        <div class="source-btn" onclick="loadPriceData()" style="background: var(--primary); color: white;">
-                            <i class="fas fa-chart-line"></i> 加载股价
-                        </div>
+                    <div class="quick-actions">
+                        <button class="quick-btn" onclick="loadAiStocksData()">
+                            <i class="fas fa-sync-alt"></i> 刷新
+                        </button>
+                        <button class="quick-btn" onclick="useSampleData()">
+                            <i class="fas fa-database"></i> 示例
+                        </button>
+                        <button class="quick-btn" onclick="showHowToUse()">
+                            <i class="fas fa-question-circle"></i> 帮助
+                        </button>
                     </div>
                 </div>
                 
                 <div class="card">
                     <div class="card-header">
                         <div class="card-title">
-                            <i class="fas fa-chart-line"></i> AI推荐股票列表
+                            <i class="fas fa-chart-line"></i> AI推荐股票
                         </div>
-                        <span id="stocksCount" style="font-size: 12px; color: var(--gray);">请加载数据</span>
-                    </div>
-                    
-                    <div id="filterSection" style="margin-bottom: 15px;">
-                        <select id="typeFilter" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: var(--radius-sm); margin-bottom: 10px;">
-                            <option value="all">所有类型</option>
-                            <option value="Warrant">认股权证</option>
-                            <option value="Stock">普通股</option>
-                        </select>
-                        <input type="text" id="searchFilter" placeholder="搜索股票代码或名称..." style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: var(--radius-sm);">
+                        <span id="stocksCount" style="font-size: 12px; color: var(--gray);">加载中...</span>
                     </div>
                     
                     <div id="aiStocksList" class="stocks-list">
                         <div class="loading">
-                            <i class="fas fa-database"></i>
-                            <p>请选择数据来源并加载数据</p>
-                            <p style="font-size: 12px; margin-top: 10px; color: var(--primary);">
-                                支持: picks_latest.json, history/*.json, 本地数据
-                            </p>
+                            <i class="fas fa-spinner fa-spin"></i>
+                            <p>正在加载AI选股数据...</p>
                         </div>
                     </div>
                 </div>
@@ -813,12 +717,11 @@
                         <div class="card-title">
                             <i class="fas fa-edit"></i> 股票信息
                         </div>
-                        <div style="font-size: 12px; color: var(--gray);" id="selectedStockInfo">未选择</div>
                     </div>
                     
                     <div class="form-group">
                         <label for="stockCode"><i class="fas fa-hashtag"></i> 股票代码</label>
-                        <input type="text" id="stockCode" class="form-input" placeholder="例如: 53473N" readonly>
+                        <input type="text" id="stockCode" class="form-input" placeholder="例如: 7214" readonly>
                     </div>
                     
                     <div class="form-group">
@@ -839,20 +742,22 @@
                     
                     <div class="form-group">
                         <label for="shareUnits"><i class="fas fa-chart-bar"></i> 购买股数 (单位: 100股)</label>
-                        <div style="display: flex; align-items: center; gap: 10px;">
-                            <input type="range" id="shareUnitsRange" min="1" max="100" value="10" style="flex: 1;">
-                            <input type="number" id="shareUnits" class="form-input" min="1" max="1000" value="10" style="width: 80px;">
-                        </div>
+                        <input type="number" id="shareUnits" class="form-input" min="1" max="1000" value="10">
                         <small style="color: var(--gray); margin-top: 5px; display: block;">
-                            总股数: <span id="totalSharesDisplay">1,000</span> 股 | 投资: <span id="investmentAmount">RM 0.00</span>
+                            总股数: <span id="totalSharesDisplay">1,000</span> 股
                         </small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="totalInvestment"><i class="fas fa-coins"></i> 投资总额 (RM)</label>
+                        <input type="text" id="totalInvestment" class="form-input" readonly placeholder="自动计算">
                     </div>
                 </div>
                 
                 <div class="card">
                     <div class="card-header">
                         <div class="card-title">
-                            <i class="fas fa-cog"></i> 费用设置（优化版）
+                            <i class="fas fa-cog"></i> 费用设置
                         </div>
                         <button id="resetFeesBtn" style="background: none; border: none; color: var(--primary); font-size: 12px; cursor: pointer;">
                             <i class="fas fa-redo"></i> 重置
@@ -915,7 +820,7 @@
             <div id="results-tab" class="tab-content">
                 <div id="resultSection" style="display: none;">
                     <div class="result-card">
-                        <div style="font-size: 14px; color: var(--gray);">净回酬分析</div>
+                        <div style="font-size: 14px; color: var(--gray);">净回酬</div>
                         <div id="resultMain" class="result-main result-positive">RM 0.00</div>
                         <div id="resultSub" class="result-sub">0.00% 回酬率</div>
                         
@@ -990,7 +895,7 @@
                 <div id="noResults" class="loading">
                     <i class="fas fa-calculator" style="font-size: 36px; color: var(--gray);"></i>
                     <p style="margin-top: 10px;">请先在计算器页面进行计算</p>
-                    <button onclick="switchTab('calculator')" class="btn-secondary" style="margin-top: 15px;">
+                    <button onclick="switchTab('calculator')" style="margin-top: 15px; padding: 10px 20px; background: var(--primary); color: white; border: none; border-radius: var(--radius-sm);">
                         <i class="fas fa-arrow-left"></i> 返回计算器
                     </button>
                 </div>
@@ -1000,97 +905,50 @@
         <!-- 底部导航 -->
         <div class="app-footer">
             <div style="text-align: center; font-size: 11px; color: var(--gray);">
-                <p>© 2025 Bursa Malaysia AI分析工具 | 使用真实AI数据</p>
-                <p id="dataSourceInfo" style="margin-top: 5px; font-size: 10px;">数据源: 未加载</p>
+                <p>© 2025 Bursa Malaysia AI分析工具 | 投资有风险，入市需谨慎</p>
             </div>
         </div>
     </div>
     
-    <!-- 股票详情模态框 -->
-    <div id="stockDetailModal" class="stock-detail-modal">
-        <div class="stock-detail-content">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
-                <h3 id="modalStockTitle" style="color: var(--primary);">股票详情</h3>
-                <button onclick="closeStockDetail()" style="background: none; border: none; font-size: 20px; color: var(--gray); cursor: pointer;">×</button>
-            </div>
-            <div id="modalStockContent">
-                <!-- 详情内容会动态生成 -->
-            </div>
-            <button onclick="closeStockDetail()" style="width: 100%; padding: 12px; background: var(--primary); color: white; border: none; border-radius: var(--radius-sm); margin-top: 15px;">
-                关闭
-            </button>
-        </div>
-    </div>
-
     <script>
         // 全局变量
-        let aiStocksData = [];
-        let priceData = [];
+        let aiStocksData = {};
         let selectedStock = null;
-        let currentDate = '2025-12-18';
-        let currentDataSource = 'local';
+        let currentDate = '2025-12-12';
+        let latestPrices = {};
         
         // 页面加载完成后初始化
         document.addEventListener('DOMContentLoaded', function() {
-            console.log('📱 Bursa AI投资计算器启动 - 使用真实数据');
+            console.log('📱 移动版投资计算器启动');
             
-            // 初始化UI
-            initUI();
+            // 初始化日期选择器
+            initDateSelector();
             
             // 绑定事件监听器
             bindEventListeners();
             
-            // 自动加载最新数据
-            setTimeout(() => {
-                loadLatestData();
-            }, 500);
-        });
-        
-        // 初始化UI
-        function initUI() {
-            // 初始化日期选择器
-            initDateSelector();
+            // 加载当前日期的数据
+            loadAiStocksData();
             
             // 初始化触摸反馈
             initTouchFeedback();
-            
-            // 设置默认数据源
-            setDataSource('local');
-            
-            // 更新当前日期显示
-            const today = new Date();
-            const dateStr = today.toISOString().split('T')[0];
-            document.getElementById('dataUpdateDate').textContent = dateStr;
-            currentDate = dateStr;
-        }
+        });
         
         // 初始化日期选择器
         function initDateSelector() {
             const dateSelect = document.getElementById('dateSelect');
-            dateSelect.innerHTML = '';
-            
-            // 生成最近7天的日期选项
-            for (let i = 0; i < 7; i++) {
-                const date = new Date();
-                date.setDate(date.getDate() - i);
-                const dateStr = date.toISOString().split('T')[0];
-                const option = document.createElement('option');
-                option.value = dateStr;
-                option.textContent = dateStr + (i === 0 ? ' (今天)' : '');
-                if (i === 0) option.selected = true;
-                dateSelect.appendChild(option);
-            }
+            dateSelect.value = currentDate;
             
             dateSelect.addEventListener('change', function() {
                 currentDate = this.value;
                 console.log('选择日期:', currentDate);
-                loadCurrentData();
+                loadAiStocksData();
             });
         }
         
         // 初始化触摸反馈
         function initTouchFeedback() {
-            const buttons = document.querySelectorAll('button, .tab, .stock-item, .source-btn');
+            const buttons = document.querySelectorAll('button, .tab, .quick-btn, .stock-item');
             buttons.forEach(btn => {
                 btn.classList.add('touch-feedback');
             });
@@ -1107,18 +965,6 @@
             // 输入框变化事件
             document.getElementById('buyPrice').addEventListener('input', updateTotalInvestment);
             document.getElementById('shareUnits').addEventListener('input', updateTotalInvestment);
-            document.getElementById('shareUnitsRange').addEventListener('input', function() {
-                document.getElementById('shareUnits').value = this.value;
-                updateTotalInvestment();
-            });
-            document.getElementById('shareUnits').addEventListener('input', function() {
-                document.getElementById('shareUnitsRange').value = this.value;
-                updateTotalInvestment();
-            });
-            
-            // 筛选器事件
-            document.getElementById('typeFilter').addEventListener('change', filterStocks);
-            document.getElementById('searchFilter').addEventListener('input', filterStocks);
             
             // 费用设置变化时自动计算
             const feeInputs = [
@@ -1171,64 +1017,9 @@
             console.log('切换到标签页:', tabName);
         }
         
-        // 设置数据源
-        function setDataSource(source) {
-            currentDataSource = source;
-            
-            // 更新按钮样式
-            document.querySelectorAll('.source-btn').forEach(btn => {
-                btn.classList.remove('active');
-            });
-            
-            // 根据数据源设置不同的文本和图标
-            let sourceText = '';
-            let sourceIcon = '';
-            
-            switch(source) {
-                case 'local':
-                    sourceText = '本地JSON数据';
-                    sourceIcon = 'fa-file-alt';
-                    document.querySelector('.source-btn[onclick="setDataSource(\'local\')"]').classList.add('active');
-                    break;
-                case 'picks_latest':
-                    sourceText = 'picks_latest.json';
-                    sourceIcon = 'fa-bolt';
-                    document.querySelector('.source-btn[onclick="setDataSource(\'picks_latest\')"]').classList.add('active');
-                    break;
-                case 'history':
-                    sourceText = '历史数据';
-                    sourceIcon = 'fa-history';
-                    document.querySelector('.source-btn[onclick="setDataSource(\'history\')"]').classList.add('active');
-                    break;
-            }
-            
-            document.getElementById('currentSource').innerHTML = `<i class="fas ${sourceIcon}"></i> ${sourceText}`;
-            document.getElementById('dataSourceInfo').textContent = `数据源: ${sourceText}`;
-            
-            console.log('设置数据源:', source);
-        }
-        
-        // 加载最新数据
-        async function loadLatestData() {
-            try {
-                // 首先尝试加载 picks_latest.json
-                const response = await fetch('picks_latest.json');
-                if (response.ok) {
-                    const data = await response.json();
-                    processStockData(data.picks || []);
-                    showNotification('成功加载 picks_latest.json', 'success');
-                    return;
-                }
-            } catch (error) {
-                console.log('picks_latest.json 加载失败，尝试其他数据源');
-            }
-            
-            // 如果 picks_latest.json 失败，尝试历史数据
-            loadHistoryData();
-        }
-        
-        // 加载AI数据
-        async function loadAIData() {
+        // 加载AI选股数据
+        async function loadAiStocksData() {
+            console.log('开始加载AI选股数据...');
             const stocksListEl = document.getElementById('aiStocksList');
             
             // 显示加载状态
@@ -1236,269 +1027,73 @@
                 <div class="loading">
                     <i class="fas fa-spinner fa-spin"></i>
                     <p>正在加载AI选股数据...</p>
-                    <p style="font-size: 12px; margin-top: 10px; color: var(--primary);" id="loadingPath"></p>
                 </div>
             `;
             
-            switch(currentDataSource) {
-                case 'picks_latest':
-                    await loadPicksLatest();
-                    break;
-                case 'history':
-                    await loadHistoryData();
-                    break;
-                case 'local':
-                default:
-                    await loadLocalData();
-                    break;
-            }
-        }
-        
-        // 加载 picks_latest.json
-        async function loadPicksLatest() {
+            // 更新数据更新日期显示
+            document.getElementById('dataUpdateDate').textContent = currentDate;
+            
             try {
-                const response = await fetch('picks_latest.json');
+                // 构建文件名
+                const filename = `scripts/data/bursa/picks/picks_${currentDate.replace(/-/g, '')}.json`;
+                console.log('尝试加载文件:', filename);
+                
+                // 尝试加载数据
+                const response = await fetch(filename);
+                
                 if (!response.ok) {
-                    throw new Error(`HTTP ${response.status}`);
+                    throw new Error(`HTTP ${response.status}: 无法加载数据`);
                 }
                 
                 const data = await response.json();
-                processStockData(data.picks || []);
-                showNotification(`成功加载 picks_latest.json (${(data.picks || []).length} 只股票)`, 'success');
+                console.log('数据加载成功:', data);
+                
+                // 处理数据
+                processStockData(data);
                 
             } catch (error) {
-                showNotification(`加载 picks_latest.json 失败: ${error.message}`, 'error');
-                loadLocalData();
+                console.error('加载AI选股数据失败:', error);
+                
+                // 显示错误，提供使用示例数据的选项
+                stocksListEl.innerHTML = `
+                    <div class="error">
+                        <i class="fas fa-exclamation-circle"></i>
+                        <div>
+                            <p style="font-weight: 600; margin-bottom: 5px;">无法加载数据</p>
+                            <p style="font-size: 12px; margin-bottom: 10px;">${error.message}</p>
+                            <button onclick="useSampleData()" style="width: 100%; padding: 10px; background: var(--primary); color: white; border: none; border-radius: var(--radius-sm); margin-top: 10px;">
+                                <i class="fas fa-database"></i> 使用示例数据
+                            </button>
+                        </div>
+                    </div>
+                `;
             }
-        }
-        
-        // 加载历史数据
-        async function loadHistoryData() {
-            try {
-                // 尝试获取历史文件列表
-                const dateStr = currentDate.replace(/-/g, '');
-                const fileName = `picks_${dateStr}.json`;
-                const filePath = `history/${fileName}`;
-                
-                const response = await fetch(filePath);
-                if (!response.ok) {
-                    // 如果指定日期的文件不存在，尝试最新日期的文件
-                    const fallbackResponse = await fetch('history/');
-                    if (fallbackResponse.ok) {
-                        // 尝试解析目录中的最新文件
-                        await loadLatestHistoryFile();
-                    } else {
-                        throw new Error(`无法访问历史数据目录`);
-                    }
-                } else {
-                    const data = await response.json();
-                    processStockData(data.picks || []);
-                    showNotification(`成功加载历史数据: ${fileName}`, 'success');
-                }
-                
-            } catch (error) {
-                showNotification(`加载历史数据失败: ${error.message}`, 'error');
-                loadLocalData();
-            }
-        }
-        
-        // 加载最新历史文件
-        async function loadLatestHistoryFile() {
-            // 尝试几个可能的历史文件
-            const date = new Date();
-            const attempts = 5; // 尝试最近5天
-            
-            for (let i = 0; i < attempts; i++) {
-                const checkDate = new Date();
-                checkDate.setDate(date.getDate() - i);
-                const dateStr = checkDate.toISOString().split('T')[0].replace(/-/g, '');
-                const fileName = `picks_${dateStr}.json`;
-                const filePath = `history/${fileName}`;
-                
-                try {
-                    const response = await fetch(filePath);
-                    if (response.ok) {
-                        const data = await response.json();
-                        processStockData(data.picks || []);
-                        showNotification(`成功加载: ${fileName}`, 'success');
-                        return;
-                    }
-                } catch (error) {
-                    // 继续尝试下一个日期
-                }
-            }
-            
-            throw new Error('没有找到可用的历史文件');
-        }
-        
-        // 加载本地数据（使用内置的真实数据示例）
-        async function loadLocalData() {
-            // 这里使用您提供的真实数据结构
-            const sampleData = [
-                {
-                    "rank": 1,
-                    "code": "53473N",
-                    "name": "TENAGA-C3N",
-                    "instrument_type": "Warrant",
-                    "sector": "365",
-                    "current_price": 0.05,
-                    "daily_change": 42.86,
-                    "score": 75,
-                    "potential_score": 90,
-                    "potential_reasons": "Warrant嚴重超賣，反彈機會極大",
-                    "recommendation": "🔥強烈買入（Warrant）",
-                    "risk_level": "高",
-                    "rsi": 50.0,
-                    "volume": 5401,
-                    "status": "中性",
-                    "pe_ratio": null,
-                    "dividend_yield": null,
-                    "macd": 0,
-                    "volume_ratio": 1.0
-                },
-                {
-                    "rank": 2,
-                    "code": "5916CV",
-                    "name": "MSC-CV",
-                    "instrument_type": "Warrant",
-                    "sector": "302",
-                    "current_price": 0.1,
-                    "daily_change": 33.33,
-                    "score": 77,
-                    "potential_score": 88,
-                    "potential_reasons": "Warrant技術面向好，上漲潛力大",
-                    "recommendation": "👍買入（Warrant）",
-                    "risk_level": "中高",
-                    "rsi": 50.0,
-                    "volume": 3670,
-                    "status": "中性",
-                    "pe_ratio": null,
-                    "dividend_yield": null,
-                    "macd": 0.017,
-                    "volume_ratio": 0.01
-                },
-                {
-                    "rank": 3,
-                    "code": "5916CU",
-                    "name": "MSC-CU",
-                    "instrument_type": "Warrant",
-                    "sector": "302",
-                    "current_price": 0.4,
-                    "daily_change": 25.0,
-                    "score": 75,
-                    "potential_score": 87,
-                    "potential_reasons": "Warrant技術面向好，上漲潛力大",
-                    "recommendation": "👍買入（Warrant）",
-                    "risk_level": "中高",
-                    "rsi": 50.0,
-                    "volume": 1310,
-                    "status": "中性",
-                    "pe_ratio": null,
-                    "dividend_yield": null,
-                    "macd": 0.034,
-                    "volume_ratio": 0.01
-                },
-                {
-                    "rank": 4,
-                    "code": "69631C",
-                    "name": "VS-C1C",
-                    "instrument_type": "Warrant",
-                    "sector": "302",
-                    "current_price": 0.02,
-                    "daily_change": 33.33,
-                    "score": 72,
-                    "potential_score": 86,
-                    "potential_reasons": "Warrant技術面向好，上漲潛力大",
-                    "recommendation": "👍買入（Warrant）",
-                    "risk_level": "中高",
-                    "rsi": 50.0,
-                    "volume": 1050,
-                    "status": "中性",
-                    "pe_ratio": null,
-                    "dividend_yield": null,
-                    "macd": 0,
-                    "volume_ratio": 1.0
-                },
-                {
-                    "rank": 5,
-                    "code": "522558",
-                    "name": "IHH-C58",
-                    "instrument_type": "Warrant",
-                    "sector": "362",
-                    "current_price": 0.235,
-                    "daily_change": 20.51,
-                    "score": 77,
-                    "potential_score": 85,
-                    "potential_reasons": "Warrant技術面向好，上漲潛力大",
-                    "recommendation": "👍買入（Warrant）",
-                    "risk_level": "中高",
-                    "rsi": 50.0,
-                    "volume": 1960,
-                    "status": "中性",
-                    "pe_ratio": null,
-                    "dividend_yield": null,
-                    "macd": 0.009,
-                    "volume_ratio": 0.03
-                }
-            ];
-            
-            processStockData(sampleData);
-            showNotification('已加载内置真实数据示例', 'success');
-        }
-        
-        // 加载股价数据
-        async function loadPriceData() {
-            try {
-                const response = await fetch('latest_price.json');
-                if (!response.ok) {
-                    throw new Error(`HTTP ${response.status}`);
-                }
-                
-                const data = await response.json();
-                priceData = data.stocks || [];
-                
-                // 如果有AI数据，尝试合并
-                if (aiStocksData.length > 0) {
-                    mergePriceData();
-                }
-                
-                showNotification(`成功加载股价数据 (${priceData.length} 只股票)`, 'success');
-                
-            } catch (error) {
-                showNotification(`加载股价数据失败: ${error.message}`, 'error');
-            }
-        }
-        
-        // 合并股价数据
-        function mergePriceData() {
-            // 创建股价映射
-            const priceMap = {};
-            priceData.forEach(stock => {
-                const cleanCode = stock.code.replace(/[="]/g, '');
-                priceMap[cleanCode] = {
-                    last_price: stock.last_price,
-                    change_percent: stock.change_percent,
-                    volume: stock.volume
-                };
-            });
-            
-            // 更新AI数据
-            aiStocksData.forEach(stock => {
-                const priceInfo = priceMap[stock.code];
-                if (priceInfo) {
-                    stock.current_price = priceInfo.last_price || stock.current_price;
-                    stock.daily_change = priceInfo.change_percent || stock.daily_change;
-                    stock.volume = priceInfo.volume || stock.volume;
-                }
-            });
-            
-            // 重新显示股票列表
-            displayStocksList(aiStocksData);
         }
         
         // 处理股票数据
-        function processStockData(picks) {
-            aiStocksData = picks;
+        function processStockData(data) {
+            const stocksListEl = document.getElementById('aiStocksList');
+            
+            // 提取picks数组
+            let picks = [];
+            if (data.picks && Array.isArray(data.picks)) {
+                picks = data.picks;
+            } else if (Array.isArray(data)) {
+                picks = data;
+            }
+            
+            if (picks.length === 0) {
+                stocksListEl.innerHTML = `
+                    <div class="loading">
+                        <i class="fas fa-database" style="color: var(--gray);"></i>
+                        <p>没有找到选股数据</p>
+                        <button onclick="useSampleData()" style="margin-top: 15px; padding: 10px 20px; background: var(--primary); color: white; border: none; border-radius: var(--radius-sm);">
+                            使用示例数据
+                        </button>
+                    </div>
+                `;
+                return;
+            }
             
             // 更新股票计数
             document.getElementById('stocksCount').textContent = `${picks.length} 只股票`;
@@ -1510,51 +1105,36 @@
         // 显示股票列表
         function displayStocksList(stocks) {
             const stocksListEl = document.getElementById('aiStocksList');
-            
-            if (stocks.length === 0) {
-                stocksListEl.innerHTML = `
-                    <div class="loading">
-                        <i class="fas fa-database" style="color: var(--gray);"></i>
-                        <p>没有找到选股数据</p>
-                        <button onclick="loadLocalData()" style="margin-top: 15px; padding: 10px 20px; background: var(--primary); color: white; border: none; border-radius: var(--radius-sm);">
-                            使用示例数据
-                        </button>
-                    </div>
-                `;
-                return;
-            }
-            
             let html = '';
             
             stocks.forEach((stock, index) => {
-                const cleanCode = stock.code || 'N/A';
+                // 限制显示数量
+                if (index >= 15) return;
+                
+                const cleanCode = stock.code ? stock.code.replace(/[="]/g, '') : 'N/A';
                 const name = stock.name || '未知';
                 const price = stock.current_price || 0;
                 const change = stock.daily_change || 0;
+                const score = stock.score || 0;
+                const potential = stock.potential_score || 0;
                 const rec = stock.recommendation || '推荐';
                 const type = stock.instrument_type === 'Warrant' ? 'warrant' : 'stock';
-                const riskLevel = stock.risk_level === '高' ? 'high-risk' : '';
-                
-                // 确定推荐类型
-                let recType = 'buy';
-                if (rec.includes('🔥')) recType = 'strong-buy';
-                else if (rec.includes('👍')) recType = 'buy';
-                else if (rec.includes('⚠️')) recType = 'caution';
+                const status = stock.status || '中性';
                 
                 // 构建股票卡片
                 html += `
-                    <div class="stock-item touch-feedback ${type} ${riskLevel}" onclick="showStockDetail(${JSON.stringify(stock).replace(/"/g, '&quot;')})">
-                        <div class="stock-rank ${type} ${riskLevel}">#${stock.rank || index + 1}</div>
+                    <div class="stock-item touch-feedback" onclick="selectStock(${JSON.stringify(stock).replace(/"/g, '&quot;')})">
+                        <div class="stock-rank">#${index + 1}</div>
                         
                         <div class="stock-basic">
-                            <div class="stock-code ${type} ${riskLevel}">${cleanCode}</div>
+                            <div class="stock-code">${cleanCode}</div>
                             <div class="stock-name">${name}</div>
                         </div>
                         
                         <div class="stock-tags">
-                            <span class="tag ${recType}">${rec.replace(/[🔥👍⚠️]/g, '')}</span>
+                            <span class="tag buy">${rec}</span>
                             <span class="tag ${type}">${type === 'warrant' ? '认股权证' : '普通股'}</span>
-                            ${stock.risk_level ? `<span class="tag caution">${stock.risk_level}风险</span>` : ''}
+                            <span style="font-size: 11px; color: var(--gray);">${status}</span>
                         </div>
                         
                         <div class="stock-price">
@@ -1564,23 +1144,8 @@
                             </div>
                         </div>
                         
-                        <div class="stock-ai-score">
-                            <div class="score-item">
-                                <div class="score-label">AI评分</div>
-                                <div class="score-value" style="color: ${stock.score >= 70 ? '#4CAF50' : stock.score >= 50 ? '#FF9800' : '#F44336'}">
-                                    ${stock.score || 'N/A'}
-                                </div>
-                            </div>
-                            <div class="score-item">
-                                <div class="score-label">潜力评分</div>
-                                <div class="score-value" style="color: ${stock.potential_score >= 85 ? '#4CAF50' : stock.potential_score >= 70 ? '#FF9800' : '#F44336'}">
-                                    ${stock.potential_score || 'N/A'}
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <button class="select-btn touch-feedback ${type}" onclick="event.stopPropagation(); selectStock(${JSON.stringify(stock).replace(/"/g, '&quot;')})">
-                            <i class="fas fa-check-circle"></i> 选择计算
+                        <button class="select-btn touch-feedback" onclick="event.stopPropagation(); selectStock(${JSON.stringify(stock).replace(/"/g, '&quot;')})">
+                            <i class="fas fa-check-circle"></i> 选择此股票
                         </button>
                     </div>
                 `;
@@ -1589,130 +1154,68 @@
             stocksListEl.innerHTML = html;
         }
         
-        // 筛选股票
-        function filterStocks() {
-            const typeFilter = document.getElementById('typeFilter').value;
-            const searchFilter = document.getElementById('searchFilter').value.toLowerCase();
+        // 使用示例数据
+        function useSampleData() {
+            console.log('使用示例数据');
             
-            const filteredStocks = aiStocksData.filter(stock => {
-                // 类型筛选
-                if (typeFilter !== 'all') {
-                    if (typeFilter === 'Warrant' && stock.instrument_type !== 'Warrant') return false;
-                    if (typeFilter === 'Stock' && stock.instrument_type === 'Warrant') return false;
-                }
-                
-                // 搜索筛选
-                if (searchFilter) {
-                    const codeMatch = (stock.code || '').toLowerCase().includes(searchFilter);
-                    const nameMatch = (stock.name || '').toLowerCase().includes(searchFilter);
-                    return codeMatch || nameMatch;
-                }
-                
-                return true;
-            });
+            const sampleData = {
+                picks: [
+                    {
+                        code: "7214",
+                        name: "LII HEN INDUSTRIES",
+                        instrument_type: "Stock",
+                        current_price: 0.735,
+                        daily_change: 2.08,
+                        score: 85.5,
+                        potential_score: 92.0,
+                        potential_reasons: "基本面强劲，技术面支持上涨",
+                        recommendation: "强烈买入",
+                        risk_level: "低",
+                        rsi: 45.5,
+                        volume: 452100,
+                        status: "超卖",
+                        pe_ratio: 8.5,
+                        dividend_yield: 4.2
+                    },
+                    {
+                        code: "285265",
+                        name: "CMSB-C65",
+                        instrument_type: "Warrant",
+                        current_price: 0.11,
+                        daily_change: 37.5,
+                        score: 82,
+                        potential_score: 96,
+                        potential_reasons: "Warrant严重超卖，反弹机会极大",
+                        recommendation: "强烈买入（Warrant）",
+                        risk_level: "高",
+                        rsi: 50.0,
+                        volume: 31449,
+                        status: "中性",
+                        pe_ratio: null,
+                        dividend_yield: null
+                    },
+                    {
+                        code: "7129",
+                        name: "ASIA FILE CORPORATION",
+                        instrument_type: "Stock",
+                        current_price: 2.140,
+                        daily_change: 0.94,
+                        score: 82.0,
+                        potential_score: 88.5,
+                        potential_reasons: "稳定现金流，良好管理",
+                        recommendation: "买入",
+                        risk_level: "低",
+                        rsi: 58.0,
+                        volume: 22400,
+                        status: "稳定",
+                        pe_ratio: 12.3,
+                        dividend_yield: 3.8
+                    }
+                ]
+            };
             
-            displayStocksList(filteredStocks);
-        }
-        
-        // 显示股票详情
-        function showStockDetail(stock) {
-            const modal = document.getElementById('stockDetailModal');
-            const title = document.getElementById('modalStockTitle');
-            const content = document.getElementById('modalStockContent');
-            
-            const cleanCode = stock.code || 'N/A';
-            const name = stock.name || '未知';
-            
-            title.textContent = `${cleanCode} - ${name}`;
-            
-            const detailHtml = `
-                <div style="margin-bottom: 20px;">
-                    <div style="background: ${stock.instrument_type === 'Warrant' ? 'var(--warrant-bg)' : 'var(--light)'}; padding: 15px; border-radius: var(--radius-sm);">
-                        <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
-                            <div>
-                                <div style="font-size: 12px; color: var(--gray);">当前价格</div>
-                                <div style="font-size: 24px; font-weight: bold; color: var(--success);">
-                                    RM ${(stock.current_price || 0).toFixed(3)}
-                                </div>
-                            </div>
-                            <div>
-                                <div style="font-size: 12px; color: var(--gray);">涨跌幅</div>
-                                <div style="font-size: 18px; font-weight: bold; color: ${(stock.daily_change || 0) >= 0 ? 'var(--success)' : 'var(--danger)'};">
-                                    ${(stock.daily_change || 0) >= 0 ? '+' : ''}${(stock.daily_change || 0).toFixed(2)}%
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 20px;">
-                    <div style="background: white; padding: 10px; border-radius: var(--radius-sm); border: 1px solid var(--light-gray);">
-                        <div style="font-size: 11px; color: var(--gray);">AI评分</div>
-                        <div style="font-size: 18px; font-weight: bold; color: ${stock.score >= 70 ? '#4CAF50' : stock.score >= 50 ? '#FF9800' : '#F44336'}">
-                            ${stock.score || 'N/A'}/100
-                        </div>
-                    </div>
-                    <div style="background: white; padding: 10px; border-radius: var(--radius-sm); border: 1px solid var(--light-gray);">
-                        <div style="font-size: 11px; color: var(--gray);">潜力评分</div>
-                        <div style="font-size: 18px; font-weight: bold; color: ${stock.potential_score >= 85 ? '#4CAF50' : stock.potential_score >= 70 ? '#FF9800' : '#F44336'}">
-                            ${stock.potential_score || 'N/A'}/100
-                        </div>
-                    </div>
-                    <div style="background: white; padding: 10px; border-radius: var(--radius-sm); border: 1px solid var(--light-gray);">
-                        <div style="font-size: 11px; color: var(--gray);">风险等级</div>
-                        <div style="font-size: 18px; font-weight: bold; color: ${stock.risk_level === '高' ? 'var(--danger)' : 'var(--warning)'}">
-                            ${stock.risk_level || '未知'}
-                        </div>
-                    </div>
-                    <div style="background: white; padding: 10px; border-radius: var(--radius-sm); border: 1px solid var(--light-gray);">
-                        <div style="font-size: 11px; color: var(--gray);">成交量</div>
-                        <div style="font-size: 18px; font-weight: bold; color: var(--primary);">
-                            ${formatVolume(stock.volume || 0)}
-                        </div>
-                    </div>
-                </div>
-                
-                <div style="margin-bottom: 20px;">
-                    <div style="font-size: 12px; color: var(--gray); margin-bottom: 5px;">AI推荐理由</div>
-                    <div style="background: #FFF3E0; padding: 15px; border-radius: var(--radius-sm); border-left: 4px solid var(--warning);">
-                        <p style="margin: 0; font-size: 14px; line-height: 1.5;">
-                            ${stock.potential_reasons || '暂无详细分析'}
-                        </p>
-                    </div>
-                </div>
-                
-                <div style="margin-bottom: 20px;">
-                    <div style="font-size: 12px; color: var(--gray); margin-bottom: 5px;">技术指标</div>
-                    <div style="background: var(--light); padding: 10px; border-radius: var(--radius-sm);">
-                        <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
-                            <span style="font-size: 12px; color: var(--gray);">RSI (14):</span>
-                            <span style="font-weight: bold;">${stock.rsi ? stock.rsi.toFixed(1) : 'N/A'}</span>
-                        </div>
-                        <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
-                            <span style="font-size: 12px; color: var(--gray);">MACD:</span>
-                            <span style="font-weight: bold;">${stock.macd ? stock.macd.toFixed(3) : 'N/A'}</span>
-                        </div>
-                        <div style="display: flex; justify-content: space-between;">
-                            <span style="font-size: 12px; color: var(--gray);">成交量比:</span>
-                            <span style="font-weight: bold;">${stock.volume_ratio ? stock.volume_ratio.toFixed(2) : 'N/A'}</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div style="text-align: center; margin-top: 20px;">
-                    <button onclick="selectStock(${JSON.stringify(stock).replace(/"/g, '&quot;')}); closeStockDetail();" style="width: 100%; padding: 12px; background: var(--primary); color: white; border: none; border-radius: var(--radius-sm); font-weight: bold;">
-                        <i class="fas fa-calculator"></i> 使用此股票计算
-                    </button>
-                </div>
-            `;
-            
-            content.innerHTML = detailHtml;
-            modal.style.display = 'flex';
-        }
-        
-        // 关闭股票详情
-        function closeStockDetail() {
-            document.getElementById('stockDetailModal').style.display = 'none';
+            processStockData(sampleData);
+            showNotification('已加载示例数据', 'success');
         }
         
         // 选择股票
@@ -1721,16 +1224,15 @@
             selectedStock = stock;
             
             // 更新表单
-            const cleanCode = stock.code || '';
+            const cleanCode = stock.code ? stock.code.replace(/[="]/g, '') : '';
             document.getElementById('stockCode').value = cleanCode;
             document.getElementById('stockName').value = stock.name || '未知';
-            document.getElementById('selectedStockInfo').textContent = `${cleanCode} - ${stock.name}`;
             
             const price = stock.current_price || 0;
             document.getElementById('buyPrice').value = price.toFixed(3);
             
-            // 计算建议卖出价格（基于AI潜力评分）
-            const suggestedSellPrice = price * (1 + (stock.potential_score || 85) / 100 * 0.1);
+            // 计算建议卖出价格（5%增长）
+            const suggestedSellPrice = price * 1.05;
             document.getElementById('sellPrice').value = suggestedSellPrice.toFixed(3);
             
             // 更新投资总额
@@ -1753,8 +1255,8 @@
             const totalInvestment = buyPrice * totalShares;
             
             // 更新显示
+            document.getElementById('totalInvestment').value = totalInvestment.toFixed(2);
             document.getElementById('totalSharesDisplay').textContent = totalShares.toLocaleString();
-            document.getElementById('investmentAmount').textContent = `RM ${totalInvestment.toFixed(2)}`;
         }
         
         // 重置费用设置
@@ -1776,7 +1278,7 @@
             }
         }
         
-        // 计算净回酬（保持原有的计算逻辑）
+        // 计算净回酬
         function calculateProfit() {
             console.log('开始计算净回酬...');
             
@@ -1861,7 +1363,7 @@
             console.log('计算完成，净回酬:', netProfit);
         }
         
-        // 显示计算结果（保持原有的显示逻辑）
+        // 显示计算结果
         function displayResults(
             netProfit, profitPercentage, buyTotal, sellTotal,
             totalBrokerage, totalClearingFee, totalStampDuty,
@@ -1920,12 +1422,39 @@
             }
         }
         
-        // 辅助函数
-        function formatVolume(volume) {
-            if (!volume || volume === 0) return '0';
-            if (volume >= 1000000) return (volume / 1000000).toFixed(1) + 'M';
-            if (volume >= 1000) return (volume / 1000).toFixed(1) + 'K';
-            return volume.toString();
+        // 显示使用说明
+        function showHowToUse() {
+            const message = `
+                <div style="padding: 15px;">
+                    <h3 style="color: var(--primary); margin-bottom: 15px;">📱 使用说明</h3>
+                    <div style="line-height: 1.6; font-size: 14px;">
+                        <p><strong>1. AI选股页面</strong></p>
+                        <ul style="margin-left: 20px; margin-bottom: 15px;">
+                            <li>选择日期查看不同日期的推荐</li>
+                            <li>点击股票卡片查看详情</li>
+                            <li>点击"选择此股票"自动填充计算器</li>
+                        </ul>
+                        
+                        <p><strong>2. 计算器页面</strong></p>
+                        <ul style="margin-left: 20px; margin-bottom: 15px;">
+                            <li>自动填充选中的股票信息</li>
+                            <li>调整买入价、目标价和股数</li>
+                            <li>修改费用设置（默认已优化）</li>
+                            <li>点击"计算净回酬"查看结果</li>
+                        </ul>
+                        
+                        <p><strong>3. 结果页面</strong></p>
+                        <ul style="margin-left: 20px;">
+                            <li>查看净回酬和回酬率</li>
+                            <li>了解详细的费用明细</li>
+                            <li>检查是否达到RM5利润目标</li>
+                            <li>查看保本价和目标价</li>
+                        </ul>
+                    </div>
+                </div>
+            `;
+            
+            alertWithHTML('使用说明', message);
         }
         
         // 显示通知
@@ -1993,6 +1522,75 @@
                 `;
                 document.head.appendChild(style);
             }
+        }
+        
+        // 带HTML的alert
+        function alertWithHTML(title, content) {
+            const modal = document.createElement('div');
+            modal.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0,0,0,0.5);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                z-index: 10000;
+                padding: 20px;
+            `;
+            
+            modal.innerHTML = `
+                <div style="
+                    background: white;
+                    border-radius: var(--radius);
+                    width: 100%;
+                    max-width: 400px;
+                    max-height: 80vh;
+                    overflow-y: auto;
+                    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+                ">
+                    <div style="
+                        padding: 20px;
+                        border-bottom: 1px solid var(--light-gray);
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+                    ">
+                        <h3 style="margin: 0; color: var(--primary);">${title}</h3>
+                        <button onclick="this.closest('.modal-overlay').remove()" style="
+                            background: none;
+                            border: none;
+                            font-size: 20px;
+                            color: var(--gray);
+                            cursor: pointer;
+                        ">×</button>
+                    </div>
+                    ${content}
+                    <div style="padding: 15px; text-align: center;">
+                        <button onclick="this.closest('.modal-overlay').remove()" style="
+                            padding: 10px 30px;
+                            background: var(--primary);
+                            color: white;
+                            border: none;
+                            border-radius: var(--radius-sm);
+                            font-weight: 600;
+                            cursor: pointer;
+                        ">确定</button>
+                    </div>
+                </div>
+            `;
+            
+            modal.className = 'modal-overlay';
+            document.body.appendChild(modal);
+            
+            // 点击背景关闭
+            modal.addEventListener('click', function(e) {
+                if (e.target === modal) {
+                    modal.remove();
+                }
+            });
         }
         
         // 页面加载后初始化

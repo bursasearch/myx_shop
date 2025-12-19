@@ -1,0 +1,74 @@
+{
+  "schema": [
+    "Code","Stock","Sector","Open","Last","Prv Close","Chg","High","Low",
+    "Y-High","Y-Low","Vol","DY*","B%","Vol MA (20)","RSI (14)",
+    "MACD (26, 12)","EPS*","P/E","Status","Market Cap","P/B"
+  ],
+  "map": {
+    "Stock Code": "Code",
+    "Stock Name (Indicators)": "Stock",
+    "Sector": "Sector",
+    "Opening Price": "Open",
+    "Last Done Price": "Last",
+    "Previous Day Closing Price": "Prv Close",
+    "Price Change": "Chg",
+    "Highest Price": "High",
+    "Lowest Price": "Low",
+    "Year High": "Y-High",
+    "Year Low": "Y-Low",
+    "Volume Traded": "Vol",
+    "Dividend Yield": "DY*",
+    "Beta": "B%",
+    "Volume Weighted Average Price": "Vol MA (20)",
+    "RSI (14)": "RSI (14)",
+    "MACD (26, 12)": "MACD (26, 12)",
+    "EPS": "EPS*",
+    "PE": "P/E",
+    "Trading Status": "Status"
+  },
+  "fill": {
+    "Open": "0",
+    "Last": "0",
+    "Prv Close": "0",
+    "Chg": "0",
+    "High": "0",
+    "Low": "0",
+    "Y-High": "0",
+    "Y-Low": "0",
+    "Vol": "0",
+    "DY*": "0%",
+    "B%": "-",
+    "Vol MA (20)": "-",
+    "RSI (14)": "-",
+    "MACD (26, 12)": "-",
+    "EPS*": "-",
+    "P/E": "-",
+    "Status": "Active",
+    "Market Cap": "-",
+    "P/B": "-"
+  },
+  "sector_lookup": {
+    "101": "Consumer Products & Services",
+    "201": "Energy",
+    "301": "Financial Services",
+    "405": "Industrial Products & Services",
+    "505": "Plantation",
+    "601": "Property",
+    "701": "Technology",
+    "705": "Telecommunications & Media",
+    "707": "Transportation & Logistics",
+    "801": "Utilities",
+    "901": "Healthcare",
+    "999": "REITs / ETFs / Others",
+    "1001": "Construction",
+    "1002": "Closed-End Funds",
+    "1003": "Exchange-Traded Funds",
+    "1004": "Special Purpose Acquisition Companies"
+  },
+  "fundamentals": {
+    "03041": { "MarketCap": "120M", "P/B": "1.2" },
+    "5326C6": { "MarketCap": "50M", "P/B": "0.8" },
+    "0703CJ": { "MarketCap": "200M", "P/B": "1.5" }
+    // Add more stock codes here as needed
+  }
+}

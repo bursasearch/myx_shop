@@ -1,0 +1,34 @@
+{
+  "schema": [
+    "Date",
+    "Code",
+    "Name",
+    "Open",
+    "High",
+    "Low",
+    "Close",
+    "Volume",
+    "Value",
+    "Change",
+    "Change%",
+    "Sector Code",
+    "Sector"
+  ],
+  "map": {
+    "股票代碼": "Code",
+    "名稱": "Name",
+    "開盤": "Open",
+    "最高": "High",
+    "最低": "Low",
+    "收盤": "Close",
+    "成交量": "Volume",
+    "成交值": "Value",
+    "漲跌": "Change",
+    "漲跌幅": "Change%",
+    "行業代碼": "Sector Code"
+  },
+  "fill": {
+    "Date": "-",
+    "Sector": "Unknown"
+  }
+}

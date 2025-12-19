@@ -1,0 +1,675 @@
+========================================
+📊 EOD文件自动处理 - 2025-12-16 16:29:32
+========================================
+🔍 查找EOD文件...
+📁 找到文件: /storage/emulated/0/eskay9761/stock_data/Myx_Data/EOD/20251215.csv
+文件大小: 359K
+修改时间: Dec 15 23:56
+
+🔄 开始处理EOD文件...
+❌ EOD文件处理失败
+
+========================================
+完成时间: 2025-12-16 16:29:32
+========================================
+========================================
+📊 EOD文件自动处理 - 2025-12-16 16:41:38
+========================================
+🔍 查找EOD文件...
+📁 找到文件: /storage/emulated/0/eskay9761/stock_data/Myx_Data/EOD/20251215.csv
+文件大小: 359K
+修改时间: Dec 15 23:56
+
+🔄 开始处理EOD文件...
+============================================================
+📁 输入文件: /storage/emulated/0/eskay9761/stock_data/Myx_Data/EOD/20251215.csv
+⏰ 开始时间: 2025-12-16 16:41:41
+============================================================
+⚠️  行业映射文件不存在，使用默认映射
+📊 加载行业映射: 9 个代码
+✅ 成功读取: 2778 行 × 20 列
+
+📋 原始列名:
+   1. Code
+   2. Stock
+   3. Status
+   4. P/E
+   5. EPS*
+   6. MACD (26, 12)
+   7. RSI (14)
+   8. Vol MA (20)
+   9. B%
+  10. DY*
+  11. Vol
+  12. Y-Low
+  13. Y-High
+  14. High
+  15. Low
+  16. Chg%
+  17. Prv Close
+  18. Last
+  19. Open
+  20. Sector
+
+🏢 行业代码转换:
+  发现 55 个不同行业代码
+  前10个行业:
+    358: Unknown (358) (281 支股票)
+    102: Consumer (275 支股票)
+    305: Unknown (305) (234 支股票)
+    301: Technology (219 支股票)
+    101: Industrial & Consumer Products (205 支股票)
+    302: Unknown (302) (156 支股票)
+    120: Unknown (120) (116 支股票)
+    310: Unknown (310) (94 支股票)
+    402: Unknown (402) (89 支股票)
+    365: Unknown (365) (84 支股票)
+    ... 还有 45 个行业
+
+📊 重新排列列顺序...
+✅ 存在的列 (22):
+   1. Code
+   2. Stock
+   3. Sector
+   4. Sector_Code
+   5. Sector_Name
+   6. Open
+   7. Last
+   8. Prv Close
+   9. Chg%
+  10. High
+  11. Low
+  12. Y-High
+  13. Y-Low
+  14. Vol
+  15. DY*
+  16. B%
+  17. Vol MA (20)
+  18. RSI (14)
+  19. MACD (26, 12)
+  20. EPS*
+  21. P/E
+  22. Status
+
+💾 保存文件: /storage/emulated/0/eskay9761/stock_data/Myx_Data/EOD/20251215_reordered.csv
+📊 最终数据: 2778 行 × 22 列
+
+📄 样本数据（前3行）:
+    Code Stock                         Sector  Sector_Code                    Sector_Name  Last Chg%
+="03041" 1TECH                      Utilities          705                      Utilities   NaN  NaN
+ ="0012"    3A Industrial & Consumer Products          101 Industrial & Consumer Products 0.705    -
+ ="0328"  3REN                  Unknown (405)          405                  Unknown (405) 0.425    -
+
+🏢 行业分布统计:
+  Consumer: 401 支股票 (14.4%)
+  Unknown (358): 281 支股票 (10.1%)
+  Unknown (305): 234 支股票 (8.4%)
+  Technology: 219 支股票 (7.9%)
+  Industrial & Consumer Products: 205 支股票 (7.4%)
+  Unknown (302): 156 支股票 (5.6%)
+  Unknown (120): 116 支股票 (4.2%)
+  Unknown (310): 94 支股票 (3.4%)
+  Unknown (402): 89 支股票 (3.2%)
+  Unknown (365): 84 支股票 (3.0%)
+  ... 还有 42 个行业
+
+============================================================
+🎉 处理完成！
+============================================================
+✅ 文件已复制到: /storage/emulated/0/bursasearch/myx_shop/web/normalized_stocks.csv
+
+🚀 启动AI选股分析...
+======================================================================
+🚀 Bursa Malaysia AI選股神器 - 完整生產版 (整合CSV規範化)
+======================================================================
+🎯 功能:
+  1. ✅ CSV數據規範化（兼容多種格式）
+  2. ✅ 生成 latest_price.json (web目錄) - 安全JSON格式
+  3. ✅ 生成 picks_latest.json (web目錄) - 安全JSON格式
+  4. ✅ 生成 picks_YYYYMMDD.json (web/history目錄)
+  5. ✅ 自動備份到scripts目錄
+  6. ✅ 自動清理30天前舊文件
+  7. ✅ 完全處理NaN值，確保JSON有效性
+======================================================================
+
+📁 輸入文件: /storage/emulated/0/bursasearch/myx_shop/web/normalized_stocks.csv
+📅 日期: 2025-12-16
+🔒 安全模式: 已啟用（完全處理NaN值）
+
+📁 創建目錄結構...
+    ✅ 確保目錄存在: /storage/emulated/0/bursasearch/myx_shop/web
+    ✅ 確保目錄存在: /storage/emulated/0/bursasearch/myx_shop/web/history
+    ✅ 確保目錄存在: /storage/emulated/0/bursasearch/myx_shop/scripts/data/bursa/picks
+    ✅ 確保目錄存在: /storage/emulated/0/bursasearch/myx_shop/scripts/backups
+
+📊 CSV數據規範化...
+  📁 输入文件: /storage/emulated/0/bursasearch/myx_shop/web/normalized_stocks.csv
+  📊 分隔符: 逗号
+  📈 读取 2778 行数据
+  🔧 规范化列名: ['Code', 'Stock', 'Sector', 'Sector_Code', 'Sector_Name', 'Open', 'Last', 'Prv Close', 'Chg%', 'High', 'Low', 'Y-High', 'Y-Low', 'Vol', 'DY*', 'B%', 'Vol MA (20)', 'RSI (14)', 'MACD (26, 12)', 'EPS*', 'P/E', 'Status'] -> ['code', 'code', 'sector', 'code', 'name', 'Open', 'last_price', 'Prv Close', 'Chg%', 'High', 'Low', 'Y-High', 'Y-Low', 'Vol', 'DY*', 'B%', 'Vol MA (20)', 'RSI (14)', 'MACD (26, 12)', 'EPS*', 'P/E', 'Status']
+
+❌ 程序錯誤: cannot reindex on an axis with duplicate labels
+❌ AI选股分析失败
+❌ 重排文件未生成
+
+========================================
+完成时间: 2025-12-16 16:41:44
+========================================
+========================================
+📊 EOD文件自动处理 - 2025-12-16 16:44:04
+========================================
+🔍 查找EOD文件...
+📁 找到文件: /storage/emulated/0/eskay9761/stock_data/Myx_Data/EOD/20251215_reordered.csv
+文件大小: 338K
+修改时间: Dec 16 16:41
+
+🔄 开始处理EOD文件...
+============================================================
+📁 输入文件: /storage/emulated/0/eskay9761/stock_data/Myx_Data/EOD/20251215_reordered.csv
+⏰ 开始时间: 2025-12-16 16:44:07
+============================================================
+⚠️  行业映射文件不存在，使用默认映射
+📊 加载行业映射: 9 个代码
+✅ 成功读取: 2778 行 × 22 列
+
+📋 原始列名:
+   1. Code
+   2. Stock
+   3. Sector
+   4. Sector_Code
+   5. Sector_Name
+   6. Open
+   7. Last
+   8. Prv Close
+   9. Chg%
+  10. High
+  11. Low
+  12. Y-High
+  13. Y-Low
+  14. Vol
+  15. DY*
+  16. B%
+  17. Vol MA (20)
+  18. RSI (14)
+  19. MACD (26, 12)
+  20. EPS*
+  21. P/E
+  22. Status
+
+🏢 行业代码转换:
+  发现 52 个不同行业代码
+  前10个行业:
+    Consumer: Unknown (Consumer) (401 支股票)
+    Unknown (358): Unknown (Unknown (358)) (281 支股票)
+    Unknown (305): Unknown (Unknown (305)) (234 支股票)
+    Technology: Unknown (Technology) (219 支股票)
+    Industrial & Consumer Products: Unknown (Industrial & Consumer Products) (205 支股票)
+    Unknown (302): Unknown (Unknown (302)) (156 支股票)
+    Unknown (120): Unknown (Unknown (120)) (116 支股票)
+    Unknown (310): Unknown (Unknown (310)) (94 支股票)
+    Unknown (402): Unknown (Unknown (402)) (89 支股票)
+    Unknown (365): Unknown (Unknown (365)) (84 支股票)
+    ... 还有 42 个行业
+
+📊 重新排列列顺序...
+✅ 存在的列 (22):
+   1. Code
+   2. Stock
+   3. Sector
+   4. Sector_Code
+   5. Sector_Name
+   6. Open
+   7. Last
+   8. Prv Close
+   9. Chg%
+  10. High
+  11. Low
+  12. Y-High
+  13. Y-Low
+  14. Vol
+  15. DY*
+  16. B%
+  17. Vol MA (20)
+  18. RSI (14)
+  19. MACD (26, 12)
+  20. EPS*
+  21. P/E
+  22. Status
+
+💾 保存文件: /storage/emulated/0/eskay9761/stock_data/Myx_Data/EOD/20251215_reordered_reordered.csv
+📊 最终数据: 2778 行 × 22 列
+
+📄 样本数据（前3行）:
+    Code Stock                                   Sector                    Sector_Code                              Sector_Name  Last Chg%
+="03041" 1TECH                      Unknown (Utilities)                      Utilities                      Unknown (Utilities)   NaN  NaN
+ ="0012"    3A Unknown (Industrial & Consumer Products) Industrial & Consumer Products Unknown (Industrial & Consumer Products) 0.705    -
+ ="0328"  3REN                  Unknown (Unknown (405))                  Unknown (405)                  Unknown (Unknown (405)) 0.425    -
+
+🏢 行业分布统计:
+  Unknown (Consumer): 401 支股票 (14.4%)
+  Unknown (Unknown (358)): 281 支股票 (10.1%)
+  Unknown (Unknown (305)): 234 支股票 (8.4%)
+  Unknown (Technology): 219 支股票 (7.9%)
+  Unknown (Industrial & Consumer Products): 205 支股票 (7.4%)
+  Unknown (Unknown (302)): 156 支股票 (5.6%)
+  Unknown (Unknown (120)): 116 支股票 (4.2%)
+  Unknown (Unknown (310)): 94 支股票 (3.4%)
+  Unknown (Unknown (402)): 89 支股票 (3.2%)
+  Unknown (Unknown (365)): 84 支股票 (3.0%)
+  ... 还有 42 个行业
+
+============================================================
+🎉 处理完成！
+============================================================
+✅ 文件已复制到: /storage/emulated/0/bursasearch/myx_shop/web/normalized_stocks.csv
+
+🚀 启动AI选股分析...
+======================================================================
+🚀 Bursa Malaysia AI選股神器 - 完整生產版 (整合CSV規範化)
+======================================================================
+🎯 功能:
+  1. ✅ CSV數據規範化（兼容多種格式）
+  2. ✅ 生成 latest_price.json (web目錄) - 安全JSON格式
+  3. ✅ 生成 picks_latest.json (web目錄) - 安全JSON格式
+  4. ✅ 生成 picks_YYYYMMDD.json (web/history目錄)
+  5. ✅ 自動備份到scripts目錄
+  6. ✅ 自動清理30天前舊文件
+  7. ✅ 完全處理NaN值，確保JSON有效性
+======================================================================
+
+📁 輸入文件: /storage/emulated/0/bursasearch/myx_shop/web/normalized_stocks.csv
+📅 日期: 2025-12-16
+🔒 安全模式: 已啟用（完全處理NaN值）
+
+📁 創建目錄結構...
+    ✅ 確保目錄存在: /storage/emulated/0/bursasearch/myx_shop/web
+    ✅ 確保目錄存在: /storage/emulated/0/bursasearch/myx_shop/web/history
+    ✅ 確保目錄存在: /storage/emulated/0/bursasearch/myx_shop/scripts/data/bursa/picks
+    ✅ 確保目錄存在: /storage/emulated/0/bursasearch/myx_shop/scripts/backups
+
+📊 CSV數據規範化...
+  📁 输入文件: /storage/emulated/0/bursasearch/myx_shop/web/normalized_stocks.csv
+  📊 分隔符: 逗号
+  📈 读取 2778 行数据
+  🔧 规范化列名: ['Code', 'Stock', 'Sector', 'Sector_Code', 'Sector_Name', 'Open', 'Last', 'Prv Close', 'Chg%', 'High', 'Low', 'Y-High', 'Y-Low', 'Vol', 'DY*', 'B%', 'Vol MA (20)', 'RSI (14)', 'MACD (26, 12)', 'EPS*', 'P/E', 'Status'] -> ['code', 'code', 'sector', 'code', 'name', 'Open', 'last_price', 'Prv Close', 'Chg%', 'High', 'Low', 'Y-High', 'Y-Low', 'Vol', 'DY*', 'B%', 'Vol MA (20)', 'RSI (14)', 'MACD (26, 12)', 'EPS*', 'P/E', 'Status']
+
+❌ 程序錯誤: cannot reindex on an axis with duplicate labels
+❌ AI选股分析失败
+❌ 重排文件未生成
+
+========================================
+完成时间: 2025-12-16 16:44:09
+========================================
+========================================
+📊 EOD文件自动处理 - 2025-12-16 17:12:50
+========================================
+🔍 查找EOD文件...
+📁 找到文件: /storage/emulated/0/eskay9761/stock_data/Myx_Data/EOD/20251215_reordered.csv
+文件大小: 357K
+修改时间: Dec 16 17:04
+
+🔄 开始处理EOD文件...
+============================================================
+📁 输入文件: /storage/emulated/0/eskay9761/stock_data/Myx_Data/EOD/20251215_reordered.csv
+⏰ 开始时间: 2025-12-16 17:12:53
+============================================================
+📊 加载行业映射: 90 个代码
+✅ 成功读取: 2778 行 × 22 列
+
+📋 原始列名:
+   1. Code
+   2. Stock
+   3. Sector
+   4. Sector_Code
+   5. Sector_Name
+   6. Open
+   7. Last
+   8. Prv Close
+   9. Chg%
+  10. High
+  11. Low
+  12. Y-High
+  13. Y-Low
+  14. Vol
+  15. DY*
+  16. B%
+  17. Vol MA (20)
+  18. RSI (14)
+  19. MACD (26, 12)
+  20. EPS*
+  21. P/E
+  22. Status
+
+🏢 行业代码转换:
+  发现 6 个不同行业代码
+  前10个行业:
+    Technology: Unknown (Technology) (1453 支股票)
+    Industrial & Consumer Products: Unknown (Industrial & Consumer Products) (958 支股票)
+    Property: Unknown (Property) (291 支股票)
+    Utilities: Unknown (Utilities) (52 支股票)
+    Transportation & Logistics: Unknown (Transportation & Logistics) (15 支股票)
+    Telecommunications & Media: Unknown (Telecommunications & Media) (9 支股票)
+
+📊 重新排列列顺序...
+✅ 存在的列 (22):
+   1. Code
+   2. Stock
+   3. Sector
+   4. Sector_Code
+   5. Sector_Name
+   6. Open
+   7. Last
+   8. Prv Close
+   9. Chg%
+  10. High
+  11. Low
+  12. Y-High
+  13. Y-Low
+  14. Vol
+  15. DY*
+  16. B%
+  17. Vol MA (20)
+  18. RSI (14)
+  19. MACD (26, 12)
+  20. EPS*
+  21. P/E
+  22. Status
+
+💾 保存文件: /storage/emulated/0/eskay9761/stock_data/Myx_Data/EOD/20251215_reordered_reordered.csv
+📊 最终数据: 2778 行 × 22 列
+
+📄 样本数据（前3行）:
+    Code Stock                                   Sector                    Sector_Code                              Sector_Name  Last Chg%
+="03041" 1TECH                      Unknown (Utilities)                      Utilities                      Unknown (Utilities)   NaN  NaN
+ ="0012"    3A Unknown (Industrial & Consumer Products) Industrial & Consumer Products Unknown (Industrial & Consumer Products) 0.705    -
+ ="0328"  3REN                       Unknown (Property)                       Property                       Unknown (Property) 0.425    -
+
+🏢 行业分布统计:
+  Unknown (Technology): 1453 支股票 (52.3%)
+  Unknown (Industrial & Consumer Products): 958 支股票 (34.5%)
+  Unknown (Property): 291 支股票 (10.5%)
+  Unknown (Utilities): 52 支股票 (1.9%)
+  Unknown (Transportation & Logistics): 15 支股票 (0.5%)
+  Unknown (Telecommunications & Media): 9 支股票 (0.3%)
+
+============================================================
+🎉 处理完成！
+============================================================
+✅ 文件已复制到: /storage/emulated/0/bursasearch/myx_shop/web/normalized_stocks.csv
+
+🚀 启动AI选股分析...
+======================================================================
+🚀 Bursa Malaysia AI選股神器 - 完整生產版 (整合CSV規範化)
+======================================================================
+🎯 功能:
+  1. ✅ CSV數據規範化（兼容多種格式）
+  2. ✅ 生成 latest_price.json (web目錄) - 安全JSON格式
+  3. ✅ 生成 picks_latest.json (web目錄) - 安全JSON格式
+  4. ✅ 生成 picks_YYYYMMDD.json (web/history目錄)
+  5. ✅ 自動備份到scripts目錄
+  6. ✅ 自動清理30天前舊文件
+  7. ✅ 完全處理NaN值，確保JSON有效性
+======================================================================
+
+📁 輸入文件: /storage/emulated/0/bursasearch/myx_shop/web/normalized_stocks.csv
+📅 日期: 2025-12-16
+🔒 安全模式: 已啟用（完全處理NaN值）
+
+📁 創建目錄結構...
+    ✅ 確保目錄存在: /storage/emulated/0/bursasearch/myx_shop/web
+    ✅ 確保目錄存在: /storage/emulated/0/bursasearch/myx_shop/web/history
+    ✅ 確保目錄存在: /storage/emulated/0/bursasearch/myx_shop/scripts/data/bursa/picks
+    ✅ 確保目錄存在: /storage/emulated/0/bursasearch/myx_shop/scripts/backups
+
+📊 CSV數據規範化...
+  📁 输入文件: /storage/emulated/0/bursasearch/myx_shop/web/normalized_stocks.csv
+  📈 读取 2778 行数据
+  📋 原始列名: ['Code', 'Stock', 'Sector', 'Sector_Code', 'Sector_Name', 'Open', 'Last', 'Prv Close', 'Chg%', 'High', 'Low', 'Y-High', 'Y-Low', 'Vol', 'DY*', 'B%', 'Vol MA (20)', 'RSI (14)', 'MACD (26, 12)', 'EPS*', 'P/E', 'Status']
+  ✅ 映射 Code → code
+  ✅ 映射 Stock → name
+  ✅ 映射 Sector → sector
+  ✅ 映射 Sector_Code → sector_code
+  ✅ 映射 Sector_Name → sector_name
+  ✅ 映射 Last → last_price
+  ✅ 映射 Open → open
+  ✅ 映射 High → high
+  ✅ 映射 Low → low
+  ✅ 映射 Prv Close → prev_close
+  ✅ 映射 Chg% → change_percent
+  ✅ 映射 Vol → volume
+  💾 保存规范化文件: /storage/emulated/0/bursasearch/myx_shop/web/normalized_stocks_normalized.csv
+  📋 最终列: ['code', 'name', 'sector', 'sector_code', 'sector_name', 'last_price', 'open', 'high', 'low', 'prev_close', 'change_percent', 'volume', 'last_updated']
+  📊 数据行数: 2778
+
+🔧 數據處理流程...
+  🔧 標準化數據...
+  ✅ 標準化完成
+  📊 計算技術指標...
+  ✅ 技術指標計算完成
+  🧠 AI評分系統啟動...
+  ✅ AI評分完成
+  🎯 生成AI選股清單...
+  ✅ 生成 20 個選股
+
+💾 生成輸出文件...
+  📄 創建 latest_price.json...
+  💾 保存JSON文件: /storage/emulated/0/bursasearch/myx_shop/web/latest_price.json
+  📄 創建 picks_latest.json...
+  💾 保存JSON文件: /storage/emulated/0/bursasearch/myx_shop/web/picks_latest.json
+  📄 創建 picks_20251216.json...
+  💾 保存JSON文件: /storage/emulated/0/bursasearch/myx_shop/web/history/picks_20251216.json
+  💾 創建備份...
+    ✅ 備份 latest_price.json
+    ✅ 備份 picks_latest.json
+  🗑️  清理30天前舊文件...
+  ✅ 無需清理
+
+======================================================================
+🎉 AI選股完成！
+======================================================================
+📊 輸入數據: 2778 支股票
+🎯 AI選股: 20 個推薦
+💾 生成文件:
+   1. /storage/emulated/0/bursasearch/myx_shop/web/latest_price.json
+   2. /storage/emulated/0/bursasearch/myx_shop/web/picks_latest.json
+   3. /storage/emulated/0/bursasearch/myx_shop/web/history/picks_20251216.json
+   4. 備份: /storage/emulated/0/bursasearch/myx_shop/scripts/backups/backup_20251216_171258
+
+⏰ 下次運行: python ai_stock_picker_full.py [CSV文件路徑]
+======================================================================
+✅ AI选股分析完成
+📊 生成 latest_price.json: N/A 支股票
+🎯 生成 picks_latest.json: N/A 个推荐
+❌ 重排文件未生成
+
+========================================
+完成时间: 2025-12-16 17:12:59
+========================================
+========================================
+📊 EOD文件自动处理 - 2025-12-16 22:11:52
+========================================
+🔍 查找EOD文件...
+📁 找到文件: /storage/emulated/0/eskay9761/stock_data/Myx_Data/EOD/20251216.csv
+文件大小: 360K
+修改时间: Dec 16 21:31
+
+🔄 开始处理EOD文件...
+============================================================
+📁 输入文件: /storage/emulated/0/eskay9761/stock_data/Myx_Data/EOD/20251216.csv
+⏰ 开始时间: 2025-12-16 22:11:55
+============================================================
+📊 加载行业映射: 90 个代码
+✅ 成功读取: 2781 行 × 20 列
+
+📋 原始列名:
+   1. Code
+   2. Stock
+   3. Status
+   4. P/E
+   5. EPS*
+   6. MACD (26, 12)
+   7. RSI (14)
+   8. Vol MA (20)
+   9. B%
+  10. DY*
+  11. Vol
+  12. Y-Low
+  13. Y-High
+  14. High
+  15. Low
+  16. Chg%
+  17. Prv Close
+  18. Last
+  19. Open
+  20. Sector
+
+🏢 行业代码转换:
+  发现 55 个不同行业代码
+  前10个行业:
+    358: Technology (289 支股票)
+    102: Industrial & Consumer Products (275 支股票)
+    305: Technology (233 支股票)
+    301: Technology (217 支股票)
+    101: Industrial & Consumer Products (205 支股票)
+    302: Technology (156 支股票)
+    120: Industrial & Consumer Products (116 支股票)
+    310: Technology (94 支股票)
+    402: Property (90 支股票)
+    365: Technology (86 支股票)
+    ... 还有 45 个行业
+
+📊 重新排列列顺序...
+✅ 存在的列 (22):
+   1. Code
+   2. Stock
+   3. Sector
+   4. Sector_Code
+   5. Sector_Name
+   6. Open
+   7. Last
+   8. Prv Close
+   9. Chg%
+  10. High
+  11. Low
+  12. Y-High
+  13. Y-Low
+  14. Vol
+  15. DY*
+  16. B%
+  17. Vol MA (20)
+  18. RSI (14)
+  19. MACD (26, 12)
+  20. EPS*
+  21. P/E
+  22. Status
+
+💾 保存文件: /storage/emulated/0/eskay9761/stock_data/Myx_Data/EOD/20251216_reordered.csv
+📊 最终数据: 2781 行 × 22 列
+
+📄 样本数据（前3行）:
+   Code  Stock                         Sector  Sector_Code                    Sector_Name  Last    Chg%
+="5681" PETDAG Industrial & Consumer Products          101 Industrial & Consumer Products 19.34 +0.311%
+="2445"    KLK Industrial & Consumer Products          125 Industrial & Consumer Products 19.80       -
+="4065"    PPB Industrial & Consumer Products          101 Industrial & Consumer Products 10.12 +1.200%
+
+🏢 行业分布统计:
+  Technology: 1455 支股票 (52.3%)
+  Industrial & Consumer Products: 958 支股票 (34.4%)
+  Property: 292 支股票 (10.5%)
+  Utilities: 52 支股票 (1.9%)
+  Transportation & Logistics: 15 支股票 (0.5%)
+  Telecommunications & Media: 9 支股票 (0.3%)
+
+============================================================
+🎉 处理完成！
+============================================================
+✅ 文件已复制到: /storage/emulated/0/bursasearch/myx_shop/web/normalized_stocks.csv
+
+🚀 启动AI选股分析...
+======================================================================
+🚀 Bursa Malaysia AI選股神器 - 完整生產版 (整合CSV規範化)
+======================================================================
+🎯 功能:
+  1. ✅ CSV數據規範化（兼容多種格式）
+  2. ✅ 生成 latest_price.json (web目錄) - 安全JSON格式
+  3. ✅ 生成 picks_latest.json (web目錄) - 安全JSON格式
+  4. ✅ 生成 picks_YYYYMMDD.json (web/history目錄)
+  5. ✅ 自動備份到scripts目錄
+  6. ✅ 自動清理30天前舊文件
+  7. ✅ 完全處理NaN值，確保JSON有效性
+======================================================================
+
+📁 輸入文件: /storage/emulated/0/bursasearch/myx_shop/web/normalized_stocks.csv
+📅 日期: 2025-12-16
+🔒 安全模式: 已啟用（完全處理NaN值）
+
+📁 創建目錄結構...
+    ✅ 確保目錄存在: /storage/emulated/0/bursasearch/myx_shop/web
+    ✅ 確保目錄存在: /storage/emulated/0/bursasearch/myx_shop/web/history
+    ✅ 確保目錄存在: /storage/emulated/0/bursasearch/myx_shop/scripts/data/bursa/picks
+    ✅ 確保目錄存在: /storage/emulated/0/bursasearch/myx_shop/scripts/backups
+
+📊 CSV數據規範化...
+  📁 输入文件: /storage/emulated/0/bursasearch/myx_shop/web/normalized_stocks.csv
+  📈 读取 2781 行数据
+  📋 原始列名: ['Code', 'Stock', 'Sector', 'Sector_Code', 'Sector_Name', 'Open', 'Last', 'Prv Close', 'Chg%', 'High', 'Low', 'Y-High', 'Y-Low', 'Vol', 'DY*', 'B%', 'Vol MA (20)', 'RSI (14)', 'MACD (26, 12)', 'EPS*', 'P/E', 'Status']
+  ✅ 映射 Code → code
+  ✅ 映射 Stock → name
+  ✅ 映射 Sector → sector
+  ✅ 映射 Sector_Code → sector_code
+  ✅ 映射 Sector_Name → sector_name
+  ✅ 映射 Last → last_price
+  ✅ 映射 Open → open
+  ✅ 映射 High → high
+  ✅ 映射 Low → low
+  ✅ 映射 Prv Close → prev_close
+  ✅ 映射 Chg% → change_percent
+  ✅ 映射 Vol → volume
+  💾 保存规范化文件: /storage/emulated/0/bursasearch/myx_shop/web/normalized_stocks_normalized.csv
+  📋 最终列: ['code', 'name', 'sector', 'sector_code', 'sector_name', 'last_price', 'open', 'high', 'low', 'prev_close', 'change_percent', 'volume', 'last_updated']
+  📊 数据行数: 2781
+
+🔧 數據處理流程...
+  🔧 標準化數據...
+  ✅ 標準化完成
+  📊 計算技術指標...
+  ✅ 技術指標計算完成
+  🧠 AI評分系統啟動...
+  ✅ AI評分完成
+  🎯 生成AI選股清單...
+  ✅ 生成 20 個選股
+
+💾 生成輸出文件...
+  📄 創建 latest_price.json...
+  💾 保存JSON文件: /storage/emulated/0/bursasearch/myx_shop/web/latest_price.json
+  📄 創建 picks_latest.json...
+  💾 保存JSON文件: /storage/emulated/0/bursasearch/myx_shop/web/picks_latest.json
+  📄 創建 picks_20251216.json...
+  💾 保存JSON文件: /storage/emulated/0/bursasearch/myx_shop/web/history/picks_20251216.json
+  💾 創建備份...
+    ✅ 備份 latest_price.json
+    ✅ 備份 picks_latest.json
+  🗑️  清理30天前舊文件...
+  ✅ 無需清理
+
+======================================================================
+🎉 AI選股完成！
+======================================================================
+📊 輸入數據: 2781 支股票
+🎯 AI選股: 20 個推薦
+💾 生成文件:
+   1. /storage/emulated/0/bursasearch/myx_shop/web/latest_price.json
+   2. /storage/emulated/0/bursasearch/myx_shop/web/picks_latest.json
+   3. /storage/emulated/0/bursasearch/myx_shop/web/history/picks_20251216.json
+   4. 備份: /storage/emulated/0/bursasearch/myx_shop/scripts/backups/backup_20251216_221200
+
+⏰ 下次運行: python ai_stock_picker_full.py [CSV文件路徑]
+======================================================================
+✅ AI选股分析完成
+📊 生成 latest_price.json: N/A 支股票
+🎯 生成 picks_latest.json: N/A 个推荐
+❌ 重排文件未生成
+
+========================================
+完成时间: 2025-12-16 22:12:01
+========================================

@@ -3,12 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Myx Shop - Shopee 产品商店</title>
-    <meta name="description" content="Myx Shop - 精选Shopee优质产品">
+    <title>Myx Shop - Shopee 產品商店</title>
+    <meta name="description" content="Myx Shop - 精選Shopee優質產品">
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     
     <style>
+        /* CSS完全保持不變，因為沒問題 */
         :root {
             --primary: #667eea;
             --primary-dark: #5a6fd8;
@@ -83,7 +84,7 @@
             transform: translateY(-2px);
         }
 
-        /* 筛选器 */
+        /* 篩選器 */
         .filters {
             background: white;
             padding: 1.5rem;
@@ -120,7 +121,7 @@
             font-size: 0.9rem;
         }
 
-        /* 产品网格 */
+        /* 產品網格 */
         .products-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -228,7 +229,7 @@
             transform: none;
         }
 
-        /* 空状态 */
+        /* 空狀態 */
         .empty-state {
             text-align: center;
             padding: 3rem;
@@ -249,7 +250,7 @@
             margin-bottom: 0.5rem;
         }
 
-        /* 加载状态 */
+        /* 加載狀態 */
         .loading {
             text-align: center;
             padding: 2rem;
@@ -271,7 +272,7 @@
             100% { transform: rotate(360deg); }
         }
 
-        /* 产品统计 */
+        /* 產品統計 */
         .products-stats {
             background: white;
             padding: 1rem;
@@ -298,7 +299,7 @@
             color: var(--primary);
         }
 
-        /* 响应式 */
+        /* 響應式 */
         @media (max-width: 768px) {
             .filters {
                 flex-direction: column;
@@ -344,7 +345,7 @@
             }
         }
 
-        /* 分类标签 */
+        /* 分類標簽 */
         .category-tag {
             display: inline-block;
             padding: 0.2rem 0.6rem;
@@ -361,7 +362,7 @@
         .category-electronic { background: #ebf8ff; color: #1a365d; }
         .category-book { background: #faf5ff; color: #44337a; }
 
-        /* 状态标签 */
+        /* 狀態標簽 */
         .status-badge {
             display: inline-block;
             padding: 0.2rem 0.6rem;
@@ -374,7 +375,7 @@
         .status-active { background: #e6fffa; color: #234e52; }
         .status-inactive { background: #fed7d7; color: #c53030; }
 
-        /* 刷新按钮 */
+        /* 刷新按鈕 */
         .refresh-btn {
             background: var(--success);
             color: white;
@@ -423,81 +424,81 @@
     <div class="container">
         <div class="header">
             <h1><i class="fab fa-shopify"></i> Myx Shop</h1>
-            <p>精选 Shopee 优质产品 - 一站式购物体验</p>
+            <p>精選 Shopee 優質產品 - 一站式購物體驗</p>
             
-            <!-- 导航链接 -->
+            <!-- 導航鏈接保持不變 -->
             <div class="header-nav">
                 <a href="admin/shopee_dashboard.html" class="nav-btn">
-                    <i class="fas fa-cog"></i> 管理后台
+                    <i class="fas fa-cog"></i> 管理後台
                 </a>
-                <a href="../index.html" class="nav-btn">
+                <a href="index.html" class="nav-btn">
                     <i class="fas fa-home"></i> 回到主頁
                 </a>
-                <a href="../bursa.html" class="nav-btn">
+                <a href="bursa.html" class="nav-btn">
                     <i class="fas fa-chart-line"></i> 回到AI選股
                 </a>
             </div>
         </div>
 
-        <!-- 产品统计 -->
+        <!-- 產品統計 -->
         <div class="products-stats">
             <div class="stat-item">
                 <i class="fas fa-cubes"></i>
-                <span>总产品数: <span class="stat-number" id="totalProducts">0</span></span>
+                <span>總產品數: <span class="stat-number" id="totalProducts">0</span></span>
             </div>
             <div class="stat-item">
                 <i class="fas fa-check-circle"></i>
-                <span>有库存: <span class="stat-number" id="availableProducts">0</span></span>
+                <span>有庫存: <span class="stat-number" id="availableProducts">0</span></span>
             </div>
             <div class="stat-item">
                 <i class="fas fa-sync-alt"></i>
-                <span>最后更新: <span class="stat-number" id="lastUpdated">-</span></span>
+                <span>最後更新: <span class="stat-number" id="lastUpdated">-</span></span>
             </div>
             <button class="refresh-btn" onclick="ProductStore.loadProducts()">
-                <i class="fas fa-redo"></i> 刷新数据
+                <i class="fas fa-redo"></i> 刷新數據
             </button>
         </div>
 
-        <!-- 筛选器 -->
+        <!-- 篩選器 -->
         <div class="filters">
             <div class="filter-group">
-                <label for="categoryFilter">分类:</label>
+                <label for="categoryFilter">分類:</label>
                 <select id="categoryFilter" class="filter-select">
-                    <option value="all">所有分类</option>
-                    <option value="health">保健养生</option>
+                    <option value="all">所有分類</option>
+                    <option value="health">保健養生</option>
                     <option value="home">家居生活</option>
-                    <option value="electronic">电子产品</option>
-                    <option value="book">图书文具</option>
+                    <option value="electronic">電子產品</option>
+                    <option value="book">圖書文具</option>
                 </select>
             </div>
             
             <div class="filter-group">
                 <label for="sortFilter">排序:</label>
                 <select id="sortFilter" class="filter-select">
-                    <option value="name">按名称</option>
-                    <option value="price-low">价格从低到高</option>
-                    <option value="price-high">价格从高到低</option>
-                    <option value="stock">库存量</option>
+                    <option value="name">按名稱</option>
+                    <option value="price-low">價格從低到高</option>
+                    <option value="price-high">價格從高到低</option>
+                    <option value="stock">庫存量</option>
                 </select>
             </div>
             
-            <input type="text" id="searchInput" class="search-box" placeholder="🔍 搜索产品名称...">
+            <input type="text" id="searchInput" class="search-box" placeholder="🔍 搜索產品名稱...">
         </div>
 
-        <!-- 产品容器 -->
+        <!-- 產品容器 -->
         <div id="productsContainer">
             <div class="loading">
                 <div class="loading-spinner"></div>
-                <p>正在加载产品数据...</p>
+                <p>正在加載產品數據...</p>
             </div>
         </div>
     </div>
 
     <script>
-        // ==================== 图片路径处理函数 ====================
+        // ==================== 圖片路徑處理函數 ====================
         function getProductImagePath(imagePath) {
             if (!imagePath) {
-                return 'https://via.placeholder.com/300x200/cccccc/000000?text=产品图片';
+                return 'https://via.placeholder.com/300x200/cccccc/000000?text=產品圖片';
             }
             
             // 如果是完整URL，直接返回
@@ -505,59 +506,69 @@
                 return imagePath;
             }
             
-            // 使用相对于服务器根目录的路径
+            // 使用正確的路徑 - 根據你的目錄結構
             return 'images/products/shopee/' + imagePath;
         }
 
-        // ==================== 分类标签映射 ====================
+        // ==================== 分類標簽映射 ====================
         const categoryMap = {
-            'health': { name: '保健养生', class: 'category-health' },
+            'health': { name: '保健養生', class: 'category-health' },
             'home': { name: '家居生活', class: 'category-home' },
-            'electronic': { name: '电子产品', class: 'category-electronic' },
-            'book': { name: '图书文具', class: 'category-book' }
+            'electronic': { name: '電子產品', class: 'category-electronic' },
+            'book': { name: '圖書文具', class: 'category-book' }
         };
 
-        // ==================== 产品管理器 ====================
+        // ==================== 產品管理器 ====================
         const ProductStore = {
             products: [],
             filteredProducts: [],
             lastUpdated: null,
             
-            // 从JSON文件加载产品数据
+            // 從JSON文件加載產品數據
             async loadProducts() {
                 try {
-                    console.log('开始加载产品数据...');
+                    console.log('開始加載產品數據...');
                     
-                    // 使用正确的JSON文件路径
-                    const response = await fetch('js/shopee_lists.json');
+                    // 關鍵修改：使用正確的文件名 shopee_list.json（單數）
+                    const response = await fetch('js/shopee_list.json');
                     
                     if (!response.ok) {
-                        throw new Error(`HTTP错误! 状态: ${response.status}`);
+                        throw new Error(`HTTP錯誤! 狀態: ${response.status}`);
                     }
                     
                     const data = await response.json();
-                    console.log('成功加载数据:', data);
+                    console.log('成功加載數據:', data);
                     
                     if (data && data.products && Array.isArray(data.products)) {
                         this.products = data.products;
                         this.filteredProducts = [...this.products];
                         this.lastUpdated = data.lastUpdated || new Date().toISOString();
                         
-                        console.log(`✅ 成功加载 ${this.products.length} 个产品`);
+                        console.log(`✅ 成功加載 ${this.products.length} 個產品`);
+                        console.log('產品列表:', this.products.map(p => ({id: p.id, name: p.name, category: p.category})));
+                        
                         this.updateStats();
                         this.renderProducts();
-                        this.showToast('✅ 数据加载成功', 'success');
+                        this.showToast('✅ 數據加載成功', 'success');
                     } else {
-                        throw new Error('JSON文件格式不正确');
+                        throw new Error('JSON文件格式不正確');
                     }
                     
                 } catch (error) {
-                    console.error('❌ 加载产品数据失败:', error);
-                    this.showError('加载产品数据失败: ' + error.message);
+                    console.error('❌ 加載產品數據失敗:', error);
+                    
+                    // 顯示詳細的錯誤信息
+                    let errorMsg = '加載產品數據失敗: ' + error.message;
+                    errorMsg += '\n\n可能原因:';
+                    errorMsg += '\n1. 文件路徑錯誤: js/shopee_list.json';
+                    errorMsg += '\n2. JSON格式不正確';
+                    errorMsg += '\n3. 文件權限問題';
+                    
+                    this.showError(errorMsg);
                 }
             },
             
-            // 更新统计信息
+            // 更新統計信息
             updateStats() {
                 const totalProducts = this.products.length;
                 const availableProducts = this.products.filter(p => p.stock > 0).length;
@@ -571,24 +582,24 @@
                 }
             },
             
-            // 筛选产品
+            // 篩選產品
             filterProducts() {
                 const category = document.getElementById('categoryFilter').value;
                 const searchTerm = document.getElementById('searchInput').value.toLowerCase();
                 const sortBy = document.getElementById('sortFilter').value;
                 
                 let filtered = this.products.filter(product => {
-                    // 状态筛选（如果有status字段）
+                    // 狀態篩選（如果有status字段）
                     if (product.status === 'inactive') {
                         return false;
                     }
                     
-                    // 分类筛选
+                    // 分類篩選
                     if (category !== 'all' && product.category !== category) {
                         return false;
                     }
                     
-                    // 搜索筛选
+                    // 搜索篩選
                     if (searchTerm && !product.name.toLowerCase().includes(searchTerm)) {
                         return false;
                     }
@@ -615,7 +626,7 @@
                 this.renderProducts();
             },
             
-            // 渲染产品
+            // 渲染產品
             renderProducts() {
                 const container = document.getElementById('productsContainer');
                 
@@ -623,12 +634,12 @@
                     container.innerHTML = `
                         <div class="empty-state">
                             <i class="fas fa-box-open"></i>
-                            <h3>暂无产品</h3>
-                            <p>没有找到符合条件的产品，请尝试其他筛选条件</p>
-                            <p style="margin-top: 1rem; font-size: 0.9rem;">
-                                <i class="fas fa-info-circle"></i> 
-                                请确保 JSON 文件存在且格式正确
-                            </p>
+                            <h3>暫無產品</h3>
+                            <p>沒有找到符合條件的產品，請嘗試其他篩選條件</p>
+                            <div style="margin-top: 1rem; font-size: 0.9rem;">
+                                <p><i class="fas fa-info-circle"></i> 當前有 ${this.products.length} 個產品，但篩選後為0</p>
+                                <p>檢查篩選條件：分類=${document.getElementById('categoryFilter').value}, 搜索=${document.getElementById('searchInput').value}</p>
+                            </div>
                         </div>
                     `;
                     return;
@@ -646,7 +657,7 @@
                             <img src="${imagePath}" 
                                  alt="${product.name}" 
                                  class="product-image"
-                                 onerror="this.src='https://via.placeholder.com/300x200/cccccc/000000?text=图片加载失败'">
+                                 onerror="this.src='https://via.placeholder.com/300x200/cccccc/000000?text=圖片加載失敗'">
                             <div class="product-info">
                                 <div style="display: flex; justify-content: space-between; align-items: flex-start;">
                                     <span class="category-tag ${categoryInfo.class}">${categoryInfo.name}</span>
@@ -662,11 +673,11 @@
                                     <span class="stock ${stockStatus.class}">
                                         <i class="fas ${stockStatus.icon}"></i> ${stockStatus.text}
                                     </span>
-                                    <span>销量: ${product.sales || 0}</span>
+                                    <span>銷量: ${product.sales || 0}</span>
                                 </div>
                                 ${product.stock > 0 && product.status !== 'inactive' ? 
                                     `<a href="${product.link || '#'}" class="buy-btn" target="_blank" rel="noopener">
-                                        <i class="fas fa-shopping-cart"></i> 立即购买
+                                        <i class="fas fa-shopping-cart"></i> 立即購買
                                     </a>` :
                                     `<button class="buy-btn" disabled>
                                         <i class="fas fa-times-circle"></i> ${product.status === 'inactive' ? '已下架' : '已售罄'}
@@ -681,36 +692,36 @@
                 container.innerHTML = html;
             },
             
-            // 获取库存状态
+            // 獲取庫存狀態
             getStockStatus(stock) {
                 if (stock <= 0) {
                     return { text: '已售罄', class: 'out-of-stock', icon: 'fa-times-circle' };
                 } else if (stock <= 10) {
-                    return { text: `仅剩 ${stock} 件`, class: 'low-stock', icon: 'fa-exclamation-triangle' };
+                    return { text: `僅剩 ${stock} 件`, class: 'low-stock', icon: 'fa-exclamation-triangle' };
                 } else {
-                    return { text: `有库存`, class: 'in-stock', icon: 'fa-check-circle' };
+                    return { text: `有庫存`, class: 'in-stock', icon: 'fa-check-circle' };
                 }
             },
             
-            // 显示错误信息
+            // 顯示錯誤信息
             showError(message) {
                 const container = document.getElementById('productsContainer');
                 container.innerHTML = `
                     <div class="empty-state">
                         <i class="fas fa-exclamation-triangle"></i>
-                        <h3>加载失败</h3>
+                        <h3>加載失敗</h3>
                         <p>${message}</p>
                         <div style="margin-top: 1rem; text-align: left; background: rgba(255,255,255,0.1); padding: 1rem; border-radius: 8px;">
-                            <p style="margin-bottom: 0.5rem;"><strong>解决方案:</strong></p>
+                            <p style="margin-bottom: 0.5rem;"><strong>解決方案:</strong></p>
                             <ol style="text-align: left; padding-left: 1.5rem;">
-                                <li>检查 JSON 文件路径: <code>js/shopee_lists.json</code></li>
-                                <li>确认图片文件夹: <code>images/products/shopee/</code></li>
-                                <li>检查文件权限和格式</li>
-                                <li>查看浏览器控制台错误信息</li>
+                                <li>確認文件名: <code>js/shopee_list.json</code>（注意是單數list）</li>
+                                <li>確認圖片路徑: <code>images/products/shopee/</code></li>
+                                <li>檢查JSON格式是否正確</li>
+                                <li>查看瀏覽器控制台錯誤信息（按F12）</li>
                             </ol>
                         </div>
                         <button class="refresh-btn" onclick="ProductStore.loadProducts()" style="margin-top: 1rem;">
-                            <i class="fas fa-redo"></i> 重试加载
+                            <i class="fas fa-redo"></i> 重試加載
                         </button>
                     </div>
                 `;
@@ -718,9 +729,12 @@
             
             // 初始化
             init() {
+                console.log('初始化Myx Shop...');
+                console.log('將嘗試加載: js/shopee_list.json');
+                
                 this.loadProducts();
                 
-                // 添加事件监听器
+                // 添加事件監聽器
                 document.getElementById('categoryFilter').addEventListener('change', () => {
                     this.filterProducts();
                 });
@@ -733,21 +747,21 @@
                     this.filterProducts();
                 });
 
-                // 添加键盘快捷键
+                // 添加鍵盤快捷鍵
                 document.addEventListener('keydown', (e) => {
                     if (e.ctrlKey && e.key === 'r') {
                         e.preventDefault();
                         this.loadProducts();
-                        this.showToast('🔄 数据已刷新', 'info');
+                        this.showToast('🔄 數據已刷新', 'info');
                     }
                 });
 
                 console.log('✅ Myx Shop 初始化完成');
             },
 
-            // 显示Toast通知
+            // 顯示Toast通知
             showToast(message, type = 'info') {
-                // 移除现有的toast
+                // 移除現有的toast
                 const existingToast = document.querySelector('.custom-toast');
                 if (existingToast) {
                     existingToast.remove();
@@ -773,11 +787,11 @@
             }
         };
 
-        // 页面加载完成后初始化
+        // 頁面加載完成後初始化
         document.addEventListener('DOMContentLoaded', function() {
             ProductStore.init();
             
-            // 添加页面可见性检测，当页面重新显示时自动刷新数据
+            // 添加頁面可見性檢測
             document.addEventListener('visibilitychange', function() {
                 if (!document.hidden) {
                     ProductStore.loadProducts();
@@ -785,17 +799,11 @@
             });
         });
 
-        // 错误处理
-        window.addEventListener('error', function(e) {
-            console.error('全局错误:', e.error);
-        });
-
-        // 调试：测试链接
-        console.log('当前页面路径:', window.location.pathname);
-        console.log('JSON文件路径:', 'js/shopee_lists.json');
-        console.log('管理后台链接:', 'admin/shopee_dashboard.html');
-        console.log('主页链接:', '../index.html');
-        console.log('AI选股链接:', '../bursa.html');
+        // 調試信息
+        console.log('Myx Shop調試信息:');
+        console.log('1. 期望加載: js/shopee_list.json');
+        console.log('2. 圖片路徑: images/products/shopee/');
+        console.log('3. 預期產品數: 6個');
     </script>
 </body>
 </html>

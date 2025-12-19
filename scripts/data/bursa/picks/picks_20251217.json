@@ -1,0 +1,8007 @@
+{
+  "filename": "20251217.csv",
+  "timestamp": "2025-12-18T08:15:33.541177",
+  "total_stocks": 1000,
+  "stocks": [
+    {
+      "code": "=\"5681\"",
+      "name": "PETDAG",
+      "last_price": 19.34,
+      "change": 0.0,
+      "volume": 9852,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"4065\"",
+      "name": "PPB",
+      "last_price": 10.06,
+      "change": 0.0,
+      "volume": 5965,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"2445\"",
+      "name": "KLK",
+      "last_price": 19.36,
+      "change": 0.0,
+      "volume": 3704,
+      "sector": "Unknown (125)"
+    },
+    {
+      "code": "=\"6033\"",
+      "name": "PETGAS",
+      "last_price": 17.76,
+      "change": 0.0,
+      "volume": 3001,
+      "sector": "Unknown (165)"
+    },
+    {
+      "code": "=\"0239\"",
+      "name": "ECOMATE",
+      "last_price": 0.85,
+      "change": 0.0,
+      "volume": 35880,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"3719\"",
+      "name": "PANAMY",
+      "last_price": 7.11,
+      "change": 0.0,
+      "volume": 836,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"7245PA\"",
+      "name": "CITAGLB-PA",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"9822\"",
+      "name": "SAM",
+      "last_price": 3.75,
+      "change": 0.0,
+      "volume": 7605,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"0166\"",
+      "name": "INARI",
+      "last_price": 1.79,
+      "change": 0.0,
+      "volume": 153018,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"0829EB\"",
+      "name": "CHINAETF-USD",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (656)"
+    },
+    {
+      "code": "=\"5099\"",
+      "name": "CAPITALA",
+      "last_price": 0.405,
+      "change": 0.0,
+      "volume": 90791,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"6742\"",
+      "name": "YTLPOWR",
+      "last_price": 3.38,
+      "change": 0.0,
+      "volume": 71107,
+      "sector": "Unknown (165)"
+    },
+    {
+      "code": "=\"0400GB\"",
+      "name": "DIN045801028",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (560)"
+    },
+    {
+      "code": "=\"5000\"",
+      "name": "HUMEIND",
+      "last_price": 3.0,
+      "change": 0.0,
+      "volume": 2178,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"5606\"",
+      "name": "IGBB",
+      "last_price": 2.84,
+      "change": 0.0,
+      "volume": 1564,
+      "sector": "Unknown (120)"
+    },
+    {
+      "code": "=\"5398\"",
+      "name": "GAMUDA",
+      "last_price": 4.87,
+      "change": 0.0,
+      "volume": 140948,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"3069\"",
+      "name": "MFCB",
+      "last_price": 3.25,
+      "change": 0.0,
+      "volume": 1158,
+      "sector": "Unknown (165)"
+    },
+    {
+      "code": "=\"7029\"",
+      "name": "MASTER",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"5340\"",
+      "name": "UMSINT",
+      "last_price": 4.34,
+      "change": 0.0,
+      "volume": 2329,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"4677\"",
+      "name": "YTL",
+      "last_price": 2.11,
+      "change": 0.0,
+      "volume": 57849,
+      "sector": "Unknown (165)"
+    },
+    {
+      "code": "=\"9334\"",
+      "name": "KESM",
+      "last_price": 2.97,
+      "change": 0.0,
+      "volume": 144,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"0652KO\"",
+      "name": "HSI-CWKO",
+      "last_price": 0.045,
+      "change": 0.0,
+      "volume": 182950,
+      "sector": "Unknown (358)"
+    },
+    {
+      "code": "=\"03017\"",
+      "name": "UNIWALL",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (703)"
+    },
+    {
+      "code": "=\"0829EA\"",
+      "name": "CHINAETF-MYR",
+      "last_price": 5.44,
+      "change": 0.0,
+      "volume": 10,
+      "sector": "Unknown (656)"
+    },
+    {
+      "code": "=\"7609\"",
+      "name": "AJIYA",
+      "last_price": 1.04,
+      "change": 0.0,
+      "volume": 1771,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"0208\"",
+      "name": "GREATEC",
+      "last_price": 1.59,
+      "change": 0.0,
+      "volume": 9044,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"0652KG\"",
+      "name": "HSI-CWKG",
+      "last_price": 0.195,
+      "change": 0.0,
+      "volume": 40,
+      "sector": "Unknown (358)"
+    },
+    {
+      "code": "=\"7204\"",
+      "name": "D&O",
+      "last_price": 0.815,
+      "change": 0.0,
+      "volume": 104966,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"3336\"",
+      "name": "IJM",
+      "last_price": 2.17,
+      "change": 0.0,
+      "volume": 43735,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"0351\"",
+      "name": "LSH",
+      "last_price": 1.89,
+      "change": 0.0,
+      "volume": 9305,
+      "sector": "Unknown (403)"
+    },
+    {
+      "code": "=\"4162\"",
+      "name": "BAT",
+      "last_price": 4.43,
+      "change": 0.0,
+      "volume": 781,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"0652KH\"",
+      "name": "HSI-CWKH",
+      "last_price": 0.035,
+      "change": 0.0,
+      "volume": 570,
+      "sector": "Unknown (358)"
+    },
+    {
+      "code": "=\"0652MQ\"",
+      "name": "HSI-CWMQ",
+      "last_price": 0.135,
+      "change": 0.0,
+      "volume": 211785,
+      "sector": "Unknown (358)"
+    },
+    {
+      "code": "=\"0276\"",
+      "name": "ADB",
+      "last_price": 0.71,
+      "change": 0.0,
+      "volume": 3736,
+      "sector": "Unknown (405)"
+    },
+    {
+      "code": "=\"0652MR\"",
+      "name": "HSI-CWMR",
+      "last_price": 0.405,
+      "change": 0.0,
+      "volume": 39836,
+      "sector": "Unknown (358)"
+    },
+    {
+      "code": "=\"3182\"",
+      "name": "GENTING",
+      "last_price": 3.06,
+      "change": 0.0,
+      "volume": 36119,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"7084\"",
+      "name": "QL",
+      "last_price": 3.96,
+      "change": 0.0,
+      "volume": 26758,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"7163\"",
+      "name": "PJBUMI",
+      "last_price": 1.67,
+      "change": 0.0,
+      "volume": 4349,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"2305\"",
+      "name": "AYER",
+      "last_price": 6.94,
+      "change": 0.0,
+      "volume": 4,
+      "sector": "Unknown (120)"
+    },
+    {
+      "code": "=\"7062\"",
+      "name": "KHIND",
+      "last_price": 1.41,
+      "change": 0.0,
+      "volume": 42,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"0652K2\"",
+      "name": "HSI-CWK2",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (358)"
+    },
+    {
+      "code": "=\"0652KX\"",
+      "name": "HSI-CWKX",
+      "last_price": 0.205,
+      "change": 0.0,
+      "volume": 1271,
+      "sector": "Unknown (358)"
+    },
+    {
+      "code": "=\"4715\"",
+      "name": "GENM",
+      "last_price": 2.09,
+      "change": 0.0,
+      "volume": 86164,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"5347\"",
+      "name": "TENAGA",
+      "last_price": 13.24,
+      "change": 0.0,
+      "volume": 71951,
+      "sector": "Unknown (165)"
+    },
+    {
+      "code": "=\"065740\"",
+      "name": "HSTECH-C40",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (358)"
+    },
+    {
+      "code": "=\"5134\"",
+      "name": "SAB",
+      "last_price": 3.12,
+      "change": 0.0,
+      "volume": 200,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"6947\"",
+      "name": "CDB",
+      "last_price": 3.26,
+      "change": 0.0,
+      "volume": 18217,
+      "sector": "Unknown (163)"
+    },
+    {
+      "code": "=\"5302\"",
+      "name": "ATECH",
+      "last_price": 0.755,
+      "change": 0.0,
+      "volume": 6483,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"0652KP\"",
+      "name": "HSI-CWKP",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (358)"
+    },
+    {
+      "code": "=\"7233\"",
+      "name": "DUFU",
+      "last_price": 1.6,
+      "change": 0.0,
+      "volume": 23035,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"0245\"",
+      "name": "MNHLDG",
+      "last_price": 1.57,
+      "change": 0.0,
+      "volume": 57176,
+      "sector": "Unknown (403)"
+    },
+    {
+      "code": "=\"0652MC\"",
+      "name": "HSI-CWMC",
+      "last_price": 0.33,
+      "change": 0.0,
+      "volume": 750,
+      "sector": "Unknown (358)"
+    },
+    {
+      "code": "=\"0245WA\"",
+      "name": "MNHLDG-WA",
+      "last_price": 1.36,
+      "change": 0.0,
+      "volume": 636,
+      "sector": "Unknown (403)"
+    },
+    {
+      "code": "=\"0151\"",
+      "name": "KGB",
+      "last_price": 5.09,
+      "change": 0.0,
+      "volume": 23801,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"0128\"",
+      "name": "FRONTKN",
+      "last_price": 4.17,
+      "change": 0.0,
+      "volume": 17316,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"0151WB\"",
+      "name": "KGB-WB",
+      "last_price": 3.71,
+      "change": 0.0,
+      "volume": 363,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"0652KU\"",
+      "name": "HSI-CWKU",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (358)"
+    },
+    {
+      "code": "=\"0652MP\"",
+      "name": "HSI-CWMP",
+      "last_price": 0.07,
+      "change": 0.0,
+      "volume": 8424,
+      "sector": "Unknown (358)"
+    },
+    {
+      "code": "=\"5209\"",
+      "name": "GASMSIA",
+      "last_price": 4.18,
+      "change": 0.0,
+      "volume": 6123,
+      "sector": "Unknown (165)"
+    },
+    {
+      "code": "=\"7095\"",
+      "name": "PIE",
+      "last_price": 2.62,
+      "change": 0.0,
+      "volume": 1038,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"0652K3\"",
+      "name": "HSI-CWK3",
+      "last_price": 0.075,
+      "change": 0.0,
+      "volume": 13110,
+      "sector": "Unknown (358)"
+    },
+    {
+      "code": "=\"0652MF\"",
+      "name": "HSI-CWMF",
+      "last_price": 0.325,
+      "change": 0.0,
+      "volume": 20,
+      "sector": "Unknown (358)"
+    },
+    {
+      "code": "=\"0652ME\"",
+      "name": "HSI-CWME",
+      "last_price": 0.58,
+      "change": 0.0,
+      "volume": 100,
+      "sector": "Unknown (358)"
+    },
+    {
+      "code": "=\"0652KN\"",
+      "name": "HSI-CWKN",
+      "last_price": 0.005,
+      "change": 0.0,
+      "volume": 400,
+      "sector": "Unknown (358)"
+    },
+    {
+      "code": "=\"03011\"",
+      "name": "AMLEX",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (705)"
+    },
+    {
+      "code": "=\"7085\"",
+      "name": "LTKM",
+      "last_price": 1.34,
+      "change": 0.0,
+      "volume": 355,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"03050\"",
+      "name": "SUNMOW",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (703)"
+    },
+    {
+      "code": "=\"060007\"",
+      "name": "FCPO-CW07",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (358)"
+    },
+    {
+      "code": "=\"0652MH\"",
+      "name": "HSI-CWMH",
+      "last_price": 0.56,
+      "change": 0.0,
+      "volume": 2730,
+      "sector": "Unknown (358)"
+    },
+    {
+      "code": "=\"5317\"",
+      "name": "CPETECH",
+      "last_price": 0.52,
+      "change": 0.0,
+      "volume": 11971,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"03002\"",
+      "name": "JAGAAPP",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (705)"
+    },
+    {
+      "code": "=\"0652KJ\"",
+      "name": "HSI-CWKJ",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (358)"
+    },
+    {
+      "code": "=\"5075\"",
+      "name": "PLENITU",
+      "last_price": 1.79,
+      "change": 0.0,
+      "volume": 349,
+      "sector": "Unknown (120)"
+    },
+    {
+      "code": "=\"5286\"",
+      "name": "MI",
+      "last_price": 2.85,
+      "change": 0.0,
+      "volume": 24234,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"0128WB\"",
+      "name": "FRONTKN-WB",
+      "last_price": 0.18,
+      "change": 0.0,
+      "volume": 30050,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"0652KK\"",
+      "name": "HSI-CWKK",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (358)"
+    },
+    {
+      "code": "=\"1619\"",
+      "name": "DRBHCOM",
+      "last_price": 1.05,
+      "change": 0.0,
+      "volume": 2241,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"16193P\"",
+      "name": "DRBHCOMC3P",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (301)"
+    },
+    {
+      "code": "=\"5028\"",
+      "name": "HTPADU",
+      "last_price": 1.73,
+      "change": 0.0,
+      "volume": 210,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"5016\"",
+      "name": "WARISAN",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"5009\"",
+      "name": "WTHORSE",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"5133\"",
+      "name": "PENERGY",
+      "last_price": 0.575,
+      "change": 0.0,
+      "volume": 83,
+      "sector": "Unknown (161)"
+    },
+    {
+      "code": "=\"8907\"",
+      "name": "EG",
+      "last_price": 1.1,
+      "change": 0.0,
+      "volume": 28173,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"0034\"",
+      "name": "MMAG",
+      "last_price": 0.07,
+      "change": 0.0,
+      "volume": 25219,
+      "sector": "Unknown (464)"
+    },
+    {
+      "code": "=\"0652KM\"",
+      "name": "HSI-CWKM",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (358)"
+    },
+    {
+      "code": "=\"0652MB\"",
+      "name": "HSI-CWMB",
+      "last_price": 0.745,
+      "change": 0.0,
+      "volume": 1341,
+      "sector": "Unknown (358)"
+    },
+    {
+      "code": "=\"5336\"",
+      "name": "CKI",
+      "last_price": 0.555,
+      "change": 0.0,
+      "volume": 1766,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"0233\"",
+      "name": "PEKAT",
+      "last_price": 1.59,
+      "change": 0.0,
+      "volume": 8465,
+      "sector": "Unknown (461)"
+    },
+    {
+      "code": "=\"0293\"",
+      "name": "KJTS",
+      "last_price": 1.3,
+      "change": 0.0,
+      "volume": 18047,
+      "sector": "Unknown (402)"
+    },
+    {
+      "code": "=\"0652LE\"",
+      "name": "HSI-PWLE",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (358)"
+    },
+    {
+      "code": "=\"0652KL\"",
+      "name": "HSI-CWKL",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (358)"
+    },
+    {
+      "code": "=\"0652LF\"",
+      "name": "HSI-PWLF",
+      "last_price": 0.205,
+      "change": 0.0,
+      "volume": 318,
+      "sector": "Unknown (358)"
+    },
+    {
+      "code": "=\"0652MI\"",
+      "name": "HSI-CWMI",
+      "last_price": 0.295,
+      "change": 0.0,
+      "volume": 700,
+      "sector": "Unknown (358)"
+    },
+    {
+      "code": "=\"51831T\"",
+      "name": "PCHEM-C1T",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (302)"
+    },
+    {
+      "code": "=\"9466\"",
+      "name": "KKB",
+      "last_price": 1.1,
+      "change": 0.0,
+      "volume": 1260,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"054647\"",
+      "name": "TENCENT-C47",
+      "last_price": 0.06,
+      "change": 0.0,
+      "volume": 12000,
+      "sector": "Unknown (358)"
+    },
+    {
+      "code": "=\"058925\"",
+      "name": "JDCOM-C25",
+      "last_price": 0.08,
+      "change": 0.0,
+      "volume": 2000,
+      "sector": "Unknown (358)"
+    },
+    {
+      "code": "=\"0652MM\"",
+      "name": "HSI-CWMM",
+      "last_price": 0.075,
+      "change": 0.0,
+      "volume": 1376,
+      "sector": "Unknown (358)"
+    },
+    {
+      "code": "=\"065656\"",
+      "name": "SP500-C56",
+      "last_price": 0.005,
+      "change": 0.0,
+      "volume": 100,
+      "sector": "Unknown (358)"
+    },
+    {
+      "code": "=\"0742C3\"",
+      "name": "POPMART-C3",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (358)"
+    },
+    {
+      "code": "=\"2836\"",
+      "name": "CARLSBG",
+      "last_price": 16.66,
+      "change": 0.0,
+      "volume": 676,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"01663U\"",
+      "name": "INARI-C3U",
+      "last_price": 0.03,
+      "change": 0.0,
+      "volume": 86587,
+      "sector": "Unknown (305)"
+    },
+    {
+      "code": "=\"0835EA\"",
+      "name": "KLCI1XI",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (653)"
+    },
+    {
+      "code": "=\"4065CW\"",
+      "name": "PPB-CW",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (301)"
+    },
+    {
+      "code": "=\"5264\"",
+      "name": "MALAKOF",
+      "last_price": 0.805,
+      "change": 0.0,
+      "volume": 14251,
+      "sector": "Unknown (165)"
+    },
+    {
+      "code": "=\"5983\"",
+      "name": "MBMR",
+      "last_price": 5.24,
+      "change": 0.0,
+      "volume": 1453,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"0083\"",
+      "name": "NOTION",
+      "last_price": 0.52,
+      "change": 0.0,
+      "volume": 19604,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"0249\"",
+      "name": "LGMS",
+      "last_price": 0.53,
+      "change": 0.0,
+      "volume": 8866,
+      "sector": "Unknown (405)"
+    },
+    {
+      "code": "=\"03027\"",
+      "name": "MMIS",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (702)"
+    },
+    {
+      "code": "=\"0652LR\"",
+      "name": "HSI-PWLR",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (358)"
+    },
+    {
+      "code": "=\"51831R\"",
+      "name": "PCHEM-C1R",
+      "last_price": 0.095,
+      "change": 0.0,
+      "volume": 43000,
+      "sector": "Unknown (302)"
+    },
+    {
+      "code": "=\"7160\"",
+      "name": "PENTA",
+      "last_price": 3.87,
+      "change": 0.0,
+      "volume": 3046,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"0652LN\"",
+      "name": "HSI-PWLN",
+      "last_price": 0.28,
+      "change": 0.0,
+      "volume": 140,
+      "sector": "Unknown (358)"
+    },
+    {
+      "code": "=\"16193S\"",
+      "name": "DRBHCOMC3S",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (301)"
+    },
+    {
+      "code": "=\"6297\"",
+      "name": "BOXPAK",
+      "last_price": 0.235,
+      "change": 0.0,
+      "volume": 3080,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"7174\"",
+      "name": "CAB",
+      "last_price": 0.605,
+      "change": 0.0,
+      "volume": 2959,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"9679\"",
+      "name": "WCT",
+      "last_price": 0.61,
+      "change": 0.0,
+      "volume": 54822,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"0113\"",
+      "name": "MMSV",
+      "last_price": 0.345,
+      "change": 0.0,
+      "volume": 4814,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"0652LG\"",
+      "name": "HSI-PWLG",
+      "last_price": 0.08,
+      "change": 0.0,
+      "volume": 52581,
+      "sector": "Unknown (358)"
+    },
+    {
+      "code": "=\"0654HQ\"",
+      "name": "NIKKEI-HQ",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (358)"
+    },
+    {
+      "code": "=\"46771X\"",
+      "name": "YTL-C1X",
+      "last_price": 0.04,
+      "change": 0.0,
+      "volume": 4000,
+      "sector": "Unknown (365)"
+    },
+    {
+      "code": "=\"6599\"",
+      "name": "AEON",
+      "last_price": 1.07,
+      "change": 0.0,
+      "volume": 25126,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"020819\"",
+      "name": "GREATEC-C19",
+      "last_price": 0.055,
+      "change": 0.0,
+      "volume": 1150,
+      "sector": "Unknown (305)"
+    },
+    {
+      "code": "=\"0270\"",
+      "name": "NATGATE",
+      "last_price": 1.01,
+      "change": 0.0,
+      "volume": 80324,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"0652LH\"",
+      "name": "HSI-PWLH",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (358)"
+    },
+    {
+      "code": "=\"4731\"",
+      "name": "SCIENTX",
+      "last_price": 3.42,
+      "change": 0.0,
+      "volume": 15975,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"5102\"",
+      "name": "GCB",
+      "last_price": 0.755,
+      "change": 0.0,
+      "volume": 74396,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"7195\"",
+      "name": "BNASTRA",
+      "last_price": 2.13,
+      "change": 0.0,
+      "volume": 15435,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"8907WD\"",
+      "name": "EG-WD",
+      "last_price": 0.43,
+      "change": 0.0,
+      "volume": 6459,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"0652LI\"",
+      "name": "HSI-PWLI",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (358)"
+    },
+    {
+      "code": "=\"065659\"",
+      "name": "SP500-H59",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (358)"
+    },
+    {
+      "code": "=\"065661\"",
+      "name": "SP500-H61",
+      "last_price": 0.375,
+      "change": 0.0,
+      "volume": 3413,
+      "sector": "Unknown (358)"
+    },
+    {
+      "code": "=\"7498\"",
+      "name": "RALCO",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"0034WC\"",
+      "name": "MMAG-WC",
+      "last_price": 0.045,
+      "change": 0.0,
+      "volume": 14113,
+      "sector": "Unknown (464)"
+    },
+    {
+      "code": "=\"0104\"",
+      "name": "GENETEC",
+      "last_price": 0.305,
+      "change": 0.0,
+      "volume": 38772,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"0185\"",
+      "name": "HSSEB",
+      "last_price": 0.385,
+      "change": 0.0,
+      "volume": 10586,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"0311\"",
+      "name": "GOHUB",
+      "last_price": 0.52,
+      "change": 0.0,
+      "volume": 795,
+      "sector": "Unknown (405)"
+    },
+    {
+      "code": "=\"46771N\"",
+      "name": "YTL-C1N",
+      "last_price": 0.055,
+      "change": 0.0,
+      "volume": 140,
+      "sector": "Unknown (365)"
+    },
+    {
+      "code": "=\"46771S\"",
+      "name": "YTL-C1S",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (365)"
+    },
+    {
+      "code": "=\"674288\"",
+      "name": "YTLPOWR-C88",
+      "last_price": 0.095,
+      "change": 0.0,
+      "volume": 7427,
+      "sector": "Unknown (365)"
+    },
+    {
+      "code": "=\"7233C1\"",
+      "name": "DUFU-C1",
+      "last_price": 0.145,
+      "change": 0.0,
+      "volume": 450,
+      "sector": "Unknown (302)"
+    },
+    {
+      "code": "=\"01389D\"",
+      "name": "ZETRIX-C9D",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (305)"
+    },
+    {
+      "code": "=\"058246\"",
+      "name": "ALIBABA-C46",
+      "last_price": 0.015,
+      "change": 0.0,
+      "volume": 100,
+      "sector": "Unknown (358)"
+    },
+    {
+      "code": "=\"058139\"",
+      "name": "XIAOMI-C39",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (358)"
+    },
+    {
+      "code": "=\"0742C2\"",
+      "name": "POPMART-C2",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (358)"
+    },
+    {
+      "code": "=\"5106\"",
+      "name": "AXREIT",
+      "last_price": 1.97,
+      "change": 0.0,
+      "volume": 10753,
+      "sector": "Unknown (150)"
+    },
+    {
+      "code": "=\"5168\"",
+      "name": "HARTA",
+      "last_price": 1.01,
+      "change": 0.0,
+      "volume": 113815,
+      "sector": "Unknown (162)"
+    },
+    {
+      "code": "=\"5171\"",
+      "name": "KIMLUN",
+      "last_price": 1.22,
+      "change": 0.0,
+      "volume": 1558,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"5247\"",
+      "name": "KAREX",
+      "last_price": 0.69,
+      "change": 0.0,
+      "volume": 8009,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"5284\"",
+      "name": "LCTITAN",
+      "last_price": 0.41,
+      "change": 0.0,
+      "volume": 23388,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"587820\"",
+      "name": "KPJ-C20",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (362)"
+    },
+    {
+      "code": "=\"7006\"",
+      "name": "RKI",
+      "last_price": 1.0,
+      "change": 0.0,
+      "volume": 18,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"7137\"",
+      "name": "UMS",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"0338\"",
+      "name": "KOPI",
+      "last_price": 1.24,
+      "change": 0.0,
+      "volume": 12141,
+      "sector": "Unknown (401)"
+    },
+    {
+      "code": "=\"0310\"",
+      "name": "UUE",
+      "last_price": 0.485,
+      "change": 0.0,
+      "volume": 1488,
+      "sector": "Unknown (403)"
+    },
+    {
+      "code": "=\"0654HT\"",
+      "name": "NIKKEI-HT",
+      "last_price": 0.47,
+      "change": 0.0,
+      "volume": 1569,
+      "sector": "Unknown (358)"
+    },
+    {
+      "code": "=\"46771U\"",
+      "name": "YTL-C1U",
+      "last_price": 0.055,
+      "change": 0.0,
+      "volume": 5205,
+      "sector": "Unknown (365)"
+    },
+    {
+      "code": "=\"7004WA\"",
+      "name": "MCEHLDG-WA",
+      "last_price": 0.78,
+      "change": 0.0,
+      "volume": 330,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"7155\"",
+      "name": "SKPRES",
+      "last_price": 0.6,
+      "change": 0.0,
+      "volume": 71867,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"7277\"",
+      "name": "DIALOG",
+      "last_price": 1.72,
+      "change": 0.0,
+      "volume": 14953,
+      "sector": "Unknown (161)"
+    },
+    {
+      "code": "=\"0097\"",
+      "name": "VITROX",
+      "last_price": 4.31,
+      "change": 0.0,
+      "volume": 7866,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"01663Y\"",
+      "name": "INARI-C3Y",
+      "last_price": 0.065,
+      "change": 0.0,
+      "volume": 10,
+      "sector": "Unknown (305)"
+    },
+    {
+      "code": "=\"0505CT\"",
+      "name": "HKEX-CT",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (358)"
+    },
+    {
+      "code": "=\"5272\"",
+      "name": "RANHILL",
+      "last_price": 1.7,
+      "change": 0.0,
+      "volume": 3847,
+      "sector": "Unknown (165)"
+    },
+    {
+      "code": "=\"7412\"",
+      "name": "SHH",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"8834\"",
+      "name": "IREKA",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"5296\"",
+      "name": "MRDIY",
+      "last_price": 1.49,
+      "change": 0.0,
+      "volume": 72813,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"5533\"",
+      "name": "OCB",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"6012\"",
+      "name": "MAXIS",
+      "last_price": 3.91,
+      "change": 0.0,
+      "volume": 16672,
+      "sector": "Unknown (163)"
+    },
+    {
+      "code": "=\"674286\"",
+      "name": "YTLPOWR-C86",
+      "last_price": 0.04,
+      "change": 0.0,
+      "volume": 1260,
+      "sector": "Unknown (365)"
+    },
+    {
+      "code": "=\"674291\"",
+      "name": "YTLPOWR-C91",
+      "last_price": 0.065,
+      "change": 0.0,
+      "volume": 13391,
+      "sector": "Unknown (365)"
+    },
+    {
+      "code": "=\"8648\"",
+      "name": "JASKITA",
+      "last_price": 0.265,
+      "change": 0.0,
+      "volume": 10,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"9369\"",
+      "name": "TGL",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"058248\"",
+      "name": "ALIBABA-C48",
+      "last_price": 0.38,
+      "change": 0.0,
+      "volume": 1,
+      "sector": "Unknown (358)"
+    },
+    {
+      "code": "=\"3816\"",
+      "name": "MISC",
+      "last_price": 7.55,
+      "change": 0.0,
+      "volume": 7429,
+      "sector": "Unknown (164)"
+    },
+    {
+      "code": "=\"53983D\"",
+      "name": "GAMUDA-C3D",
+      "last_price": 0.105,
+      "change": 0.0,
+      "volume": 33921,
+      "sector": "Unknown (303)"
+    },
+    {
+      "code": "=\"674290\"",
+      "name": "YTLPOWR-C90",
+      "last_price": 0.055,
+      "change": 0.0,
+      "volume": 3100,
+      "sector": "Unknown (365)"
+    },
+    {
+      "code": "=\"7095CP\"",
+      "name": "PIE-CP",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (302)"
+    },
+    {
+      "code": "=\"01388P\"",
+      "name": "ZETRIX-C8P",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (305)"
+    },
+    {
+      "code": "=\"020821\"",
+      "name": "GREATEC-C21",
+      "last_price": 0.035,
+      "change": 0.0,
+      "volume": 2730,
+      "sector": "Unknown (305)"
+    },
+    {
+      "code": "=\"020823\"",
+      "name": "GREATEC-C23",
+      "last_price": 0.065,
+      "change": 0.0,
+      "volume": 15960,
+      "sector": "Unknown (305)"
+    },
+    {
+      "code": "=\"058247\"",
+      "name": "ALIBABA-C47",
+      "last_price": 0.15,
+      "change": 0.0,
+      "volume": 235,
+      "sector": "Unknown (358)"
+    },
+    {
+      "code": "=\"0652LM\"",
+      "name": "HSI-PWLM",
+      "last_price": 0.035,
+      "change": 0.0,
+      "volume": 4866,
+      "sector": "Unknown (358)"
+    },
+    {
+      "code": "=\"0652LS\"",
+      "name": "HSI-PWLS",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (358)"
+    },
+    {
+      "code": "=\"46771P\"",
+      "name": "YTL-C1P",
+      "last_price": 0.135,
+      "change": 0.0,
+      "volume": 9740,
+      "sector": "Unknown (365)"
+    },
+    {
+      "code": "=\"46771T\"",
+      "name": "YTL-C1T",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (365)"
+    },
+    {
+      "code": "=\"524845\"",
+      "name": "BAUTO-C45",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (301)"
+    },
+    {
+      "code": "=\"526465\"",
+      "name": "MALAKOFC65",
+      "last_price": 0.025,
+      "change": 0.0,
+      "volume": 1000,
+      "sector": "Unknown (365)"
+    },
+    {
+      "code": "=\"5878\"",
+      "name": "KPJ",
+      "last_price": 2.6,
+      "change": 0.0,
+      "volume": 3542,
+      "sector": "Unknown (162)"
+    },
+    {
+      "code": "=\"5436\"",
+      "name": "PERSTIM",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"0259\"",
+      "name": "SNS",
+      "last_price": 0.515,
+      "change": 0.0,
+      "volume": 82291,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"0275\"",
+      "name": "OPPSTAR",
+      "last_price": 0.365,
+      "change": 0.0,
+      "volume": 2661,
+      "sector": "Unknown (405)"
+    },
+    {
+      "code": "=\"058137\"",
+      "name": "XIAOMI-C37",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (358)"
+    },
+    {
+      "code": "=\"058333\"",
+      "name": "MEITUAN-C33",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (358)"
+    },
+    {
+      "code": "=\"5183\"",
+      "name": "PCHEM",
+      "last_price": 3.59,
+      "change": 0.0,
+      "volume": 94038,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"5983C7\"",
+      "name": "MBMR-C7",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (301)"
+    },
+    {
+      "code": "=\"0168WA\"",
+      "name": "BMGREEN-WA",
+      "last_price": 0.17,
+      "change": 0.0,
+      "volume": 5,
+      "sector": "Unknown (161)"
+    },
+    {
+      "code": "=\"0272\"",
+      "name": "TTVHB",
+      "last_price": 0.215,
+      "change": 0.0,
+      "volume": 17016,
+      "sector": "Unknown (405)"
+    },
+    {
+      "code": "=\"054834\"",
+      "name": "BYD-C34",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (358)"
+    },
+    {
+      "code": "=\"0652K8\"",
+      "name": "HSI-CWK8",
+      "last_price": 0.04,
+      "change": 0.0,
+      "volume": 17898,
+      "sector": "Unknown (358)"
+    },
+    {
+      "code": "=\"0703CJ\"",
+      "name": "A50CHIN-CJ",
+      "last_price": 0.015,
+      "change": 0.0,
+      "volume": 50,
+      "sector": "Unknown (358)"
+    },
+    {
+      "code": "=\"526338\"",
+      "name": "SUNCON-C38",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (303)"
+    },
+    {
+      "code": "=\"674294\"",
+      "name": "YTLPOWR-C94",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (365)"
+    },
+    {
+      "code": "=\"7004\"",
+      "name": "MCEHLDG",
+      "last_price": 1.56,
+      "change": 0.0,
+      "volume": 2990,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"720421\"",
+      "name": "D&O-C21",
+      "last_price": 0.03,
+      "change": 0.0,
+      "volume": 1300,
+      "sector": "Unknown (305)"
+    },
+    {
+      "code": "=\"7233C6\"",
+      "name": "DUFU-C6",
+      "last_price": 0.08,
+      "change": 0.0,
+      "volume": 25576,
+      "sector": "Unknown (302)"
+    },
+    {
+      "code": "=\"8664PC\"",
+      "name": "SPSETIA-PC",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (120)"
+    },
+    {
+      "code": "=\"01388Z\"",
+      "name": "ZETRIX-C8Z",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (305)"
+    },
+    {
+      "code": "=\"0168\"",
+      "name": "BMGREEN",
+      "last_price": 1.45,
+      "change": 0.0,
+      "volume": 892,
+      "sector": "Unknown (161)"
+    },
+    {
+      "code": "=\"020825\"",
+      "name": "GREATEC-C25",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (305)"
+    },
+    {
+      "code": "=\"0223\"",
+      "name": "SAMAIDEN",
+      "last_price": 1.41,
+      "change": 0.0,
+      "volume": 4097,
+      "sector": "Unknown (161)"
+    },
+    {
+      "code": "=\"03019\"",
+      "name": "MPSOL",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (701)"
+    },
+    {
+      "code": "=\"058244\"",
+      "name": "ALIBABA-C44",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (358)"
+    },
+    {
+      "code": "=\"2569\"",
+      "name": "SBAGAN",
+      "last_price": 5.6,
+      "change": 0.0,
+      "volume": 37,
+      "sector": "Unknown (125)"
+    },
+    {
+      "code": "=\"3298\"",
+      "name": "HEXZA",
+      "last_price": 0.8,
+      "change": 0.0,
+      "volume": 975,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"3859\"",
+      "name": "MAGNUM",
+      "last_price": 1.27,
+      "change": 0.0,
+      "volume": 3855,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"5167\"",
+      "name": "TURBO",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"5335\"",
+      "name": "HI",
+      "last_price": 2.52,
+      "change": 0.0,
+      "volume": 4287,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"568114\"",
+      "name": "PETDAG-C14",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (301)"
+    },
+    {
+      "code": "=\"7073\"",
+      "name": "SEACERA",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"7233C3\"",
+      "name": "DUFU-C3",
+      "last_price": 0.165,
+      "change": 0.0,
+      "volume": 13656,
+      "sector": "Unknown (302)"
+    },
+    {
+      "code": "=\"0002\"",
+      "name": "KOTRA",
+      "last_price": 4.17,
+      "change": 0.0,
+      "volume": 50,
+      "sector": "Unknown (162)"
+    },
+    {
+      "code": "=\"01663I\"",
+      "name": "INARI-C3I",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (305)"
+    },
+    {
+      "code": "=\"0652KT\"",
+      "name": "HSI-CWKT",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (358)"
+    },
+    {
+      "code": "=\"1287\"",
+      "name": "EXSIMHB",
+      "last_price": 0.245,
+      "change": 0.0,
+      "volume": 574,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"16193T\"",
+      "name": "DRBHCOMC3T",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (301)"
+    },
+    {
+      "code": "=\"51682U\"",
+      "name": "HARTA-C2U",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (362)"
+    },
+    {
+      "code": "=\"526347\"",
+      "name": "SUNCON-C47",
+      "last_price": 0.065,
+      "change": 0.0,
+      "volume": 10,
+      "sector": "Unknown (303)"
+    },
+    {
+      "code": "=\"7106\"",
+      "name": "SUPERMX",
+      "last_price": 0.345,
+      "change": 0.0,
+      "volume": 117235,
+      "sector": "Unknown (162)"
+    },
+    {
+      "code": "=\"0098\"",
+      "name": "AUMAS",
+      "last_price": 0.665,
+      "change": 0.0,
+      "volume": 14129,
+      "sector": "Unknown (402)"
+    },
+    {
+      "code": "=\"0117\"",
+      "name": "SMRT",
+      "last_price": 0.575,
+      "change": 0.0,
+      "volume": 1193,
+      "sector": "Unknown (405)"
+    },
+    {
+      "code": "=\"01388X\"",
+      "name": "ZETRIX-C8X",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (305)"
+    },
+    {
+      "code": "=\"0230WA\"",
+      "name": "TELADAN-WA",
+      "last_price": 0.31,
+      "change": 0.0,
+      "volume": 72,
+      "sector": "Unknown (120)"
+    },
+    {
+      "code": "=\"0277\"",
+      "name": "CLOUDPT",
+      "last_price": 0.65,
+      "change": 0.0,
+      "volume": 8173,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"0340\"",
+      "name": "NORTHERN",
+      "last_price": 0.62,
+      "change": 0.0,
+      "volume": 19451,
+      "sector": "Unknown (461)"
+    },
+    {
+      "code": "=\"054837\"",
+      "name": "BYD-C37",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (358)"
+    },
+    {
+      "code": "=\"3417LC\"",
+      "name": "E&O-LC",
+      "last_price": 0.715,
+      "change": 0.0,
+      "volume": 1,
+      "sector": "Unknown (520)"
+    },
+    {
+      "code": "=\"4405\"",
+      "name": "TCHONG",
+      "last_price": 0.565,
+      "change": 0.0,
+      "volume": 4584,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"46771L\"",
+      "name": "YTL-C1L",
+      "last_price": 0.005,
+      "change": 0.0,
+      "volume": 180,
+      "sector": "Unknown (365)"
+    },
+    {
+      "code": "=\"5012\"",
+      "name": "TAANN",
+      "last_price": 4.12,
+      "change": 0.0,
+      "volume": 2792,
+      "sector": "Unknown (125)"
+    },
+    {
+      "code": "=\"51831P\"",
+      "name": "PCHEM-C1P",
+      "last_price": 0.045,
+      "change": 0.0,
+      "volume": 3000,
+      "sector": "Unknown (302)"
+    },
+    {
+      "code": "=\"53983P\"",
+      "name": "GAMUDA-C3P",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (303)"
+    },
+    {
+      "code": "=\"568113\"",
+      "name": "PETDAG-C13",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (301)"
+    },
+    {
+      "code": "=\"6017\"",
+      "name": "SHL",
+      "last_price": 2.25,
+      "change": 0.0,
+      "volume": 130,
+      "sector": "Unknown (120)"
+    },
+    {
+      "code": "=\"67421D\"",
+      "name": "YTLPOWR-C1D",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (365)"
+    },
+    {
+      "code": "=\"720419\"",
+      "name": "D&O-C19",
+      "last_price": 0.025,
+      "change": 0.0,
+      "volume": 7211,
+      "sector": "Unknown (305)"
+    },
+    {
+      "code": "=\"7293\"",
+      "name": "YINSON",
+      "last_price": 2.34,
+      "change": 0.0,
+      "volume": 44655,
+      "sector": "Unknown (161)"
+    },
+    {
+      "code": "=\"0083WD\"",
+      "name": "NOTION-WD",
+      "last_price": 0.35,
+      "change": 0.0,
+      "volume": 1313,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"01389J\"",
+      "name": "ZETRIX-C9J",
+      "last_price": 0.02,
+      "change": 0.0,
+      "volume": 9000,
+      "sector": "Unknown (305)"
+    },
+    {
+      "code": "=\"01663W\"",
+      "name": "INARI-C3W",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (305)"
+    },
+    {
+      "code": "=\"0223WA\"",
+      "name": "SAMAIDEN-WA",
+      "last_price": 0.66,
+      "change": 0.0,
+      "volume": 681,
+      "sector": "Unknown (161)"
+    },
+    {
+      "code": "=\"0652IB\"",
+      "name": "HSI-CWIB",
+      "last_price": 0.145,
+      "change": 0.0,
+      "volume": 1100,
+      "sector": "Unknown (358)"
+    },
+    {
+      "code": "=\"16193Q\"",
+      "name": "DRBHCOMC3Q",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (301)"
+    },
+    {
+      "code": "=\"46771W\"",
+      "name": "YTL-C1W",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (365)"
+    },
+    {
+      "code": "=\"521669\"",
+      "name": "NEXG-C69",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (305)"
+    },
+    {
+      "code": "=\"5218\"",
+      "name": "VANTNRG",
+      "last_price": 0.445,
+      "change": 0.0,
+      "volume": 50182,
+      "sector": "Unknown (161)"
+    },
+    {
+      "code": "=\"5337\"",
+      "name": "ECOSHOP",
+      "last_price": 1.37,
+      "change": 0.0,
+      "volume": 45695,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"53983R\"",
+      "name": "GAMUDA-C3R",
+      "last_price": 0.075,
+      "change": 0.0,
+      "volume": 79612,
+      "sector": "Unknown (303)"
+    },
+    {
+      "code": "=\"6203\"",
+      "name": "KHEESAN",
+      "last_price": 0.085,
+      "change": 0.0,
+      "volume": 90799,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"674293\"",
+      "name": "YTLPOWR-C93",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (365)"
+    },
+    {
+      "code": "=\"0053\"",
+      "name": "OSKVI",
+      "last_price": 0.515,
+      "change": 0.0,
+      "volume": 112,
+      "sector": "Unknown (410)"
+    },
+    {
+      "code": "=\"01663S\"",
+      "name": "INARI-C3S",
+      "last_price": 0.045,
+      "change": 0.0,
+      "volume": 5040,
+      "sector": "Unknown (305)"
+    },
+    {
+      "code": "=\"01663T\"",
+      "name": "INARI-C3T",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (305)"
+    },
+    {
+      "code": "=\"0253\"",
+      "name": "INFOTEC",
+      "last_price": 0.33,
+      "change": 0.0,
+      "volume": 1145,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"058136\"",
+      "name": "XIAOMI-C36",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (358)"
+    },
+    {
+      "code": "=\"0652IR\"",
+      "name": "HSI-CWIR",
+      "last_price": 0.195,
+      "change": 0.0,
+      "volume": 900,
+      "sector": "Unknown (358)"
+    },
+    {
+      "code": "=\"0652LO\"",
+      "name": "HSI-PWLO",
+      "last_price": 0.085,
+      "change": 0.0,
+      "volume": 362,
+      "sector": "Unknown (358)"
+    },
+    {
+      "code": "=\"0745C1\"",
+      "name": "MEITU-C1",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (358)"
+    },
+    {
+      "code": "=\"244539\"",
+      "name": "KLK-C39",
+      "last_price": 0.075,
+      "change": 0.0,
+      "volume": 260,
+      "sector": "Unknown (325)"
+    },
+    {
+      "code": "=\"4065CU\"",
+      "name": "PPB-CU",
+      "last_price": 0.08,
+      "change": 0.0,
+      "volume": 160,
+      "sector": "Unknown (301)"
+    },
+    {
+      "code": "=\"46771Z\"",
+      "name": "YTL-C1Z",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (365)"
+    },
+    {
+      "code": "=\"5036\"",
+      "name": "EDARAN",
+      "last_price": 1.1,
+      "change": 0.0,
+      "volume": 100,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"5337CA\"",
+      "name": "ECOSHOP-CA",
+      "last_price": 0.145,
+      "change": 0.0,
+      "volume": 750,
+      "sector": "Unknown (301)"
+    },
+    {
+      "code": "=\"5337CB\"",
+      "name": "ECOSHOP-CB",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (301)"
+    },
+    {
+      "code": "=\"53473C\"",
+      "name": "TENAGA-C3C",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (365)"
+    },
+    {
+      "code": "=\"587822\"",
+      "name": "KPJ-C22",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (362)"
+    },
+    {
+      "code": "=\"674298\"",
+      "name": "YTLPOWR-C98",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (365)"
+    },
+    {
+      "code": "=\"7226\"",
+      "name": "WATTA",
+      "last_price": 0.4,
+      "change": 0.0,
+      "volume": 200,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"967940\"",
+      "name": "WCT-C40",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (303)"
+    },
+    {
+      "code": "=\"0032\"",
+      "name": "REDTONE",
+      "last_price": 0.38,
+      "change": 0.0,
+      "volume": 7735,
+      "sector": "Unknown (163)"
+    },
+    {
+      "code": "=\"020822\"",
+      "name": "GREATEC-C22",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (305)"
+    },
+    {
+      "code": "=\"020824\"",
+      "name": "GREATEC-C24",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (305)"
+    },
+    {
+      "code": "=\"058720\"",
+      "name": "KUAISHO-C20",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (358)"
+    },
+    {
+      "code": "=\"0652KF\"",
+      "name": "HSI-CWKF",
+      "last_price": 0.105,
+      "change": 0.0,
+      "volume": 230,
+      "sector": "Unknown (358)"
+    },
+    {
+      "code": "=\"0654HS\"",
+      "name": "NIKKEI-HS",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (358)"
+    },
+    {
+      "code": "=\"31824B\"",
+      "name": "GENTINGC4B",
+      "last_price": 0.1,
+      "change": 0.0,
+      "volume": 25331,
+      "sector": "Unknown (301)"
+    },
+    {
+      "code": "=\"33361D\"",
+      "name": "IJM-C1D",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (303)"
+    },
+    {
+      "code": "=\"4065CV\"",
+      "name": "PPB-CV",
+      "last_price": 0.105,
+      "change": 0.0,
+      "volume": 8051,
+      "sector": "Unknown (301)"
+    },
+    {
+      "code": "=\"4936\"",
+      "name": "MALPAC",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (125)"
+    },
+    {
+      "code": "=\"5302WA\"",
+      "name": "ATECH-WA",
+      "last_price": 0.13,
+      "change": 0.0,
+      "volume": 43186,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"5301\"",
+      "name": "CTOS",
+      "last_price": 0.79,
+      "change": 0.0,
+      "volume": 52744,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"7005\"",
+      "name": "BIG",
+      "last_price": 0.52,
+      "change": 0.0,
+      "volume": 89,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"6874\"",
+      "name": "JAGCPTL",
+      "last_price": 0.87,
+      "change": 0.0,
+      "volume": 3379,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"01389F\"",
+      "name": "ZETRIX-C9F",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (305)"
+    },
+    {
+      "code": "=\"0291\"",
+      "name": "CHB",
+      "last_price": 0.825,
+      "change": 0.0,
+      "volume": 3103,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"0652IY\"",
+      "name": "HSI-CWIY",
+      "last_price": 0.1,
+      "change": 0.0,
+      "volume": 450,
+      "sector": "Unknown (358)"
+    },
+    {
+      "code": "=\"4383\"",
+      "name": "JTIASA",
+      "last_price": 1.04,
+      "change": 0.0,
+      "volume": 33851,
+      "sector": "Unknown (125)"
+    },
+    {
+      "code": "=\"47153P\"",
+      "name": "GENM-C3P",
+      "last_price": 0.01,
+      "change": 0.0,
+      "volume": 800,
+      "sector": "Unknown (301)"
+    },
+    {
+      "code": "=\"5005\"",
+      "name": "UNISEM",
+      "last_price": 3.28,
+      "change": 0.0,
+      "volume": 3574,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"51831S\"",
+      "name": "PCHEM-C1S",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (302)"
+    },
+    {
+      "code": "=\"5202\"",
+      "name": "MSM",
+      "last_price": 0.97,
+      "change": 0.0,
+      "volume": 2440,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"521141\"",
+      "name": "SUNWAY-C41",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (302)"
+    },
+    {
+      "code": "=\"521674\"",
+      "name": "NEXG-C74",
+      "last_price": 0.02,
+      "change": 0.0,
+      "volume": 14,
+      "sector": "Unknown (305)"
+    },
+    {
+      "code": "=\"528847\"",
+      "name": "SIMEPROP-C47",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (320)"
+    },
+    {
+      "code": "=\"53983M\"",
+      "name": "GAMUDA-C3M",
+      "last_price": 0.065,
+      "change": 0.0,
+      "volume": 72898,
+      "sector": "Unknown (303)"
+    },
+    {
+      "code": "=\"674289\"",
+      "name": "YTLPOWR-C89",
+      "last_price": 0.02,
+      "change": 0.0,
+      "volume": 360,
+      "sector": "Unknown (365)"
+    },
+    {
+      "code": "=\"8192\"",
+      "name": "MERCURY",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"9288\"",
+      "name": "BONIA",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"0090\"",
+      "name": "ELSOFT",
+      "last_price": 0.23,
+      "change": 0.0,
+      "volume": 2188,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"01388L\"",
+      "name": "ZETRIX-C8L",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (305)"
+    },
+    {
+      "code": "=\"0146\"",
+      "name": "JFTECH",
+      "last_price": 0.475,
+      "change": 0.0,
+      "volume": 4158,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"0652IZ\"",
+      "name": "HSI-CWIZ",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (358)"
+    },
+    {
+      "code": "=\"0652MN\"",
+      "name": "HSI-CWMN",
+      "last_price": 0.11,
+      "change": 0.0,
+      "volume": 600,
+      "sector": "Unknown (358)"
+    },
+    {
+      "code": "=\"16193V\"",
+      "name": "DRBHCOMC3V",
+      "last_price": 0.03,
+      "change": 0.0,
+      "volume": 560,
+      "sector": "Unknown (301)"
+    },
+    {
+      "code": "=\"4197\"",
+      "name": "SIME",
+      "last_price": 1.98,
+      "change": 0.0,
+      "volume": 84913,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"46771Q\"",
+      "name": "YTL-C1Q",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (365)"
+    },
+    {
+      "code": "=\"5041\"",
+      "name": "PBA",
+      "last_price": 1.84,
+      "change": 0.0,
+      "volume": 405,
+      "sector": "Unknown (165)"
+    },
+    {
+      "code": "=\"5136\"",
+      "name": "HEXTECH",
+      "last_price": 1.05,
+      "change": 0.0,
+      "volume": 271,
+      "sector": "Unknown (164)"
+    },
+    {
+      "code": "=\"5148\"",
+      "name": "UEMS",
+      "last_price": 0.565,
+      "change": 0.0,
+      "volume": 69238,
+      "sector": "Unknown (120)"
+    },
+    {
+      "code": "=\"51831O\"",
+      "name": "PCHEM-C1O",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (302)"
+    },
+    {
+      "code": "=\"526464\"",
+      "name": "MALAKOFC64",
+      "last_price": 0.04,
+      "change": 0.0,
+      "volume": 560,
+      "sector": "Unknown (365)"
+    },
+    {
+      "code": "=\"526466\"",
+      "name": "MALAKOFC66",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (365)"
+    },
+    {
+      "code": "=\"7199\"",
+      "name": "KEINHIN",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"7239LA\"",
+      "name": "SCNWOLF-LA",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (502)"
+    },
+    {
+      "code": "=\"967942\"",
+      "name": "WCT-C42",
+      "last_price": 0.035,
+      "change": 0.0,
+      "volume": 700,
+      "sector": "Unknown (303)"
+    },
+    {
+      "code": "=\"0104CK\"",
+      "name": "GENETEC-CK",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (305)"
+    },
+    {
+      "code": "=\"0104CN\"",
+      "name": "GENETEC-CN",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (305)"
+    },
+    {
+      "code": "=\"0175WA\"",
+      "name": "HHRG-WA",
+      "last_price": 0.005,
+      "change": 0.0,
+      "volume": 304,
+      "sector": "Unknown (402)"
+    },
+    {
+      "code": "=\"0232\"",
+      "name": "VOLCANO",
+      "last_price": 0.425,
+      "change": 0.0,
+      "volume": 244,
+      "sector": "Unknown (402)"
+    },
+    {
+      "code": "=\"0292\"",
+      "name": "JTGROUP",
+      "last_price": 0.605,
+      "change": 0.0,
+      "volume": 2509,
+      "sector": "Unknown (403)"
+    },
+    {
+      "code": "=\"058138\"",
+      "name": "XIAOMI-C38",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (358)"
+    },
+    {
+      "code": "=\"0652I7\"",
+      "name": "HSI-CWI7",
+      "last_price": 0.1,
+      "change": 0.0,
+      "volume": 360,
+      "sector": "Unknown (358)"
+    },
+    {
+      "code": "=\"2542\"",
+      "name": "RVIEW",
+      "last_price": 2.89,
+      "change": 0.0,
+      "volume": 40,
+      "sector": "Unknown (125)"
+    },
+    {
+      "code": "=\"416239\"",
+      "name": "BAT-C39",
+      "last_price": 0.075,
+      "change": 0.0,
+      "volume": 3618,
+      "sector": "Unknown (301)"
+    },
+    {
+      "code": "=\"46771Y\"",
+      "name": "YTL-C1Y",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (365)"
+    },
+    {
+      "code": "=\"5135\"",
+      "name": "SWKPLNT",
+      "last_price": 2.77,
+      "change": 0.0,
+      "volume": 774,
+      "sector": "Unknown (125)"
+    },
+    {
+      "code": "=\"51481V\"",
+      "name": "UEMS-C1V",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (320)"
+    },
+    {
+      "code": "=\"51682Z\"",
+      "name": "HARTA-C2Z",
+      "last_price": 0.04,
+      "change": 0.0,
+      "volume": 1400,
+      "sector": "Unknown (362)"
+    },
+    {
+      "code": "=\"5173\"",
+      "name": "SYGROUP",
+      "last_price": 0.82,
+      "change": 0.0,
+      "volume": 1852,
+      "sector": "Unknown (164)"
+    },
+    {
+      "code": "=\"51831U\"",
+      "name": "PCHEM-C1U",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (302)"
+    },
+    {
+      "code": "=\"519979\"",
+      "name": "HIBISCS-C79",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (361)"
+    },
+    {
+      "code": "=\"5253\"",
+      "name": "ECONBHD",
+      "last_price": 0.245,
+      "change": 0.0,
+      "volume": 13354,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"526467\"",
+      "name": "MALAKOFC67",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (365)"
+    },
+    {
+      "code": "=\"53983N\"",
+      "name": "GAMUDA-C3N",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (303)"
+    },
+    {
+      "code": "=\"6033C7\"",
+      "name": "PETGAS-C7",
+      "last_price": 0.025,
+      "change": 0.0,
+      "volume": 378,
+      "sector": "Unknown (365)"
+    },
+    {
+      "code": "=\"6556\"",
+      "name": "ANNJOO",
+      "last_price": 0.59,
+      "change": 0.0,
+      "volume": 602,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"7108PA\"",
+      "name": "PERDANA-PA",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (161)"
+    },
+    {
+      "code": "=\"716052\"",
+      "name": "PENTA-C52",
+      "last_price": 0.275,
+      "change": 0.0,
+      "volume": 2000,
+      "sector": "Unknown (305)"
+    },
+    {
+      "code": "=\"7249\"",
+      "name": "SKYGATE",
+      "last_price": 0.7,
+      "change": 0.0,
+      "volume": 155,
+      "sector": "Unknown (120)"
+    },
+    {
+      "code": "=\"0222\"",
+      "name": "OPTIMAX",
+      "last_price": 0.575,
+      "change": 0.0,
+      "volume": 924,
+      "sector": "Unknown (162)"
+    },
+    {
+      "code": "=\"0215WA\"",
+      "name": "SLVEST-WA",
+      "last_price": 2.23,
+      "change": 0.0,
+      "volume": 6537,
+      "sector": "Unknown (161)"
+    },
+    {
+      "code": "=\"0270CU\"",
+      "name": "NATGATE-CU",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (302)"
+    },
+    {
+      "code": "=\"03022\"",
+      "name": "MCOM",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (705)"
+    },
+    {
+      "code": "=\"058719\"",
+      "name": "KUAISHO-C19",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (358)"
+    },
+    {
+      "code": "=\"0652LQ\"",
+      "name": "HSI-PWLQ",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (358)"
+    },
+    {
+      "code": "=\"0652NO\"",
+      "name": "HSI-PWNO",
+      "last_price": 0.245,
+      "change": 0.0,
+      "volume": 163390,
+      "sector": "Unknown (358)"
+    },
+    {
+      "code": "=\"065657\"",
+      "name": "SP500-H57",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (358)"
+    },
+    {
+      "code": "=\"0822EA\"",
+      "name": "PAM-A40M",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (656)"
+    },
+    {
+      "code": "=\"31823Y\"",
+      "name": "GENTINGC3Y",
+      "last_price": 0.01,
+      "change": 0.0,
+      "volume": 9000,
+      "sector": "Unknown (301)"
+    },
+    {
+      "code": "=\"31824C\"",
+      "name": "GENTINGC4C",
+      "last_price": 0.045,
+      "change": 0.0,
+      "volume": 475,
+      "sector": "Unknown (301)"
+    },
+    {
+      "code": "=\"31824E\"",
+      "name": "GENTINGC4E",
+      "last_price": 0.04,
+      "change": 0.0,
+      "volume": 3000,
+      "sector": "Unknown (301)"
+    },
+    {
+      "code": "=\"3417\"",
+      "name": "E&O",
+      "last_price": 0.725,
+      "change": 0.0,
+      "volume": 10144,
+      "sector": "Unknown (120)"
+    },
+    {
+      "code": "=\"419796\"",
+      "name": "SIME-C96",
+      "last_price": 0.135,
+      "change": 0.0,
+      "volume": 310,
+      "sector": "Unknown (301)"
+    },
+    {
+      "code": "=\"46771R\"",
+      "name": "YTL-C1R",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (365)"
+    },
+    {
+      "code": "=\"5165\"",
+      "name": "DFCITY",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"5337CP\"",
+      "name": "ECOSHOP-CP",
+      "last_price": 0.065,
+      "change": 0.0,
+      "volume": 300,
+      "sector": "Unknown (301)"
+    },
+    {
+      "code": "=\"674283\"",
+      "name": "YTLPOWR-C83",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (365)"
+    },
+    {
+      "code": "=\"7237\"",
+      "name": "PWROOT",
+      "last_price": 1.2,
+      "change": 0.0,
+      "volume": 740,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"729347\"",
+      "name": "YINSON-C47",
+      "last_price": 0.09,
+      "change": 0.0,
+      "volume": 90,
+      "sector": "Unknown (361)"
+    },
+    {
+      "code": "=\"7579\"",
+      "name": "AWC",
+      "last_price": 0.625,
+      "change": 0.0,
+      "volume": 4668,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"7439\"",
+      "name": "TECGUAN",
+      "last_price": 1.97,
+      "change": 0.0,
+      "volume": 94,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"8435\"",
+      "name": "CEPCO",
+      "last_price": 1.1,
+      "change": 0.0,
+      "volume": 10,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"8664\"",
+      "name": "SPSETIA",
+      "last_price": 0.79,
+      "change": 0.0,
+      "volume": 19914,
+      "sector": "Unknown (120)"
+    },
+    {
+      "code": "=\"9016\"",
+      "name": "EKSONS",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"9059\"",
+      "name": "TSH",
+      "last_price": 1.24,
+      "change": 0.0,
+      "volume": 14645,
+      "sector": "Unknown (125)"
+    },
+    {
+      "code": "=\"012843\"",
+      "name": "FRONTKN-C43",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (305)"
+    },
+    {
+      "code": "=\"01388K\"",
+      "name": "ZETRIX-C8K",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (305)"
+    },
+    {
+      "code": "=\"0151CR\"",
+      "name": "KGB-CR",
+      "last_price": 0.335,
+      "change": 0.0,
+      "volume": 4758,
+      "sector": "Unknown (302)"
+    },
+    {
+      "code": "=\"0159\"",
+      "name": "MMM",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (163)"
+    },
+    {
+      "code": "=\"0198\"",
+      "name": "GDB",
+      "last_price": 0.365,
+      "change": 0.0,
+      "volume": 176323,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"020828\"",
+      "name": "GREATEC-C28",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (305)"
+    },
+    {
+      "code": "=\"0186\"",
+      "name": "PTRANS",
+      "last_price": 0.28,
+      "change": 0.0,
+      "volume": 173543,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"0196\"",
+      "name": "QES",
+      "last_price": 0.39,
+      "change": 0.0,
+      "volume": 6943,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"0278\"",
+      "name": "EDELTEQ",
+      "last_price": 0.42,
+      "change": 0.0,
+      "volume": 6616,
+      "sector": "Unknown (405)"
+    },
+    {
+      "code": "=\"0652KS\"",
+      "name": "HSI-CWKS",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (358)"
+    },
+    {
+      "code": "=\"0659HM\"",
+      "name": "NDX-HM",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (358)"
+    },
+    {
+      "code": "=\"0823EA\"",
+      "name": "PAM-C50",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (656)"
+    },
+    {
+      "code": "=\"16193X\"",
+      "name": "DRBHCOMC3X",
+      "last_price": 0.045,
+      "change": 0.0,
+      "volume": 500,
+      "sector": "Unknown (301)"
+    },
+    {
+      "code": "=\"1651\"",
+      "name": "MRCB",
+      "last_price": 0.4,
+      "change": 0.0,
+      "volume": 141732,
+      "sector": "Unknown (120)"
+    },
+    {
+      "code": "=\"33361H\"",
+      "name": "IJM-C1H",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (303)"
+    },
+    {
+      "code": "=\"33361M\"",
+      "name": "IJM-C1M",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (303)"
+    },
+    {
+      "code": "=\"47153N\"",
+      "name": "GENM-C3N",
+      "last_price": 0.04,
+      "change": 0.0,
+      "volume": 2012,
+      "sector": "Unknown (301)"
+    },
+    {
+      "code": "=\"5105\"",
+      "name": "CANONE",
+      "last_price": 1.7,
+      "change": 0.0,
+      "volume": 192,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"510221\"",
+      "name": "GCB-C21",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (301)"
+    },
+    {
+      "code": "=\"5212\"",
+      "name": "PAVREIT",
+      "last_price": 1.8,
+      "change": 0.0,
+      "volume": 58124,
+      "sector": "Unknown (150)"
+    },
+    {
+      "code": "=\"5227\"",
+      "name": "IGBREIT",
+      "last_price": 2.68,
+      "change": 0.0,
+      "volume": 37172,
+      "sector": "Unknown (150)"
+    },
+    {
+      "code": "=\"53983Q\"",
+      "name": "GAMUDA-C3Q",
+      "last_price": 0.05,
+      "change": 0.0,
+      "volume": 4085,
+      "sector": "Unknown (303)"
+    },
+    {
+      "code": "=\"53983S\"",
+      "name": "GAMUDA-C3S",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (303)"
+    },
+    {
+      "code": "=\"6815\"",
+      "name": "EUPE",
+      "last_price": 0.93,
+      "change": 0.0,
+      "volume": 31,
+      "sector": "Unknown (120)"
+    },
+    {
+      "code": "=\"7055\"",
+      "name": "PLB",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (120)"
+    },
+    {
+      "code": "=\"7107\"",
+      "name": "OFI",
+      "last_price": 1.35,
+      "change": 0.0,
+      "volume": 1928,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"72772F\"",
+      "name": "DIALOG-C2F",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (361)"
+    },
+    {
+      "code": "=\"7252\"",
+      "name": "TEOSENG",
+      "last_price": 0.98,
+      "change": 0.0,
+      "volume": 581,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"8583\"",
+      "name": "MAHSING",
+      "last_price": 0.945,
+      "change": 0.0,
+      "volume": 73299,
+      "sector": "Unknown (120)"
+    },
+    {
+      "code": "=\"0105\"",
+      "name": "ASIAPLY",
+      "last_price": 0.125,
+      "change": 0.0,
+      "volume": 13747,
+      "sector": "Unknown (402)"
+    },
+    {
+      "code": "=\"012842\"",
+      "name": "FRONTKN-C42",
+      "last_price": 0.11,
+      "change": 0.0,
+      "volume": 598,
+      "sector": "Unknown (305)"
+    },
+    {
+      "code": "=\"0104CL\"",
+      "name": "GENETEC-CL",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (305)"
+    },
+    {
+      "code": "=\"0259CL\"",
+      "name": "SNS-CL",
+      "last_price": 0.055,
+      "change": 0.0,
+      "volume": 5000,
+      "sector": "Unknown (305)"
+    },
+    {
+      "code": "=\"0296\"",
+      "name": "HEGROUP",
+      "last_price": 0.305,
+      "change": 0.0,
+      "volume": 9903,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"0295\"",
+      "name": "MTEC",
+      "last_price": 1.08,
+      "change": 0.0,
+      "volume": 388,
+      "sector": "Unknown (402)"
+    },
+    {
+      "code": "=\"0652K1\"",
+      "name": "HSI-CWK1",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (358)"
+    },
+    {
+      "code": "=\"0659HO\"",
+      "name": "NDX-HO",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (358)"
+    },
+    {
+      "code": "=\"0821EA\"",
+      "name": "EQ8MY25",
+      "last_price": 0.977,
+      "change": 0.0,
+      "volume": 901,
+      "sector": "Unknown (656)"
+    },
+    {
+      "code": "=\"2062\"",
+      "name": "HARBOUR",
+      "last_price": 1.45,
+      "change": 0.0,
+      "volume": 337,
+      "sector": "Unknown (164)"
+    },
+    {
+      "code": "=\"31823V\"",
+      "name": "GENTINGC3V",
+      "last_price": 0.01,
+      "change": 0.0,
+      "volume": 695,
+      "sector": "Unknown (301)"
+    },
+    {
+      "code": "=\"5065\"",
+      "name": "ORNA",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"51831Q\"",
+      "name": "PCHEM-C1Q",
+      "last_price": 0.16,
+      "change": 0.0,
+      "volume": 5319,
+      "sector": "Unknown (302)"
+    },
+    {
+      "code": "=\"521670\"",
+      "name": "NEXG-C70",
+      "last_price": 0.02,
+      "change": 0.0,
+      "volume": 3900,
+      "sector": "Unknown (305)"
+    },
+    {
+      "code": "=\"526334\"",
+      "name": "SUNCON-C34",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (303)"
+    },
+    {
+      "code": "=\"528635\"",
+      "name": "MI-C35",
+      "last_price": 0.29,
+      "change": 0.0,
+      "volume": 6020,
+      "sector": "Unknown (305)"
+    },
+    {
+      "code": "=\"7195CA\"",
+      "name": "BNASTRA-CA",
+      "last_price": 0.14,
+      "change": 0.0,
+      "volume": 11036,
+      "sector": "Unknown (303)"
+    },
+    {
+      "code": "=\"7174WB\"",
+      "name": "CAB-WB",
+      "last_price": 0.15,
+      "change": 0.0,
+      "volume": 2983,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"7229\"",
+      "name": "FAVCO",
+      "last_price": 1.56,
+      "change": 0.0,
+      "volume": 13,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"7216\"",
+      "name": "KAWAN",
+      "last_price": 0.95,
+      "change": 0.0,
+      "volume": 767,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"72772G\"",
+      "name": "DIALOG-C2G",
+      "last_price": 0.175,
+      "change": 0.0,
+      "volume": 400,
+      "sector": "Unknown (361)"
+    },
+    {
+      "code": "=\"7233C4\"",
+      "name": "DUFU-C4",
+      "last_price": 0.075,
+      "change": 0.0,
+      "volume": 15300,
+      "sector": "Unknown (302)"
+    },
+    {
+      "code": "=\"8117PA\"",
+      "name": "PGF-PA",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"8613WA\"",
+      "name": "ENRA-WA",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (161)"
+    },
+    {
+      "code": "=\"8907CF\"",
+      "name": "EG-CF",
+      "last_price": 0.03,
+      "change": 0.0,
+      "volume": 1962,
+      "sector": "Unknown (302)"
+    },
+    {
+      "code": "=\"8907CG\"",
+      "name": "EG-CG",
+      "last_price": 0.05,
+      "change": 0.0,
+      "volume": 674,
+      "sector": "Unknown (302)"
+    },
+    {
+      "code": "=\"0150PA\"",
+      "name": "FINTEC-PA",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (410)"
+    },
+    {
+      "code": "=\"020826\"",
+      "name": "GREATEC-C26",
+      "last_price": 0.025,
+      "change": 0.0,
+      "volume": 1544,
+      "sector": "Unknown (305)"
+    },
+    {
+      "code": "=\"0222WA\"",
+      "name": "OPTIMAX-WA",
+      "last_price": 0.08,
+      "change": 0.0,
+      "volume": 812,
+      "sector": "Unknown (162)"
+    },
+    {
+      "code": "=\"0258\"",
+      "name": "AGMO",
+      "last_price": 0.355,
+      "change": 0.0,
+      "volume": 448,
+      "sector": "Unknown (405)"
+    },
+    {
+      "code": "=\"054838\"",
+      "name": "BYD-C38",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (358)"
+    },
+    {
+      "code": "=\"058249\"",
+      "name": "ALIBABA-C49",
+      "last_price": 0.09,
+      "change": 0.0,
+      "volume": 57009,
+      "sector": "Unknown (358)"
+    },
+    {
+      "code": "=\"0703CK\"",
+      "name": "A50CHIN-CK",
+      "last_price": 0.18,
+      "change": 0.0,
+      "volume": 54150,
+      "sector": "Unknown (358)"
+    },
+    {
+      "code": "=\"16193R\"",
+      "name": "DRBHCOMC3R",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (301)"
+    },
+    {
+      "code": "=\"1724\"",
+      "name": "PARAMON",
+      "last_price": 0.99,
+      "change": 0.0,
+      "volume": 1393,
+      "sector": "Unknown (120)"
+    },
+    {
+      "code": "=\"2291\"",
+      "name": "GENP",
+      "last_price": 5.0,
+      "change": 0.0,
+      "volume": 5905,
+      "sector": "Unknown (125)"
+    },
+    {
+      "code": "=\"3034\"",
+      "name": "HAPSENG",
+      "last_price": 2.9,
+      "change": 0.0,
+      "volume": 1002,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"33361F\"",
+      "name": "IJM-C1F",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (303)"
+    },
+    {
+      "code": "=\"5056\"",
+      "name": "ENGTEX",
+      "last_price": 0.555,
+      "change": 0.0,
+      "volume": 1597,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"5100\"",
+      "name": "BPPLAS",
+      "last_price": 0.64,
+      "change": 0.0,
+      "volume": 6017,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"510224\"",
+      "name": "GCB-C24",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (301)"
+    },
+    {
+      "code": "=\"51682V\"",
+      "name": "HARTA-C2V",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (362)"
+    },
+    {
+      "code": "=\"51682W\"",
+      "name": "HARTA-C2W",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (362)"
+    },
+    {
+      "code": "=\"51683A\"",
+      "name": "HARTA-C3A",
+      "last_price": 0.01,
+      "change": 0.0,
+      "volume": 950,
+      "sector": "Unknown (362)"
+    },
+    {
+      "code": "=\"5192WA\"",
+      "name": "KSSC-WA",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"51831V\"",
+      "name": "PCHEM-C1V",
+      "last_price": 0.065,
+      "change": 0.0,
+      "volume": 22,
+      "sector": "Unknown (302)"
+    },
+    {
+      "code": "=\"524634\"",
+      "name": "WPRTS-C34",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (364)"
+    },
+    {
+      "code": "=\"5274\"",
+      "name": "HLCAP",
+      "last_price": 3.32,
+      "change": 0.0,
+      "volume": 53,
+      "sector": "Unknown (110)"
+    },
+    {
+      "code": "=\"5284CW\"",
+      "name": "LCTITAN-CW",
+      "last_price": 0.01,
+      "change": 0.0,
+      "volume": 130,
+      "sector": "Unknown (302)"
+    },
+    {
+      "code": "=\"5284CX\"",
+      "name": "LCTITAN-CX",
+      "last_price": 0.01,
+      "change": 0.0,
+      "volume": 2000,
+      "sector": "Unknown (302)"
+    },
+    {
+      "code": "=\"528638\"",
+      "name": "MI-C38",
+      "last_price": 0.15,
+      "change": 0.0,
+      "volume": 580,
+      "sector": "Unknown (305)"
+    },
+    {
+      "code": "=\"529643\"",
+      "name": "MRDIY-C43",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (301)"
+    },
+    {
+      "code": "=\"5337CT\"",
+      "name": "ECOSHOP-CT",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (301)"
+    },
+    {
+      "code": "=\"53983T\"",
+      "name": "GAMUDA-C3T",
+      "last_price": 0.05,
+      "change": 0.0,
+      "volume": 29950,
+      "sector": "Unknown (303)"
+    },
+    {
+      "code": "=\"53983U\"",
+      "name": "GAMUDA-C3U",
+      "last_price": 0.075,
+      "change": 0.0,
+      "volume": 55586,
+      "sector": "Unknown (303)"
+    },
+    {
+      "code": "=\"53473B\"",
+      "name": "TENAGA-C3B",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (365)"
+    },
+    {
+      "code": "=\"53473D\"",
+      "name": "TENAGA-C3D",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (365)"
+    },
+    {
+      "code": "=\"53983Y\"",
+      "name": "GAMUDA-C3Y",
+      "last_price": 0.045,
+      "change": 0.0,
+      "volume": 4000,
+      "sector": "Unknown (303)"
+    },
+    {
+      "code": "=\"674292\"",
+      "name": "YTLPOWR-C92",
+      "last_price": 0.05,
+      "change": 0.0,
+      "volume": 51,
+      "sector": "Unknown (365)"
+    },
+    {
+      "code": "=\"674296\"",
+      "name": "YTLPOWR-C96",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (365)"
+    },
+    {
+      "code": "=\"6888\"",
+      "name": "AXIATA",
+      "last_price": 2.57,
+      "change": 0.0,
+      "volume": 44116,
+      "sector": "Unknown (163)"
+    },
+    {
+      "code": "=\"7014\"",
+      "name": "YLI",
+      "last_price": 0.245,
+      "change": 0.0,
+      "volume": 44,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"7016\"",
+      "name": "CHUAN",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"7152\"",
+      "name": "JAYCORP",
+      "last_price": 0.34,
+      "change": 0.0,
+      "volume": 1524,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"715381\"",
+      "name": "KOSSAN-C81",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (362)"
+    },
+    {
+      "code": "=\"720418\"",
+      "name": "D&O-C18",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (305)"
+    },
+    {
+      "code": "=\"720420\"",
+      "name": "D&O-C20",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (305)"
+    },
+    {
+      "code": "=\"7212\"",
+      "name": "DESTINI",
+      "last_price": 0.325,
+      "change": 0.0,
+      "volume": 443,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"7233C2\"",
+      "name": "DUFU-C2",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (302)"
+    },
+    {
+      "code": "=\"729348\"",
+      "name": "YINSON-C48",
+      "last_price": 0.005,
+      "change": 0.0,
+      "volume": 2100,
+      "sector": "Unknown (361)"
+    },
+    {
+      "code": "=\"8206\"",
+      "name": "ECOWLD",
+      "last_price": 2.06,
+      "change": 0.0,
+      "volume": 54210,
+      "sector": "Unknown (120)"
+    },
+    {
+      "code": "=\"8419PA\"",
+      "name": "PANSAR-PA",
+      "last_price": 0.53,
+      "change": 0.0,
+      "volume": 400,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"866498\"",
+      "name": "SPSETIA-C98",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (320)"
+    },
+    {
+      "code": "=\"9377WB\"",
+      "name": "FSBM-WB",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"0001\"",
+      "name": "SCOMNET",
+      "last_price": 0.71,
+      "change": 0.0,
+      "volume": 221,
+      "sector": "Unknown (162)"
+    },
+    {
+      "code": "=\"012849\"",
+      "name": "FRONTKN-C49",
+      "last_price": 0.11,
+      "change": 0.0,
+      "volume": 4822,
+      "sector": "Unknown (305)"
+    },
+    {
+      "code": "=\"0172\"",
+      "name": "OCK",
+      "last_price": 0.39,
+      "change": 0.0,
+      "volume": 64508,
+      "sector": "Unknown (163)"
+    },
+    {
+      "code": "=\"020820\"",
+      "name": "GREATEC-C20",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (305)"
+    },
+    {
+      "code": "=\"0256\"",
+      "name": "UMC",
+      "last_price": 0.36,
+      "change": 0.0,
+      "volume": 1159,
+      "sector": "Unknown (162)"
+    },
+    {
+      "code": "=\"0265\"",
+      "name": "INFOM",
+      "last_price": 1.4,
+      "change": 0.0,
+      "volume": 1022,
+      "sector": "Unknown (405)"
+    },
+    {
+      "code": "=\"0289\"",
+      "name": "PLYTEC",
+      "last_price": 0.14,
+      "change": 0.0,
+      "volume": 9120,
+      "sector": "Unknown (402)"
+    },
+    {
+      "code": "=\"0345\"",
+      "name": "SUNLOGY",
+      "last_price": 0.26,
+      "change": 0.0,
+      "volume": 7593,
+      "sector": "Unknown (403)"
+    },
+    {
+      "code": "=\"0377\"",
+      "name": "POWER",
+      "last_price": 0.22,
+      "change": 0.0,
+      "volume": 12059,
+      "sector": "Unknown (402)"
+    },
+    {
+      "code": "=\"0650EB\"",
+      "name": "FBMKLCI-HEB",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (358)"
+    },
+    {
+      "code": "=\"058336\"",
+      "name": "MEITUAN-C36",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (358)"
+    },
+    {
+      "code": "=\"0652II\"",
+      "name": "HSI-CWII",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (358)"
+    },
+    {
+      "code": "=\"0838EA\"",
+      "name": "CHINA100-MYR",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (656)"
+    },
+    {
+      "code": "=\"16193W\"",
+      "name": "DRBHCOMC3W",
+      "last_price": 0.04,
+      "change": 0.0,
+      "volume": 250,
+      "sector": "Unknown (301)"
+    },
+    {
+      "code": "=\"31823W\"",
+      "name": "GENTINGC3W",
+      "last_price": 0.05,
+      "change": 0.0,
+      "volume": 5882,
+      "sector": "Unknown (301)"
+    },
+    {
+      "code": "=\"3395LE\"",
+      "name": "BJCORP-LE",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (502)"
+    },
+    {
+      "code": "=\"33361J\"",
+      "name": "IJM-C1J",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (303)"
+    },
+    {
+      "code": "=\"33361K\"",
+      "name": "IJM-C1K",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (303)"
+    },
+    {
+      "code": "=\"33361O\"",
+      "name": "IJM-C1O",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (303)"
+    },
+    {
+      "code": "=\"3476\"",
+      "name": "KSENG",
+      "last_price": 5.5,
+      "change": 0.0,
+      "volume": 512,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"3913\"",
+      "name": "MUIPROP",
+      "last_price": 0.225,
+      "change": 0.0,
+      "volume": 891,
+      "sector": "Unknown (120)"
+    },
+    {
+      "code": "=\"4006\"",
+      "name": "ORIENT",
+      "last_price": 6.75,
+      "change": 0.0,
+      "volume": 988,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"4995WA\"",
+      "name": "VERSATL-WA",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"51481T\"",
+      "name": "UEMS-C1T",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (320)"
+    },
+    {
+      "code": "=\"51831Z\"",
+      "name": "PCHEM-C1Z",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (302)"
+    },
+    {
+      "code": "=\"5255\"",
+      "name": "LFG",
+      "last_price": 1.96,
+      "change": 0.0,
+      "volume": 8134,
+      "sector": "Unknown (161)"
+    },
+    {
+      "code": "=\"526468\"",
+      "name": "MALAKOFC68",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (365)"
+    },
+    {
+      "code": "=\"5308\"",
+      "name": "SENFONG",
+      "last_price": 0.69,
+      "change": 0.0,
+      "volume": 748,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"5337CC\"",
+      "name": "ECOSHOP-CC",
+      "last_price": 0.11,
+      "change": 0.0,
+      "volume": 8500,
+      "sector": "Unknown (301)"
+    },
+    {
+      "code": "=\"53984A\"",
+      "name": "GAMUDA-C4A",
+      "last_price": 0.02,
+      "change": 0.0,
+      "volume": 6777,
+      "sector": "Unknown (303)"
+    },
+    {
+      "code": "=\"53984E\"",
+      "name": "GAMUDA-C4E",
+      "last_price": 0.105,
+      "change": 0.0,
+      "volume": 40,
+      "sector": "Unknown (303)"
+    },
+    {
+      "code": "=\"5789PA\"",
+      "name": "LBS-PA",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (120)"
+    },
+    {
+      "code": "=\"5614\"",
+      "name": "NHB",
+      "last_price": 0.64,
+      "change": 0.0,
+      "volume": 20,
+      "sector": "Unknown (161)"
+    },
+    {
+      "code": "=\"674297\"",
+      "name": "YTLPOWR-C97",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (365)"
+    },
+    {
+      "code": "=\"716056\"",
+      "name": "PENTA-C56",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (305)"
+    },
+    {
+      "code": "=\"7214\"",
+      "name": "ARANK",
+      "last_price": 0.4,
+      "change": 0.0,
+      "volume": 810,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"7245WB\"",
+      "name": "CITAGLB-WB",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"7233C5\"",
+      "name": "DUFU-C5",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (302)"
+    },
+    {
+      "code": "=\"7239WA\"",
+      "name": "SCNWOLF-WA",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"820638\"",
+      "name": "ECOWLD-C38",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (320)"
+    },
+    {
+      "code": "=\"9237\"",
+      "name": "SCIB",
+      "last_price": 0.165,
+      "change": 0.0,
+      "volume": 5012,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"0023\"",
+      "name": "IFCAMSC",
+      "last_price": 0.235,
+      "change": 0.0,
+      "volume": 1578,
+      "sector": "Unknown (405)"
+    },
+    {
+      "code": "=\"0025\"",
+      "name": "YBS",
+      "last_price": 0.21,
+      "change": 0.0,
+      "volume": 5002,
+      "sector": "Unknown (402)"
+    },
+    {
+      "code": "=\"012848\"",
+      "name": "FRONTKN-C48",
+      "last_price": 0.085,
+      "change": 0.0,
+      "volume": 50,
+      "sector": "Unknown (305)"
+    },
+    {
+      "code": "=\"0151CV\"",
+      "name": "KGB-CV",
+      "last_price": 0.06,
+      "change": 0.0,
+      "volume": 130,
+      "sector": "Unknown (302)"
+    },
+    {
+      "code": "=\"01663P\"",
+      "name": "INARI-C3P",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (305)"
+    },
+    {
+      "code": "=\"0259CH\"",
+      "name": "SNS-CH",
+      "last_price": 0.02,
+      "change": 0.0,
+      "volume": 1130,
+      "sector": "Unknown (305)"
+    },
+    {
+      "code": "=\"0270CQ\"",
+      "name": "NATGATE-CQ",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (302)"
+    },
+    {
+      "code": "=\"03033\"",
+      "name": "SGBHD",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (702)"
+    },
+    {
+      "code": "=\"0339\"",
+      "name": "CBHB",
+      "last_price": 0.415,
+      "change": 0.0,
+      "volume": 8871,
+      "sector": "Unknown (402)"
+    },
+    {
+      "code": "=\"0652L4\"",
+      "name": "HSI-PWL4",
+      "last_price": 0.105,
+      "change": 0.0,
+      "volume": 2100,
+      "sector": "Unknown (358)"
+    },
+    {
+      "code": "=\"065737\"",
+      "name": "HSTECH-H37",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (358)"
+    },
+    {
+      "code": "=\"31823Z\"",
+      "name": "GENTINGC3Z",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (301)"
+    },
+    {
+      "code": "=\"419799\"",
+      "name": "SIME-C99",
+      "last_price": 0.145,
+      "change": 0.0,
+      "volume": 1560,
+      "sector": "Unknown (301)"
+    },
+    {
+      "code": "=\"4324\"",
+      "name": "HENGYUAN",
+      "last_price": 0.79,
+      "change": 0.0,
+      "volume": 3411,
+      "sector": "Unknown (161)"
+    },
+    {
+      "code": "=\"4383C7\"",
+      "name": "JTIASA-C7",
+      "last_price": 0.04,
+      "change": 0.0,
+      "volume": 1133,
+      "sector": "Unknown (325)"
+    },
+    {
+      "code": "=\"5056WB\"",
+      "name": "ENGTEX-WB",
+      "last_price": 0.145,
+      "change": 0.0,
+      "volume": 89,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"5125\"",
+      "name": "PANTECH",
+      "last_price": 0.605,
+      "change": 0.0,
+      "volume": 4023,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"5161\"",
+      "name": "JCY",
+      "last_price": 0.32,
+      "change": 0.0,
+      "volume": 17263,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"5162\"",
+      "name": "VSTECS",
+      "last_price": 4.02,
+      "change": 0.0,
+      "volume": 1769,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"51683C\"",
+      "name": "HARTA-C3C",
+      "last_price": 0.04,
+      "change": 0.0,
+      "volume": 28334,
+      "sector": "Unknown (362)"
+    },
+    {
+      "code": "=\"5192\"",
+      "name": "KSSC",
+      "last_price": 0.72,
+      "change": 0.0,
+      "volume": 5750,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"521147\"",
+      "name": "SUNWAY-C47",
+      "last_price": 0.105,
+      "change": 0.0,
+      "volume": 40,
+      "sector": "Unknown (302)"
+    },
+    {
+      "code": "=\"5275\"",
+      "name": "MYNEWS",
+      "last_price": 0.535,
+      "change": 0.0,
+      "volume": 2206,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"528632\"",
+      "name": "MI-C32",
+      "last_price": 0.23,
+      "change": 0.0,
+      "volume": 4000,
+      "sector": "Unknown (305)"
+    },
+    {
+      "code": "=\"528636\"",
+      "name": "MI-C36",
+      "last_price": 0.125,
+      "change": 0.0,
+      "volume": 6500,
+      "sector": "Unknown (305)"
+    },
+    {
+      "code": "=\"5302CP\"",
+      "name": "ATECH-CP",
+      "last_price": 0.01,
+      "change": 0.0,
+      "volume": 5000,
+      "sector": "Unknown (302)"
+    },
+    {
+      "code": "=\"530121\"",
+      "name": "CTOS-C21",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (305)"
+    },
+    {
+      "code": "=\"530122\"",
+      "name": "CTOS-C22",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (305)"
+    },
+    {
+      "code": "=\"529650\"",
+      "name": "MRDIY-C50",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (301)"
+    },
+    {
+      "code": "=\"529651\"",
+      "name": "MRDIY-C51",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (301)"
+    },
+    {
+      "code": "=\"5335CD\"",
+      "name": "HI-CD",
+      "last_price": 0.105,
+      "change": 0.0,
+      "volume": 3711,
+      "sector": "Unknown (301)"
+    },
+    {
+      "code": "=\"5331\"",
+      "name": "PGLOBAL",
+      "last_price": 0.45,
+      "change": 0.0,
+      "volume": 1564,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"5330\"",
+      "name": "TMK",
+      "last_price": 1.31,
+      "change": 0.0,
+      "volume": 1841,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"53983V\"",
+      "name": "GAMUDA-C3V",
+      "last_price": 0.07,
+      "change": 0.0,
+      "volume": 4600,
+      "sector": "Unknown (303)"
+    },
+    {
+      "code": "=\"53983X\"",
+      "name": "GAMUDA-C3X",
+      "last_price": 0.03,
+      "change": 0.0,
+      "volume": 1250,
+      "sector": "Unknown (303)"
+    },
+    {
+      "code": "=\"53984D\"",
+      "name": "GAMUDA-C4D",
+      "last_price": 0.07,
+      "change": 0.0,
+      "volume": 41041,
+      "sector": "Unknown (303)"
+    },
+    {
+      "code": "=\"659944\"",
+      "name": "AEON-C44",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (301)"
+    },
+    {
+      "code": "=\"674299\"",
+      "name": "YTLPOWR-C99",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (365)"
+    },
+    {
+      "code": "=\"7076\"",
+      "name": "CBIP",
+      "last_price": 1.22,
+      "change": 0.0,
+      "volume": 120,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"7129\"",
+      "name": "ASIAFLE",
+      "last_price": 1.34,
+      "change": 0.0,
+      "volume": 41,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"716055\"",
+      "name": "PENTA-C55",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (305)"
+    },
+    {
+      "code": "=\"8494\"",
+      "name": "LBICAP",
+      "last_price": 0.4,
+      "change": 0.0,
+      "volume": 141,
+      "sector": "Unknown (120)"
+    },
+    {
+      "code": "=\"858382\"",
+      "name": "MAHSING-C82",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (320)"
+    },
+    {
+      "code": "=\"8532\"",
+      "name": "PERTAMA",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"8311\"",
+      "name": "PESONA",
+      "last_price": 0.34,
+      "change": 0.0,
+      "volume": 12914,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"8877\"",
+      "name": "EKOVEST",
+      "last_price": 0.295,
+      "change": 0.0,
+      "volume": 31765,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"866497\"",
+      "name": "SPSETIA-C97",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (320)"
+    },
+    {
+      "code": "=\"0151CN\"",
+      "name": "KGB-CN",
+      "last_price": 0.23,
+      "change": 0.0,
+      "volume": 480,
+      "sector": "Unknown (302)"
+    },
+    {
+      "code": "=\"0151CU\"",
+      "name": "KGB-CU",
+      "last_price": 0.13,
+      "change": 0.0,
+      "volume": 2000,
+      "sector": "Unknown (302)"
+    },
+    {
+      "code": "=\"0178\"",
+      "name": "SEDANIA",
+      "last_price": 0.11,
+      "change": 0.0,
+      "volume": 15390,
+      "sector": "Unknown (401)"
+    },
+    {
+      "code": "=\"0227\"",
+      "name": "EFRAME",
+      "last_price": 0.36,
+      "change": 0.0,
+      "volume": 756,
+      "sector": "Unknown (402)"
+    },
+    {
+      "code": "=\"0259CG\"",
+      "name": "SNS-CG",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (305)"
+    },
+    {
+      "code": "=\"0261\"",
+      "name": "COSMOS",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (402)"
+    },
+    {
+      "code": "=\"0270CR\"",
+      "name": "NATGATE-CR",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (302)"
+    },
+    {
+      "code": "=\"0323\"",
+      "name": "CREST",
+      "last_price": 0.21,
+      "change": 0.0,
+      "volume": 966,
+      "sector": "Unknown (402)"
+    },
+    {
+      "code": "=\"0307\"",
+      "name": "KENERGY",
+      "last_price": 0.645,
+      "change": 0.0,
+      "volume": 1286,
+      "sector": "Unknown (402)"
+    },
+    {
+      "code": "=\"0369\"",
+      "name": "JSSOLAR",
+      "last_price": 0.265,
+      "change": 0.0,
+      "volume": 5567,
+      "sector": "Unknown (461)"
+    },
+    {
+      "code": "=\"058337\"",
+      "name": "MEITUAN-C37",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (358)"
+    },
+    {
+      "code": "=\"0652JG\"",
+      "name": "HSI-PWJG",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (358)"
+    },
+    {
+      "code": "=\"0654CT\"",
+      "name": "NIKKEI-CT",
+      "last_price": 0.585,
+      "change": 0.0,
+      "volume": 411,
+      "sector": "Unknown (358)"
+    },
+    {
+      "code": "=\"33361G\"",
+      "name": "IJM-C1G",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (303)"
+    },
+    {
+      "code": "=\"416241\"",
+      "name": "BAT-C41",
+      "last_price": 0.025,
+      "change": 0.0,
+      "volume": 6100,
+      "sector": "Unknown (301)"
+    },
+    {
+      "code": "=\"41971D\"",
+      "name": "SIME-C1D",
+      "last_price": 0.075,
+      "change": 0.0,
+      "volume": 1000,
+      "sector": "Unknown (301)"
+    },
+    {
+      "code": "=\"46771V\"",
+      "name": "YTL-C1V",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (365)"
+    },
+    {
+      "code": "=\"5035\"",
+      "name": "KNUSFOR",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"5084\"",
+      "name": "IBRACO",
+      "last_price": 1.27,
+      "change": 0.0,
+      "volume": 20,
+      "sector": "Unknown (120)"
+    },
+    {
+      "code": "=\"5138\"",
+      "name": "HSPLANT",
+      "last_price": 2.13,
+      "change": 0.0,
+      "volume": 7815,
+      "sector": "Unknown (125)"
+    },
+    {
+      "code": "=\"5147\"",
+      "name": "SAMCHEM",
+      "last_price": 0.325,
+      "change": 0.0,
+      "volume": 931,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"5140\"",
+      "name": "TASCO",
+      "last_price": 0.48,
+      "change": 0.0,
+      "volume": 43,
+      "sector": "Unknown (164)"
+    },
+    {
+      "code": "=\"526341\"",
+      "name": "SUNCON-C41",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (303)"
+    },
+    {
+      "code": "=\"529647\"",
+      "name": "MRDIY-C47",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (301)"
+    },
+    {
+      "code": "=\"5298\"",
+      "name": "OMH",
+      "last_price": 0.7,
+      "change": 0.0,
+      "volume": 232,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"5335CA\"",
+      "name": "HI-CA",
+      "last_price": 0.23,
+      "change": 0.0,
+      "volume": 1037,
+      "sector": "Unknown (301)"
+    },
+    {
+      "code": "=\"5337CJ\"",
+      "name": "ECOSHOP-CJ",
+      "last_price": 0.07,
+      "change": 0.0,
+      "volume": 2013,
+      "sector": "Unknown (301)"
+    },
+    {
+      "code": "=\"5337CR\"",
+      "name": "ECOSHOP-CR",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (301)"
+    },
+    {
+      "code": "=\"5673\"",
+      "name": "JSB",
+      "last_price": 0.305,
+      "change": 0.0,
+      "volume": 9446,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"5673WB\"",
+      "name": "JSB-WB",
+      "last_price": 0.08,
+      "change": 0.0,
+      "volume": 35013,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"587823\"",
+      "name": "KPJ-C23",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (362)"
+    },
+    {
+      "code": "=\"587826\"",
+      "name": "KPJ-C26",
+      "last_price": 0.07,
+      "change": 0.0,
+      "volume": 2884,
+      "sector": "Unknown (362)"
+    },
+    {
+      "code": "=\"587827\"",
+      "name": "KPJ-C27",
+      "last_price": 0.065,
+      "change": 0.0,
+      "volume": 1000,
+      "sector": "Unknown (362)"
+    },
+    {
+      "code": "=\"587829\"",
+      "name": "KPJ-C29",
+      "last_price": 0.04,
+      "change": 0.0,
+      "volume": 900,
+      "sector": "Unknown (362)"
+    },
+    {
+      "code": "=\"6149\"",
+      "name": "METROD",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"68881T\"",
+      "name": "AXIATA-C1T",
+      "last_price": 0.075,
+      "change": 0.0,
+      "volume": 800,
+      "sector": "Unknown (363)"
+    },
+    {
+      "code": "=\"7078\"",
+      "name": "AZRB",
+      "last_price": 0.15,
+      "change": 0.0,
+      "volume": 80,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"7077\"",
+      "name": "KPPROP",
+      "last_price": 0.31,
+      "change": 0.0,
+      "volume": 37,
+      "sector": "Unknown (120)"
+    },
+    {
+      "code": "=\"71064W\"",
+      "name": "SUPERMX-C4W",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (362)"
+    },
+    {
+      "code": "=\"7106WA\"",
+      "name": "SUPERMX-WA",
+      "last_price": 0.1,
+      "change": 0.0,
+      "volume": 769,
+      "sector": "Unknown (162)"
+    },
+    {
+      "code": "=\"7115\"",
+      "name": "SKBSHUT",
+      "last_price": 0.85,
+      "change": 0.0,
+      "volume": 495,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"7218\"",
+      "name": "ARKA",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (164)"
+    },
+    {
+      "code": "=\"72772K\"",
+      "name": "DIALOG-C2K",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (361)"
+    },
+    {
+      "code": "=\"820642\"",
+      "name": "ECOWLD-C42",
+      "last_price": 0.045,
+      "change": 0.0,
+      "volume": 180,
+      "sector": "Unknown (320)"
+    },
+    {
+      "code": "=\"858379\"",
+      "name": "MAHSING-C79",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (320)"
+    },
+    {
+      "code": "=\"9091\"",
+      "name": "EMICO",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"905915\"",
+      "name": "TSH-C15",
+      "last_price": 0.085,
+      "change": 0.0,
+      "volume": 5256,
+      "sector": "Unknown (325)"
+    },
+    {
+      "code": "=\"009712\"",
+      "name": "VITROX-C12",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (305)"
+    },
+    {
+      "code": "=\"0181\"",
+      "name": "AEMULUS",
+      "last_price": 0.185,
+      "change": 0.0,
+      "volume": 4228,
+      "sector": "Unknown (405)"
+    },
+    {
+      "code": "=\"0223CB\"",
+      "name": "SAMAIDEN-CB",
+      "last_price": 0.095,
+      "change": 0.0,
+      "volume": 6482,
+      "sector": "Unknown (361)"
+    },
+    {
+      "code": "=\"0259CM\"",
+      "name": "SNS-CM",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (305)"
+    },
+    {
+      "code": "=\"0270CX\"",
+      "name": "NATGATE-CX",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (302)"
+    },
+    {
+      "code": "=\"0360\"",
+      "name": "SAG",
+      "last_price": 0.815,
+      "change": 0.0,
+      "volume": 1117,
+      "sector": "Unknown (403)"
+    },
+    {
+      "code": "=\"0652L8\"",
+      "name": "HSI-PWL8",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (358)"
+    },
+    {
+      "code": "=\"12951U\"",
+      "name": "PBBANK-C1U",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (310)"
+    },
+    {
+      "code": "=\"31824D\"",
+      "name": "GENTINGC4D",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (301)"
+    },
+    {
+      "code": "=\"3611\"",
+      "name": "PGLOBE",
+      "last_price": 0.6,
+      "change": 0.0,
+      "volume": 1012,
+      "sector": "Unknown (120)"
+    },
+    {
+      "code": "=\"416237\"",
+      "name": "BAT-C37",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (301)"
+    },
+    {
+      "code": "=\"500542\"",
+      "name": "UNISEM-C42",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (305)"
+    },
+    {
+      "code": "=\"5073\"",
+      "name": "NAIM",
+      "last_price": 0.77,
+      "change": 0.0,
+      "volume": 302,
+      "sector": "Unknown (120)"
+    },
+    {
+      "code": "=\"5260\"",
+      "name": "OWG",
+      "last_price": 0.21,
+      "change": 0.0,
+      "volume": 485,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"526340\"",
+      "name": "SUNCON-C40",
+      "last_price": 0.145,
+      "change": 0.0,
+      "volume": 60,
+      "sector": "Unknown (303)"
+    },
+    {
+      "code": "=\"530117\"",
+      "name": "CTOS-C17",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (305)"
+    },
+    {
+      "code": "=\"5315\"",
+      "name": "SKYWLD",
+      "last_price": 0.485,
+      "change": 0.0,
+      "volume": 1020,
+      "sector": "Unknown (120)"
+    },
+    {
+      "code": "=\"5337CD\"",
+      "name": "ECOSHOP-CD",
+      "last_price": 0.075,
+      "change": 0.0,
+      "volume": 13000,
+      "sector": "Unknown (301)"
+    },
+    {
+      "code": "=\"5337CQ\"",
+      "name": "ECOSHOP-CQ",
+      "last_price": 0.045,
+      "change": 0.0,
+      "volume": 100,
+      "sector": "Unknown (301)"
+    },
+    {
+      "code": "=\"53473A\"",
+      "name": "TENAGA-C3A",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (365)"
+    },
+    {
+      "code": "=\"5789\"",
+      "name": "LBS",
+      "last_price": 0.375,
+      "change": 0.0,
+      "volume": 57193,
+      "sector": "Unknown (120)"
+    },
+    {
+      "code": "=\"601255\"",
+      "name": "MAXIS-C55",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (363)"
+    },
+    {
+      "code": "=\"674295\"",
+      "name": "YTLPOWR-C95",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (365)"
+    },
+    {
+      "code": "=\"696395\"",
+      "name": "VS-C95",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (302)"
+    },
+    {
+      "code": "=\"7153\"",
+      "name": "KOSSAN",
+      "last_price": 1.12,
+      "change": 0.0,
+      "volume": 45974,
+      "sector": "Unknown (162)"
+    },
+    {
+      "code": "=\"715384\"",
+      "name": "KOSSAN-C84",
+      "last_price": 0.05,
+      "change": 0.0,
+      "volume": 200,
+      "sector": "Unknown (362)"
+    },
+    {
+      "code": "=\"7140\"",
+      "name": "OKA",
+      "last_price": 0.42,
+      "change": 0.0,
+      "volume": 127,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"716053\"",
+      "name": "PENTA-C53",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (305)"
+    },
+    {
+      "code": "=\"7172\"",
+      "name": "PMBTECH",
+      "last_price": 1.13,
+      "change": 0.0,
+      "volume": 307,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"7207\"",
+      "name": "SUCCESS",
+      "last_price": 0.62,
+      "change": 0.0,
+      "volume": 56,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"72772J\"",
+      "name": "DIALOG-C2J",
+      "last_price": 0.075,
+      "change": 0.0,
+      "volume": 2070,
+      "sector": "Unknown (361)"
+    },
+    {
+      "code": "=\"7252CE\"",
+      "name": "TEOSENG-CE",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (301)"
+    },
+    {
+      "code": "=\"7617\"",
+      "name": "MAGNA",
+      "last_price": 0.69,
+      "change": 0.0,
+      "volume": 2,
+      "sector": "Unknown (120)"
+    },
+    {
+      "code": "=\"8206WB\"",
+      "name": "ECOWLD-WB",
+      "last_price": 0.905,
+      "change": 0.0,
+      "volume": 975,
+      "sector": "Unknown (120)"
+    },
+    {
+      "code": "=\"9946\"",
+      "name": "ETA",
+      "last_price": 0.16,
+      "change": 0.0,
+      "volume": 1570,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"012840\"",
+      "name": "FRONTKN-C40",
+      "last_price": 0.015,
+      "change": 0.0,
+      "volume": 110,
+      "sector": "Unknown (305)"
+    },
+    {
+      "code": "=\"012844\"",
+      "name": "FRONTKN-C44",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (305)"
+    },
+    {
+      "code": "=\"012845\"",
+      "name": "FRONTKN-C45",
+      "last_price": 0.025,
+      "change": 0.0,
+      "volume": 600,
+      "sector": "Unknown (305)"
+    },
+    {
+      "code": "=\"0157\"",
+      "name": "FOCUSP",
+      "last_price": 0.48,
+      "change": 0.0,
+      "volume": 947,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"01663R\"",
+      "name": "INARI-C3R",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (305)"
+    },
+    {
+      "code": "=\"0191\"",
+      "name": "CABNET",
+      "last_price": 0.265,
+      "change": 0.0,
+      "volume": 158,
+      "sector": "Unknown (405)"
+    },
+    {
+      "code": "=\"0225CN\"",
+      "name": "SCGBHD-CN",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (302)"
+    },
+    {
+      "code": "=\"0259CE\"",
+      "name": "SNS-CE",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (305)"
+    },
+    {
+      "code": "=\"0259CJ\"",
+      "name": "SNS-CJ",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (305)"
+    },
+    {
+      "code": "=\"0270CP\"",
+      "name": "NATGATE-CP",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (302)"
+    },
+    {
+      "code": "=\"0270CT\"",
+      "name": "NATGATE-CT",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (302)"
+    },
+    {
+      "code": "=\"0270CV\"",
+      "name": "NATGATE-CV",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (302)"
+    },
+    {
+      "code": "=\"0270CW\"",
+      "name": "NATGATE-CW",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (302)"
+    },
+    {
+      "code": "=\"0279\"",
+      "name": "SYNERGY",
+      "last_price": 0.305,
+      "change": 0.0,
+      "volume": 6885,
+      "sector": "Unknown (401)"
+    },
+    {
+      "code": "=\"0319\"",
+      "name": "VTC",
+      "last_price": 0.235,
+      "change": 0.0,
+      "volume": 390,
+      "sector": "Unknown (405)"
+    },
+    {
+      "code": "=\"0350\"",
+      "name": "MSB",
+      "last_price": 0.085,
+      "change": 0.0,
+      "volume": 1060,
+      "sector": "Unknown (402)"
+    },
+    {
+      "code": "=\"0652H9\"",
+      "name": "HSI-PWH9",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (358)"
+    },
+    {
+      "code": "=\"1562\"",
+      "name": "SPTOTO",
+      "last_price": 1.35,
+      "change": 0.0,
+      "volume": 3843,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"2224\"",
+      "name": "SDRED",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (120)"
+    },
+    {
+      "code": "=\"33361L\"",
+      "name": "IJM-C1L",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (303)"
+    },
+    {
+      "code": "=\"41971B\"",
+      "name": "SIME-C1B",
+      "last_price": 0.08,
+      "change": 0.0,
+      "volume": 20,
+      "sector": "Unknown (301)"
+    },
+    {
+      "code": "=\"419797\"",
+      "name": "SIME-C97",
+      "last_price": 0.125,
+      "change": 0.0,
+      "volume": 12806,
+      "sector": "Unknown (301)"
+    },
+    {
+      "code": "=\"4596\"",
+      "name": "SAPRES",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (120)"
+    },
+    {
+      "code": "=\"4375\"",
+      "name": "SMI",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (120)"
+    },
+    {
+      "code": "=\"500550\"",
+      "name": "UNISEM-C50",
+      "last_price": 0.125,
+      "change": 0.0,
+      "volume": 4000,
+      "sector": "Unknown (305)"
+    },
+    {
+      "code": "=\"510231\"",
+      "name": "GCB-C31",
+      "last_price": 0.035,
+      "change": 0.0,
+      "volume": 2680,
+      "sector": "Unknown (301)"
+    },
+    {
+      "code": "=\"5098\"",
+      "name": "MASTEEL",
+      "last_price": 0.265,
+      "change": 0.0,
+      "volume": 5841,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"516120\"",
+      "name": "JCY-C20",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (305)"
+    },
+    {
+      "code": "=\"5185\"",
+      "name": "AFFIN",
+      "last_price": 2.28,
+      "change": 0.0,
+      "volume": 7972,
+      "sector": "Unknown (110)"
+    },
+    {
+      "code": "=\"5216WB\"",
+      "name": "NEXG-WB",
+      "last_price": 0.165,
+      "change": 0.0,
+      "volume": 1989,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"5283\"",
+      "name": "EWICAP",
+      "last_price": 0.2,
+      "change": 0.0,
+      "volume": 36721,
+      "sector": "Unknown (120)"
+    },
+    {
+      "code": "=\"526351\"",
+      "name": "SUNCON-C51",
+      "last_price": 0.04,
+      "change": 0.0,
+      "volume": 5000,
+      "sector": "Unknown (303)"
+    },
+    {
+      "code": "=\"5284CY\"",
+      "name": "LCTITAN-CY",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (302)"
+    },
+    {
+      "code": "=\"528848\"",
+      "name": "SIMEPROP-C48",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (320)"
+    },
+    {
+      "code": "=\"529211\"",
+      "name": "UWC-C11",
+      "last_price": 0.17,
+      "change": 0.0,
+      "volume": 133,
+      "sector": "Unknown (305)"
+    },
+    {
+      "code": "=\"5302CN\"",
+      "name": "ATECH-CN",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (302)"
+    },
+    {
+      "code": "=\"5329\"",
+      "name": "AZAMJAYA",
+      "last_price": 1.05,
+      "change": 0.0,
+      "volume": 9240,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"5337CK\"",
+      "name": "ECOSHOP-CK",
+      "last_price": 0.065,
+      "change": 0.0,
+      "volume": 60,
+      "sector": "Unknown (301)"
+    },
+    {
+      "code": "=\"53473I\"",
+      "name": "TENAGA-C3I",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (365)"
+    },
+    {
+      "code": "=\"53473J\"",
+      "name": "TENAGA-C3J",
+      "last_price": 0.025,
+      "change": 0.0,
+      "volume": 3501,
+      "sector": "Unknown (365)"
+    },
+    {
+      "code": "=\"5827WA\"",
+      "name": "OIB-WA",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (120)"
+    },
+    {
+      "code": "=\"5517\"",
+      "name": "SHANG",
+      "last_price": 1.69,
+      "change": 0.0,
+      "volume": 951,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"6351\"",
+      "name": "AMWAY",
+      "last_price": 4.9,
+      "change": 0.0,
+      "volume": 107,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"6084\"",
+      "name": "STAR",
+      "last_price": 0.35,
+      "change": 0.0,
+      "volume": 1650,
+      "sector": "Unknown (163)"
+    },
+    {
+      "code": "=\"659941\"",
+      "name": "AEON-C41",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (301)"
+    },
+    {
+      "code": "=\"7028\"",
+      "name": "ZECON",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"7089\"",
+      "name": "LIIHEN",
+      "last_price": 0.335,
+      "change": 0.0,
+      "volume": 1000,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"716058\"",
+      "name": "PENTA-C58",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (305)"
+    },
+    {
+      "code": "=\"7222\"",
+      "name": "IMASPRO",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"7227\"",
+      "name": "UMSNGB",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"7668\"",
+      "name": "BESHOM",
+      "last_price": 0.635,
+      "change": 0.0,
+      "volume": 111,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"7528\"",
+      "name": "DKLS",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"8079\"",
+      "name": "LEESK",
+      "last_price": 0.44,
+      "change": 0.0,
+      "volume": 612,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"7595\"",
+      "name": "MGB",
+      "last_price": 0.42,
+      "change": 0.0,
+      "volume": 1640,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"7811\"",
+      "name": "SAPIND",
+      "last_price": 0.78,
+      "change": 0.0,
+      "volume": 70,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"858383\"",
+      "name": "MAHSING-C83",
+      "last_price": 0.005,
+      "change": 0.0,
+      "volume": 4042,
+      "sector": "Unknown (320)"
+    },
+    {
+      "code": "=\"9997\"",
+      "name": "PENSONI",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"009713\"",
+      "name": "VITROX-C13",
+      "last_price": 0.095,
+      "change": 0.0,
+      "volume": 20,
+      "sector": "Unknown (305)"
+    },
+    {
+      "code": "=\"009715\"",
+      "name": "VITROX-C15",
+      "last_price": 0.105,
+      "change": 0.0,
+      "volume": 2500,
+      "sector": "Unknown (305)"
+    },
+    {
+      "code": "=\"012847\"",
+      "name": "FRONTKN-C47",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (305)"
+    },
+    {
+      "code": "=\"0104CO\"",
+      "name": "GENETEC-CO",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (305)"
+    },
+    {
+      "code": "=\"0104CP\"",
+      "name": "GENETEC-CP",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (305)"
+    },
+    {
+      "code": "=\"01663O\"",
+      "name": "INARI-C3O",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (305)"
+    },
+    {
+      "code": "=\"01663Q\"",
+      "name": "INARI-C3Q",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (305)"
+    },
+    {
+      "code": "=\"020815\"",
+      "name": "GREATEC-C15",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (305)"
+    },
+    {
+      "code": "=\"0225CF\"",
+      "name": "SCGBHD-CF",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (302)"
+    },
+    {
+      "code": "=\"0225CI\"",
+      "name": "SCGBHD-CI",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (302)"
+    },
+    {
+      "code": "=\"0230\"",
+      "name": "TELADAN",
+      "last_price": 0.84,
+      "change": 0.0,
+      "volume": 884,
+      "sector": "Unknown (120)"
+    },
+    {
+      "code": "=\"0246\"",
+      "name": "CNERGEN",
+      "last_price": 0.445,
+      "change": 0.0,
+      "volume": 2530,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"0259CK\"",
+      "name": "SNS-CK",
+      "last_price": 0.03,
+      "change": 0.0,
+      "volume": 27770,
+      "sector": "Unknown (305)"
+    },
+    {
+      "code": "=\"0257WA\"",
+      "name": "UNIQUE-WA",
+      "last_price": 0.17,
+      "change": 0.0,
+      "volume": 155,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"0286\"",
+      "name": "EMCC",
+      "last_price": 0.35,
+      "change": 0.0,
+      "volume": 7771,
+      "sector": "Unknown (410)"
+    },
+    {
+      "code": "=\"0288\"",
+      "name": "MINOX",
+      "last_price": 0.18,
+      "change": 0.0,
+      "volume": 267,
+      "sector": "Unknown (402)"
+    },
+    {
+      "code": "=\"0270C1\"",
+      "name": "NATGATE-C1",
+      "last_price": 0.02,
+      "change": 0.0,
+      "volume": 6525,
+      "sector": "Unknown (302)"
+    },
+    {
+      "code": "=\"0650B7\"",
+      "name": "FBMKLCI-HB7",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (358)"
+    },
+    {
+      "code": "=\"0652JX\"",
+      "name": "HSI-PWJX",
+      "last_price": 0.095,
+      "change": 0.0,
+      "volume": 200,
+      "sector": "Unknown (358)"
+    },
+    {
+      "code": "=\"117186\"",
+      "name": "MBSB-C86",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (310)"
+    },
+    {
+      "code": "=\"181893\"",
+      "name": "BURSA-C93",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (310)"
+    },
+    {
+      "code": "=\"1694\"",
+      "name": "MENANG",
+      "last_price": 0.64,
+      "change": 0.0,
+      "volume": 150,
+      "sector": "Unknown (120)"
+    },
+    {
+      "code": "=\"285264\"",
+      "name": "CMSB-C64",
+      "last_price": 0.065,
+      "change": 0.0,
+      "volume": 1846,
+      "sector": "Unknown (302)"
+    },
+    {
+      "code": "=\"285265\"",
+      "name": "CMSB-C65",
+      "last_price": 0.12,
+      "change": 0.0,
+      "volume": 34404,
+      "sector": "Unknown (302)"
+    },
+    {
+      "code": "=\"3247\"",
+      "name": "GUH",
+      "last_price": 0.275,
+      "change": 0.0,
+      "volume": 511,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"416238\"",
+      "name": "BAT-C38",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (301)"
+    },
+    {
+      "code": "=\"419795\"",
+      "name": "SIME-C95",
+      "last_price": 0.055,
+      "change": 0.0,
+      "volume": 60,
+      "sector": "Unknown (301)"
+    },
+    {
+      "code": "=\"4383C6\"",
+      "name": "JTIASA-C6",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (325)"
+    },
+    {
+      "code": "=\"46772B\"",
+      "name": "YTL-C2B",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (365)"
+    },
+    {
+      "code": "=\"4758\"",
+      "name": "ANCOMNY",
+      "last_price": 0.905,
+      "change": 0.0,
+      "volume": 16721,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"47153Q\"",
+      "name": "GENM-C3Q",
+      "last_price": 0.08,
+      "change": 0.0,
+      "volume": 9107,
+      "sector": "Unknown (301)"
+    },
+    {
+      "code": "=\"500549\"",
+      "name": "UNISEM-C49",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (305)"
+    },
+    {
+      "code": "=\"4995\"",
+      "name": "VERSATL",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"514154\"",
+      "name": "DAYANG-C54",
+      "last_price": 0.04,
+      "change": 0.0,
+      "volume": 5520,
+      "sector": "Unknown (361)"
+    },
+    {
+      "code": "=\"5182\"",
+      "name": "AVALAND",
+      "last_price": 0.21,
+      "change": 0.0,
+      "volume": 500,
+      "sector": "Unknown (120)"
+    },
+    {
+      "code": "=\"51683D\"",
+      "name": "HARTA-C3D",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (362)"
+    },
+    {
+      "code": "=\"5216\"",
+      "name": "NEXG",
+      "last_price": 0.335,
+      "change": 0.0,
+      "volume": 52101,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"521667\"",
+      "name": "NEXG-C67",
+      "last_price": 0.005,
+      "change": 0.0,
+      "volume": 200,
+      "sector": "Unknown (305)"
+    },
+    {
+      "code": "=\"5223\"",
+      "name": "MENTIGA",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (125)"
+    },
+    {
+      "code": "=\"5272CP\"",
+      "name": "RANHILL-CP",
+      "last_price": 0.05,
+      "change": 0.0,
+      "volume": 20,
+      "sector": "Unknown (365)"
+    },
+    {
+      "code": "=\"5337CL\"",
+      "name": "ECOSHOP-CL",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (301)"
+    },
+    {
+      "code": "=\"5337CM\"",
+      "name": "ECOSHOP-CM",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (301)"
+    },
+    {
+      "code": "=\"53983W\"",
+      "name": "GAMUDA-C3W",
+      "last_price": 0.025,
+      "change": 0.0,
+      "volume": 10015,
+      "sector": "Unknown (303)"
+    },
+    {
+      "code": "=\"5371\"",
+      "name": "KIMHIN",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"5649\"",
+      "name": "GPHAROS",
+      "last_price": 0.235,
+      "change": 0.0,
+      "volume": 254,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"5665\"",
+      "name": "SSTEEL",
+      "last_price": 0.375,
+      "change": 0.0,
+      "volume": 300,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"5932\"",
+      "name": "BPURI",
+      "last_price": 0.29,
+      "change": 0.0,
+      "volume": 86641,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"6556WC\"",
+      "name": "ANNJOO-WC",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"6521\"",
+      "name": "SURIA",
+      "last_price": 1.55,
+      "change": 0.0,
+      "volume": 35,
+      "sector": "Unknown (164)"
+    },
+    {
+      "code": "=\"67421C\"",
+      "name": "YTLPOWR-C1C",
+      "last_price": 0.005,
+      "change": 0.0,
+      "volume": 1,
+      "sector": "Unknown (365)"
+    },
+    {
+      "code": "=\"69631B\"",
+      "name": "VS-C1B",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (302)"
+    },
+    {
+      "code": "=\"696399\"",
+      "name": "VS-C99",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (302)"
+    },
+    {
+      "code": "=\"7033\"",
+      "name": "HIGHTEC",
+      "last_price": 0.67,
+      "change": 0.0,
+      "volume": 10,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"71065G\"",
+      "name": "SUPERMX-C5G",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (362)"
+    },
+    {
+      "code": "=\"7117\"",
+      "name": "CJCEN",
+      "last_price": 0.15,
+      "change": 0.0,
+      "volume": 250,
+      "sector": "Unknown (164)"
+    },
+    {
+      "code": "=\"715387\"",
+      "name": "KOSSAN-C87",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (362)"
+    },
+    {
+      "code": "=\"716054\"",
+      "name": "PENTA-C54",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (305)"
+    },
+    {
+      "code": "=\"716057\"",
+      "name": "PENTA-C57",
+      "last_price": 0.11,
+      "change": 0.0,
+      "volume": 20,
+      "sector": "Unknown (305)"
+    },
+    {
+      "code": "=\"7234\"",
+      "name": "LOTUSCIR",
+      "last_price": 0.32,
+      "change": 0.0,
+      "volume": 1,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"7250\"",
+      "name": "UZMA",
+      "last_price": 0.42,
+      "change": 0.0,
+      "volume": 40788,
+      "sector": "Unknown (161)"
+    },
+    {
+      "code": "=\"8478\"",
+      "name": "HWATAI",
+      "last_price": 0.44,
+      "change": 0.0,
+      "volume": 155,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"887771\"",
+      "name": "EKOVEST-C71",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (303)"
+    },
+    {
+      "code": "=\"887774\"",
+      "name": "EKOVEST-C74",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (303)"
+    },
+    {
+      "code": "=\"866499\"",
+      "name": "SPSETIA-C99",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (320)"
+    },
+    {
+      "code": "=\"9148\"",
+      "name": "GBAY",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"9539\"",
+      "name": "MUH",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (120)"
+    },
+    {
+      "code": "=\"0058\"",
+      "name": "JCBNEXT",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"0050\"",
+      "name": "SYSTECH",
+      "last_price": 0.145,
+      "change": 0.0,
+      "volume": 14972,
+      "sector": "Unknown (405)"
+    },
+    {
+      "code": "=\"0136\"",
+      "name": "GREENYB",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"0151C1\"",
+      "name": "KGB-C1",
+      "last_price": 0.1,
+      "change": 0.0,
+      "volume": 6568,
+      "sector": "Unknown (302)"
+    },
+    {
+      "code": "=\"0176\"",
+      "name": "KRONO",
+      "last_price": 0.2,
+      "change": 0.0,
+      "volume": 10135,
+      "sector": "Unknown (405)"
+    },
+    {
+      "code": "=\"0165\"",
+      "name": "XOX",
+      "last_price": 0.24,
+      "change": 0.0,
+      "volume": 985,
+      "sector": "Unknown (463)"
+    },
+    {
+      "code": "=\"0165PA\"",
+      "name": "XOX-PA",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (463)"
+    },
+    {
+      "code": "=\"0195\"",
+      "name": "BINACOM",
+      "last_price": 0.1,
+      "change": 0.0,
+      "volume": 1234,
+      "sector": "Unknown (463)"
+    },
+    {
+      "code": "=\"0190\"",
+      "name": "ESAFE",
+      "last_price": 0.105,
+      "change": 0.0,
+      "volume": 140,
+      "sector": "Unknown (402)"
+    },
+    {
+      "code": "=\"0207\"",
+      "name": "MESTRON",
+      "last_price": 0.18,
+      "change": 0.0,
+      "volume": 46357,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"0186WB\"",
+      "name": "PTRANS-WB",
+      "last_price": 0.06,
+      "change": 0.0,
+      "volume": 5327,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"0199\"",
+      "name": "TRIMODE",
+      "last_price": 0.17,
+      "change": 0.0,
+      "volume": 2547,
+      "sector": "Unknown (464)"
+    },
+    {
+      "code": "=\"0213\"",
+      "name": "MTAG",
+      "last_price": 0.25,
+      "change": 0.0,
+      "volume": 40,
+      "sector": "Unknown (402)"
+    },
+    {
+      "code": "=\"0227WA\"",
+      "name": "EFRAME-WA",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (402)"
+    },
+    {
+      "code": "=\"0215CV\"",
+      "name": "SLVEST-CV",
+      "last_price": 0.46,
+      "change": 0.0,
+      "volume": 18714,
+      "sector": "Unknown (361)"
+    },
+    {
+      "code": "=\"0270CY\"",
+      "name": "NATGATE-CY",
+      "last_price": 0.005,
+      "change": 0.0,
+      "volume": 510,
+      "sector": "Unknown (302)"
+    },
+    {
+      "code": "=\"03023\"",
+      "name": "SMILE",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (762)"
+    },
+    {
+      "code": "=\"0373\"",
+      "name": "VERDANT",
+      "last_price": 0.255,
+      "change": 0.0,
+      "volume": 14693,
+      "sector": "Unknown (461)"
+    },
+    {
+      "code": "=\"0353\"",
+      "name": "WESTRVR",
+      "last_price": 0.205,
+      "change": 0.0,
+      "volume": 402,
+      "sector": "Unknown (402)"
+    },
+    {
+      "code": "=\"0652JW\"",
+      "name": "HSI-PWJW",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (358)"
+    },
+    {
+      "code": "=\"0652L7\"",
+      "name": "HSI-PWL7",
+      "last_price": 0.335,
+      "change": 0.0,
+      "volume": 103105,
+      "sector": "Unknown (358)"
+    },
+    {
+      "code": "=\"0709C6\"",
+      "name": "GLDHK-C6",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (358)"
+    },
+    {
+      "code": "=\"1171\"",
+      "name": "MBSB",
+      "last_price": 0.7,
+      "change": 0.0,
+      "volume": 64856,
+      "sector": "Unknown (110)"
+    },
+    {
+      "code": "=\"117184\"",
+      "name": "MBSB-C84",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (310)"
+    },
+    {
+      "code": "=\"1589\"",
+      "name": "IWCITY",
+      "last_price": 0.265,
+      "change": 0.0,
+      "volume": 8831,
+      "sector": "Unknown (120)"
+    },
+    {
+      "code": "=\"16511O\"",
+      "name": "MRCB-C1O",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (320)"
+    },
+    {
+      "code": "=\"2259\"",
+      "name": "TALAMT",
+      "last_price": 0.11,
+      "change": 0.0,
+      "volume": 293,
+      "sector": "Unknown (120)"
+    },
+    {
+      "code": "=\"285270\"",
+      "name": "CMSB-C70",
+      "last_price": 0.16,
+      "change": 0.0,
+      "volume": 7003,
+      "sector": "Unknown (302)"
+    },
+    {
+      "code": "=\"31823X\"",
+      "name": "GENTINGC3X",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (301)"
+    },
+    {
+      "code": "=\"33361N\"",
+      "name": "IJM-C1N",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (303)"
+    },
+    {
+      "code": "=\"3573\"",
+      "name": "LIENHOE",
+      "last_price": 0.195,
+      "change": 0.0,
+      "volume": 27,
+      "sector": "Unknown (120)"
+    },
+    {
+      "code": "=\"4456WE\"",
+      "name": "DNEX-WE",
+      "last_price": 0.115,
+      "change": 0.0,
+      "volume": 71491,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"5021\"",
+      "name": "AYS",
+      "last_price": 0.235,
+      "change": 0.0,
+      "volume": 251,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"5079\"",
+      "name": "ONEGLOVE",
+      "last_price": 0.165,
+      "change": 0.0,
+      "volume": 1000,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"5107\"",
+      "name": "IQGROUP",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"5162CD\"",
+      "name": "VSTECS-CD",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (305)"
+    },
+    {
+      "code": "=\"5186\"",
+      "name": "MHB",
+      "last_price": 0.35,
+      "change": 0.0,
+      "volume": 1358,
+      "sector": "Unknown (161)"
+    },
+    {
+      "code": "=\"521149\"",
+      "name": "SUNWAY-C49",
+      "last_price": 0.035,
+      "change": 0.0,
+      "volume": 1000,
+      "sector": "Unknown (302)"
+    },
+    {
+      "code": "=\"5276\"",
+      "name": "DANCO",
+      "last_price": 0.365,
+      "change": 0.0,
+      "volume": 931,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"526343\"",
+      "name": "SUNCON-C43",
+      "last_price": 0.06,
+      "change": 0.0,
+      "volume": 40,
+      "sector": "Unknown (303)"
+    },
+    {
+      "code": "=\"526344\"",
+      "name": "SUNCON-C44",
+      "last_price": 0.005,
+      "change": 0.0,
+      "volume": 700,
+      "sector": "Unknown (303)"
+    },
+    {
+      "code": "=\"528533\"",
+      "name": "SDG-C33",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (325)"
+    },
+    {
+      "code": "=\"529218\"",
+      "name": "UWC-C18",
+      "last_price": 0.095,
+      "change": 0.0,
+      "volume": 60,
+      "sector": "Unknown (305)"
+    },
+    {
+      "code": "=\"529645\"",
+      "name": "MRDIY-C45",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (301)"
+    },
+    {
+      "code": "=\"530119\"",
+      "name": "CTOS-C19",
+      "last_price": 0.005,
+      "change": 0.0,
+      "volume": 1,
+      "sector": "Unknown (305)"
+    },
+    {
+      "code": "=\"530120\"",
+      "name": "CTOS-C20",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (305)"
+    },
+    {
+      "code": "=\"53473K\"",
+      "name": "TENAGA-C3K",
+      "last_price": 0.05,
+      "change": 0.0,
+      "volume": 20444,
+      "sector": "Unknown (365)"
+    },
+    {
+      "code": "=\"5843\"",
+      "name": "KPS",
+      "last_price": 0.605,
+      "change": 0.0,
+      "volume": 316,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"6173\"",
+      "name": "BDB",
+      "last_price": 0.255,
+      "change": 0.0,
+      "volume": 200,
+      "sector": "Unknown (120)"
+    },
+    {
+      "code": "=\"6262\"",
+      "name": "INNO",
+      "last_price": 1.81,
+      "change": 0.0,
+      "volume": 1576,
+      "sector": "Unknown (125)"
+    },
+    {
+      "code": "=\"6742HI\"",
+      "name": "YTLPOWR-HI",
+      "last_price": 0.04,
+      "change": 0.0,
+      "volume": 3488,
+      "sector": "Unknown (365)"
+    },
+    {
+      "code": "=\"68881P\"",
+      "name": "AXIATA-C1P",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (363)"
+    },
+    {
+      "code": "=\"68881Q\"",
+      "name": "AXIATA-C1Q",
+      "last_price": 0.135,
+      "change": 0.0,
+      "volume": 3430,
+      "sector": "Unknown (363)"
+    },
+    {
+      "code": "=\"7010\"",
+      "name": "PTT",
+      "last_price": 1.37,
+      "change": 0.0,
+      "volume": 25,
+      "sector": "Unknown (120)"
+    },
+    {
+      "code": "=\"7047\"",
+      "name": "FBG",
+      "last_price": 0.16,
+      "change": 0.0,
+      "volume": 10210,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"7017WD\"",
+      "name": "KOMARK-WD",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"71064Z\"",
+      "name": "SUPERMX-C4Z",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (362)"
+    },
+    {
+      "code": "=\"71135H\"",
+      "name": "TOPGLOV-C5H",
+      "last_price": 0.05,
+      "change": 0.0,
+      "volume": 5000,
+      "sector": "Unknown (362)"
+    },
+    {
+      "code": "=\"71135J\"",
+      "name": "TOPGLOV-C5J",
+      "last_price": 0.05,
+      "change": 0.0,
+      "volume": 3906,
+      "sector": "Unknown (362)"
+    },
+    {
+      "code": "=\"7148\"",
+      "name": "DPHARMA",
+      "last_price": 1.25,
+      "change": 0.0,
+      "volume": 2888,
+      "sector": "Unknown (162)"
+    },
+    {
+      "code": "=\"7179\"",
+      "name": "LAGENDA",
+      "last_price": 1.25,
+      "change": 0.0,
+      "volume": 3671,
+      "sector": "Unknown (120)"
+    },
+    {
+      "code": "=\"7173\"",
+      "name": "TOYOVEN",
+      "last_price": 0.27,
+      "change": 0.0,
+      "volume": 2250,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"7176\"",
+      "name": "TPC",
+      "last_price": 0.3,
+      "change": 0.0,
+      "volume": 30,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"7178\"",
+      "name": "YSPSAH",
+      "last_price": 2.07,
+      "change": 0.0,
+      "volume": 268,
+      "sector": "Unknown (162)"
+    },
+    {
+      "code": "=\"7203\"",
+      "name": "WANGZNG",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"7232WB\"",
+      "name": "RESINTC-WB",
+      "last_price": 0.135,
+      "change": 0.0,
+      "volume": 20,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"7247\"",
+      "name": "SCGM",
+      "last_price": 0.5,
+      "change": 0.0,
+      "volume": 1353,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"7248\"",
+      "name": "SLP",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"7765\"",
+      "name": "RAPID",
+      "last_price": 0.565,
+      "change": 0.0,
+      "volume": 11297,
+      "sector": "Unknown (120)"
+    },
+    {
+      "code": "=\"729349\"",
+      "name": "YINSON-C49",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (361)"
+    },
+    {
+      "code": "=\"729351\"",
+      "name": "YINSON-C51",
+      "last_price": 0.05,
+      "change": 0.0,
+      "volume": 10602,
+      "sector": "Unknown (361)"
+    },
+    {
+      "code": "=\"8591\"",
+      "name": "CRESBLD",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"8567\"",
+      "name": "SALCON",
+      "last_price": 0.225,
+      "change": 0.0,
+      "volume": 763,
+      "sector": "Unknown (165)"
+    },
+    {
+      "code": "=\"8613\"",
+      "name": "ENRA",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (161)"
+    },
+    {
+      "code": "=\"887772\"",
+      "name": "EKOVEST-C72",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (303)"
+    },
+    {
+      "code": "=\"86641C\"",
+      "name": "SPSETIA-C1C",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (320)"
+    },
+    {
+      "code": "=\"9261\"",
+      "name": "GADANG",
+      "last_price": 0.255,
+      "change": 0.0,
+      "volume": 8257,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"9962\"",
+      "name": "GMUTUAL",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (120)"
+    },
+    {
+      "code": "=\"0039\"",
+      "name": "GFM",
+      "last_price": 0.17,
+      "change": 0.0,
+      "volume": 3585,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"0037\"",
+      "name": "RGB",
+      "last_price": 0.22,
+      "change": 0.0,
+      "volume": 19943,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"0172WB\"",
+      "name": "OCK-WB",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (163)"
+    },
+    {
+      "code": "=\"0192\"",
+      "name": "INTA",
+      "last_price": 0.395,
+      "change": 0.0,
+      "volume": 3314,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"0192WA\"",
+      "name": "INTA-WA",
+      "last_price": 0.05,
+      "change": 0.0,
+      "volume": 11830,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"0212\"",
+      "name": "SDS",
+      "last_price": 0.72,
+      "change": 0.0,
+      "volume": 42,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"0215\"",
+      "name": "SLVEST",
+      "last_price": 3.31,
+      "change": 0.0,
+      "volume": 92242,
+      "sector": "Unknown (161)"
+    },
+    {
+      "code": "=\"0225CK\"",
+      "name": "SCGBHD-CK",
+      "last_price": 0.165,
+      "change": 0.0,
+      "volume": 60,
+      "sector": "Unknown (302)"
+    },
+    {
+      "code": "=\"0215CU\"",
+      "name": "SLVEST-CU",
+      "last_price": 0.2,
+      "change": 0.0,
+      "volume": 49884,
+      "sector": "Unknown (361)"
+    },
+    {
+      "code": "=\"0215CW\"",
+      "name": "SLVEST-CW",
+      "last_price": 0.085,
+      "change": 0.0,
+      "volume": 720,
+      "sector": "Unknown (361)"
+    },
+    {
+      "code": "=\"0231\"",
+      "name": "FLEXI",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (402)"
+    },
+    {
+      "code": "=\"0257\"",
+      "name": "UNIQUE",
+      "last_price": 0.435,
+      "change": 0.0,
+      "volume": 977,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"0268\"",
+      "name": "L&PBHD",
+      "last_price": 0.095,
+      "change": 0.0,
+      "volume": 2661,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"0298\"",
+      "name": "WENTEL",
+      "last_price": 0.29,
+      "change": 0.0,
+      "volume": 3498,
+      "sector": "Unknown (402)"
+    },
+    {
+      "code": "=\"03001\"",
+      "name": "CLOUD",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (705)"
+    },
+    {
+      "code": "=\"0304\"",
+      "name": "FPHB",
+      "last_price": 0.4,
+      "change": 0.0,
+      "volume": 404,
+      "sector": "Unknown (401)"
+    },
+    {
+      "code": "=\"0304WA\"",
+      "name": "FPHB-WA",
+      "last_price": 0.14,
+      "change": 0.0,
+      "volume": 410,
+      "sector": "Unknown (401)"
+    },
+    {
+      "code": "=\"0312\"",
+      "name": "OFB",
+      "last_price": 0.2,
+      "change": 0.0,
+      "volume": 200,
+      "sector": "Unknown (401)"
+    },
+    {
+      "code": "=\"0348\"",
+      "name": "CLITE",
+      "last_price": 0.235,
+      "change": 0.0,
+      "volume": 630,
+      "sector": "Unknown (402)"
+    },
+    {
+      "code": "=\"0341\"",
+      "name": "COLFORM",
+      "last_price": 0.315,
+      "change": 0.0,
+      "volume": 521,
+      "sector": "Unknown (402)"
+    },
+    {
+      "code": "=\"0362\"",
+      "name": "ASM",
+      "last_price": 0.14,
+      "change": 0.0,
+      "volume": 3705,
+      "sector": "Unknown (402)"
+    },
+    {
+      "code": "=\"0371\"",
+      "name": "CAMAROE",
+      "last_price": 0.11,
+      "change": 0.0,
+      "volume": 559,
+      "sector": "Unknown (401)"
+    },
+    {
+      "code": "=\"0355\"",
+      "name": "FIBRO",
+      "last_price": 0.65,
+      "change": 0.0,
+      "volume": 1859,
+      "sector": "Unknown (402)"
+    },
+    {
+      "code": "=\"0366\"",
+      "name": "ICENTS",
+      "last_price": 0.39,
+      "change": 0.0,
+      "volume": 11614,
+      "sector": "Unknown (402)"
+    },
+    {
+      "code": "=\"0363\"",
+      "name": "PMCK",
+      "last_price": 0.19,
+      "change": 0.0,
+      "volume": 15621,
+      "sector": "Unknown (462)"
+    },
+    {
+      "code": "=\"0370\"",
+      "name": "XPB",
+      "last_price": 0.17,
+      "change": 0.0,
+      "volume": 80,
+      "sector": "Unknown (402)"
+    },
+    {
+      "code": "=\"0650EC\"",
+      "name": "FBMKLCI-HEC",
+      "last_price": 0.005,
+      "change": 0.0,
+      "volume": 500,
+      "sector": "Unknown (358)"
+    },
+    {
+      "code": "=\"0652JP\"",
+      "name": "HSI-PWJP",
+      "last_price": 0.025,
+      "change": 0.0,
+      "volume": 500,
+      "sector": "Unknown (358)"
+    },
+    {
+      "code": "=\"11552A\"",
+      "name": "MAYBANKC2A",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (310)"
+    },
+    {
+      "code": "=\"2127\"",
+      "name": "COMFORT",
+      "last_price": 0.165,
+      "change": 0.0,
+      "volume": 6452,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"1996\"",
+      "name": "KRETAM",
+      "last_price": 0.695,
+      "change": 0.0,
+      "volume": 11432,
+      "sector": "Unknown (125)"
+    },
+    {
+      "code": "=\"285266\"",
+      "name": "CMSB-C66",
+      "last_price": 0.075,
+      "change": 0.0,
+      "volume": 3000,
+      "sector": "Unknown (302)"
+    },
+    {
+      "code": "=\"285272\"",
+      "name": "CMSB-C72",
+      "last_price": 0.155,
+      "change": 0.0,
+      "volume": 12660,
+      "sector": "Unknown (302)"
+    },
+    {
+      "code": "=\"31824A\"",
+      "name": "GENTINGC4A",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (301)"
+    },
+    {
+      "code": "=\"3174\"",
+      "name": "L&G",
+      "last_price": 0.13,
+      "change": 0.0,
+      "volume": 57774,
+      "sector": "Unknown (120)"
+    },
+    {
+      "code": "=\"3883\"",
+      "name": "MUDA",
+      "last_price": 0.8,
+      "change": 0.0,
+      "volume": 25,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"3905\"",
+      "name": "MULPHA",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"41971G\"",
+      "name": "SIME-C1G",
+      "last_price": 0.07,
+      "change": 0.0,
+      "volume": 2626,
+      "sector": "Unknown (301)"
+    },
+    {
+      "code": "=\"41971I\"",
+      "name": "SIME-C1I",
+      "last_price": 0.04,
+      "change": 0.0,
+      "volume": 15662,
+      "sector": "Unknown (301)"
+    },
+    {
+      "code": "=\"5062\"",
+      "name": "HUAYANG",
+      "last_price": 0.215,
+      "change": 0.0,
+      "volume": 2100,
+      "sector": "Unknown (120)"
+    },
+    {
+      "code": "=\"5088\"",
+      "name": "APEX",
+      "last_price": 0.895,
+      "change": 0.0,
+      "volume": 319,
+      "sector": "Unknown (110)"
+    },
+    {
+      "code": "=\"5102WC\"",
+      "name": "GCB-WC",
+      "last_price": 0.14,
+      "change": 0.0,
+      "volume": 3311,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"5132\"",
+      "name": "DELEUM",
+      "last_price": 1.22,
+      "change": 0.0,
+      "volume": 238,
+      "sector": "Unknown (161)"
+    },
+    {
+      "code": "=\"5184\"",
+      "name": "CYPARK",
+      "last_price": 0.71,
+      "change": 0.0,
+      "volume": 18409,
+      "sector": "Unknown (161)"
+    },
+    {
+      "code": "=\"5191\"",
+      "name": "TAMBUN",
+      "last_price": 0.785,
+      "change": 0.0,
+      "volume": 100,
+      "sector": "Unknown (120)"
+    },
+    {
+      "code": "=\"521143\"",
+      "name": "SUNWAY-C43",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (302)"
+    },
+    {
+      "code": "=\"5257\"",
+      "name": "CARIMIN",
+      "last_price": 0.56,
+      "change": 0.0,
+      "volume": 294,
+      "sector": "Unknown (161)"
+    },
+    {
+      "code": "=\"526342\"",
+      "name": "SUNCON-C42",
+      "last_price": 0.065,
+      "change": 0.0,
+      "volume": 10000,
+      "sector": "Unknown (303)"
+    },
+    {
+      "code": "=\"5273\"",
+      "name": "CHINHIN",
+      "last_price": 2.17,
+      "change": 0.0,
+      "volume": 7114,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"526345\"",
+      "name": "SUNCON-C45",
+      "last_price": 0.065,
+      "change": 0.0,
+      "volume": 24895,
+      "sector": "Unknown (303)"
+    },
+    {
+      "code": "=\"5293WA\"",
+      "name": "AME-WA",
+      "last_price": 0.04,
+      "change": 0.0,
+      "volume": 593,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"529649\"",
+      "name": "MRDIY-C49",
+      "last_price": 0.015,
+      "change": 0.0,
+      "volume": 200,
+      "sector": "Unknown (301)"
+    },
+    {
+      "code": "=\"5311\"",
+      "name": "CEB",
+      "last_price": 0.265,
+      "change": 0.0,
+      "volume": 14546,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"5337CH\"",
+      "name": "ECOSHOP-CH",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (301)"
+    },
+    {
+      "code": "=\"5330CC\"",
+      "name": "TMK-CC",
+      "last_price": 0.1,
+      "change": 0.0,
+      "volume": 320,
+      "sector": "Unknown (302)"
+    },
+    {
+      "code": "=\"5338\"",
+      "name": "PARADIGM",
+      "last_price": 0.94,
+      "change": 0.0,
+      "volume": 14576,
+      "sector": "Unknown (150)"
+    },
+    {
+      "code": "=\"53473F\"",
+      "name": "TENAGA-C3F",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (365)"
+    },
+    {
+      "code": "=\"53983Z\"",
+      "name": "GAMUDA-C3Z",
+      "last_price": 0.01,
+      "change": 0.0,
+      "volume": 11194,
+      "sector": "Unknown (303)"
+    },
+    {
+      "code": "=\"5738\"",
+      "name": "CHHB",
+      "last_price": 0.17,
+      "change": 0.0,
+      "volume": 2,
+      "sector": "Unknown (120)"
+    },
+    {
+      "code": "=\"6459CI\"",
+      "name": "MNRB-CI",
+      "last_price": 0.095,
+      "change": 0.0,
+      "volume": 5000,
+      "sector": "Unknown (310)"
+    },
+    {
+      "code": "=\"6068\"",
+      "name": "PCCS",
+      "last_price": 0.295,
+      "change": 0.0,
+      "volume": 260,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"7007\"",
+      "name": "ARK",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (120)"
+    },
+    {
+      "code": "=\"68881U\"",
+      "name": "AXIATA-C1U",
+      "last_price": 0.025,
+      "change": 0.0,
+      "volume": 3500,
+      "sector": "Unknown (363)"
+    },
+    {
+      "code": "=\"694768\"",
+      "name": "CDB-C68",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (363)"
+    },
+    {
+      "code": "=\"6939\"",
+      "name": "FIAMMA",
+      "last_price": 1.12,
+      "change": 0.0,
+      "volume": 100,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"696398\"",
+      "name": "VS-C98",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (302)"
+    },
+    {
+      "code": "=\"7031\"",
+      "name": "AMTEL",
+      "last_price": 0.385,
+      "change": 0.0,
+      "volume": 71,
+      "sector": "Unknown (163)"
+    },
+    {
+      "code": "=\"7053\"",
+      "name": "SEEHUP",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (164)"
+    },
+    {
+      "code": "=\"71065D\"",
+      "name": "SUPERMX-C5D",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (362)"
+    },
+    {
+      "code": "=\"7167\"",
+      "name": "ABLEGLOB",
+      "last_price": 1.59,
+      "change": 0.0,
+      "volume": 2128,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"7187\"",
+      "name": "CHGP",
+      "last_price": 1.2,
+      "change": 0.0,
+      "volume": 153,
+      "sector": "Unknown (120)"
+    },
+    {
+      "code": "=\"7232\"",
+      "name": "RESINTC",
+      "last_price": 0.525,
+      "change": 0.0,
+      "volume": 348,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"7285\"",
+      "name": "TOMYPAK",
+      "last_price": 0.245,
+      "change": 0.0,
+      "volume": 20,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"7501WB\"",
+      "name": "HARNLEN-WB",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (125)"
+    },
+    {
+      "code": "=\"8176\"",
+      "name": "WAVEFRNT",
+      "last_price": 0.19,
+      "change": 0.0,
+      "volume": 1986,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"820644\"",
+      "name": "ECOWLD-C44",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (320)"
+    },
+    {
+      "code": "=\"820648\"",
+      "name": "ECOWLD-C48",
+      "last_price": 0.075,
+      "change": 0.0,
+      "volume": 22030,
+      "sector": "Unknown (320)"
+    },
+    {
+      "code": "=\"8397\"",
+      "name": "TNLOGIS",
+      "last_price": 0.805,
+      "change": 0.0,
+      "volume": 508,
+      "sector": "Unknown (164)"
+    },
+    {
+      "code": "=\"9083\"",
+      "name": "JETSON",
+      "last_price": 0.12,
+      "change": 0.0,
+      "volume": 297,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"9601\"",
+      "name": "HWGB",
+      "last_price": 0.14,
+      "change": 0.0,
+      "volume": 270,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"0018\"",
+      "name": "LAMBO",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (405)"
+    },
+    {
+      "code": "=\"0008\"",
+      "name": "WILLOW",
+      "last_price": 0.265,
+      "change": 0.0,
+      "volume": 170,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"0051\"",
+      "name": "CUSCAPI",
+      "last_price": 0.115,
+      "change": 0.0,
+      "volume": 109,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"0039WD\"",
+      "name": "GFM-WD",
+      "last_price": 0.035,
+      "change": 0.0,
+      "volume": 5002,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"0036\"",
+      "name": "KGROUP",
+      "last_price": 0.08,
+      "change": 0.0,
+      "volume": 1036,
+      "sector": "Unknown (405)"
+    },
+    {
+      "code": "=\"0107WC\"",
+      "name": "EDUSPEC-WC",
+      "last_price": 0.08,
+      "change": 0.0,
+      "volume": 87,
+      "sector": "Unknown (405)"
+    },
+    {
+      "code": "=\"0120\"",
+      "name": "VIS",
+      "last_price": 0.19,
+      "change": 0.0,
+      "volume": 100,
+      "sector": "Unknown (405)"
+    },
+    {
+      "code": "=\"0138\"",
+      "name": "ZETRIX",
+      "last_price": 0.805,
+      "change": 0.0,
+      "volume": 667619,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"01389U\"",
+      "name": "ZETRIX-C9U",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (305)"
+    },
+    {
+      "code": "=\"0151C3\"",
+      "name": "KGB-C3",
+      "last_price": 0.05,
+      "change": 0.0,
+      "volume": 20,
+      "sector": "Unknown (302)"
+    },
+    {
+      "code": "=\"0151CY\"",
+      "name": "KGB-CY",
+      "last_price": 0.09,
+      "change": 0.0,
+      "volume": 12106,
+      "sector": "Unknown (302)"
+    },
+    {
+      "code": "=\"0198WA\"",
+      "name": "GDB-WA",
+      "last_price": 0.02,
+      "change": 0.0,
+      "volume": 6413,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"0200\"",
+      "name": "REVENUE",
+      "last_price": 0.055,
+      "change": 0.0,
+      "volume": 4130,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"0215CT\"",
+      "name": "SLVEST-CT",
+      "last_price": 0.33,
+      "change": 0.0,
+      "volume": 7318,
+      "sector": "Unknown (361)"
+    },
+    {
+      "code": "=\"0238\"",
+      "name": "CEKD",
+      "last_price": 0.32,
+      "change": 0.0,
+      "volume": 530,
+      "sector": "Unknown (402)"
+    },
+    {
+      "code": "=\"0285\"",
+      "name": "MERSEC",
+      "last_price": 0.31,
+      "change": 0.0,
+      "volume": 9649,
+      "sector": "Unknown (410)"
+    },
+    {
+      "code": "=\"0299\"",
+      "name": "AGX",
+      "last_price": 0.445,
+      "change": 0.0,
+      "volume": 4887,
+      "sector": "Unknown (464)"
+    },
+    {
+      "code": "=\"0313\"",
+      "name": "BWYS",
+      "last_price": 0.21,
+      "change": 0.0,
+      "volume": 1805,
+      "sector": "Unknown (402)"
+    },
+    {
+      "code": "=\"0336\"",
+      "name": "WINSTAR",
+      "last_price": 0.5,
+      "change": 0.0,
+      "volume": 1193,
+      "sector": "Unknown (402)"
+    },
+    {
+      "code": "=\"0347\"",
+      "name": "DENGKIL",
+      "last_price": 0.185,
+      "change": 0.0,
+      "volume": 833,
+      "sector": "Unknown (403)"
+    },
+    {
+      "code": "=\"0349\"",
+      "name": "SUMI",
+      "last_price": 0.09,
+      "change": 0.0,
+      "volume": 2249,
+      "sector": "Unknown (402)"
+    },
+    {
+      "code": "=\"05821F\"",
+      "name": "ALIBABA-H1F",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (358)"
+    },
+    {
+      "code": "=\"0650EE\"",
+      "name": "FBMKLCI-HEE",
+      "last_price": 0.015,
+      "change": 0.0,
+      "volume": 2501,
+      "sector": "Unknown (358)"
+    },
+    {
+      "code": "=\"0650EF\"",
+      "name": "FBMKLCI-HEF",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (358)"
+    },
+    {
+      "code": "=\"0650EH\"",
+      "name": "FBMKLCI-HEH",
+      "last_price": 0.075,
+      "change": 0.0,
+      "volume": 2751,
+      "sector": "Unknown (358)"
+    },
+    {
+      "code": "=\"1503\"",
+      "name": "GUOCO",
+      "last_price": 0.58,
+      "change": 0.0,
+      "volume": 1763,
+      "sector": "Unknown (120)"
+    },
+    {
+      "code": "=\"285269\"",
+      "name": "CMSB-C69",
+      "last_price": 0.065,
+      "change": 0.0,
+      "volume": 1300,
+      "sector": "Unknown (302)"
+    },
+    {
+      "code": "=\"3247WA\"",
+      "name": "GUH-WA",
+      "last_price": 0.04,
+      "change": 0.0,
+      "volume": 46,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"3158\"",
+      "name": "YNHPROP",
+      "last_price": 0.28,
+      "change": 0.0,
+      "volume": 4822,
+      "sector": "Unknown (120)"
+    },
+    {
+      "code": "=\"4081\"",
+      "name": "PMCORP",
+      "last_price": 0.075,
+      "change": 0.0,
+      "volume": 5153,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"445640\"",
+      "name": "DNEX-C40",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (305)"
+    },
+    {
+      "code": "=\"445641\"",
+      "name": "DNEX-C41",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (305)"
+    },
+    {
+      "code": "=\"4677HH\"",
+      "name": "YTL-HH",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (365)"
+    },
+    {
+      "code": "=\"5038CP\"",
+      "name": "KSL-CP",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (320)"
+    },
+    {
+      "code": "=\"5054\"",
+      "name": "TRC",
+      "last_price": 0.365,
+      "change": 0.0,
+      "volume": 3928,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"5143\"",
+      "name": "LUXCHEM",
+      "last_price": 0.395,
+      "change": 0.0,
+      "volume": 3548,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"51682X\"",
+      "name": "HARTA-C2X",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (362)"
+    },
+    {
+      "code": "=\"5202C9\"",
+      "name": "MSM-C9",
+      "last_price": 0.04,
+      "change": 0.0,
+      "volume": 150,
+      "sector": "Unknown (301)"
+    },
+    {
+      "code": "=\"524848\"",
+      "name": "BAUTO-C48",
+      "last_price": 0.025,
+      "change": 0.0,
+      "volume": 2000,
+      "sector": "Unknown (301)"
+    },
+    {
+      "code": "=\"526348\"",
+      "name": "SUNCON-C48",
+      "last_price": 0.155,
+      "change": 0.0,
+      "volume": 12079,
+      "sector": "Unknown (303)"
+    },
+    {
+      "code": "=\"5267\"",
+      "name": "XINHWA",
+      "last_price": 0.16,
+      "change": 0.0,
+      "volume": 181,
+      "sector": "Unknown (164)"
+    },
+    {
+      "code": "=\"528633\"",
+      "name": "MI-C33",
+      "last_price": 0.12,
+      "change": 0.0,
+      "volume": 60,
+      "sector": "Unknown (305)"
+    },
+    {
+      "code": "=\"528637\"",
+      "name": "MI-C37",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (305)"
+    },
+    {
+      "code": "=\"5319\"",
+      "name": "MKHOP",
+      "last_price": 0.615,
+      "change": 0.0,
+      "volume": 2530,
+      "sector": "Unknown (125)"
+    },
+    {
+      "code": "=\"5336CC\"",
+      "name": "CKI-CC",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (301)"
+    },
+    {
+      "code": "=\"53473E\"",
+      "name": "TENAGA-C3E",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (365)"
+    },
+    {
+      "code": "=\"5568\"",
+      "name": "APB",
+      "last_price": 0.165,
+      "change": 0.0,
+      "volume": 521,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"6399\"",
+      "name": "ASTRO",
+      "last_price": 0.105,
+      "change": 0.0,
+      "volume": 28516,
+      "sector": "Unknown (163)"
+    },
+    {
+      "code": "=\"6076\"",
+      "name": "ENCORP",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (120)"
+    },
+    {
+      "code": "=\"6181\"",
+      "name": "MALTON",
+      "last_price": 0.345,
+      "change": 0.0,
+      "volume": 49,
+      "sector": "Unknown (120)"
+    },
+    {
+      "code": "=\"6807\"",
+      "name": "PUNCAK",
+      "last_price": 0.215,
+      "change": 0.0,
+      "volume": 846,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"7003\"",
+      "name": "Y&G",
+      "last_price": 0.44,
+      "change": 0.0,
+      "volume": 1,
+      "sector": "Unknown (120)"
+    },
+    {
+      "code": "=\"7082\"",
+      "name": "M&A",
+      "last_price": 0.245,
+      "change": 0.0,
+      "volume": 3640,
+      "sector": "Unknown (110)"
+    },
+    {
+      "code": "=\"71135F\"",
+      "name": "TOPGLOV-C5F",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (362)"
+    },
+    {
+      "code": "=\"715382\"",
+      "name": "KOSSAN-C82",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (362)"
+    },
+    {
+      "code": "=\"715386\"",
+      "name": "KOSSAN-C86",
+      "last_price": 0.035,
+      "change": 0.0,
+      "volume": 5354,
+      "sector": "Unknown (362)"
+    },
+    {
+      "code": "=\"7139\"",
+      "name": "NICE",
+      "last_price": 0.095,
+      "change": 0.0,
+      "volume": 7156,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"7157\"",
+      "name": "CYL",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"716049\"",
+      "name": "PENTA-C49",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (305)"
+    },
+    {
+      "code": "=\"716051\"",
+      "name": "PENTA-C51",
+      "last_price": 0.1,
+      "change": 0.0,
+      "volume": 40,
+      "sector": "Unknown (305)"
+    },
+    {
+      "code": "=\"7198\"",
+      "name": "DPS",
+      "last_price": 0.45,
+      "change": 0.0,
+      "volume": 300,
+      "sector": "Unknown (120)"
+    },
+    {
+      "code": "=\"7210\"",
+      "name": "FM",
+      "last_price": 0.565,
+      "change": 0.0,
+      "volume": 20,
+      "sector": "Unknown (164)"
+    },
+    {
+      "code": "=\"8443\"",
+      "name": "HIL",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"8486\"",
+      "name": "LIONPSIM",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"8524\"",
+      "name": "TALIWRK",
+      "last_price": 0.515,
+      "change": 0.0,
+      "volume": 819,
+      "sector": "Unknown (165)"
+    },
+    {
+      "code": "=\"86641A\"",
+      "name": "SPSETIA-C1A",
+      "last_price": 0.0,
+      "change": 0.0,
+      "volume": 0,
+      "sector": "Unknown (320)"
+    },
+    {
+      "code": "=\"8885\"",
+      "name": "AVI",
+      "last_price": 0.045,
+      "change": 0.0,
+      "volume": 1286,
+      "sector": "Industrial & Consumer Products"
+    },
+    {
+      "code": "=\"9695WA\"",
+      "name": "PLS-WA",
+      "last_price": 0.09,
+      "change": 0.0,
+      "volume": 6205,
+      "sector": "Unknown (125)"
+    },
+    {
+      "code": "=\"0035\"",
+      "name": "HEXCAP",
+      "last_price": 0.205,
+      "change": 0.0,
+      "volume": 37727,
+      "sector": "Unknown (463)"
+    },
+    {
+      "code": "=\"0010\"",
+      "name": "IRIS",
+      "last_price": 0.24,
+      "change": 0.0,
+      "volume": 6314,
+      "sector": "Unknown (405)"
+    },
+    {
+      "code": "=\"0017\"",
+      "name": "NOVATECH",
+      "last_price": 0.045,
+      "change": 0.0,
+      "volume": 24534,
+      "sector": "Unknown (463)"
+    }
+  ]
+}

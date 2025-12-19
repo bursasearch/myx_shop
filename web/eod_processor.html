@@ -1,0 +1,1536 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>📊 EOD CSV专业处理器 - 列重排 & 行业转换</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0d47a1 0%, #1976d2 100%);
+            color: #333;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        
+        /* 头部 */
+        .header {
+            background: linear-gradient(135deg, #1565c0 0%, #0d47a1 100%);
+            color: white;
+            padding: 25px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .header h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        .header .subtitle {
+            font-size: 16px;
+            opacity: 0.9;
+            margin-bottom: 15px;
+        }
+        
+        /* 两栏布局 */
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 400px;
+            gap: 0;
+            min-height: 800px;
+        }
+        
+        /* 主内容区 */
+        .content-area {
+            padding: 25px;
+            overflow-y: auto;
+        }
+        
+        /* 侧边栏 */
+        .sidebar {
+            background: #f5f7fa;
+            border-left: 1px solid #e0e0e0;
+            padding: 25px;
+            overflow-y: auto;
+        }
+        
+        /* 卡片样式 */
+        .card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border: 1px solid #e0e0e0;
+        }
+        
+        .card h2 {
+            color: #1976d2;
+            margin-bottom: 15px;
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        /* 列管理区域 */
+        .column-manager {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 15px;
+        }
+        
+        .column-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .column-item {
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 6px;
+            padding: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: move;
+            transition: all 0.2s;
+            user-select: none;
+        }
+        
+        .column-item:hover {
+            border-color: #1976d2;
+            background: #e3f2fd;
+            transform: translateY(-2px);
+        }
+        
+        .column-item.dragging {
+            opacity: 0.5;
+            border-style: dashed;
+        }
+        
+        .column-handle {
+            color: #1976d2;
+            cursor: move;
+        }
+        
+        .column-name {
+            font-weight: 500;
+            color: #333;
+        }
+        
+        /* 目标列区域 */
+        .target-columns {
+            min-height: 200px;
+            border: 3px dashed #4CAF50;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 15px;
+            background: #f8f9fa;
+        }
+        
+        .target-placeholder {
+            text-align: center;
+            color: #666;
+            padding: 40px 20px;
+        }
+        
+        .target-columns .column-item {
+            background: #E8F5E9;
+            border-color: #4CAF50;
+        }
+        
+        /* 行业映射区域 */
+        .sector-mapping {
+            background: #fff3e0;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 15px;
+            border: 1px solid #FFB74D;
+        }
+        
+        .sector-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 10px;
+            margin-top: 15px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        
+        .sector-item {
+            background: white;
+            border: 1px solid #FFB74D;
+            border-radius: 6px;
+            padding: 10px;
+            font-size: 13px;
+        }
+        
+        .sector-code {
+            font-weight: bold;
+            color: #1976d2;
+        }
+        
+        .sector-name {
+            color: #333;
+        }
+        
+        /* 预览区域 */
+        .preview-area {
+            background: #1e1e1e;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 15px;
+            overflow-x: auto;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 12px;
+        }
+        
+        .preview-table {
+            width: 100%;
+            border-collapse: collapse;
+            color: #d4d4d4;
+        }
+        
+        .preview-table th {
+            background: #2d2d2d;
+            padding: 8px;
+            border: 1px solid #404040;
+            text-align: left;
+            font-weight: bold;
+            color: #569cd6;
+        }
+        
+        .preview-table td {
+            padding: 8px;
+            border: 1px solid #404040;
+            white-space: nowrap;
+        }
+        
+        /* 按钮样式 */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+        }
+        
+        .btn-primary {
+            background: #1976d2;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #1565c0;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(25, 118, 210, 0.3);
+        }
+        
+        .btn-success {
+            background: #4CAF50;
+            color: white;
+        }
+        
+        .btn-success:hover {
+            background: #388E3C;
+            transform: translateY(-2px);
+        }
+        
+        .btn-warning {
+            background: #FF9800;
+            color: white;
+        }
+        
+        .btn-warning:hover {
+            background: #F57C00;
+            transform: translateY(-2px);
+        }
+        
+        .btn-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .btn-small {
+            padding: 8px 16px;
+            font-size: 13px;
+        }
+        
+        /* 文件上传区域 */
+        .upload-area {
+            border: 3px dashed #4CAF50;
+            border-radius: 10px;
+            padding: 40px 20px;
+            text-align: center;
+            margin: 20px 0;
+            background: #f8f9fa;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .upload-area:hover {
+            background: #E8F5E9;
+            border-color: #2E7D32;
+        }
+        
+        .upload-area i {
+            font-size: 60px;
+            color: #4CAF50;
+            margin-bottom: 20px;
+        }
+        
+        .upload-area h3 {
+            color: #4CAF50;
+            margin-bottom: 10px;
+        }
+        
+        /* 侧边栏信息 */
+        .info-box {
+            background: white;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-left: 4px solid #1976d2;
+        }
+        
+        .info-box.warning {
+            border-left-color: #FF9800;
+            background: #fff3e0;
+        }
+        
+        .info-box.success {
+            border-left-color: #4CAF50;
+            background: #E8F5E9;
+        }
+        
+        .info-box h4 {
+            color: #333;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        /* 进度条 */
+        .progress-container {
+            margin: 20px 0;
+        }
+        
+        .progress-bar {
+            height: 10px;
+            background: #e0e0e0;
+            border-radius: 5px;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4CAF50, #8BC34A);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 1000px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .sidebar {
+                border-left: none;
+                border-top: 1px solid #e0e0e0;
+            }
+        }
+        
+        @media (max-width: 600px) {
+            .header h1 {
+                font-size: 22px;
+            }
+            
+            .column-list {
+                grid-template-columns: 1fr;
+            }
+            
+            .btn-group {
+                flex-direction: column;
+            }
+            
+            .btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 头部 -->
+        <div class="header">
+            <h1><i class="fas fa-columns"></i> EOD CSV专业处理器</h1>
+            <div class="subtitle">专门解决：列排列 + 行业代码转换</div>
+        </div>
+        
+        <div class="main-content">
+            <!-- 主内容区 -->
+            <div class="content-area">
+                <!-- 文件上传 -->
+                <div class="card">
+                    <h2><i class="fas fa-file-upload"></i> 第一步：上传原始EOD CSV文件</h2>
+                    <p style="color: #666; margin-bottom: 15px;">
+                        从您的股票经纪系统下载的EOD CSV文件（确保包含所有必需列）
+                    </p>
+                    
+                    <div class="upload-area" onclick="document.getElementById('csvInput').click()">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                        <h3>点击上传EOD CSV文件</h3>
+                        <p>支持 .csv 格式 | 自动检测列结构</p>
+                    </div>
+                    
+                    <input type="file" id="csvInput" accept=".csv" style="display: none;" onchange="handleCSVUpload(event)">
+                    
+                    <div id="uploadStatus" style="margin-top: 15px;"></div>
+                </div>
+                
+                <!-- 列排列处理 -->
+                <div class="card" id="columnSection" style="display: none;">
+                    <h2><i class="fas fa-sort-alpha-down"></i> 第二步：列排列管理</h2>
+                    <p style="color: #666; margin-bottom: 15px;">
+                        拖拽下面的列到目标区域，按照要求的顺序排列：
+                    </p>
+                    
+                    <div class="column-manager">
+                        <h3 style="color: #1976d2; margin-bottom: 10px;">可用列：</h3>
+                        <div class="column-list" id="availableColumns">
+                            <!-- 可用列会动态生成 -->
+                        </div>
+                    </div>
+                    
+                    <div class="column-manager">
+                        <h3 style="color: #4CAF50; margin-bottom: 10px;">目标列顺序：</h3>
+                        <div class="target-columns" id="targetColumns">
+                            <div class="target-placeholder">
+                                <i class="fas fa-arrow-down" style="font-size: 32px; color: #ccc; margin-bottom: 10px;"></i>
+                                <div>将列拖放到这里</div>
+                                <div style="font-size: 12px; margin-top: 5px; color: #999;">
+                                    按照要求顺序：Code, Stock, Sector, Open, Last, Prv Close...
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="btn-group">
+                        <button onclick="autoArrangeColumns()" class="btn btn-primary btn-small">
+                            <i class="fas fa-magic"></i> 自动排列
+                        </button>
+                        <button onclick="resetColumns()" class="btn btn-warning btn-small">
+                            <i class="fas fa-redo"></i> 重置
+                        </button>
+                        <button onclick="previewColumnOrder()" class="btn btn-success btn-small">
+                            <i class="fas fa-eye"></i> 预览排列
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- 行业代码转换 -->
+                <div class="card" id="sectorSection" style="display: none;">
+                    <h2><i class="fas fa-exchange-alt"></i> 第三步：行业代码转换</h2>
+                    <p style="color: #666; margin-bottom: 15px;">
+                        将数字行业代码转换为实际行业名称：
+                    </p>
+                    
+                    <div class="sector-mapping">
+                        <h3 style="color: #FF9800; margin-bottom: 10px;">行业代码映射：</h3>
+                        <div class="sector-grid" id="sectorMapping">
+                            <!-- 行业映射会动态生成 -->
+                        </div>
+                    </div>
+                    
+                    <div class="btn-group">
+                        <button onclick="applySectorMapping()" class="btn btn-success">
+                            <i class="fas fa-sync-alt"></i> 应用行业转换
+                        </button>
+                        <button onclick="viewSectorStats()" class="btn btn-warning btn-small">
+                            <i class="fas fa-chart-bar"></i> 查看统计
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- 数据预览 -->
+                <div class="card" id="previewSection" style="display: none;">
+                    <h2><i class="fas fa-eye"></i> 第四步：处理结果预览</h2>
+                    <p style="color: #666; margin-bottom: 15px;">
+                        处理后的数据预览（前10行）：
+                    </p>
+                    
+                    <div class="preview-area">
+                        <table class="preview-table" id="dataPreview">
+                            <!-- 数据预览会动态生成 -->
+                        </table>
+                    </div>
+                    
+                    <div style="display: flex; justify-content: space-between; margin-top: 10px;">
+                        <div style="font-size: 12px; color: #666;">
+                            显示 <span id="previewRowCount">0</span> 行数据
+                        </div>
+                        <button onclick="showFullPreview()" style="background: none; border: none; color: #1976d2; cursor: pointer; font-size: 12px;">
+                            <i class="fas fa-expand"></i> 显示完整数据
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- 处理进度 -->
+                <div class="card" id="processSection" style="display: none;">
+                    <h2><i class="fas fa-cogs"></i> 第五步：开始处理</h2>
+                    <p style="color: #666; margin-bottom: 15px;">
+                        确认所有设置后，开始处理数据：
+                    </p>
+                    
+                    <div class="progress-container">
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="processProgress" style="width: 0%"></div>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; font-size: 14px; color: #666;">
+                            <span id="processText">等待开始...</span>
+                            <span id="processPercent">0%</span>
+                        </div>
+                    </div>
+                    
+                    <div class="btn-group">
+                        <button onclick="startProcessing()" class="btn btn-success">
+                            <i class="fas fa-play-circle"></i> 开始处理
+                        </button>
+                        <button onclick="downloadResult()" class="btn btn-primary" id="downloadBtn" disabled>
+                            <i class="fas fa-download"></i> 下载结果
+                        </button>
+                        <button onclick="exportToJSON()" class="btn btn-warning">
+                            <i class="fas fa-file-export"></i> 导出JSON
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 侧边栏 -->
+            <div class="sidebar">
+                <!-- 步骤指示器 -->
+                <div class="info-box">
+                    <h4><i class="fas fa-list-ol"></i> 处理步骤</h4>
+                    <div style="font-size: 14px; line-height: 1.6;">
+                        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
+                            <span style="background: #1976d2; color: white; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px;">1</span>
+                            <span>上传CSV文件</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
+                            <span style="background: #e0e0e0; color: #666; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px;">2</span>
+                            <span>列排列管理</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
+                            <span style="background: #e0e0e0; color: #666; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px;">3</span>
+                            <span>行业代码转换</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
+                            <span style="background: #e0e0e0; color: #666; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px;">4</span>
+                            <span>结果预览</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <span style="background: #e0e0e0; color: #666; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px;">5</span>
+                            <span>完成下载</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 必需列信息 -->
+                <div class="info-box warning">
+                    <h4><i class="fas fa-exclamation-triangle"></i> 必需列 (22列)</h4>
+                    <div style="font-size: 13px; color: #555; line-height: 1.5;">
+                        请确保以下列按顺序排列：
+                        <ol style="padding-left: 20px; margin-top: 8px; font-size: 12px;">
+                            <li>Code</li>
+                            <li>Stock</li>
+                            <li>Sector</li>
+                            <li>Open</li>
+                            <li>Last</li>
+                            <li>Prv Close</li>
+                            <li>Chg</li>
+                            <li>High</li>
+                            <li>Low</li>
+                            <li>Y-High</li>
+                            <li>Y-Low</li>
+                            <li>Vol</li>
+                            <li>DY*</li>
+                            <li>B%</li>
+                            <li>Vol MA (20)</li>
+                            <li>RSI (14)</li>
+                            <li>MACD (26,12)</li>
+                            <li>EPS*</li>
+                            <li>P/E</li>
+                            <li>Status</li>
+                        </ol>
+                    </div>
+                </div>
+                
+                <!-- 行业映射信息 -->
+                <div class="info-box success">
+                    <h4><i class="fas fa-map-signs"></i> 行业代码示例</h4>
+                    <div style="font-size: 13px; color: #555; line-height: 1.5;">
+                        <div><strong>101-166:</strong> Industrial & Consumer Products</div>
+                        <div><strong>301-365:</strong> Technology</div>
+                        <div><strong>401-465:</strong> Property</div>
+                        <div><strong>501-560:</strong> Telecom & Media</div>
+                        <div><strong>653-657:</strong> Transportation</div>
+                        <div><strong>701-762:</strong> Utilities</div>
+                        <div><strong>1201-1205:</strong> Financial</div>
+                        <button onclick="showFullSectorMapping()" style="background: none; border: none; color: #1976d2; cursor: pointer; font-size: 12px; margin-top: 10px;">
+                            <i class="fas fa-list"></i> 查看完整映射
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- 处理状态 -->
+                <div class="info-box">
+                    <h4><i class="fas fa-info-circle"></i> 当前状态</h4>
+                    <div id="currentStatus" style="font-size: 14px; color: #666;">
+                        等待上传文件...
+                    </div>
+                    <div id="fileInfo" style="margin-top: 10px; font-size: 12px; color: #888;">
+                        <!-- 文件信息会动态显示 -->
+                    </div>
+                </div>
+                
+                <!-- 快速操作 -->
+                <div style="margin-top: 20px;">
+                    <button onclick="loadSampleData()" class="btn btn-primary" style="width: 100%; margin-bottom: 10px;">
+                        <i class="fas fa-vial"></i> 加载示例数据
+                    </button>
+                    <button onclick="resetAll()" class="btn btn-warning" style="width: 100%;">
+                        <i class="fas fa-trash"></i> 全部重置
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 完整行业映射模态框 -->
+    <div id="sectorModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; overflow-y: auto;">
+        <div style="position: absolute; top: 20px; left: 50%; transform: translateX(-50%); background: white; width: 90%; max-width: 800px; border-radius: 10px; max-height: 80vh; overflow-y: auto;">
+            <div style="background: #1976d2; color: white; padding: 15px; display: flex; justify-content: space-between; align-items: center;">
+                <h3 style="margin: 0;"><i class="fas fa-map"></i> 完整行业代码映射</h3>
+                <button onclick="closeSectorModal()" style="background: none; border: none; color: white; font-size: 24px; cursor: pointer;">×</button>
+            </div>
+            <div style="padding: 20px;" id="fullSectorMapping">
+                <!-- 完整映射会动态生成 -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 全局变量
+        let rawData = [];
+        let processedData = [];
+        let currentColumns = [];
+        let targetColumnOrder = [];
+        let sectorMapping = {};
+        
+        // 标准列顺序
+        const REQUIRED_COLUMNS = [
+            "Code", "Stock", "Sector", "Open", "Last", "Prv Close", "Chg", "High", "Low", 
+            "Y-High", "Y-Low", "Vol", "DY*", "B%", "Vol MA (20)", "RSI (14)", "MACD (26,12)", 
+            "EPS*", "P/E", "Status"
+        ];
+        
+        // 行业映射数据（使用您提供的映射）
+        const SECTOR_MAP = {
+            "101": "Industrial & Consumer Products",
+            "102": "Industrial & Consumer Products", 
+            "103": "Industrial & Consumer Products",
+            "105": "Industrial & Consumer Products",
+            "110": "Industrial & Consumer Products",
+            "120": "Industrial & Consumer Products",
+            "125": "Industrial & Consumer Products",
+            "150": "Industrial & Consumer Products",
+            "155": "Industrial & Consumer Products",
+            "161": "Industrial & Consumer Products",
+            "162": "Industrial & Consumer Products",
+            "163": "Industrial & Consumer Products",
+            "164": "Industrial & Consumer Products",
+            "165": "Industrial & Consumer Products",
+            "166": "Industrial & Consumer Products",
+            "301": "Technology",
+            "302": "Technology",
+            "303": "Technology",
+            "305": "Technology",
+            "310": "Technology",
+            "320": "Technology",
+            "325": "Technology",
+            "358": "Technology",
+            "361": "Technology",
+            "362": "Technology",
+            "363": "Technology",
+            "364": "Technology",
+            "365": "Technology",
+            "401": "Property",
+            "402": "Property",
+            "403": "Property",
+            "405": "Property",
+            "410": "Property",
+            "420": "Property",
+            "425": "Property",
+            "461": "Property",
+            "462": "Property",
+            "463": "Property",
+            "464": "Property",
+            "465": "Property",
+            "501": "Telecommunications & Media",
+            "502": "Telecommunications & Media",
+            "520": "Telecommunications & Media",
+            "560": "Telecommunications & Media",
+            "653": "Transportation & Logistics",
+            "654": "Transportation & Logistics",
+            "656": "Transportation & Logistics",
+            "657": "Transportation & Logistics",
+            "701": "Utilities",
+            "702": "Utilities",
+            "703": "Utilities",
+            "705": "Utilities",
+            "710": "Utilities",
+            "725": "Utilities",
+            "762": "Utilities",
+            "0162": "Medical Devices & Supplies",
+            "0405": "Software & IT Services",
+            "1701": "Industrial Holding Firms",
+            "1702": "Industrial & Consumer Products",
+            "1703": "Industrial Support Services",
+            "1704": "Building Materials",
+            "1705": "Construction & Infrastructure",
+            "1706": "Transportation & Logistics",
+            "1801": "Consumer Product Holding Firms",
+            "1802": "Food, Beverage & Tobacco",
+            "1803": "Retail & Distribution",
+            "1804": "Hotel, Resort & Recreational Services",
+            "1805": "Media & Entertainment",
+            "1806": "Other Consumer Services",
+            "1807": "Health Care Equipment & Services",
+            "1808": "Pharmaceuticals & Biotechnology",
+            "1809": "Technology",
+            "1810": "Telecommunications & Media",
+            "0200": "Plantation",
+            "0501": "Property Holding Firms",
+            "0502": "Property Development",
+            "0503": "Real Estate Investment Trusts (REITs)",
+            "0504": "Other Property-related Services",
+            "1201": "Financial Holding Firms",
+            "1202": "Commercial Banks",
+            "1203": "Insurance",
+            "1204": "Investment Banks",
+            "1205": "Other Finance",
+            "0301": "Energy Holding Firms",
+            "0302": "Energy-related Equipment & Services",
+            "0303": "Oil & Gas",
+            "0401": "Utilities Holding Firms",
+            "0402": "Gas, Water & Multi-utilities",
+            "0403": "Electricity",
+            "0080": "Special Purpose Acquisition",
+            
+            // 默认映射
+            "default_mapping": {
+                "1": "Industrial & Consumer Products",
+                "2": "Technology", 
+                "3": "Property",
+                "4": "Telecommunications & Media",
+                "5": "Transportation & Logistics",
+                "6": "Utilities",
+                "7": "Medical",
+                "8": "Financial",
+                "9": "Energy",
+                "10": "Consumer"
+            }
+        };
+        
+        // 页面加载
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeSectorMapping();
+            setupDragAndDrop();
+        });
+        
+        // 初始化行业映射显示
+        function initializeSectorMapping() {
+            const container = document.getElementById('sectorMapping');
+            let html = '';
+            
+            // 显示主要分类
+            const mainCategories = {
+                'Industrial & Consumer Products': ['101-166'],
+                'Technology': ['301-365'],
+                'Property': ['401-465'],
+                'Financial': ['1201-1205'],
+                'Telecom & Media': ['501-560'],
+                'Transportation': ['653-657'],
+                'Utilities': ['701-762']
+            };
+            
+            for (const [category, ranges] of Object.entries(mainCategories)) {
+                html += `
+                    <div class="sector-item">
+                        <div class="sector-code">${ranges.join(', ')}</div>
+                        <div class="sector-name">${category}</div>
+                    </div>
+                `;
+            }
+            
+            container.innerHTML = html;
+        }
+        
+        // 设置拖拽功能
+        function setupDragAndDrop() {
+            const targetArea = document.getElementById('targetColumns');
+            
+            targetArea.addEventListener('dragover', function(e) {
+                e.preventDefault();
+                this.style.backgroundColor = '#f1f8e9';
+            });
+            
+            targetArea.addEventListener('dragleave', function() {
+                this.style.backgroundColor = '#f8f9fa';
+            });
+            
+            targetArea.addEventListener('drop', function(e) {
+                e.preventDefault();
+                this.style.backgroundColor = '#f8f9fa';
+                
+                const columnName = e.dataTransfer.getData('text/plain');
+                if (columnName && !targetColumnOrder.includes(columnName)) {
+                    addColumnToTarget(columnName);
+                }
+            });
+        }
+        
+        // 处理CSV上传
+        function handleCSVUpload(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            
+            const uploadStatus = document.getElementById('uploadStatus');
+            uploadStatus.innerHTML = `
+                <div style="background: #e3f2fd; padding: 10px; border-radius: 5px;">
+                    <i class="fas fa-spinner fa-spin"></i> 正在读取文件: ${file.name}
+                </div>
+            `;
+            
+            const reader = new FileReader();
+            
+            reader.onload = function(e) {
+                try {
+                    const csvContent = e.target.result;
+                    const lines = csvContent.split('\n');
+                    
+                    if (lines.length < 2) {
+                        throw new Error('CSV文件内容过少');
+                    }
+                    
+                    // 解析CSV
+                    const headers = parseCSVLine(lines[0]);
+                    const data = [];
+                    
+                    for (let i = 1; i < Math.min(100, lines.length); i++) {
+                        if (lines[i].trim()) {
+                            const values = parseCSVLine(lines[i]);
+                            const row = {};
+                            headers.forEach((header, index) => {
+                                row[header.trim()] = values[index] ? values[index].trim() : '';
+                            });
+                            data.push(row);
+                        }
+                    }
+                    
+                    if (data.length === 0) {
+                        throw new Error('CSV文件中没有数据');
+                    }
+                    
+                    rawData = data;
+                    currentColumns = headers.map(h => h.trim());
+                    
+                    // 显示成功信息
+                    uploadStatus.innerHTML = `
+                        <div style="background: #E8F5E9; padding: 10px; border-radius: 5px; color: #4CAF50;">
+                            <i class="fas fa-check-circle"></i> 成功读取文件！
+                            <div style="font-size: 12px; margin-top: 5px;">
+                                发现 ${data.length} 行数据，${headers.length} 个列
+                            </div>
+                        </div>
+                    `;
+                    
+                    // 更新状态
+                    document.getElementById('currentStatus').innerHTML = `
+                        <span style="color: #4CAF50;">✓ 文件已上传</span><br>
+                        <span style="font-size: 12px; color: #888;">${data.length} 行数据</span>
+                    `;
+                    
+                    document.getElementById('fileInfo').innerHTML = `
+                        文件名: ${file.name}<br>
+                        大小: ${formatFileSize(file.size)}<br>
+                        列数: ${headers.length}
+                    `;
+                    
+                    // 显示列管理区域
+                    document.getElementById('columnSection').style.display = 'block';
+                    document.getElementById('sectorSection').style.display = 'block';
+                    document.getElementById('previewSection').style.display = 'block';
+                    document.getElementById('processSection').style.display = 'block';
+                    
+                    // 初始化列列表
+                    initializeColumnList();
+                    
+                    // 尝试自动排列列
+                    autoArrangeColumns();
+                    
+                } catch (error) {
+                    console.error('CSV解析错误:', error);
+                    uploadStatus.innerHTML = `
+                        <div style="background: #FFEBEE; padding: 10px; border-radius: 5px; color: #f44336;">
+                            <i class="fas fa-exclamation-triangle"></i> 文件解析失败
+                            <div style="font-size: 12px; margin-top: 5px;">
+                                ${error.message}
+                            </div>
+                        </div>
+                    `;
+                }
+            };
+            
+            reader.onerror = function() {
+                uploadStatus.innerHTML = `
+                    <div style="background: #FFEBEE; padding: 10px; border-radius: 5px; color: #f44336;">
+                        <i class="fas fa-exclamation-triangle"></i> 文件读取失败
+                    </div>
+                `;
+            };
+            
+            reader.readAsText(file, 'UTF-8');
+        }
+        
+        // 解析CSV行
+        function parseCSVLine(line) {
+            const result = [];
+            let current = '';
+            let inQuotes = false;
+            
+            for (let i = 0; i < line.length; i++) {
+                const char = line[i];
+                
+                if (char === '"') {
+                    inQuotes = !inQuotes;
+                } else if (char === ',' && !inQuotes) {
+                    result.push(current);
+                    current = '';
+                } else {
+                    current += char;
+                }
+            }
+            
+            result.push(current);
+            return result;
+        }
+        
+        // 初始化列列表
+        function initializeColumnList() {
+            const container = document.getElementById('availableColumns');
+            container.innerHTML = '';
+            
+            currentColumns.forEach(column => {
+                const columnItem = document.createElement('div');
+                columnItem.className = 'column-item';
+                columnItem.id = `column-${column}`;
+                columnItem.draggable = true;
+                columnItem.innerHTML = `
+                    <span class="column-handle"><i class="fas fa-grip-vertical"></i></span>
+                    <span class="column-name">${column}</span>
+                `;
+                
+                columnItem.addEventListener('dragstart', function(e) {
+                    e.dataTransfer.setData('text/plain', column);
+                    this.classList.add('dragging');
+                });
+                
+                columnItem.addEventListener('dragend', function() {
+                    this.classList.remove('dragging');
+                });
+                
+                container.appendChild(columnItem);
+            });
+        }
+        
+        // 添加列到目标区域
+        function addColumnToTarget(columnName) {
+            if (targetColumnOrder.includes(columnName)) {
+                return; // 已经存在
+            }
+            
+            targetColumnOrder.push(columnName);
+            
+            const targetContainer = document.getElementById('targetColumns');
+            const placeholder = targetContainer.querySelector('.target-placeholder');
+            
+            if (placeholder) {
+                targetContainer.removeChild(placeholder);
+            }
+            
+            const columnItem = document.createElement('div');
+            columnItem.className = 'column-item';
+            columnItem.innerHTML = `
+                <span class="column-handle"><i class="fas fa-grip-vertical"></i></span>
+                <span class="column-name">${columnName}</span>
+                <button onclick="removeFromTarget('${columnName}')" style="margin-left: auto; background: none; border: none; color: #f44336; cursor: pointer;">
+                    <i class="fas fa-times"></i>
+                </button>
+            `;
+            
+            targetContainer.appendChild(columnItem);
+            
+            // 更新状态
+            updateStatus();
+        }
+        
+        // 从目标区域移除列
+        function removeFromTarget(columnName) {
+            targetColumnOrder = targetColumnOrder.filter(col => col !== columnName);
+            updateTargetColumnsDisplay();
+        }
+        
+        // 更新目标列显示
+        function updateTargetColumnsDisplay() {
+            const targetContainer = document.getElementById('targetColumns');
+            targetContainer.innerHTML = '';
+            
+            if (targetColumnOrder.length === 0) {
+                targetContainer.innerHTML = `
+                    <div class="target-placeholder">
+                        <i class="fas fa-arrow-down" style="font-size: 32px; color: #ccc; margin-bottom: 10px;"></i>
+                        <div>将列拖放到这里</div>
+                    </div>
+                `;
+            } else {
+                targetColumnOrder.forEach(columnName => {
+                    const columnItem = document.createElement('div');
+                    columnItem.className = 'column-item';
+                    columnItem.innerHTML = `
+                        <span class="column-handle"><i class="fas fa-grip-vertical"></i></span>
+                        <span class="column-name">${columnName}</span>
+                        <button onclick="removeFromTarget('${columnName}')" style="margin-left: auto; background: none; border: none; color: #f44336; cursor: pointer;">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    `;
+                    targetContainer.appendChild(columnItem);
+                });
+            }
+            
+            updateStatus();
+        }
+        
+        // 自动排列列
+        function autoArrangeColumns() {
+            targetColumnOrder = [];
+            
+            // 尝试匹配标准列名
+            REQUIRED_COLUMNS.forEach(requiredCol => {
+                const matchingCol = currentColumns.find(col => 
+                    col.toLowerCase().includes(requiredCol.toLowerCase()) ||
+                    requiredCol.toLowerCase().includes(col.toLowerCase())
+                );
+                
+                if (matchingCol && !targetColumnOrder.includes(matchingCol)) {
+                    targetColumnOrder.push(matchingCol);
+                }
+            });
+            
+            // 添加剩余的列
+            currentColumns.forEach(col => {
+                if (!targetColumnOrder.includes(col)) {
+                    targetColumnOrder.push(col);
+                }
+            });
+            
+            updateTargetColumnsDisplay();
+            
+            // 显示消息
+            const matched = targetColumnOrder.filter(col => 
+                REQUIRED_COLUMNS.some(req => 
+                    col.toLowerCase().includes(req.toLowerCase()) ||
+                    req.toLowerCase().includes(col.toLowerCase())
+                )
+            ).length;
+            
+            document.getElementById('currentStatus').innerHTML = `
+                <span style="color: #1976d2;">✓ 自动排列完成</span><br>
+                <span style="font-size: 12px; color: #888;">匹配了 ${matched}/${REQUIRED_COLUMNS.length} 个必需列</span>
+            `;
+        }
+        
+        // 重置列
+        function resetColumns() {
+            targetColumnOrder = [];
+            updateTargetColumnsDisplay();
+            
+            document.getElementById('currentStatus').innerHTML = `
+                <span style="color: #FF9800;">↺ 列排列已重置</span>
+            `;
+        }
+        
+        // 预览列顺序
+        function previewColumnOrder() {
+            if (targetColumnOrder.length === 0) {
+                alert('请先排列列顺序！');
+                return;
+            }
+            
+            const preview = targetColumnOrder.map((col, index) => 
+                `${index + 1}. ${col}`
+            ).join('\n');
+            
+            alert(`列顺序预览：\n\n${preview}\n\n总计：${targetColumnOrder.length} 列`);
+        }
+        
+        // 应用行业映射
+        function applySectorMapping() {
+            if (rawData.length === 0) {
+                alert('请先上传数据！');
+                return;
+            }
+            
+            processedData = rawData.map(row => {
+                const newRow = {...row};
+                
+                // 找到Sector列
+                const sectorKey = Object.keys(row).find(key => 
+                    key.toLowerCase().includes('sector') || 
+                    key.toLowerCase().includes('industry')
+                );
+                
+                if (sectorKey && row[sectorKey]) {
+                    const sectorCode = row[sectorKey].toString();
+                    const sectorName = SECTOR_MAP[sectorCode] || 
+                                      SECTOR_MAP.default_mapping?.[sectorCode[0]] || 
+                                      `Unknown (${sectorCode})`;
+                    
+                    newRow[sectorKey] = sectorName;
+                }
+                
+                return newRow;
+            });
+            
+            // 更新状态
+            document.getElementById('currentStatus').innerHTML = `
+                <span style="color: #4CAF50;">✓ 行业代码已转换</span><br>
+                <span style="font-size: 12px; color: #888;">${rawData.length} 行数据已处理</span>
+            `;
+            
+            // 预览数据
+            previewData();
+        }
+        
+        // 预览数据
+        function previewData() {
+            if (processedData.length === 0) {
+                processedData = [...rawData];
+            }
+            
+            const previewTable = document.getElementById('dataPreview');
+            previewTable.innerHTML = '';
+            
+            // 创建表头
+            const thead = document.createElement('thead');
+            const headerRow = document.createElement('tr');
+            
+            targetColumnOrder.forEach(column => {
+                const th = document.createElement('th');
+                th.textContent = column;
+                headerRow.appendChild(th);
+            });
+            
+            thead.appendChild(headerRow);
+            previewTable.appendChild(thead);
+            
+            // 创建表格内容（前10行）
+            const tbody = document.createElement('tbody');
+            const previewRows = Math.min(10, processedData.length);
+            
+            for (let i = 0; i < previewRows; i++) {
+                const row = processedData[i];
+                const tr = document.createElement('tr');
+                
+                targetColumnOrder.forEach(column => {
+                    const td = document.createElement('td');
+                    td.textContent = row[column] || '';
+                    tr.appendChild(td);
+                });
+                
+                tbody.appendChild(tr);
+            }
+            
+            previewTable.appendChild(tbody);
+            
+            // 更新行数显示
+            document.getElementById('previewRowCount').textContent = previewRows;
+        }
+        
+        // 显示完整数据
+        function showFullPreview() {
+            if (processedData.length === 0) {
+                alert('请先处理数据！');
+                return;
+            }
+            
+            let fullContent = targetColumnOrder.join(',') + '\n';
+            
+            processedData.forEach(row => {
+                const rowContent = targetColumnOrder.map(col => 
+                    `"${row[col] || ''}"`
+                ).join(',');
+                fullContent += rowContent + '\n';
+            });
+            
+            // 在新窗口中显示
+            const newWindow = window.open();
+            newWindow.document.write(`
+                <html>
+                <head>
+                    <title>完整数据预览</title>
+                    <style>
+                        body { font-family: monospace; padding: 20px; }
+                        pre { background: #f5f5f5; padding: 20px; border-radius: 5px; overflow-x: auto; }
+                    </style>
+                </head>
+                <body>
+                    <h2>完整数据预览 (${processedData.length} 行)</h2>
+                    <pre>${fullContent}</pre>
+                </body>
+                </html>
+            `);
+        }
+        
+        // 开始处理
+        function startProcessing() {
+            if (targetColumnOrder.length === 0) {
+                alert('请先排列列顺序！');
+                return;
+            }
+            
+            const progressBar = document.getElementById('processProgress');
+            const progressText = document.getElementById('processText');
+            const progressPercent = document.getElementById('processPercent');
+            const downloadBtn = document.getElementById('downloadBtn');
+            
+            let progress = 0;
+            const interval = setInterval(() => {
+                progress += 10;
+                progressBar.style.width = progress + '%';
+                progressPercent.textContent = progress + '%';
+                
+                if (progress <= 30) {
+                    progressText.textContent = '验证列顺序...';
+                } else if (progress <= 60) {
+                    progressText.textContent = '应用行业映射...';
+                } else if (progress <= 90) {
+                    progressText.textContent = '重新排列数据...';
+                } else {
+                    progressText.textContent = '生成最终结果...';
+                }
+                
+                if (progress >= 100) {
+                    clearInterval(interval);
+                    progressText.textContent = '处理完成！';
+                    downloadBtn.disabled = false;
+                    
+                    // 生成最终数据
+                    generateFinalData();
+                    
+                    document.getElementById('currentStatus').innerHTML = `
+                        <span style="color: #4CAF50;">✓ 数据处理完成</span><br>
+                        <span style="font-size: 12px; color: #888;">${processedData.length} 行数据已就绪</span>
+                    `;
+                }
+            }, 200);
+        }
+        
+        // 生成最终数据
+        function generateFinalData() {
+            if (processedData.length === 0) {
+                // 如果没有应用行业映射，先处理
+                applySectorMapping();
+            }
+            
+            // 按照目标列顺序重新组织数据
+            finalData = processedData.map(row => {
+                const newRow = {};
+                targetColumnOrder.forEach(col => {
+                    newRow[col] = row[col] || '';
+                });
+                return newRow;
+            });
+        }
+        
+        // 下载结果
+        function downloadResult() {
+            if (!finalData || finalData.length === 0) {
+                alert('请先处理数据！');
+                return;
+            }
+            
+            // 转换为CSV
+            let csvContent = targetColumnOrder.join(',') + '\n';
+            
+            finalData.forEach(row => {
+                const rowContent = targetColumnOrder.map(col => {
+                    const value = row[col];
+                    // 处理包含逗号或引号的值
+                    if (typeof value === 'string' && (value.includes(',') || value.includes('"'))) {
+                        return `"${value.replace(/"/g, '""')}"`;
+                    }
+                    return value;
+                }).join(',');
+                csvContent += rowContent + '\n';
+            });
+            
+            // 创建下载链接
+            const blob = new Blob(['\ufeff' + csvContent], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            const url = URL.createObjectURL(blob);
+            link.setAttribute('href', url);
+            link.setAttribute('download', `EOD_Processed_${new Date().toISOString().slice(0,10)}.csv`);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+        
+        // 导出JSON
+        function exportToJSON() {
+            if (!finalData || finalData.length === 0) {
+                alert('请先处理数据！');
+                return;
+            }
+            
+            const jsonData = {
+                metadata: {
+                    processed_date: new Date().toISOString(),
+                    total_records: finalData.length,
+                    columns: targetColumnOrder,
+                    sector_mapping: 'applied'
+                },
+                data: finalData
+            };
+            
+            const jsonStr = JSON.stringify(jsonData, null, 2);
+            const blob = new Blob([jsonStr], { type: 'application/json' });
+            const link = document.createElement('a');
+            const url = URL.createObjectURL(blob);
+            link.setAttribute('href', url);
+            link.setAttribute('download', `EOD_Processed_${new Date().toISOString().slice(0,10)}.json`);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+        
+        // 查看行业统计
+        function viewSectorStats() {
+            if (processedData.length === 0) {
+                alert('请先应用行业映射！');
+                return;
+            }
+            
+            const sectorCounts = {};
+            
+            processedData.forEach(row => {
+                const sectorKey = Object.keys(row).find(key => 
+                    key.toLowerCase().includes('sector') || 
+                    key.toLowerCase().includes('industry')
+                );
+                
+                if (sectorKey && row[sectorKey]) {
+                    const sector = row[sectorKey];
+                    sectorCounts[sector] = (sectorCounts[sector] || 0) + 1;
+                }
+            });
+            
+            let statsText = '行业分布统计：\n\n';
+            for (const [sector, count] of Object.entries(sectorCounts)) {
+                statsText += `${sector}: ${count} 个股票 (${((count/processedData.length)*100).toFixed(1)}%)\n`;
+            }
+            
+            alert(statsText);
+        }
+        
+        // 显示完整行业映射
+        function showFullSectorMapping() {
+            const modal = document.getElementById('sectorModal');
+            const content = document.getElementById('fullSectorMapping');
+            
+            let html = '<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px;">';
+            
+            // 按代码排序
+            const sortedCodes = Object.keys(SECTOR_MAP)
+                .filter(key => key !== 'default_mapping')
+                .sort();
+            
+            sortedCodes.forEach(code => {
+                html += `
+                    <div style="border: 1px solid #e0e0e0; border-radius: 6px; padding: 10px; font-size: 12px;">
+                        <div style="font-weight: bold; color: #1976d2;">${code}</div>
+                        <div>${SECTOR_MAP[code]}</div>
+                    </div>
+                `;
+            });
+            
+            html += '</div>';
+            content.innerHTML = html;
+            modal.style.display = 'block';
+        }
+        
+        // 关闭行业映射模态框
+        function closeSectorModal() {
+            document.getElementById('sectorModal').style.display = 'none';
+        }
+        
+        // 加载示例数据
+        function loadSampleData() {
+            // 创建示例数据
+            rawData = [
+                {
+                    "Code": "1015",
+                    "Name": "EXAMPLE1",
+                    "Sector": "101",
+                    "Open": 1.20,
+                    "Last": 1.25,
+                    "Prv Close": 1.18,
+                    "Change": "+0.07",
+                    "High": 1.30,
+                    "Low": 1.15,
+                    "Volume": 123456
+                },
+                {
+                    "Code": "3020", 
+                    "Name": "EXAMPLE2",
+                    "Sector": "302",
+                    "Open": 2.50,
+                    "Last": 2.45,
+                    "Prv Close": 2.55,
+                    "Change": "-0.10",
+                    "High": 2.60,
+                    "Low": 2.40,
+                    "Volume": 98765
+                }
+            ];
+            
+            currentColumns = ["Code", "Name", "Sector", "Open", "Last", "Prv Close", "Change", "High", "Low", "Volume"];
+            
+            // 更新UI
+            document.getElementById('uploadStatus').innerHTML = `
+                <div style="background: #E8F5E9; padding: 10px; border-radius: 5px; color: #4CAF50;">
+                    <i class="fas fa-check-circle"></i> 示例数据已加载
+                </div>
+            `;
+            
+            document.getElementById('columnSection').style.display = 'block';
+            document.getElementById('sectorSection').style.display = 'block';
+            document.getElementById('previewSection').style.display = 'block';
+            document.getElementById('processSection').style.display = 'block';
+            
+            initializeColumnList();
+            autoArrangeColumns();
+            
+            document.getElementById('currentStatus').innerHTML = `
+                <span style="color: #4CAF50;">✓ 示例数据已加载</span><br>
+                <span style="font-size: 12px; color: #888;">${rawData.length} 行示例数据</span>
+            `;
+        }
+        
+        // 全部重置
+        function resetAll() {
+            rawData = [];
+            processedData = [];
+            currentColumns = [];
+            targetColumnOrder = [];
+            
+            document.getElementById('uploadStatus').innerHTML = '';
+            document.getElementById('availableColumns').innerHTML = '';
+            document.getElementById('targetColumns').innerHTML = `
+                <div class="target-placeholder">
+                    <i class="fas fa-arrow-down" style="font-size: 32px; color: #ccc; margin-bottom: 10px;"></i>
+                    <div>将列拖放到这里</div>
+                </div>
+            `;
+            document.getElementById('dataPreview').innerHTML = '';
+            document.getElementById('processProgress').style.width = '0%';
+            document.getElementById('processText').textContent = '等待开始...';
+            document.getElementById('processPercent').textContent = '0%';
+            document.getElementById('downloadBtn').disabled = true;
+            
+            document.getElementById('currentStatus').innerHTML = '等待上传文件...';
+            document.getElementById('fileInfo').innerHTML = '';
+            
+            document.getElementById('csvInput').value = '';
+        }
+        
+        // 更新状态
+        function updateStatus() {
+            const matchedCount = targetColumnOrder.filter(col => 
+                REQUIRED_COLUMNS.some(req => 
+                    col.toLowerCase().includes(req.toLowerCase()) ||
+                    req.toLowerCase().includes(col.toLowerCase())
+                )
+            ).length;
+            
+            document.getElementById('currentStatus').innerHTML = `
+                <span style="color: #1976d2;">已选择 ${targetColumnOrder.length} 列</span><br>
+                <span style="font-size: 12px; color: ${matchedCount >= REQUIRED_COLUMNS.length ? '#4CAF50' : '#FF9800'};">
+                    必需列: ${matchedCount}/${REQUIRED_COLUMNS.length}
+                </span>
+            `;
+        }
+        
+        // 辅助函数
+        function formatFileSize(bytes) {
+            if (bytes === 0) return '0 Bytes';
+            const k = 1024;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        }
+        
+        // 点击模态框外部关闭
+        window.onclick = function(event) {
+            const modal = document.getElementById('sectorModal');
+            if (event.target == modal) {
+                closeSectorModal();
+            }
+        };
+    </script>
+</body>
+</html>

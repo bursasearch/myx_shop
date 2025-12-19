@@ -2,7 +2,7 @@
 <html lang="zh">
 <head>
   <meta charset="UTF-8" />
-  <title>Shopee 管理后台 - 增强版</title>
+  <title>Shopee 管理后台 - API 版本</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
     body { font-family: system-ui, Arial; margin: 16px; background:#f7f7f7; color:#222; }
@@ -34,16 +34,25 @@
     .modal { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:1000; }
     .modal-content { position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); background:white; padding:20px; border-radius:8px; width:90%; max-width:500px; }
     .modal-buttons { display:flex; gap:8px; justify-content:flex-end; margin-top:16px; }
+    .connection-status { display:inline-block; width:10px; height:10px; border-radius:50%; margin-right:5px; }
+    .connected { background:#28a745; }
+    .disconnected { background:#dc3545; }
+    .api-status { font-size:12px; color:#666; margin-left:10px; }
   </style>
 </head>
 <body>
   <header>
-    <h1>🛍️ Shopee 管理后台 - 增强版</h1>
-    <div class="stats">总数: <span id="totalCount">—</span> · 最后更新: <span id="lastUpdated">—</span></div>
+    <h1>🛍️ Shopee 管理后台 - API 版本</h1>
+    <div class="stats">
+      <span class="connection-status" id="connectionStatus"></span>
+      状态: <span id="connectionText">检查中...</span>
+      <span class="api-status">服务器: http://127.0.0.1:5050</span>
+    </div>
     <div class="toolbar">
       <button id="refreshBtn">🔄 刷新</button>
-      <button id="prettifyBtn" class="primary">💾 保存数据</button>
+      <button id="saveBtn" class="primary">💾 保存数据</button>
       <button id="checkDuplicatesBtn" class="warn">🔍 检查重复</button>
+      <button id="backupBtn" class="success">📥 下载备份</button>
     </div>
   </header>
 
@@ -179,8 +188,41 @@
   </div>
 
   <script>
-    const API_BASE = 'http://127.0.0.1:5000';
+    // API 配置 - 使用你的本地服务器
+    const API_BASE = 'http://127.0.0.1:5050';
+    const JSON_FILE = 'shopee_list.json';  // 单数 list
+    
     let allProducts = [];
+    let isConnected = false;
+
+    // 检查服务器连接
+    async function checkServerConnection() {
+      try {
+        const response = await fetch(`${API_BASE}/`, { method: 'HEAD' });
+        isConnected = response.ok;
+        
+        const statusElement = document.getElementById('connectionStatus');
+        const textElement = document.getElementById('connectionText');
+        
+        if (isConnected) {
+          statusElement.className = 'connection-status connected';
+          textElement.textContent = '已连接';
+          console.log('✅ 服务器连接正常');
+        } else {
+          statusElement.className = 'connection-status disconnected';
+          textElement.textContent = '未连接';
+          console.warn('⚠️ 服务器连接失败');
+        }
+      } catch (error) {
+        console.error('连接检查失败:', error);
+        isConnected = false;
+        
+        const statusElement = document.getElementById('connectionStatus');
+        const textElement = document.getElementById('connectionText');
+        statusElement.className = 'connection-status disconnected';
+        textElement.textContent = '连接失败';
+      }
+    }
 
     // 重复检查函数
     function checkDuplicates(newProduct, currentProducts) {
@@ -378,20 +420,60 @@
       document.getElementById('editDuplicateAlert').style.display = 'none';
     }
 
+    // 从API加载数据
     async function loadData() {
       try {
-        const res = await fetch(`${API_BASE}/api/shopee/products`);
-        if (!res.ok) throw new Error(`HTTP错误! 状态: ${res.status}`);
+        console.log(`正在从 ${API_BASE}/js/${JSON_FILE} 加载数据...`);
+        
+        // 尝试从API获取数据
+        const res = await fetch(`${API_BASE}/js/${JSON_FILE}`);
+        
+        if (!res.ok) {
+          // 如果API失败，尝试直接文件路径
+          console.log('API获取失败，尝试直接文件路径...');
+          const localRes = await fetch(`../js/${JSON_FILE}`);
+          if (!localRes.ok) {
+            throw new Error(`无法加载数据文件: ${res.status} - ${localRes.status}`);
+          }
+          const data = await localRes.json();
+          processLoadedData(data);
+          return;
+        }
         
         const data = await res.json();
-        allProducts = data.products || [];
+        processLoadedData(data);
         
-        updateDisplay(data);
-        setupRealTimeValidation();
       } catch (error) {
         console.error('加载数据失败:', error);
-        alert("错误: " + error.message);
+        
+        // 显示友好的错误信息
+        let errorMsg = `无法加载数据: ${error.message}\n\n`;
+        errorMsg += `请检查:\n`;
+        errorMsg += `1. 服务器是否运行: ${API_BASE}\n`;
+        errorMsg += `2. 文件是否存在: js/${JSON_FILE}\n`;
+        errorMsg += `3. 网络连接是否正常`;
+        
+        alert(errorMsg);
+        
+        // 如果失败，使用空数据
+        allProducts = [];
+        updateDisplay({ products: [], totalProducts: 0, lastUpdated: new Date().toISOString() });
       }
+    }
+
+    function processLoadedData(data) {
+      // 确保数据格式正确
+      if (!data.products || !Array.isArray(data.products)) {
+        throw new Error('JSON文件格式不正确，缺少products数组');
+      }
+      
+      allProducts = data.products || [];
+      
+      console.log(`✅ 成功加载 ${allProducts.length} 个产品`);
+      console.log('最后更新:', data.lastUpdated);
+      
+      updateDisplay(data);
+      setupRealTimeValidation();
     }
 
     function updateDisplay(data) {
@@ -491,7 +573,9 @@
       const form = e.target;
       
       try {
-        const newId = Math.max(...allProducts.map(p => p.id), 0) + 1;
+        // 生成新ID（现有最大ID + 1）
+        const newId = allProducts.length > 0 ? Math.max(...allProducts.map(p => p.id)) + 1 : 1;
+        
         const newProduct = {
           id: newId,
           name: form.name.value.trim(),
@@ -524,18 +608,69 @@
       }
     });
 
-    // 保存产品数据
+    // 保存产品数据到API
     async function saveProducts(products) {
-      const updateRes = await fetch(`${API_BASE}/api/shopee/update`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          products: products,
-          totalProducts: products.length,
-          lastUpdated: new Date().toISOString()
-        })
-      });
-      return await updateRes.json();
+      const dataToSave = {
+        products: products,
+        totalProducts: products.length,
+        lastUpdated: new Date().toISOString()
+      };
+      
+      try {
+        // 尝试通过API保存
+        console.log('正在保存数据到API...');
+        const updateRes = await fetch(`${API_BASE}/save_shopee_data`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(dataToSave)
+        });
+        
+        if (!updateRes.ok) {
+          // 如果API保存失败，尝试直接保存到文件
+          console.log('API保存失败，尝试直接保存...');
+          const directRes = await fetch(`${API_BASE}/js/${JSON_FILE}`, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(dataToSave, null, 2)
+          });
+          
+          if (!directRes.ok) {
+            throw new Error(`保存失败: ${directRes.status} - ${directRes.statusText}`);
+          }
+          
+          console.log('直接保存成功');
+        } else {
+          console.log('API保存成功');
+        }
+        
+        // 更新本地数据
+        allProducts = products;
+        
+        return { success: true };
+        
+      } catch (error) {
+        console.error('保存失败:', error);
+        
+        // 提供备用保存方案 - 下载文件
+        downloadBackupFile(dataToSave);
+        
+        return { success: false, error: error.message };
+      }
+    }
+
+    // 下载备份文件
+    function downloadBackupFile(data) {
+      const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'shopee_list_backup.json';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+      
+      alert(`保存到服务器失败，已下载备份文件: shopee_list_backup.json\n\n请手动将文件复制到 js/${JSON_FILE}`);
     }
 
     // 打开编辑模态框
@@ -652,13 +787,28 @@
       });
     }
 
+    // 手动保存数据（按钮功能）
+    async function manualSaveData() {
+      try {
+        await saveProducts(allProducts);
+        alert("✅ 数据保存成功！");
+      } catch (error) {
+        alert("保存失败: " + error.message);
+      }
+    }
+
     // 事件监听器
     document.getElementById("refreshBtn").addEventListener("click", loadData);
-    document.getElementById("prettifyBtn").addEventListener("click", async () => {
-      await loadData();
-      alert("✅ 数据已刷新");
-    });
+    document.getElementById("saveBtn").addEventListener("click", manualSaveData);
     document.getElementById("checkDuplicatesBtn").addEventListener("click", checkAllDuplicates);
+    document.getElementById("backupBtn").addEventListener("click", () => {
+      downloadBackupFile({
+        products: allProducts,
+        totalProducts: allProducts.length,
+        lastUpdated: new Date().toISOString()
+      });
+    });
+    
     document.getElementById("searchInput").addEventListener("input", () => updateDisplay({products: allProducts}));
     document.getElementById("statusFilter").addEventListener("change", () => updateDisplay({products: allProducts}));
     document.getElementById("categoryFilter").addEventListener("change", () => updateDisplay({products: allProducts}));
@@ -670,8 +820,26 @@
       }
     });
 
-    // 初始加载
-    loadData();
+    // 初始化
+    async function init() {
+      console.log('Shopee管理后台初始化...');
+      console.log('API基础地址:', API_BASE);
+      console.log('JSON文件:', JSON_FILE);
+      
+      // 检查服务器连接
+      await checkServerConnection();
+      
+      // 加载数据
+      await loadData();
+      
+      // 定期检查连接状态（每30秒）
+      setInterval(checkServerConnection, 30000);
+      
+      console.log('✅ 管理后台初始化完成');
+    }
+
+    // 页面加载完成后初始化
+    document.addEventListener('DOMContentLoaded', init);
   </script>
 </body>
 </html>
