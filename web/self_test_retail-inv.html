@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>路徑測試頁面 - Retail-inv.html 訪問測試</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+            line-height: 1.6;
+            background: #f5f5f5;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            border-bottom: 2px solid #4CAF50;
+            padding-bottom: 10px;
+        }
+        .test-section {
+            margin: 20px 0;
+            padding: 15px;
+            background: #f9f9f9;
+            border-radius: 8px;
+            border-left: 4px solid #2196F3;
+        }
+        .result-section {
+            margin: 20px 0;
+            padding: 15px;
+            background: #e8f5e8;
+            border-radius: 8px;
+            border: 1px solid #4CAF50;
+        }
+        .error-section {
+            margin: 20px 0;
+            padding: 15px;
+            background: #ffebee;
+            border-radius: 8px;
+            border: 1px solid #f44336;
+        }
+        button {
+            background: #2196F3;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+            font-size: 16px;
+        }
+        button:hover {
+            background: #1976D2;
+        }
+        button.secondary {
+            background: #4CAF50;
+        }
+        button.secondary:hover {
+            background: #388E3C;
+        }
+        button.danger {
+            background: #f44336;
+        }
+        button.danger:hover {
+            background: #d32f2f;
+        }
+        pre {
+            background: #333;
+            color: #fff;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+        }
+        .path-item {
+            margin: 5px 0;
+            padding: 8px;
+            background: #e3f2fd;
+            border-radius: 4px;
+        }
+        .success {
+            color: #4CAF50;
+            font-weight: bold;
+        }
+        .error {
+            color: #f44336;
+            font-weight: bold;
+        }
+        .warning {
+            color: #FF9800;
+            font-weight: bold;
+        }
+        .info {
+            color: #2196F3;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📁 Retail-inv.html 路徑測試工具</h1>
+        <p>這個頁面將幫助您診斷為什麼無法訪問 retail-inv.html</p>
+        
+        <!-- 當前位置信息 -->
+        <div class="test-section">
+            <h2>📌 當前位置信息</h2>
+            <div id="currentInfo"></div>
+        </div>
+        
+        <!-- 路徑測試 -->
+        <div class="test-section">
+            <h2>🧪 路徑測試</h2>
+            <p>點擊按鈕測試不同的路徑：</p>
+            <div>
+                <button onclick="testPath('web/retail-inv.html')">測試: web/retail-inv.html</button>
+                <button onclick="testPath('./web/retail-inv.html')">測試: ./web/retail-inv.html</button>
+                <button onclick="testPath('/web/retail-inv.html')">測試: /web/retail-inv.html</button>
+                <button onclick="testPath('../web/retail-inv.html')">測試: ../web/retail-inv.html</button>
+                <button onclick="testAllPaths()" class="secondary">測試所有路徑</button>
+            </div>
+            
+            <div style="margin-top: 20px;">
+                <h3>會員狀態測試</h3>
+                <button onclick="checkMembershipStatus()" class="secondary">檢查會員狀態</button>
+                <button onclick="testDirectAccess()" class="secondary">直接訪問零售投資頁面</button>
+                <button onclick="clearLocalStorage()" class="danger">清除會員數據（測試用）</button>
+            </div>
+        </div>
+        
+        <!-- 測試結果 -->
+        <div id="results" class="result-section">
+            <h2>📊 測試結果</h2>
+            <div id="testResults"></div>
+        </div>
+        
+        <!-- 路徑建議 -->
+        <div class="test-section">
+            <h2>💡 路徑建議</h2>
+            <div id="pathSuggestions"></div>
+        </div>
+        
+        <!-- 快速修復 -->
+        <div class="test-section">
+            <h2>🔧 快速修復</h2>
+            <button onclick="applyQuickFix()" class="secondary">應用快速修復</button>
+            <button onclick="copyFixCode()" class="secondary">複製修復代碼</button>
+            <div id="quickFixInfo" style="margin-top: 15px;"></div>
+        </div>
+        
+        <!-- 詳細信息 -->
+        <div class="test-section">
+            <h2>📋 詳細信息</h2>
+            <button onclick="showDetailedInfo()">顯示詳細信息</button>
+            <div id="detailedInfo" style="display: none; margin-top: 15px;"></div>
+        </div>
+    </div>
+
+    <script>
+        // 顯示當前位置信息
+        function showCurrentInfo() {
+            const currentInfo = document.getElementById('currentInfo');
+            const info = `
+                <p><strong>當前URL:</strong> ${window.location.href}</p>
+                <p><strong>主機:</strong> ${window.location.host}</p>
+                <p><strong>路徑:</strong> ${window.location.pathname}</p>
+                <p><strong>協議:</strong> ${window.location.protocol}</p>
+                <p><strong>當前目錄:</strong> ${window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/') + 1)}</p>
+            `;
+            currentInfo.innerHTML = info;
+        }
+        
+        // 測試單個路徑
+        function testPath(path) {
+            const resultsDiv = document.getElementById('testResults');
+            resultsDiv.innerHTML = `<p class="info">正在測試路徑: ${path}</p>`;
+            
+            fetch(path)
+                .then(response => {
+                    if (response.ok) {
+                        resultsDiv.innerHTML += `<p class="success">✅ 路徑 "${path}" 可以訪問！</p>`;
+                        resultsDiv.innerHTML += `<p>HTTP 狀態碼: ${response.status}</p>`;
+                        resultsDiv.innerHTML += `<p><button onclick="redirectTo('${path}')">跳轉到這個路徑</button></p>`;
+                    } else {
+                        resultsDiv.innerHTML += `<p class="error">❌ 路徑 "${path}" 無法訪問</p>`;
+                        resultsDiv.innerHTML += `<p>HTTP 狀態碼: ${response.status}</p>`;
+                    }
+                })
+                .catch(error => {
+                    resultsDiv.innerHTML += `<p class="error">❌ 路徑 "${path}" 錯誤: ${error.message}</p>`;
+                });
+        }
+        
+        // 測試所有路徑
+        function testAllPaths() {
+            const paths = [
+                'web/retail-inv.html',
+                './web/retail-inv.html',
+                '/web/retail-inv.html',
+                '../web/retail-inv.html',
+                'retail-inv.html',
+                './retail-inv.html',
+                '/retail-inv.html'
+            ];
+            
+            const resultsDiv = document.getElementById('testResults');
+            resultsDiv.innerHTML = '<h3>所有路徑測試結果:</h3>';
+            
+            let workingPaths = [];
+            
+            paths.forEach((path, index) => {
+                setTimeout(() => {
+                    fetch(path)
+                        .then(response => {
+                            const pathDiv = document.createElement('div');
+                            pathDiv.className = 'path-item';
+                            
+                            if (response.ok) {
+                                pathDiv.innerHTML = `
+                                    <span class="success">✅ ${path}</span> - 可以訪問 (${response.status})
+                                    <button onclick="redirectTo('${path}')" style="margin-left: 10px; padding: 3px 8px; font-size: 12px;">跳轉</button>
+                                `;
+                                workingPaths.push(path);
+                            } else {
+                                pathDiv.innerHTML = `<span class="error">❌ ${path}</span> - 無法訪問 (${response.status})`;
+                            }
+                            
+                            resultsDiv.appendChild(pathDiv);
+                            
+                            // 最後一個路徑測試完成後，顯示建議
+                            if (index === paths.length - 1) {
+                                showPathSuggestions(workingPaths);
+                            }
+                        })
+                        .catch(error => {
+                            const pathDiv = document.createElement('div');
+                            pathDiv.className = 'path-item';
+                            pathDiv.innerHTML = `<span class="error">❌ ${path}</span> - 錯誤: ${error.message}`;
+                            resultsDiv.appendChild(pathDiv);
+                            
+                            if (index === paths.length - 1) {
+                                showPathSuggestions(workingPaths);
+                            }
+                        });
+                }, index * 500); // 每個測試間隔500ms
+            });
+        }
+        
+        // 檢查會員狀態
+        function checkMembershipStatus() {
+            const resultsDiv = document.getElementById('testResults');
+            resultsDiv.innerHTML = '<h3>會員狀態檢查:</h3>';
+            
+            const isMember = localStorage.getItem('myx_member') === 'true';
+            const expiryDateStr = localStorage.getItem('myx_expiry');
+            
+            if (isMember && expiryDateStr) {
+                const expiryDate = new Date(expiryDateStr);
+                const today = new Date();
+                const daysLeft = Math.ceil((expiryDate - today) / (1000 * 60 * 60 * 24));
+                
+                resultsDiv.innerHTML += `<p class="success">✅ 您是會員</p>`;
+                resultsDiv.innerHTML += `<p>到期日期: ${expiryDate.toLocaleDateString('zh-CN')}</p>`;
+                resultsDiv.innerHTML += `<p>剩餘天數: ${daysLeft}天</p>`;
+                
+                if (daysLeft > 0) {
+                    resultsDiv.innerHTML += `<p class="success">✅ 會員狀態有效</p>`;
+                } else {
+                    resultsDiv.innerHTML += `<p class="error">❌ 會員已過期</p>`;
+                }
+            } else {
+                resultsDiv.innerHTML += `<p class="error">❌ 您不是會員或會員數據丟失</p>`;
+                resultsDiv.innerHTML += `<p>myx_member: ${localStorage.getItem('myx_member')}</p>`;
+                resultsDiv.innerHTML += `<p>myx_expiry: ${localStorage.getItem('myx_expiry')}</p>`;
+            }
+        }
+        
+        // 直接訪問零售投資頁面
+        function testDirectAccess() {
+            const resultsDiv = document.getElementById('testResults');
+            resultsDiv.innerHTML = '<h3>直接訪問測試:</h3>';
+            
+            // 先檢查會員狀態
+            const isMember = localStorage.getItem('myx_member') === 'true';
+            const expiryDateStr = localStorage.getItem('myx_expiry');
+            
+            if (!isMember || !expiryDateStr) {
+                resultsDiv.innerHTML += `<p class="error">❌ 您需要先成為會員</p>`;
+                return;
+            }
+            
+            const expiryDate = new Date(expiryDateStr);
+            const today = new Date();
+            
+            if (today > expiryDate) {
+                resultsDiv.innerHTML += `<p class="error">❌ 您的會員已過期</p>`;
+                return;
+            }
+            
+            // 嘗試不同的路徑
+            const paths = [
+                'web/retail-inv.html',
+                './web/retail-inv.html'
+            ];
+            
+            let foundWorkingPath = false;
+            
+            paths.forEach(path => {
+                fetch(path)
+                    .then(response => {
+                        if (response.ok && !foundWorkingPath) {
+                            foundWorkingPath = true;
+                            resultsDiv.innerHTML += `<p class="success">✅ 找到可用的路徑: ${path}</p>`;
+                            resultsDiv.innerHTML += `<p><button onclick="redirectTo('${path}')" class="secondary">立即跳轉</button></p>`;
+                        }
+                    })
+                    .catch(() => {
+                        // 忽略錯誤，繼續嘗試下一個路徑
+                    });
+            });
+            
+            if (!foundWorkingPath) {
+                resultsDiv.innerHTML += `<p class="error">❌ 找不到可用的路徑</p>`;
+                resultsDiv.innerHTML += `<p>請先使用上面的"測試所有路徑"按鈕找出正確的路徑</p>`;
+            }
+        }
+        
+        // 清除會員數據（測試用）
+        function clearLocalStorage() {
+            if (confirm('確定要清除會員數據嗎？這僅用於測試。')) {
+                localStorage.removeItem('myx_member');
+                localStorage.removeItem('myx_expiry');
+                document.getElementById('testResults').innerHTML = '<p class="info">✅ 會員數據已清除</p>';
+            }
+        }
+        
+        // 顯示路徑建議
+        function showPathSuggestions(workingPaths) {
+            const suggestionsDiv = document.getElementById('pathSuggestions');
+            
+            if (workingPaths.length > 0) {
+                suggestionsDiv.innerHTML = `
+                    <h3>找到可用的路徑：</h3>
+                    <ul>
+                        ${workingPaths.map(path => `<li><strong>${path}</strong></li>`).join('')}
+                    </ul>
+                    <p>建議在您的代碼中使用：</p>
+                    <pre><code>window.location.href = '${workingPaths[0]}';</code></pre>
+                `;
+            } else {
+                suggestionsDiv.innerHTML = `
+                    <h3 class="warning">⚠️ 找不到可用的路徑</h3>
+                    <p>可能的原因：</p>
+                    <ol>
+                        <li>retail-inv.html 文件不存在於 web/ 目錄中</li>
+                        <li>文件名拼寫錯誤</li>
+                        <li>路徑結構不正確</li>
+                        <li>文件權限問題</li>
+                    </ol>
+                    <p>請檢查：</p>
+                    <ul>
+                        <li>確認 retail-inv.html 文件位於 web/ 目錄中</li>
+                        <li>確認文件大小寫正確（retail-inv.html vs Retail-inv.html）</li>
+                        <li>嘗試使用絕對路徑</li>
+                    </ul>
+                `;
+            }
+        }
+        
+        // 應用快速修復
+        function applyQuickFix() {
+            const fixCode = `
+// 將這段代碼添加到您的 JavaScript 中
+function enterServiceFixed() {
+    // 檢查會員狀態
+    const isMember = localStorage.getItem('myx_member') === 'true';
+    const expiryDateStr = localStorage.getItem('myx_expiry');
+    
+    if (!isMember || !expiryDateStr) {
+        alert('請先成為會員');
+        return;
+    }
+    
+    const expiryDate = new Date(expiryDateStr);
+    const today = new Date();
+    
+    if (today > expiryDate) {
+        alert('您的會員已過期，請續費');
+        return;
+    }
+    
+    // 嘗試不同的路徑
+    const possiblePaths = [
+        'web/retail-inv.html',
+        './web/retail-inv.html',
+        '/web/retail-inv.html'
+    ];
+    
+    // 找到第一個可用的路徑
+    for (let path of possiblePaths) {
+        try {
+            // 簡單的檢查（不完美但通常有效）
+            if (window.location.pathname.includes('myx_shop')) {
+                // 如果在 myx_shop 目錄中
+                window.location.href = 'web/retail-inv.html';
+                return;
+            } else {
+                // 如果在其他位置
+                window.location.href = './web/retail-inv.html';
+                return;
+            }
+        } catch (e) {
+            continue;
+        }
+    }
+    
+    // 如果所有路徑都失敗
+    alert('無法找到服務頁面，請聯繫客服');
+}
+            `;
+            
+            const quickFixInfo = document.getElementById('quickFixInfo');
+            quickFixInfo.innerHTML = `
+                <h3>快速修復代碼：</h3>
+                <pre><code>${fixCode}</code></pre>
+                <p>使用方法：</p>
+                <ol>
+                    <li>複製上面的代碼</li>
+                    <li>替換您頁面中的 enterService() 函數</li>
+                    <li>或者將按鈕的 onclick 改為 enterServiceFixed()</li>
+                </ol>
+            `;
+        }
+        
+        // 複製修復代碼
+        function copyFixCode() {
+            const textarea = document.createElement('textarea');
+            textarea.value = `function enterServiceFixed() {
+    const isMember = localStorage.getItem('myx_member') === 'true';
+    const expiryDateStr = localStorage.getItem('myx_expiry');
+    
+    if (!isMember || !expiryDateStr) {
+        alert('請先成為會員');
+        return;
+    }
+    
+    const expiryDate = new Date(expiryDateStr);
+    const today = new Date();
+    
+    if (today > expiryDate) {
+        alert('您的會員已過期，請續費');
+        return;
+    }
+    
+    // 直接跳轉到零售投資頁面
+    window.location.href = 'web/retail-inv.html';
+}`;
+            
+            document.body.appendChild(textarea);
+            textarea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textarea);
+            
+            alert('修復代碼已複製到剪貼板！');
+        }
+        
+        // 顯示詳細信息
+        function showDetailedInfo() {
+            const detailedInfo = document.getElementById('detailedInfo');
+            detailedInfo.style.display = 'block';
+            
+            let info = '<h3>系統信息：</h3>';
+            info += `<p><strong>User Agent:</strong> ${navigator.userAgent}</p>`;
+            info += `<p><strong>平台:</strong> ${navigator.platform}</p>`;
+            info += `<p><strong>語言:</strong> ${navigator.language}</p>`;
+            info += `<p><strong>在線狀態:</strong> ${navigator.onLine ? '在線' : '離線'}</p>`;
+            
+            info += '<h3>LocalStorage 內容：</h3>';
+            for (let i = 0; i < localStorage.length; i++) {
+                const key = localStorage.key(i);
+                const value = localStorage.getItem(key);
+                info += `<p><strong>${key}:</strong> ${value}</p>`;
+            }
+            
+            info += '<h3>Cookies：</h3>';
+            info += `<p>${document.cookie || '沒有 cookies'}</p>`;
+            
+            detailedInfo.innerHTML = info;
+        }
+        
+        // 跳轉到指定路徑
+        function redirectTo(path) {
+            window.location.href = path;
+        }
+        
+        // 頁面加載時顯示當前信息
+        window.onload = function() {
+            showCurrentInfo();
+            
+            // 檢查當前是否有會員數據
+            const isMember = localStorage.getItem('myx_member') === 'true';
+            if (isMember) {
+                document.getElementById('testResults').innerHTML = 
+                    '<p class="info">檢測到會員數據，可以使用"檢查會員狀態"按鈕查看更多信息</p>';
+            }
+        };
+    </script>
+</body>
+</html>
