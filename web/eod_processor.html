@@ -275,6 +275,16 @@
             transform: translateY(-2px);
         }
         
+        .btn-info {
+            background: #2196F3;
+            color: white;
+        }
+        
+        .btn-info:hover {
+            background: #0b7dda;
+            transform: translateY(-2px);
+        }
+        
         .btn-group {
             display: flex;
             gap: 10px;
@@ -360,6 +370,83 @@
             background: linear-gradient(90deg, #4CAF50, #8BC34A);
             width: 0%;
             transition: width 0.3s ease;
+        }
+        
+        /* 匹配状态标签 */
+        .match-badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 11px;
+            font-weight: bold;
+            margin-left: 5px;
+        }
+        
+        .match-good {
+            background: #4CAF50;
+            color: white;
+        }
+        
+        .match-warning {
+            background: #FF9800;
+            color: white;
+        }
+        
+        .match-bad {
+            background: #f44336;
+            color: white;
+        }
+        
+        /* 模态框样式 */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            overflow-y: auto;
+        }
+        
+        .modal-content {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: white;
+            width: 90%;
+            max-width: 800px;
+            border-radius: 10px;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        
+        .modal-header {
+            background: #1976d2;
+            color: white;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-radius: 10px 10px 0 0;
+        }
+        
+        .modal-body {
+            padding: 20px;
+            max-height: 60vh;
+            overflow-y: auto;
+        }
+        
+        .modal-close {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            line-height: 1;
         }
         
         /* 响应式设计 */
@@ -453,11 +540,17 @@
                         <button onclick="autoArrangeColumns()" class="btn btn-primary btn-small">
                             <i class="fas fa-magic"></i> 自动排列
                         </button>
+                        <button onclick="adjustColumnManually()" class="btn btn-info btn-small">
+                            <i class="fas fa-hand-pointer"></i> 手动调整
+                        </button>
+                        <button onclick="showColumnMatchStatus()" class="btn btn-info btn-small">
+                            <i class="fas fa-check-circle"></i> 检查匹配
+                        </button>
+                        <button onclick="debugDataMapping()" class="btn btn-warning btn-small">
+                            <i class="fas fa-bug"></i> 调试
+                        </button>
                         <button onclick="resetColumns()" class="btn btn-warning btn-small">
                             <i class="fas fa-redo"></i> 重置
-                        </button>
-                        <button onclick="previewColumnOrder()" class="btn btn-success btn-small">
-                            <i class="fas fa-eye"></i> 预览排列
                         </button>
                     </div>
                 </div>
@@ -547,23 +640,23 @@
                     <h4><i class="fas fa-list-ol"></i> 处理步骤</h4>
                     <div style="font-size: 14px; line-height: 1.6;">
                         <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
-                            <span style="background: #1976d2; color: white; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px;">1</span>
+                            <span id="step1" style="background: #1976d2; color: white; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px;">1</span>
                             <span>上传CSV文件</span>
                         </div>
                         <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
-                            <span style="background: #e0e0e0; color: #666; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px;">2</span>
+                            <span id="step2" style="background: #e0e0e0; color: #666; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px;">2</span>
                             <span>列排列管理</span>
                         </div>
                         <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
-                            <span style="background: #e0e0e0; color: #666; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px;">3</span>
+                            <span id="step3" style="background: #e0e0e0; color: #666; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px;">3</span>
                             <span>行业代码转换</span>
                         </div>
                         <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
-                            <span style="background: #e0e0e0; color: #666; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px;">4</span>
+                            <span id="step4" style="background: #e0e0e0; color: #666; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px;">4</span>
                             <span>结果预览</span>
                         </div>
                         <div style="display: flex; align-items: center; gap: 10px;">
-                            <span style="background: #e0e0e0; color: #666; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px;">5</span>
+                            <span id="step5" style="background: #e0e0e0; color: #666; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px;">5</span>
                             <span>完成下载</span>
                         </div>
                     </div>
@@ -571,7 +664,7 @@
                 
                 <!-- 必需列信息 -->
                 <div class="info-box warning">
-                    <h4><i class="fas fa-exclamation-triangle"></i> 必需列 (22列)</h4>
+                    <h4><i class="fas fa-exclamation-triangle"></i> 必需列 (20列)</h4>
                     <div style="font-size: 13px; color: #555; line-height: 1.5;">
                         请确保以下列按顺序排列：
                         <ol style="padding-left: 20px; margin-top: 8px; font-size: 12px;">
@@ -625,6 +718,9 @@
                     <div id="fileInfo" style="margin-top: 10px; font-size: 12px; color: #888;">
                         <!-- 文件信息会动态显示 -->
                     </div>
+                    <div id="columnMatchInfo" style="margin-top: 10px; font-size: 12px;">
+                        <!-- 列匹配信息会动态显示 -->
+                    </div>
                 </div>
                 
                 <!-- 快速操作 -->
@@ -641,14 +737,27 @@
     </div>
 
     <!-- 完整行业映射模态框 -->
-    <div id="sectorModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; overflow-y: auto;">
-        <div style="position: absolute; top: 20px; left: 50%; transform: translateX(-50%); background: white; width: 90%; max-width: 800px; border-radius: 10px; max-height: 80vh; overflow-y: auto;">
-            <div style="background: #1976d2; color: white; padding: 15px; display: flex; justify-content: space-between; align-items: center;">
+    <div id="sectorModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
                 <h3 style="margin: 0;"><i class="fas fa-map"></i> 完整行业代码映射</h3>
-                <button onclick="closeSectorModal()" style="background: none; border: none; color: white; font-size: 24px; cursor: pointer;">×</button>
+                <button onclick="closeSectorModal()" class="modal-close">×</button>
             </div>
-            <div style="padding: 20px;" id="fullSectorMapping">
+            <div class="modal-body" id="fullSectorMapping">
                 <!-- 完整映射会动态生成 -->
+            </div>
+        </div>
+    </div>
+
+    <!-- 行业统计模态框 -->
+    <div id="statsModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 style="margin: 0;"><i class="fas fa-chart-bar"></i> 行业分布统计</h3>
+                <button onclick="closeStatsModal()" class="modal-close">×</button>
+            </div>
+            <div class="modal-body" id="statsContent">
+                <!-- 统计信息会动态生成 -->
             </div>
         </div>
     </div>
@@ -660,15 +769,42 @@
         let currentColumns = [];
         let targetColumnOrder = [];
         let sectorMapping = {};
+        let finalData = [];
         
-        // 标准列顺序
-        const REQUIRED_COLUMNS = [
+        // 标准列顺序 - 用于CSV输出
+        const STANDARD_COLUMN_NAMES = [
             "Code", "Stock", "Sector", "Open", "Last", "Prv Close", "Chg", "High", "Low", 
             "Y-High", "Y-Low", "Vol", "DY*", "B%", "Vol MA (20)", "RSI (14)", "MACD (26,12)", 
             "EPS*", "P/E", "Status"
         ];
         
-        // 行业映射数据（使用您提供的映射）
+        // 优化的列名映射（支持多种列名变体）
+        const COLUMN_MAPPING = {
+            "Code": ["Code", "股票代码", "代码", "Symbol", "Ticker", "代号", "证券代码", "股号"],
+            "Stock": ["Stock", "股票", "名称", "Name", "公司名称", "股票名称", "公司", "股票名"],
+            "Sector": ["Sector", "行业", "板块", "Industry", "行业分类", "所属行业", "产业", "板块分类"],
+            "Open": ["Open", "开盘价", "开盘", "Opening Price", "开市价", "今开", "开盘价格"],
+            "Last": ["Last", "最新价", "现价", "当前价", "收盘价", "最后价", "成交价", "当前价格"],
+            "Prv Close": ["Prv Close", "前收盘", "昨日收盘", "Previous Close", "前收", "昨收", "前一日收盘", "昨日收市", "Prev Close"],
+            "Chg": ["Chg", "涨跌", "变化", "Change", "涨跌幅", "变动", "涨幅", "变化率", "涨跌%", "Chg%", "Change%"],
+            "High": ["High", "最高价", "最高", "最高价", "日内最高", "当日最高"],
+            "Low": ["Low", "最低价", "最低", "最低价", "日内最低", "当日最低"],
+            "Y-High": ["Y-High", "年最高", "52周最高", "Year High", "52周高", "年度最高", "年内最高", "Year-High"],
+            "Y-Low": ["Y-Low", "年最低", "52周最低", "Year Low", "52周低", "年度最低", "年内最低", "Year-Low"],
+            "Vol": ["Vol", "成交量", "交易量", "Volume", "成交额", "量", "成交股数", "交易股数"],
+            "DY*": ["DY*", "股息率", "股息收益率", "Dividend Yield", "股息", "分红率", "股息%", "Dividend"],
+            "B%": ["B%", "贝塔系数", "Beta", "波动率", "风险系数", "β", "Beta系数"],
+            "Vol MA (20)": ["Vol MA (20)", "成交量均线20", "20日成交量均线", "Vol MA 20", "Volume MA 20", "20日均量", "成交量20日均线", "Vol MA(20)"],
+            "RSI (14)": ["RSI (14)", "RSI", "相对强弱指数", "RSI 14", "相对强弱指标", "RSI指标"],
+            "MACD (26,12)": ["MACD (26,12)", "MACD", "指数平滑异同移动平均线", "MACD指标", 
+                           "MACD(26,12)", "MACD (26, 12)", "MACD(26, 12)", "MACD 26 12", 
+                           "MACD(26,12,9)", "MACD (26,12,9)", "MACD 26-12", "MACD (26,12)", "MACD(26,12)"],
+            "EPS*": ["EPS*", "每股收益", "EPS", "每股盈利", "每股盈余", "Earnings Per Share", "每股收益EPS"],
+            "P/E": ["P/E", "市盈率", "PE", "股价收益比", "本益比", "市盈率(PE)", "PE Ratio", "P/E Ratio"],
+            "Status": ["Status", "状态", "交易状态", "上市状态", "股票状态", "上市情况", "交易情况"]
+        };
+        
+        // 行业映射数据
         const SECTOR_MAP = {
             "101": "Industrial & Consumer Products",
             "102": "Industrial & Consumer Products", 
@@ -861,7 +997,7 @@
                     const headers = parseCSVLine(lines[0]);
                     const data = [];
                     
-                    for (let i = 1; i < Math.min(100, lines.length); i++) {
+                    for (let i = 1; i < Math.min(1000, lines.length); i++) {
                         if (lines[i].trim()) {
                             const values = parseCSVLine(lines[i]);
                             const row = {};
@@ -889,6 +1025,9 @@
                         </div>
                     `;
                     
+                    // 更新步骤状态
+                    updateStepStatus(1, true);
+                    
                     // 更新状态
                     document.getElementById('currentStatus').innerHTML = `
                         <span style="color: #4CAF50;">✓ 文件已上传</span><br>
@@ -911,7 +1050,10 @@
                     initializeColumnList();
                     
                     // 尝试自动排列列
-                    autoArrangeColumns();
+                    setTimeout(() => {
+                        autoArrangeColumns();
+                        updateStepStatus(2, true);
+                    }, 500);
                     
                 } catch (error) {
                     console.error('CSV解析错误:', error);
@@ -995,34 +1137,15 @@
             }
             
             targetColumnOrder.push(columnName);
-            
-            const targetContainer = document.getElementById('targetColumns');
-            const placeholder = targetContainer.querySelector('.target-placeholder');
-            
-            if (placeholder) {
-                targetContainer.removeChild(placeholder);
-            }
-            
-            const columnItem = document.createElement('div');
-            columnItem.className = 'column-item';
-            columnItem.innerHTML = `
-                <span class="column-handle"><i class="fas fa-grip-vertical"></i></span>
-                <span class="column-name">${columnName}</span>
-                <button onclick="removeFromTarget('${columnName}')" style="margin-left: auto; background: none; border: none; color: #f44336; cursor: pointer;">
-                    <i class="fas fa-times"></i>
-                </button>
-            `;
-            
-            targetContainer.appendChild(columnItem);
-            
-            // 更新状态
-            updateStatus();
+            updateTargetColumnsDisplay();
+            updateColumnMatchInfo();
         }
         
         // 从目标区域移除列
         function removeFromTarget(columnName) {
             targetColumnOrder = targetColumnOrder.filter(col => col !== columnName);
             updateTargetColumnsDisplay();
+            updateColumnMatchInfo();
         }
         
         // 更新目标列显示
@@ -1038,12 +1161,25 @@
                     </div>
                 `;
             } else {
-                targetColumnOrder.forEach(columnName => {
+                targetColumnOrder.forEach((columnName, index) => {
                     const columnItem = document.createElement('div');
                     columnItem.className = 'column-item';
+                    
+                    // 检查是否匹配标准列名
+                    const standardCol = STANDARD_COLUMN_NAMES[index];
+                    const isMatched = standardCol && checkColumnMatch(columnName, standardCol);
+                    
                     columnItem.innerHTML = `
                         <span class="column-handle"><i class="fas fa-grip-vertical"></i></span>
                         <span class="column-name">${columnName}</span>
+                        ${index < STANDARD_COLUMN_NAMES.length ? 
+                            `<span class="match-badge ${isMatched ? 'match-good' : 'match-warning'}">
+                                ${index + 1}
+                            </span>` : 
+                            `<span class="match-badge" style="background:#9e9e9e;color:white;">
+                                ${index + 1}
+                            </span>`
+                        }
                         <button onclick="removeFromTarget('${columnName}')" style="margin-left: auto; background: none; border: none; color: #f44336; cursor: pointer;">
                             <i class="fas fa-times"></i>
                         </button>
@@ -1055,67 +1191,370 @@
             updateStatus();
         }
         
-        // 自动排列列
+        // 优化的列名匹配逻辑
+        function checkColumnMatch(actualCol, standardCol) {
+            if (!actualCol || !standardCol) return false;
+            
+            // 去除空格和特殊字符进行比较
+            const cleanActual = actualCol.trim().replace(/\s+/g, ' ').toLowerCase();
+            const cleanStandard = standardCol.trim().replace(/\s+/g, ' ').toLowerCase();
+            
+            // 直接匹配
+            if (cleanActual === cleanStandard) return true;
+            
+            // 检查列名映射
+            if (COLUMN_MAPPING[standardCol]) {
+                for (const variant of COLUMN_MAPPING[standardCol]) {
+                    const cleanVariant = variant.toLowerCase();
+                    if (cleanActual === cleanVariant) return true;
+                    if (cleanActual.includes(cleanVariant)) return true;
+                    if (cleanVariant.includes(cleanActual)) return true;
+                }
+            }
+            
+            // 对于MACD列的特殊处理
+            if (standardCol === "MACD (26,12)") {
+                const macdPatterns = [
+                    /macd\s*\(\s*26\s*[,，]\s*12\s*\)/i,
+                    /macd\s*26\s*[,，]\s*12/i,
+                    /^macd$/i,
+                    /指数平滑异同移动平均线/i,
+                    /macd\s*\(\s*26\s*,\s*12\s*\)/i,
+                    /macd\s*\(26,12\)/i
+                ];
+                return macdPatterns.some(pattern => pattern.test(actualCol));
+            }
+            
+            // 处理中文列名
+            const chineseMapping = {
+                "Code": ["代码", "代号", "股号"],
+                "Stock": ["股票", "名称"],
+                "Sector": ["行业"],
+                "Open": ["开盘价", "开盘"],
+                "Last": ["最新价", "收盘价"],
+                "Prv Close": ["前收盘", "昨收", "前收"],
+                "Chg": ["涨跌", "涨跌幅", "变化"],
+                "High": ["最高价", "最高"],
+                "Low": ["最低价", "最低"],
+                "Y-High": ["年最高", "52周最高"],
+                "Y-Low": ["年最低", "52周最低"],
+                "Vol": ["成交量", "交易量"],
+                "DY*": ["股息率", "股息收益率"],
+                "B%": ["贝塔系数", "Beta"],
+                "Vol MA (20)": ["成交量均线20", "20日成交量均线", "成交量均线"],
+                "RSI (14)": ["RSI", "相对强弱指数"],
+                "MACD (26,12)": ["MACD", "指数平滑异同移动平均线"],
+                "EPS*": ["每股收益", "EPS"],
+                "P/E": ["市盈率", "PE"],
+                "Status": ["状态", "交易状态"]
+            };
+            
+            if (chineseMapping[standardCol]) {
+                for (const chinese of chineseMapping[standardCol]) {
+                    if (actualCol.includes(chinese) || chinese.includes(actualCol)) {
+                        return true;
+                    }
+                }
+            }
+            
+            // 关键词匹配
+            const keywords = cleanStandard.replace(/[^a-z0-9]/g, ' ');
+            const keywordList = keywords.split(' ').filter(k => k.length > 1);
+            
+            if (keywordList.length > 0) {
+                return keywordList.some(keyword => cleanActual.includes(keyword));
+            }
+            
+            return false;
+        }
+        
+        // 优化的自动排列列函数
         function autoArrangeColumns() {
             targetColumnOrder = [];
+            const matchedColumns = [];
+            const usedActualCols = [];
             
-            // 尝试匹配标准列名
-            REQUIRED_COLUMNS.forEach(requiredCol => {
-                const matchingCol = currentColumns.find(col => 
-                    col.toLowerCase().includes(requiredCol.toLowerCase()) ||
-                    requiredCol.toLowerCase().includes(col.toLowerCase())
-                );
+            console.log("开始自动排列列...");
+            console.log("原始列:", currentColumns);
+            
+            // 第一步：为每个标准列寻找最佳匹配
+            STANDARD_COLUMN_NAMES.forEach(standardCol => {
+                let bestMatch = null;
+                let bestScore = 0;
                 
-                if (matchingCol && !targetColumnOrder.includes(matchingCol)) {
-                    targetColumnOrder.push(matchingCol);
+                currentColumns.forEach(actualCol => {
+                    if (usedActualCols.includes(actualCol)) return;
+                    
+                    // 计算匹配分数
+                    let score = 0;
+                    
+                    // 精确匹配：10分
+                    if (actualCol === standardCol) {
+                        score = 10;
+                        console.log(`精确匹配: ${standardCol} -> ${actualCol} (10分)`);
+                    }
+                    
+                    // 检查列名映射：8分
+                    else if (score === 0 && COLUMN_MAPPING[standardCol]) {
+                        for (const variant of COLUMN_MAPPING[standardCol]) {
+                            if (actualCol.toLowerCase() === variant.toLowerCase()) {
+                                score = 8;
+                                console.log(`映射匹配: ${standardCol} -> ${actualCol} (8分)`);
+                                break;
+                            }
+                        }
+                    }
+                    
+                    // 包含关系：6分
+                    if (score === 0) {
+                        const actualLower = actualCol.toLowerCase();
+                        const standardLower = standardCol.toLowerCase();
+                        
+                        // 检查实际列名是否包含标准列名的关键词
+                        const standardWords = standardLower.split(/[^a-z0-9]+/).filter(w => w.length > 1);
+                        const containsKeyword = standardWords.some(word => 
+                            actualLower.includes(word)
+                        );
+                        
+                        if (containsKeyword) {
+                            score = 6;
+                            console.log(`关键词匹配: ${standardCol} -> ${actualCol} (6分)`);
+                        }
+                        
+                        // 检查是否有中文对应
+                        const chineseMapping = {
+                            "Code": ["代码", "代号", "股号"],
+                            "Stock": ["股票", "名称"],
+                            "Sector": ["行业"],
+                            "Open": ["开盘价", "开盘"],
+                            "Last": ["最新价", "收盘价"],
+                            "Prv Close": ["前收盘", "昨收"],
+                            "Chg": ["涨跌", "涨跌幅", "Chg%"],
+                            "High": ["最高价", "最高"],
+                            "Low": ["最低价", "最低"],
+                            "Y-High": ["年最高", "52周最高"],
+                            "Y-Low": ["年最低", "52周最低"],
+                            "Vol": ["成交量", "交易量"],
+                            "DY*": ["股息率", "股息收益率"],
+                            "B%": ["贝塔系数", "Beta"],
+                            "Vol MA (20)": ["成交量均线20", "20日成交量均线"],
+                            "RSI (14)": ["RSI", "相对强弱指数"],
+                            "MACD (26,12)": ["MACD", "指数平滑异同移动平均线"],
+                            "EPS*": ["每股收益", "EPS"],
+                            "P/E": ["市盈率", "PE"],
+                            "Status": ["状态", "交易状态"]
+                        };
+                        
+                        if (chineseMapping[standardCol]) {
+                            for (const chinese of chineseMapping[standardCol]) {
+                                if (actualCol.includes(chinese)) {
+                                    score = 7;
+                                    console.log(`中文匹配: ${standardCol} -> ${actualCol} (7分)`);
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    
+                    // 如果找到更好的匹配，更新最佳匹配
+                    if (score > bestScore) {
+                        bestScore = score;
+                        bestMatch = actualCol;
+                    }
+                });
+                
+                // 如果找到了匹配，添加到目标列
+                if (bestMatch && bestScore >= 3) {
+                    targetColumnOrder.push(bestMatch);
+                    usedActualCols.push(bestMatch);
+                    matchedColumns.push({ standard: standardCol, actual: bestMatch, score: bestScore });
+                    console.log(`最终匹配: ${standardCol} -> ${bestMatch} (${bestScore}分)`);
+                } else {
+                    // 如果没有找到匹配，添加标准列名
+                    targetColumnOrder.push(standardCol);
+                    console.log(`未找到匹配: ${standardCol} -> ${standardCol}`);
                 }
             });
             
-            // 添加剩余的列
+            // 第二步：添加剩余的列
             currentColumns.forEach(col => {
-                if (!targetColumnOrder.includes(col)) {
+                if (!usedActualCols.includes(col)) {
                     targetColumnOrder.push(col);
                 }
             });
             
-            updateTargetColumnsDisplay();
+            console.log("自动排列完成，结果:", targetColumnOrder);
             
-            // 显示消息
-            const matched = targetColumnOrder.filter(col => 
-                REQUIRED_COLUMNS.some(req => 
-                    col.toLowerCase().includes(req.toLowerCase()) ||
-                    req.toLowerCase().includes(col.toLowerCase())
-                )
-            ).length;
+            updateTargetColumnsDisplay();
+            updateColumnMatchInfo();
+            
+            // 显示匹配结果
+            const matchedCount = getMatchedColumnCount();
+            const matchPercentage = Math.round((matchedCount / STANDARD_COLUMN_NAMES.length) * 100);
+            
+            let statusColor = '#1976d2';
+            let statusIcon = '✓';
+            if (matchPercentage < 70) {
+                statusColor = '#FF9800';
+                statusIcon = '⚠';
+            }
+            if (matchPercentage < 50) {
+                statusColor = '#f44336';
+                statusIcon = '✗';
+            }
             
             document.getElementById('currentStatus').innerHTML = `
-                <span style="color: #1976d2;">✓ 自动排列完成</span><br>
-                <span style="font-size: 12px; color: #888;">匹配了 ${matched}/${REQUIRED_COLUMNS.length} 个必需列</span>
+                <span style="color: ${statusColor};">
+                    ${statusIcon} 自动排列完成
+                </span><br>
+                <span style="font-size: 12px; color: #888;">
+                    匹配了 ${matchedCount}/${STANDARD_COLUMN_NAMES.length} 个标准列 (${matchPercentage}%)
+                </span>
             `;
+            
+            // 如果匹配率低，显示警告
+            if (matchPercentage < 70) {
+                document.getElementById('columnMatchInfo').innerHTML = `
+                    <div style="color: #FF9800; font-weight: bold;">
+                        <i class="fas fa-exclamation-triangle"></i> 匹配率较低，请手动检查列顺序或使用"手动调整"功能
+                    </div>
+                `;
+            }
+        }
+        
+        // 获取匹配的列数
+        function getMatchedColumnCount() {
+            let count = 0;
+            STANDARD_COLUMN_NAMES.forEach((stdCol, index) => {
+                if (index < targetColumnOrder.length) {
+                    const actualCol = targetColumnOrder[index];
+                    if (actualCol && checkColumnMatch(actualCol, stdCol)) {
+                        count++;
+                    }
+                }
+            });
+            return count;
+        }
+        
+        // 更新列匹配信息
+        function updateColumnMatchInfo() {
+            const matchedCount = getMatchedColumnCount();
+            const totalRequired = STANDARD_COLUMN_NAMES.length;
+            const matchPercentage = Math.round((matchedCount / totalRequired) * 100);
+            
+            let color = '#4CAF50';
+            if (matchPercentage < 70) color = '#FF9800';
+            if (matchPercentage < 50) color = '#f44336';
+            
+            document.getElementById('columnMatchInfo').innerHTML = `
+                <div style="color: ${color}; font-weight: bold;">
+                    列匹配: ${matchedCount}/${totalRequired} (${matchPercentage}%)
+                </div>
+            `;
+        }
+        
+        // 显示列匹配状态
+        function showColumnMatchStatus() {
+            if (targetColumnOrder.length === 0) {
+                alert('请先运行自动排列！');
+                return;
+            }
+            
+            let statusHTML = '<h3>列匹配状态：</h3><table style="width:100%; border-collapse:collapse;">';
+            statusHTML += '<tr style="background:#f0f0f0;"><th>序号</th><th>标准列名</th><th>实际列名</th><th>匹配状态</th><th>建议</th></tr>';
+            
+            STANDARD_COLUMN_NAMES.forEach((stdCol, index) => {
+                const actualCol = targetColumnOrder[index] || '未匹配';
+                const isMatched = actualCol && checkColumnMatch(actualCol, stdCol);
+                
+                let suggestion = '';
+                if (!isMatched && actualCol !== '未匹配') {
+                    suggestion = `建议: 将"${actualCol}"移动到正确位置`;
+                } else if (actualCol === '未匹配') {
+                    suggestion = `建议: 查找包含"${stdCol}"的列`;
+                }
+                
+                statusHTML += `
+                    <tr style="border-bottom:1px solid #ddd;">
+                        <td style="padding:5px;">${index + 1}</td>
+                        <td style="padding:5px;"><strong>${stdCol}</strong></td>
+                        <td style="padding:5px;">${actualCol}</td>
+                        <td style="padding:5px; color:${isMatched ? 'green' : 'red'}">
+                            ${isMatched ? '✓ 匹配' : '✗ 不匹配'}
+                        </td>
+                        <td style="padding:5px; font-size:11px; color:#666;">${suggestion}</td>
+                    </tr>
+                `;
+            });
+            
+            // 显示额外的列
+            if (targetColumnOrder.length > STANDARD_COLUMN_NAMES.length) {
+                statusHTML += '<tr><td colspan="5" style="padding:10px; background:#f9f9f9;"><strong>额外列：</strong></td></tr>';
+                for (let i = STANDARD_COLUMN_NAMES.length; i < targetColumnOrder.length; i++) {
+                    statusHTML += `
+                        <tr style="border-bottom:1px solid #ddd;">
+                            <td style="padding:5px;">${i + 1}</td>
+                            <td style="padding:5px; color:#999;">(额外)</td>
+                            <td style="padding:5px;">${targetColumnOrder[i]}</td>
+                            <td style="padding:5px; color:#666;">额外列</td>
+                            <td style="padding:5px; font-size:11px; color:#666;">将显示在必需列之后</td>
+                        </tr>
+                    `;
+                }
+            }
+            
+            statusHTML += '</table>';
+            
+            const matchedCount = getMatchedColumnCount();
+            const matchPercentage = Math.round((matchedCount / STANDARD_COLUMN_NAMES.length) * 100);
+            
+            // 在新窗口中显示
+            const newWindow = window.open();
+            newWindow.document.write(`
+                <html>
+                <head>
+                    <title>列匹配状态</title>
+                    <style>
+                        body { font-family: Arial, sans-serif; padding: 20px; }
+                        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+                        th, td { padding: 8px; text-align: left; border-bottom: 1px solid #ddd; }
+                        th { background-color: #f2f2f2; }
+                        .summary { 
+                            background: #f8f9fa; 
+                            padding: 15px; 
+                            border-radius: 5px; 
+                            margin: 20px 0;
+                            border-left: 4px solid #1976d2;
+                        }
+                        .match-good { color: green; font-weight: bold; }
+                        .match-warning { color: orange; font-weight: bold; }
+                        .match-bad { color: red; font-weight: bold; }
+                    </style>
+                </head>
+                <body>
+                    <h2>列顺序匹配状态</h2>
+                    <div class="summary">
+                        <h3>匹配摘要</h3>
+                        <p>标准列总数: ${STANDARD_COLUMN_NAMES.length}</p>
+                        <p>已匹配列数: ${matchedCount}</p>
+                        <p>匹配率: <span class="${matchPercentage >= 90 ? 'match-good' : matchPercentage >= 70 ? 'match-warning' : 'match-bad'}">${matchPercentage}%</span></p>
+                        <p>总共列数: ${targetColumnOrder.length}</p>
+                    </div>
+                    ${statusHTML}
+                </body>
+                </html>
+            `);
         }
         
         // 重置列
         function resetColumns() {
             targetColumnOrder = [];
             updateTargetColumnsDisplay();
+            updateColumnMatchInfo();
             
             document.getElementById('currentStatus').innerHTML = `
                 <span style="color: #FF9800;">↺ 列排列已重置</span>
             `;
-        }
-        
-        // 预览列顺序
-        function previewColumnOrder() {
-            if (targetColumnOrder.length === 0) {
-                alert('请先排列列顺序！');
-                return;
-            }
-            
-            const preview = targetColumnOrder.map((col, index) => 
-                `${index + 1}. ${col}`
-            ).join('\n');
-            
-            alert(`列顺序预览：\n\n${preview}\n\n总计：${targetColumnOrder.length} 列`);
         }
         
         // 应用行业映射
@@ -1131,11 +1570,12 @@
                 // 找到Sector列
                 const sectorKey = Object.keys(row).find(key => 
                     key.toLowerCase().includes('sector') || 
-                    key.toLowerCase().includes('industry')
+                    key.toLowerCase().includes('industry') ||
+                    key === 'Sector'
                 );
                 
                 if (sectorKey && row[sectorKey]) {
-                    const sectorCode = row[sectorKey].toString();
+                    const sectorCode = row[sectorKey].toString().trim();
                     const sectorName = SECTOR_MAP[sectorCode] || 
                                       SECTOR_MAP.default_mapping?.[sectorCode[0]] || 
                                       `Unknown (${sectorCode})`;
@@ -1145,6 +1585,9 @@
                 
                 return newRow;
             });
+            
+            // 更新步骤状态
+            updateStepStatus(3, true);
             
             // 更新状态
             document.getElementById('currentStatus').innerHTML = `
@@ -1165,11 +1608,11 @@
             const previewTable = document.getElementById('dataPreview');
             previewTable.innerHTML = '';
             
-            // 创建表头
+            // 创建表头 - 使用标准列名
             const thead = document.createElement('thead');
             const headerRow = document.createElement('tr');
             
-            targetColumnOrder.forEach(column => {
+            STANDARD_COLUMN_NAMES.forEach(column => {
                 const th = document.createElement('th');
                 th.textContent = column;
                 headerRow.appendChild(th);
@@ -1186,9 +1629,17 @@
                 const row = processedData[i];
                 const tr = document.createElement('tr');
                 
-                targetColumnOrder.forEach(column => {
+                STANDARD_COLUMN_NAMES.forEach(column => {
                     const td = document.createElement('td');
-                    td.textContent = row[column] || '';
+                    // 查找对应的实际列
+                    let value = '';
+                    for (const [key, val] of Object.entries(row)) {
+                        if (checkColumnMatch(key, column)) {
+                            value = val;
+                            break;
+                        }
+                    }
+                    td.textContent = value || '';
                     tr.appendChild(td);
                 });
                 
@@ -1199,6 +1650,9 @@
             
             // 更新行数显示
             document.getElementById('previewRowCount').textContent = previewRows;
+            
+            // 更新步骤状态
+            updateStepStatus(4, true);
         }
         
         // 显示完整数据
@@ -1208,12 +1662,20 @@
                 return;
             }
             
-            let fullContent = targetColumnOrder.join(',') + '\n';
+            let fullContent = STANDARD_COLUMN_NAMES.join(',') + '\n';
             
             processedData.forEach(row => {
-                const rowContent = targetColumnOrder.map(col => 
-                    `"${row[col] || ''}"`
-                ).join(',');
+                const rowContent = STANDARD_COLUMN_NAMES.map(col => {
+                    // 查找对应的实际列
+                    let value = '';
+                    for (const [key, val] of Object.entries(row)) {
+                        if (checkColumnMatch(key, col)) {
+                            value = val;
+                            break;
+                        }
+                    }
+                    return `"${value || ''}"`;
+                }).join(',');
                 fullContent += rowContent + '\n';
             });
             
@@ -1234,6 +1696,60 @@
                 </body>
                 </html>
             `);
+        }
+        
+        // 生成最终数据 - 修复版
+        function generateFinalData() {
+            if (processedData.length === 0) {
+                applySectorMapping();
+            }
+            
+            console.log("开始生成最终数据...");
+            console.log("目标列顺序:", targetColumnOrder);
+            console.log("标准列顺序:", STANDARD_COLUMN_NAMES);
+            
+            // 创建列映射关系
+            const columnMapping = {};
+            
+            // 为每个标准列找到对应的实际列
+            STANDARD_COLUMN_NAMES.forEach(standardCol => {
+                let foundMatch = null;
+                
+                // 在目标列顺序中查找匹配
+                for (let i = 0; i < targetColumnOrder.length; i++) {
+                    const actualCol = targetColumnOrder[i];
+                    if (actualCol && checkColumnMatch(actualCol, standardCol)) {
+                        foundMatch = actualCol;
+                        console.log(`映射: ${standardCol} -> ${actualCol}`);
+                        break;
+                    }
+                }
+                
+                columnMapping[standardCol] = foundMatch;
+            });
+            
+            console.log("列映射关系:", columnMapping);
+            
+            // 生成最终数据
+            finalData = processedData.map((row, rowIndex) => {
+                const newRow = {};
+                
+                // 为每个标准列赋值
+                STANDARD_COLUMN_NAMES.forEach(standardCol => {
+                    const actualCol = columnMapping[standardCol];
+                    
+                    if (actualCol && row[actualCol] !== undefined && row[actualCol] !== '') {
+                        newRow[standardCol] = row[actualCol];
+                    } else {
+                        newRow[standardCol] = '';
+                    }
+                });
+                
+                return newRow;
+            });
+            
+            console.log("最终数据示例:", finalData[0]);
+            return finalData;
         }
         
         // 开始处理
@@ -1272,6 +1788,12 @@
                     // 生成最终数据
                     generateFinalData();
                     
+                    // 调试输出
+                    debugDataMapping();
+                    
+                    // 更新步骤状态
+                    updateStepStatus(5, true);
+                    
                     document.getElementById('currentStatus').innerHTML = `
                         <span style="color: #4CAF50;">✓ 数据处理完成</span><br>
                         <span style="font-size: 12px; color: #888;">${processedData.length} 行数据已就绪</span>
@@ -1280,42 +1802,44 @@
             }, 200);
         }
         
-        // 生成最终数据
-        function generateFinalData() {
-            if (processedData.length === 0) {
-                // 如果没有应用行业映射，先处理
-                applySectorMapping();
-            }
-            
-            // 按照目标列顺序重新组织数据
-            finalData = processedData.map(row => {
-                const newRow = {};
-                targetColumnOrder.forEach(col => {
-                    newRow[col] = row[col] || '';
-                });
-                return newRow;
-            });
-        }
-        
-        // 下载结果
+        // 下载结果 - 修复版
         function downloadResult() {
             if (!finalData || finalData.length === 0) {
+                generateFinalData();
+            }
+            
+            if (finalData.length === 0) {
                 alert('请先处理数据！');
                 return;
             }
             
-            // 转换为CSV
-            let csvContent = targetColumnOrder.join(',') + '\n';
+            // 使用标准列顺序
+            const exportColumns = STANDARD_COLUMN_NAMES;
             
-            finalData.forEach(row => {
-                const rowContent = targetColumnOrder.map(col => {
-                    const value = row[col];
-                    // 处理包含逗号或引号的值
-                    if (typeof value === 'string' && (value.includes(',') || value.includes('"'))) {
+            console.log("导出列顺序:", exportColumns);
+            console.log("第一行数据:", finalData[0]);
+            
+            // 转换为CSV
+            let csvContent = exportColumns.join(',') + '\n';
+            
+            finalData.forEach((row, rowIndex) => {
+                const rowContent = exportColumns.map(col => {
+                    let value = row[col] || '';
+                    
+                    // 确保值是字符串
+                    if (value !== null && value !== undefined) {
+                        value = value.toString();
+                    } else {
+                        value = '';
+                    }
+                    
+                    // 处理包含逗号、引号或换行符的值
+                    if (value.includes(',') || value.includes('"') || value.includes('\n')) {
                         return `"${value.replace(/"/g, '""')}"`;
                     }
                     return value;
                 }).join(',');
+                
                 csvContent += rowContent + '\n';
             });
             
@@ -1328,194 +1852,484 @@
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
+            
+            // 显示下载成功消息
+            const matchedCount = getMatchedColumnCount();
+            alert(`下载成功！\n\n文件: EOD_Processed_${new Date().toISOString().slice(0,10)}.csv\n行数: ${finalData.length}\n列数: ${exportColumns.length}\n标准列匹配: ${matchedCount}/${STANDARD_COLUMN_NAMES.length}`);
         }
         
         // 导出JSON
         function exportToJSON() {
             if (!finalData || finalData.length === 0) {
+                generateFinalData();
+            }
+            
+            if (finalData.length === 0) {
                 alert('请先处理数据！');
                 return;
             }
             
-            const jsonData = {
-                metadata: {
-                    processed_date: new Date().toISOString(),
-                    total_records: finalData.length,
-                    columns: targetColumnOrder,
-                    sector_mapping: 'applied'
-                },
-                data: finalData
-            };
-            
-            const jsonStr = JSON.stringify(jsonData, null, 2);
-            const blob = new Blob([jsonStr], { type: 'application/json' });
-            const link = document.createElement('a');
+            const jsonData = JSON.stringify(finalData, null, 2);
+            const blob = new Blob([jsonData], { type: 'application/json' });
             const url = URL.createObjectURL(blob);
-            link.setAttribute('href', url);
-            link.setAttribute('download', `EOD_Processed_${new Date().toISOString().slice(0,10)}.json`);
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `EOD_Processed_${new Date().toISOString().slice(0,10)}.json`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            
+            alert(`JSON导出成功！\n文件: EOD_Processed_${new Date().toISOString().slice(0,10)}.json\n行数: ${finalData.length}`);
         }
         
         // 查看行业统计
         function viewSectorStats() {
             if (processedData.length === 0) {
-                alert('请先应用行业映射！');
+                alert('请先处理数据！');
                 return;
             }
             
             const sectorCounts = {};
-            
             processedData.forEach(row => {
-                const sectorKey = Object.keys(row).find(key => 
-                    key.toLowerCase().includes('sector') || 
-                    key.toLowerCase().includes('industry')
-                );
+                // 查找Sector列
+                let sector = '';
+                for (const [key, value] of Object.entries(row)) {
+                    if (key.toLowerCase().includes('sector') || key === 'Sector') {
+                        sector = value;
+                        break;
+                    }
+                }
                 
-                if (sectorKey && row[sectorKey]) {
-                    const sector = row[sectorKey];
+                if (sector) {
                     sectorCounts[sector] = (sectorCounts[sector] || 0) + 1;
                 }
             });
             
-            let statsText = '行业分布统计：\n\n';
-            for (const [sector, count] of Object.entries(sectorCounts)) {
-                statsText += `${sector}: ${count} 个股票 (${((count/processedData.length)*100).toFixed(1)}%)\n`;
-            }
+            let statsHTML = '<h3>行业分布统计：</h3>';
+            statsHTML += `<p>总计: ${processedData.length} 行数据</p>`;
+            statsHTML += '<table style="width:100%;border-collapse:collapse;margin-top:15px;">';
+            statsHTML += '<tr style="background:#f0f0f0;"><th>行业</th><th>股票数量</th><th>占比</th></tr>';
             
-            alert(statsText);
+            Object.entries(sectorCounts).forEach(([sector, count]) => {
+                const percentage = ((count / processedData.length) * 100).toFixed(2);
+                statsHTML += `
+                    <tr style="border-bottom:1px solid #ddd;">
+                        <td style="padding:8px;">${sector}</td>
+                        <td style="padding:8px;text-align:center;">${count}</td>
+                        <td style="padding:8px;text-align:center;">${percentage}%</td>
+                    </tr>
+                `;
+            });
+            
+            statsHTML += '</table>';
+            
+            // 显示在模态框中
+            document.getElementById('statsContent').innerHTML = statsHTML;
+            document.getElementById('statsModal').style.display = 'block';
         }
         
-        // 显示完整行业映射
-        function showFullSectorMapping() {
-            const modal = document.getElementById('sectorModal');
-            const content = document.getElementById('fullSectorMapping');
+        // 调试函数，检查数据转换过程
+        function debugDataMapping() {
+            if (rawData.length === 0) {
+                console.log("没有原始数据");
+                return;
+            }
             
-            let html = '<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px;">';
+            console.log("=== 数据映射调试 ===");
+            console.log("原始列顺序:", currentColumns);
+            console.log("目标列顺序:", targetColumnOrder);
+            console.log("标准列名:", STANDARD_COLUMN_NAMES);
             
-            // 按代码排序
-            const sortedCodes = Object.keys(SECTOR_MAP)
-                .filter(key => key !== 'default_mapping')
-                .sort();
+            // 检查第一行数据的列名
+            const firstRow = rawData[0];
+            console.log("原始数据第一行:", firstRow);
             
-            sortedCodes.forEach(code => {
-                html += `
-                    <div style="border: 1px solid #e0e0e0; border-radius: 6px; padding: 10px; font-size: 12px;">
-                        <div style="font-weight: bold; color: #1976d2;">${code}</div>
-                        <div>${SECTOR_MAP[code]}</div>
+            // 检查每个列是否匹配
+            STANDARD_COLUMN_NAMES.forEach((stdCol, index) => {
+                const targetCol = targetColumnOrder[index];
+                const isMatched = targetCol ? checkColumnMatch(targetCol, stdCol) : false;
+                const actualValue = firstRow ? firstRow[targetCol] : 'N/A';
+                console.log(`${index + 1}. ${stdCol} -> ${targetCol || '未匹配'} ${isMatched ? '✓' : '✗'} 值: ${actualValue}`);
+            });
+            
+            // 显示在页面上
+            let debugHTML = '<h3>调试信息：</h3>';
+            debugHTML += '<p><strong>原始列顺序:</strong> ' + currentColumns.join(', ') + '</p>';
+            debugHTML += '<p><strong>目标列顺序:</strong> ' + targetColumnOrder.join(', ') + '</p>';
+            
+            debugHTML += '<table style="width:100%;border-collapse:collapse;margin-top:15px;">';
+            debugHTML += '<tr style="background:#f0f0f0;"><th>标准列</th><th>映射列</th><th>匹配状态</th><th>示例值</th></tr>';
+            
+            STANDARD_COLUMN_NAMES.forEach((stdCol, index) => {
+                const targetCol = targetColumnOrder[index];
+                const isMatched = targetCol ? checkColumnMatch(targetCol, stdCol) : false;
+                const actualValue = rawData[0] ? rawData[0][targetCol] || '' : '';
+                
+                debugHTML += `
+                    <tr style="border-bottom:1px solid #ddd;">
+                        <td style="padding:5px;"><strong>${stdCol}</strong></td>
+                        <td style="padding:5px;">${targetCol || '未匹配'}</td>
+                        <td style="padding:5px; color:${isMatched ? 'green' : 'red'}">
+                            ${isMatched ? '✓ 匹配' : '✗ 不匹配'}
+                        </td>
+                        <td style="padding:5px;">${actualValue}</td>
+                    </tr>
+                `;
+            });
+            
+            debugHTML += '</table>';
+            
+            const debugWindow = window.open();
+            debugWindow.document.write(`
+                <html>
+                <head>
+                    <title>调试信息</title>
+                    <style>
+                        body { font-family: Arial, sans-serif; padding: 20px; }
+                        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+                        th, td { padding: 8px; text-align: left; border-bottom: 1px solid #ddd; }
+                        th { background-color: #f2f2f2; }
+                    </style>
+                </head>
+                <body>
+                    ${debugHTML}
+                </body>
+                </html>
+            `);
+        }
+        
+        // 手动调整列映射
+        function adjustColumnManually() {
+            if (currentColumns.length === 0) {
+                alert('请先上传数据！');
+                return;
+            }
+            
+            // 创建一个界面让用户手动调整列顺序
+            let manualHtml = `
+                <div style="padding: 20px; max-width: 800px;">
+                    <h3>手动调整列映射</h3>
+                    <p>请为每个标准列选择对应的实际列：</p>
+                    <div id="manualMapping" style="margin: 20px 0;">
+            `;
+            
+            STANDARD_COLUMN_NAMES.forEach((stdCol, index) => {
+                // 查找当前匹配的列
+                let currentMatch = '';
+                if (index < targetColumnOrder.length) {
+                    currentMatch = targetColumnOrder[index];
+                }
+                
+                manualHtml += `
+                    <div style="margin: 10px 0; padding: 10px; border: 1px solid #ddd; border-radius: 5px; background: #f9f9f9;">
+                        <strong>${index + 1}. ${stdCol}:</strong>
+                        <select id="map-${stdCol}" style="margin-left: 10px; padding: 5px; min-width: 250px;">
+                            <option value="">-- 选择对应列 --</option>
+                `;
+                
+                currentColumns.forEach(actualCol => {
+                    const isSelected = currentMatch === actualCol;
+                    manualHtml += `<option value="${actualCol}" ${isSelected ? 'selected' : ''}>${actualCol}</option>`;
+                });
+                
+                manualHtml += `
+                        </select>
                     </div>
                 `;
             });
             
-            html += '</div>';
-            content.innerHTML = html;
-            modal.style.display = 'block';
+            manualHtml += `
+                    </div>
+                    <div style="margin-top: 20px;">
+                        <button id="applyManualBtn" style="padding: 10px 20px; background: #4CAF50; color: white; border: none; border-radius: 5px; cursor: pointer;">
+                            应用手动映射
+                        </button>
+                        <button id="cancelManualBtn" style="padding: 10px 20px; background: #f44336; color: white; border: none; border-radius: 5px; cursor: pointer; margin-left: 10px;">
+                            取消
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            const manualWindow = window.open();
+            manualWindow.document.write(`
+                <html>
+                <head>
+                    <title>手动调整列映射</title>
+                    <style>
+                        body { font-family: Arial, sans-serif; }
+                        select { min-width: 200px; }
+                        button { cursor: pointer; }
+                    </style>
+                </head>
+                <body>${manualHtml}</body>
+                </html>
+            `);
+            
+            // 添加事件处理
+            manualWindow.document.getElementById('applyManualBtn').onclick = function() {
+                const newTargetOrder = [];
+                STANDARD_COLUMN_NAMES.forEach(stdCol => {
+                    const select = manualWindow.document.getElementById(`map-${stdCol}`);
+                    const selectedCol = select.value;
+                    if (selectedCol) {
+                        newTargetOrder.push(selectedCol);
+                    }
+                });
+                
+                // 添加剩余的列
+                currentColumns.forEach(col => {
+                    if (!newTargetOrder.includes(col)) {
+                        newTargetOrder.push(col);
+                    }
+                });
+                
+                targetColumnOrder = newTargetOrder;
+                updateTargetColumnsDisplay();
+                updateColumnMatchInfo();
+                
+                manualWindow.close();
+                alert('手动映射已应用！');
+            };
+            
+            manualWindow.document.getElementById('cancelManualBtn').onclick = function() {
+                manualWindow.close();
+            };
         }
         
-        // 关闭行业映射模态框
+        // 显示完整行业映射
+        function showFullSectorMapping() {
+            const content = document.getElementById('fullSectorMapping');
+            
+            let html = '<h3>完整行业代码映射：</h3>';
+            html += '<table style="width:100%;border-collapse:collapse;margin-top:15px;">';
+            html += '<tr style="background:#f0f0f0;"><th>代码</th><th>行业名称</th></tr>';
+            
+            // 按照代码排序
+            const sortedCodes = Object.keys(SECTOR_MAP).sort((a, b) => {
+                if (a === 'default_mapping') return 1;
+                if (b === 'default_mapping') return -1;
+                return a.localeCompare(b, undefined, {numeric: true});
+            });
+            
+            sortedCodes.forEach(code => {
+                if (code !== 'default_mapping') {
+                    html += `
+                        <tr style="border-bottom:1px solid #ddd;">
+                            <td style="padding:8px;"><strong>${code}</strong></td>
+                            <td style="padding:8px;">${SECTOR_MAP[code]}</td>
+                        </tr>
+                    `;
+                }
+            });
+            
+            html += '</table>';
+            
+            // 添加默认映射
+            html += '<h3 style="margin-top:20px;">默认映射：</h3>';
+            html += '<table style="width:100%;border-collapse:collapse;">';
+            html += '<tr style="background:#f0f0f0;"><th>代码开头</th><th>行业名称</th></tr>';
+            
+            Object.entries(SECTOR_MAP.default_mapping).forEach(([code, name]) => {
+                html += `
+                    <tr style="border-bottom:1px solid #ddd;">
+                        <td style="padding:8px;"><strong>${code}</strong></td>
+                        <td style="padding:8px;">${name}</td>
+                    </tr>
+                `;
+            });
+            
+            html += '</table>';
+            
+            content.innerHTML = html;
+            document.getElementById('sectorModal').style.display = 'block';
+        }
+        
+        // 关闭行业模态框
         function closeSectorModal() {
             document.getElementById('sectorModal').style.display = 'none';
         }
         
-        // 加载示例数据
-        function loadSampleData() {
-            // 创建示例数据
-            rawData = [
-                {
-                    "Code": "1015",
-                    "Name": "EXAMPLE1",
-                    "Sector": "101",
-                    "Open": 1.20,
-                    "Last": 1.25,
-                    "Prv Close": 1.18,
-                    "Change": "+0.07",
-                    "High": 1.30,
-                    "Low": 1.15,
-                    "Volume": 123456
-                },
-                {
-                    "Code": "3020", 
-                    "Name": "EXAMPLE2",
-                    "Sector": "302",
-                    "Open": 2.50,
-                    "Last": 2.45,
-                    "Prv Close": 2.55,
-                    "Change": "-0.10",
-                    "High": 2.60,
-                    "Low": 2.40,
-                    "Volume": 98765
-                }
-            ];
-            
-            currentColumns = ["Code", "Name", "Sector", "Open", "Last", "Prv Close", "Change", "High", "Low", "Volume"];
-            
-            // 更新UI
-            document.getElementById('uploadStatus').innerHTML = `
-                <div style="background: #E8F5E9; padding: 10px; border-radius: 5px; color: #4CAF50;">
-                    <i class="fas fa-check-circle"></i> 示例数据已加载
-                </div>
-            `;
-            
-            document.getElementById('columnSection').style.display = 'block';
-            document.getElementById('sectorSection').style.display = 'block';
-            document.getElementById('previewSection').style.display = 'block';
-            document.getElementById('processSection').style.display = 'block';
-            
-            initializeColumnList();
-            autoArrangeColumns();
-            
-            document.getElementById('currentStatus').innerHTML = `
-                <span style="color: #4CAF50;">✓ 示例数据已加载</span><br>
-                <span style="font-size: 12px; color: #888;">${rawData.length} 行示例数据</span>
-            `;
+        // 关闭统计模态框
+        function closeStatsModal() {
+            document.getElementById('statsModal').style.display = 'none';
         }
         
-        // 全部重置
-        function resetAll() {
-            rawData = [];
-            processedData = [];
-            currentColumns = [];
-            targetColumnOrder = [];
+        // 加载示例数据
+        function loadSampleData() {
+            // 创建与您提供的示例数据格式相同的示例数据
+            const sampleCSV = `Code,Stock,Status,P/E,EPS*,MACD (26, 12),RSI (14),Vol MA (20),B%,DY*,Vol,Y-Low,Y-High,High,Low,Chg%,Prv Close,Last,Open,Sector
+5681,PETDAG,Active,17.54,109.4,-0.65,42%,844450,64,5.43%,11776,16.1,23.8,19.72,19.38,1.65%,19.4,19.72,19.38,101
+4065,PPB,Active,12.14,85.72,-0.282,33%,1209920,59,3.96%,12030,8.23,12.58,10.7,10.28,2.91%,10.3,10.6,10.3,101
+2445,KLK,Active,22.93,73.9,-0.263,43%,1532915,47,3.00%,19034,18.34,21.86,20.18,19.7,1.52%,19.7,20,19.7,125`;
             
-            document.getElementById('uploadStatus').innerHTML = '';
-            document.getElementById('availableColumns').innerHTML = '';
-            document.getElementById('targetColumns').innerHTML = `
-                <div class="target-placeholder">
-                    <i class="fas fa-arrow-down" style="font-size: 32px; color: #ccc; margin-bottom: 10px;"></i>
-                    <div>将列拖放到这里</div>
+            // 模拟文件上传
+            const uploadStatus = document.getElementById('uploadStatus');
+            uploadStatus.innerHTML = `
+                <div style="background: #e3f2fd; padding: 10px; border-radius: 5px;">
+                    <i class="fas fa-spinner fa-spin"></i> 正在加载示例数据...
                 </div>
             `;
-            document.getElementById('dataPreview').innerHTML = '';
-            document.getElementById('processProgress').style.width = '0%';
-            document.getElementById('processText').textContent = '等待开始...';
-            document.getElementById('processPercent').textContent = '0%';
-            document.getElementById('downloadBtn').disabled = true;
             
-            document.getElementById('currentStatus').innerHTML = '等待上传文件...';
-            document.getElementById('fileInfo').innerHTML = '';
+            setTimeout(() => {
+                try {
+                    const lines = sampleCSV.split('\n');
+                    const headers = parseCSVLine(lines[0]);
+                    const data = [];
+                    
+                    for (let i = 1; i < lines.length; i++) {
+                        if (lines[i].trim()) {
+                            const values = parseCSVLine(lines[i]);
+                            const row = {};
+                            headers.forEach((header, index) => {
+                                row[header.trim()] = values[index] ? values[index].trim() : '';
+                            });
+                            data.push(row);
+                        }
+                    }
+                    
+                    rawData = data;
+                    currentColumns = headers.map(h => h.trim());
+                    
+                    uploadStatus.innerHTML = `
+                        <div style="background: #E8F5E9; padding: 10px; border-radius: 5px; color: #4CAF50;">
+                            <i class="fas fa-check-circle"></i> 示例数据加载成功！
+                            <div style="font-size: 12px; margin-top: 5px;">
+                                加载了 ${data.length} 行示例数据
+                            </div>
+                        </div>
+                    `;
+                    
+                    // 更新步骤状态
+                    updateStepStatus(1, true);
+                    
+                    // 更新状态
+                    document.getElementById('currentStatus').innerHTML = `
+                        <span style="color: #4CAF50;">✓ 示例数据已加载</span><br>
+                        <span style="font-size: 12px; color: #888;">${data.length} 行示例数据</span>
+                    `;
+                    
+                    document.getElementById('fileInfo').innerHTML = `
+                        文件名: 示例数据.csv<br>
+                        大小: 1.2 KB<br>
+                        列数: ${headers.length}
+                    `;
+                    
+                    // 显示列管理区域
+                    document.getElementById('columnSection').style.display = 'block';
+                    document.getElementById('sectorSection').style.display = 'block';
+                    document.getElementById('previewSection').style.display = 'block';
+                    document.getElementById('processSection').style.display = 'block';
+                    
+                    // 初始化列列表
+                    initializeColumnList();
+                    
+                    // 尝试自动排列列
+                    setTimeout(() => {
+                        autoArrangeColumns();
+                        updateStepStatus(2, true);
+                    }, 500);
+                    
+                } catch (error) {
+                    uploadStatus.innerHTML = `
+                        <div style="background: #FFEBEE; padding: 10px; border-radius: 5px; color: #f44336;">
+                            <i class="fas fa-exclamation-triangle"></i> 示例数据加载失败
+                        </div>
+                    `;
+                }
+            }, 1000);
+        }
+        
+        // 重置所有
+        function resetAll() {
+            if (confirm('确定要重置所有数据吗？所有进度将丢失。')) {
+                rawData = [];
+                processedData = [];
+                currentColumns = [];
+                targetColumnOrder = [];
+                finalData = [];
+                
+                // 重置UI
+                document.getElementById('columnSection').style.display = 'none';
+                document.getElementById('sectorSection').style.display = 'none';
+                document.getElementById('previewSection').style.display = 'none';
+                document.getElementById('processSection').style.display = 'none';
+                
+                document.getElementById('availableColumns').innerHTML = '';
+                document.getElementById('targetColumns').innerHTML = `
+                    <div class="target-placeholder">
+                        <i class="fas fa-arrow-down" style="font-size: 32px; color: #ccc; margin-bottom: 10px;"></i>
+                        <div>将列拖放到这里</div>
+                    </div>
+                `;
+                
+                document.getElementById('dataPreview').innerHTML = '';
+                document.getElementById('previewRowCount').textContent = '0';
+                document.getElementById('processProgress').style.width = '0%';
+                document.getElementById('processText').textContent = '等待开始...';
+                document.getElementById('processPercent').textContent = '0%';
+                document.getElementById('downloadBtn').disabled = true;
+                
+                document.getElementById('currentStatus').innerHTML = '等待上传文件...';
+                document.getElementById('fileInfo').innerHTML = '';
+                document.getElementById('columnMatchInfo').innerHTML = '';
+                document.getElementById('uploadStatus').innerHTML = '';
+                
+                // 重置步骤指示器
+                for (let i = 1; i <= 5; i++) {
+                    document.getElementById(`step${i}`).style.background = i === 1 ? '#1976d2' : '#e0e0e0';
+                    document.getElementById(`step${i}`).style.color = i === 1 ? 'white' : '#666';
+                }
+                
+                // 重置文件输入
+                document.getElementById('csvInput').value = '';
+            }
+        }
+        
+        // 更新步骤状态
+        function updateStepStatus(step, completed) {
+            const stepElement = document.getElementById(`step${step}`);
+            if (completed) {
+                stepElement.style.background = '#4CAF50';
+                stepElement.style.color = 'white';
+                stepElement.innerHTML = '<i class="fas fa-check"></i>';
+            } else {
+                stepElement.style.background = '#1976d2';
+                stepElement.style.color = 'white';
+                stepElement.textContent = step;
+            }
             
-            document.getElementById('csvInput').value = '';
+            // 激活下一步
+            if (step < 5 && completed) {
+                const nextStep = document.getElementById(`step${step + 1}`);
+                nextStep.style.background = '#1976d2';
+                nextStep.style.color = 'white';
+            }
         }
         
         // 更新状态
         function updateStatus() {
-            const matchedCount = targetColumnOrder.filter(col => 
-                REQUIRED_COLUMNS.some(req => 
-                    col.toLowerCase().includes(req.toLowerCase()) ||
-                    req.toLowerCase().includes(col.toLowerCase())
-                )
-            ).length;
-            
-            document.getElementById('currentStatus').innerHTML = `
-                <span style="color: #1976d2;">已选择 ${targetColumnOrder.length} 列</span><br>
-                <span style="font-size: 12px; color: ${matchedCount >= REQUIRED_COLUMNS.length ? '#4CAF50' : '#FF9800'};">
-                    必需列: ${matchedCount}/${REQUIRED_COLUMNS.length}
-                </span>
-            `;
+            if (targetColumnOrder.length > 0) {
+                const matchedCount = getMatchedColumnCount();
+                const matchPercentage = Math.round((matchedCount / STANDARD_COLUMN_NAMES.length) * 100);
+                
+                let color = '#4CAF50';
+                if (matchPercentage < 70) color = '#FF9800';
+                if (matchPercentage < 50) color = '#f44336';
+                
+                document.getElementById('currentStatus').innerHTML = `
+                    <span style="color: ${color};">
+                        ${matchPercentage >= 70 ? '✓' : matchPercentage >= 50 ? '⚠' : '✗'} 列排列完成
+                    </span><br>
+                    <span style="font-size: 12px; color: #888;">
+                        匹配了 ${matchedCount}/${STANDARD_COLUMN_NAMES.length} 个标准列
+                    </span>
+                `;
+            }
         }
         
-        // 辅助函数
+        // 辅助函数：格式化文件大小
         function formatFileSize(bytes) {
             if (bytes === 0) return '0 Bytes';
             const k = 1024;
@@ -1526,9 +2340,14 @@
         
         // 点击模态框外部关闭
         window.onclick = function(event) {
-            const modal = document.getElementById('sectorModal');
-            if (event.target == modal) {
+            const sectorModal = document.getElementById('sectorModal');
+            const statsModal = document.getElementById('statsModal');
+            
+            if (event.target == sectorModal) {
                 closeSectorModal();
+            }
+            if (event.target == statsModal) {
+                closeStatsModal();
             }
         };
     </script>

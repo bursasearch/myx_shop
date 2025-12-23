@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>测试日期选择器</title>
+    <style>
+        body { font-family: Arial; padding: 20px; }
+        .date-picker { margin: 20px 0; padding: 15px; background: #f5f5f5; }
+        .file-list { margin: 20px 0; }
+    </style>
+</head>
+<body>
+    <h1>测试日期选择器</h1>
+    
+    <div class="date-picker">
+        <label>选择日期:</label>
+        <select id="dateSelect">
+            <!-- 选项会由JavaScript生成 -->
+        </select>
+    </div>
+    
+    <div class="file-list">
+        <h3>实际存在的文件：</h3>
+        <ul id="realFiles"></ul>
+    </div>
+    
+    <script>
+        // 真实存在的文件
+        const realFiles = [
+            { file: 'picks_20251221.json', date: '2025-12-21' },
+            { file: 'picks_20251220.json', date: '2025-12-20' },
+            { file: 'picks_20251218.json', date: '2025-12-18' },
+            { file: 'picks_20251217.json', date: '2025-12-17' },
+            { file: 'picks_20251216.json', date: '2025-12-16' },
+            { file: 'picks_20251215.json', date: '2025-12-15' }
+        ];
+        
+        // 初始化日期选择器
+        function initDateSelector() {
+            const dateSelect = document.getElementById('dateSelect');
+            const fileList = document.getElementById('realFiles');
+            
+            // 清空
+            dateSelect.innerHTML = '';
+            fileList.innerHTML = '';
+            
+            // 添加最新数据选项
+            const latestOption = document.createElement('option');
+            latestOption.value = 'latest';
+            latestOption.textContent = '最新数据 (picks_latest.json)';
+            latestOption.selected = true;
+            dateSelect.appendChild(latestOption);
+            
+            // 添加真实存在的日期
+            realFiles.forEach(item => {
+                // 日期选择器选项
+                const option = document.createElement('option');
+                option.value = item.date;
+                option.textContent = item.date;
+                dateSelect.appendChild(option);
+                
+                // 文件列表
+                const li = document.createElement('li');
+                li.textContent = `${item.file} → ${item.date}`;
+                fileList.appendChild(li);
+            });
+            
+            // 事件监听
+            dateSelect.addEventListener('change', function() {
+                const selectedDate = this.value;
+                console.log('选择了:', selectedDate);
+                alert(`选择了: ${selectedDate}`);
+            });
+        }
+        
+        // 初始化
+        initDateSelector();
+    </script>
+</body>
+</html>

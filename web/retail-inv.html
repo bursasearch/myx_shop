@@ -841,7 +841,7 @@
                         <label for="shareUnits"><i class="fas fa-chart-bar"></i> 购买股数 (单位: 100股)</label>
                         <div style="display: flex; align-items: center; gap: 10px;">
                             <input type="range" id="shareUnitsRange" min="1" max="100" value="10" style="flex: 1;">
-                            <input type="number" id="shareUnits" class="form-input" min="1" max="1000" value="10" style="width: 80px;">
+                            <input type="number" id="shareUnits" class="form-input" min="1" max1000 value="10" style="width: 80px;">
                         </div>
                         <small style="color: var(--gray); margin-top: 5px; display: block;">
                             总股数: <span id="totalSharesDisplay">1,000</span> 股 | 投资: <span id="investmentAmount">RM 0.00</span>
@@ -889,7 +889,7 @@
                             </div>
                             <div class="form-group">
                                 <label style="font-size: 12px;">上限 (RM)</label>
-                                <input type="number" id="stampDutyCap" class="form-input" step="1" min="0" value="1000">
+                                <input type="number" id="stampDutyCap" class="form-input" step="1" min="0" value1000>
                             </div>
                         </div>
                         
@@ -1070,22 +1070,30 @@
             dateSelect.innerHTML = '';
             
             // 生成最近7天的日期选项
-            for (let i = 0; i < 7; i++) {
-                const date = new Date();
-                date.setDate(date.getDate() - i);
-                const dateStr = date.toISOString().split('T')[0];
-                const option = document.createElement('option');
-                option.value = dateStr;
-                option.textContent = dateStr + (i === 0 ? ' (今天)' : '');
-                if (i === 0) option.selected = true;
-                dateSelect.appendChild(option);
-            }
-            
-            dateSelect.addEventListener('change', function() {
-                currentDate = this.value;
-                console.log('选择日期:', currentDate);
-                loadCurrentData();
-            });
+        // 真实存在的日期选项
+        const availableDates = [
+            '2025-12-21',
+            '2025-12-20',
+            '2025-12-18',
+            '2025-12-17',
+            '2025-12-16',
+            '2025-12-15'
+        ];
+        
+        // 添加'最新数据'选项
+        const latestOption = document.createElement('option');
+        latestOption.value = 'latest';
+        latestOption.textContent = '最新数据';
+        latestOption.selected = true;
+        dateSelect.appendChild(latestOption);
+        
+        // 添加真实日期选项
+        availableDates.forEach(dateStr => {
+            const option = document.createElement('option');
+            option.value = dateStr;
+            option.textContent = dateStr;
+            dateSelect.appendChild(option);
+        });
         }
         
         // 初始化触摸反馈

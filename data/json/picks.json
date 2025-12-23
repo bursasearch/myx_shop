@@ -32,7 +32,7 @@
   "picks": [
     {
       "rank": 1,
-      "code": "=\"5210\"",
+      "code": "5210",
       "name": "ARMADA",
       "sector": "Unknown",
       "current_price": 0.31,
@@ -53,7 +53,7 @@
     },
     {
       "rank": 2,
-      "code": "=\"0157\"",
+      "code": "0157",
       "name": "FOCUSP",
       "sector": "Unknown",
       "current_price": 0.49,
@@ -74,7 +74,7 @@
     },
     {
       "rank": 3,
-      "code": "=\"5143\"",
+      "code": "5143",
       "name": "LUXCHEM",
       "sector": "Unknown",
       "current_price": 0.395,
@@ -95,7 +95,7 @@
     },
     {
       "rank": 4,
-      "code": "=\"3182\"",
+      "code": "3182",
       "name": "GENTING",
       "sector": "Unknown",
       "current_price": 3.06,
@@ -116,7 +116,7 @@
     },
     {
       "rank": 5,
-      "code": "=\"4723\"",
+      "code": "4723",
       "name": "JAKS",
       "sector": "Unknown",
       "current_price": 0.095,
@@ -137,7 +137,7 @@
     },
     {
       "rank": 6,
-      "code": "=\"7153\"",
+      "code": "7153",
       "name": "KOSSAN",
       "sector": "Unknown",
       "current_price": 1.13,
@@ -158,7 +158,7 @@
     },
     {
       "rank": 7,
-      "code": "=\"7668\"",
+      "code": "7668",
       "name": "BESHOM",
       "sector": "Unknown",
       "current_price": 0.61,
@@ -179,7 +179,7 @@
     },
     {
       "rank": 8,
-      "code": "=\"5121\"",
+      "code": "5121",
       "name": "HEKTAR",
       "sector": "Unknown",
       "current_price": 0.435,
@@ -200,7 +200,7 @@
     },
     {
       "rank": 9,
-      "code": "=\"5248\"",
+      "code": "5248",
       "name": "BAUTO",
       "sector": "Unknown",
       "current_price": 0.705,
@@ -221,7 +221,7 @@
     },
     {
       "rank": 10,
-      "code": "=\"4197\"",
+      "code": "4197",
       "name": "SIME",
       "sector": "Unknown",
       "current_price": 1.91,

@@ -1,0 +1,43 @@
+<!-- 正确的日期选择器 - 基于真实文件 -->
+<h3>選擇日期</h3>
+<select id="dateSelect">
+    <option value="picks_latest.json">最新數據 (picks_latest.json)</option>
+    <!-- 真实存在的日期文件 -->
+    <option value="picks_20251221.json">2025-12-21 (最新)</option>
+    <option value="picks_20251220.json">2025-12-20</option>
+    <option value="picks_20251218.json">2025-12-18</option>
+    <option value="picks_20251217.json">2025-12-17</option>
+    <option value="picks_20251216.json">2025-12-16</option>
+    <option value="picks_20251215.json">2025-12-15 (最早)</option>
+</select>
+
+<script>
+// 基于真实文件的日期选择器
+const availableDates = [
+    'picks_20251221.json',
+    'picks_20251220.json', 
+    'picks_20251218.json',
+    'picks_20251217.json',
+    'picks_20251216.json',
+    'picks_20251215.json'
+];
+
+function loadSelectedDate() {
+    const select = document.getElementById('dateSelect');
+    const selectedFile = select.value;
+    
+    if (selectedFile && availableDates.includes(selectedFile)) {
+        // 加载选中的日期文件
+        fetch(`history/${selectedFile}`)
+            .then(response => response.json())
+            .then(data => {
+                console.log(`已加载: ${selectedFile}`);
+                updateDisplay(data);
+            })
+            .catch(error => {
+                console.error(`加载失败: ${selectedFile}`, error);
+                alert(`無法加載 ${selectedFile}，文件可能不存在`);
+            });
+    }
+}
+</script>
