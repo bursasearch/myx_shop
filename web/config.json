@@ -1,0 +1,22 @@
+{
+  "system": {
+    "name": "BursaSearch AI验证系统",
+    "version": "1.0.0",
+    "data_mode": "live",
+    "github": {
+      "username": "eskay9761",
+      "repo": "bursasearch-data",
+      "branch": "main"
+    }
+  },
+  "fees": {
+    "brokerage_rate": 0.0042,
+    "brokerage_min": 8,
+    "clearing_rate": 0.0003,
+    "clearing_cap": 200,
+    "stamp_duty_per_thousand": 1.5,
+    "stamp_duty_cap": 1000,
+    "service_tax_rate": 0.06
+  },
+  "strategies": ["momentum", "value", "growth", "dividend", "technical"]
+}

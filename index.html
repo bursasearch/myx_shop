@@ -1,249 +1,299 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh">
 <head>
     <meta charset="UTF-8">
-    <title>Bursa AI 選股分析計算器</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Myx Shop - SSM註冊企業</title>
     
-    <!-- 直接加載 retail-inv.html 的標題 -->
+    <!-- Google Analytics 4 (GA4) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-92XTNG247J"></script>
     <script>
-        // 先加載 retail-inv.html 獲取標題
-        fetch('web/retail-inv.html')
-            .then(response => response.text())
-            .then(html => {
-                const parser = new DOMParser();
-                const doc = parser.parseFromString(html, 'text/html');
-                const title = doc.querySelector('title');
-                if (title) {
-                    document.title = title.textContent;
-                }
-            })
-            .catch(err => {
-                console.log('加載標題失敗，使用默認標題');
-                document.title = 'Bursa AI 選股分析';
-            });
+        const GA_MEASUREMENT_ID = 'G-92XTNG247J';
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', GA_MEASUREMENT_ID, {
+            page_title: 'Myx Shop - 主頁',
+            page_location: window.location.href,
+            time_zone: 'Asia/Kuala_Lumpur'
+        });
     </script>
     
     <style>
-        body, html {
-            margin: 0;
-            padding: 0;
-            height: 100%;
-            overflow: hidden;
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Segoe UI', 'Microsoft JhengHei', sans-serif; 
+            background: #f5f5f5;
+            min-height: 100vh; 
+            color: #333;
         }
-        iframe {
-            width: 100%;
-            height: 100vh;
-            border: none;
-            display: block;
+        .container { 
+            max-width: 1000px; 
+            margin: 0 auto; 
+            padding: 20px; 
         }
-        .loading {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            color: white;
-            font-family: Arial, sans-serif;
-            z-index: 1000;
-            transition: opacity 0.5s;
-        }
-        .spinner {
-            border: 4px solid rgba(255, 255, 255, 0.3);
-            border-top: 4px solid white;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            animation: spin 1s linear infinite;
+        
+        header {
+            background: white;
+            padding: 20px;
+            text-align: center;
+            border-radius: 10px;
             margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+        
+        h1 { 
+            color: #2d3748; 
+            font-size: 24px; 
+            margin-bottom: 10px; 
+        }
+        
+        .ssm-badge {
+            background: #48bb78;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            display: inline-block;
+            margin-bottom: 15px;
+            font-size: 14px;
+        }
+        
+        .ga-status-box {
+            background: #d4edda;
+            border: 1px solid #b1dfbb;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 15px 0;
+            text-align: center;
+        }
+        
+        .ga-id-box {
+            background: #155724;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-family: monospace;
+            font-size: 14px;
+            margin: 10px 0;
+            display: inline-block;
+        }
+        
+        .timezone-box {
+            background: #d1ecf1;
+            border: 1px solid #abdde5;
+            border-radius: 10px;
+            padding: 12px;
+            margin: 15px 0;
+            font-size: 14px;
+        }
+        
+        .ga-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin: 20px 0;
+        }
+        
+        .ga-btn {
+            background: #4285f4;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+            transition: opacity 0.3s;
+        }
+        
+        .ga-btn:hover {
+            opacity: 0.9;
+        }
+        
+        .nav-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .nav-card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-decoration: none;
+            color: inherit;
+            transition: transform 0.2s;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        
+        .nav-card:hover {
+            transform: translateY(-3px);
+        }
+        
+        footer {
+            background: white;
+            padding: 20px;
+            text-align: center;
+            border-radius: 10px;
+            margin-top: 20px;
+            font-size: 14px;
+            color: #666;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .ga-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .ga-btn {
+                width: 100%;
+                max-width: 300px;
+            }
+            
+            .nav-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
 <body>
-<<<<<<< HEAD
-    <div class="loading" id="loading">
-        <div class="spinner"></div>
-        <div>正在加載 Bursa AI 選股分析系統...</div>
-        <div style="margin-top: 10px; font-size: 0.9em;">http://localhost:5050/</div>
-=======
-    <div class="container fade-in">
+    <div class="container">
         <header>
-            <div class="logo">
-                <i class="fas fa-store"></i>
-            </div>
             <h1>Myx Shop</h1>
-            <p class="tagline">SSM註冊企業 | 多元化服務平台</p>
+            <p>SSM註冊企業 | 多元化服務平台</p>
             
             <div class="ssm-badge">
-                <i class="fas fa-certificate"></i> SSM註冊: 202510210078 (JM1034075-K)
+                SSM註冊: 202510210078 (JM1034075-K)
             </div>
             
-            <!-- Google Analytics Setup Status -->
-            <div class="setup-complete">
-                <h3><i class="fas fa-check-circle"></i> Google Analytics 4 已成功設置!</h3>
-                <div class="ga-id-display">
-                    <i class="fas fa-fingerprint"></i> 測量ID: G-92XTNG247J
+            <div class="ga-status-box">
+                <strong>Google Analytics 4 已設置</strong>
+                <div class="ga-id-box">
+                    測量ID: G-92XTNG247J
                 </div>
-                <p>您的網站現在正在收集分析數據</p>
+                <p>正在收集真實分析數據</p>
             </div>
             
-            <!-- Time Zone Information -->
-            <div class="timezone-info">
-                <h4><i class="fas fa-clock"></i> 時區設置: Asia/Kuala_Lumpur (UTC+8)</h4>
-                <p>所有數據將以馬來西亞時間記錄</p>
-                <div class="time-display" id="localTime"></div>
+            <div class="timezone-box">
+                <strong>時區設置:</strong> Asia/Kuala_Lumpur (UTC+8)<br>
+                數據以馬來西亞時間記錄
             </div>
             
-            <!-- Statistics Dashboard -->
-            <div class="stats-grid">
-                <div class="stat-card" onclick="trackEvent('stat_click', 'total_visitors')">
-                    <div class="stat-number" id="totalVisitors">1,247</div>
-                    <div class="stat-label">總訪客人數</div>
-                </div>
-                <div class="stat-card" onclick="trackEvent('stat_click', 'today_visitors')">
-                    <div class="stat-number" id="todayVisitors">42</div>
-                    <div class="stat-label">今日訪客</div>
-                </div>
-                <div class="stat-card" onclick="trackEvent('stat_click', 'active_users')">
-                    <div class="stat-number pulse" id="activeNow">3</div>
-                    <div class="stat-label">當前在線</div>
-                </div>
-                <div class="stat-card" onclick="trackEvent('stat_click', 'conversion_rate')">
-                    <div class="stat-number">4.7%</div>
-                    <div class="stat-label">轉化率</div>
-                </div>
+            <div class="ga-buttons">
+                <button class="ga-btn" style="background:#4285f4;" onclick="openGAConsole()">
+                    查看GA數據
+                </button>
+                <button class="ga-btn" style="background:#34a853;" onclick="showGASetup()">
+                    GA設置說明
+                </button>
+                <button class="ga-btn" style="background:#fbbc05;" onclick="copyGAID()">
+                    複製GA ID
+                </button>
+                <button class="ga-btn" style="background:#ea4335;" onclick="showRealTimeInfo()">
+                    實時報告
+                </button>
             </div>
             
-            <!-- Verification Button -->
-            <a href="http://127.0.0.1:5050/verification.html" class="verification-btn" onclick="trackEvent('button_click', 'verification_button')">
-                <i class="fas fa-check-circle"></i> 驗證商業資訊
+            <a href="http://127.0.0.1:5050/verification.html" style="display:inline-block; background:#667eea; color:white; padding:8px 20px; border-radius:20px; margin-top:15px; text-decoration:none;">
+                驗證商業資訊
             </a>
-            
-            <!-- Real-time Visitor Counter -->
-            <div class="visitor-counter">
-                <div class="counter-label">
-                    <i class="fas fa-users"></i> 即時訪客
-                </div>
-                <div class="counter-value" id="visitorCount">5</div>
-            </div>
-            
-            <!-- GA Status Indicator -->
-            <div class="ga-status" id="gaStatus">
-                <i class="fas fa-broadcast-tower"></i> Google Analytics 4 追蹤中...
-            </div>
-            
-            <p style="margin-top: 1.5rem; color: #555;">歡迎來到 Myx Shop - 您的一站式服務平台</p>
         </header>
 
-        <!-- Navigation Grid -->
         <div class="nav-grid">
-            <a href="http://127.0.0.1:5050/bursa.html" class="nav-card" onclick="trackNavigation('AI選股分析')">
-                <div class="nav-icon">
-                    <i class="fas fa-chart-line"></i>
-                </div>
+            <a href="http://127.0.0.1:5050/bursa.html" class="nav-card">
                 <h3>AI選股分析</h3>
                 <p>智能選股策略與市場分析</p>
-                <div style="margin-top: 1rem; color: #667eea;">
-                    <i class="fas fa-arrow-right"></i> 查看分析報告
-                </div>
             </a>
             
-            <a href="http://127.0.0.1:5050/products.html" class="nav-card" onclick="trackNavigation('聯盟商店')">
-                <div class="nav-icon">
-                    <i class="fas fa-shopping-bag"></i>
-                </div>
+            <a href="http://127.0.0.1:5050/products.html" class="nav-card">
                 <h3>聯盟商店</h3>
                 <p>熱門產品推薦與優惠</p>
-                <div style="margin-top: 1rem; color: #667eea;">
-                    <i class="fas fa-arrow-right"></i> 瀏覽產品
-                </div>
             </a>
             
-            <a href="http://127.0.0.1:5050/vehicles.html" class="nav-card" onclick="trackNavigation('二手車輛')">
-                <div class="nav-icon">
-                    <i class="fas fa-car"></i>
-                </div>
+            <a href="http://127.0.0.1:5050/vehicles.html" class="nav-card">
                 <h3>二手車輛</h3>
                 <p>車輛資訊與市場分析</p>
-                <div style="margin-top: 1rem; color: #667eea;">
-                    <i class="fas fa-arrow-right"></i> 查看車輛
-                </div>
             </a>
             
-            <a href="http://127.0.0.1:5050/real-estate.html" class="nav-card" onclick="trackNavigation('房地產代理')">
-                <div class="nav-icon">
-                    <i class="fas fa-building"></i>
-                </div>
+            <a href="http://127.0.0.1:5050/real-estate.html" class="nav-card">
                 <h3>房地產代理</h3>
                 <p>專業房地產服務與物業資訊</p>
-                <div style="margin-top: 1rem; color: #667eea;">
-                    <i class="fas fa-arrow-right"></i> 查看物業
-                </div>
             </a>
         </div>
 
-        <!-- Footer -->
         <footer>
-            <div class="company-info">
-                <p><strong>Myx Shop</strong></p>
-                <p>SSM Reg No: 202510210078 (JM1034075-K) | 馬來西亞註冊企業</p>
-                <p>© 2025 Myx Shop. 保留所有權利。</p>
-                <div class="time-display" id="footerTime"></div>
-                <p style="margin-top: 1rem; font-size: 0.8rem; color: #667eea;">
-                    <i class="fas fa-chart-bar"></i> 網站分析: Google Analytics 4 (ID: G-92XTNG247J)
-                </p>
-            </div>
+            <p><strong>Myx Shop</strong></p>
+            <p>SSM Reg No: 202510210078 (JM1034075-K)</p>
+            <p>© 2025 Myx Shop. 保留所有權利。</p>
+            <p>網站分析: Google Analytics 4 (ID: G-92XTNG247J)</p>
         </footer>
->>>>>>> 0c35ea6824b5f3cb30aedb48c89f2655e2c2ec9a
     </div>
-    
-    <iframe 
-        src="web/retail-inv.html" 
-        id="mainFrame"
-        onload="document.getElementById('loading').style.opacity = '0';
-                setTimeout(() => document.getElementById('loading').style.display = 'none', 500);"
-        allow="fullscreen"
-    ></iframe>
-    
+
     <script>
-        // 確保 iframe 可以全屏
-        document.getElementById('mainFrame').addEventListener('load', function() {
-            console.log('零售投資頁面已加載');
-            
-            // 嘗試從 iframe 獲取標題
-            try {
-                const iframeTitle = this.contentDocument.title;
-                if (iframeTitle && iframeTitle !== '') {
-                    document.title = iframeTitle;
+    // 注意：这里不再声明 GA_MEASUREMENT_ID，因为已经在头部声明过了
+    
+    function openGAConsole() {
+        const gaURL = `https://analytics.google.com/analytics/web/#/p${GA_MEASUREMENT_ID}/reports/intelligenthome`;
+        window.open(gaURL, '_blank');
+        alert('正在打開 Google Analytics 控制台');
+    }
+
+    function copyGAID() {
+        navigator.clipboard.writeText(GA_MEASUREMENT_ID)
+            .then(() => {
+                alert('已複製 GA4 測量ID: ' + GA_MEASUREMENT_ID);
+            })
+            .catch(err => {
+                console.error('复制失败:', err);
+                // 备用复制方法
+                const textArea = document.createElement('textarea');
+                textArea.value = GA_MEASUREMENT_ID;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                alert('已複製 GA4 測量ID: ' + GA_MEASUREMENT_ID);
+            });
+    }
+
+    function showGASetup() {
+        alert('GA4 測量ID: ' + GA_MEASUREMENT_ID + '\n狀態: 正常運作\n時區: Asia/Kuala_Lumpur');
+    }
+    
+    function showRealTimeInfo() {
+        alert('實時數據請在 Google Analytics 控制台中查看\n網址: https://analytics.google.com');
+    }
+    
+    document.addEventListener('DOMContentLoaded', function() {
+        // 基本 GA4 追蹤
+        if (typeof gtag === 'function') {
+            gtag('event', 'page_view', {
+                page_title: 'Myx Shop - 主頁',
+                business_name: 'Myx Shop',
+                ssm_number: '202510210078'
+            });
+        }
+        
+        // 追蹤導航點擊
+        document.querySelectorAll('.nav-card').forEach(card => {
+            card.addEventListener('click', function(e) {
+                if (typeof gtag === 'function') {
+                    const section = this.querySelector('h3').textContent;
+                    gtag('event', 'navigation_click', {
+                        event_category: 'Navigation',
+                        event_label: section
+                    });
                 }
-            } catch (e) {
-                // 跨域限制，忽略
-            }
+            });
         });
-        
-        // 如果 iframe 加載失敗
-        document.getElementById('mainFrame').addEventListener('error', function() {
-            document.getElementById('loading').innerHTML = 
-                '<div style="text-align: center; padding: 20px;">' +
-                '<h3>加載失敗</h3>' +
-                '<p>無法加載零售投資頁面</p>' +
-                '<p><a href="web/retail-inv.html" style="color: #FFD700;">點擊這裡直接訪問</a></p>' +
-                '</div>';
-        });
-        
-        // 顯示當前路徑信息
-        console.log('主頁面: index.html');
-        console.log('加載內容: web/retail-inv.html');
-        console.log('完整URL: ' + window.location.href);
-    </script>
+    });
+</script>
 </body>
 </html>

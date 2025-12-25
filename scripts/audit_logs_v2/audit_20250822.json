@@ -1,9 +1,9 @@
 {
   "source_file": "20250822.csv",
   "output_file": "normalized_20250822.csv",
-  "timestamp": "2025-12-24T02:52:40.044025Z",
+  "timestamp": "2025-12-25T04:19:35.787978Z",
   "delimiter_detected": "comma",
-  "present_columns": [
+  "original_columns": [
     "",
     "",
     "",
@@ -40,10 +40,48 @@
     "P/E",
     "Status"
   ],
-  "missing_columns_filled": [
-    "Sector"
+  "normalized_columns": [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "Code",
+    "Stock",
+    "Open",
+    "Last",
+    "Prv Close",
+    "Chg",
+    "High",
+    "Low",
+    "Y-High",
+    "Y-Low",
+    "Vol",
+    "DY*",
+    "B%",
+    "Vol MA (20)",
+    "RSI (14)",
+    "MACD (26, 12)",
+    "EPS*",
+    "P/E",
+    "Status"
   ],
   "rows_in": 5210,
   "rows_out": 5210,
-  "new_sector_codes": []
+  "sector_distribution": {
+    "Unknown": 5210
+  },
+  "chg_values_count": {},
+  "unmapped_sector_codes": []
 }

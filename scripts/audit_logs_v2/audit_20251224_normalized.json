@@ -1,0 +1,41 @@
+{
+  "source_file": "20251224_normalized.csv",
+  "output_file": "normalized_20251224_normalized.csv",
+  "timestamp": "2025-12-25T04:20:16.088855Z",
+  "delimiter_detected": "comma",
+  "original_columns": [
+    "code",
+    "name",
+    "sector",
+    "last_price",
+    "open",
+    "high",
+    "low",
+    "prev_close",
+    "change_percent",
+    "volume",
+    "sector_name",
+    "last_updated"
+  ],
+  "normalized_columns": [
+    "code",
+    "name",
+    "sector",
+    "last_price",
+    "open",
+    "high",
+    "low",
+    "prev_close",
+    "change_percent",
+    "volume",
+    "sector_name",
+    "last_updated"
+  ],
+  "rows_in": 2780,
+  "rows_out": 2780,
+  "sector_distribution": {
+    "Unknown": 2780
+  },
+  "chg_values_count": {},
+  "unmapped_sector_codes": []
+}

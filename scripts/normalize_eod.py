@@ -1,10 +1,7 @@
 #!/usr/bin/env python3
 import sys, csv, json, os, re
 from datetime import datetime, timezone
-<<<<<<< HEAD
-=======
 from collections import defaultdict
->>>>>>> 0c35ea6824b5f3cb30aedb48c89f2655e2c2ec9a
 
 def load_config(config_path):
     with open(config_path, "r", encoding="utf-8") as f:

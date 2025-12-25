@@ -1,14 +1,11 @@
- 122171 Unknown
-  75640 Technology
-  61733 Industrial & Consumer Products
-  25563 Property
-   7514 Telecommunications & Media
-   5360 Utilities
-   4752 Transportation & Logistics
-   3396 Financial
-   2870 Medical
-   2412 Energy
-    115 Sector
-     63 Consumer Products
+ 178254 Unknown
+  72162 Technology
+  46318 Industrial Products
+  13796 Property
+   2871 Industrial & Consumer Products
+   2476 Utilities
+    731 Transportation & Logistics
+    426 Telecommunications & Media
+    117 Sector
      38 -
       2  Forbid"

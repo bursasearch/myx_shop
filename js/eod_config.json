@@ -1,0 +1,38 @@
+{
+    "schema": [
+        "Code",
+        "Stock",
+        "Sector",
+        "Open",
+        "Last",
+        "Prv Close",
+        "Chg",
+        "High",
+        "Low",
+        "Y-High",
+        "Y-Low",
+        "Vol",
+        "DY*",
+        "B%",
+        "Vol MA (20)",
+        "RSI (14)",
+        "MACD (26, 12)",
+        "EPS*",
+        "P/E",
+        "Status"
+    ],
+    "map": {
+        "股票代碼": "Code",
+        "股票名稱": "Stock",
+        "行業": "Sector",
+        "開盤價": "Open",
+        "收盤價": "Last",
+        "昨收": "Prv Close",
+        "漲跌": "Chg",
+        "最高": "High",
+        "最低": "Low",
+        "52周高": "Y-High",
+        "52周低": "Y-Low",
+        "成交量": "Vol"
+    }
+}

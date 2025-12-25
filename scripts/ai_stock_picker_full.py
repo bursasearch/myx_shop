@@ -27,7 +27,8 @@ import warnings
 warnings.filterwarnings('ignore')
 
 # ============================================================================
-# 获取当前脚本目录
+# 配置文件路径
+# ============================================================================
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 BASE_DIR = os.path.dirname(SCRIPT_DIR)
 
@@ -139,44 +140,6 @@ def normalize_csv_file(input_path, output_path=None, config_path=None):
     规范化CSV文件
     返回规范化后的DataFrame和输出路径
     """
-    # ... 前面的代碼不變 ...
-    
-    # 創建新的DataFrame
-    normalized_data = {}
-    
-    for orig_col, norm_col in column_mapping.items():
-        if orig_col in df.columns:
-            normalized_data[norm_col] = df[orig_col]
-            print(f"  ✅ 映射 {orig_col} → {norm_col}")
-        else:
-            print(f"  ⚠️  列不存在: {orig_col}")
-    
-    # 創建新的DataFrame
-    normalized_df = pd.DataFrame(normalized_data)
-    
-    # ========== 清理代碼列 ==========
-    if 'code' in normalized_df.columns:
-        print("  🔧 清理股票代碼格式...")
-        def clean_stock_code(code):
-            if isinstance(code, str):
-                # 移除 Excel 公式格式 ="2429"
-                code = code.strip()
-                if code.startswith('="') and code.endswith('"'):
-                    code = code[2:-1]  # 移除 =" 和 "
-                elif code.startswith('='):
-                    code = code[1:]  # 移除 =
-                # 移除所有非數字字符（保留字母，因為權證可能有字母）
-                # 只移除空格、引號、等號等不需要的字符
-                import re
-                code = re.sub(r'[=\s"\']', '', code)
-                # 補齊前導零（如果需要）
-                if code.isdigit():
-                    code = code.zfill(4)  # 補齊到4位數字
-            return code
-        
-        normalized_df['code'] = normalized_df['code'].apply(clean_stock_code)
-        print("  ✅ 股票代碼清理完成")
-
     if config_path is None:
         config_path = EOD_CONFIG_PATH
     
@@ -599,33 +562,7 @@ def save_safe_json(data, filepath, indent=2):
         if pd.isna(obj):
             return None
         raise TypeError(f"無法序列化類型: {type(obj)}")
-
-# 確保代碼是字符串
-    def ensure_string_codes(obj):
-        if isinstance(obj, dict):
-            return {k: ensure_string_codes(v) for k, v in obj.items()}
-        elif isinstance(obj, list):
-            return [ensure_string_codes(item) for item in obj]
-        elif isinstance(obj, (int, float)) and not isinstance(obj, bool):
-            # 檢查是否是代碼字段
-            if isinstance(obj, int) and 1000 <= obj <= 9999:
-                return str(obj).zfill(4)
-            return obj
-        else:
-            return obj
     
-    try:
-        # 清理數據
-        cleaned_data = ensure_string_codes(data)
-        
-        with open(filepath, 'w', encoding='utf-8') as f:
-            json.dump(cleaned_data, f, indent=indent, default=safe_serializer, ensure_ascii=False)
-        print(f"  💾 保存JSON文件: {filepath}")
-        return True
-    except Exception as e:
-        print(f"  ❌ 保存JSON失敗 {filepath}: {e}")
-        return False
-```
     try:
         with open(filepath, 'w', encoding='utf-8') as f:
             json.dump(data, f, indent=indent, default=safe_serializer, ensure_ascii=False)

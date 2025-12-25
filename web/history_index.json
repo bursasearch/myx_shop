@@ -1,32 +1,4 @@
 {
-<<<<<<< HEAD
-  "files": [
-    {
-      "filename": "picks_20251221.json",
-      "date": "2025-12-21"
-    },
-    {
-      "filename": "picks_20251220.json",
-      "date": "2025-12-20"
-    },
-    {
-      "filename": "picks_20251218.json",
-      "date": "2025-12-18"
-    },
-    {
-      "filename": "picks_20251217.json",
-      "date": "2025-12-17"
-    },
-    {
-      "filename": "picks_20251216.json",
-      "date": "2025-12-16"
-    },
-    {
-      "filename": "picks_20251215.json",
-      "date": "2025-12-15"
-    }
-  ]
-=======
   "generated_at": "2025-12-24T16:01:50.956598",
   "last_updated": "2025-12-24 16:01:50",
   "count": 8,
@@ -104,5 +76,4 @@
     "size": 9433,
     "url": "./history/picks_20251223.json"
   }
->>>>>>> 0c35ea6824b5f3cb30aedb48c89f2655e2c2ec9a
 }
