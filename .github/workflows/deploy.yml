@@ -1,4 +1,4 @@
-name: Deploy to GitHub Pages
+nlame: Deploy to GitHub Pages
 
 on:
   push:
@@ -12,7 +12,7 @@ permissions:
 
 concurrency:
   group: "pages"
-  cancel-inprogress: true
+  cancel-in-progress: true
 
 jobs:
   deploy:
@@ -35,3 +35,4 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+0
