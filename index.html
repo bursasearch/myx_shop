@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Bursa AI 選股分析計算器</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- 直接加載 retail-inv.html 的標題 -->
+    <script>
+        // 先加載 retail-inv.html 獲取標題
+        fetch('web/retail-inv.html')
+            .then(response => response.text())
+            .then(html => {
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(html, 'text/html');
+                const title = doc.querySelector('title');
+                if (title) {
+                    document.title = title.textContent;
+                }
+            })
+            .catch(err => {
+                console.log('加載標題失敗，使用默認標題');
+                document.title = 'Bursa AI 選股分析';
+            });
+    </script>
+    
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden;
+        }
+        iframe {
+            width: 100%;
+            height: 100vh;
+            border: none;
+            display: block;
+        }
+        .loading {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-family: Arial, sans-serif;
+            z-index: 1000;
+            transition: opacity 0.5s;
+        }
+        .spinner {
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-top: 4px solid white;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin-bottom: 20px;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="loading" id="loading">
+        <div class="spinner"></div>
+        <div>正在加載 Bursa AI 選股分析系統...</div>
+        <div style="margin-top: 10px; font-size: 0.9em;">http://localhost:5050/</div>
+    </div>
+    
+    <iframe 
+        src="web/retail-inv.html" 
+        id="mainFrame"
+        onload="document.getElementById('loading').style.opacity = '0';
+                setTimeout(() => document.getElementById('loading').style.display = 'none', 500);"
+        allow="fullscreen"
+    ></iframe>
+    
+    <script>
+        // 確保 iframe 可以全屏
+        document.getElementById('mainFrame').addEventListener('load', function() {
+            console.log('零售投資頁面已加載');
+            
+            // 嘗試從 iframe 獲取標題
+            try {
+                const iframeTitle = this.contentDocument.title;
+                if (iframeTitle && iframeTitle !== '') {
+                    document.title = iframeTitle;
+                }
+            } catch (e) {
+                // 跨域限制，忽略
+            }
+        });
+        
+        // 如果 iframe 加載失敗
+        document.getElementById('mainFrame').addEventListener('error', function() {
+            document.getElementById('loading').innerHTML = 
+                '<div style="text-align: center; padding: 20px;">' +
+                '<h3>加載失敗</h3>' +
+                '<p>無法加載零售投資頁面</p>' +
+                '<p><a href="web/retail-inv.html" style="color: #FFD700;">點擊這裡直接訪問</a></p>' +
+                '</div>';
+        });
+        
+        // 顯示當前路徑信息
+        console.log('主頁面: index.html');
+        console.log('加載內容: web/retail-inv.html');
+        console.log('完整URL: ' + window.location.href);
+    </script>
+</body>
+</html>

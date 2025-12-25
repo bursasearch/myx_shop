@@ -1,0 +1,1602 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Bursa投资计算器 - 手机版</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2196F3;
+            --primary-dark: #1976D2;
+            --secondary: #4CAF50;
+            --secondary-dark: #388E3C;
+            --warning: #FF9800;
+            --danger: #F44336;
+            --success: #4CAF50;
+            --light: #F5F7FA;
+            --dark: #333333;
+            --gray: #666666;
+            --light-gray: #EEEEEE;
+            --white: #FFFFFF;
+            --shadow: 0 2px 10px rgba(0,0,0,0.1);
+            --radius: 12px;
+            --radius-sm: 8px;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Microsoft YaHei', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: var(--dark);
+            line-height: 1.5;
+            min-height: 100vh;
+            padding: 0;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 500px;
+            margin: 0 auto;
+            background: var(--white);
+            min-height: 100vh;
+            position: relative;
+            box-shadow: 0 0 20px rgba(0,0,0,0.2);
+        }
+        
+        /* 顶部导航栏 */
+        .app-header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 20px 15px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .app-title {
+            font-size: 18px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .app-title i {
+            font-size: 20px;
+        }
+        
+        .app-subtitle {
+            font-size: 13px;
+            opacity: 0.9;
+            margin-top: 5px;
+        }
+        
+        /* 标签页切换 */
+        .tab-bar {
+            display: flex;
+            background: white;
+            border-bottom: 1px solid var(--light-gray);
+            position: sticky;
+            top: 90px;
+            z-index: 99;
+        }
+        
+        .tab {
+            flex: 1;
+            padding: 15px;
+            text-align: center;
+            font-weight: 500;
+            color: var(--gray);
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s;
+        }
+        
+        .tab.active {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+            font-weight: 600;
+        }
+        
+        .tab i {
+            margin-right: 5px;
+            font-size: 16px;
+        }
+        
+        /* 内容区域 */
+        .content {
+            padding: 15px;
+            min-height: calc(100vh - 180px);
+            overflow-y: auto;
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* 卡片样式 */
+        .card {
+            background: white;
+            border-radius: var(--radius);
+            padding: 20px;
+            margin-bottom: 15px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--light-gray);
+        }
+        
+        .card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--light-gray);
+        }
+        
+        .card-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .card-title i {
+            font-size: 18px;
+        }
+        
+        /* 日期选择器 */
+        .date-picker {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+            padding: 12px;
+            background: var(--light);
+            border-radius: var(--radius-sm);
+        }
+        
+        .date-picker label {
+            font-weight: 500;
+            color: var(--gray);
+            white-space: nowrap;
+        }
+        
+        #dateSelect {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: var(--radius-sm);
+            background: white;
+            font-size: 14px;
+        }
+        
+        /* 股票列表 */
+        .stocks-list {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        
+        .stock-item {
+            padding: 15px;
+            margin-bottom: 10px;
+            background: var(--light);
+            border-radius: var(--radius-sm);
+            border-left: 4px solid var(--primary);
+            position: relative;
+            transition: all 0.3s;
+        }
+        
+        .stock-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        
+        .stock-item.selected {
+            background: #E8F5E9;
+            border-left-color: var(--success);
+        }
+        
+        .stock-rank {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 24px;
+            height: 24px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        
+        .stock-basic {
+            margin-bottom: 10px;
+        }
+        
+        .stock-code {
+            font-size: 16px;
+            font-weight: bold;
+            color: var(--primary);
+        }
+        
+        .stock-name {
+            font-size: 13px;
+            color: var(--gray);
+            margin-top: 2px;
+        }
+        
+        .stock-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            margin: 8px 0;
+        }
+        
+        .tag {
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 500;
+        }
+        
+        .tag.buy {
+            background: #E8F5E9;
+            color: var(--success);
+        }
+        
+        .tag.warrant {
+            background: #E3F2FD;
+            color: var(--primary);
+        }
+        
+        .tag.stock {
+            background: #FFF3E0;
+            color: var(--warning);
+        }
+        
+        .stock-price {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 10px;
+        }
+        
+        .price {
+            font-size: 18px;
+            font-weight: bold;
+            color: var(--success);
+        }
+        
+        .price-change {
+            font-size: 12px;
+            padding: 3px 8px;
+            border-radius: 4px;
+        }
+        
+        .price-change.positive {
+            background: #E8F5E9;
+            color: var(--success);
+        }
+        
+        .price-change.negative {
+            background: #FFEBEE;
+            color: var(--danger);
+        }
+        
+        .select-btn {
+            width: 100%;
+            padding: 12px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: var(--radius-sm);
+            font-weight: 600;
+            margin-top: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.3s;
+        }
+        
+        .select-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-1px);
+        }
+        
+        .select-btn.selected {
+            background: var(--success);
+        }
+        
+        .select-btn i {
+            font-size: 14px;
+        }
+        
+        /* 表单样式 */
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 500;
+            color: var(--dark);
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        .form-label i {
+            color: var(--primary);
+            font-size: 14px;
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: var(--radius-sm);
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(33, 150, 243, 0.1);
+        }
+        
+        .input-group {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .input-group .form-input {
+            flex: 1;
+        }
+        
+        .input-icon {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gray);
+            font-size: 14px;
+        }
+        
+        /* 费用设置 */
+        .fee-settings {
+            background: var(--light);
+            padding: 15px;
+            border-radius: var(--radius-sm);
+            margin: 15px 0;
+        }
+        
+        .fee-row {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+        
+        .fee-row .form-group {
+            flex: 1;
+            margin-bottom: 0;
+        }
+        
+        /* 按钮样式 */
+        .btn {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: var(--radius-sm);
+            font-size: 16px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: all 0.3s;
+            margin-top: 10px;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, var(--secondary) 0%, var(--secondary-dark) 100%);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(76, 175, 80, 0.3);
+        }
+        
+        .btn-secondary {
+            background: var(--light);
+            color: var(--dark);
+            border: 1px solid #ddd;
+        }
+        
+        /* 结果区域 */
+        .result-card {
+            background: linear-gradient(135deg, #E8F5E9 0%, #C8E6C9 100%);
+            padding: 20px;
+            border-radius: var(--radius);
+            text-align: center;
+            margin-top: 20px;
+        }
+        
+        .result-main {
+            font-size: 32px;
+            font-weight: bold;
+            color: var(--success);
+            margin: 10px 0;
+        }
+        
+        .result-positive {
+            color: var(--success);
+        }
+        
+        .result-negative {
+            color: var(--danger);
+        }
+        
+        .result-sub {
+            font-size: 14px;
+            color: var(--gray);
+            margin-bottom: 15px;
+        }
+        
+        .result-details {
+            background: white;
+            padding: 15px;
+            border-radius: var(--radius-sm);
+            margin-top: 15px;
+        }
+        
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--light-gray);
+            font-size: 14px;
+        }
+        
+        .detail-row:last-child {
+            border-bottom: none;
+            font-weight: bold;
+            padding-top: 15px;
+            border-top: 2px solid var(--light-gray);
+        }
+        
+        /* 加载状态 */
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: var(--gray);
+        }
+        
+        .loading i {
+            font-size: 36px;
+            margin-bottom: 15px;
+            color: var(--primary);
+        }
+        
+        .error {
+            background: #FFEBEE;
+            color: var(--danger);
+            padding: 15px;
+            border-radius: var(--radius-sm);
+            margin-bottom: 15px;
+            border-left: 4px solid var(--danger);
+        }
+        
+        /* 底部导航 */
+        .app-footer {
+            background: white;
+            padding: 15px;
+            border-top: 1px solid var(--light-gray);
+            position: sticky;
+            bottom: 0;
+            z-index: 100;
+        }
+        
+        /* 响应式调整 */
+        @media (max-width: 480px) {
+            .container {
+                border-radius: 0;
+            }
+            
+            .app-header {
+                padding: 15px;
+            }
+            
+            .content {
+                padding: 12px;
+            }
+            
+            .card {
+                padding: 15px;
+            }
+            
+            .fee-row {
+                flex-direction: column;
+                gap: 8px;
+            }
+            
+            .input-group {
+                flex-direction: column;
+                gap: 8px;
+            }
+        }
+        
+        /* 触摸优化 */
+        .touch-feedback {
+            transition: transform 0.1s;
+        }
+        
+        .touch-feedback:active {
+            transform: scale(0.98);
+        }
+        
+        /* 滚动条优化 */
+        ::-webkit-scrollbar {
+            width: 4px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary);
+            border-radius: 2px;
+        }
+        
+        /* 状态指示器 */
+        .status-indicator {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 5px;
+        }
+        
+        .status-online {
+            background: var(--success);
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+        
+        /* 快捷按钮 */
+        .quick-actions {
+            display: flex;
+            gap: 10px;
+            margin: 15px 0;
+        }
+        
+        .quick-btn {
+            flex: 1;
+            padding: 10px;
+            background: var(--light);
+            border: 1px solid #ddd;
+            border-radius: var(--radius-sm);
+            text-align: center;
+            font-size: 13px;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+        
+        .quick-btn:hover {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 顶部导航栏 -->
+        <div class="app-header">
+            <div class="header-content">
+                <div>
+                    <div class="app-title">
+                        <i class="fas fa-chart-line"></i>
+                        <span>Bursa投资计算器</span>
+                        <span class="status-indicator status-online"></span>
+                    </div>
+                    <div class="app-subtitle">AI选股 + 费用计算 | 确保RM5净回酬</div>
+                </div>
+                <div style="font-size: 12px; opacity: 0.9;">
+                    <div>更新: <span id="dataUpdateDate">2025-12-12</span></div>
+                    <div>目标: RM5 利润</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 标签页切换 -->
+        <div class="tab-bar">
+            <div class="tab active" onclick="switchTab('stocks')">
+                <i class="fas fa-star"></i> AI选股
+            </div>
+            <div class="tab" onclick="switchTab('calculator')">
+                <i class="fas fa-calculator"></i> 计算器
+            </div>
+            <div class="tab" onclick="switchTab('results')">
+                <i class="fas fa-chart-pie"></i> 结果
+            </div>
+        </div>
+        
+        <!-- 内容区域 -->
+        <div class="content">
+            <!-- AI选股标签页 -->
+            <div id="stocks-tab" class="tab-content active">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">
+                            <i class="fas fa-filter"></i> 数据筛选
+                        </div>
+                    </div>
+                    
+                    <div class="date-picker">
+                        <label for="dateSelect"><i class="far fa-calendar-alt"></i> 日期:</label>
+                        <select id="dateSelect">
+                            <option value="2025-12-12">2025-12-12</option>
+                            <option value="2025-12-11">2025-12-11</option>
+                            <option value="2025-12-10">2025-12-10</option>
+                        </select>
+                    </div>
+                    
+                    <div class="quick-actions">
+                        <button class="quick-btn" onclick="loadAiStocksData()">
+                            <i class="fas fa-sync-alt"></i> 刷新
+                        </button>
+                        <button class="quick-btn" onclick="useSampleData()">
+                            <i class="fas fa-database"></i> 示例
+                        </button>
+                        <button class="quick-btn" onclick="showHowToUse()">
+                            <i class="fas fa-question-circle"></i> 帮助
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">
+                            <i class="fas fa-chart-line"></i> AI推荐股票
+                        </div>
+                        <span id="stocksCount" style="font-size: 12px; color: var(--gray);">加载中...</span>
+                    </div>
+                    
+                    <div id="aiStocksList" class="stocks-list">
+                        <div class="loading">
+                            <i class="fas fa-spinner fa-spin"></i>
+                            <p>正在加载AI选股数据...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 计算器标签页 -->
+            <div id="calculator-tab" class="tab-content">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">
+                            <i class="fas fa-edit"></i> 股票信息
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="stockCode"><i class="fas fa-hashtag"></i> 股票代码</label>
+                        <input type="text" id="stockCode" class="form-input" placeholder="例如: 7214" readonly>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="stockName"><i class="fas fa-signature"></i> 股票名称</label>
+                        <input type="text" id="stockName" class="form-input" placeholder="选择股票后自动填充" readonly>
+                    </div>
+                    
+                    <div class="input-group">
+                        <div class="form-group">
+                            <label for="buyPrice"><i class="fas fa-shopping-cart"></i> 买入价</label>
+                            <input type="number" id="buyPrice" class="form-input" step="0.001" min="0.001" placeholder="0.000">
+                        </div>
+                        <div class="form-group">
+                            <label for="sellPrice"><i class="fas fa-money-bill-wave"></i> 目标价</label>
+                            <input type="number" id="sellPrice" class="form-input" step="0.001" min="0.001" placeholder="0.000">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="shareUnits"><i class="fas fa-chart-bar"></i> 购买股数 (单位: 100股)</label>
+                        <input type="number" id="shareUnits" class="form-input" min="1" max="1000" value="10">
+                        <small style="color: var(--gray); margin-top: 5px; display: block;">
+                            总股数: <span id="totalSharesDisplay">1,000</span> 股
+                        </small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="totalInvestment"><i class="fas fa-coins"></i> 投资总额 (RM)</label>
+                        <input type="text" id="totalInvestment" class="form-input" readonly placeholder="自动计算">
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">
+                            <i class="fas fa-cog"></i> 费用设置
+                        </div>
+                        <button id="resetFeesBtn" style="background: none; border: none; color: var(--primary); font-size: 12px; cursor: pointer;">
+                            <i class="fas fa-redo"></i> 重置
+                        </button>
+                    </div>
+                    
+                    <div class="fee-settings">
+                        <div class="fee-row">
+                            <div class="form-group">
+                                <label style="font-size: 12px;">经纪佣金 (%)</label>
+                                <input type="number" id="brokerageRate" class="form-input" step="0.01" min="0" value="0.42">
+                            </div>
+                            <div class="form-group">
+                                <label style="font-size: 12px;">最低佣金 (RM)</label>
+                                <input type="number" id="brokerageMin" class="form-input" step="0.01" min="0" value="8">
+                            </div>
+                        </div>
+                        
+                        <div class="fee-row">
+                            <div class="form-group">
+                                <label style="font-size: 12px;">清算费 (%)</label>
+                                <input type="number" id="clearingFeeRate" class="form-input" step="0.001" min="0" value="0.03">
+                            </div>
+                            <div class="form-group">
+                                <label style="font-size: 12px;">上限 (RM)</label>
+                                <input type="number" id="clearingCap" class="form-input" step="1" min="0" value="200">
+                            </div>
+                        </div>
+                        
+                        <div class="fee-row">
+                            <div class="form-group">
+                                <label style="font-size: 12px;">印花税 (RM/1000)</label>
+                                <input type="number" id="stampDuty" class="form-input" step="0.01" min="0" value="1.50">
+                            </div>
+                            <div class="form-group">
+                                <label style="font-size: 12px;">上限 (RM)</label>
+                                <input type="number" id="stampDutyCap" class="form-input" step="1" min="0" value="1000">
+                            </div>
+                        </div>
+                        
+                        <div class="fee-row">
+                            <div class="form-group">
+                                <label style="font-size: 12px;">服务税 (%)</label>
+                                <input type="number" id="serviceTaxRate" class="form-input" step="0.01" min="0" value="6.00">
+                            </div>
+                            <div class="form-group">
+                                <label style="font-size: 12px;">目标利润 (RM)</label>
+                                <input type="number" id="minProfitTarget" class="form-input" step="0.01" min="0" value="5.00">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <button id="calculateBtn" class="btn btn-primary touch-feedback">
+                    <i class="fas fa-calculator"></i> 计算净回酬
+                </button>
+            </div>
+            
+            <!-- 结果标签页 -->
+            <div id="results-tab" class="tab-content">
+                <div id="resultSection" style="display: none;">
+                    <div class="result-card">
+                        <div style="font-size: 14px; color: var(--gray);">净回酬</div>
+                        <div id="resultMain" class="result-main result-positive">RM 0.00</div>
+                        <div id="resultSub" class="result-sub">0.00% 回酬率</div>
+                        
+                        <div style="display: flex; justify-content: space-around; margin-top: 20px;">
+                            <div style="text-align: center;">
+                                <div style="font-size: 12px; color: var(--gray);">保本价</div>
+                                <div id="breakEvenPrice" style="font-size: 16px; font-weight: 600;">RM 0.000</div>
+                            </div>
+                            <div style="text-align: center;">
+                                <div style="font-size: 12px; color: var(--gray);">目标价</div>
+                                <div id="targetPrice" style="font-size: 16px; font-weight: 600;">RM 0.000</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div id="minimumNote" class="card" style="display: none; background: #FFF3E0; border-left: 4px solid var(--warning);">
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <i class="fas fa-exclamation-triangle" style="color: var(--warning);"></i>
+                            <div>
+                                <div style="font-weight: 600; color: var(--warning);">未达到最低利润目标</div>
+                                <div style="font-size: 13px; color: var(--gray); margin-top: 5px;">
+                                    当前回酬 <strong id="currentProfitDisplay">RM 0.00</strong> 低于目标 <strong>RM <span id="minProfitDisplay">5.00</span></strong>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-title">
+                                <i class="fas fa-list-alt"></i> 费用明细
+                            </div>
+                        </div>
+                        
+                        <div id="resultDetails">
+                            <div class="detail-row">
+                                <span>购买成本:</span>
+                                <span id="buyTotalCost">RM 0.00</span>
+                            </div>
+                            <div class="detail-row">
+                                <span>卖出收入:</span>
+                                <span id="sellTotalRevenue">RM 0.00</span>
+                            </div>
+                            <div class="detail-row">
+                                <span>经纪佣金:</span>
+                                <span id="totalBrokerage">RM 0.00</span>
+                            </div>
+                            <div class="detail-row">
+                                <span>清算费:</span>
+                                <span id="totalClearingFee">RM 0.00</span>
+                            </div>
+                            <div class="detail-row">
+                                <span>印花税:</span>
+                                <span id="totalStampDuty">RM 0.00</span>
+                            </div>
+                            <div class="detail-row">
+                                <span>服务税:</span>
+                                <span id="serviceTax">RM 0.00</span>
+                            </div>
+                            <div class="detail-row">
+                                <span>总费用:</span>
+                                <span id="totalFees">RM 0.00</span>
+                            </div>
+                            <div class="detail-row">
+                                <span>净回酬:</span>
+                                <span id="netProfit" class="result-positive">RM 0.00</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="noResults" class="loading">
+                    <i class="fas fa-calculator" style="font-size: 36px; color: var(--gray);"></i>
+                    <p style="margin-top: 10px;">请先在计算器页面进行计算</p>
+                    <button onclick="switchTab('calculator')" style="margin-top: 15px; padding: 10px 20px; background: var(--primary); color: white; border: none; border-radius: var(--radius-sm);">
+                        <i class="fas fa-arrow-left"></i> 返回计算器
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 底部导航 -->
+        <div class="app-footer">
+            <div style="text-align: center; font-size: 11px; color: var(--gray);">
+                <p>© 2025 Bursa Malaysia AI分析工具 | 投资有风险，入市需谨慎</p>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // 全局变量
+        let aiStocksData = {};
+        let selectedStock = null;
+        let currentDate = '2025-12-12';
+        let latestPrices = {};
+        
+        // 页面加载完成后初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('📱 移动版投资计算器启动');
+            
+            // 初始化日期选择器
+            initDateSelector();
+            
+            // 绑定事件监听器
+            bindEventListeners();
+            
+            // 加载当前日期的数据
+            loadAiStocksData();
+            
+            // 初始化触摸反馈
+            initTouchFeedback();
+        });
+        
+        // 初始化日期选择器
+        function initDateSelector() {
+            const dateSelect = document.getElementById('dateSelect');
+            dateSelect.value = currentDate;
+            
+            dateSelect.addEventListener('change', function() {
+                currentDate = this.value;
+                console.log('选择日期:', currentDate);
+                loadAiStocksData();
+            });
+        }
+        
+        // 初始化触摸反馈
+        function initTouchFeedback() {
+            const buttons = document.querySelectorAll('button, .tab, .quick-btn, .stock-item');
+            buttons.forEach(btn => {
+                btn.classList.add('touch-feedback');
+            });
+        }
+        
+        // 绑定事件监听器
+        function bindEventListeners() {
+            // 计算按钮
+            document.getElementById('calculateBtn').addEventListener('click', calculateProfit);
+            
+            // 重置费用按钮
+            document.getElementById('resetFeesBtn').addEventListener('click', resetFeesToDefault);
+            
+            // 输入框变化事件
+            document.getElementById('buyPrice').addEventListener('input', updateTotalInvestment);
+            document.getElementById('shareUnits').addEventListener('input', updateTotalInvestment);
+            
+            // 费用设置变化时自动计算
+            const feeInputs = [
+                'brokerageRate', 'brokerageMin', 'clearingFeeRate', 'clearingCap',
+                'stampDuty', 'stampDutyCap', 'serviceTaxRate', 'minProfitTarget'
+            ];
+            
+            feeInputs.forEach(id => {
+                document.getElementById(id).addEventListener('input', function() {
+                    if (document.getElementById('buyPrice').value && 
+                        document.getElementById('sellPrice').value) {
+                        setTimeout(calculateProfit, 300);
+                    }
+                });
+            });
+        }
+        
+        // 切换标签页
+        function switchTab(tabName) {
+            // 更新标签页样式
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            
+            // 激活选中的标签页
+            const activeTab = document.querySelector(`.tab[onclick*="${tabName}"]`);
+            if (activeTab) {
+                activeTab.classList.add('active');
+            }
+            
+            document.getElementById(`${tabName}-tab`).classList.add('active');
+            
+            // 滚动到顶部
+            document.querySelector('.content').scrollTop = 0;
+            
+            // 如果切换到结果页且没有结果，显示提示
+            if (tabName === 'results' && !document.getElementById('resultSection').style.display || 
+                document.getElementById('resultSection').style.display === 'none') {
+                document.getElementById('resultSection').style.display = 'none';
+                document.getElementById('noResults').style.display = 'block';
+            } else if (tabName === 'results') {
+                document.getElementById('resultSection').style.display = 'block';
+                document.getElementById('noResults').style.display = 'none';
+            }
+            
+            console.log('切换到标签页:', tabName);
+        }
+        
+        // 加载AI选股数据
+        async function loadAiStocksData() {
+            console.log('开始加载AI选股数据...');
+            const stocksListEl = document.getElementById('aiStocksList');
+            
+            // 显示加载状态
+            stocksListEl.innerHTML = `
+                <div class="loading">
+                    <i class="fas fa-spinner fa-spin"></i>
+                    <p>正在加载AI选股数据...</p>
+                </div>
+            `;
+            
+            // 更新数据更新日期显示
+            document.getElementById('dataUpdateDate').textContent = currentDate;
+            
+            try {
+                // 构建文件名
+                const filename = `scripts/data/bursa/picks/picks_${currentDate.replace(/-/g, '')}.json`;
+                console.log('尝试加载文件:', filename);
+                
+                // 尝试加载数据
+                const response = await fetch(filename);
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: 无法加载数据`);
+                }
+                
+                const data = await response.json();
+                console.log('数据加载成功:', data);
+                
+                // 处理数据
+                processStockData(data);
+                
+            } catch (error) {
+                console.error('加载AI选股数据失败:', error);
+                
+                // 显示错误，提供使用示例数据的选项
+                stocksListEl.innerHTML = `
+                    <div class="error">
+                        <i class="fas fa-exclamation-circle"></i>
+                        <div>
+                            <p style="font-weight: 600; margin-bottom: 5px;">无法加载数据</p>
+                            <p style="font-size: 12px; margin-bottom: 10px;">${error.message}</p>
+                            <button onclick="useSampleData()" style="width: 100%; padding: 10px; background: var(--primary); color: white; border: none; border-radius: var(--radius-sm); margin-top: 10px;">
+                                <i class="fas fa-database"></i> 使用示例数据
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }
+        }
+        
+        // 处理股票数据
+        function processStockData(data) {
+            const stocksListEl = document.getElementById('aiStocksList');
+            
+            // 提取picks数组
+            let picks = [];
+            if (data.picks && Array.isArray(data.picks)) {
+                picks = data.picks;
+            } else if (Array.isArray(data)) {
+                picks = data;
+            }
+            
+            if (picks.length === 0) {
+                stocksListEl.innerHTML = `
+                    <div class="loading">
+                        <i class="fas fa-database" style="color: var(--gray);"></i>
+                        <p>没有找到选股数据</p>
+                        <button onclick="useSampleData()" style="margin-top: 15px; padding: 10px 20px; background: var(--primary); color: white; border: none; border-radius: var(--radius-sm);">
+                            使用示例数据
+                        </button>
+                    </div>
+                `;
+                return;
+            }
+            
+            // 更新股票计数
+            document.getElementById('stocksCount').textContent = `${picks.length} 只股票`;
+            
+            // 显示股票列表
+            displayStocksList(picks);
+        }
+        
+        // 显示股票列表
+        function displayStocksList(stocks) {
+            const stocksListEl = document.getElementById('aiStocksList');
+            let html = '';
+            
+            stocks.forEach((stock, index) => {
+                // 限制显示数量
+                if (index >= 15) return;
+                
+                const cleanCode = stock.code ? stock.code.replace(/[="]/g, '') : 'N/A';
+                const name = stock.name || '未知';
+                const price = stock.current_price || 0;
+                const change = stock.daily_change || 0;
+                const score = stock.score || 0;
+                const potential = stock.potential_score || 0;
+                const rec = stock.recommendation || '推荐';
+                const type = stock.instrument_type === 'Warrant' ? 'warrant' : 'stock';
+                const status = stock.status || '中性';
+                
+                // 构建股票卡片
+                html += `
+                    <div class="stock-item touch-feedback" onclick="selectStock(${JSON.stringify(stock).replace(/"/g, '&quot;')})">
+                        <div class="stock-rank">#${index + 1}</div>
+                        
+                        <div class="stock-basic">
+                            <div class="stock-code">${cleanCode}</div>
+                            <div class="stock-name">${name}</div>
+                        </div>
+                        
+                        <div class="stock-tags">
+                            <span class="tag buy">${rec}</span>
+                            <span class="tag ${type}">${type === 'warrant' ? '认股权证' : '普通股'}</span>
+                            <span style="font-size: 11px; color: var(--gray);">${status}</span>
+                        </div>
+                        
+                        <div class="stock-price">
+                            <div class="price">RM ${price.toFixed(3)}</div>
+                            <div class="price-change ${change >= 0 ? 'positive' : 'negative'}">
+                                ${change >= 0 ? '+' : ''}${change.toFixed(2)}%
+                            </div>
+                        </div>
+                        
+                        <button class="select-btn touch-feedback" onclick="event.stopPropagation(); selectStock(${JSON.stringify(stock).replace(/"/g, '&quot;')})">
+                            <i class="fas fa-check-circle"></i> 选择此股票
+                        </button>
+                    </div>
+                `;
+            });
+            
+            stocksListEl.innerHTML = html;
+        }
+        
+        // 使用示例数据
+        function useSampleData() {
+            console.log('使用示例数据');
+            
+            const sampleData = {
+                picks: [
+                    {
+                        code: "7214",
+                        name: "LII HEN INDUSTRIES",
+                        instrument_type: "Stock",
+                        current_price: 0.735,
+                        daily_change: 2.08,
+                        score: 85.5,
+                        potential_score: 92.0,
+                        potential_reasons: "基本面强劲，技术面支持上涨",
+                        recommendation: "强烈买入",
+                        risk_level: "低",
+                        rsi: 45.5,
+                        volume: 452100,
+                        status: "超卖",
+                        pe_ratio: 8.5,
+                        dividend_yield: 4.2
+                    },
+                    {
+                        code: "285265",
+                        name: "CMSB-C65",
+                        instrument_type: "Warrant",
+                        current_price: 0.11,
+                        daily_change: 37.5,
+                        score: 82,
+                        potential_score: 96,
+                        potential_reasons: "Warrant严重超卖，反弹机会极大",
+                        recommendation: "强烈买入（Warrant）",
+                        risk_level: "高",
+                        rsi: 50.0,
+                        volume: 31449,
+                        status: "中性",
+                        pe_ratio: null,
+                        dividend_yield: null
+                    },
+                    {
+                        code: "7129",
+                        name: "ASIA FILE CORPORATION",
+                        instrument_type: "Stock",
+                        current_price: 2.140,
+                        daily_change: 0.94,
+                        score: 82.0,
+                        potential_score: 88.5,
+                        potential_reasons: "稳定现金流，良好管理",
+                        recommendation: "买入",
+                        risk_level: "低",
+                        rsi: 58.0,
+                        volume: 22400,
+                        status: "稳定",
+                        pe_ratio: 12.3,
+                        dividend_yield: 3.8
+                    }
+                ]
+            };
+            
+            processStockData(sampleData);
+            showNotification('已加载示例数据', 'success');
+        }
+        
+        // 选择股票
+        function selectStock(stock) {
+            console.log('选择股票:', stock.code, stock.name);
+            selectedStock = stock;
+            
+            // 更新表单
+            const cleanCode = stock.code ? stock.code.replace(/[="]/g, '') : '';
+            document.getElementById('stockCode').value = cleanCode;
+            document.getElementById('stockName').value = stock.name || '未知';
+            
+            const price = stock.current_price || 0;
+            document.getElementById('buyPrice').value = price.toFixed(3);
+            
+            // 计算建议卖出价格（5%增长）
+            const suggestedSellPrice = price * 1.05;
+            document.getElementById('sellPrice').value = suggestedSellPrice.toFixed(3);
+            
+            // 更新投资总额
+            updateTotalInvestment();
+            
+            // 切换到计算器标签页
+            switchTab('calculator');
+            
+            // 显示通知
+            showNotification(`已选择 ${cleanCode} - ${stock.name}`, 'success');
+        }
+        
+        // 更新投资总额
+        function updateTotalInvestment() {
+            const buyPrice = parseFloat(document.getElementById('buyPrice').value) || 0;
+            const shareUnits = parseInt(document.getElementById('shareUnits').value) || 0;
+            
+            // 计算总股数（单位 * 100）
+            const totalShares = shareUnits * 100;
+            const totalInvestment = buyPrice * totalShares;
+            
+            // 更新显示
+            document.getElementById('totalInvestment').value = totalInvestment.toFixed(2);
+            document.getElementById('totalSharesDisplay').textContent = totalShares.toLocaleString();
+        }
+        
+        // 重置费用设置
+        function resetFeesToDefault() {
+            document.getElementById('brokerageRate').value = 0.42;
+            document.getElementById('brokerageMin').value = 8;
+            document.getElementById('clearingFeeRate').value = 0.03;
+            document.getElementById('clearingCap').value = 200;
+            document.getElementById('stampDuty').value = 1.50;
+            document.getElementById('stampDutyCap').value = 1000;
+            document.getElementById('serviceTaxRate').value = 6.00;
+            document.getElementById('minProfitTarget').value = 5.00;
+            
+            showNotification('费用设置已重置为默认值', 'success');
+            
+            // 重新计算
+            if (document.getElementById('buyPrice').value) {
+                calculateProfit();
+            }
+        }
+        
+        // 计算净回酬
+        function calculateProfit() {
+            console.log('开始计算净回酬...');
+            
+            // 获取输入值
+            const buyPrice = parseFloat(document.getElementById('buyPrice').value) || 0;
+            const sellPrice = parseFloat(document.getElementById('sellPrice').value) || 0;
+            const shareUnits = parseInt(document.getElementById('shareUnits').value) || 0;
+            
+            if (buyPrice <= 0 || sellPrice <= 0 || shareUnits <= 0) {
+                showNotification('请输入有效的价格和股数', 'error');
+                return;
+            }
+            
+            // 获取费用设置
+            const brokerageRate = parseFloat(document.getElementById('brokerageRate').value) / 100 || 0;
+            const brokerageMin = parseFloat(document.getElementById('brokerageMin').value) || 0;
+            const clearingFeeRate = parseFloat(document.getElementById('clearingFeeRate').value) / 100 || 0;
+            const clearingCap = parseFloat(document.getElementById('clearingCap').value) || 0;
+            const stampDuty = parseFloat(document.getElementById('stampDuty').value) || 0;
+            const stampDutyCap = parseFloat(document.getElementById('stampDutyCap').value) || 0;
+            const serviceTaxRate = parseFloat(document.getElementById('serviceTaxRate').value) / 100 || 0;
+            const minProfitTarget = parseFloat(document.getElementById('minProfitTarget').value) || 5.00;
+            
+            // 计算总股数
+            const totalShares = shareUnits * 100;
+            
+            // 计算买入和卖出总额
+            const buyTotal = buyPrice * totalShares;
+            const sellTotal = sellPrice * totalShares;
+            
+            // 计算经纪佣金
+            const buyBrokerage = Math.max(buyTotal * brokerageRate, brokerageMin);
+            const sellBrokerage = Math.max(sellTotal * brokerageRate, brokerageMin);
+            const totalBrokerage = buyBrokerage + sellBrokerage;
+            
+            // 计算清算费
+            const buyClearingFee = Math.min(buyTotal * clearingFeeRate, clearingCap);
+            const sellClearingFee = Math.min(sellTotal * clearingFeeRate, clearingCap);
+            const totalClearingFee = buyClearingFee + sellClearingFee;
+            
+            // 计算印花税
+            const buyStampDuty = Math.min(Math.ceil(buyTotal / 1000) * stampDuty, stampDutyCap);
+            const sellStampDuty = Math.min(Math.ceil(sellTotal / 1000) * stampDuty, stampDutyCap);
+            const totalStampDuty = buyStampDuty + sellStampDuty;
+            
+            // 计算服务税
+            const serviceTax = totalBrokerage * serviceTaxRate;
+            
+            // 计算总费用
+            const totalFees = totalBrokerage + totalClearingFee + totalStampDuty + serviceTax;
+            
+            // 计算净回酬
+            const netProfit = sellTotal - buyTotal - totalFees;
+            const profitPercentage = buyTotal > 0 ? (netProfit / buyTotal) * 100 : 0;
+            
+            // 计算盈亏平衡价格
+            const buyCostPerShare = buyTotal + buyBrokerage + buyClearingFee + buyStampDuty + (serviceTax / 2);
+            const breakEvenPrice = (buyCostPerShare + sellBrokerage + sellClearingFee + sellStampDuty + (serviceTax / 2)) / totalShares;
+            
+            // 计算达到目标利润的价格
+            const targetPrice = (buyCostPerShare + sellBrokerage + sellClearingFee + sellStampDuty + (serviceTax / 2) + minProfitTarget) / totalShares;
+            
+            // 显示结果
+            displayResults(
+                netProfit,
+                profitPercentage,
+                buyTotal,
+                sellTotal,
+                totalBrokerage,
+                totalClearingFee,
+                totalStampDuty,
+                serviceTax,
+                totalFees,
+                breakEvenPrice,
+                targetPrice,
+                minProfitTarget
+            );
+            
+            // 切换到结果标签页
+            switchTab('results');
+            
+            console.log('计算完成，净回酬:', netProfit);
+        }
+        
+        // 显示计算结果
+        function displayResults(
+            netProfit, profitPercentage, buyTotal, sellTotal,
+            totalBrokerage, totalClearingFee, totalStampDuty,
+            serviceTax, totalFees, breakEvenPrice, targetPrice, minProfitTarget
+        ) {
+            // 显示结果区域
+            document.getElementById('resultSection').style.display = 'block';
+            document.getElementById('noResults').style.display = 'none';
+            
+            // 更新主要结果
+            const resultMainEl = document.getElementById('resultMain');
+            const resultSubEl = document.getElementById('resultSub');
+            
+            if (netProfit >= 0) {
+                resultMainEl.className = 'result-main result-positive';
+                resultMainEl.textContent = `+ RM ${netProfit.toFixed(2)}`;
+                resultSubEl.textContent = `+${profitPercentage.toFixed(2)}% 回酬率`;
+            } else {
+                resultMainEl.className = 'result-main result-negative';
+                resultMainEl.textContent = `- RM ${Math.abs(netProfit).toFixed(2)}`;
+                resultSubEl.textContent = `${profitPercentage.toFixed(2)}% 回酬率`;
+            }
+            
+            // 更新价格
+            document.getElementById('breakEvenPrice').textContent = `RM ${breakEvenPrice.toFixed(3)}`;
+            document.getElementById('targetPrice').textContent = `RM ${targetPrice.toFixed(3)}`;
+            
+            // 检查是否达到最低利润目标
+            const minNoteEl = document.getElementById('minimumNote');
+            if (netProfit < minProfitTarget) {
+                document.getElementById('minProfitDisplay').textContent = minProfitTarget.toFixed(2);
+                document.getElementById('currentProfitDisplay').textContent = `RM ${netProfit.toFixed(2)}`;
+                minNoteEl.style.display = 'block';
+            } else {
+                minNoteEl.style.display = 'none';
+            }
+            
+            // 更新详细费用
+            const formatCurrency = (value) => `RM ${value.toFixed(2)}`;
+            
+            document.getElementById('buyTotalCost').textContent = formatCurrency(buyTotal);
+            document.getElementById('sellTotalRevenue').textContent = formatCurrency(sellTotal);
+            document.getElementById('totalBrokerage').textContent = formatCurrency(totalBrokerage);
+            document.getElementById('totalClearingFee').textContent = formatCurrency(totalClearingFee);
+            document.getElementById('totalStampDuty').textContent = formatCurrency(totalStampDuty);
+            document.getElementById('serviceTax').textContent = formatCurrency(serviceTax);
+            document.getElementById('totalFees').textContent = formatCurrency(totalFees);
+            
+            const netProfitEl = document.getElementById('netProfit');
+            if (netProfit >= 0) {
+                netProfitEl.textContent = `+ ${formatCurrency(netProfit)}`;
+                netProfitEl.className = 'result-positive';
+            } else {
+                netProfitEl.textContent = `- ${formatCurrency(Math.abs(netProfit))}`;
+                netProfitEl.className = 'result-negative';
+            }
+        }
+        
+        // 显示使用说明
+        function showHowToUse() {
+            const message = `
+                <div style="padding: 15px;">
+                    <h3 style="color: var(--primary); margin-bottom: 15px;">📱 使用说明</h3>
+                    <div style="line-height: 1.6; font-size: 14px;">
+                        <p><strong>1. AI选股页面</strong></p>
+                        <ul style="margin-left: 20px; margin-bottom: 15px;">
+                            <li>选择日期查看不同日期的推荐</li>
+                            <li>点击股票卡片查看详情</li>
+                            <li>点击"选择此股票"自动填充计算器</li>
+                        </ul>
+                        
+                        <p><strong>2. 计算器页面</strong></p>
+                        <ul style="margin-left: 20px; margin-bottom: 15px;">
+                            <li>自动填充选中的股票信息</li>
+                            <li>调整买入价、目标价和股数</li>
+                            <li>修改费用设置（默认已优化）</li>
+                            <li>点击"计算净回酬"查看结果</li>
+                        </ul>
+                        
+                        <p><strong>3. 结果页面</strong></p>
+                        <ul style="margin-left: 20px;">
+                            <li>查看净回酬和回酬率</li>
+                            <li>了解详细的费用明细</li>
+                            <li>检查是否达到RM5利润目标</li>
+                            <li>查看保本价和目标价</li>
+                        </ul>
+                    </div>
+                </div>
+            `;
+            
+            alertWithHTML('使用说明', message);
+        }
+        
+        // 显示通知
+        function showNotification(message, type = 'info') {
+            // 移除现有通知
+            const existingNotification = document.querySelector('.notification-toast');
+            if (existingNotification) {
+                existingNotification.remove();
+            }
+            
+            // 创建通知
+            const notification = document.createElement('div');
+            notification.className = 'notification-toast';
+            notification.style.cssText = `
+                position: fixed;
+                top: 100px;
+                left: 50%;
+                transform: translateX(-50%);
+                padding: 12px 20px;
+                background: ${type === 'success' ? '#4CAF50' : type === 'error' ? '#F44336' : '#2196F3'};
+                color: white;
+                border-radius: var(--radius-sm);
+                box-shadow: var(--shadow);
+                z-index: 10000;
+                font-weight: 500;
+                font-size: 14px;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                animation: slideDown 0.3s ease;
+                max-width: 90%;
+                white-space: nowrap;
+            `;
+            
+            notification.innerHTML = `
+                <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-circle' : 'info-circle'}"></i>
+                <span>${message}</span>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            // 3秒后移除
+            setTimeout(() => {
+                notification.style.animation = 'slideUp 0.3s ease';
+                setTimeout(() => {
+                    if (notification.parentNode) {
+                        notification.parentNode.removeChild(notification);
+                    }
+                }, 300);
+            }, 3000);
+            
+            // 添加CSS动画
+            if (!document.querySelector('#notification-animations')) {
+                const style = document.createElement('style');
+                style.id = 'notification-animations';
+                style.textContent = `
+                    @keyframes slideDown {
+                        from { top: 50px; opacity: 0; }
+                        to { top: 100px; opacity: 1; }
+                    }
+                    @keyframes slideUp {
+                        from { top: 100px; opacity: 1; }
+                        to { top: 50px; opacity: 0; }
+                    }
+                `;
+                document.head.appendChild(style);
+            }
+        }
+        
+        // 带HTML的alert
+        function alertWithHTML(title, content) {
+            const modal = document.createElement('div');
+            modal.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0,0,0,0.5);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                z-index: 10000;
+                padding: 20px;
+            `;
+            
+            modal.innerHTML = `
+                <div style="
+                    background: white;
+                    border-radius: var(--radius);
+                    width: 100%;
+                    max-width: 400px;
+                    max-height: 80vh;
+                    overflow-y: auto;
+                    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+                ">
+                    <div style="
+                        padding: 20px;
+                        border-bottom: 1px solid var(--light-gray);
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+                    ">
+                        <h3 style="margin: 0; color: var(--primary);">${title}</h3>
+                        <button onclick="this.closest('.modal-overlay').remove()" style="
+                            background: none;
+                            border: none;
+                            font-size: 20px;
+                            color: var(--gray);
+                            cursor: pointer;
+                        ">×</button>
+                    </div>
+                    ${content}
+                    <div style="padding: 15px; text-align: center;">
+                        <button onclick="this.closest('.modal-overlay').remove()" style="
+                            padding: 10px 30px;
+                            background: var(--primary);
+                            color: white;
+                            border: none;
+                            border-radius: var(--radius-sm);
+                            font-weight: 600;
+                            cursor: pointer;
+                        ">确定</button>
+                    </div>
+                </div>
+            `;
+            
+            modal.className = 'modal-overlay';
+            document.body.appendChild(modal);
+            
+            // 点击背景关闭
+            modal.addEventListener('click', function(e) {
+                if (e.target === modal) {
+                    modal.remove();
+                }
+            });
+        }
+        
+        // 页面加载后初始化
+        setTimeout(() => {
+            updateTotalInvestment();
+        }, 500);
+    </script>
+</body>
+</html>

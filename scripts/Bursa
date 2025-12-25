@@ -1,0 +1,566 @@
+#!/bin/bash
+# 智能Bursa管理器 v2.0 - 集成Shopee管理功能
+
+# 顏色定義
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+BLUE='\033[0;34m'
+PURPLE='\033[0;35m'
+CYAN='\033[0;36m'
+NC='\033[0m' # No Color
+
+# 項目路徑
+PROJECT_ROOT="/storage/emulated/0/bursasearch/myx_shop"
+
+# 函數：顯示標題
+show_title() {
+    clear
+    echo -e "${CYAN}╔══════════════════════════════════════════════════╗${NC}"
+    echo -e "${CYAN}║      🤖 Bursa AI選股 + Shopee 電商管理系統       ║${NC}"
+    echo -e "${CYAN}╚══════════════════════════════════════════════════╝${NC}"
+    echo ""
+}
+
+# 函數：檢查服務器狀態
+check_server_status() {
+    echo -e "${BLUE}🔍 檢查服務器狀態...${NC}"
+    
+    # 檢查端口8000（HTTP服務器）
+    if nc -z 127.0.0.1 8000 2>/dev/null; then
+        echo -e "  ${GREEN}✅ HTTP服務器 (8000) - 運行中${NC}"
+    else
+        echo -e "  ${RED}❌ HTTP服務器 (8000) - 未運行${NC}"
+    fi
+    
+    # 檢查端口5050（API服務器）
+    if nc -z 127.0.0.1 5050 2>/dev/null; then
+        echo -e "  ${GREEN}✅ API服務器 (5050) - 運行中${NC}"
+    else
+        echo -e "  ${RED}❌ API服務器 (5050) - 未運行${NC}"
+    fi
+    
+    echo ""
+}
+
+# 函數：打開文件
+open_file() {
+    local file="$1"
+    local desc="$2"
+    
+    if [ -n "$desc" ]; then
+        echo -e "${GREEN}✅ 正在打開: $desc${NC}"
+    else
+        echo -e "${GREEN}✅ 正在打開: $file${NC}"
+    fi
+    
+    if command -v termux-open &> /dev/null; then
+        termux-open "$file" 2>/dev/null && \
+        echo -e "${BLUE}🚀 已通過Termux打開${NC}"
+    else
+        echo -e "${YELLOW}🌐 請手動訪問:${NC}"
+        echo -e "file://$(pwd)/$file"
+    fi
+}
+
+# 函數：檢查JSON文件
+check_json_file() {
+    local json_file="$1"
+    
+    if [ ! -f "$json_file" ]; then
+        echo -e "${RED}❌ 文件不存在: $json_file${NC}"
+        return 1
+    fi
+    
+    # 嘗試使用jq解析
+    if command -v jq &> /dev/null; then
+        local count=$(jq '.products | length' "$json_file" 2>/dev/null)
+        if [ -n "$count" ]; then
+            echo -e "${GREEN}📊 JSON文件檢查:${NC}"
+            echo -e "  文件: $(basename "$json_file")"
+            echo -e "  產品數量: $count"
+            echo -e "  最後更新: $(jq -r '.lastUpdated // "未知"' "$json_file")"
+            
+            # 顯示前3個產品
+            echo -e "\n${YELLOW}📋 產品樣例:${NC}"
+            jq -r '.products[0:3] | .[] | "  \(.id). \(.name) - RM\(.price) (庫存: \(.stock))"' "$json_file" 2>/dev/null
+        else
+            echo -e "${YELLOW}⚠️  文件存在但可能格式錯誤${NC}"
+            head -5 "$json_file"
+        fi
+    else
+        echo -e "${YELLOW}📄 文件內容(前5行):${NC}"
+        head -5 "$json_file"
+    fi
+    
+    echo ""
+}
+
+# 函數：管理Shopee系統
+manage_shopee() {
+    while true; do
+        show_title
+        echo -e "${PURPLE}🛍️  SHOPEE 電商系統管理${NC}"
+        echo "══════════════════════════════════════════════════"
+        echo ""
+        echo -e "${CYAN}📱 前台展示:${NC}"
+        echo "  1. 打開Shopee產品頁面"
+        echo "  2. 打開Temu產品頁面"
+        echo "  3. 打開Lazada產品頁面"
+        echo ""
+        echo -e "${CYAN}⚙️  後台管理:${NC}"
+        echo "  4. 打開Shopee管理後台"
+        echo "  5. 檢查JSON數據文件"
+        echo "  6. 備份JSON數據"
+        echo ""
+        echo -e "${CYAN}🖼️  圖片管理:${NC}"
+        echo "  7. 查看產品圖片"
+        echo "  8. 檢查圖片路徑"
+        echo ""
+        echo -e "${CYAN}🌐 服務器:${NC}"
+        echo "  9. 啟動本地服務器"
+        echo "  0. 返回主菜單"
+        echo ""
+        
+        read -p "請選擇操作 (0-9): " choice
+        
+        case $choice in
+            1)
+                if [ -f "shopee.html" ]; then
+                    open_file "shopee.html" "Shopee產品展示頁面"
+                else
+                    echo -e "${RED}❌ 找不到 shopee.html${NC}"
+                fi
+                read -p "按Enter繼續..."
+                ;;
+            2)
+                if [ -f "temu.html" ]; then
+                    open_file "temu.html" "Temu產品展示頁面"
+                else
+                    echo -e "${YELLOW}⚠️  找不到 temu.html${NC}"
+                fi
+                read -p "按Enter繼續..."
+                ;;
+            3)
+                if [ -f "lazada.html" ]; then
+                    open_file "lazada.html" "Lazada產品展示頁面"
+                else
+                    echo -e "${YELLOW}⚠️  找不到 lazada.html${NC}"
+                fi
+                read -p "按Enter繼續..."
+                ;;
+            4)
+                if [ -f "admin/shopee_dashboard.html" ]; then
+                    open_file "admin/shopee_dashboard.html" "Shopee管理後台"
+                else
+                    echo -e "${RED}❌ 找不到 admin/shopee_dashboard.html${NC}"
+                fi
+                read -p "按Enter繼續..."
+                ;;
+            5)
+                echo -e "${YELLOW}📊 檢查JSON數據文件...${NC}"
+                if [ -f "js/shopee_list.json" ]; then
+                    check_json_file "js/shopee_list.json"
+                else
+                    echo -e "${RED}❌ 找不到 js/shopee_list.json${NC}"
+                    echo -e "可選文件:"
+                    find . -name "*.json" -type f | grep -i shopee | head -5
+                fi
+                read -p "按Enter繼續..."
+                ;;
+            6)
+                echo -e "${YELLOW}💾 備份JSON數據...${NC}"
+                if [ -f "js/shopee_list.json" ]; then
+                    backup_file="shopee_list_$(date +%Y%m%d_%H%M%S).json"
+                    cp "js/shopee_list.json" "$backup_file"
+                    echo -e "${GREEN}✅ 備份完成: $backup_file${NC}"
+                    ls -la "$backup_file"
+                else
+                    echo -e "${RED}❌ 找不到原始文件${NC}"
+                fi
+                read -p "按Enter繼續..."
+                ;;
+            7)
+                echo -e "${YELLOW}🖼️  產品圖片列表:${NC}"
+                if [ -d "images/products/shopee" ]; then
+                    echo "圖片目錄: images/products/shopee/"
+                    ls -la "images/products/shopee/" | head -10
+                    echo ""
+                    echo "總圖片數: $(ls "images/products/shopee/" 2>/dev/null | wc -l)"
+                else
+                    echo -e "${RED}❌ 找不到圖片目錄${NC}"
+                    find . -name "*.jpg" -o -name "*.png" -o -name "*.jpeg" | grep -i shopee | head -5
+                fi
+                read -p "按Enter繼續..."
+                ;;
+            8)
+                echo -e "${YELLOW}🔍 檢查圖片路徑...${NC}"
+                if [ -f "js/shopee_list.json" ] && command -v jq &> /dev/null; then
+                    echo "產品使用的圖片文件:"
+                    jq -r '.products[] | "\(.id). \(.name) -> \(.image // "無圖片")"' "js/shopee_list.json" 2>/dev/null
+                    
+                    echo -e "\n${YELLOW}檢查缺失的圖片:${NC}"
+                    jq -r '.products[] | select(.image) | .image' "js/shopee_list.json" 2>/dev/null | while read img; do
+                        if [ ! -f "images/products/shopee/$img" ]; then
+                            echo "❌ 缺失: $img"
+                        fi
+                    done
+                fi
+                read -p "按Enter繼續..."
+                ;;
+            9)
+                manage_server
+                ;;
+            0)
+                return
+                ;;
+            *)
+                echo -e "${RED}❌ 無效選擇${NC}"
+                read -p "按Enter繼續..."
+                ;;
+        esac
+    done
+}
+
+# 函數：管理服務器
+manage_server() {
+    while true; do
+        show_title
+        echo -e "${PURPLE}🌐 服務器管理${NC}"
+        echo "══════════════════════════════════════════════════"
+        echo ""
+        check_server_status
+        
+        echo -e "${CYAN}可選操作:${NC}"
+        echo "  1. 啟動Python HTTP服務器 (端口8000)"
+        echo "  2. 啟動Python API服務器 (端口5050)"
+        echo "  3. 停止所有服務器"
+        echo "  4. 查看運行中的服務器"
+        echo "  0. 返回上一層"
+        echo ""
+        
+        read -p "請選擇操作 (0-4): " choice
+        
+        case $choice in
+            1)
+                echo -e "${GREEN}🚀 啟動HTTP服務器 (端口8000)...${NC}"
+                python3 -m http.server 8000 > /dev/null 2>&1 &
+                SERVER_PID=$!
+                echo -e "✅ 服務器已啟動 (PID: $SERVER_PID)"
+                echo -e "🌐 訪問地址: http://localhost:8000"
+                sleep 2
+                ;;
+            2)
+                echo -e "${GREEN}🚀 啟動API服務器 (端口5050)...${NC}"
+                if [ -f "save_server.py" ]; then
+                    python3 save_server.py > /dev/null 2>&1 &
+                    API_PID=$!
+                    echo -e "✅ API服務器已啟動 (PID: $API_PID)"
+                    echo -e "🔗 訪問地址: http://localhost:5050"
+                else
+                    echo -e "${YELLOW}⚠️  找不到 save_server.py${NC}"
+                    echo -e "正在創建基本API服務器..."
+                    create_basic_server
+                    python3 save_server.py > /dev/null 2>&1 &
+                fi
+                sleep 2
+                ;;
+            3)
+                echo -e "${RED}🛑 停止所有Python服務器...${NC}"
+                pkill -f "python.*server" 2>/dev/null
+                pkill -f "save_server.py" 2>/dev/null
+                echo -e "✅ 服務器已停止"
+                sleep 1
+                ;;
+            4)
+                echo -e "${YELLOW}📊 運行中的服務器進程:${NC}"
+                ps aux | grep -E "python.*server|save_server" | grep -v grep
+                echo ""
+                read -p "按Enter繼續..."
+                ;;
+            0)
+                return
+                ;;
+            *)
+                echo -e "${RED}❌ 無效選擇${NC}"
+                ;;
+        esac
+        sleep 1
+    done
+}
+
+# 函數：創建基本API服務器
+create_basic_server() {
+    cat > save_server.py << 'EOF'
+from http.server import HTTPServer, SimpleHTTPRequestHandler
+import json
+import os
+from datetime import datetime
+
+class ShopeeAPIHandler(SimpleHTTPRequestHandler):
+    def do_GET(self):
+        # 允許跨域
+        self.send_header('Access-Control-Allow-Origin', '*')
+        self.send_header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS')
+        self.send_header('Access-Control-Allow-Headers', 'Content-Type')
+        
+        if self.path == '/api/shopee/products':
+            try:
+                with open('js/shopee_list.json', 'r', encoding='utf-8') as f:
+                    data = json.load(f)
+                
+                self.send_response(200)
+                self.send_header('Content-type', 'application/json')
+                self.end_headers()
+                self.wfile.write(json.dumps(data, ensure_ascii=False).encode())
+            except Exception as e:
+                self.send_error(500, str(e))
+        else:
+            super().do_GET()
+    
+    def do_POST(self):
+        if self.path == '/api/shopee/save':
+            try:
+                content_length = int(self.headers['Content-Length'])
+                post_data = self.rfile.read(content_length)
+                data = json.loads(post_data.decode('utf-8'))
+                
+                # 添加時間戳
+                data['lastUpdated'] = datetime.now().isoformat()
+                
+                # 保存到文件
+                with open('js/shopee_list.json', 'w', encoding='utf-8') as f:
+                    json.dump(data, f, indent=2, ensure_ascii=False)
+                
+                self.send_response(200)
+                self.send_header('Content-type', 'application/json')
+                self.send_header('Access-Control-Allow-Origin', '*')
+                self.end_headers()
+                response = {'success': True, 'message': '數據保存成功'}
+                self.wfile.write(json.dumps(response).encode())
+                
+                print(f"[{datetime.now()}] ✅ 保存了 {len(data.get('products', []))} 個產品")
+                
+            except Exception as e:
+                self.send_response(500)
+                self.send_header('Content-type', 'application/json')
+                self.end_headers()
+                response = {'success': False, 'error': str(e)}
+                self.wfile.write(json.dumps(response).encode())
+                print(f"[{datetime.now()}] ❌ 保存失敗: {e}")
+        else:
+            self.send_error(404, "API endpoint not found")
+    
+    def do_OPTIONS(self):
+        self.send_response(200)
+        self.send_header('Access-Control-Allow-Origin', '*')
+        self.send_header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS')
+        self.send_header('Access-Control-Allow-Headers', 'Content-Type')
+        self.end_headers()
+
+if __name__ == '__main__':
+    # 確保在項目根目錄運行
+    os.chdir(os.path.dirname(os.path.abspath(__file__)))
+    
+    server = HTTPServer(('127.0.0.1', 5050), ShopeeAPIHandler)
+    print(f"[{datetime.now()}] 🚀 Shopee API服務器運行在 http://127.0.0.1:5050")
+    print(f"[{datetime.now()}] 📁 當前目錄: {os.getcwd()}")
+    print(f"[{datetime.now()}] 📊 API端點:")
+    print(f"[{datetime.now()}]   GET  /api/shopee/products  - 獲取產品數據")
+    print(f"[{datetime.now()}]   POST /api/shopee/save     - 保存產品數據")
+    
+    try:
+        server.serve_forever()
+    except KeyboardInterrupt:
+        print(f"\n[{datetime.now()}] 👋 服務器已停止")
+EOF
+    
+    echo -e "${GREEN}✅ 已創建基本API服務器: save_server.py${NC}"
+    chmod +x save_server.py
+}
+
+# 函數：主菜單
+main_menu() {
+    # 檢測當前目錄
+    CURRENT_DIR=$(basename "$(pwd)")
+    BASE_DIR=$(basename "$(dirname "$(pwd)")")
+    
+    while true; do
+        show_title
+        check_server_status
+        
+        # 顯示當前位置
+        echo -e "${YELLOW}📍 當前位置:${NC}"
+        pwd
+        echo ""
+        
+        # 根據目錄顯示不同菜單
+        case "$CURRENT_DIR" in
+            "myx_shop")
+                echo -e "${GREEN}🏠 主項目目錄${NC}"
+                echo "══════════════════════════════════════════════════"
+                echo ""
+                echo -e "${CYAN}🌐 網站系統:${NC}"
+                echo "  1. 🛍️  管理Shopee電商系統"
+                echo "  2. 📊 打開AI選股頁面 (bursa.html)"
+                echo "  3. 🏠 打開網站首頁 (index.html)"
+                echo ""
+                echo -e "${CYAN}🤖 AI系統:${NC}"
+                echo "  4. 運行AI股票分析"
+                echo "  5. 查看AI報告"
+                echo ""
+                echo -e "${CYAN}🔧 工具:${NC}"
+                echo "  6. 🌐 服務器管理"
+                echo "  7. 📁 瀏覽文件"
+                echo "  8. 🔄 切換目錄"
+                echo "  0. 🚪 退出"
+                echo ""
+                ;;
+                
+            "web")
+                echo -e "${BLUE}🌐 Web目錄${NC}"
+                echo "══════════════════════════════════════════════════"
+                echo ""
+                echo "可用網頁文件:"
+                ls -1 *.html 2>/dev/null | nl
+                echo ""
+                echo "  9. 返回主目錄"
+                echo "  0. 退出"
+                echo ""
+                ;;
+                
+            "scripts")
+                echo -e "${PURPLE}🤖 Scripts目錄${NC}"
+                echo "══════════════════════════════════════════════════"
+                echo ""
+                echo "可用腳本:"
+                ls -1 *.py *.sh 2>/dev/null | nl
+                echo ""
+                echo "  9. 返回主目錄"
+                echo "  0. 退出"
+                echo ""
+                ;;
+                
+            *)
+                echo -e "${YELLOW}📁 其他目錄: $CURRENT_DIR${NC}"
+                echo "══════════════════════════════════════════════════"
+                echo ""
+                echo "  1. 進入myx_shop主目錄"
+                echo "  2. 進入web目錄"
+                echo "  3. 進入scripts目錄"
+                echo "  0. 退出"
+                echo ""
+                ;;
+        esac
+        
+        read -p "請選擇操作: " choice
+        
+        case "$CURRENT_DIR" in
+            "myx_shop")
+                case $choice in
+                    1) manage_shopee ;;
+                    2) open_file "bursa.html" "AI選股系統" ;;
+                    3) open_file "index.html" "網站首頁" ;;
+                    4) 
+                        echo -e "${GREEN}🤖 運行AI分析...${NC}"
+                        if [ -d "scripts" ]; then
+                            cd scripts && ./Bursa
+                            cd ..
+                        else
+                            echo -e "${RED}❌ 找不到scripts目錄${NC}"
+                        fi
+                        ;;
+                    5)
+                        if [ -f "web/ai_analysis_preview.html" ]; then
+                            open_file "web/ai_analysis_preview.html" "AI分析報告"
+                        else
+                            echo -e "${YELLOW}⚠️  找不到AI報告${NC}"
+                        fi
+                        ;;
+                    6) manage_server ;;
+                    7)
+                        echo -e "${YELLOW}📁 文件列表:${NC}"
+                        find . -maxdepth 2 -type f \( -name "*.html" -o -name "*.json" -o -name "*.py" \) | sort
+                        echo ""
+                        read -p "按Enter繼續..."
+                        ;;
+                    8)
+                        echo "選擇目錄:"
+                        select dir in "web" "scripts" "admin" "js" "images"; do
+                            if [ -d "$dir" ]; then
+                                cd "$dir" && exec "$0"
+                            fi
+                            break
+                        done
+                        ;;
+                    0)
+                        echo -e "${GREEN}👋 再見！${NC}"
+                        exit 0
+                        ;;
+                    *)
+                        echo -e "${RED}❌ 無效選擇${NC}"
+                        sleep 1
+                        ;;
+                esac
+                ;;
+                
+            "web"|"scripts")
+                case $choice in
+                    [1-9])
+                        if [ "$choice" = "9" ]; then
+                            cd "$PROJECT_ROOT" && exec "$0"
+                        else
+                            files=($(ls -1 *.html 2>/dev/null))
+                            if [ ${#files[@]} -ge $choice ]; then
+                                open_file "${files[$((choice-1))]}" "${files[$((choice-1))]}"
+                            else
+                                echo -e "${RED}❌ 文件不存在${NC}"
+                            fi
+                        fi
+                        read -p "按Enter繼續..."
+                        ;;
+                    0)
+                        echo -e "${GREEN}👋 再見！${NC}"
+                        exit 0
+                        ;;
+                    *)
+                        echo -e "${RED}❌ 無效選擇${NC}"
+                        sleep 1
+                        ;;
+                esac
+                ;;
+                
+            *)
+                case $choice in
+                    1) cd "$PROJECT_ROOT" && exec "$0" ;;
+                    2) cd "$PROJECT_ROOT/web" && exec "$0" ;;
+                    3) cd "$PROJECT_ROOT/scripts" && exec "$0" ;;
+                    0)
+                        echo -e "${GREEN}👋 再見！${NC}"
+                        exit 0
+                        ;;
+                    *)
+                        echo -e "${RED}❌ 無效選擇${NC}"
+                        sleep 1
+                        ;;
+                esac
+                ;;
+        esac
+    done
+}
+
+# 確保在正確的目錄
+if [ ! -d "$PROJECT_ROOT" ]; then
+    echo -e "${RED}❌ 項目目錄不存在: $PROJECT_ROOT${NC}"
+    echo -e "請檢查路徑設置"
+    exit 1
+fi
+
+# 如果不在項目目錄，自動導航
+if [ "$(pwd)" != "$PROJECT_ROOT" ] && [ "$(basename "$(pwd)")" != "web" ] && [ "$(basename "$(pwd)")" != "scripts" ]; then
+    echo -e "${YELLOW}🔄 自動導航到項目目錄...${NC}"
+    cd "$PROJECT_ROOT"
+fi
+
+# 啟動主菜單
+main_menu
