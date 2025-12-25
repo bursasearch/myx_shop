@@ -1,0 +1,32 @@
+{
+  "source_file": "20250930.csv",
+  "output_file": "normalized_20250930.csv",
+  "timestamp": "2025-12-24T02:52:53.496804Z",
+  "delimiter_detected": "comma",
+  "present_columns": [
+    "Code",
+    "Stock",
+    "Sector",
+    "Open",
+    "Last",
+    "Prv Close",
+    "Chg",
+    "High",
+    "Low",
+    "Y-High",
+    "Y-Low",
+    "Vol",
+    "DY*",
+    "B%",
+    "Vol MA (20)",
+    "RSI (14)",
+    "MACD (26, 12)",
+    "EPS*",
+    "P/E",
+    "Status"
+  ],
+  "missing_columns_filled": [],
+  "rows_in": 2704,
+  "rows_out": 2704,
+  "new_sector_codes": []
+}

@@ -1,0 +1,27 @@
+{
+  "说明": "这是一个手动行业映射文件",
+  "用法": "在这里添加未识别的股票代码及其行业",
+  "示例": {
+    "03041": "Technology",
+    "0012": "Industrial Products"
+  },
+  "标准行业分类": [
+    "Financial Services",
+    "Industrial Products",
+    "Consumer Products", 
+    "Property & Construction",
+    "Plantation",
+    "Technology",
+    "Telecommunications & Media",
+    "Utilities",
+    "Transportation & Logistics",
+    "Healthcare",
+    "Energy",
+    "REITs"
+  ],
+  "映射数据": {
+    "0001": "Financial Services",
+    "0002": "Financial Services",
+    "0003": "Financial Services"
+  }
+}

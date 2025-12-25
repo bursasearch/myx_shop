@@ -1,0 +1,79 @@
+{
+  "generated_at": "2025-12-24T16:01:50.956598",
+  "last_updated": "2025-12-24 16:01:50",
+  "count": 8,
+  "files": [
+    {
+      "filename": "picks_20251223.json",
+      "path": "history/picks_20251223.json",
+      "date": "2025-12-23",
+      "date_code": "20251223",
+      "size": 9433,
+      "url": "./history/picks_20251223.json"
+    },
+    {
+      "filename": "picks_20251222.json",
+      "path": "history/picks_20251222.json",
+      "date": "2025-12-22",
+      "date_code": "20251222",
+      "size": 9149,
+      "url": "./history/picks_20251222.json"
+    },
+    {
+      "filename": "picks_20251221.json",
+      "path": "history/picks_20251221.json",
+      "date": "2025-12-21",
+      "date_code": "20251221",
+      "size": 9172,
+      "url": "./history/picks_20251221.json"
+    },
+    {
+      "filename": "picks_20251220.json",
+      "path": "history/picks_20251220.json",
+      "date": "2025-12-20",
+      "date_code": "20251220",
+      "size": 9187,
+      "url": "./history/picks_20251220.json"
+    },
+    {
+      "filename": "picks_20251218.json",
+      "path": "history/picks_20251218.json",
+      "date": "2025-12-18",
+      "date_code": "20251218",
+      "size": 10033,
+      "url": "./history/picks_20251218.json"
+    },
+    {
+      "filename": "picks_20251217.json",
+      "path": "history/picks_20251217.json",
+      "date": "2025-12-17",
+      "date_code": "20251217",
+      "size": 9155,
+      "url": "./history/picks_20251217.json"
+    },
+    {
+      "filename": "picks_20251216.json",
+      "path": "history/picks_20251216.json",
+      "date": "2025-12-16",
+      "date_code": "20251216",
+      "size": 11793,
+      "url": "./history/picks_20251216.json"
+    },
+    {
+      "filename": "picks_20251215.json",
+      "path": "history/picks_20251215.json",
+      "date": "2025-12-15",
+      "date_code": "20251215",
+      "size": 11335,
+      "url": "./history/picks_20251215.json"
+    }
+  ],
+  "latest": {
+    "filename": "picks_20251223.json",
+    "path": "history/picks_20251223.json",
+    "date": "2025-12-23",
+    "date_code": "20251223",
+    "size": 9433,
+    "url": "./history/picks_20251223.json"
+  }
+}

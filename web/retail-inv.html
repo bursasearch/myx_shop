@@ -747,20 +747,20 @@
                         <div class="source-buttons">
                             <div class="source-btn active" onclick="setDataSource('local')">
                                 <i class="fas fa-file-alt"></i><br>
-                                本地JSON
+                                處擬
                             </div>
                             <div class="source-btn" onclick="setDataSource('picks_latest')">
                                 <i class="fas fa-bolt"></i><br>
-                                picks_latest.json
+                                最新 Ai 選股
                             </div>
                             <div class="source-btn" onclick="setDataSource('history')">
                                 <i class="fas fa-history"></i><br>
-                                历史数据
+                                過去 Ai 選股 
                             </div>
                         </div>
                     </div>
                     
-                    <div class="date-picker" id="datePickerSection">
+                    <div class="date-picker" id="datePickerSection" style="display: none;">
                         <label for="dateSelect"><i class="far fa-calendar-alt"></i> 选择日期:</label>
                         <select id="dateSelect">
                             <!-- 日期选项会动态生成 -->
@@ -841,7 +841,7 @@
                         <label for="shareUnits"><i class="fas fa-chart-bar"></i> 购买股数 (单位: 100股)</label>
                         <div style="display: flex; align-items: center; gap: 10px;">
                             <input type="range" id="shareUnitsRange" min="1" max="100" value="10" style="flex: 1;">
-                            <input type="number" id="shareUnits" class="form-input" min="1" max1000 value="10" style="width: 80px;">
+                            <input type="number" id="shareUnits" class="form-input" min="1" max="1000" value="10" style="width: 80px;">
                         </div>
                         <small style="color: var(--gray); margin-top: 5px; display: block;">
                             总股数: <span id="totalSharesDisplay">1,000</span> 股 | 投资: <span id="investmentAmount">RM 0.00</span>
@@ -889,7 +889,7 @@
                             </div>
                             <div class="form-group">
                                 <label style="font-size: 12px;">上限 (RM)</label>
-                                <input type="number" id="stampDutyCap" class="form-input" step="1" min="0" value1000>
+                                <input type="number" id="stampDutyCap" class="form-input" step="1" min="0" value="1000">
                             </div>
                         </div>
                         
@@ -1032,7 +1032,7 @@
         
         // 页面加载完成后初始化
         document.addEventListener('DOMContentLoaded', function() {
-            console.log('📱 Bursa AI投资计算器启动 - 使用真实数据');
+            console.log('📱 Bursa AI投资计算器启动 - 增强版');
             
             // 初始化UI
             initUI();
@@ -1040,10 +1040,16 @@
             // 绑定事件监听器
             bindEventListeners();
             
+            // 初始化增强的日期选择器
+            setTimeout(() => {
+                initDateSelectorEnhanced();
+                updateDateSelector();
+            }, 500);
+            
             // 自动加载最新数据
             setTimeout(() => {
                 loadLatestData();
-            }, 500);
+            }, 1000);
         });
         
         // 初始化UI
@@ -1067,33 +1073,168 @@
         // 初始化日期选择器
         function initDateSelector() {
             const dateSelect = document.getElementById('dateSelect');
+            if (!dateSelect) return;
+            
             dateSelect.innerHTML = '';
             
-            // 生成最近7天的日期选项
-        // 真实存在的日期选项
-        const availableDates = [
-            '2025-12-21',
-            '2025-12-20',
-            '2025-12-18',
-            '2025-12-17',
-            '2025-12-16',
-            '2025-12-15'
-        ];
+            // 添加今天的选项
+            const today = new Date();
+            const todayStr = today.toISOString().split('T')[0];
+            const todayOption = document.createElement('option');
+            todayOption.value = todayStr;
+            todayOption.textContent = todayStr + ' (今天)';
+            todayOption.selected = true;
+            dateSelect.appendChild(todayOption);
+            
+            console.log('基本日期选择器初始化完成');
+        }
         
-        // 添加'最新数据'选项
-        const latestOption = document.createElement('option');
-        latestOption.value = 'latest';
-        latestOption.textContent = '最新数据';
-        latestOption.selected = true;
-        dateSelect.appendChild(latestOption);
+        // 增强版日期选择器初始化
+        function initDateSelectorEnhanced() {
+            const dateSelect = document.getElementById('dateSelect');
+            
+            if (!dateSelect) {
+                console.error('找不到日期选择器元素');
+                return;
+            }
+            
+            // 移除旧的事件监听器（如果存在）
+            dateSelect.removeEventListener('change', handleDateChange);
+            
+            // 添加新的事件监听器
+            dateSelect.addEventListener('change', handleDateChange);
+            
+            console.log('增强版日期选择器初始化完成');
+        }
         
-        // 添加真实日期选项
-        availableDates.forEach(dateStr => {
-            const option = document.createElement('option');
-            option.value = dateStr;
-            option.textContent = dateStr;
-            dateSelect.appendChild(option);
-        });
+        // 自动检测历史文件
+        async function scanHistoryFiles() {
+            try {
+                console.log('正在扫描 history/ 目录...');
+                // 尝试直接访问 history 目录
+                const response = await fetch('history/');
+                if (!response.ok) {
+                    console.log('history目录不存在或无权限访问');
+                    return [];
+                }
+                
+                const html = await response.text();
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(html, 'text/html');
+                const links = Array.from(doc.querySelectorAll('a[href$=".json"]'));
+                
+                console.log('找到的链接:', links.map(link => link.getAttribute('href')));
+                
+                // 提取 picks_YYYYMMDD.json 格式的文件
+                const files = links
+                    .map(link => link.getAttribute('href'))
+                    .filter(href => {
+                        // 过滤 picks_YYYYMMDD.json 格式的文件
+                        const match = href.match(/picks_(\d{8})\.json/);
+                        return match && !href.includes('latest'); // 排除 picks_latest.json
+                    })
+                    .map(href => {
+                        // 提取日期部分
+                        const match = href.match(/picks_(\d{8})\.json/);
+                        return {
+                            filename: href,
+                            dateStr: match[1],
+                            formattedDate: match[1].replace(/(\d{4})(\d{2})(\d{2})/, '$1-$2-$3')
+                        };
+                    })
+                    .sort((a, b) => b.dateStr.localeCompare(a.dateStr)); // 按日期降序排列
+                
+                console.log(`找到 ${files.length} 个历史文件:`, files);
+                return files;
+                
+            } catch (error) {
+                console.error('扫描历史文件失败:', error);
+                return [];
+            }
+        }
+        
+        // 更新日期选择器
+        async function updateDateSelector() {
+            const dateSelect = document.getElementById('dateSelect');
+            
+            if (!dateSelect) {
+                console.error('找不到日期选择器元素');
+                return;
+            }
+            
+            // 保存当前值
+            const currentValue = dateSelect.value;
+            
+            // 清空现有选项
+            dateSelect.innerHTML = '';
+            
+            // 添加今天的选项
+            const today = new Date();
+            const todayStr = today.toISOString().split('T')[0];
+            
+            const todayOption = document.createElement('option');
+            todayOption.value = todayStr;
+            todayOption.textContent = todayStr + ' (今天)';
+            dateSelect.appendChild(todayOption);
+            
+            // 从历史文件添加选项
+            const files = await scanHistoryFiles();
+            
+            files.forEach(file => {
+                const formattedDate = file.formattedDate;
+                
+                // 避免重复添加今天
+                if (formattedDate !== todayStr) {
+                    const option = document.createElement('option');
+                    option.value = formattedDate;
+                    option.textContent = formattedDate + ' (历史)';
+                    dateSelect.appendChild(option);
+                }
+            });
+            
+            // 恢复之前选中的值或选择第一个
+            if (dateSelect.options.length > 0) {
+                const hasCurrent = Array.from(dateSelect.options).some(opt => opt.value === currentValue);
+                if (hasCurrent && currentValue) {
+                    dateSelect.value = currentValue;
+                } else {
+                    dateSelect.selectedIndex = 0;
+                }
+            }
+            
+            console.log(`日期选择器已更新: ${dateSelect.options.length} 个选项`);
+            
+            // 触发日期变更事件
+            setTimeout(() => {
+                dateSelect.dispatchEvent(new Event('change'));
+            }, 100);
+        }
+        
+        // 处理日期变更
+        function handleDateChange() {
+            const selectedDate = this.value;
+            console.log('选择日期:', selectedDate);
+            currentDate = selectedDate;
+            
+            // 更新数据更新日期显示
+            document.getElementById('dataUpdateDate').textContent = selectedDate;
+            
+            // 如果当前数据源是 history，重新加载数据
+            if (currentDataSource === 'history') {
+                console.log('重新加载历史数据...');
+                loadCurrentData();
+            }
+        }
+        
+        // 加载当前选择的数据
+        async function loadCurrentData() {
+            if (currentDataSource === 'history') {
+                await loadHistoryData();
+            } else if (currentDataSource === 'picks_latest') {
+                await loadPicksLatest();
+            } else {
+                await loadLocalData();
+            }
         }
         
         // 初始化触摸反馈
@@ -1197,16 +1338,24 @@
                     sourceText = '本地JSON数据';
                     sourceIcon = 'fa-file-alt';
                     document.querySelector('.source-btn[onclick="setDataSource(\'local\')"]').classList.add('active');
+                    // 隐藏日期选择器
+                    document.getElementById('datePickerSection').style.display = 'none';
                     break;
                 case 'picks_latest':
-                    sourceText = 'picks_latest.json';
-                    sourceIcon = 'fa-bolt';
+                    sourceText = '';
+                  sourceIcon = 'fa-bolt';
                     document.querySelector('.source-btn[onclick="setDataSource(\'picks_latest\')"]').classList.add('active');
+                    // 隐藏日期选择器
+                    document.getElementById('datePickerSection').style.display = 'none';
                     break;
                 case 'history':
                     sourceText = '历史数据';
                     sourceIcon = 'fa-history';
                     document.querySelector('.source-btn[onclick="setDataSource(\'history\')"]').classList.add('active');
+                    // 显示日期选择器
+                    document.getElementById('datePickerSection').style.display = 'flex';
+                    // 更新日期选择器
+                    setTimeout(updateDateSelector, 100);
                     break;
             }
             
@@ -1225,6 +1374,7 @@
                     const data = await response.json();
                     processStockData(data.picks || []);
                     showNotification('成功加载 picks_latest.json', 'success');
+                    setDataSource('picks_latest');
                     return;
                 }
             } catch (error) {
@@ -1232,7 +1382,14 @@
             }
             
             // 如果 picks_latest.json 失败，尝试历史数据
-            loadHistoryData();
+            try {
+                await loadLatestHistoryFile();
+                setDataSource('history');
+            } catch (error) {
+                console.log('历史数据加载失败，使用本地数据');
+                loadLocalData();
+                setDataSource('local');
+            }
         }
         
         // 加载AI数据
@@ -1282,52 +1439,85 @@
         
         // 加载历史数据
         async function loadHistoryData() {
+            const stocksListEl = document.getElementById('aiStocksList');
+            const dateSelect = document.getElementById('dateSelect');
+            const selectedDate = dateSelect ? dateSelect.value : currentDate;
+            
+            if (!selectedDate) {
+                showNotification('请先选择日期', 'error');
+                return;
+            }
+            
+            // 显示加载状态
+            stocksListEl.innerHTML = `
+                <div class="loading">
+                    <i class="fas fa-spinner fa-spin"></i>
+                    <p>正在加载历史数据...</p>
+                    <p style="font-size: 12px; margin-top: 10px; color: var(--primary);">
+                        日期: ${selectedDate}
+                    </p>
+                </div>
+            `;
+            
             try {
-                // 尝试获取历史文件列表
-                const dateStr = currentDate.replace(/-/g, '');
+                // 将 YYYY-MM-DD 转换为 YYYYMMDD
+                const dateStr = selectedDate.replace(/-/g, '');
                 const fileName = `picks_${dateStr}.json`;
                 const filePath = `history/${fileName}`;
                 
+                console.log('加载历史文件:', filePath);
+                
                 const response = await fetch(filePath);
                 if (!response.ok) {
-                    // 如果指定日期的文件不存在，尝试最新日期的文件
-                    const fallbackResponse = await fetch('history/');
-                    if (fallbackResponse.ok) {
-                        // 尝试解析目录中的最新文件
-                        await loadLatestHistoryFile();
-                    } else {
-                        throw new Error(`无法访问历史数据目录`);
-                    }
-                } else {
-                    const data = await response.json();
-                    processStockData(data.picks || []);
-                    showNotification(`成功加载历史数据: ${fileName}`, 'success');
+                    throw new Error(`HTTP ${response.status}: ${fileName} 不存在`);
                 }
                 
+                const data = await response.json();
+                processStockData(data.picks || []);
+                
+                showNotification(`成功加载历史数据: ${selectedDate} (${(data.picks || []).length} 只股票)`, 'success');
+                
             } catch (error) {
-                showNotification(`加载历史数据失败: ${error.message}`, 'error');
-                loadLocalData();
+                console.error('加载历史数据失败:', error);
+                
+                // 尝试加载最新的历史文件
+                try {
+                    await loadLatestHistoryFile();
+                } catch (fallbackError) {
+                    showNotification(`历史数据加载失败: ${error.message}`, 'error');
+                    loadLocalData(); // 回退到本地数据
+                }
             }
         }
         
         // 加载最新历史文件
         async function loadLatestHistoryFile() {
-            // 尝试几个可能的历史文件
-            const date = new Date();
-            const attempts = 5; // 尝试最近5天
+            const dateSelect = document.getElementById('dateSelect');
+            const today = new Date();
+            const attempts = 7; // 尝试最近7天
             
-            for (let i = 0; i < attempts; i++) {
+            for (let i = 1; i <= attempts; i++) { // 从昨天开始
                 const checkDate = new Date();
-                checkDate.setDate(date.getDate() - i);
+                checkDate.setDate(today.getDate() - i);
                 const dateStr = checkDate.toISOString().split('T')[0].replace(/-/g, '');
                 const fileName = `picks_${dateStr}.json`;
                 const filePath = `history/${fileName}`;
+                
+                console.log(`尝试加载: ${filePath}`);
                 
                 try {
                     const response = await fetch(filePath);
                     if (response.ok) {
                         const data = await response.json();
                         processStockData(data.picks || []);
+                        
+                        // 更新日期选择器
+                        const formattedDate = dateStr.replace(/(\d{4})(\d{2})(\d{2})/, '$1-$2-$3');
+                        if (dateSelect) {
+                            dateSelect.value = formattedDate;
+                            currentDate = formattedDate;
+                        }
+                        
                         showNotification(`成功加载: ${fileName}`, 'success');
                         return;
                     }
@@ -1336,7 +1526,7 @@
                 }
             }
             
-            throw new Error('没有找到可用的历史文件');
+            throw new Error('最近7天内没有找到可用的历史文件');
         }
         
         // 加载本地数据（使用内置的真实数据示例）

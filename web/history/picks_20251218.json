@@ -4,7 +4,7 @@
   "picks": [
     {
       "rank": 1,
-      "code": "=\"5341\"",
+      "code": "5341",
       "name": "LACMED",
       "instrument_type": "Stock",
       "sector": "162",
@@ -21,7 +21,7 @@
     },
     {
       "rank": 2,
-      "code": "=\"9008\"",
+      "code": "9008",
       "name": "OMESTI",
       "instrument_type": "Stock",
       "sector": "105",
@@ -38,7 +38,7 @@
     },
     {
       "rank": 3,
-      "code": "=\"0652MQ\"",
+      "code": "0652MQ",
       "name": "HSI-CWMQ",
       "instrument_type": "Stock",
       "sector": "358",
@@ -55,7 +55,7 @@
     },
     {
       "rank": 4,
-      "code": "=\"0703CK\"",
+      "code": "0703CK",
       "name": "A50CHIN-CK",
       "instrument_type": "Stock",
       "sector": "358",
@@ -72,7 +72,7 @@
     },
     {
       "rank": 5,
-      "code": "=\"521146\"",
+      "code": "521146",
       "name": "SUNWAY-C46",
       "instrument_type": "Stock",
       "sector": "302",
@@ -89,7 +89,7 @@
     },
     {
       "rank": 6,
-      "code": "=\"53983W\"",
+      "code": "53983W",
       "name": "GAMUDA-C3W",
       "instrument_type": "Stock",
       "sector": "303",
@@ -106,7 +106,7 @@
     },
     {
       "rank": 7,
-      "code": "=\"0215CP\"",
+      "code": "0215CP",
       "name": "SLVEST-CP",
       "instrument_type": "Stock",
       "sector": "361",
@@ -123,7 +123,7 @@
     },
     {
       "rank": 8,
-      "code": "=\"53983U\"",
+      "code": "53983U",
       "name": "GAMUDA-C3U",
       "instrument_type": "Stock",
       "sector": "303",
@@ -140,7 +140,7 @@
     },
     {
       "rank": 9,
-      "code": "=\"53983T\"",
+      "code": "53983T",
       "name": "GAMUDA-C3T",
       "instrument_type": "Stock",
       "sector": "303",
@@ -157,7 +157,7 @@
     },
     {
       "rank": 10,
-      "code": "=\"8478\"",
+      "code": "8478",
       "name": "HWATAI",
       "instrument_type": "Stock",
       "sector": "101",
@@ -174,7 +174,7 @@
     },
     {
       "rank": 11,
-      "code": "=\"058338\"",
+      "code": "058338",
       "name": "MEITUAN-C38",
       "instrument_type": "Stock",
       "sector": "358",
@@ -191,7 +191,7 @@
     },
     {
       "rank": 12,
-      "code": "=\"0153\"",
+      "code": "0153",
       "name": "OVERSEA",
       "instrument_type": "Stock",
       "sector": "401",
@@ -208,7 +208,7 @@
     },
     {
       "rank": 13,
-      "code": "=\"01663U\"",
+      "code": "01663U",
       "name": "INARI-C3U",
       "instrument_type": "Stock",
       "sector": "305",
@@ -225,7 +225,7 @@
     },
     {
       "rank": 14,
-      "code": "=\"530626\"",
+      "code": "530626",
       "name": "FFB-C26",
       "instrument_type": "Stock",
       "sector": "301",
@@ -242,7 +242,7 @@
     },
     {
       "rank": 15,
-      "code": "=\"820649\"",
+      "code": "820649",
       "name": "ECOWLD-C49",
       "instrument_type": "Stock",
       "sector": "320",
@@ -259,7 +259,7 @@
     },
     {
       "rank": 16,
-      "code": "=\"729354\"",
+      "code": "729354",
       "name": "YINSON-C54",
       "instrument_type": "Stock",
       "sector": "361",
@@ -276,7 +276,7 @@
     },
     {
       "rank": 17,
-      "code": "=\"0163\"",
+      "code": "0163",
       "name": "CAREPLS",
       "instrument_type": "Stock",
       "sector": "162",
@@ -293,7 +293,7 @@
     },
     {
       "rank": 18,
-      "code": "=\"5168\"",
+      "code": "5168",
       "name": "HARTA",
       "instrument_type": "Stock",
       "sector": "162",
@@ -310,7 +310,7 @@
     },
     {
       "rank": 19,
-      "code": "=\"0652MR\"",
+      "code": "0652MR",
       "name": "HSI-CWMR",
       "instrument_type": "Stock",
       "sector": "358",
@@ -327,7 +327,7 @@
     },
     {
       "rank": 20,
-      "code": "=\"0270C3\"",
+      "code": "0270C3",
       "name": "NATGATE-C3",
       "instrument_type": "Stock",
       "sector": "302",

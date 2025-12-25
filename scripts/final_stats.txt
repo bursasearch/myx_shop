@@ -1,0 +1,11 @@
+ 175474 Unknown
+  70711 Technology
+  45357 Industrial Products
+  13504 Property
+   2871 Industrial & Consumer Products
+   2424 Utilities
+    716 Transportation & Logistics
+    417 Telecommunications & Media
+    115 Sector
+     38 -
+      2  Forbid"

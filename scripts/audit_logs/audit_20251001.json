@@ -1,0 +1,39 @@
+{
+  "source_file": "20251001.csv",
+  "output_file": "normalized_20251001.csv",
+  "timestamp": "2025-12-24T02:32:29.226626Z",
+  "delimiter_detected": "comma",
+  "present_columns": [
+    "Code",
+    "Stock",
+    "Sector",
+    "Open",
+    "Last",
+    "Prv Close",
+    "Chg",
+    "High",
+    "Low",
+    "Y-High",
+    "Y-Low",
+    "Vol",
+    "DY*",
+    "B%",
+    "Vol MA (20)",
+    "RSI (14)",
+    "MACD (26, 12)",
+    "EPS*",
+    "P/E",
+    "Status"
+  ],
+  "missing_columns_filled": [],
+  "rows_in": 2722,
+  "rows_out": 2722,
+  "new_sector_codes": [
+    "Industrial & Consumer Products",
+    "Property",
+    "Technology",
+    "Telecommunications & Media",
+    "Transportation & Logistics",
+    "Utilities"
+  ]
+}
