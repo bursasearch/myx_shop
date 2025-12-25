@@ -1121,7 +1121,7 @@
                 const html = await response.text();
                 const parser = new DOMParser();
                 const doc = parser.parseFromString(html, 'text/html');
-                const links = Array.from(doc.querySelectorAll('a[href$="web/picks_latest.json"]'));
+                const links = Array.from(doc.querySelectorAll('a[href$="picks_latest.json"]'));
                 
                 console.log('找到的链接:', links.map(link => link.getAttribute('href')));
                 

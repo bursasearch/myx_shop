@@ -919,7 +919,7 @@ def generate_picks_latest_file(picks, project_root, date_str, date_formatted):
     }
     
     # 保存到web目錄
-    picks_latest_path = os.path.join(web_dir, "web/picks_latest.json")
+    picks_latest_path = os.path.join(web_dir, "picks_latest.json")
     if save_json_safely(picks_latest_path, picks_data):
         print(f"    ✅ picks_latest.json 已生成")
         

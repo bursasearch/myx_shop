@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>文件访问测试</title>
+</head>
+<body>
+    <h1>Myx Shop 文件访问测试</h1>
+    <div id="result"></div>
+    <script>
+        const files = [
+            'web/picks_latest.json',
+            'web/latest_price.json',
+            'web/data.json'
+        ];
+        
+        async function testFiles() {
+            const results = [];
+            for (const file of files) {
+                try {
+                    const response = await fetch(file);
+                    if (response.ok) {
+                        const size = (await response.blob()).size;
+                        results.push(`✅ ${file} - ${size} bytes`);
+                    } else {
+                        results.push(`❌ ${file} - HTTP ${response.status}`);
+                    }
+                } catch (error) {
+                    results.push(`❌ ${file} - ${error.message}`);
+                }
+            }
+            document.getElementById('result').innerHTML = 
+                results.map(r => `<p>${r}</p>`).join('');
+        }
+        
+        testFiles();
+    </script>
+</body>
+</html>
