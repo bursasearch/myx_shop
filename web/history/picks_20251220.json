@@ -4,7 +4,7 @@
   "picks": [
     {
       "rank": 1,
-      "code": "=\"6742\"",
+      "code": "6742",
       "name": "YTLPOWR",
       "instrument_type": "Stock",
       "sector": "165",
@@ -21,7 +21,7 @@
     },
     {
       "rank": 2,
-      "code": "=\"0138\"",
+      "code": "0138",
       "name": "ZETRIX",
       "instrument_type": "Stock",
       "sector": "105",
@@ -38,7 +38,7 @@
     },
     {
       "rank": 3,
-      "code": "=\"5327\"",
+      "code": "5327",
       "name": "MEGAFB",
       "instrument_type": "Stock",
       "sector": "102",
@@ -55,7 +55,7 @@
     },
     {
       "rank": 4,
-      "code": "=\"5398\"",
+      "code": "5398",
       "name": "GAMUDA",
       "instrument_type": "Stock",
       "sector": "103",
@@ -72,7 +72,7 @@
     },
     {
       "rank": 5,
-      "code": "=\"0321\"",
+      "code": "0321",
       "name": "SDCG",
       "instrument_type": "Stock",
       "sector": "402",
@@ -89,7 +89,7 @@
     },
     {
       "rank": 6,
-      "code": "=\"7081\"",
+      "code": "7081",
       "name": "PHARMA",
       "instrument_type": "Stock",
       "sector": "162",
@@ -106,7 +106,7 @@
     },
     {
       "rank": 7,
-      "code": "=\"4863\"",
+      "code": "4863",
       "name": "TM",
       "instrument_type": "Stock",
       "sector": "163",
@@ -123,7 +123,7 @@
     },
     {
       "rank": 8,
-      "code": "=\"6888\"",
+      "code": "6888",
       "name": "AXIATA",
       "instrument_type": "Stock",
       "sector": "163",
@@ -140,7 +140,7 @@
     },
     {
       "rank": 9,
-      "code": "=\"5285\"",
+      "code": "5285",
       "name": "SDG",
       "instrument_type": "Stock",
       "sector": "125",
@@ -157,7 +157,7 @@
     },
     {
       "rank": 10,
-      "code": "=\"0239WA\"",
+      "code": "0239WA",
       "name": "ECOMATE-WA",
       "instrument_type": "Stock",
       "sector": "101",
@@ -174,7 +174,7 @@
     },
     {
       "rank": 11,
-      "code": "=\"3816\"",
+      "code": "3816",
       "name": "MISC",
       "instrument_type": "Stock",
       "sector": "164",
@@ -191,7 +191,7 @@
     },
     {
       "rank": 12,
-      "code": "=\"0102\"",
+      "code": "0102",
       "name": "WAJA",
       "instrument_type": "Stock",
       "sector": "402",
@@ -208,7 +208,7 @@
     },
     {
       "rank": 13,
-      "code": "=\"6963\"",
+      "code": "6963",
       "name": "VS",
       "instrument_type": "Stock",
       "sector": "102",
@@ -225,7 +225,7 @@
     },
     {
       "rank": 14,
-      "code": "=\"1023\"",
+      "code": "1023",
       "name": "CIMB",
       "instrument_type": "Stock",
       "sector": "110",
@@ -242,7 +242,7 @@
     },
     {
       "rank": 15,
-      "code": "=\"0213\"",
+      "code": "0213",
       "name": "MTAG",
       "instrument_type": "Stock",
       "sector": "402",
@@ -259,7 +259,7 @@
     },
     {
       "rank": 16,
-      "code": "=\"526339\"",
+      "code": "526339",
       "name": "SUNCON-C39",
       "instrument_type": "Stock",
       "sector": "303",
@@ -276,7 +276,7 @@
     },
     {
       "rank": 17,
-      "code": "=\"012850\"",
+      "code": "012850",
       "name": "FRONTKN-C50",
       "instrument_type": "Stock",
       "sector": "305",
@@ -293,7 +293,7 @@
     },
     {
       "rank": 18,
-      "code": "=\"5176\"",
+      "code": "5176",
       "name": "SUNREIT",
       "instrument_type": "Stock",
       "sector": "150",
@@ -310,7 +310,7 @@
     },
     {
       "rank": 19,
-      "code": "=\"0385\"",
+      "code": "0385",
       "name": "BMS",
       "instrument_type": "Stock",
       "sector": "401",
@@ -327,7 +327,7 @@
     },
     {
       "rank": 20,
-      "code": "=\"3336\"",
+      "code": "3336",
       "name": "IJM",
       "instrument_type": "Stock",
       "sector": "103",

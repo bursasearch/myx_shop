@@ -69,10 +69,141 @@
     </style>
 </head>
 <body>
+<<<<<<< HEAD
     <div class="loading" id="loading">
         <div class="spinner"></div>
         <div>正在加載 Bursa AI 選股分析系統...</div>
         <div style="margin-top: 10px; font-size: 0.9em;">http://localhost:5050/</div>
+=======
+    <div class="container fade-in">
+        <header>
+            <div class="logo">
+                <i class="fas fa-store"></i>
+            </div>
+            <h1>Myx Shop</h1>
+            <p class="tagline">SSM註冊企業 | 多元化服務平台</p>
+            
+            <div class="ssm-badge">
+                <i class="fas fa-certificate"></i> SSM註冊: 202510210078 (JM1034075-K)
+            </div>
+            
+            <!-- Google Analytics Setup Status -->
+            <div class="setup-complete">
+                <h3><i class="fas fa-check-circle"></i> Google Analytics 4 已成功設置!</h3>
+                <div class="ga-id-display">
+                    <i class="fas fa-fingerprint"></i> 測量ID: G-92XTNG247J
+                </div>
+                <p>您的網站現在正在收集分析數據</p>
+            </div>
+            
+            <!-- Time Zone Information -->
+            <div class="timezone-info">
+                <h4><i class="fas fa-clock"></i> 時區設置: Asia/Kuala_Lumpur (UTC+8)</h4>
+                <p>所有數據將以馬來西亞時間記錄</p>
+                <div class="time-display" id="localTime"></div>
+            </div>
+            
+            <!-- Statistics Dashboard -->
+            <div class="stats-grid">
+                <div class="stat-card" onclick="trackEvent('stat_click', 'total_visitors')">
+                    <div class="stat-number" id="totalVisitors">1,247</div>
+                    <div class="stat-label">總訪客人數</div>
+                </div>
+                <div class="stat-card" onclick="trackEvent('stat_click', 'today_visitors')">
+                    <div class="stat-number" id="todayVisitors">42</div>
+                    <div class="stat-label">今日訪客</div>
+                </div>
+                <div class="stat-card" onclick="trackEvent('stat_click', 'active_users')">
+                    <div class="stat-number pulse" id="activeNow">3</div>
+                    <div class="stat-label">當前在線</div>
+                </div>
+                <div class="stat-card" onclick="trackEvent('stat_click', 'conversion_rate')">
+                    <div class="stat-number">4.7%</div>
+                    <div class="stat-label">轉化率</div>
+                </div>
+            </div>
+            
+            <!-- Verification Button -->
+            <a href="http://127.0.0.1:5050/verification.html" class="verification-btn" onclick="trackEvent('button_click', 'verification_button')">
+                <i class="fas fa-check-circle"></i> 驗證商業資訊
+            </a>
+            
+            <!-- Real-time Visitor Counter -->
+            <div class="visitor-counter">
+                <div class="counter-label">
+                    <i class="fas fa-users"></i> 即時訪客
+                </div>
+                <div class="counter-value" id="visitorCount">5</div>
+            </div>
+            
+            <!-- GA Status Indicator -->
+            <div class="ga-status" id="gaStatus">
+                <i class="fas fa-broadcast-tower"></i> Google Analytics 4 追蹤中...
+            </div>
+            
+            <p style="margin-top: 1.5rem; color: #555;">歡迎來到 Myx Shop - 您的一站式服務平台</p>
+        </header>
+
+        <!-- Navigation Grid -->
+        <div class="nav-grid">
+            <a href="http://127.0.0.1:5050/bursa.html" class="nav-card" onclick="trackNavigation('AI選股分析')">
+                <div class="nav-icon">
+                    <i class="fas fa-chart-line"></i>
+                </div>
+                <h3>AI選股分析</h3>
+                <p>智能選股策略與市場分析</p>
+                <div style="margin-top: 1rem; color: #667eea;">
+                    <i class="fas fa-arrow-right"></i> 查看分析報告
+                </div>
+            </a>
+            
+            <a href="http://127.0.0.1:5050/products.html" class="nav-card" onclick="trackNavigation('聯盟商店')">
+                <div class="nav-icon">
+                    <i class="fas fa-shopping-bag"></i>
+                </div>
+                <h3>聯盟商店</h3>
+                <p>熱門產品推薦與優惠</p>
+                <div style="margin-top: 1rem; color: #667eea;">
+                    <i class="fas fa-arrow-right"></i> 瀏覽產品
+                </div>
+            </a>
+            
+            <a href="http://127.0.0.1:5050/vehicles.html" class="nav-card" onclick="trackNavigation('二手車輛')">
+                <div class="nav-icon">
+                    <i class="fas fa-car"></i>
+                </div>
+                <h3>二手車輛</h3>
+                <p>車輛資訊與市場分析</p>
+                <div style="margin-top: 1rem; color: #667eea;">
+                    <i class="fas fa-arrow-right"></i> 查看車輛
+                </div>
+            </a>
+            
+            <a href="http://127.0.0.1:5050/real-estate.html" class="nav-card" onclick="trackNavigation('房地產代理')">
+                <div class="nav-icon">
+                    <i class="fas fa-building"></i>
+                </div>
+                <h3>房地產代理</h3>
+                <p>專業房地產服務與物業資訊</p>
+                <div style="margin-top: 1rem; color: #667eea;">
+                    <i class="fas fa-arrow-right"></i> 查看物業
+                </div>
+            </a>
+        </div>
+
+        <!-- Footer -->
+        <footer>
+            <div class="company-info">
+                <p><strong>Myx Shop</strong></p>
+                <p>SSM Reg No: 202510210078 (JM1034075-K) | 馬來西亞註冊企業</p>
+                <p>© 2025 Myx Shop. 保留所有權利。</p>
+                <div class="time-display" id="footerTime"></div>
+                <p style="margin-top: 1rem; font-size: 0.8rem; color: #667eea;">
+                    <i class="fas fa-chart-bar"></i> 網站分析: Google Analytics 4 (ID: G-92XTNG247J)
+                </p>
+            </div>
+        </footer>
+>>>>>>> 0c35ea6824b5f3cb30aedb48c89f2655e2c2ec9a
     </div>
     
     <iframe 

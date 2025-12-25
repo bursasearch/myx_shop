@@ -4,7 +4,7 @@
   "picks": [
     {
       "rank": 1,
-      "code": "=\"0382\"",
+      "code": "0382",
       "name": "FOODIE",
       "instrument_type": "Stock",
       "sector": "463",
@@ -21,7 +21,7 @@
     },
     {
       "rank": 2,
-      "code": "=\"0652NY\"",
+      "code": "0652NY",
       "name": "HSI-PWNY",
       "instrument_type": "Stock",
       "sector": "358",
@@ -38,7 +38,7 @@
     },
     {
       "rank": 3,
-      "code": "=\"0138\"",
+      "code": "0138",
       "name": "ZETRIX",
       "instrument_type": "Stock",
       "sector": "105",
@@ -55,7 +55,7 @@
     },
     {
       "rank": 4,
-      "code": "=\"0652MA\"",
+      "code": "0652MA",
       "name": "HSI-CWMA",
       "instrument_type": "Stock",
       "sector": "358",
@@ -72,7 +72,7 @@
     },
     {
       "rank": 5,
-      "code": "=\"5151\"",
+      "code": "5151",
       "name": "HEXTAR",
       "instrument_type": "Stock",
       "sector": "102",
@@ -89,7 +89,7 @@
     },
     {
       "rank": 6,
-      "code": "=\"0652KQ\"",
+      "code": "0652KQ",
       "name": "HSI-CWKQ",
       "instrument_type": "Stock",
       "sector": "358",
@@ -106,7 +106,7 @@
     },
     {
       "rank": 7,
-      "code": "=\"1015\"",
+      "code": "1015",
       "name": "AMBANK",
       "instrument_type": "Stock",
       "sector": "110",
@@ -123,7 +123,7 @@
     },
     {
       "rank": 8,
-      "code": "=\"0259\"",
+      "code": "0259",
       "name": "SNS",
       "instrument_type": "Stock",
       "sector": "105",
@@ -140,7 +140,7 @@
     },
     {
       "rank": 9,
-      "code": "=\"8877\"",
+      "code": "8877",
       "name": "EKOVEST",
       "instrument_type": "Stock",
       "sector": "103",
@@ -157,7 +157,7 @@
     },
     {
       "rank": 10,
-      "code": "=\"0339\"",
+      "code": "0339",
       "name": "CBHB",
       "instrument_type": "Stock",
       "sector": "402",
@@ -174,7 +174,7 @@
     },
     {
       "rank": 11,
-      "code": "=\"5196\"",
+      "code": "5196",
       "name": "BJFOOD",
       "instrument_type": "Stock",
       "sector": "101",
@@ -191,7 +191,7 @@
     },
     {
       "rank": 12,
-      "code": "=\"5219\"",
+      "code": "5219",
       "name": "PESTEC",
       "instrument_type": "Stock",
       "sector": "102",
@@ -208,7 +208,7 @@
     },
     {
       "rank": 13,
-      "code": "=\"0652NO\"",
+      "code": "0652NO",
       "name": "HSI-PWNO",
       "instrument_type": "Stock",
       "sector": "358",
@@ -225,7 +225,7 @@
     },
     {
       "rank": 14,
-      "code": "=\"7081\"",
+      "code": "7081",
       "name": "PHARMA",
       "instrument_type": "Stock",
       "sector": "162",
@@ -242,7 +242,7 @@
     },
     {
       "rank": 15,
-      "code": "=\"5183\"",
+      "code": "5183",
       "name": "PCHEM",
       "instrument_type": "Stock",
       "sector": "102",
@@ -259,7 +259,7 @@
     },
     {
       "rank": 16,
-      "code": "=\"7121WB\"",
+      "code": "7121WB",
       "name": "XL-WB",
       "instrument_type": "Stock",
       "sector": "101",
@@ -276,7 +276,7 @@
     },
     {
       "rank": 17,
-      "code": "=\"0599C3\"",
+      "code": "0599C3",
       "name": "XPENG-C3",
       "instrument_type": "Stock",
       "sector": "358",
@@ -293,7 +293,7 @@
     },
     {
       "rank": 18,
-      "code": "=\"8869\"",
+      "code": "8869",
       "name": "PMETAL",
       "instrument_type": "Stock",
       "sector": "102",
@@ -310,7 +310,7 @@
     },
     {
       "rank": 19,
-      "code": "=\"2429\"",
+      "code": "2429",
       "name": "TANCO",
       "instrument_type": "Stock",
       "sector": "120",
@@ -327,7 +327,7 @@
     },
     {
       "rank": 20,
-      "code": "=\"1651\"",
+      "code": "1651",
       "name": "MRCB",
       "instrument_type": "Stock",
       "sector": "120",
