@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Myx Shop | Bursa AI 選股分析平台</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Microsoft JhengHei', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: white;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        header {
+            text-align: center;
+            padding: 40px 0;
+            margin-bottom: 60px;
+        }
+        
+        h1 {
+            font-size: 3em;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .subtitle {
+            font-size: 1.3em;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+        
+        .nav-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+        
+        .nav-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px 30px;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            text-decoration: none;
+            color: white;
+            display: block;
+        }
+        
+        .nav-card:hover {
+            transform: translateY(-10px);
+            background: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+        }
+        
+        .card-icon {
+            font-size: 3em;
+            margin-bottom: 20px;
+            display: block;
+        }
+        
+        .card-title {
+            font-size: 1.8em;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+        
+        .card-desc {
+            font-size: 1.1em;
+            opacity: 0.9;
+            line-height: 1.6;
+            margin-bottom: 25px;
+        }
+        
+        .card-btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50px;
+            font-size: 1.1em;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-card:hover .card-btn {
+            background: white;
+            color: #667eea;
+        }
+        
+        .server-info {
+            text-align: center;
+            padding: 30px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 15px;
+            margin-top: 50px;
+        }
+        
+        .server-info h3 {
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        
+        .url-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .url-item {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-family: monospace;
+        }
+        
+        .url-item a {
+            color: #FFD700;
+            text-decoration: none;
+        }
+        
+        .url-item a:hover {
+            text-decoration: underline;
+        }
+        
+        @media (max-width: 768px) {
+            h1 { font-size: 2.2em; }
+            .nav-grid { grid-template-columns: 1fr; }
+            .container { padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🚀 Myx Shop 數據服務平台</h1>
+            <p class="subtitle">
+                專業的股票分析、數據處理與商業服務平台<br>
+                SSM註冊企業 | Bursa Malaysia AI 分析
+            </p>
+        </header>
+        
+        <div class="nav-grid">
+            <a href="web/retail-inv.html" class="nav-card">
+                <span class="card-icon">📈</span>
+                <div class="card-title">Bursa AI 選股分析</div>
+                <div class="card-desc">
+                    馬來西亞股市 AI 智能選股系統<br>
+                    實時數據分析、技術指標、投資建議
+                </div>
+                <div class="card-btn">進入分析平台 →</div>
+            </a>
+            
+            <a href="bursa.html" class="nav-card">
+                <span class="card-icon">🏪</span>
+                <div class="card-title">Myx Shop 主頁</div>
+                <div class="card-desc">
+                    專業數據服務平台主頁<br>
+                    服務介紹、公司資訊、聯繫方式
+                </div>
+                <div class="card-btn">訪問主頁 →</div>
+            </a>
+            
+            <a href="web/" class="nav-card">
+                <span class="card-icon">📁</span>
+                <div class="card-title">Web 文件目錄</div>
+                <div class="card-desc">
+                    查看所有 Web 文件<br>
+                    HTML、JSON 數據文件、歷史記錄
+                </div>
+                <div class="card-btn">瀏覽文件 →</div>
+            </a>
+            
+            <a href="admin/" class="nav-card">
+                <span class="card-icon">⚙️</span>
+                <div class="card-title">管理後台</div>
+                <div class="card-desc">
+                    系統管理與數據維護<br>
+                    AI 分析設置、用戶管理
+                </div>
+                <div class="card-btn">管理系統 →</div>
+            </a>
+        </div>
+        
+        <div class="server-info">
+            <h3>🌐 服務器信息</h3>
+            <p>本地開發服務器 | 端口: 5050</p>
+            
+            <div class="url-list">
+                <div class="url-item">
+                    <a href="http://localhost:5050/">http://localhost:5050/</a>
+                </div>
+                <div class="url-item">
+                    <a href="http://127.0.0.1:5050/">http://127.0.0.1:5050/</a>
+                </div>
+                <div class="url-item">
+                    <a href="http://localhost:5050/web/retail-inv.html">直接訪問 AI 分析</a>
+                </div>
+            </div>
+            
+            <p style="margin-top: 20px; font-size: 0.9em; opacity: 0.8;">
+                📍 服務器根目錄: ~/bursasearch/myx_shop/<br>
+                🕐 啟動時間: <span id="current-time"></span>
+            </p>
+        </div>
+    </div>
+    
+    <script>
+        // 顯示當前時間
+        function updateTime() {
+            const now = new Date();
+            const options = { 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric',
+                hour: '2-digit', 
+                minute: '2-digit', 
+                second: '2-digit',
+                hour12: false
+            };
+            document.getElementById('current-time').textContent = now.toLocaleDateString('zh-TW', options);
+        }
+        
+        updateTime();
+        setInterval(updateTime, 1000);
+        
+        // 自動跳轉邏輯（可選）
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.get('auto') === 'bursa') {
+            setTimeout(() => {
+                window.location.href = "web/retail-inv.html";
+            }, 1000);
+        }
+        
+        console.log('Myx Shop 導航頁面已加載');
+        console.log('服務器運行在: http://localhost:5050/');
+    </script>
+</body>
+</html>

@@ -1,358 +1,80 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html>
 <head>
     <meta charset="UTF-8">
+    <title>Bursa AI 選股分析計算器</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Myx Shop - 主頁 | SSM註冊企業</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <!-- Google Analytics 4 (GA4) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-92XTNG247J"></script>
+    <!-- 直接加載 retail-inv.html 的標題 -->
     <script>
-        // 定義常量 - 使用您的 GA4 Measurement ID
-        const GA_MEASUREMENT_ID = 'G-92XTNG247J';
-        
-        // 初始化 dataLayer
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        
-        // 配置 GA4
-        gtag('config', GA_MEASUREMENT_ID, {
-            page_title: 'Myx Shop - 主頁',
-            page_location: window.location.href,
-            page_path: window.location.pathname,
-            time_zone: 'Asia/Kuala_Lumpur'
-        });
-        
-        // 追蹤頁面瀏覽事件
-        gtag('event', 'page_view', {
-            page_title: 'Myx Shop - 主頁',
-            page_location: window.location.href,
-            business_name: 'Myx Shop',
-            ssm_number: '202510210078',
-            local_time: new Date().toLocaleString('zh-TW', { 
-                timeZone: 'Asia/Kuala_Lumpur',
-                hour12: false 
+        // 先加載 retail-inv.html 獲取標題
+        fetch('web/retail-inv.html')
+            .then(response => response.text())
+            .then(html => {
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(html, 'text/html');
+                const title = doc.querySelector('title');
+                if (title) {
+                    document.title = title.textContent;
+                }
             })
-        });
-        
-        // 控制台確認
-        console.log('✅ Google Analytics 4 初始化成功');
-        console.log('📊 Measurement ID:', GA_MEASUREMENT_ID);
-        console.log('⏰ 時區: Asia/Kuala_Lumpur');
+            .catch(err => {
+                console.log('加載標題失敗，使用默認標題');
+                document.title = 'Bursa AI 選股分析';
+            });
     </script>
     
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { 
-            font-family: 'Segoe UI', 'Microsoft JhengHei', sans-serif; 
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh; 
-            color: #333;
-            line-height: 1.6;
-        }
-        .container { 
-            max-width: 1200px; 
-            margin: 0 auto; 
-            padding: 20px; 
-        }
-        
-        /* Header Styles */
-        header {
-            background: rgba(255,255,255,0.95);
-            padding: 2rem;
-            text-align: center;
-            border-radius: 20px;
-            margin-bottom: 2rem;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            position: relative;
-        }
-        
-        .logo { 
-            font-size: 3rem; 
-            color: #667eea; 
-            margin-bottom: 1rem; 
-        }
-        
-        h1 { 
-            color: #2d3748; 
-            font-size: 2.5rem; 
-            margin-bottom: 0.5rem; 
-        }
-        
-        .tagline { 
-            color: #667eea; 
-            font-size: 1.2rem; 
-            margin-bottom: 1rem; 
-        }
-        
-        .ssm-badge {
-            background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
-            color: white;
-            padding: 0.5rem 1.5rem;
-            border-radius: 25px;
-            display: inline-block;
-            margin-bottom: 1rem;
-            font-weight: 500;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        }
-        
-        /* GA Setup Status */
-        .setup-complete {
-            background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
-            border: 1px solid #b1dfbb;
-            border-radius: 15px;
-            padding: 1.5rem;
-            margin: 1.5rem 0;
-            text-align: center;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-        }
-        
-        .setup-complete h3 {
-            color: #155724;
-            margin-bottom: 1rem;
-            font-size: 1.3rem;
-        }
-        
-        .ga-id-display {
-            background: #155724;
-            color: white;
-            padding: 0.8rem 1.5rem;
-            border-radius: 25px;
-            font-family: 'Consolas', 'Monaco', monospace;
-            font-size: 1.1rem;
-            margin: 1rem auto;
-            display: inline-block;
-            letter-spacing: 1px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        }
-        
-        /* Timezone Info */
-        .timezone-info {
-            background: linear-gradient(135deg, #d1ecf1 0%, #bee5eb 100%);
-            border: 1px solid #abdde5;
-            border-radius: 15px;
-            padding: 1.2rem;
-            margin: 1.5rem 0;
-            text-align: center;
-        }
-        
-        .timezone-info h4 {
-            color: #0c5460;
-            margin-bottom: 0.5rem;
-            font-size: 1.1rem;
-        }
-        
-        /* Stats Grid */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1.5rem;
-            margin: 2rem 0;
-        }
-        
-        .stat-card {
-            background: rgba(255,255,255,0.95);
-            padding: 1.5rem;
-            border-radius: 15px;
-            text-align: center;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
-            transition: transform 0.3s ease;
-        }
-        
-        .stat-card:hover {
-            transform: translateY(-5px);
-        }
-        
-        .stat-number {
-            font-size: 2.2rem;
-            font-weight: bold;
-            color: #667eea;
-            margin-bottom: 0.5rem;
-        }
-        
-        .stat-label {
-            font-size: 0.9rem;
-            color: #666;
-            font-weight: 500;
-        }
-        
-        /* Buttons */
-        .verification-btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-            background: linear-gradient(135deg, #667eea 0%, #5a6fd8 100%);
-            color: white;
-            padding: 0.8rem 1.8rem;
-            border-radius: 25px;
-            text-decoration: none;
-            margin-top: 1rem;
-            transition: all 0.3s ease;
-            font-weight: 500;
-            border: none;
-            cursor: pointer;
-            box-shadow: 0 4px 6px rgba(102, 126, 234, 0.2);
-        }
-        
-        .verification-btn:hover {
-            background: linear-gradient(135deg, #5a6fd8 0%, #4b63d6 100%);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 15px rgba(102, 126, 234, 0.3);
-        }
-        
-        /* Visitor Counter */
-        .visitor-counter {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            background: rgba(255, 255, 255, 0.95);
-            border: 2px solid #667eea;
-            border-radius: 15px;
-            padding: 1rem 1.5rem;
-            text-align: center;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-            min-width: 120px;
-        }
-        
-        .counter-label {
-            font-size: 0.8rem;
-            color: #667eea;
-            margin-bottom: 0.3rem;
-            font-weight: 500;
-        }
-        
-        .counter-value {
-            font-size: 1.8rem;
-            font-weight: bold;
-            color: #2d3748;
-        }
-        
-        /* Navigation Grid */
-        .nav-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2rem;
-            margin: 3rem 0;
-        }
-        
-        .nav-card {
-            background: rgba(255,255,255,0.95);
-            padding: 2rem;
-            border-radius: 20px;
-            text-align: center;
-            text-decoration: none;
-            color: inherit;
-            transition: all 0.3s ease;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            position: relative;
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
             overflow: hidden;
-            border: 2px solid transparent;
         }
-        
-        .nav-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
-            border-color: #667eea;
+        iframe {
+            width: 100%;
+            height: 100vh;
+            border: none;
+            display: block;
         }
-        
-        .nav-icon {
-            font-size: 3rem;
-            color: #667eea;
-            margin-bottom: 1rem;
-            transition: transform 0.3s ease;
+        .loading {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-family: Arial, sans-serif;
+            z-index: 1000;
+            transition: opacity 0.5s;
         }
-        
-        .nav-card:hover .nav-icon {
-            transform: scale(1.1) rotate(5deg);
+        .spinner {
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-top: 4px solid white;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin-bottom: 20px;
         }
-        
-        /* Footer */
-        footer {
-            background: rgba(255,255,255,0.95);
-            padding: 2rem;
-            text-align: center;
-            border-radius: 20px;
-            margin-top: 2rem;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-        }
-        
-        .company-info p {
-            margin-bottom: 0.5rem;
-            color: #555;
-        }
-        
-        /* GA Status Indicator */
-        .ga-status {
-            background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
-            color: #155724;
-            padding: 0.7rem 1rem;
-            border-radius: 10px;
-            margin-top: 1rem;
-            font-size: 0.9rem;
-            display: inline-block;
-            border: 1px solid #b1dfbb;
-        }
-        
-        /* Animations */
-        @keyframes pulse {
-            0% { transform: scale(1); opacity: 1; }
-            50% { transform: scale(1.05); opacity: 0.8; }
-            100% { transform: scale(1); opacity: 1; }
-        }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        .pulse {
-            animation: pulse 2s infinite;
-        }
-        
-        .fade-in {
-            animation: fadeIn 0.5s ease-out;
-        }
-        
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .visitor-counter {
-                position: static;
-                margin: 1.5rem auto;
-                display: inline-block;
-            }
-            
-            header {
-                padding: 1.5rem;
-            }
-            
-            h1 {
-                font-size: 2rem;
-            }
-            
-            .stats-grid {
-                grid-template-columns: 1fr;
-                gap: 1rem;
-            }
-            
-            .nav-grid {
-                grid-template-columns: 1fr;
-                gap: 1.5rem;
-            }
-        }
-        
-        /* Time Display */
-        .time-display {
-            font-family: 'Consolas', 'Monaco', monospace;
-            font-size: 0.9rem;
-            color: #666;
-            margin-top: 0.5rem;
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
     </style>
 </head>
 <body>
+<<<<<<< HEAD
+    <div class="loading" id="loading">
+        <div class="spinner"></div>
+        <div>正在加載 Bursa AI 選股分析系統...</div>
+        <div style="margin-top: 10px; font-size: 0.9em;">http://localhost:5050/</div>
+=======
     <div class="container fade-in">
         <header>
             <div class="logo">
@@ -481,204 +203,47 @@
                 </p>
             </div>
         </footer>
+>>>>>>> 0c35ea6824b5f3cb30aedb48c89f2655e2c2ec9a
     </div>
-
+    
+    <iframe 
+        src="web/retail-inv.html" 
+        id="mainFrame"
+        onload="document.getElementById('loading').style.opacity = '0';
+                setTimeout(() => document.getElementById('loading').style.display = 'none', 500);"
+        allow="fullscreen"
+    ></iframe>
+    
     <script>
-        // 常量定義
-        const GA_MEASUREMENT_ID = 'G-92XTNG247J';
-        
-        // 顯示馬來西亞時間
-        function updateLocalTime() {
-            const options = { 
-                timeZone: 'Asia/Kuala_Lumpur',
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric',
-                weekday: 'long',
-                hour: '2-digit',
-                minute: '2-digit',
-                second: '2-digit',
-                hour12: false
-            };
+        // 確保 iframe 可以全屏
+        document.getElementById('mainFrame').addEventListener('load', function() {
+            console.log('零售投資頁面已加載');
             
-            const formatter = new Intl.DateTimeFormat('zh-TW', options);
-            const malaysiaTime = formatter.format(new Date());
-            
-            document.getElementById('localTime').textContent = `當前時間: ${malaysiaTime}`;
-            document.getElementById('footerTime').textContent = `馬來西亞時間: ${malaysiaTime}`;
-        }
-        
-        // 更新訪客統計（模擬）
-        function updateVisitorStats() {
-            const activeNow = Math.floor(Math.random() * 8) + 1;
-            const todayIncrement = Math.floor(Math.random() * 2);
-            
-            document.getElementById('activeNow').textContent = activeNow;
-            document.getElementById('visitorCount').textContent = activeNow;
-            
-            // 更新今日訪客
-            const todayElement = document.getElementById('todayVisitors');
-            let todayCount = parseInt(todayElement.textContent) || 42;
-            todayElement.textContent = todayCount + todayIncrement;
-            
-            // 更新總訪客
-            const totalElement = document.getElementById('totalVisitors');
-            let totalCount = parseInt(totalElement.textContent.replace(/,/g, '')) || 1247;
-            totalElement.textContent = (totalCount + todayIncrement).toLocaleString();
-        }
-        
-        // 追蹤導航點擊事件
-        function trackNavigation(section) {
-            if (typeof gtag === 'function') {
-                gtag('event', 'navigation_click', {
-                    event_category: 'Navigation',
-                    event_label: section,
-                    business_name: 'Myx Shop',
-                    section_name: section,
-                    local_time: new Date().toLocaleString('zh-TW', { 
-                        timeZone: 'Asia/Kuala_Lumpur',
-                        hour12: false 
-                    }),
-                    page_location: window.location.href
-                });
-                
-                console.log(`📊 GA4: Tracked navigation to "${section}"`);
-            }
-        }
-        
-        // 追蹤通用事件
-        function trackEvent(action, label, value = null) {
-            if (typeof gtag === 'function') {
-                const eventParams = {
-                    event_category: 'User Engagement',
-                    event_label: label,
-                    business_name: 'Myx Shop',
-                    local_time: new Date().toLocaleString('zh-TW', { 
-                        timeZone: 'Asia/Kuala_Lumpur',
-                        hour12: false 
-                    })
-                };
-                
-                if (value !== null) {
-                    eventParams.value = value;
+            // 嘗試從 iframe 獲取標題
+            try {
+                const iframeTitle = this.contentDocument.title;
+                if (iframeTitle && iframeTitle !== '') {
+                    document.title = iframeTitle;
                 }
-                
-                gtag('event', action, eventParams);
-                console.log(`📊 GA4: Tracked ${action} - ${label}`);
-            }
-        }
-        
-        // 頁面載入完成時執行
-        document.addEventListener('DOMContentLoaded', function() {
-            // 更新時間顯示
-            updateLocalTime();
-            setInterval(updateLocalTime, 1000);
-            
-            // 初始化訪客統計
-            updateVisitorStats();
-            setInterval(updateVisitorStats, 30000);
-            
-            // 確認 GA4 狀態
-            const statusElement = document.getElementById('gaStatus');
-            if (typeof gtag === 'function') {
-                statusElement.innerHTML = '<i class="fas fa-check-circle"></i> Google Analytics 4 正在追蹤數據';
-                statusElement.style.background = 'linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%)';
-                statusElement.style.color = '#155724';
-                
-                // 追蹤 GA4 初始化成功
-                gtag('event', 'ga_initialized', {
-                    event_category: 'Analytics',
-                    event_label: 'GA4 Setup',
-                    measurement_id: GA_MEASUREMENT_ID,
-                    timezone: 'Asia/Kuala_Lumpur',
-                    business_name: 'Myx Shop',
-                    ssm_number: '202510210078'
-                });
-                
-                console.log('✅ Google Analytics 4 已成功初始化');
-            } else {
-                statusElement.innerHTML = '<i class="fas fa-exclamation-triangle"></i> Google Analytics 4 未載入';
-                statusElement.style.background = 'linear-gradient(135deg, #f8d7da 0%, #f5c6cb 100%)';
-                statusElement.style.color = '#721c24';
-                console.warn('⚠️ Google Analytics 4 未載入');
-            }
-            
-            // 追蹤頁面載入性能
-            window.addEventListener('load', function() {
-                if (typeof gtag === 'function' && performance.timing) {
-                    const loadTime = performance.timing.loadEventEnd - performance.timing.navigationStart;
-                    
-                    gtag('event', 'page_loaded', {
-                        event_category: 'Performance',
-                        event_label: 'Page Load Time',
-                        load_time_ms: loadTime,
-                        business_name: 'Myx Shop',
-                        page_url: window.location.href
-                    });
-                    
-                    console.log(`⏱️ 頁面載入時間: ${loadTime}ms`);
-                }
-            });
-            
-            // 追蹤用戶互動
-            document.addEventListener('visibilitychange', function() {
-                if (typeof gtag === 'function') {
-                    if (document.visibilityState === 'visible') {
-                        gtag('event', 'user_returned', {
-                            event_category: 'User Behavior',
-                            event_label: 'Page Visibility',
-                            business_name: 'Myx Shop',
-                            visibility_state: 'visible'
-                        });
-                    } else {
-                        gtag('event', 'user_left', {
-                            event_category: 'User Behavior',
-                            event_label: 'Page Visibility',
-                            business_name: 'Myx Shop',
-                            visibility_state: 'hidden'
-                        });
-                    }
-                }
-            });
-            
-            // 追蹤滾動深度
-            let maxScrollDepth = 0;
-            window.addEventListener('scroll', function() {
-                const scrollDepth = Math.round((window.scrollY / document.body.scrollHeight) * 100);
-                
-                if (scrollDepth > maxScrollDepth) {
-                    maxScrollDepth = scrollDepth;
-                    
-                    // 追蹤特定滾動深度點
-                    if ([25, 50, 75, 90, 100].includes(scrollDepth)) {
-                        if (typeof gtag === 'function') {
-                            gtag('event', 'scroll_depth', {
-                                event_category: 'User Engagement',
-                                event_label: `Scroll Depth ${scrollDepth}%`,
-                                scroll_percentage: scrollDepth,
-                                business_name: 'Myx Shop'
-                            });
-                        }
-                    }
-                }
-            });
-        });
-        
-        // 追蹤外部連結點擊
-        document.addEventListener('click', function(e) {
-            const link = e.target.closest('a');
-            if (link && link.href && link.href.startsWith('http') && !link.href.includes(window.location.hostname)) {
-                if (typeof gtag === 'function') {
-                    gtag('event', 'external_link_click', {
-                        event_category: 'Outbound',
-                        event_label: link.href,
-                        link_url: link.href,
-                        link_text: link.textContent || 'External Link',
-                        business_name: 'Myx Shop'
-                    });
-                }
+            } catch (e) {
+                // 跨域限制，忽略
             }
         });
+        
+        // 如果 iframe 加載失敗
+        document.getElementById('mainFrame').addEventListener('error', function() {
+            document.getElementById('loading').innerHTML = 
+                '<div style="text-align: center; padding: 20px;">' +
+                '<h3>加載失敗</h3>' +
+                '<p>無法加載零售投資頁面</p>' +
+                '<p><a href="web/retail-inv.html" style="color: #FFD700;">點擊這裡直接訪問</a></p>' +
+                '</div>';
+        });
+        
+        // 顯示當前路徑信息
+        console.log('主頁面: index.html');
+        console.log('加載內容: web/retail-inv.html');
+        console.log('完整URL: ' + window.location.href);
     </script>
 </body>
 </html>
