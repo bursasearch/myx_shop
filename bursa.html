@@ -310,6 +310,46 @@
       text-align: center;
     }
     
+    /* ==================== 新增：零售投资按钮样式 ==================== */
+    .retail-button-section {
+      background: linear-gradient(135deg, #6A11CB 0%, #2575FC 100%);
+      color: white;
+      padding: 25px;
+      border-radius: 15px;
+      margin: 30px 0;
+      text-align: center;
+      box-shadow: 0 10px 30px rgba(106, 17, 203, 0.3);
+      display: none;
+    }
+    
+    .retail-button-section button {
+      background: white;
+      color: #6A11CB;
+      border: none;
+      padding: 15px 40px;
+      border-radius: 30px;
+      font-size: 1.2rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin: 10px 0;
+    }
+    
+    .retail-button-section button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+      background: #f8f9fa;
+    }
+    
+    .retail-button-section p {
+      margin-top: 15px;
+      opacity: 0.9;
+      font-size: 0.95rem;
+    }
+    
     /* ==================== 新增：社交媒体频道样式 ==================== */
     .social-channels {
       background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
@@ -521,6 +561,8 @@
       .trust-badges { flex-direction: column; align-items: center; }
       .nav-links { flex-direction: column; width: 100%; }
       .nav-btn { width: 100%; justify-content: center; }
+      .retail-button-section { padding: 20px 15px; }
+      .retail-button-section button { width: 100%; padding: 15px 20px; }
     }
     
     @media (max-width: 480px) {
@@ -636,6 +678,16 @@
           <div style="font-size: 0.85rem; color: #666;">专业客服团队</div>
         </div>
       </div>
+    </div>
+
+    <!-- 零售投资按钮区域 -->
+    <div id="retailButtonSection" class="retail-button-section" style="display: none;">
+      <h3><span>📈</span> 零售投资数据服务</h3>
+      <p>作为尊贵会员，您可以访问零售投资数据分析平台</p>
+      <button onclick="window.location.href='web/retail-inv.html'">
+        <span>🚀</span> 进入零售投资页面
+      </button>
+      <p>包含完整的零售投资数据分析、历史数据和趋势图表</p>
     </div>
     
     <!-- 已付款用户状态 -->
@@ -967,6 +1019,9 @@
                     document.getElementById('renewalReminder').style.display = 'block';
                     document.getElementById('renewalDays').textContent = daysLeft;
                 }
+
+                // 顯示零售投資按鈕
+                document.getElementById('retailButtonSection').style.display = 'block';
             }
         }
     }
