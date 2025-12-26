@@ -17,9 +17,50 @@
         .container { max-width: 1200px; margin: 0 auto; }
 
         /* Header */
-        .header { text-align: center; color: white; margin-bottom: 40px; padding: 30px 20px; }
+        .header { 
+            text-align: center; 
+            color: white; 
+            margin-bottom: 40px; 
+            padding: 30px 20px; 
+            position: relative;
+        }
         .header h1 { font-size: 3em; margin-bottom: 15px; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); }
         .header p { font-size: 1.3em; opacity: 0.9; max-width: 600px; margin: 0 auto; }
+        
+        /* 回到主页按钮 */
+        .home-btn {
+            position: absolute;
+            top: 20px;
+            left: 0;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255, 255, 255, 0.9);
+            color: #333;
+            padding: 10px 20px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border: none;
+            cursor: pointer;
+            font-family: inherit;
+        }
+        .home-btn:hover {
+            background: white;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+        }
+        @media (max-width: 768px) {
+            .home-btn {
+                position: relative;
+                top: 0;
+                left: 0;
+                margin-bottom: 15px;
+                display: inline-flex;
+            }
+        }
 
         /* Search */
         .search-box { max-width: 500px; margin: 0 auto 40px; position: relative; }
@@ -104,6 +145,9 @@
             .filters { flex-direction: column; align-items: center; }
             .filter-btn, .sell-btn { width: 220px; justify-content: center; }
             .card-actions { flex-direction: column; }
+            .header {
+                padding-top: 60px;
+            }
         }
 /* Admin Entry */
 .admin-entry {
@@ -153,6 +197,11 @@
 
         <!-- HEADER -->
         <div class="header">
+            <!-- 回到主页按钮 -->
+            <button class="home-btn" onclick="goToHomePage()">
+                <i class="fas fa-home"></i> 回到主页
+            </button>
+            
             <h1>精選二手車輛</h1>
             <p>發掘高品質二手車，價格實惠，車況透明</p>
         </div>
@@ -194,7 +243,13 @@
     </div>
 
     <script>
-        // 車輛數據
+        // 回到主页函数
+        function goToHomePage() {
+            // 这里可以修改为您的主页URL
+            window.location.href = 'index.html'; // 请根据实际情况修改主页URL
+        }
+
+        // 车辆数据
         const vehicles = [
             {
                 id: "Daihatsu",
