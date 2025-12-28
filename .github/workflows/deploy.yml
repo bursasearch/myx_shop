@@ -3,7 +3,7 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches: ["main"]
-
+  
 permissions:
   contents: read
   pages: write
@@ -22,12 +22,16 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+      
       - name: Setup Pages
         uses: actions/configure-pages@v4
+      
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: './web'
+          # 關鍵修正：上傳整個項目，不只是 web 目錄
+          path: '.'
+      
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
