@@ -2,8 +2,7 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <!-- 修改了 viewport，移除了 user-scalable=no，允許縮放 -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Bursa投资计算器 - 使用真实AI数据</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -41,9 +40,6 @@
             line-height: 1.5;
             min-height: 100vh;
             padding: 0;
-            /* 允許文本選擇以便縮放時閱讀 */
-            -webkit-user-select: text;
-            user-select: text;
         }
         
         .container {
@@ -697,18 +693,6 @@
             max-height: 80vh;
             overflow-y: auto;
         }
-        
-        /* 確保內容在縮放時正常顯示 */
-        .scalable-content {
-            -webkit-text-size-adjust: 100%;
-            text-size-adjust: 100%;
-        }
-        
-        /* 確保圖片在縮放時保持比例 */
-        img {
-            max-width: 100%;
-            height: auto;
-        }
     </style>
 </head>
 <body>
@@ -745,7 +729,7 @@
         </div>
         
         <!-- 内容区域 -->
-        <div class="content scalable-content">
+        <div class="content">
             <!-- AI选股标签页 -->
             <div id="stocks-tab" class="tab-content active">
                 <div class="card">
@@ -1190,7 +1174,7 @@
             
             const todayOption = document.createElement('option');
             todayOption.value = todayStr;
-            todayOption.textContent = todayStr + ' (最新 EOD)';
+            todayOption.textContent = todayStr + ' (今天)';
             dateSelect.appendChild(todayOption);
             
             // 从历史文件添加选项

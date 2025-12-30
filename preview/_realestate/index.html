@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>房地產代理 | Myx Shop - 專業物業服務</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Segoe UI', sans-serif; 
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh; 
+            color: #333;
+            line-height: 1.6;
+        }
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+        
+        /* Header Styles */
+        header {
+            background: rgba(255,255,255,0.95);
+            padding: 2rem;
+            text-align: center;
+            border-radius: 20px;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            position: relative;
+        }
+        
+        .logo { font-size: 3rem; color: #667eea; margin-bottom: 1rem; }
+        h1 { color: #2d3748; font-size: 2.5rem; margin-bottom: 0.5rem; }
+        .tagline { color: #667eea; font-size: 1.2rem; margin-bottom: 1rem; }
+        
+        .ssm-badge {
+            background: #48bb78;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            display: inline-block;
+            margin-bottom: 1rem;
+        }
+        
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: #667eea;
+            color: white;
+            padding: 0.7rem 1.5rem;
+            border-radius: 25px;
+            text-decoration: none;
+            margin-top: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .back-btn:hover {
+            background: #5a6fd8;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        /* Search Section */
+        .search-section {
+            background: rgba(255,255,255,0.95);
+            padding: 2rem;
+            border-radius: 20px;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        .search-form {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .form-group label {
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #4a5568;
+        }
+        
+        .form-control {
+            padding: 0.8rem 1rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+        
+        .search-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 10px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            align-self: end;
+        }
+        
+        .search-btn:hover {
+            background: #5a6fd8;
+            transform: translateY(-2px);
+        }
+        
+        /* Property Grid */
+        .section-title {
+            text-align: center;
+            margin: 2rem 0;
+            color: white;
+            font-size: 2rem;
+        }
+        
+        .properties-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        .property-card {
+            background: rgba(255,255,255,0.95);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .property-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+        
+        .property-image {
+            height: 200px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 3rem;
+        }
+        
+        .property-details {
+            padding: 1.5rem;
+        }
+        
+        .property-price {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 0.5rem;
+        }
+        
+        .property-title {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: #2d3748;
+        }
+        
+        .property-location {
+            color: #718096;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .property-features {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        
+        .feature {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .feature-value {
+            font-weight: bold;
+            color: #2d3748;
+        }
+        
+        .feature-label {
+            font-size: 0.8rem;
+            color: #718096;
+        }
+        
+        .property-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .btn {
+            flex: 1;
+            padding: 0.7rem;
+            border: none;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            text-decoration: none;
+        }
+        
+        .btn-primary {
+            background: #667eea;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #5a6fd8;
+        }
+        
+        .btn-outline {
+            background: transparent;
+            border: 1px solid #667eea;
+            color: #667eea;
+        }
+        
+        .btn-outline:hover {
+            background: rgba(102, 126, 234, 0.1);
+        }
+        
+        /* Agents Section */
+        .agents-section {
+            background: rgba(255,255,255,0.95);
+            padding: 2rem;
+            border-radius: 20px;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        .agents-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 1.5rem;
+        }
+        
+        .agent-card {
+            text-align: center;
+            padding: 1.5rem;
+            border-radius: 15px;
+            background: rgba(102, 126, 234, 0.05);
+            transition: all 0.3s ease;
+        }
+        
+        .agent-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        
+        .agent-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin: 0 auto 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2.5rem;
+        }
+        
+        .agent-name {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: #2d3748;
+        }
+        
+        .agent-role {
+            color: #667eea;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+        }
+        
+        .agent-contact {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+        
+        .contact-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #667eea;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .contact-btn:hover {
+            background: #5a6fd8;
+            transform: scale(1.1);
+        }
+        
+        /* Services Section */
+        .services-section {
+            background: rgba(255,255,255,0.95);
+            padding: 2rem;
+            border-radius: 20px;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 1.5rem;
+        }
+        
+        .service-card {
+            text-align: center;
+            padding: 2rem 1rem;
+            border-radius: 15px;
+            background: rgba(255,255,255,0.7);
+            transition: all 0.3s ease;
+        }
+        
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        
+        .service-icon {
+            font-size: 3rem;
+            color: #667eea;
+            margin-bottom: 1rem;
+        }
+        
+        .service-title {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: #2d3748;
+        }
+        
+        /* Footer */
+        footer {
+            background: rgba(255,255,255,0.95);
+            padding: 2rem;
+            text-align: center;
+            border-radius: 20px;
+            margin-top: 2rem;
+        }
+        
+        .company-info p {
+            margin-bottom: 0.5rem;
+        }
+        
+        .local-time {
+            font-size: 0.9rem;
+            color: #666;
+            margin-top: 0.5rem;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .search-form {
+                grid-template-columns: 1fr;
+            }
+            
+            .properties-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            header {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <i class="fas fa-building"></i>
+            </div>
+            <h1>房地產代理服務</h1>
+            <p class="tagline">專業物業買賣、租賃與投資諮詢</p>
+            <div class="ssm-badge">
+                <i class="fas fa-certificate"></i> SSM註冊: 202510210078 (JM1034075-K)
+            </div>
+            
+            <a href="index.html" class="back-btn">
+                <i class="fas fa-arrow-left"></i> 返回主頁
+            </a>
+            
+            <p>尋找您的夢想家園 | 專業房地產顧問服務</p>
+        </header>
+
+        <!-- Search Section -->
+        <section class="search-section">
+            <h2><i class="fas fa-search"></i> 物業搜索</h2>
+            <p>根據您的需求尋找合適的物業</p>
+            
+            <form class="search-form">
+                <div class="form-group">
+                    <label for="property-type">物業類型</label>
+                    <select id="property-type" class="form-control">
+                        <option value="">所有類型</option>
+                        <option value="apartment">公寓</option>
+                        <option value="condo">共管公寓</option>
+                        <option value="terrace">排屋</option>
+                        <option value="bungalow">獨立式洋房</option>
+                        <option value="commercial">商業物業</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="location">地區</label>
+                    <select id="location" class="form-control">
+                        <option value="">所有地區</option>
+                        <option value="kuala-lumpur">吉隆坡</option>
+                        <option value="selangor">雪蘭莪</option>
+                        <option value="penang">檳城</option>
+                        <option value="johor">柔佛</option>
+                        <option value="malacca">馬六甲</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="price-range">價格範圍</label>
+                    <select id="price-range" class="form-control">
+                        <option value="">任何價格</option>
+                        <option value="0-300000">RM 300,000 以下</option>
+                        <option value="300000-500000">RM 300,000 - 500,000</option>
+                        <option value="500000-800000">RM 500,000 - 800,000</option>
+                        <option value="800000-1200000">RM 800,000 - 1,200,000</option>
+                        <option value="1200000+">RM 1,200,000 以上</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="bedrooms">臥室數量</label>
+                    <select id="bedrooms" class="form-control">
+                        <option value="">任何數量</option>
+                        <option value="1">1 臥室</option>
+                        <option value="2">2 臥室</option>
+                        <option value="3">3 臥室</option>
+                        <option value="4">4 臥室以上</option>
+                    </select>
+                </div>
+                
+                <button type="submit" class="search-btn">
+                    <i class="fas fa-search"></i> 搜索物業
+                </button>
+            </form>
+        </section>
+
+        <!-- Featured Properties -->
+        <h2 class="section-title">精選物業</h2>
+        
+        <div class="properties-grid">
+            <!-- Property 1 -->
+            <div class="property-card">
+                <div class="property-image">
+                    <i class="fas fa-home"></i>
+                </div>
+                <div class="property-details">
+                    <div class="property-price">RM 680,000</div>
+                    <h3 class="property-title">豪華公寓單位 - 吉隆坡市中心</h3>
+                    <div class="property-location">
+                        <i class="fas fa-map-marker-alt"></i> 吉隆坡, 金三角區
+                    </div>
+                    <div class="property-features">
+                        <div class="feature">
+                            <span class="feature-value">3</span>
+                            <span class="feature-label">臥室</span>
+                        </div>
+                        <div class="feature">
+                            <span class="feature-value">2</span>
+                            <span class="feature-label">浴室</span>
+                        </div>
+                        <div class="feature">
+                            <span class="feature-value">1,200</span>
+                            <span class="feature-label">平方英尺</span>
+                        </div>
+                    </div>
+                    <div class="property-actions">
+                        <a href="#" class="btn btn-primary">查看詳情</a>
+                        <a href="#" class="btn btn-outline">聯繫經紀</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Property 2 -->
+            <div class="property-card">
+                <div class="property-image">
+                    <i class="fas fa-building"></i>
+                </div>
+                <div class="property-details">
+                    <div class="property-price">RM 1,250,000</div>
+                    <h3 class="property-title">雙層排屋 - 雪蘭莪八打靈再也</h3>
+                    <div class="property-location">
+                        <i class="fas fa-map-marker-alt"></i> 雪蘭莪, 八打靈再也
+                    </div>
+                    <div class="property-features">
+                        <div class="feature">
+                            <span class="feature-value">4</span>
+                            <span class="feature-label">臥室</span>
+                        </div>
+                        <div class="feature">
+                            <span class="feature-value">3</span>
+                            <span class="feature-label">浴室</span>
+                        </div>
+                        <div class="feature">
+                            <span class="feature-value">2,200</span>
+                            <span class="feature-label">平方英尺</span>
+                        </div>
+                    </div>
+                    <div class="property-actions">
+                        <a href="#" class="btn btn-primary">查看詳情</a>
+                        <a href="#" class="btn btn-outline">聯繫經紀</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Property 3 -->
+            <div class="property-card">
+                <div class="property-image">
+                    <i class="fas fa-warehouse"></i>
+                </div>
+                <div class="property-details">
+                    <div class="property-price">RM 2,500,000</div>
+                    <h3 class="property-title">商業店屋 - 檳城喬治市</h3>
+                    <div class="property-location">
+                        <i class="fas fa-map-marker-alt"></i> 檳城, 喬治市遺產區
+                    </div>
+                    <div class="property-features">
+                        <div class="feature">
+                            <span class="feature-value">商業</span>
+                            <span class="feature-label">物業類型</span>
+                        </div>
+                        <div class="feature">
+                            <span class="feature-value">2</span>
+                            <span class="feature-label">樓層</span>
+                        </div>
+                        <div class="feature">
+                            <span class="feature-value">3,500</span>
+                            <span class="feature-label">平方英尺</span>
+                        </div>
+                    </div>
+                    <div class="property-actions">
+                        <a href="#" class="btn btn-primary">查看詳情</a>
+                        <a href="#" class="btn btn-outline">聯繫經紀</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Real Estate Agents -->
+        <section class="agents-section">
+            <h2><i class="fas fa-user-tie"></i> 專業房地產經紀</h2>
+            <p>我們的專業團隊為您提供最優質的服務</p>
+            
+            <div class="agents-grid">
+                <!-- Agent 1 -->
+                <div class="agent-card">
+                    <div class="agent-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <h3 class="agent-name">張偉明</h3>
+                    <div class="agent-role">高級房地產顧問</div>
+                    <p>專注於吉隆坡高端住宅市場，10年經驗</p>
+                    <div class="agent-contact">
+                        <a href="tel:+60123456789" class="contact-btn">
+                            <i class="fas fa-phone"></i>
+                        </a>
+                        <a href="https://wa.me/60123456789" class="contact-btn">
+                            <i class="fab fa-whatsapp"></i>
+                        </a>
+                        <a href="mailto:weiming@myxshop.com" class="contact-btn">
+                            <i class="fas fa-envelope"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Agent 2 -->
+                <div class="agent-card">
+                    <div class="agent-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <h3 class="agent-name">林美琪</h3>
+                    <div class="agent-role">商業物業專家</div>
+                    <p>商業地產投資顧問，8年專業經驗</p>
+                    <div class="agent-contact">
+                        <a href="tel:+60129876543" class="contact-btn">
+                            <i class="fas fa-phone"></i>
+                        </a>
+                        <a href="https://wa.me/60129876543" class="contact-btn">
+                            <i class="fab fa-whatsapp"></i>
+                        </a>
+                        <a href="mailto:meiqi@myxshop.com" class="contact-btn">
+                            <i class="fas fa-envelope"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Agent 3 -->
+                <div class="agent-card">
+                    <div class="agent-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <h3 class="agent-name">陳志強</h3>
+                    <div class="agent-role">租賃市場專家</div>
+                    <p>住宅與商業租賃，6年服務經驗</p>
+                    <div class="agent-contact">
+                        <a href="tel:+60128765432" class="contact-btn">
+                            <i class="fas fa-phone"></i>
+                        </a>
+                        <a href="https://wa.me/60128765432" class="contact-btn">
+                            <i class="fab fa-whatsapp"></i>
+                        </a>
+                        <a href="mailto:zhiqiang@myxshop.com" class="contact-btn">
+                            <i class="fas fa-envelope"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Services Section -->
+        <section class="services-section">
+            <h2><i class="fas fa-concierge-bell"></i> 我們的服務</h2>
+            <p>全面的房地產解決方案</p>
+            
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-home"></i>
+                    </div>
+                    <h3 class="service-title">住宅買賣</h3>
+                    <p>公寓、排屋、獨立式洋房等各類住宅物業交易</p>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-building"></i>
+                    </div>
+                    <h3 class="service-title">商業物業</h3>
+                    <p>店屋、辦公室、廠房等商業地產投資顧問</p>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-key"></i>
+                    </div>
+                    <h3 class="service-title">物業租賃</h3>
+                    <p>住宅與商業物業租賃管理服務</p>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3 class="service-title">投資諮詢</h3>
+                    <p>房地產市場分析與投資策略規劃</p>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            <div class="company-info">
+                <p><strong>Myx Shop 房地產代理</strong></p>
+                <p>SSM Reg No: 202510210078 (JM1034075-K) | Registered in Malaysia</p>
+                <p>© 2025 Myx Shop. All rights reserved.</p>
+                <p class="local-time" id="footerTime"></p>
+                <p style="margin-top: 1rem; font-size: 0.8rem; color: #667eea;">
+                    <i class="fas fa-phone"></i> 聯繫我們: +60 12-345 6789 | 
+                    <i class="fas fa-envelope"></i> realestate@myxshop.com
+                </p>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Display local Malaysian time
+        function updateLocalTime() {
+            const options = { 
+                timeZone: 'Asia/Kuala_Lumpur',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+                weekday: 'long',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit',
+                hour12: false
+            };
+            
+            const malaysiaTime = new Date().toLocaleString('zh-TW', options);
+            document.getElementById('footerTime').textContent = `馬來西亞時間: ${malaysiaTime}`;
+        }
+        
+        // Update time every second
+        updateLocalTime();
+        setInterval(updateLocalTime, 1000);
+        
+        // Search form handling
+        document.querySelector('.search-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form values
+            const propertyType = document.getElementById('property-type').value;
+            const location = document.getElementById('location').value;
+            const priceRange = document.getElementById('price-range').value;
+            const bedrooms = document.getElementById('bedrooms').value;
+            
+            // In a real application, you would send this data to a server
+            // For now, we'll just show an alert
+            alert(`搜索條件:\n物業類型: ${propertyType || '所有'}\n地區: ${location || '所有'}\n價格範圍: ${priceRange || '任何'}\n臥室: ${bedrooms || '任何'}`);
+            
+            // Track search event if Google Analytics is available
+            if (typeof gtag !== 'undefined') {
+                gtag('event', 'real_estate_search', {
+                    'property_type': propertyType,
+                    'location': location,
+                    'price_range': priceRange,
+                    'bedrooms': bedrooms
+                });
+            }
+        });
+        
+        // Track page view for real estate section
+        document.addEventListener('DOMContentLoaded', function() {
+            if (typeof gtag !== 'undefined') {
+                gtag('event', 'page_view', {
+                    'page_title': 'Myx Shop - 房地產代理',
+                    'page_location': window.location.href,
+                    'business_section': 'real_estate'
+                });
+            }
+        });
+    </script>
+</body>
+</html>

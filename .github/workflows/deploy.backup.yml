@@ -3,9 +3,8 @@ name: Deploy to GitHub Pages
 
 on:
   push:
-    branches:
-      - main
-  workflow_dispatch:
+    branches: [main]
+  workflow_dispatch: {}
 
 permissions:
   contents: read
@@ -25,14 +24,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-        with:
-          # 获取完整的仓库历史，确保.nojekyll文件被包含
-          fetch-depth: 0
-
-      - name: Create .nojekyll file
-        run: |
-          touch .nojekyll
-          echo "GitHub Pages without Jekyll" > .nojekyll
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
@@ -40,7 +31,6 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          # 上传所有文件，包括.nojekyll
           path: '.'
 
       - name: Deploy to GitHub Pages
