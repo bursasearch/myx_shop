@@ -40,6 +40,24 @@
             justify-content: center; margin-right: 15px; flex-shrink: 0;
             font-weight: bold; font-size: 0.9em;
         }
+        
+        /* 付款警告区域 */
+        .payment-warning-section {
+            background: linear-gradient(135deg, #FFEBEE, #FFCDD2);
+            border: 2px solid #D32F2F;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+            box-shadow: 0 4px 12px rgba(211, 47, 47, 0.1);
+        }
+        .payment-warning-section h3 {
+            color: #D32F2F;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
         .payment-info {
             background: #fff3cd; padding: 20px; border-radius: 10px;
             border: 2px solid #ffc107; text-align: center; margin: 25px 0;
@@ -48,7 +66,13 @@
             display: flex; justify-content: center; gap: 30px;
             margin: 20px 0; flex-wrap: wrap;
         }
-        .qr-item { text-align: center; }
+        .qr-item { 
+            text-align: center; 
+            padding: 15px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
         .qr-item img {
             width: 150px; height: 150px; border: 2px solid #ddd;
             border-radius: 10px; padding: 5px; background: white;
@@ -63,6 +87,74 @@
             margin: 20px 0; border-left: 4px solid #e53e3e;
         }
         .highlight { color: #e53e3e; font-weight: bold; }
+        
+        /* 支付記錄按鈕 */
+        .payment-log-btn {
+            background: rgba(33, 150, 243, 0.2);
+            color: #1976D2;
+            border: 1px solid #2196F3;
+            border-radius: 8px;
+            padding: 8px 16px;
+            margin: 10px 0;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9em;
+            transition: all 0.3s ease;
+        }
+        .payment-log-btn:hover {
+            background: rgba(33, 150, 243, 0.3);
+            transform: translateY(-2px);
+        }
+        
+        /* 審計日誌區域 */
+        .audit-section {
+            background: linear-gradient(135deg, #E3F2FD, #BBDEFB);
+            border: 2px solid #2196F3;
+            padding: 20px;
+            border-radius: 15px;
+            margin: 25px 0;
+            text-align: center;
+        }
+        .audit-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .audit-btn {
+            padding: 12px 20px;
+            background: #2196F3;
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+        }
+        .audit-btn:hover {
+            background: #1976D2;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(33, 150, 243, 0.3);
+        }
+        .audit-log-display {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 12px;
+            padding: 15px;
+            margin-top: 20px;
+            text-align: left;
+            max-height: 300px;
+            overflow-y: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            border: 1px solid #BBDEFB;
+            display: none;
+        }
 
         /* WhatsApp 按钮 */
         .whatsapp-btn {
@@ -107,12 +199,41 @@
             border-top: 1px solid #e9ecef; color: #666; font-size: 0.9em;
         }
 
+        /* 彈窗樣式 */
+        .alert-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            padding: 15px;
+        }
+        .alert-box {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            max-width: 95%;
+            max-height: 90vh;
+            overflow-y: auto;
+            animation: alertFadeIn 0.3s ease;
+        }
+        @keyframes alertFadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
         @media (max-width: 768px) {
             .container { padding: 20px; }
             .qr-codes { flex-direction: column; gap: 20px; align-items: center; }
             .step { flex-direction: column; text-align: center; }
             .step-number { margin-bottom: 10px; }
             .nav-buttons, .whatsapp-btn { flex-direction: column; width: 100%; justify-content: center; }
+            .audit-buttons { flex-direction: column; }
         }
     </style>
 </head>
@@ -122,6 +243,49 @@
         <div class="header">
             <h1>🚗 车辆摆卖说明</h1>
             <p>Myx Shop - 专业二手车买卖平台</p>
+        </div>
+
+        <!-- 付款警告区域 -->
+        <div class="payment-warning-section">
+            <h3><span>⚠️</span> 重要：付款注意事項</h3>
+            <div style="display: grid; gap: 10px; margin: 10px 0;">
+                <div style="display: flex; align-items: flex-start; gap: 10px;">
+                    <span style="color: #D32F2F; font-weight: bold;">•</span>
+                    <span>付款前請務必確認支付金額為 <strong>RM 5</strong></span>
+                </div>
+                <div style="display: flex; align-items: flex-start; gap: 10px;">
+                    <span style="color: #D32F2F; font-weight: bold;">•</span>
+                    <span><strong>如誤將款項轉入錯誤帳戶：</strong></span>
+                </div>
+                <div style="background: rgba(211, 47, 47, 0.1); padding: 12px; border-radius: 8px; margin-left: 20px;">
+                    <div style="display: flex; align-items: flex-start; gap: 8px; margin-bottom: 5px;">
+                        <span style="color: #D32F2F;">1.</span>
+                        <span>請立即聯繫客服協助處理</span>
+                    </div>
+                    <div style="display: flex; align-items: flex-start; gap: 8px; margin-bottom: 5px;">
+                        <span style="color: #D32F2F;">2.</span>
+                        <span>提供交易截圖和詳細信息</span>
+                    </div>
+                    <div style="display: flex; align-items: flex-start; gap: 8px;">
+                        <span style="color: #D32F2F;">3.</span>
+                        <span><strong>需等待銀行處理及警方介入調查</strong></span>
+                    </div>
+                </div>
+                <div style="display: flex; align-items: flex-start; gap: 10px;">
+                    <span style="color: #D32F2F; font-weight: bold;">•</span>
+                    <span><strong>退款流程：</strong> 銀行處理 + 警方調查，需時較長，請耐心等待</span>
+                </div>
+                <div style="display: flex; align-items: flex-start; gap: 10px;">
+                    <span style="color: #D32F2F; font-weight: bold;">•</span>
+                    <span><strong>再次確認收款人：</strong> WONG SENG KOON / Wong Seng Koon</span>
+                </div>
+            </div>
+            
+            <div style="background: #FFF8E1; padding: 10px; border-radius: 8px; margin-top: 15px;">
+                <p style="margin: 0; color: #F57C00; font-size: 0.9rem; font-weight: bold;">
+                    💡 提示：建議先聯繫客服確認支付詳情，避免錯誤轉帳
+                </p>
+            </div>
         </div>
 
         <!-- 公告 -->
@@ -135,8 +299,7 @@
             <div class="step-number">1</div>
             <div>
                 <h3>提交车辆资料</h3>
-                <p>请 WhatsApp 发送以下资料至 <span class="highlight">019-6819069</span>：</p>
-                <ul style="margin-left: 20px; margin-top: 10px;">
+                <p>请在 WhatsApp 附上以下资料 :<span 
                     <li>车辆清晰照片（前面、侧面、后面、内部设备等）</li>
                     <li>车牌号码</li>
                     <li>车卡副本</li>
@@ -181,12 +344,26 @@
                     
                     <div class="qr-codes">
                         <div class="qr-item">
-                            <p>Touch 'n Go</p>
+                            <p><span>💜</span> Touch 'n Go</p>
                             <img src="images/tng-qr.jpg" alt="TnG QR Code">
+                            <br>
+                            <button onclick="logPaymentClick('TnG', 'vehicle_listing')" class="payment-log-btn">
+                                <i class="fas fa-file-invoice"></i> 記錄TnG點擊
+                            </button>
+                            <p style="font-size: 0.85rem; margin-top: 5px;">
+                                收款人: <strong>WONG SENG KOON</strong>
+                            </p>
                         </div>
                         <div class="qr-item">
-                            <p>Maybank QR</p>
+                            <p><span>💙</span> Maybank QR</p>
                             <img src="images/maybank-qr.jpg" alt="Maybank QR Code">
+                            <br>
+                            <button onclick="logPaymentClick('Maybank', 'vehicle_listing')" class="payment-log-btn">
+                                <i class="fas fa-file-invoice"></i> 記錄Maybank點擊
+                            </button>
+                            <p style="font-size: 0.85rem; margin-top: 5px;">
+                                收款人: <strong>Wong Seng Koon</strong>
+                            </p>
                         </div>
                     </div>
                     
@@ -220,6 +397,25 @@
             </div>
         </div>
 
+        <!-- 审计日志区域 -->
+        <div class="audit-section">
+            <h3><span>🔒</span> 審計日誌管理系統</h3>
+            <p style="margin: 15px 0;">所有车辆买卖支付操作均會加密記錄並安全儲存</p>
+            
+            <div class="audit-buttons">
+                <button onclick="showAuditLogs()" class="audit-btn">
+                    <i class="fas fa-chart-bar"></i> 查看本地日誌
+                </button>
+                <button onclick="showAuditInfo()" class="audit-btn">
+                    <i class="fas fa-info-circle"></i> 系統信息
+                </button>
+            </div>
+            
+            <div id="auditLogDisplay" class="audit-log-display">
+                <!-- 审计日志将在这里显示 -->
+            </div>
+        </div>
+
         <!-- 导航按钮 -->
         <div class="nav-buttons">
             <a href="../index.html" class="nav-btn home">
@@ -233,12 +429,312 @@
         <!-- 页脚 -->
         <div class="footer">
             <p>© 2025 Myx Shop | 专业二手车买卖平台</p>
-            <p>SSM注册: 202510210078 (JM1034075-K) | 联系电话: +60196819069</p>
+            <p>SSM注册: 202510210078 (JM1034075-K)<p style="font-size: 0.85rem; color: #666; margin: 10px 0;">
+                <span>🔐</span> 所有支付操作均有加密審計記錄
+            </p>
             <br>
             <a href="https://wa.me/60196819069?text=我有關於MyxShop車輛擺賣的問題想詢問。" class="whatsapp-btn contact-btn" target="_blank">
                 <i class="fas fa-headset"></i> 联系客服询问详情
             </a>
         </div>
     </div>
+
+    <!-- JavaScript 代码 -->
+    <script>
+        // ============ 審計日誌功能 ============
+        
+        // 記錄支付點擊
+        async function logPaymentClick(method, context = 'vehicle_listing') {
+            const entry = {
+                method: method,
+                action: `${context}_payment_button_click`,
+                logged_at: new Date().toISOString(),
+                user_agent: navigator.userAgent,
+                timestamp: Date.now(),
+                page: window.location.pathname
+            };
+            
+            try {
+                // 發送到審計日誌服務器
+                const response = await fetch('http://localhost:3000/log-payment-click', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(entry)
+                });
+                
+                if (response.ok) {
+                    console.log('Payment click logged successfully');
+                    showCustomAlert(`已記錄${method}支付按鈕點擊<br>時間: ${new Date().toLocaleString()}<br>用途: 車輛擺賣服務費`, '審計記錄');
+                } else {
+                    console.error('Failed to log payment click');
+                    // 本地備份記錄
+                    backupLogLocally(entry);
+                }
+            } catch (error) {
+                console.error('Error logging payment click:', error);
+                // 本地備份記錄
+                backupLogLocally(entry);
+                showCustomAlert(`已記錄${method}支付按鈕點擊 (本地備份)<br>用途: 車輛擺賣服務費<br>服務器暫時不可用`, '審計記錄');
+            }
+        }
+        
+        // 本地備份記錄
+        function backupLogLocally(entry) {
+            try {
+                const logs = JSON.parse(localStorage.getItem('audit_logs_backup') || '[]');
+                logs.push(entry);
+                localStorage.setItem('audit_logs_backup', JSON.stringify(logs.slice(-100))); // 只保留最近100條
+            } catch (error) {
+                console.error('Error backing up log locally:', error);
+            }
+        }
+        
+        // 顯示審計日誌
+        async function showAuditLogs() {
+            try {
+                const response = await fetch('http://localhost:3000/get-logs');
+                if (response.ok) {
+                    const logs = await response.json();
+                    displayAuditLogs(logs);
+                } else {
+                    showLocalAuditLogs();
+                }
+            } catch (error) {
+                console.error('Error fetching audit logs:', error);
+                showLocalAuditLogs();
+            }
+        }
+        
+        // 顯示本地備份日誌
+        function showLocalAuditLogs() {
+            try {
+                const logs = JSON.parse(localStorage.getItem('audit_logs_backup') || '[]');
+                if (logs.length > 0) {
+                    displayAuditLogs(logs);
+                    showCustomAlert('顯示本地備份日誌<br>服務器日誌暫時不可用', '審計日誌');
+                } else {
+                    showCustomAlert('暫無審計日誌記錄', '審計日誌');
+                }
+            } catch (error) {
+                showCustomAlert('讀取日誌時發生錯誤', '審計日誌');
+            }
+        }
+        
+        // 顯示日誌內容
+        function displayAuditLogs(logs) {
+            const displayDiv = document.getElementById('auditLogDisplay');
+            displayDiv.style.display = 'block';
+            
+            if (!logs || logs.length === 0) {
+                displayDiv.innerHTML = '<p style="color: #666; text-align: center;">暫無日誌記錄</p>';
+                return;
+            }
+            
+            // 過濾車輛相關的日誌
+            const vehicleLogs = logs.filter(log => 
+                log.action && log.action.includes('vehicle_listing')
+            );
+            
+            if (vehicleLogs.length === 0) {
+                displayDiv.innerHTML = '<p style="color: #666; text-align: center;">暫無車輛擺賣相關日誌記錄</p>';
+                return;
+            }
+            
+            let html = '<h4 style="color: #2196F3; margin-bottom: 10px;">車輛擺賣審計日誌</h4>';
+            html += '<div style="max-height: 250px; overflow-y: auto;">';
+            
+            vehicleLogs.reverse().forEach((log, index) => {
+                const date = new Date(log.logged_at || log.timestamp).toLocaleString('zh-CN');
+                const method = log.method === 'TnG' ? 'Touch \'n Go' : (log.method === 'Maybank' ? 'Maybank QR' : log.method);
+                
+                html += `
+                    <div style="margin-bottom: 10px; padding: 10px; background: ${index % 2 === 0 ? '#f8f9fa' : 'white'}; border-radius: 8px;">
+                        <div style="font-weight: bold; color: #2196F3;">${method} - 車輛擺賣服務</div>
+                        <div style="font-size: 0.8rem; color: #666;">${date}</div>
+                        ${log.user_agent ? `<div style="font-size: 0.7rem; color: #999; margin-top: 5px; word-break: break-all;">設備: ${log.user_agent.substring(0, 50)}...</div>` : ''}
+                    </div>
+                `;
+            });
+            
+            html += '</div>';
+            displayDiv.innerHTML = html;
+            
+            // 滾動到顯示區域
+            displayDiv.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+        
+        // 顯示審計系統信息
+        function showAuditInfo() {
+            showCustomAlert(`
+                <div style="max-width: 500px; padding: 20px;">
+                    <h3 style="color: #2196F3; margin-bottom: 15px;">🔒 車輛擺賣審計系統</h3>
+                    
+                    <div style="margin-bottom: 15px;">
+                        <h4>系統特性</h4>
+                        <ul style="padding-left: 20px;">
+                            <li>所有車輛擺賣支付操作均有加密記錄</li>
+                            <li>本地備份 + 服務器存儲</li>
+                            <li>記錄支付時間、方法和設備信息</li>
+                            <li>保護買賣雙方權益</li>
+                        </ul>
+                    </div>
+                    
+                    <div style="margin-bottom: 15px;">
+                        <h4>記錄內容</h4>
+                        <ul style="padding-left: 20px;">
+                            <li>支付按鈕點擊時間和方法</li>
+                            <li>車輛擺賣服務費支付記錄</li>
+                            <li>用戶瀏覽器設備信息</li>
+                            <li>操作時間戳和IP地址</li>
+                        </ul>
+                    </div>
+                    
+                    <div style="background: #E3F2FD; padding: 10px; border-radius: 8px; margin-top: 15px;">
+                        <p style="margin: 0; font-size: 0.9rem; color: #1976D2;">
+                            🔐 所有日誌均加密存儲，用於保障車輛擺賣交易安全
+                        </p>
+                    </div>
+                </div>
+            `, '審計系統信息');
+        }
+        
+        // 顯示誤轉款溫馨提醒
+        function showPaymentWarning() {
+            showCustomAlert(`
+                <div style="max-width: 500px; padding: 20px;">
+                    <h3 style="color: #D32F2F; margin-bottom: 15px;">⚠️ 付款重要提醒</h3>
+                    
+                    <div style="margin-bottom: 15px;">
+                        <h4>付款前請確認：</h4>
+                        <ul style="padding-left: 20px;">
+                            <li>支付金額為 <strong>RM 5</strong></li>
+                            <li>收款人為 <strong>WONG SENG KOON</strong></li>
+                            <li>確認支付帳戶無誤</li>
+                        </ul>
+                    </div>
+                    
+                    <div style="margin-bottom: 15px;">
+                        <h4>如發生錯誤轉帳：</h4>
+                        <ul style="padding-left: 20px;">
+                            <li>立即聯繫客服提供交易截圖</li>
+                            <li>等待銀行處理流程</li>
+                            <li>可能需要警方介入調查</li>
+                            <li>退款流程需時較長</li>
+                        </ul>
+                    </div>
+                    
+                    <div style="background: #FFEBEE; padding: 10px; border-radius: 8px; margin-top: 15px;">
+                        <p style="margin: 0; font-size: 0.9rem; color: #D32F2F;">
+                            💡 建議：支付前再次確認收款帳戶，避免錯誤轉帳
+                        </p>
+                    </div>
+                </div>
+            `, '付款注意事項');
+        }
+
+        // ============ 彈窗系統 ============
+        
+        let alertOverlay = null;
+        let alertBox = null;
+
+        function showCustomAlert(content, title = '提示') {
+            if (alertOverlay) {
+                document.body.removeChild(alertOverlay);
+            }
+            
+            alertOverlay = document.createElement('div');
+            alertOverlay.className = 'alert-overlay';
+            alertOverlay.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0,0,0,0.5);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                z-index: 9999;
+                padding: 15px;
+            `;
+            
+            alertBox = document.createElement('div');
+            alertBox.className = 'alert-box';
+            alertBox.style.cssText = `
+                background: white;
+                border-radius: 15px;
+                box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+                max-width: 95%;
+                max-height: 90vh;
+                overflow-y: auto;
+                animation: alertFadeIn 0.3s ease;
+            `;
+            
+            alertBox.innerHTML = `
+                <div style="position: relative;">
+                    <div style="background: linear-gradient(135deg, #2c3e50, #34495e); color: white; padding: 20px; border-radius: 15px 15px 0 0;">
+                        <h3 style="margin: 0; font-size: 1.2rem;">${title}</h3>
+                        <button onclick="closeAlert()" 
+                                style="position: absolute; top: 15px; right: 15px; background: none; border: none; color: white; font-size: 1.5rem; cursor: pointer; padding: 0; line-height: 1; min-height: auto;">
+                            ×
+                        </button>
+                    </div>
+                    <div style="padding: 20px;">
+                        ${content}
+                    </div>
+                </div>
+            `;
+            
+            alertOverlay.appendChild(alertBox);
+            document.body.appendChild(alertOverlay);
+            
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeAlert() {
+            if (alertOverlay) {
+                document.body.removeChild(alertOverlay);
+                alertOverlay = null;
+                alertBox = null;
+            }
+            document.body.style.overflow = '';
+        }
+
+        // 頁面加載完成後執行
+        document.addEventListener('DOMContentLoaded', function() {
+            // 記錄頁面訪問
+            logPageVisit();
+            
+            // 添加付款警告提示到QR碼點擊
+            document.querySelectorAll('.payment-log-btn').forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    // 先顯示警告提示
+                    setTimeout(() => {
+                        showPaymentWarning();
+                    }, 500);
+                });
+            });
+        });
+
+        // 記錄頁面訪問
+        function logPageVisit() {
+            const entry = {
+                method: 'system',
+                action: 'vehicle_listing_page_visit',
+                logged_at: new Date().toISOString(),
+                user_agent: navigator.userAgent,
+                timestamp: Date.now(),
+                page: window.location.pathname
+            };
+            
+            backupLogLocally(entry);
+        }
+
+        // 全局暴露函數
+        window.closeAlert = closeAlert;
+        window.showPaymentWarning = showPaymentWarning;
+    </script>
 </body>
 </html>
