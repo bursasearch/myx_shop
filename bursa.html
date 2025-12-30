@@ -2,8 +2,8 @@
 <html lang="zh">
 <head>
   <meta charset="UTF-8">
-  <!-- 添加移动端优化 meta -->
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <!-- 修改了 viewport，移除了 user-scalable=no，允许缩放 -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -24,9 +24,9 @@
       line-height: 1.7;
       min-height: 100vh;
       padding: 0;
-      /* 防止文本选中 */
-      -webkit-user-select: none;
-      user-select: none;
+      /* 允许文本选中，方便缩放时选择 */
+      -webkit-user-select: text;
+      user-select: text;
       /* 平滑滚动 */
       -webkit-overflow-scrolling: touch;
       overflow-x: hidden;
@@ -37,6 +37,8 @@
       margin: 0 auto;
       padding: 15px; /* 减少内边距 */
       width: 100%;
+      /* 确保容器在缩放时正常工作 */
+      overflow-x: hidden;
     }
     
     /* 触控按钮优化 */
@@ -45,7 +47,7 @@
     .subscribe-btn,
     .support-btn,
     .test-btn {
-      min-height: 48px; /* Material Design 建议的最小触控目标 */
+      min-height: 44px; /* 标准触控目标大小 */
       touch-action: manipulation; /* 优化触控响应 */
       cursor: pointer;
       font-size: 16px !important; /* 防止iOS缩放 */
@@ -531,10 +533,22 @@
     ::-webkit-scrollbar-thumb:hover {
       background: #555;
     }
+    
+    /* 缩放优化样式 */
+    .scalable-content {
+      -webkit-text-size-adjust: 100%;
+      text-size-adjust: 100%;
+    }
+    
+    /* 确保图片在缩放时保持比例 */
+    img {
+      max-width: 100%;
+      height: auto;
+    }
   </style>
 </head>
 <body>
-  <div class="container senior-friendly">
+  <div class="container senior-friendly scalable-content">
     <!-- 法律免责横幅 -->
     <div class="legal-banner">
       <h3><span>⚖️</span> 重要法律聲明與免責條款</h3>
@@ -690,7 +704,7 @@
             <p><span>💙</span> Maybank QRPay</p>
             <!-- 修改为本地图片路径 -->
             <img src="./images/maybank-qr.jpg" alt="Maybank QR Code"
-                 onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI0YwQjQwMiIvPjx0ZXh0IHg9IjEwMCIgeT0iOTAiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0iI2ZmZiI+TWF5YmFuayBRUiBDb2RlPC90ZXh0Pjx0ZXh0IHg9IjEwMCIgeT0iMTEwIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2lplPSIxMiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0iI2ZmZiI+U0NBTiBUSEUgUVZyb3JkPSIxMiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0iI2ZmZiI+U0NBTiBUSEUgUVE8L3RleHQ+PC9zdmc+'">
+                 onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI0YwQjQwMiIvPjx0ZXh0IHg9IjEwMCIgeT0iOTAiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0iI2ZmZiI+TWF5YmFuayBRUiBDb2RlPC90ZXh0Pjx0ZXh0IHg9IjEwMCIgeT0iMTEwIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTIiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZpbGw9IiNmZmYiPlNDQU4gVEhFICJ0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSIjZmZmIj5TQ0FOIFRIRSBRVjwvdGV4dD48L3N2Zz4='">
             <p style="margin-top: 10px; font-size: 0.85rem;">
               收款人: <strong>Wong Seng Koon</strong>
             </p>
@@ -1250,16 +1264,6 @@
           this.style.opacity = '';
         });
       });
-      
-      // 防止双击缩放
-      let lastTouchEnd = 0;
-      document.addEventListener('touchend', function(event) {
-        const now = Date.now();
-        if (now - lastTouchEnd <= 300) {
-          event.preventDefault();
-        }
-        lastTouchEnd = now;
-      }, { passive: false });
     });
 
     // 全局暴露closeAlert函数
