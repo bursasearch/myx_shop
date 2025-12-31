@@ -78,51 +78,49 @@ def load_eod_csv(csv_path):
 
 def standardize_columns(df):
     """
-    Standardize column names safely.
-    - Detects duplicate mappings (e.g. 'Code' and 'Sector Code' both → 'code')
-    - Renames duplicates with unique suffixes (e.g. 'code', 'sector_code')
-    - Lowercases and strips spaces for consistency
+    标准化列名 - 修复列名冲突问题
     """
     print("\n🔧 标准化列名...")
-
-    # Define your mapping rules
-    mapping = {
-        "Code": "code",
-        "Name": "name",
-        "Volume": "volume",
-        "Change%": "change_percent",
-        "Sector Code": "sector_code",
-        "Sector": "sector",
-        "Close": "close",
-        "Open": "open",
-        "High": "high",
-        "Low": "low",
-        "Value": "value",
-        "Change": "change"
-    }
-
-    # Apply mapping safely
-    new_columns = []
-    seen = {}
+    
+    # 创建列名映射
+    column_mapping = {}
     
     for col in df.columns:
         col_str = str(col).strip()
+        col_lower = col_str.lower()
         
-        if col_str in mapping:
-            new_name = mapping[col_str]
-        else:
-            new_name = col_str.lower().replace(" ", "_")
-
-        # Handle duplicates
-        if new_name in seen:
-            seen[new_name] += 1
-            new_name = f"{new_name}_{seen[new_name]}"
-        else:
-            seen[new_name] = 1
-
-        new_columns.append(new_name)
+        # 先检查是否有精确匹配
+        if 'code' in col_lower and 'change' not in col_lower:
+            column_mapping[col] = 'code'
+            print(f"  📍 代码列: {col} → code")
+            
+        elif 'stock' in col_lower or ('name' in col_lower and 'change' not in col_lower):
+            column_mapping[col] = 'name'
+            print(f"  📍 名称列: {col} → name")
+            
+        elif 'last' in col_lower and 'close' not in col_lower:
+            column_mapping[col] = 'last_price'
+            print(f"  📍 最新价列: {col} → last_price")
+            
+        elif 'chg%' in col_lower or 'change%' in col_lower:
+            column_mapping[col] = 'change_percent'
+            print(f"  📍 涨跌幅列: {col} → change_percent")
+            
+        elif 'sector' in col_lower:
+            column_mapping[col] = 'sector'
+            print(f"  📍 行业列: {col} → sector")
+            
+        elif 'vol' in col_lower and 'ma' in col_lower:
+            column_mapping[col] = 'volume_ma'
+            print(f"  📍 成交量均线列: {col} → volume_ma")
+            
+        elif 'vol' in col_lower:
+            column_mapping[col] = 'volume'
+            print(f"  📍 成交量列: {col} → volume")
     
-    df.columns = new_columns
+    # 应用重命名
+    if column_mapping:
+        df = df.rename(columns=column_mapping)
     
     # 清理股票代码列
     if 'code' in df.columns:
@@ -185,11 +183,6 @@ def generate_ai_picks_simple(df, top_n=20):
                         pick['last_price'] = float(row['last_price'])
                     except:
                         pick['last_price'] = 0
-                elif 'close' in df.columns and pd.notna(row.get('close')):
-                    try:
-                        pick['last_price'] = float(row['close'])
-                    except:
-                        pick['last_price'] = 0
                 
                 # 添加涨跌幅
                 if 'change_percent' in df.columns and pd.notna(row.get('change_percent')):
@@ -197,11 +190,6 @@ def generate_ai_picks_simple(df, top_n=20):
                         pick['change_percent'] = float(row['change_percent'])
                     except:
                         pick['change_percent'] = 0
-                elif 'change' in df.columns and pd.notna(row.get('change')):
-                    try:
-                        pick['change'] = float(row['change'])
-                    except:
-                        pick['change'] = 0
                 
                 # 添加行业
                 if 'sector' in df.columns and pd.notna(row.get('sector')):

@@ -1,0 +1,208 @@
+{
+  "date": "2025-12-31",
+  "last_updated": "2025-12-31 20:21:48",
+  "source": "20251231_normalized.csv",
+  "total_picks": 20,
+  "picks": [
+    {
+      "rank": 1,
+      "code": "5681",
+      "name": "-",
+      "ai_score": 80,
+      "potential_score": 85,
+      "last_price": 0,
+      "change_percent": 0,
+      "sector": "Industrial Products"
+    },
+    {
+      "rank": 2,
+      "code": "7245",
+      "name": "-",
+      "ai_score": 81,
+      "potential_score": 86,
+      "last_price": 0,
+      "change_percent": 0,
+      "sector": "Industrial Products"
+    },
+    {
+      "rank": 3,
+      "code": "0239",
+      "name": "-",
+      "ai_score": 82,
+      "potential_score": 87,
+      "last_price": 0,
+      "change_percent": 0,
+      "sector": "Industrial Products"
+    },
+    {
+      "rank": 4,
+      "code": "0829EB",
+      "name": "-",
+      "ai_score": 83,
+      "potential_score": 88,
+      "last_price": 0,
+      "change_percent": 0,
+      "sector": "Transportation & Logistics"
+    },
+    {
+      "rank": 5,
+      "code": "0652KG",
+      "name": "-",
+      "ai_score": 84,
+      "potential_score": 89,
+      "last_price": 0,
+      "change_percent": 0,
+      "sector": "Technology"
+    },
+    {
+      "rank": 6,
+      "code": "3719",
+      "name": "-",
+      "ai_score": 85,
+      "potential_score": 90,
+      "last_price": 0,
+      "change_percent": 0,
+      "sector": "Industrial Products"
+    },
+    {
+      "rank": 7,
+      "code": "0166",
+      "name": "-",
+      "ai_score": 86,
+      "potential_score": 91,
+      "last_price": 0,
+      "change_percent": 0,
+      "sector": "Industrial Products"
+    },
+    {
+      "rank": 8,
+      "code": "9172",
+      "name": "-",
+      "ai_score": 87,
+      "potential_score": 92,
+      "last_price": 0,
+      "change_percent": 0,
+      "sector": "Industrial Products"
+    },
+    {
+      "rank": 9,
+      "code": "9822",
+      "name": "-",
+      "ai_score": 88,
+      "potential_score": 93,
+      "last_price": 0,
+      "change_percent": 0,
+      "sector": "Industrial Products"
+    },
+    {
+      "rank": 10,
+      "code": "0400GB",
+      "name": "-",
+      "ai_score": 89,
+      "potential_score": 94,
+      "last_price": 0,
+      "change_percent": 0,
+      "sector": "Telecommunications & Media"
+    },
+    {
+      "rank": 11,
+      "code": "0652KP",
+      "name": "-",
+      "ai_score": 90,
+      "potential_score": 95,
+      "last_price": 0,
+      "change_percent": 0,
+      "sector": "Technology"
+    },
+    {
+      "rank": 12,
+      "code": "03017",
+      "name": "-",
+      "ai_score": 91,
+      "potential_score": 96,
+      "last_price": 0,
+      "change_percent": 0,
+      "sector": "Utilities"
+    },
+    {
+      "rank": 13,
+      "code": "0652KO",
+      "name": "-",
+      "ai_score": 92,
+      "potential_score": 97,
+      "last_price": 0,
+      "change_percent": 0,
+      "sector": "Technology"
+    },
+    {
+      "rank": 14,
+      "code": "0829EA",
+      "name": "-",
+      "ai_score": 93,
+      "potential_score": 98,
+      "last_price": 0,
+      "change_percent": 0,
+      "sector": "Transportation & Logistics"
+    },
+    {
+      "rank": 15,
+      "code": "5099",
+      "name": "-",
+      "ai_score": 94,
+      "potential_score": 99,
+      "last_price": 0,
+      "change_percent": 0,
+      "sector": "Industrial Products"
+    },
+    {
+      "rank": 16,
+      "code": "7084",
+      "name": "-",
+      "ai_score": 95,
+      "potential_score": 100,
+      "last_price": 0,
+      "change_percent": 0,
+      "sector": "Industrial Products"
+    },
+    {
+      "rank": 17,
+      "code": "7029",
+      "name": "-",
+      "ai_score": 96,
+      "potential_score": 100,
+      "last_price": 0,
+      "change_percent": 0,
+      "sector": "Industrial Products"
+    },
+    {
+      "rank": 18,
+      "code": "0652K",
+      "name": "-",
+      "ai_score": 97,
+      "potential_score": 100,
+      "last_price": 0,
+      "change_percent": 0,
+      "sector": "Technology"
+    },
+    {
+      "rank": 19,
+      "code": "0652K2",
+      "name": "-",
+      "ai_score": 98,
+      "potential_score": 100,
+      "last_price": 0,
+      "change_percent": 0,
+      "sector": "Technology"
+    },
+    {
+      "rank": 20,
+      "code": "0652",
+      "name": "-",
+      "ai_score": 99,
+      "potential_score": 100,
+      "last_price": 0,
+      "change_percent": 0,
+      "sector": "Technology"
+    }
+  ]
+}

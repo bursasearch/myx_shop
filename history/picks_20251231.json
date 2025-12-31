@@ -1,192 +1,208 @@
 {
-  "date": "2025-12-30",
-  "last_updated": "2025-12-31 14:47:19",
-  "source": "20251230.csv",
+  "date": "2025-12-31",
+  "last_updated": "2025-12-31 20:40:00",
+  "source": "20251231_normalized.csv",
   "total_picks": 20,
   "picks": [
     {
       "rank": 1,
       "code": "5681",
-      "name": "PETDAG",
+      "name": "-",
       "ai_score": 80,
       "potential_score": 85,
-      "last_price": 19.86,
+      "last_price": 0,
       "change_percent": 0,
-      "sector": "101"
+      "sector": "Unknown"
     },
     {
       "rank": 2,
-      "code": "0239",
-      "name": "ECOMATE",
+      "code": "7245",
+      "name": "-",
       "ai_score": 81,
       "potential_score": 86,
-      "last_price": 0.855,
+      "last_price": 0,
       "change_percent": 0,
-      "sector": "101"
+      "sector": "Unknown"
     },
     {
       "rank": 3,
-      "code": "7245",
-      "name": "CITAGLB-PA",
+      "code": "0239",
+      "name": "-",
       "ai_score": 82,
       "potential_score": 87,
-      "sector": "102"
+      "last_price": 0,
+      "change_percent": 0,
+      "sector": "Unknown"
     },
     {
       "rank": 4,
       "code": "0829EB",
-      "name": "CHINAETF-USD",
+      "name": "-",
       "ai_score": 83,
       "potential_score": 88,
-      "sector": "656"
+      "last_price": 0,
+      "change_percent": 0,
+      "sector": "Unknown"
     },
     {
       "rank": 5,
-      "code": "3719",
-      "name": "PANAMY",
+      "code": "0652KG",
+      "name": "-",
       "ai_score": 84,
       "potential_score": 89,
-      "last_price": 7.15,
+      "last_price": 0,
       "change_percent": 0,
-      "sector": "101"
+      "sector": "Unknown"
     },
     {
       "rank": 6,
-      "code": "0652KG",
-      "name": "HSI-CWKG",
+      "code": "3719",
+      "name": "-",
       "ai_score": 85,
       "potential_score": 90,
-      "sector": "358"
+      "last_price": 0,
+      "change_percent": 0,
+      "sector": "Unknown"
     },
     {
       "rank": 7,
       "code": "0166",
-      "name": "INARI",
+      "name": "-",
       "ai_score": 86,
       "potential_score": 91,
-      "last_price": 1.7,
+      "last_price": 0,
       "change_percent": 0,
-      "sector": "105"
+      "sector": "Unknown"
     },
     {
       "rank": 8,
-      "code": "9822",
-      "name": "SAM",
+      "code": "9172",
+      "name": "-",
       "ai_score": 87,
       "potential_score": 92,
-      "last_price": 3.67,
+      "last_price": 0,
       "change_percent": 0,
-      "sector": "102"
+      "sector": "Unknown"
     },
     {
       "rank": 9,
-      "code": "0400GB",
-      "name": "DIN045801028",
+      "code": "9822",
+      "name": "-",
       "ai_score": 88,
       "potential_score": 93,
-      "sector": "560"
+      "last_price": 0,
+      "change_percent": 0,
+      "sector": "Unknown"
     },
     {
       "rank": 10,
-      "code": "03017",
-      "name": "UNIWALL",
+      "code": "0400GB",
+      "name": "-",
       "ai_score": 89,
       "potential_score": 94,
-      "sector": "703"
+      "last_price": 0,
+      "change_percent": 0,
+      "sector": "Unknown"
     },
     {
       "rank": 11,
-      "code": "5099",
-      "name": "CAPITALA",
+      "code": "0652KP",
+      "name": "-",
       "ai_score": 90,
       "potential_score": 95,
-      "last_price": 0.42,
+      "last_price": 0,
       "change_percent": 0,
-      "sector": "101"
+      "sector": "Unknown"
     },
     {
       "rank": 12,
-      "code": "0829EA",
-      "name": "CHINAETF-MYR",
+      "code": "03017",
+      "name": "-",
       "ai_score": 91,
       "potential_score": 96,
-      "last_price": 5.42,
+      "last_price": 0,
       "change_percent": 0,
-      "sector": "656"
+      "sector": "Unknown"
     },
     {
       "rank": 13,
-      "code": "9172",
-      "name": "FPI",
+      "code": "0652KO",
+      "name": "-",
       "ai_score": 92,
       "potential_score": 97,
-      "last_price": 1.12,
+      "last_price": 0,
       "change_percent": 0,
-      "sector": "101"
+      "sector": "Unknown"
     },
     {
       "rank": 14,
-      "code": "0652KO",
-      "name": "HSI-CWKO",
+      "code": "0829EA",
+      "name": "-",
       "ai_score": 93,
       "potential_score": 98,
-      "sector": "358"
+      "last_price": 0,
+      "change_percent": 0,
+      "sector": "Unknown"
     },
     {
       "rank": 15,
-      "code": "7084",
-      "name": "QL",
+      "code": "5099",
+      "name": "-",
       "ai_score": 94,
       "potential_score": 99,
-      "last_price": 3.83,
+      "last_price": 0,
       "change_percent": 0,
-      "sector": "101"
+      "sector": "Unknown"
     },
     {
       "rank": 16,
-      "code": "0652KP",
-      "name": "HSI-CWKP",
+      "code": "7084",
+      "name": "-",
       "ai_score": 95,
       "potential_score": 100,
-      "last_price": 0.255,
+      "last_price": 0,
       "change_percent": 0,
-      "sector": "358"
+      "sector": "Unknown"
     },
     {
       "rank": 17,
       "code": "7029",
-      "name": "MASTER",
+      "name": "-",
       "ai_score": 96,
       "potential_score": 100,
-      "last_price": 1.85,
+      "last_price": 0,
       "change_percent": 0,
-      "sector": "102"
+      "sector": "Unknown"
     },
     {
       "rank": 18,
       "code": "0652K",
-      "name": "HSI-CWKH",
+      "name": "-",
       "ai_score": 97,
       "potential_score": 100,
-      "sector": "358"
+      "last_price": 0,
+      "change_percent": 0,
+      "sector": "Unknown"
     },
     {
       "rank": 19,
-      "code": "0652",
-      "name": "HSI-CWMR",
+      "code": "0652K2",
+      "name": "-",
       "ai_score": 98,
       "potential_score": 100,
-      "last_price": 0.385,
+      "last_price": 0,
       "change_percent": 0,
-      "sector": "358"
+      "sector": "Unknown"
     },
     {
       "rank": 20,
-      "code": "0652K2",
-      "name": "HSI-CWK2",
+      "code": "0652",
+      "name": "-",
       "ai_score": 99,
       "potential_score": 100,
-      "sector": "358"
+      "last_price": 0,
+      "change_percent": 0,
+      "sector": "Unknown"
     }
   ]
 }
