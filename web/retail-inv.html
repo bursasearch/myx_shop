@@ -1517,8 +1517,14 @@
                 checkDate.setDate(today.getDate() - i);
                 const dateStr = checkDate.toISOString().split('T')[0].replace(/-/g, '');
                 const fileName = `picks_${dateStr}.json`;
-                const filePath = `history/${fileName}`;
-                
+                const filePath = `history/picks_${selectedDate}.json`; 
+// works locally if retail-inv.html is in web/ and history/ is also inside web/
+
+const basePath = window.location.pathname.includes('/web/') ? 'history/' : 'web/history/';
+const filePath = `${basePath}picks_${selectedDate}.json`;
+
+const response = await fetch(filePath);
+
                 console.log(`尝试加载: ${filePath}`);
                 
                 try {
