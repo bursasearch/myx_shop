@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <title>Bursa AI 投资计算器</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #f9f9f9; margin: 20px; }
+    h1 { color: #2c3e50; }
+    .card { background: white; padding: 15px; margin: 10px 0; border-radius: 5px; }
+    .card h2 { margin-top: 0; }
+  </style>
+</head>
+<body>
+  <h1>📊 Bursa AI 投资计算器</h1>
+  <p>数据更新至: <span id="date"></span></p>
+
+  <div class="card">
+    <h2>AI 推荐股票</h2>
+    <ul id="picks"></ul>
+  </div>
+
+  <div class="card">
+    <h2>股价数据 (最新)</h2>
+    <p>共 <span id="total"></span> 只股票</p>
+  </div>
+
+  <script>
+    async function loadData() {
+      const data = await fetch('data.json').then(r => r.json());
+      document.getElementById('date').textContent = data.data_date;
+
+      const picks = await fetch('picks_latest.json').then(r => r.json());
+      document.getElementById('picks').innerHTML =
+        picks.picks.map(p => `<li>${p.code} - ${p.name}</li>`).join('');
+
+      const prices = await fetch('latest_price.json').then(r => r.json());
+      document.getElementById('total').textContent = prices.total_stocks;
+    }
+    loadData();
+  </script>
+</body>
+</html>
