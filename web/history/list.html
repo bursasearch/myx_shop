@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AI选股历史数据</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            margin: 20px; 
+            background: #f0f2f5; 
+        }
+        .container { 
+            max-width: 800px; 
+            margin: 0 auto; 
+            background: white; 
+            padding: 20px; 
+            border-radius: 8px; 
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1); 
+        }
+        h1 { 
+            color: #2c3e50; 
+            border-bottom: 2px solid #3498db; 
+            padding-bottom: 10px; 
+        }
+        .file-list { 
+            list-style: none; 
+            padding: 0; 
+        }
+        .file-item { 
+            padding: 10px; 
+            margin: 5px 0; 
+            background: #ecf0f1; 
+            border-radius: 4px; 
+            border-left: 4px solid #3498db; 
+        }
+        .file-item:hover { 
+            background: #d5dbdb; 
+        }
+        .file-link { 
+            color: #2980b9; 
+            text-decoration: none; 
+            font-weight: bold; 
+        }
+        .file-link:hover { 
+            text-decoration: underline; 
+        }
+        .date { 
+            color: #7f8c8d; 
+            font-size: 0.9em; 
+            margin-left: 10px; 
+        }
+        .back-link { 
+            display: inline-block; 
+            margin-top: 20px; 
+            padding: 10px 15px; 
+            background: #3498db; 
+            color: white; 
+            text-decoration: none; 
+            border-radius: 4px; 
+        }
+        .back-link:hover { 
+            background: #2980b9; 
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📊 AI选股历史数据档案</h1>
+        <p>以下是所有可用的历史选股数据文件：</p>
+        
+        <ul class="file-list" id="fileList">
+            <li>正在加载文件列表...</li>
+        </ul>
+        
+        <a href="../" class="back-link">← 返回主页</a>
+        <a href="../web/retail-inv.html" class="back-link">📈 进入AI投资计算器</a>
+        
+        <script>
+        // 动态加载文件列表
+        fetch('./')
+            .then(response => response.text())
+            .then(html => {
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(html, 'text/html');
+                const links = Array.from(doc.querySelectorAll('a'));
+                
+                // 过滤出.json文件
+                const jsonFiles = links
+                    .filter(a => {
+                        const href = a.getAttribute('href');
+                        return href && href.endsWith('.json') && !href.includes('..');
+                    })
+                    .map(a => a.getAttribute('href'))
+                    .sort((a, b) => b.localeCompare(a)); // 按文件名降序排列
+                
+                const fileList = document.getElementById('fileList');
+                fileList.innerHTML = '';
+                
+                if (jsonFiles.length === 0) {
+                    fileList.innerHTML = '<li>暂无历史数据文件</li>';
+                    return;
+                }
+                
+                jsonFiles.forEach(file => {
+                    // 提取日期
+                    const dateMatch = file.match(/picks_(\d{8})\.json/);
+                    let dateDisplay = file;
+                    
+                    if (dateMatch) {
+                        const dateStr = dateMatch[1];
+                        dateDisplay = dateStr.replace(/(\d{4})(\d{2})(\d{2})/, '$1年$2月$3日');
+                    }
+                    
+                    const li = document.createElement('li');
+                    li.className = 'file-item';
+                    li.innerHTML = `
+                        <a href="${file}" class="file-link" target="_blank">${file}</a>
+                        <span class="date">${dateDisplay}</span>
+                    `;
+                    fileList.appendChild(li);
+                });
+            })
+            .catch(error => {
+                document.getElementById('fileList').innerHTML = 
+                    '<li>无法加载文件列表，请直接访问JSON文件</li>';
+            });
+        </script>
+    </div>
+</body>
+</html>
