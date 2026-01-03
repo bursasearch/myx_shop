@@ -2,8 +2,7 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <!-- 修改了 viewport，移除了 user-scalable=no，允許縮放 -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Bursa投资计算器 - 使用真实AI数据</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -41,9 +40,6 @@
             line-height: 1.5;
             min-height: 100vh;
             padding: 0;
-            /* 允許文本選擇以便縮放時閱讀 */
-            -webkit-user-select: text;
-            user-select: text;
         }
         
         .container {
@@ -89,6 +85,25 @@
             font-size: 13px;
             opacity: 0.9;
             margin-top: 5px;
+        }
+        
+        .home-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            padding: 8px 12px;
+            border-radius: var(--radius-sm);
+            font-size: 12px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: all 0.3s;
+        }
+        
+        .home-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-1px);
         }
         
         /* 标签页切换 */
@@ -489,6 +504,7 @@
             gap: 10px;
             transition: all 0.3s;
             margin-top: 10px;
+            cursor: pointer;
         }
         
         .btn-primary {
@@ -505,6 +521,15 @@
             background: var(--light);
             color: var(--dark);
             border: 1px solid #ddd;
+        }
+        
+        .btn-secondary:hover {
+            background: var(--light-gray);
+        }
+        
+        .btn-home {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
         }
         
         /* 结果区域 */
@@ -618,6 +643,11 @@
                 flex-direction: column;
                 gap: 8px;
             }
+            
+            .home-btn {
+                padding: 6px 10px;
+                font-size: 11px;
+            }
         }
         
         /* 触摸优化 */
@@ -697,18 +727,6 @@
             max-height: 80vh;
             overflow-y: auto;
         }
-        
-        /* 確保內容在縮放時正常顯示 */
-        .scalable-content {
-            -webkit-text-size-adjust: 100%;
-            text-size-adjust: 100%;
-        }
-        
-        /* 確保圖片在縮放時保持比例 */
-        img {
-            max-width: 100%;
-            height: auto;
-        }
     </style>
 </head>
 <body>
@@ -724,9 +742,15 @@
                     </div>
                     <div class="app-subtitle">真实AI数据 + 精确费用计算</div>
                 </div>
-                <div style="font-size: 12px; opacity: 0.9;">
-                    <div>更新: <span id="dataUpdateDate">2025-12-18</span></div>
-                    <div>目标利润: RM5</div>
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <div style="font-size: 12px; opacity: 0.9; text-align: right;">
+                        <div>更新: <span id="dataUpdateDate">2025-12-18</span></div>
+                        <div>目标利润: RM5</div>
+                    </div>
+                    <!-- 首页按钮 - 路径已修复 -->
+                    <button class="home-btn touch-feedback" onclick="goToHome()">
+                        <i class="fas fa-home"></i> 首页
+                    </button>
                 </div>
             </div>
         </div>
@@ -745,7 +769,7 @@
         </div>
         
         <!-- 内容区域 -->
-        <div class="content scalable-content">
+        <div class="content">
             <!-- AI选股标签页 -->
             <div id="stocks-tab" class="tab-content active">
                 <div class="card">
@@ -925,6 +949,11 @@
                 <button id="calculateBtn" class="btn btn-primary touch-feedback">
                     <i class="fas fa-calculator"></i> 计算净回酬
                 </button>
+                
+                <!-- 返回首页按钮 - 路径已修复 -->
+                <button class="btn btn-secondary touch-feedback" onclick="goToHome()">
+                    <i class="fas fa-home"></i> 返回首页
+                </button>
             </div>
             
             <!-- 结果标签页 -->
@@ -1001,6 +1030,11 @@
                             </div>
                         </div>
                     </div>
+                    
+                    <!-- 返回首页按钮 - 路径已修复 -->
+                    <button class="btn btn-home touch-feedback" onclick="goToHome()">
+                        <i class="fas fa-home"></i> 返回首页
+                    </button>
                 </div>
                 
                 <div id="noResults" class="loading">
@@ -1008,6 +1042,10 @@
                     <p style="margin-top: 10px;">请先在计算器页面进行计算</p>
                     <button onclick="switchTab('calculator')" class="btn-secondary" style="margin-top: 15px;">
                         <i class="fas fa-arrow-left"></i> 返回计算器
+                    </button>
+                    <!-- 返回首页按钮 - 路径已修复 -->
+                    <button onclick="goToHome()" class="btn btn-home touch-feedback" style="margin-top: 10px;">
+                        <i class="fas fa-home"></i> 返回首页
                     </button>
                 </div>
             </div>
@@ -1032,9 +1070,15 @@
             <div id="modalStockContent">
                 <!-- 详情内容会动态生成 -->
             </div>
-            <button onclick="closeStockDetail()" style="width: 100%; padding: 12px; background: var(--primary); color: white; border: none; border-radius: var(--radius-sm); margin-top: 15px;">
-                关闭
-            </button>
+            <div style="display: flex; gap: 10px; margin-top: 15px;">
+                <button onclick="closeStockDetail()" style="flex: 1; padding: 12px; background: var(--primary); color: white; border: none; border-radius: var(--radius-sm);">
+                    关闭
+                </button>
+                <!-- 返回首页按钮 - 路径已修复 -->
+                <button onclick="goToHome()" style="flex: 1; padding: 12px; background: var(--success); color: white; border: none; border-radius: var(--radius-sm);">
+                    <i class="fas fa-home"></i> 首页
+                </button>
+            </div>
         </div>
     </div>
 
@@ -1067,6 +1111,17 @@
                 loadLatestData();
             }, 1000);
         });
+        
+        // 返回首页函数 - 已修复路径
+        function goToHome() {
+            // 当前文件在 "myx_shop/web/retail-inv.html"
+            // 首页在 "myx_shop/index.html"
+            // 使用相对路径: ../index.html 返回到上一级目录
+            
+            window.location.href = '../index.html';
+            
+            console.log('返回首页: 从零售投资页返回到主页');
+        }
         
         // 初始化UI
         function initUI() {
@@ -1190,7 +1245,7 @@
             
             const todayOption = document.createElement('option');
             todayOption.value = todayStr;
-            todayOption.textContent = todayStr + ' (最新 EOD)';
+            todayOption.textContent = todayStr + ' (今天)';
             dateSelect.appendChild(todayOption);
             
             // 从历史文件添加选项
@@ -1517,9 +1572,8 @@
                 checkDate.setDate(today.getDate() - i);
                 const dateStr = checkDate.toISOString().split('T')[0].replace(/-/g, '');
                 const fileName = `picks_${dateStr}.json`;
-                const filePath = `history/picks_${selectedDate}.json`; 
-// works locally if retail-inv.html is in web/ and history/ is also inside web/
-
+                const filePath = `history/${fileName}`;
+                
                 console.log(`尝试加载: ${filePath}`);
                 
                 try {
