@@ -569,7 +569,7 @@
       </div>
       <div class="nav-links">
         <!-- 修改为本地端口 -->
-        <button onclick="window.location.href='http://127.0.0.1:5050/index.html'" class="nav-btn">
+        <button onclick="window.location.href='index.html'" class="nav-btn">
           <span>🏠</span> 主頁
         </button>
         <button onclick="scrollToChannels()" class="nav-btn">
@@ -679,7 +679,7 @@
           <div class="qr-item">
             <p><span>💜</span> Touch 'n Go</p>
             <!-- 修改为本地图片路径 -->
-            <img src="http://127.0.0.1:5050/images/tng-qr.jpg" alt="TnG QR Code" 
+            <img src="./images/tng-qr.jpg" alt="TnG QR Code" 
                  onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iIzdCMEI2MCIvPjx0ZXh0IHg9IjEwMCIgeT0iOTAiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0iI2ZmZiI+VG91Y2ggJ24gR28gUVEgQ29kZTwvdGV4dD48dGV4dCB4PSIxMDAiIHk9IjExMCIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjEyIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSIjZmZmIj5TQ0FOIFRIRSBRUjwvdGV4dD48L3N2Zz4='">
             <p style="margin-top: 10px; font-size: 0.85rem;">
               收款人: <strong>WONG SENG KOON</strong>
@@ -689,7 +689,7 @@
           <div class="qr-item">
             <p><span>💙</span> Maybank QRPay</p>
             <!-- 修改为本地图片路径 -->
-            <img src="http://127.0.0.1:5050/images/maybank-qr.jpg" alt="Maybank QR Code"
+            <img src="./images/maybank-qr.jpg" alt="Maybank QR Code"
                  onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI0YwQjQwMiIvPjx0ZXh0IHg9IjEwMCIgeT0iOTAiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0iI2ZmZiI+TWF5YmFuayBRUiBDb2RlPC90ZXh0Pjx0ZXh0IHg9IjEwMCIgeT0iMTEwIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2lplPSIxMiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0iI2ZmZiI+U0NBTiBUSEUgUVZyb3JkPSIxMiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0iI2ZmZiI+U0NBTiBUSEUgUVE8L3RleHQ+PC9zdmc+'">
             <p style="margin-top: 10px; font-size: 0.85rem;">
               收款人: <strong>Wong Seng Koon</strong>
@@ -934,7 +934,7 @@
         }
         
         // 修改为本地端口
-        window.location.href = 'http://127.0.0.1:5050/web/retail-inv.html';
+        window.location.href = 'web/retail-inv.html';
     }
 
     // 續費延長服務
@@ -1013,7 +1013,7 @@
         const testSection = document.getElementById('testSection');
         
         // 在本地端口下始终显示测试区域
-        if (window.location.hostname === '127.0.0.1' && window.location.port === '5050') {
+        if (window.location.hostname === '127.0.0.1' || window.location.port === 'localhost') {
             testSection.style.display = 'block';
         } else if (urlParams.has('test') || 
             window.location.hostname === 'localhost' || 
