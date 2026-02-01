@@ -1,0 +1,156 @@
+{
+  "generated_at": "2026-02-01 23:14:05",
+  "total_stocks": 15,
+  "stocks": [
+    {
+      "code": "0043",
+      "name": "MTRONIC",
+      "last_price": 0.01,
+      "change_percent": 1.0,
+      "volume": 1056040,
+      "sector": "102",
+      "sector_name": "Industrial & Consumer Products",
+      "update_time": "2026-02-01 23:14:05"
+    },
+    {
+      "code": "519985",
+      "name": "HIBISCS-C85",
+      "last_price": 0.01,
+      "change_percent": 1.0,
+      "volume": 349710,
+      "sector": "361",
+      "sector_name": "Technology",
+      "update_time": "2026-02-01 23:14:05"
+    },
+    {
+      "code": "7018",
+      "name": "CME",
+      "last_price": 0.015,
+      "change_percent": 0.5,
+      "volume": 111580,
+      "sector": "102",
+      "sector_name": "Industrial & Consumer Products",
+      "update_time": "2026-02-01 23:14:05"
+    },
+    {
+      "code": "5085WB",
+      "name": "MUDAJYA-WB",
+      "last_price": 0.075,
+      "change_percent": 0.5,
+      "volume": 143350,
+      "sector": "103",
+      "sector_name": "Industrial & Consumer Products",
+      "update_time": "2026-02-01 23:14:05"
+    },
+    {
+      "code": "519987",
+      "name": "HIBISCS-C87",
+      "last_price": 0.09,
+      "change_percent": 0.38,
+      "volume": 134880,
+      "sector": "361",
+      "sector_name": "Technology",
+      "update_time": "2026-02-01 23:14:05"
+    },
+    {
+      "code": "0652NQ",
+      "name": "HSI-PWNQ",
+      "last_price": 0.075,
+      "change_percent": 0.36,
+      "volume": 0,
+      "sector": "358",
+      "sector_name": "Technology",
+      "update_time": "2026-02-01 23:14:05"
+    },
+    {
+      "code": "5293WA",
+      "name": "AME-WA",
+      "last_price": 0.02,
+      "change_percent": 0.33,
+      "volume": 153085,
+      "sector": "103",
+      "sector_name": "Industrial & Consumer Products",
+      "update_time": "2026-02-01 23:14:05"
+    },
+    {
+      "code": "526351",
+      "name": "SUNCON-C51",
+      "last_price": 0.02,
+      "change_percent": 0.33,
+      "volume": 234025,
+      "sector": "303",
+      "sector_name": "Technology",
+      "update_time": "2026-02-01 23:14:05"
+    },
+    {
+      "code": "0652NE",
+      "name": "HSI-PWNE",
+      "last_price": 0.08,
+      "change_percent": 0.33,
+      "volume": 93365,
+      "sector": "358",
+      "sector_name": "Technology",
+      "update_time": "2026-02-01 23:14:05"
+    },
+    {
+      "code": "0215CS",
+      "name": "SLVEST-CS",
+      "last_price": 0.04,
+      "change_percent": 0.33,
+      "volume": 1001275,
+      "sector": "361",
+      "sector_name": "Technology",
+      "update_time": "2026-02-01 23:14:05"
+    },
+    {
+      "code": "0007",
+      "name": "PUC",
+      "last_price": 0.02,
+      "change_percent": 0.33,
+      "volume": 631175,
+      "sector": "463",
+      "sector_name": "Property",
+      "update_time": "2026-02-01 23:14:05"
+    },
+    {
+      "code": "0215CX",
+      "name": "SLVEST-CX",
+      "last_price": 0.02,
+      "change_percent": 0.33,
+      "volume": 2185015,
+      "sector": "361",
+      "sector_name": "Technology",
+      "update_time": "2026-02-01 23:14:05"
+    },
+    {
+      "code": "6742HH",
+      "name": "YTLPOWR-HH",
+      "last_price": 0.02,
+      "change_percent": 0.33,
+      "volume": 307165,
+      "sector": "365",
+      "sector_name": "Technology",
+      "update_time": "2026-02-01 23:14:05"
+    },
+    {
+      "code": "0743C1",
+      "name": "CATL-C1",
+      "last_price": 0.2,
+      "change_percent": 0.33,
+      "volume": 2909560,
+      "sector": "358",
+      "sector_name": "Technology",
+      "update_time": "2026-02-01 23:14:05"
+    },
+    {
+      "code": "7221",
+      "name": "BSLCORP",
+      "last_price": 0.02,
+      "change_percent": 0.33,
+      "volume": 1059415,
+      "sector": "102",
+      "sector_name": "Industrial & Consumer Products",
+      "update_time": "2026-02-01 23:14:05"
+    }
+  ]
+}
