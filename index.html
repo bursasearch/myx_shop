@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Myx Shop & Bursa Analysis</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .container {
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 30px;
+            background: #f9f9f9;
+        }
+        h1 {
+            color: #333;
+            border-bottom: 2px solid #4CAF50;
+            padding-bottom: 10px;
+        }
+        .projects {
+            display: flex;
+            gap: 20px;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+        .project-card {
+            flex: 1;
+            min-width: 250px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            padding: 20px;
+            background: white;
+            text-decoration: none;
+            color: #333;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        .project-card h2 {
+            color: #2196F3;
+            margin-top: 0;
+        }
+        .project-card.bursa {
+            border-top: 4px solid #4CAF50;
+        }
+        .project-card.myshop {
+            border-top: 4px solid #FF9800;
+        }
+        .btn {
+            display: inline-block;
+            background: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            margin-top: 10px;
+        }
+        .btn:hover {
+            background: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome to My Projects</h1>
+        <p>选择你想要访问的项目：</p>
+        
+        <div class="projects">
+            <a href="web/" class="project-card bursa">
+                <h2>🏦 Bursa Stock Analysis</h2>
+                <p>马来西亚股票数据分析系统</p>
+                <p>包含实时数据、AI推荐和历史分析</p>
+                <span class="btn">访问股票分析</span>
+            </a>
+            
+            <a href="products.html" class="project-card myshop">
+                <h2>🛍️ Myx Shop</h2>
+                <p>电子商务网站</p>
+                <p>产品展示和在线购物</p>
+                <span class="btn">访问网上商店</span>
+            </a>
+        </div>
+        
+        <p style="margin-top: 30px; font-size: 0.9em; color: #666;">
+            提示：GitHub Pages 已配置为部署 <code>/web</code> 目录，
+            因此 Bursa Stock Analysis 可以直接通过 https://bursasearch.github.io/myx_shop/ 访问。
+        </p>
+    </div>
+</body>
+</html>
