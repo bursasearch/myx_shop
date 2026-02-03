@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>JS 語法測試</title>
+</head>
+<body>
+    <h1>JavaScript 語法測試</h1>
+    <div id="output"></div>
+    
+    <script>
+        // 測試 picks_history.js
+        console.log("開始測試...");
+        
+        function testPicksHistory() {
+            try {
+                // 嘗試動態加載
+                const script = document.createElement('script');
+                script.src = 'js/picks_history.js';
+                script.onload = function() {
+                    console.log("✅ picks_history.js 加載成功");
+                    if (window.allHistoryData) {
+                        console.log("✅ allHistoryData 已定義");
+                        console.log("數據天數:", Object.keys(window.allHistoryData).length);
+                    } else {
+                        console.log("❌ allHistoryData 未定義");
+                    }
+                };
+                script.onerror = function() {
+                    console.log("❌ picks_history.js 加載失敗");
+                };
+                document.head.appendChild(script);
+            } catch (e) {
+                console.log("❌ 錯誤:", e.message);
+            }
+        }
+        
+        // 運行測試
+        testPicksHistory();
+    </script>
+</body>
+</html>
