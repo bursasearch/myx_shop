@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Bursa投资计算器 - GitHub Pages版</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- 核心数据文件 - GitHub Pages专用 -->
+    <script src="picks_history.js"></script>
+    
+    <style>
+        /* 保持您原有的样式不变 */
+        :root {
+            --primary: #2196F3;
+            --primary-dark: #1976D2;
+            --secondary: #4CAF50;
+            --warning: #FF9800;
+            --danger: #F44336;
+            --light: #F5F7FA;
+            --dark: #333333;
+            --gray: #666666;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: var(--dark);
+            line-height: 1.5;
+            min-height: 100vh;
+            padding: 0;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 500px;
+            margin: 0 auto;
+            background: white;
+            min-height: 100vh;
+            position: relative;
+            box-shadow: 0 0 20px rgba(0,0,0,0.2);
+        }
+        
+        .app-header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 20px 15px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .app-title {
+            font-size: 18px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .tab-bar {
+            display: flex;
+            background: white;
+            border-bottom: 1px solid var(--light);
+            position: sticky;
+            top: 90px;
+            z-index: 99;
+        }
+        
+        .tab {
+            flex: 1;
+            padding: 15px;
+            text-align: center;
+            font-weight: 500;
+            color: var(--gray);
+            border-bottom: 3px solid transparent;
+        }
+        
+        .tab.active {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+            font-weight: 600;
+        }
+        
+        .content {
+            padding: 15px;
+            min-height: calc(100vh - 180px);
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            border: 1px solid var(--light);
+        }
+        
+        .card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--light);
+        }
+        
+        .card-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        /* 历史数据面板样式 */
+        .history-panel {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 4px solid #6c757d;
+        }
+        
+        .history-controls {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        
+        .history-select {
+            flex: 1;
+            min-width: 200px;
+            padding: 10px 15px;
+            border: 2px solid #ced4da;
+            border-radius: 8px;
+            background: white;
+            font-size: 14px;
+        }
+        
+        .history-btn {
+            padding: 10px 20px;
+            background: linear-gradient(135deg, #6c757d 0%, #495057 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            white-space: nowrap;
+        }
+        
+        .history-btn:hover {
+            background: linear-gradient(135deg, #495057 0%, #343a40 100%);
+        }
+        
+        .history-stats {
+            display: flex;
+            gap: 20px;
+            font-size: 14px;
+            color: #6c757d;
+            margin-top: 10px;
+            flex-wrap: wrap;
+        }
+        
+        .history-stat-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        /* 股票列表样式 */
+        .stock-list {
+            display: grid;
+            gap: 12px;
+            margin-top: 15px;
+        }
+        
+        .stock-card {
+            background: white;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            padding: 15px;
+            transition: all 0.3s ease;
+        }
+        
+        .stock-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            border-color: #667eea;
+        }
+        
+        .stock-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 10px;
+        }
+        
+        .stock-rank {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 3px 10px;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        
+        .stock-code {
+            font-size: 13px;
+            color: #6c757d;
+            background: #f8f9fa;
+            padding: 2px 8px;
+            border-radius: 4px;
+        }
+        
+        .stock-name {
+            font-size: 16px;
+            font-weight: 600;
+            color: #333;
+            margin: 5px 0;
+        }
+        
+        .stock-price {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 10px;
+        }
+        
+        .price-value {
+            font-size: 18px;
+            font-weight: bold;
+            color: #28a745;
+        }
+        
+        .price-change {
+            font-size: 14px;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+        
+        .price-change.positive {
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        .price-change.negative {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        
+        .stock-info {
+            font-size: 12px;
+            color: #6c757d;
+            margin-top: 8px;
+            display: flex;
+            gap: 10px;
+        }
+        
+        .stock-tag {
+            background: #e9ecef;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 11px;
+        }
+        
+        /* 测试按钮样式 */
+        .test-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            z-index: 9999;
+            box-shadow: 0 4px 15px rgba(40, 167, 69, 0.4);
+            font-size: 14px;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @media (max-width: 480px) {
+            .container {
+                border-radius: 0;
+            }
+            
+            .history-controls {
+                flex-direction: column;
+            }
+            
+            .history-select {
+                min-width: 100%;
+            }
+        }
+    </style>
+    <script src="all_history.js"></script>
+    <script src="date_config.js"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- 顶部导航栏 -->
+        <div class="app-header">
+            <div class="header-content">
+                <div>
+                    <div class="app-title">
+                        <i class="fas fa-chart-line"></i>
+                        <span>Bursa AI投资计算器</span>
+                    </div>
+                    <div style="font-size: 13px; opacity: 0.9; margin-top: 5px;">
+                        使用 picks_history.js 数据 | GitHub Pages版
+                    </div>
+                </div>
+                <div style="font-size: 12px; opacity: 0.9;">
+                    <div>更新: <span id="dataUpdateDate">2026-01-30</span></div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 标签页切换 -->
+        <div class="tab-bar">
+            <div class="tab active" onclick="switchTab('stocks')">
+                <i class="fas fa-star"></i> AI选股
+            </div>
+            <div class="tab" onclick="switchTab('calculator')">
+                <i class="fas fa-calculator"></i> 计算器
+            </div>
+            <div class="tab" onclick="switchTab('history')">
+                <i class="fas fa-history"></i> 历史数据
+            </div>
+        </div>
+        
+        <!-- 内容区域 -->
+        <div class="content">
+            <!-- AI选股标签页 -->
+            <div id="stocks-tab" class="tab-content active">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">
+                            <i class="fas fa-chart-line"></i> 最新AI推荐
+                        </div>
+                    </div>
+                    <div id="latestStocksContainer">
+                        <!-- 最新股票会动态加载到这里 -->
+                        <div style="text-align: center; padding: 20px; color: #6c757d;">
+                            <i class="fas fa-spinner fa-spin" style="font-size: 24px; margin-bottom: 10px;"></i>
+                            <div>加载最新数据...</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 计算器标签页 -->
+            <div id="calculator-tab" class="tab-content">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">
+                            <i class="fas fa-calculator"></i> 投资计算器
+                        </div>
+                    </div>
+                    <div style="text-align: center; padding: 40px 20px;">
+                        <i class="fas fa-calculator" style="font-size: 48px; color: #6c757d; margin-bottom: 15px;"></i>
+                        <div style="color: #6c757d; margin-bottom: 20px;">
+                            计算器功能（保持原有代码）
+                        </div>
+                        <button onclick="switchTab('stocks')" style="
+                            padding: 10px 20px;
+                            background: var(--primary);
+                            color: white;
+                            border: none;
+                            border-radius: 5px;
+                            cursor: pointer;
+                        ">
+                            返回选股页面
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 历史数据标签页 -->
+            <div id="history-tab" class="tab-content">
+                <!-- 历史数据控制面板 -->
+                <div class="history-panel">
+                    <div class="card-header" style="border-bottom: none; margin-bottom: 0; padding-bottom: 0;">
+                        <div class="card-title">
+                            <i class="fas fa-database"></i> 历史数据浏览器
+                        </div>
+                        <div id="historyStatus" style="font-size: 12px; color: #28a745;">
+                            <i class="fas fa-check-circle"></i> 数据已加载
+                        </div>
+                    </div>
+                    
+                    <div class="history-controls">
+                        <select id="historyDateSelect" class="history-select">
+                            <option value="">请选择历史日期...</option>
+                        </select>
+                        <button onclick="loadSelectedHistory()" class="history-btn">
+                            <i class="fas fa-search"></i> 加载数据
+                        </button>
+                        <button onclick="showLatestHistory()" class="history-btn" style="background: linear-gradient(135deg, #28a745 0%, #20c997 100%);">
+                            <i class="fas fa-bolt"></i> 最新数据
+                        </button>
+                    </div>
+                    
+                    <div class="history-stats">
+                        <div class="history-stat-item">
+                            <i class="fas fa-calendar-alt"></i>
+                            <span>数据天数: <strong id="availableDays">0</strong></span>
+                        </div>
+                        <div class="history-stat-item">
+                            <i class="fas fa-chart-line"></i>
+                            <span>当前显示: <strong id="currentDateDisplay">-</strong></span>
+                        </div>
+                        <div class="history-stat-item">
+                            <i class="fas fa-stock"></i>
+                            <span>股票数量: <strong id="currentStockCount">0</strong></span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 股票列表容器 -->
+                <div id="historyStocksContainer" class="stock-list">
+                    <div style="text-align: center; padding: 30px 20px; color: #6c757d; background: #f8f9fa; border-radius: 8px;">
+                        <i class="fas fa-database" style="font-size: 36px; margin-bottom: 10px;"></i>
+                        <div style="font-size: 16px; font-weight: bold; margin-bottom: 5px;">请选择历史日期</div>
+                        <div style="font-size: 14px;">选择上方日期并点击"加载数据"</div>
+                    </div>
+                </div>
+                
+                <!-- 股票搜索框 -->
+                <div class="card" style="margin-top: 15px;">
+                    <div class="card-header">
+                        <div class="card-title">
+                            <i class="fas fa-search"></i> 股票历史搜索
+                        </div>
+                    </div>
+                    <div style="display: flex; gap: 10px;">
+                        <input type="text" id="stockSearchInput" placeholder="输入股票代码，例如: 0043" 
+                               style="flex: 1; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+                        <button onclick="searchStockHistory()" style="
+                            padding: 10px 20px;
+                            background: var(--primary);
+                            color: white;
+                            border: none;
+                            border-radius: 5px;
+                            cursor: pointer;
+                        ">
+                            搜索
+                        </button>
+                    </div>
+                    <div id="stockSearchResults" style="margin-top: 15px; display: none;">
+                        <!-- 搜索结果会显示在这里 -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 测试按钮 -->
+    <button onclick="testData()" class="test-button">
+        ✅ 测试数据
+    </button>
+    
+    <!-- 核心JavaScript代码 -->
+    <script>
+    // ============================================
+    // 核心数据函数 - GitHub Pages专用
+    // ============================================
+    
+    // 切换标签页
+    function switchTab(tabName) {
+        // 更新标签页样式
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.classList.remove('active');
+        });
+        document.querySelectorAll('.tab-content').forEach(content => {
+            content.classList.remove('active');
+        });
+        
+        // 激活选中的标签页
+        document.querySelector(`.tab[onclick*="${tabName}"]`).classList.add('active');
+        document.getElementById(`${tabName}-tab`).classList.add('active');
+    }
+    
+    // 初始化历史数据
+    function initHistoryData() {
+        console.log('🔄 初始化历史数据...');
+        
+        if (!window.allHistoryData) {
+            console.error('❌ allHistoryData 未定义');
+            document.getElementById('historyStatus').innerHTML = '<span style="color: #dc3545;"><i class="fas fa-exclamation-triangle"></i> 数据未加载</span>';
+            return;
+        }
+        
+        const dates = Object.keys(window.allHistoryData).sort().reverse();
+        console.log(`✅ 找到 ${dates.length} 天数据`);
+        
+        // 更新状态显示
+        document.getElementById('availableDays').textContent = dates.length;
+        document.getElementById('historyStatus').innerHTML = `<span style="color: #28a745;"><i class="fas fa-check-circle"></i> ${dates.length}天数据已加载</span>`;
+        
+        // 填充日期选择器
+        const dateSelect = document.getElementById('historyDateSelect');
+        dateSelect.innerHTML = '<option value="">请选择历史日期...</option>';
+        
+        dates.forEach(dateId => {
+            const data = window.allHistoryData[dateId];
+            const option = document.createElement('option');
+            option.value = dateId;
+            option.textContent = `${data.date} (${data.total_picks}只股票)`;
+            dateSelect.appendChild(option);
+        });
+        
+        // 默认显示最新数据
+        if (dates.length > 0) {
+            dateSelect.value = dates[0];
+            loadSelectedHistory();
+        }
+        
+        // 加载最新数据到AI选股页面
+        loadLatestStocks();
+    }
+    
+    // 加载选中的历史数据
+    function loadSelectedHistory() {
+        const dateSelect = document.getElementById('historyDateSelect');
+        const dateId = dateSelect.value;
+        
+        if (!dateId) {
+            alert('请选择日期');
+            return;
+        }
+        
+        const data = window.allHistoryData[dateId];
+        if (!data) {
+            alert('该日期数据不存在');
+            return;
+        }
+        
+        console.log(`📅 加载 ${data.date} 数据`);
+        
+        // 更新显示
+        document.getElementById('currentDateDisplay').textContent = data.date;
+        document.getElementById('currentStockCount').textContent = data.total_picks;
+        
+        // 显示股票列表
+        displayHistoryStocks(data.picks);
+    }
+    
+    // 显示最新历史数据
+    function showLatestHistory() {
+        const dates = Object.keys(window.allHistoryData).sort().reverse();
+        if (dates.length === 0) {
+            alert('没有历史数据');
+            return;
+        }
+        
+        const dateSelect = document.getElementById('historyDateSelect');
+        dateSelect.value = dates[0];
+        loadSelectedHistory();
+    }
+    
+    // 显示历史股票列表
+    function displayHistoryStocks(stocks) {
+        const container = document.getElementById('historyStocksContainer');
+        
+        if (!stocks || stocks.length === 0) {
+            container.innerHTML = `
+                <div style="text-align: center; padding: 40px 20px; color: #6c757d; background: #f8f9fa; border-radius: 8px;">
+                    <i class="fas fa-database" style="font-size: 36px; margin-bottom: 10px;"></i>
+                    <div style="font-size: 16px; font-weight: bold;">没有股票数据</div>
+                </div>
+            `;
+            return;
+        }
+        
+        let html = '';
+        
+        stocks.forEach(stock => {
+            const changeClass = stock.daily_change >= 0 ? 'positive' : 'negative';
+            const changeSign = stock.daily_change >= 0 ? '+' : '';
+            
+            html += `
+                <div class="stock-card">
+                    <div class="stock-header">
+                        <div>
+                            <span class="stock-rank">#${stock.rank}</span>
+                            <span class="stock-code">${stock.code}</span>
+                        </div>
+                        <div style="text-align: right;">
+                            <div class="price-value">RM${stock.current_price.toFixed(3)}</div>
+                            <div class="price-change ${changeClass}">
+                                ${changeSign}${stock.daily_change.toFixed(1)}%
+                            </div>
+                        </div>
+                    </div>
+                    <div class="stock-name">${stock.name}</div>
+                    <div class="stock-info">
+                        <span class="stock-tag">${stock.instrument_type === 'Warrant' ? '认股权证' : '普通股'}</span>
+                        <span class="stock-tag">${stock.sector_name || '未分类'}</span>
+                        <span class="stock-tag">AI评分: ${stock.score}</span>
+                    </div>
+                    <div style="margin-top: 10px; padding-top: 10px; border-top: 1px solid #f1f1f1;">
+                        <div style="font-size: 13px; color: #495057;">
+                            <strong>推荐:</strong> ${stock.recommendation}
+                        </div>
+                        <div style="font-size: 12px; color: ${stock.risk_level === '高' ? '#dc3545' : '#28a745'}; margin-top: 5px;">
+                            <i class="fas fa-exclamation-triangle"></i> 风险等级: ${stock.risk_level}
+                        </div>
+                    </div>
+                </div>
+            `;
+        });
+        
+        container.innerHTML = html;
+    }
+    
+    // 加载最新股票到AI选股页面
+    function loadLatestStocks() {
+        const dates = Object.keys(window.allHistoryData).sort().reverse();
+        if (dates.length === 0) return;
+        
+        const latestData = window.allHistoryData[dates[0]];
+        const container = document.getElementById('latestStocksContainer');
+        
+        if (!latestData || !latestData.picks) {
+            container.innerHTML = '<div style="text-align: center; padding: 20px; color: #6c757d;">没有最新数据</div>';
+            return;
+        }
+        
+        // 只显示前5个
+        const topPicks = latestData.picks.slice(0, 5);
+        let html = '<div class="stock-list">';
+        
+        topPicks.forEach(stock => {
+            const changeClass = stock.daily_change >= 0 ? 'positive' : 'negative';
+            const changeSign = stock.daily_change >= 0 ? '+' : '';
+            
+            html += `
+                <div class="stock-card">
+                    <div class="stock-header">
+                        <div>
+                            <span class="stock-rank">#${stock.rank}</span>
+                            <span class="stock-code">${stock.code}</span>
+                        </div>
+                        <div style="text-align: right;">
+                            <div class="price-value">RM${stock.current_price.toFixed(3)}</div>
+                            <div class="price-change ${changeClass}">
+                                ${changeSign}${stock.daily_change.toFixed(1)}%
+                            </div>
+                        </div>
+                    </div>
+                    <div class="stock-name">${stock.name}</div>
+                    <div style="margin-top: 10px;">
+                        <div style="font-size: 13px; color: #495057;">
+                            <strong>推荐:</strong> ${stock.recommendation}
+                        </div>
+                    </div>
+                </div>
+            `;
+        });
+        
+        html += '</div>';
+        container.innerHTML = html;
+        
+        // 更新日期显示
+        document.getElementById('dataUpdateDate').textContent = latestData.date;
+    }
+    
+    // 搜索股票历史
+    function searchStockHistory() {
+        const searchInput = document.getElementById('stockSearchInput');
+        const stockCode = searchInput.value.trim();
+        
+        if (!stockCode) {
+            alert('请输入股票代码');
+            return;
+        }
+        
+        const results = [];
+        const dates = Object.keys(window.allHistoryData).sort().reverse();
+        
+        dates.forEach(dateId => {
+            const dayData = window.allHistoryData[dateId];
+            if (dayData && dayData.picks) {
+                const stock = dayData.picks.find(p => p.code === stockCode);
+                if (stock) {
+                    results.push({
+                        date: dayData.date,
+                        rank: stock.rank,
+                        code: stock.code,
+                        name: stock.name,
+                        price: stock.current_price,
+                        change: stock.daily_change,
+                        score: stock.score,
+                        recommendation: stock.recommendation
+                    });
+                }
+            }
+        });
+        
+        const resultsContainer = document.getElementById('stockSearchResults');
+        
+        if (results.length === 0) {
+            resultsContainer.innerHTML = `
+                <div style="background: #f8d7da; color: #721c24; padding: 10px; border-radius: 5px;">
+                    <i class="fas fa-search"></i> 未找到股票 "${stockCode}" 的历史记录
+                </div>
+            `;
+            resultsContainer.style.display = 'block';
+            return;
+        }
+        
+        let html = `
+            <div style="background: #d4edda; color: #155724; padding: 10px; border-radius: 5px; margin-bottom: 15px;">
+                <i class="fas fa-check-circle"></i> 找到股票 "${stockCode}" 在 ${results.length} 天的记录
+            </div>
+            <div style="max-height: 300px; overflow-y: auto;">
+                <table style="width: 100%; border-collapse: collapse; font-size: 13px;">
+                    <thead>
+                        <tr style="background: #f8f9fa;">
+                            <th style="padding: 8px; border: 1px solid #dee2e6; text-align: left;">日期</th>
+                            <th style="padding: 8px; border: 1px solid #dee2e6; text-align: center;">排名</th>
+                            <th style="padding: 8px; border: 1px solid #dee2e6; text-align: right;">价格</th>
+                            <th style="padding: 8px; border: 1px solid #dee2e6; text-align: right;">涨跌</th>
+                            <th style="padding: 8px; border: 1px solid #dee2e6; text-align: center;">评分</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+        `;
+        
+        results.forEach(item => {
+            const changeColor = item.change >= 0 ? '#28a745' : '#dc3545';
+            const changeSign = item.change >= 0 ? '+' : '';
+            
+            html += `
+                <tr>
+                    <td style="padding: 8px; border: 1px solid #dee2e6;">${item.date}</td>
+                    <td style="padding: 8px; border: 1px solid #dee2e6; text-align: center; font-weight: bold;">#${item.rank}</td>
+                    <td style="padding: 8px; border: 1px solid #dee2e6; text-align: right;">RM${item.price.toFixed(3)}</td>
+                    <td style="padding: 8px; border: 1px solid #dee2e6; text-align: right; color: ${changeColor}; font-weight: bold;">
+                        ${changeSign}${item.change.toFixed(1)}%
+                    </td>
+                    <td style="padding: 8px; border: 1px solid #dee2e6; text-align: center;">${item.score}</td>
+                </tr>
+            `;
+        });
+        
+        html += `
+                    </tbody>
+                </table>
+            </div>
+        `;
+        
+        resultsContainer.innerHTML = html;
+        resultsContainer.style.display = 'block';
+    }
+    
+    // 测试数据函数
+    function testData() {
+        if (!window.allHistoryData) {
+            alert('❌ picks_history.js 未加载');
+            return;
+        }
+        
+        const dates = Object.keys(window.allHistoryData);
+        const dateCount = dates.length;
+        
+        if (dateCount === 0) {
+            alert('📭 picks_history.js 已加载，但没有数据');
+            return;
+        }
+        
+        const latestDate = dates.sort().reverse()[0];
+        const latestData = window.allHistoryData[latestDate];
+        
+        alert(`✅ picks_history.js 测试通过！\n\n📊 数据天数: ${dateCount}\n📅 最新日期: ${latestData.date}\n📈 股票数量: ${latestData.total_picks}\n💾 数据源: picks_history.js\n🌐 环境: GitHub Pages兼容`);
+        
+        console.log('测试详情:', {
+            数据天数: dateCount,
+            最新日期: latestData.date,
+            最新数据: latestData
+        });
+    }
+    
+    // 页面加载后初始化
+    window.addEventListener('DOMContentLoaded', function() {
+        console.log('🚀 页面加载完成');
+        
+        // 等待 picks_history.js 加载
+        setTimeout(function() {
+            initHistoryData();
+            
+            // 如果数据加载失败，显示提示
+            if (!window.allHistoryData) {
+                alert('⚠️ picks_history.js 未加载\n请确保文件存在并重新加载页面');
+            }
+        }, 100);
+    });
+    
+    // 简单日志
+    console.log('🌐 bursa.html - GitHub Pages版');
+    console.log('📁 数据源: picks_history.js');
+    </script>
+</body>
+</html>
