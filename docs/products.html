@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>聯盟商店 - 升級中</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Microsoft JhengHei', '微軟正黑體', Arial, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            color: white;
+        }
+
+        .container {
+            max-width: 800px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 50px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            animation: shine 3s infinite;
+        }
+
+        @keyframes shine {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        h1 {
+            color: white;
+            margin-bottom: 30px;
+            font-size: 3rem;
+            font-weight: 700;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .upgrade-icon {
+            font-size: 120px;
+            margin: 40px 0;
+            animation: float 3s ease-in-out infinite;
+            filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.2));
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .message {
+            font-size: 1.6rem;
+            margin-bottom: 40px;
+            line-height: 1.8;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+        }
+
+        .progress-container {
+            width: 100%;
+            height: 12px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            margin: 30px 0;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #ff6b6b, #ffd93d, #6bcf7f);
+            border-radius: 10px;
+            width: 65%;
+            animation: progress 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes progress {
+            0% { width: 60%; }
+            100% { width: 70%; }
+        }
+
+        .status {
+            font-size: 1rem;
+            margin-bottom: 40px;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .buttons-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .btn {
+            padding: 15px 30px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 200px;
+            text-decoration: none;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            backdrop-filter: blur(5px);
+        }
+
+        .btn:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.5);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-home {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+        }
+
+        .btn-stocks {
+            background: linear-gradient(45deg, #f093fb, #f5576c);
+        }
+
+        .btn-vehicles {
+            background: linear-gradient(45deg, #4facfe, #00f2fe);
+        }
+
+        .btn-lazada {
+            background: linear-gradient(45deg, #0f146b, #40b4e5);
+        }
+
+        .btn-shopee {
+            background: linear-gradient(45deg, #ee4d2d, #ff8c00);
+        }
+
+        .btn-temu {
+            background: linear-gradient(45deg, #5c2d91, #8a2be2);
+        }
+
+        .footer {
+            margin-top: 50px;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+        }
+
+        .features {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            margin: 40px 0;
+            gap: 20px;
+        }
+
+        .feature {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 15px;
+            width: 150px;
+            backdrop-filter: blur(5px);
+        }
+
+        .feature-icon {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 30px 20px;
+            }
+
+            h1 {
+                font-size: 2.2rem;
+            }
+
+            .upgrade-icon {
+                font-size: 80px;
+            }
+
+            .message {
+                font-size: 1.3rem;
+            }
+
+            .btn {
+                width: 100%;
+                min-width: auto;
+            }
+
+            .features {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>聯盟商店</h1>
+
+        <div class="upgrade-icon">
+            🚀
+        </div>
+
+        <div class="message">
+            系統正在升級中<br>
+            我們正在為您打造更優質的購物體驗
+        </div>
+
+        <div class="progress-container">
+            <div class="progress-bar"></div>
+        </div>
+
+        <div class="status">升級進度：65% - 預計完成時間：2天</div>
+
+        <div class="features">
+            <div class="feature">
+                <div class="feature-icon">🛒</div>
+                <div>更多商品</div>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">⚡</div>
+                <div>更快速度</div>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">🎯</div>
+                <div>智能推薦</div>
+            </div>
+        </div>
+
+        <div class="buttons-container">
+            <a href="index.html" class="btn btn-home">
+                回到主頁
+            </a>
+            <a href="bursa.html" class="btn btn-stocks">
+                AI 選股成績
+            </a>
+            <a href="vehicles.html" class="btn btn-vehicles">
+                二手車輛資訊
+            </a>
+            <!-- 新增的三個電商平台按鈕 -->
+            <a href="lazada.html" class="btn btn-lazada">
+                Lazada 購物
+            </a>
+            <a href="shopee.html" class="btn btn-shopee">
+                Shopee 購物
+            </a>
+            <a href="temu.html" class="btn btn-temu">
+                Temu 購物
+            </a>
+        </div>
+
+        <div class="footer">
+            © 2025 聯盟商店 - 全新版本 即將上線
+        </div>
+    </div>
+</body>
+</html>
