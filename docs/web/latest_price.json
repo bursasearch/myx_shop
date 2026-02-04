@@ -1,0 +1,156 @@
+{
+  "generated_at": "2026-02-05 04:59:32",
+  "total_stocks": 15,
+  "stocks": [
+    {
+      "code": "0094",
+      "name": "ZENTECH",
+      "last_price": 0.01,
+      "change_percent": 1.0,
+      "volume": 3240060,
+      "sector": "405",
+      "sector_name": "Property",
+      "update_time": "2026-02-05 04:59:32"
+    },
+    {
+      "code": "53983R",
+      "name": "GAMUDA-C3R",
+      "last_price": 0.01,
+      "change_percent": 1.0,
+      "volume": 2742350,
+      "sector": "303",
+      "sector_name": "Technology",
+      "update_time": "2026-02-05 04:59:32"
+    },
+    {
+      "code": "0041",
+      "name": "HONGSENG",
+      "last_price": 0.01,
+      "change_percent": 1.0,
+      "volume": 4020950,
+      "sector": "105",
+      "sector_name": "Industrial & Consumer Products",
+      "update_time": "2026-02-05 04:59:32"
+    },
+    {
+      "code": "0109",
+      "name": "SCBUILD",
+      "last_price": 0.01,
+      "change_percent": 1.0,
+      "volume": 330720,
+      "sector": "403",
+      "sector_name": "Property",
+      "update_time": "2026-02-05 04:59:32"
+    },
+    {
+      "code": "0174PA",
+      "name": "EVD-PA",
+      "last_price": 0.03,
+      "change_percent": 1.0,
+      "volume": 175335,
+      "sector": "405",
+      "sector_name": "Property",
+      "update_time": "2026-02-05 04:59:32"
+    },
+    {
+      "code": "0650Q9",
+      "name": "FBMKLCI-CQ9",
+      "last_price": 0.41,
+      "change_percent": 0.55,
+      "volume": 0,
+      "sector": "358",
+      "sector_name": "Technology",
+      "update_time": "2026-02-05 04:59:32"
+    },
+    {
+      "code": "7154WC",
+      "name": "NEXGBINA-WC",
+      "last_price": 0.015,
+      "change_percent": 0.5,
+      "volume": 64075,
+      "sector": "101",
+      "sector_name": "Industrial & Consumer Products",
+      "update_time": "2026-02-05 04:59:32"
+    },
+    {
+      "code": "5213",
+      "name": "SNTORIA",
+      "last_price": 0.015,
+      "change_percent": 0.5,
+      "volume": 1617020,
+      "sector": "120",
+      "sector_name": "Industrial & Consumer Products",
+      "update_time": "2026-02-05 04:59:32"
+    },
+    {
+      "code": "967942",
+      "name": "WCT-C42",
+      "last_price": 0.015,
+      "change_percent": 0.5,
+      "volume": 1128560,
+      "sector": "303",
+      "sector_name": "Technology",
+      "update_time": "2026-02-05 04:59:32"
+    },
+    {
+      "code": "5157",
+      "name": "SG",
+      "last_price": 0.015,
+      "change_percent": 0.5,
+      "volume": 173580,
+      "sector": "101",
+      "sector_name": "Industrial & Consumer Products",
+      "update_time": "2026-02-05 04:59:32"
+    },
+    {
+      "code": "524848",
+      "name": "BAUTO-C48",
+      "last_price": 0.05,
+      "change_percent": 0.43,
+      "volume": 1170660,
+      "sector": "301",
+      "sector_name": "Technology",
+      "update_time": "2026-02-05 04:59:32"
+    },
+    {
+      "code": "8907CH",
+      "name": "EG-CH",
+      "last_price": 0.05,
+      "change_percent": 0.43,
+      "volume": 117490,
+      "sector": "302",
+      "sector_name": "Technology",
+      "update_time": "2026-02-05 04:59:32"
+    },
+    {
+      "code": "659944",
+      "name": "AEON-C44",
+      "last_price": 0.02,
+      "change_percent": 0.33,
+      "volume": 287405,
+      "sector": "301",
+      "sector_name": "Technology",
+      "update_time": "2026-02-05 04:59:32"
+    },
+    {
+      "code": "53983V",
+      "name": "GAMUDA-C3V",
+      "last_price": 0.02,
+      "change_percent": 0.33,
+      "volume": 291405,
+      "sector": "303",
+      "sector_name": "Technology",
+      "update_time": "2026-02-05 04:59:32"
+    },
+    {
+      "code": "9814WA",
+      "name": "BERTAM-WA",
+      "last_price": 0.02,
+      "change_percent": 0.33,
+      "volume": 172375,
+      "sector": "120",
+      "sector_name": "Industrial & Consumer Products",
+      "update_time": "2026-02-05 04:59:32"
+    }
+  ]
+}
