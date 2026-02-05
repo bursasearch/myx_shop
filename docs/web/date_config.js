@@ -1,6 +1,11 @@
 // 自动生成
 window.availableDates = [
   {
+    "id": "20260205",
+    "display": "2026-02-05",
+    "file": "history/picks_20260205.json"
+  },
+  {
     "id": "20260204",
     "display": "2026-02-04",
     "file": "history/picks_20260204.json"
@@ -11,4 +16,4 @@ window.availableDates = [
     "file": "history/picks_20260202.json"
   }
 ];
-window.latestDate = "20260204";
+window.latestDate = "20260205";
