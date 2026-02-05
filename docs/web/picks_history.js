@@ -346,7 +346,7 @@ window.allHistoryData = {
   "20260204": {
     "date": "2026-02-04",
     "date_id": "20260204",
-    "last_updated": "2026-02-05 16:36:47",
+    "last_updated": "2026-02-05 16:37:43",
     "source": "20260204.csv",
     "total_picks": 15,
     "sector_breakdown": {
