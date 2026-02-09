@@ -1,156 +1,156 @@
 {
-  "generated_at": "2026-02-06 18:40:51",
+  "generated_at": "2026-02-09 19:18:50",
   "total_stocks": 15,
   "stocks": [
     {
-      "code": "33361F",
-      "name": "IJM-C1F",
+      "code": "01389Q",
+      "name": "ZETRIX-C9Q",
       "last_price": 0.04,
+      "change_percent": 3.0,
+      "volume": 2999010,
+      "sector": "305",
+      "sector_name": "Technology",
+      "update_time": "2026-02-09 19:18:50"
+    },
+    {
+      "code": "01389S",
+      "name": "ZETRIX-C9S",
+      "last_price": 0.02,
+      "change_percent": 3.0,
+      "volume": 7326755,
+      "sector": "305",
+      "sector_name": "Technology",
+      "update_time": "2026-02-09 19:18:50"
+    },
+    {
+      "code": "0270C5",
+      "name": "NATGATE-C5",
+      "last_price": 0.08,
       "change_percent": 1.67,
-      "volume": 444260,
-      "sector": "303",
-      "sector_name": "Technology",
-      "update_time": "2026-02-06 18:40:51"
-    },
-    {
-      "code": "46771U",
-      "name": "YTL-C1U",
-      "last_price": 0.01,
-      "change_percent": 1.0,
-      "volume": 1439335,
-      "sector": "365",
-      "sector_name": "Technology",
-      "update_time": "2026-02-06 18:40:51"
-    },
-    {
-      "code": "0215CU",
-      "name": "SLVEST-CU",
-      "last_price": 0.01,
-      "change_percent": 1.0,
-      "volume": 3547430,
-      "sector": "361",
-      "sector_name": "Technology",
-      "update_time": "2026-02-06 18:40:51"
-    },
-    {
-      "code": "0187",
-      "name": "BCMALL",
-      "last_price": 0.01,
-      "change_percent": 1.0,
-      "volume": 395115,
-      "sector": "402",
-      "sector_name": "Property",
-      "update_time": "2026-02-06 18:40:51"
-    },
-    {
-      "code": "0650EI",
-      "name": "FBMKLCI-HEI",
-      "last_price": 0.01,
-      "change_percent": 1.0,
-      "volume": 262420,
-      "sector": "358",
-      "sector_name": "Technology",
-      "update_time": "2026-02-06 18:40:51"
-    },
-    {
-      "code": "0109",
-      "name": "SCBUILD",
-      "last_price": 0.01,
-      "change_percent": 1.0,
-      "volume": 277880,
-      "sector": "403",
-      "sector_name": "Property",
-      "update_time": "2026-02-06 18:40:51"
-    },
-    {
-      "code": "31824C",
-      "name": "GENTINGC4C",
-      "last_price": 0.01,
-      "change_percent": 1.0,
-      "volume": 659465,
-      "sector": "301",
-      "sector_name": "Technology",
-      "update_time": "2026-02-06 18:40:51"
-    },
-    {
-      "code": "0652L3",
-      "name": "HSI-PWL3",
-      "last_price": 0.145,
-      "change_percent": 0.71,
-      "volume": 0,
-      "sector": "358",
-      "sector_name": "Technology",
-      "update_time": "2026-02-06 18:40:51"
-    },
-    {
-      "code": "0207WA",
-      "name": "MESTRON-WA",
-      "last_price": 0.015,
-      "change_percent": 0.5,
-      "volume": 1119625,
-      "sector": "102",
-      "sector_name": "Industrial & Consumer Products",
-      "update_time": "2026-02-06 18:40:51"
-    },
-    {
-      "code": "0270C2",
-      "name": "NATGATE-C2",
-      "last_price": 0.015,
-      "change_percent": 0.5,
-      "volume": 711715,
+      "volume": 437410,
       "sector": "302",
       "sector_name": "Technology",
-      "update_time": "2026-02-06 18:40:51"
+      "update_time": "2026-02-09 19:18:50"
     },
     {
-      "code": "7097",
-      "name": "TAWIN",
-      "last_price": 0.015,
-      "change_percent": 0.5,
-      "volume": 1169525,
+      "code": "01389R",
+      "name": "ZETRIX-C9R",
+      "last_price": 0.025,
+      "change_percent": 1.5,
+      "volume": 4041735,
+      "sector": "305",
+      "sector_name": "Technology",
+      "update_time": "2026-02-09 19:18:50"
+    },
+    {
+      "code": "0198WA",
+      "name": "GDB-WA",
+      "last_price": 0.02,
+      "change_percent": 1.0,
+      "volume": 146000,
+      "sector": "103",
+      "sector_name": "Industrial & Consumer Products",
+      "update_time": "2026-02-09 19:18:50"
+    },
+    {
+      "code": "6033C8",
+      "name": "PETGAS-C8",
+      "last_price": 0.01,
+      "change_percent": 1.0,
+      "volume": 403720,
+      "sector": "365",
+      "sector_name": "Technology",
+      "update_time": "2026-02-09 19:18:50"
+    },
+    {
+      "code": "0116",
+      "name": "FOCUS",
+      "last_price": 0.01,
+      "change_percent": 1.0,
+      "volume": 2303120,
+      "sector": "401",
+      "sector_name": "Property",
+      "update_time": "2026-02-09 19:18:50"
+    },
+    {
+      "code": "0029WD",
+      "name": "DIGISTA-WD",
+      "last_price": 0.01,
+      "change_percent": 1.0,
+      "volume": 52625,
+      "sector": "105",
+      "sector_name": "Industrial & Consumer Products",
+      "update_time": "2026-02-09 19:18:50"
+    },
+    {
+      "code": "0041",
+      "name": "HONGSENG",
+      "last_price": 0.01,
+      "change_percent": 1.0,
+      "volume": 4287025,
+      "sector": "105",
+      "sector_name": "Industrial & Consumer Products",
+      "update_time": "2026-02-09 19:18:50"
+    },
+    {
+      "code": "7188WC",
+      "name": "BTM-WC",
+      "last_price": 0.01,
+      "change_percent": 1.0,
+      "volume": 837870,
       "sector": "102",
       "sector_name": "Industrial & Consumer Products",
-      "update_time": "2026-02-06 18:40:51"
+      "update_time": "2026-02-09 19:18:50"
     },
     {
-      "code": "51683C",
-      "name": "HARTA-C3C",
-      "last_price": 0.015,
-      "change_percent": 0.5,
-      "volume": 498235,
-      "sector": "362",
+      "code": "0138AE",
+      "name": "ZETRIX-CAE",
+      "last_price": 0.08,
+      "change_percent": 0.78,
+      "volume": 1379590,
+      "sector": "305",
       "sector_name": "Technology",
-      "update_time": "2026-02-06 18:40:51"
+      "update_time": "2026-02-09 19:18:50"
     },
     {
-      "code": "0652LD",
-      "name": "HSI-PWLD",
-      "last_price": 0.055,
-      "change_percent": 0.37,
-      "volume": 48100,
-      "sector": "358",
-      "sector_name": "Technology",
-      "update_time": "2026-02-06 18:40:51"
-    },
-    {
-      "code": "0215CZ",
-      "name": "SLVEST-CZ",
-      "last_price": 0.02,
-      "change_percent": 0.33,
+      "code": "41971F",
+      "name": "SIME-C1F",
+      "last_price": 0.035,
+      "change_percent": 0.75,
       "volume": 0,
-      "sector": "361",
+      "sector": "301",
       "sector_name": "Technology",
-      "update_time": "2026-02-06 18:40:51"
+      "update_time": "2026-02-09 19:18:50"
     },
     {
-      "code": "7221",
-      "name": "BSLCORP",
-      "last_price": 0.02,
-      "change_percent": 0.33,
-      "volume": 1045575,
-      "sector": "102",
-      "sector_name": "Industrial & Consumer Products",
-      "update_time": "2026-02-06 18:40:51"
+      "code": "01389U",
+      "name": "ZETRIX-C9U",
+      "last_price": 0.035,
+      "change_percent": 0.75,
+      "volume": 1068840,
+      "sector": "305",
+      "sector_name": "Technology",
+      "update_time": "2026-02-09 19:18:50"
+    },
+    {
+      "code": "0138AL",
+      "name": "ZETRIX-CAL",
+      "last_price": 0.18,
+      "change_percent": 0.64,
+      "volume": 1234350,
+      "sector": "305",
+      "sector_name": "Technology",
+      "update_time": "2026-02-09 19:18:50"
+    },
+    {
+      "code": "0138AZ",
+      "name": "ZETRIX-CAZ",
+      "last_price": 0.09,
+      "change_percent": 0.64,
+      "volume": 0,
+      "sector": "305",
+      "sector_name": "Technology",
+      "update_time": "2026-02-09 19:18:50"
     }
   ]
 }
