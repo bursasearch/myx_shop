@@ -1,156 +1,156 @@
 {
-  "generated_at": "2026-02-10 19:00:52",
+  "generated_at": "2026-02-11 18:54:52",
   "total_stocks": 15,
   "stocks": [
     {
       "code": "416238",
       "name": "BAT-C38",
-      "last_price": 0.04,
-      "change_percent": 7.0,
-      "volume": 299270,
+      "last_price": 0.11,
+      "change_percent": 1.75,
+      "volume": 302140,
       "sector": "301",
       "sector_name": "Technology",
-      "update_time": "2026-02-10 19:00:52"
-    },
-    {
-      "code": "416239",
-      "name": "BAT-C39",
-      "last_price": 0.185,
-      "change_percent": 3.11,
-      "volume": 73735,
-      "sector": "301",
-      "sector_name": "Technology",
-      "update_time": "2026-02-10 19:00:52"
-    },
-    {
-      "code": "5202C6",
-      "name": "MSM-C6",
-      "last_price": 0.015,
-      "change_percent": 2.0,
-      "volume": 0,
-      "sector": "301",
-      "sector_name": "Technology",
-      "update_time": "2026-02-10 19:00:52"
+      "update_time": "2026-02-11 18:54:52"
     },
     {
       "code": "416241",
       "name": "BAT-C41",
-      "last_price": 0.06,
-      "change_percent": 2.0,
-      "volume": 793640,
+      "last_price": 0.155,
+      "change_percent": 1.58,
+      "volume": 1598190,
       "sector": "301",
       "sector_name": "Technology",
-      "update_time": "2026-02-10 19:00:52"
+      "update_time": "2026-02-11 18:54:52"
     },
     {
-      "code": "7123WB",
-      "name": "MAXLAND-WB",
-      "last_price": 0.01,
+      "code": "5172WB",
+      "name": "SINARAN-WB",
+      "last_price": 0.02,
       "change_percent": 1.0,
-      "volume": 257550,
-      "sector": "102",
+      "volume": 284850,
+      "sector": "101",
       "sector_name": "Industrial & Consumer Products",
-      "update_time": "2026-02-10 19:00:52"
+      "update_time": "2026-02-11 18:54:52"
     },
     {
-      "code": "0043",
-      "name": "MTRONIC",
+      "code": "659944",
+      "name": "AEON-C44",
+      "last_price": 0.02,
+      "change_percent": 1.0,
+      "volume": 285955,
+      "sector": "301",
+      "sector_name": "Technology",
+      "update_time": "2026-02-11 18:54:52"
+    },
+    {
+      "code": "058139",
+      "name": "XIAOMI-C39",
       "last_price": 0.01,
       "change_percent": 1.0,
-      "volume": 549030,
-      "sector": "102",
+      "volume": 511475,
+      "sector": "358",
+      "sector_name": "Technology",
+      "update_time": "2026-02-11 18:54:52"
+    },
+    {
+      "code": "4464",
+      "name": "PHB",
+      "last_price": 0.01,
+      "change_percent": 1.0,
+      "volume": 2514455,
+      "sector": "120",
       "sector_name": "Industrial & Consumer Products",
-      "update_time": "2026-02-10 19:00:52"
+      "update_time": "2026-02-11 18:54:52"
+    },
+    {
+      "code": "416240",
+      "name": "BAT-C40",
+      "last_price": 0.04,
+      "change_percent": 0.6,
+      "volume": 0,
+      "sector": "301",
+      "sector_name": "Technology",
+      "update_time": "2026-02-11 18:54:52"
+    },
+    {
+      "code": "0078WC",
+      "name": "GDEX-WC",
+      "last_price": 0.015,
+      "change_percent": 0.5,
+      "volume": 36530,
+      "sector": "164",
+      "sector_name": "Industrial & Consumer Products",
+      "update_time": "2026-02-11 18:54:52"
+    },
+    {
+      "code": "659941",
+      "name": "AEON-C41",
+      "last_price": 0.015,
+      "change_percent": 0.5,
+      "volume": 1491975,
+      "sector": "301",
+      "sector_name": "Technology",
+      "update_time": "2026-02-11 18:54:52"
+    },
+    {
+      "code": "0599C3",
+      "name": "XPENG-C3",
+      "last_price": 0.045,
+      "change_percent": 0.5,
+      "volume": 2382790,
+      "sector": "358",
+      "sector_name": "Technology",
+      "update_time": "2026-02-11 18:54:52"
+    },
+    {
+      "code": "71065H",
+      "name": "SUPERMX-C5H",
+      "last_price": 0.015,
+      "change_percent": 0.5,
+      "volume": 387825,
+      "sector": "362",
+      "sector_name": "Technology",
+      "update_time": "2026-02-11 18:54:52"
     },
     {
       "code": "715386",
       "name": "KOSSAN-C86",
-      "last_price": 0.01,
-      "change_percent": 1.0,
-      "volume": 669225,
+      "last_price": 0.015,
+      "change_percent": 0.5,
+      "volume": 651425,
       "sector": "362",
       "sector_name": "Technology",
-      "update_time": "2026-02-10 19:00:52"
+      "update_time": "2026-02-11 18:54:52"
     },
     {
-      "code": "7036",
-      "name": "BORNOIL",
-      "last_price": 0.01,
-      "change_percent": 1.0,
-      "volume": 19747270,
-      "sector": "102",
-      "sector_name": "Industrial & Consumer Products",
-      "update_time": "2026-02-10 19:00:52"
+      "code": "0156WB",
+      "name": "MPAY-WB",
+      "last_price": 0.015,
+      "change_percent": 0.5,
+      "volume": 463685,
+      "sector": "405",
+      "sector_name": "Property",
+      "update_time": "2026-02-11 18:54:52"
     },
     {
-      "code": "68881W",
-      "name": "AXIATA-C1W",
-      "last_price": 0.01,
-      "change_percent": 1.0,
-      "volume": 0,
-      "sector": "363",
+      "code": "419795",
+      "name": "SIME-C95",
+      "last_price": 0.11,
+      "change_percent": 0.47,
+      "volume": 16650,
+      "sector": "301",
       "sector_name": "Technology",
-      "update_time": "2026-02-10 19:00:52"
+      "update_time": "2026-02-11 18:54:52"
     },
     {
       "code": "416242",
       "name": "BAT-C42",
-      "last_price": 0.285,
-      "change_percent": 0.97,
-      "volume": 219450,
+      "last_price": 0.41,
+      "change_percent": 0.44,
+      "volume": 242425,
       "sector": "301",
       "sector_name": "Technology",
-      "update_time": "2026-02-10 19:00:52"
-    },
-    {
-      "code": "5040",
-      "name": "MERIDIAN",
-      "last_price": 0.025,
-      "change_percent": 0.67,
-      "volume": 133325,
-      "sector": "120",
-      "sector_name": "Industrial & Consumer Products",
-      "update_time": "2026-02-10 19:00:52"
-    },
-    {
-      "code": "68881Y",
-      "name": "AXIATA-C1Y",
-      "last_price": 0.075,
-      "change_percent": 0.67,
-      "volume": 0,
-      "sector": "363",
-      "sector_name": "Technology",
-      "update_time": "2026-02-10 19:00:52"
-    },
-    {
-      "code": "68881X",
-      "name": "AXIATA-C1X",
-      "last_price": 0.07,
-      "change_percent": 0.56,
-      "volume": 1007855,
-      "sector": "363",
-      "sector_name": "Technology",
-      "update_time": "2026-02-10 19:00:52"
-    },
-    {
-      "code": "68881P",
-      "name": "AXIATA-C1P",
-      "last_price": 0.085,
-      "change_percent": 0.55,
-      "volume": 376650,
-      "sector": "363",
-      "sector_name": "Technology",
-      "update_time": "2026-02-10 19:00:52"
-    },
-    {
-      "code": "0288WA",
-      "name": "MINOX-WA",
-      "last_price": 0.03,
-      "change_percent": 0.5,
-      "volume": 108385,
-      "sector": "402",
-      "sector_name": "Property",
-      "update_time": "2026-02-10 19:00:52"
+      "update_time": "2026-02-11 18:54:52"
     }
   ]
 }
