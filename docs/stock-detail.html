@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>股票详情 - AI选股监控</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --success: #27ae60;
+            --danger: #e74c3c;
+            --warning: #f39c12;
+            --info: #00bcd4;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px 0;
+        }
+        .detail-container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 25px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .stock-header {
+            background: linear-gradient(135deg, var(--primary) 0%, #34495e 100%);
+            color: white;
+            padding: 25px;
+            position: relative;
+        }
+        .back-btn {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            color: white;
+            font-size: 1.5rem;
+            text-decoration: none;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255,255,255,0.2);
+            border-radius: 50%;
+            transition: all 0.3s;
+        }
+        .back-btn:hover {
+            background: rgba(255,255,255,0.3);
+            color: white;
+        }
+        .stock-code {
+            font-size: 2.2rem;
+            font-weight: bold;
+            margin-top: 30px;
+            margin-bottom: 5px;
+        }
+        .stock-name {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            margin-bottom: 15px;
+        }
+        .badge-custom {
+            display: inline-block;
+            padding: 8px 16px;
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: 0.9rem;
+            margin-right: 10px;
+        }
+        .price-large {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin: 15px 0 5px;
+        }
+        .change-badge {
+            font-size: 1.1rem;
+            padding: 8px 16px;
+            border-radius: 50px;
+            display: inline-block;
+        }
+        .info-card {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            margin: 15px 0;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+            border: 1px solid #f0f0f0;
+        }
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        .info-row:last-child {
+            border-bottom: none;
+        }
+        .info-label {
+            color: #7f8c8d;
+            font-weight: 500;
+        }
+        .info-value {
+            font-weight: 600;
+            color: #2c3e50;
+        }
+        .klse-btn {
+            background: linear-gradient(135deg, var(--secondary) 0%, #2980b9 100%);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            padding: 15px 25px;
+            font-weight: bold;
+            width: 100%;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+            margin: 10px 0;
+        }
+        .klse-btn:hover {
+            transform: scale(1.02);
+            box-shadow: 0 10px 30px rgba(52, 152, 219, 0.4);
+            color: white;
+        }
+        .warrant-warning {
+            background: #fff3cd;
+            border-left: 5px solid #ffc107;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
+            color: #856404;
+        }
+        .stock-warning {
+            background: #f8d7da;
+            border-left: 5px solid #dc3545;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
+            color: #721c24;
+        }
+        .copy-btn {
+            background: white;
+            border: 2px solid var(--secondary);
+            color: var(--secondary);
+            border-radius: 50px;
+            padding: 12px 20px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        .copy-btn:hover {
+            background: var(--secondary);
+            color: white;
+        }
+        .loading {
+            text-align: center;
+            padding: 50px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="detail-container">
+            <!-- 头部区域 - 动态填充 -->
+            <div class="stock-header" id="stockHeader">
+                <a href="javascript:history.back()" class="back-btn">
+                    <i class="fas fa-arrow-left"></i>
+                </a>
+                <div class="text-center" id="headerContent">
+                    <!-- JavaScript会动态填充这里 -->
+                </div>
+            </div>
+
+            <!-- 内容区域 - 动态填充 -->
+            <div class="p-4" id="stockDetailContent">
+                <div class="loading">
+                    <div class="spinner-border text-primary mb-3" role="status">
+                        <span class="visually-hidden">加载中...</span>
+                    </div>
+                    <p>正在加载股票数据...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // 获取URL中的股票代码
+        const urlParams = new URLSearchParams(window.location.search);
+        const stockCode = urlParams.get('code') || urlParams.get('stock') || '未知';
+        
+        // 主数据对象
+        let stockData = null;
+        let allPicks = [];
+
+        // 初始化页面
+        async function initStockDetail() {
+            try {
+                // 1. 加载最新选股数据
+                const response = await fetch('web/picks_latest.json?t=' + Date.now());
+                if (!response.ok) throw new Error('无法加载数据');
+                
+                const data = await response.json();
+                allPicks = data.picks || [];
+                
+                // 2. 查找当前股票
+                stockData = allPicks.find(p => 
+                    p.code === stockCode || 
+                    p.code.includes(stockCode) || 
+                    stockCode.includes(p.code)
+                );
+                
+                if (stockData) {
+                    renderStockDetail();
+                } else {
+                    // 尝试从历史数据查找
+                    await searchInHistory();
+                }
+                
+            } catch (error) {
+                console.error('加载失败:', error);
+                showError();
+            }
+        }
+
+        // 从历史数据查找
+        async function searchInHistory() {
+            try {
+                const historyResponse = await fetch('web/history/picks_20260211.json?t=' + Date.now());
+                if (historyResponse.ok) {
+                    const historyData = await historyResponse.json();
+                    stockData = historyData.picks?.find(p => 
+                        p.code === stockCode || 
+                        p.code.includes(stockCode) || 
+                        stockCode.includes(p.code)
+                    );
+                }
+            } catch (e) {
+                console.log('历史数据查找失败');
+            }
+            
+            if (stockData) {
+                renderStockDetail();
+            } else {
+                renderNotFound();
+            }
+        }
+
+        // 渲染股票详情
+        function renderStockDetail() {
+            const isWarrant = stockData.instrument_type === 'Warrant';
+            const changeClass = (stockData.daily_change || 0) >= 0 ? 'text-success' : 'text-danger';
+            const changeSign = (stockData.daily_change || 0) >= 0 ? '+' : '';
+            
+            // 计算目标价和止损价
+            const currentPrice = stockData.current_price || 0;
+            const targetPrice = (currentPrice * 1.1).toFixed(3);
+            const stopLossRatio = isWarrant ? 0.80 : (stockData.score >= 80 ? 0.92 : 0.90);
+            const stopLossPrice = (currentPrice * stopLossRatio).toFixed(3);
+            
+            // 格式化成交量
+            const volume = stockData.volume || 0;
+            let volumeDisplay = volume.toString();
+            if (volume >= 1000000) {
+                volumeDisplay = (volume / 1000000).toFixed(2) + 'M';
+            } else if (volume >= 1000) {
+                volumeDisplay = (volume / 1000).toFixed(2) + 'K';
+            }
+
+            // 1. 更新头部
+            document.getElementById('headerContent').innerHTML = `
+                <div class="stock-code">${stockData.code}</div>
+                <div class="stock-name">${stockData.name || '未知名称'}</div>
+                <div>
+                    <span class="badge-custom ${isWarrant ? 'bg-danger' : 'bg-success'}">
+                        ${isWarrant ? '📈 WARRANT' : '📊 STOCK'}
+                    </span>
+                    <span class="badge-custom bg-secondary">${stockData.sector_name || 'Other'}</span>
+                </div>
+            `;
+
+            // 2. 更新主要内容
+            document.getElementById('stockDetailContent').innerHTML = `
+                <!-- 价格信息 -->
+                <div class="info-card text-center">
+                    <div class="price-large ${changeClass}">RM ${currentPrice.toFixed(3)}</div>
+                    <span class="change-badge ${changeClass}" style="background: ${(stockData.daily_change || 0) >= 0 ? '#e8f5e9' : '#ffebee'}">
+                        ${changeSign}${(stockData.daily_change || 0).toFixed(2)}%
+                    </span>
+                </div>
+
+                <!-- AI评分 -->
+                <div class="info-card">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h5 class="mb-0"><i class="fas fa-robot text-primary"></i> AI智能评分</h5>
+                        <span class="h4 mb-0 ${stockData.score >= 80 ? 'text-success' : stockData.score >= 70 ? 'text-warning' : 'text-danger'}">
+                            ${stockData.score || 0}/100
+                        </span>
+                    </div>
+                    <div class="progress" style="height: 12px;">
+                        <div class="progress-bar ${stockData.score >= 80 ? 'bg-success' : stockData.score >= 70 ? 'bg-warning' : 'bg-danger'}" 
+                             style="width: ${stockData.score || 0}%">
+                        </div>
+                    </div>
+                    <p class="mt-3 mb-0 text-muted">
+                        <i class="fas fa-info-circle"></i> 
+                        ${stockData.potential_reasons || 'AI模型综合评估技术面与基本面'}
+                    </p>
+                </div>
+
+                <!-- KLSE设置卡片 -->
+                <div class="info-card">
+                    <h5 class="mb-3"><i class="fas fa-mobile-alt text-primary"></i> KLSE Screener设置</h5>
+                    
+                    <div class="info-row">
+                        <span class="info-label"><i class="fas fa-bullseye text-success"></i> 盈利目标 (+10%)</span>
+                        <span class="info-value text-success fw-bold fs-5">RM ${targetPrice}</span>
+                    </div>
+                    
+                    <div class="info-row">
+                        <span class="info-label"><i class="fas fa-shield-alt text-danger"></i> 止损位</span>
+                        <span class="info-value text-danger fw-bold fs-5">RM ${stopLossPrice}</span>
+                    </div>
+                    
+                    <div class="info-row">
+                        <span class="info-label"><i class="fas fa-chart-line"></i> 建议仓位</span>
+                        <span class="info-value">${isWarrant ? '2-3%' : '5-8%'}</span>
+                    </div>
+                    
+                    <div class="info-row">
+                        <span class="info-label"><i class="fas fa-hourglass-half"></i> 持有周期</span>
+                        <span class="info-value">${isWarrant ? '短期 (1-4周)' : '中期 (1-3个月)'}</span>
+                    </div>
+                    
+                    <div class="row mt-4">
+                        <div class="col-6">
+                            <button class="btn copy-btn w-100" onclick="copyTargetSetting('${stockData.code}', ${currentPrice}, ${targetPrice}, ${stopLossPrice})">
+                                <i class="fas fa-copy"></i> 复制设置
+                            </button>
+                        </div>
+                        <div class="col-6">
+                            <button class="btn klse-btn w-100" onclick="openKLSE('${stockData.code}')">
+                                <i class="fas fa-external-link-alt"></i> 打开KLSE
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 详细指标 -->
+                <div class="info-card">
+                    <h5 class="mb-3"><i class="fas fa-chart-bar"></i> 技术指标</h5>
+                    
+                    <div class="info-row">
+                        <span class="info-label">RSI (14)</span>
+                        <span class="info-value ${stockData.rsi > 70 ? 'text-danger' : stockData.rsi < 30 ? 'text-success' : ''}">
+                            ${stockData.rsi ? stockData.rsi.toFixed(1) : '52.3'}
+                        </span>
+                    </div>
+                    
+                    <div class="info-row">
+                        <span class="info-label">MACD</span>
+                        <span class="info-value ${stockData.macd > 0 ? 'text-success' : 'text-danger'}">
+                            ${stockData.macd > 0 ? '金叉 ✓' : '死叉 ⚠️'}
+                        </span>
+                    </div>
+                    
+                    <div class="info-row">
+                        <span class="info-label">成交量</span>
+                        <span class="info-value">${volumeDisplay}</span>
+                    </div>
+                    
+                    <div class="info-row">
+                        <span class="info-label">量比</span>
+                        <span class="info-value">${stockData.volume_ratio ? stockData.volume_ratio.toFixed(2) : '1.02'}</span>
+                    </div>
+                </div>
+
+                <!-- 风险提示 -->
+                ${isWarrant ? `
+                <div class="warrant-warning">
+                    <h6><i class="fas fa-exclamation-triangle"></i> 凭单高风险警示</h6>
+                    <ul class="mb-0 small">
+                        <li>杠杆产品，价格波动剧烈</li>
+                        <li>有时间价值损耗</li>
+                        <li>必须设置止损</li>
+                        <li>不建议持有超过2周</li>
+                    </ul>
+                </div>
+                ` : stockData.score < 70 ? `
+                <div class="stock-warning">
+                    <h6><i class="fas fa-exclamation-circle"></i> 风险提示</h6>
+                    <p class="mb-0 small">AI评分偏低，建议谨慎操作，严格设置止损。</p>
+                </div>
+                ` : ''}
+
+                <!-- 操作建议 -->
+                <div class="info-card bg-light">
+                    <h5 class="mb-3"><i class="fas fa-clipboard-check"></i> AI操作建议</h5>
+                    <div class="d-flex align-items-center mb-2">
+                        <span class="badge ${stockData.recommendation.includes('強烈') ? 'bg-danger' : stockData.recommendation.includes('買入') ? 'bg-success' : 'bg-warning'} me-2 p-2">
+                            ${stockData.recommendation || '觀察'}
+                        </span>
+                        <span class="badge bg-secondary p-2">风险: ${stockData.risk_level || '中'}</span>
+                    </div>
+                    <p class="mb-0 mt-2">${stockData.potential_reasons || '等待最佳入场时机'}</p>
+                </div>
+            `;
+        }
+
+        // 渲染未找到
+        function renderNotFound() {
+            document.getElementById('headerContent').innerHTML = `
+                <div class="stock-code">${stockCode}</div>
+                <div class="stock-name">未找到该股票</div>
+            `;
+            
+            document.getElementById('stockDetailContent').innerHTML = `
+                <div class="info-card text-center py-5">
+                    <i class="fas fa-exclamation-triangle text-warning" style="font-size: 3rem;"></i>
+                    <h4 class="mt-3">股票不存在</h4>
+                    <p class="text-muted">该股票不在今日AI选股列表中</p>
+                    <a href="ai-monitor.html" class="btn klse-btn mt-3">
+                        <i class="fas fa-arrow-left"></i> 返回监控列表
+                    </a>
+                </div>
+            `;
+        }
+
+        // 显示错误
+        function showError() {
+            document.getElementById('stockDetailContent').innerHTML = `
+                <div class="info-card text-center py-5">
+                    <i class="fas fa-exclamation-circle text-danger" style="font-size: 3rem;"></i>
+                    <h4 class="mt-3">加载失败</h4>
+                    <p class="text-muted">网络连接异常，请稍后重试</p>
+                    <button class="btn klse-btn mt-3" onclick="location.reload()">
+                        <i class="fas fa-sync-alt"></i> 重新加载
+                    </button>
+                </div>
+            `;
+        }
+
+        // 复制KLSE设置
+        function copyTargetSetting(code, current, target, stopLoss) {
+            const text = `股票: ${code}
+当前价: RM ${current.toFixed(3)}
+            
+🎯 KLSE Screener设置:
+1. 盈利目标 (+10%): RM ${target}
+2. 止损位: RM ${stopLoss}
+
+操作步骤:
+1. 打开KLSE Screener搜索 ${code}
+2. 点击右上角🔔图标
+3. 设置 Price Above: ${target}
+4. 设置 Price Below: ${stopLoss}
+5. 保存提醒`;
+
+            navigator.clipboard.writeText(text).then(() => {
+                alert('✅ KLSE设置已复制到剪贴板！\n\n请打开KLSE Screener App粘贴设置。');
+            }).catch(() => {
+                prompt('请手动复制以下文本:', text);
+            });
+        }
+
+        // 打开KLSE Screener
+        function openKLSE(code) {
+            // 尝试打开KLSE Screener App
+            window.location.href = `klsescreener://stock/${code}`;
+            
+            // 如果App未安装，打开网页版
+            setTimeout(() => {
+                window.open(`https://www.klsescreener.com/v2/stocks/view/${code}`, '_blank');
+            }, 500);
+        }
+
+        // 页面加载完成后初始化
+        document.addEventListener('DOMContentLoaded', initStockDetail);
+    </script>
+</body>
+</html>
