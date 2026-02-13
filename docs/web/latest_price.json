@@ -1,156 +1,156 @@
 {
-  "generated_at": "2026-02-13 08:10:56",
+  "generated_at": "2026-02-13 19:47:32",
   "total_stocks": 15,
   "stocks": [
     {
-      "code": "72772F",
-      "name": "DIALOG-C2F",
-      "last_price": 0.02,
-      "change_percent": 3.0,
-      "volume": 414915,
-      "sector": "Technology",
-      "sector_name": "Other",
-      "update_time": "2026-02-13 08:10:56"
-    },
-    {
-      "code": "0116",
-      "name": "FOCUS",
-      "last_price": 0.01,
-      "change_percent": 1.0,
-      "volume": 3439805,
-      "sector": "Property",
-      "sector_name": "Other",
-      "update_time": "2026-02-13 08:10:56"
-    },
-    {
       "code": "526470",
-      "name": "MALAKOFC70",
+      "name": "Technology",
       "last_price": 0.01,
       "change_percent": 1.0,
       "volume": 208085,
-      "sector": "Technology",
-      "sector_name": "Other",
-      "update_time": "2026-02-13 08:10:56"
+      "sector": "365",
+      "sector_name": "Technology",
+      "update_time": "2026-02-13 19:47:32"
+    },
+    {
+      "code": "0116",
+      "name": "Property",
+      "last_price": 0.01,
+      "change_percent": 1.0,
+      "volume": 3439805,
+      "sector": "401",
+      "sector_name": "Property",
+      "update_time": "2026-02-13 19:47:32"
     },
     {
       "code": "5293WA",
-      "name": "AME-WA",
+      "name": "Industrial & Consumer Products",
       "last_price": 0.025,
       "change_percent": 0.67,
       "volume": 130660,
-      "sector": "Industrial & Consumer Products",
-      "sector_name": "Other",
-      "update_time": "2026-02-13 08:10:56"
+      "sector": "103",
+      "sector_name": "Industrial & Consumer Products",
+      "update_time": "2026-02-13 19:47:32"
     },
     {
       "code": "5255WB",
-      "name": "LFG-WB",
+      "name": "Industrial & Consumer Products",
       "last_price": 0.5,
       "change_percent": 0.64,
       "volume": 0,
-      "sector": "Industrial & Consumer Products",
-      "sector_name": "Other",
-      "update_time": "2026-02-13 08:10:56"
+      "sector": "161",
+      "sector_name": "Industrial & Consumer Products",
+      "update_time": "2026-02-13 19:47:32"
     },
     {
       "code": "72772S",
-      "name": "DIALOG-C2S",
+      "name": "Technology",
       "last_price": 0.04,
       "change_percent": 0.6,
       "volume": 0,
-      "sector": "Technology",
-      "sector_name": "Other",
-      "update_time": "2026-02-13 08:10:56"
+      "sector": "361",
+      "sector_name": "Technology",
+      "update_time": "2026-02-13 19:47:32"
     },
     {
       "code": "0096WD",
-      "name": "NEXGRAM-WD",
+      "name": "Property",
       "last_price": 0.015,
       "change_percent": 0.5,
       "volume": 27140,
-      "sector": "Property",
-      "sector_name": "Other",
-      "update_time": "2026-02-13 08:10:56"
+      "sector": "463",
+      "sector_name": "Property",
+      "update_time": "2026-02-13 19:47:32"
     },
     {
       "code": "72772L",
-      "name": "DIALOG-C2L",
+      "name": "Technology",
       "last_price": 0.03,
       "change_percent": 0.5,
       "volume": 246650,
-      "sector": "Technology",
-      "sector_name": "Other",
-      "update_time": "2026-02-13 08:10:56"
+      "sector": "361",
+      "sector_name": "Technology",
+      "update_time": "2026-02-13 19:47:32"
     },
     {
       "code": "52101J",
-      "name": "ARMADA-C1J",
+      "name": "Technology",
       "last_price": 0.015,
       "change_percent": 0.5,
       "volume": 561560,
-      "sector": "Technology",
-      "sector_name": "Other",
-      "update_time": "2026-02-13 08:10:56"
+      "sector": "361",
+      "sector_name": "Technology",
+      "update_time": "2026-02-13 19:47:32"
     },
     {
       "code": "7145PA",
-      "name": "TXCD-PA",
+      "name": "Industrial & Consumer Products",
       "last_price": 0.015,
       "change_percent": 0.5,
       "volume": 32805,
-      "sector": "Industrial & Consumer Products",
-      "sector_name": "Other",
-      "update_time": "2026-02-13 08:10:56"
-    },
-    {
-      "code": "0162",
-      "name": "WIDAD",
-      "last_price": 0.015,
-      "change_percent": 0.5,
-      "volume": 433735,
-      "sector": "Property",
-      "sector_name": "Other",
-      "update_time": "2026-02-13 08:10:56"
+      "sector": "103",
+      "sector_name": "Industrial & Consumer Products",
+      "update_time": "2026-02-13 19:47:32"
     },
     {
       "code": "7079LA",
-      "name": "TWL-LA",
+      "name": "Telecommunications & Media",
       "last_price": 0.015,
       "change_percent": 0.5,
       "volume": 1051995,
-      "sector": "Telecommunications & Media",
-      "sector_name": "Other",
-      "update_time": "2026-02-13 08:10:56"
+      "sector": "520",
+      "sector_name": "Telecommunications & Media",
+      "update_time": "2026-02-13 19:47:32"
+    },
+    {
+      "code": "0162",
+      "name": "Property",
+      "last_price": 0.015,
+      "change_percent": 0.5,
+      "volume": 433735,
+      "sector": "403",
+      "sector_name": "Property",
+      "update_time": "2026-02-13 19:47:32"
     },
     {
       "code": "16193V",
-      "name": "DRBHCOMC3V",
+      "name": "Technology",
       "last_price": 0.05,
       "change_percent": 0.43,
       "volume": 251425,
-      "sector": "Technology",
-      "sector_name": "Other",
-      "update_time": "2026-02-13 08:10:56"
+      "sector": "301",
+      "sector_name": "Technology",
+      "update_time": "2026-02-13 19:47:32"
     },
     {
       "code": "72772J",
-      "name": "DIALOG-C2J",
+      "name": "Technology",
       "last_price": 0.07,
       "change_percent": 0.4,
       "volume": 1693260,
-      "sector": "Technology",
-      "sector_name": "Other",
-      "update_time": "2026-02-13 08:10:56"
+      "sector": "361",
+      "sector_name": "Technology",
+      "update_time": "2026-02-13 19:47:32"
+    },
+    {
+      "code": "7221",
+      "name": "Industrial & Consumer Products",
+      "last_price": 0.02,
+      "change_percent": 0.33,
+      "volume": 501425,
+      "sector": "102",
+      "sector_name": "Industrial & Consumer Products",
+      "update_time": "2026-02-13 19:47:32"
     },
     {
       "code": "0174",
-      "name": "EVD",
+      "name": "Property",
       "last_price": 0.04,
       "change_percent": 0.33,
       "volume": 80635,
-      "sector": "Property",
-      "sector_name": "Other",
-      "update_time": "2026-02-13 08:10:56"
+      "sector": "405",
+      "sector_name": "Property",
+      "update_time": "2026-02-13 19:47:32"
     }
   ]
 }
