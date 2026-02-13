@@ -2409,7 +2409,7 @@ window.allHistoryData = {
   "20260212": {
     "date": "2026-02-12",
     "date_id": "20260212",
-    "last_updated": "2026-02-13 19:47:32",
+    "last_updated": "2026-02-13 20:48:55",
     "source": "20260212_processed_20260213_194156.csv",
     "total_picks": 15,
     "sector_breakdown": {
