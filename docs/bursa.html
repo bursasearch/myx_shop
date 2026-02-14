@@ -603,7 +603,7 @@ async function initApp() {
         const response = await fetch('https://bursasearch.github.io/myx_shop/web/picks_latest.json');
         const latestData = await response.json();
         
-        console.log('数据加载成功:', latestData); // 添加调试
+        console.log('数据加载成功:', latestData);
         
         // ✅ 确保这里调用了渲染函数
         if (latestData && latestData.picks) {
@@ -611,14 +611,26 @@ async function initApp() {
         } else {
             console.error('数据格式错误:', latestData);
         }
+
+        // 创建类似 window.allHistoryData 的结构
+        window.allHistoryData = {};
+        window.allHistoryData[latestData.date_id] = latestData;
+        
+        // 初始化日期下拉菜单
+        initDateSelector();
+        
+        // 加载最新数据
+        loadData(latestData.date_id);
+        
     } catch (error) {
-        console.error('加载失败:', error);
+        console.error("加载数据失败:", error);
         document.getElementById('latestStocksContainer').innerHTML = 
-            '<div style="color:red; padding:20px;">加载失败: ' + error.message + '</div>';
+            `<div style="text-align:center; padding:20px; color:#f44336;">
+                ❌ 错误: 无法加载数据<br>
+                ${error.message}
+            </div>`;
     }
 }
-        
-        const latestData = await response.json();
         
         // 创建类似 window.allHistoryData 的结构
         window.allHistoryData = {};
@@ -692,69 +704,6 @@ function renderLatest(dateId) {
         renderStockList(data.picks, 'latestStocksContainer', true);
     }
 }
-
-// 5. 通用列表渲染函数
-function renderStockList(stocks, containerId, isLatest = false) {
-    const container = document.getElementById(containerId);
-    
-    if (!stocks || stocks.length === 0) {
-        container.innerHTML = '<p style="text-align:center; color:#999; padding:20px;">暂无数据</p>';
-        return;
-    }
-    
-    let html = '';
-    stocks.forEach(stock => {
-        html += `
-            <div class="stock-card">
-                <span class="stock-code">${stock.code}</span>
-                <span class="stock-name">${stock.name}</span>
-                <span class="stock-sector">${stock.sector_name}</span>
-                <span class="stock-price">RM ${stock.current_price.toFixed(3)}</span>
-                <span class="stock-recommend">${stock.recommendation}</span>
-            </div>
-        `;
-    });
-    
-    container.innerHTML = html;
-}
-            
-            let html = '';
-
-            stocks.forEach(s => {
-                const safeName = s.name.replace(/'/g, "\\'");
-                const price = parseFloat(s.current_price || s.price || 0);
-                
-                // 为所有卡片添加点击功能
-                html += `
-                <div class="stock-card clickable" onclick="selectStockToCalculator('${safeName}', '${s.code}', ${price})">
-                    <div class="stock-title">
-                        <span class="stock-name">${s.name}</span>
-                        <span class="stock-code">${s.code}</span>
-                    </div>
-                    <div style="display:flex; justify-content:space-between; margin-top:8px; align-items:center;">
-                        <div style="color:var(--danger); font-weight:bold;">RM ${price.toFixed(3)}</div>
-                        <div class="badge-buy">${s.recommendation || '买入'}</div>
-                    </div>`;
-                    
-                // 首页显示提示文字
-                if (isLatest) {
-                    html += `
-                    <div style="font-size:11px; color:#999; margin-top:5px;">
-                        点击计算交易成本 →
-                    </div>`;
-                } else {
-                    // 历史页面显示更多信息
-                    html += `
-                    <div style="font-size:11px; color:#999; margin-top:5px;">
-                        评分: ${s.score || 'N/A'} | 板块: ${s.sector_name || s.sector || 'N/A'}
-                    </div>`;
-                }
-                
-                html += `</div>`;
-            });
-            
-            container.innerHTML = html;
-        }
 
         // 6. 选择股票到计算器（增强版）
         function selectStockToCalculator(name
@@ -910,25 +859,25 @@ function renderStockList(stocks, containerId, isLatest = false) {
             document.getElementById('maybank-error').style.display = 'block';
         }
 
-        // 13. 测试函数
-        function testData() {
-            if(window.allHistoryData) {
-                const count = Object.keys(window.allHistoryData).length;
-                const latestDate = Object.keys(window.allHistoryData).sort().reverse()[0];
-                const latestData = window.allHistoryData[latestDate];
-                
-                // 测试计算器功能
-                document.getElementById('buyPrice').value = 1.500;
-                document.getElementById('targetPrice').value = 1.650;
-                document.getElementById('stockLots').value = 20;
-                calculateFullInvestment();
-                
-                alert("✅ 数据源匹配成功！\n" + 
-                      "已加载历史天数: " + count + "天\n" +
-                      "最新日期: " + latestDate + "\n" +
-                      } else {
-    console.warn("数据加载失败，使用测试数据");
-    // 使用测试数据继续运行
+// 13. 测试函数
+function testData() {
+    if(window.allHistoryData) {
+        const count = Object.keys(window.allHistoryData).length;
+        const latestDate = Object.keys(window.allHistoryData).sort().reverse()[0];
+        const latestData = window.allHistoryData[latestDate];
+        
+        // 测试计算器功能
+        document.getElementById('buyPrice').value = 1.500;
+        document.getElementById('targetPrice').value = 1.650;
+        document.getElementById('stockLots').value = 20;
+        calculateFullInvestment();
+        
+        alert("✅ 数据源匹配成功！\n" + 
+              "已加载历史天数: " + count + "天\n" +
+              "最新日期: " + latestDate);
+    } else {
+        alert("❌ 无法加载AI选股数据，请稍后重试。");
+    }
 }
 
         // 页面加载完成后初始化
