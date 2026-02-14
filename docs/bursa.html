@@ -756,12 +756,9 @@ function renderStockList(stocks, containerId, isLatest = false) {
             container.innerHTML = html;
         }
 
-
-
-
-$$$$$$$$$$$$$$$$$$$$$$$$$$$
         // 6. 选择股票到计算器（增强版）
-        function selectStockToCalculator(name, code, price) {
+        function selectStockToCalculator(name
+ code, price) {
             // 填充表单
             document.getElementById('stockName').value = name;
             document.getElementById('stockCode').value = code;
@@ -777,7 +774,8 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$
             // 立即计算
             setTimeout(() => {
                 calculateFullInvestment();
-            }, 50);
+            }
+ 50);
         }
 
         // 7. 更新计算器实时显示
@@ -856,14 +854,19 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$
         // 9. 计算买入成本
         function calculateBuyCosts(totalValue) {
             // 佣金 (0.1%, 最低 RM8)
-            let brokerFee = Math.max(8, totalValue * 0.001);
-            // 印花税 (每 RM1000 收 RM1.50, 最高 RM1000)
-            let stampDuty = Math.min(1000, Math.ceil(totalValue / 1000) * 1.5);
+            let brokerFee = Math.max(8
+
+ totalValue * 0.001);
+            // 印花税 (每 RM1000 收 RM1.50
+ 最高 RM1000)
+            let stampDuty = Math.min(1000
+ Math.ceil(totalValue / 1000) * 1.5);
             // 清算费 (0.03%)
             let clearingFee = totalValue * 0.0003;
             
             return {
-                brokerFee: brokerFee,
+                brokerFee: brokerFee
+
                 stampDuty: stampDuty,
                 clearingFee: clearingFee,
                 total: brokerFee + stampDuty + clearingFee
