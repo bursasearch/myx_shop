@@ -675,19 +675,15 @@ async function initApp() {
         }
 
         // 4. 渲染最新数据到首页
-        function renderLatest(dateId) {
-            const data = window.allHistoryData[dateId];
-            if (data && data.picks) {
-                renderStockList(data.picks, 'latestStocksContainer', true);
-            }
-        }
+function renderLatest(dateId) {
+    const data = window.allHistoryData[dateId];
+    if (data && data.picks) {
+        renderStockList(data.picks, 'latestStocksContainer', true);
+    }
+}
 
-        // 5. 通用列表渲染函数（含点击功能）
-console.log('准备渲染的股票数据:', stocks);
-console.log('第一只股票详情:', stocks[0]);
-renderStockList(stocks, 'latestStocksContainer', true);
-
-        function renderStockList(stocks, containerId, isLatest = false) {
+// 5. 通用列表渲染函数
+function renderStockList(stocks, containerId, isLatest = false) {
     const container = document.getElementById(containerId);
     
     if (!stocks || stocks.length === 0) {
@@ -697,7 +693,6 @@ renderStockList(stocks, 'latestStocksContainer', true);
     
     let html = '';
     stocks.forEach(stock => {
-        // ✅ 确保这里有 name 字段
         html += `
             <div class="stock-card">
                 <span class="stock-code">${stock.code}</span>
@@ -706,7 +701,6 @@ renderStockList(stocks, 'latestStocksContainer', true);
             </div>
         `;
     });
-    
     container.innerHTML = html;
 }
             
@@ -748,6 +742,10 @@ renderStockList(stocks, 'latestStocksContainer', true);
             container.innerHTML = html;
         }
 
+
+
+
+$$$$$$$$$$$$$$$$$$$$$$$$$$$
         // 6. 选择股票到计算器（增强版）
         function selectStockToCalculator(name, code, price) {
             // 填充表单
