@@ -1,15 +1,15 @@
 {
   "date": "2026-02-14",
   "date_id": "20260214",
-  "last_updated": "2026-02-14 08:44:42",
-  "source": "20260212.csv",
+  "last_updated": "2026-02-14 07:15:38",
+  "source": "20260212_processed_20260213_194156.csv",
   "total_picks": 15,
   "sector_breakdown": {},
   "picks": [
     {
       "rank": 1,
       "code": "0012",
-      "name": "3A",
+      "name": "Industrial & Consumer Products",
       "instrument_type": "Stock",
       "sector": "101",
       "sector_name": "Industrial & Consumer Products",
@@ -31,7 +31,7 @@
     {
       "rank": 2,
       "code": "2682",
-      "name": "PARKWD",
+      "name": "Industrial & Consumer Products",
       "instrument_type": "Stock",
       "sector": "120",
       "sector_name": "Industrial & Consumer Products",
@@ -53,7 +53,7 @@
     {
       "rank": 3,
       "code": "12952B",
-      "name": "PBBANK-C2B",
+      "name": "Technology",
       "instrument_type": "Stock",
       "sector": "310",
       "sector_name": "Technology",
@@ -75,7 +75,7 @@
     {
       "rank": 4,
       "code": "12952A",
-      "name": "PBBANK-C2A",
+      "name": "Technology",
       "instrument_type": "Stock",
       "sector": "310",
       "sector_name": "Technology",
@@ -97,7 +97,7 @@
     {
       "rank": 5,
       "code": "12951Z",
-      "name": "PBBANK-C1Z",
+      "name": "Technology",
       "instrument_type": "Stock",
       "sector": "310",
       "sector_name": "Technology",
@@ -119,7 +119,7 @@
     {
       "rank": 6,
       "code": "12951Y",
-      "name": "PBBANK-C1Y",
+      "name": "Technology",
       "instrument_type": "Stock",
       "sector": "310",
       "sector_name": "Technology",
@@ -141,7 +141,7 @@
     {
       "rank": 7,
       "code": "12951X",
-      "name": "PBBANK-C1X",
+      "name": "Technology",
       "instrument_type": "Stock",
       "sector": "310",
       "sector_name": "Technology",
@@ -163,7 +163,7 @@
     {
       "rank": 8,
       "code": "6912",
-      "name": "PASDEC",
+      "name": "Industrial & Consumer Products",
       "instrument_type": "Stock",
       "sector": "120",
       "sector_name": "Industrial & Consumer Products",
@@ -185,7 +185,7 @@
     {
       "rank": 9,
       "code": "0022",
-      "name": "PARLO",
+      "name": "Property",
       "instrument_type": "Stock",
       "sector": "401",
       "sector_name": "Property",
@@ -207,7 +207,7 @@
     {
       "rank": 10,
       "code": "5657",
-      "name": "PARKSON",
+      "name": "Industrial & Consumer Products",
       "instrument_type": "Stock",
       "sector": "101",
       "sector_name": "Industrial & Consumer Products",
@@ -229,7 +229,7 @@
     {
       "rank": 11,
       "code": "12952D",
-      "name": "PBBANK-C2D",
+      "name": "Technology",
       "instrument_type": "Stock",
       "sector": "310",
       "sector_name": "Technology",
@@ -251,7 +251,7 @@
     {
       "rank": 12,
       "code": "5022",
-      "name": "PAOS",
+      "name": "Industrial & Consumer Products",
       "instrument_type": "Stock",
       "sector": "101",
       "sector_name": "Industrial & Consumer Products",
@@ -273,7 +273,7 @@
     {
       "rank": 13,
       "code": "5125",
-      "name": "PANTECH",
+      "name": "Industrial & Consumer Products",
       "instrument_type": "Stock",
       "sector": "102",
       "sector_name": "Industrial & Consumer Products",
@@ -295,7 +295,7 @@
     {
       "rank": 14,
       "code": "0290",
-      "name": "PANDA",
+      "name": "Property",
       "instrument_type": "Stock",
       "sector": "405",
       "sector_name": "Property",
@@ -317,7 +317,7 @@
     {
       "rank": 15,
       "code": "7225",
-      "name": "PA",
+      "name": "Industrial & Consumer Products",
       "instrument_type": "Stock",
       "sector": "102",
       "sector_name": "Industrial & Consumer Products",

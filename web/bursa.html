@@ -10,11 +10,12 @@
     <script src="date_config.js"></script>
     
     <style>
-        /* 保持原有样式，并增加表格适配 */
+        /* 保持原有样式 */
         :root {
             --primary: #2196F3; --primary-dark: #1976D2; --secondary: #4CAF50;
             --warning: #FF9800; --danger: #F44336; --light: #F5F7FA;
             --dark: #333333; --gray: #666666; --coffee: #FF9800;
+            --success: #4CAF50;
         }
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
@@ -40,18 +41,187 @@
         .tab-content { display: none; }
         .tab-content.active { display: block; animation: fadeIn 0.3s ease; }
         .card { background: white; border-radius: 12px; padding: 15px; margin-bottom: 15px; border: 1px solid var(--light); box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
-        .history-panel { background: #f8f9fa; padding: 15px; border-radius: 10px; margin-bottom: 15px; border-left: 4px solid var(--primary); }
-        .history-controls { display: flex; gap: 10px; margin-bottom: 10px; flex-wrap: wrap; }
-        .history-select { flex: 1; padding: 10px; border-radius: 5px; border: 1px solid #ddd; }
-        .history-btn { padding: 10px 15px; border: none; border-radius: 5px; cursor: pointer; color: white; background: var(--primary); font-weight: bold; }
         
-        /* 股票卡片样式 */
+        /* 計算器卡片樣式 */
+        .calculator-card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 15px;
+            border: 1px solid #e0e0e0;
+        }
+        
+        .section-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: var(--dark);
+            border-left: 4px solid var(--primary);
+            padding-left: 10px;
+        }
+        
+        .input-group {
+            margin-bottom: 15px;
+        }
+        
+        .input-label {
+            display: block;
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+        
+        .input-row {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .input-field {
+            flex: 1;
+        }
+        
+        .input-field input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+        
+        .input-field input:focus {
+            border-color: var(--primary);
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(33, 150, 243, 0.1);
+        }
+        
+        .info-text {
+            font-size: 12px;
+            color: #999;
+            margin-top: 5px;
+            display: block;
+        }
+        
+        .summary-box {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 10px;
+            text-align: center;
+            border: 1px solid #e9ecef;
+        }
+        
+        .summary-text {
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .summary-value {
+            font-size: 18px;
+            font-weight: bold;
+            color: var(--primary);
+            margin-top: 5px;
+        }
+        
+        .divider {
+            height: 1px;
+            background: #e0e0e0;
+            margin: 20px 0;
+        }
+        
+        .result-card {
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 20px;
+            border: 1px solid #d0d7e2;
+        }
+        
+        .result-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            align-items: center;
+        }
+        
+        .result-label {
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .result-value {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--dark);
+        }
+        
+        .profit-loss {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        
+        .profit {
+            background: #e8f5e9;
+            color: #2e7d32;
+        }
+        
+        .loss {
+            background: #ffebee;
+            color: #c62828;
+        }
+        
+        .total-row {
+            border-top: 2px solid #ddd;
+            padding-top: 10px;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+        
+        .footer-note {
+            text-align: center;
+            font-size: 11px;
+            color: #999;
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 1px solid #eee;
+        }
+        
+        .btn-calculate {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 15px;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-calculate:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(33, 150, 243, 0.3);
+        }
+        
+        .btn-calculate:active {
+            transform: translateY(0);
+        }
+        
+        /* 股票卡片樣式 */
         .stock-card { 
             border: 1px solid #eee; 
             border-radius: 8px; 
             padding: 12px; 
             margin-bottom: 10px; 
             transition: all 0.2s ease;
+            cursor: pointer;
         }
         .stock-card:hover { 
             background-color: #f9f9f9; 
@@ -59,7 +229,6 @@
             transform: translateY(-2px);
         }
         .stock-card.clickable { 
-            cursor: pointer; 
             border-left: 4px solid var(--primary); 
         }
         .stock-title { display: flex; justify-content: space-between; align-items: center; }
@@ -67,31 +236,7 @@
         .stock-code { color: #666; font-size: 12px; background: #eee; padding: 2px 5px; border-radius: 4px; }
         .badge-buy { background: #e8f5e9; color: #2e7d32; padding: 2px 8px; border-radius: 10px; font-size: 12px; font-weight: bold; }
         
-        /* 計算器樣式 */
-        .calc-form input { 
-            width: 100%; 
-            padding: 10px; 
-            border: 1px solid #ddd; 
-            border-radius: 5px; 
-            font-size: 14px;
-        }
-        .calc-form label { 
-            display: block; 
-            font-size: 12px; 
-            color: #666; 
-            margin-bottom: 5px;
-        }
-        
-        /* 提示文字 */
-        .hint-text {
-            font-size: 11px;
-            color: #999;
-            text-align: center;
-            margin-top: 5px;
-            font-style: italic;
-        }
-        
-        /* 簡化版支持页面样式 */
+        /* 支持页面样式 */
         .support-panel {
             position: fixed;
             top: 0;
@@ -170,78 +315,151 @@
                         <h3 style="font-size: 16px; color: var(--primary);">
                             <i class="fas fa-star"></i> 今日AI推荐
                         </h3>
-                        <div class="hint-text">点击任何股票卡片自动计算交易成本</div>
+                        <div style="font-size: 11px; color: #999;">点击股票卡片自动填充计算器</div>
                     </div>
                     <div id="latestStocksContainer">加载中...</div>
                 </div>
             </div>
 
-            <!-- 计算器页面 -->
+            <!-- 计算器页面 - 全新设计 -->
             <div id="calculator-tab" class="tab-content">
-                <div class="card">
-                    <div class="card-header">
-                        <div class="card-title"><i class="fas fa-calculator"></i> 交易成本计算器 (MYX)</div>
+                <div class="calculator-card">
+                    <div class="section-title">
+                        <i class="fas fa-chart-bar"></i> 股票信息
                     </div>
                     
-                    <div class="calc-form">
-                        <div class="mb-3">
-                            <label>股票名称/代码</label>
-                            <input type="text" id="calc_name" class="history-select" placeholder="选择或输入股票">
+                    <div class="input-group">
+                        <label class="input-label">股票代码</label>
+                        <div class="input-field">
+                            <input type="text" id="stockCode" placeholder="例如: 53473N" oninput="updateCalculator()">
                         </div>
-                        <div style="display:flex; gap:10px; margin-bottom:15px;">
-                            <div style="flex:1">
-                                <label>买入价 (RM)</label>
-                                <input type="number" id="calc_price" step="0.005" placeholder="0.000">
-                            </div>
-                            <div style="flex:1">
-                                <label>数量 (Lots)</label>
-                                <input type="number" id="calc_lots" value="10">
-                            </div>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label class="input-label">股票名称</label>
+                        <div class="input-field">
+                            <input type="text" id="stockName" placeholder="选择股票后自动填充" readonly style="background:#f5f5f5;">
                         </div>
-
-                        <div style="background:#f8f9fa; padding:15px; border-radius:8px; font-size:14px;">
-                            <div style="display:flex; justify-content:space-between; margin-bottom:5px;">
-                                <span>交易总值:</span> <span id="res_total">RM 0.00</span>
-                            </div>
-                            <div style="display:flex; justify-content:space-between; margin-bottom:5px; color:#666; font-size:12px;">
-                                <span>佣金 (0.1% min RM8):</span> <span id="res_broker">RM 0.00</span>
-                            </div>
-                            <div style="display:flex; justify-content:space-between; margin-bottom:5px; color:#666; font-size:12px;">
-                                <span>印花税 (Stamp Duty):</span> <span id="res_stamp">RM 0.00</span>
-                            </div>
-                            <div style="display:flex; justify-content:space-between; margin-bottom:5px; color:#666; font-size:12px;">
-                                <span>清算费 (Clearing):</span> <span id="res_clear">RM 0.00</span>
-                            </div>
-                            <hr style="margin:10px 0; border:0; border-top:1px solid #ddd;">
-                            <div style="display:flex; justify-content:space-between; font-weight:bold; color:var(--danger);">
-                                <span>净投资总额:</span> <span id="res_net">RM 0.00</span>
-                            </div>
+                    </div>
+                    
+                    <div class="input-row">
+                        <div class="input-field">
+                            <label class="input-label">买入价 (RM)</label>
+                            <input type="number" id="buyPrice" step="0.001" placeholder="0.000" oninput="updateCalculator()">
                         </div>
-                        
-                        <div class="hint-text" style="margin-top: 10px;">
-                            提示: 从"AI选股"或"历史数据"点击股票卡片自动填充
+                        <div class="input-field">
+                            <label class="input-label">目标价 (RM)</label>
+                            <input type="number" id="targetPrice" step="0.001" placeholder="0.000" oninput="updateCalculator()">
                         </div>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label class="input-label">购买股数 (单位: 100股)</label>
+                        <div class="input-field">
+                            <input type="number" id="stockLots" value="10" min="1" oninput="updateCalculator()">
+                            <span class="info-text">1 Lot = 100 股</span>
+                        </div>
+                    </div>
+                    
+                    <div class="summary-box">
+                        <div class="summary-text">总股数</div>
+                        <div class="summary-value" id="totalShares">1,000 股</div>
+                        <div class="summary-text" style="margin-top:10px;">投资金额</div>
+                        <div class="summary-value" id="investmentAmount">RM 0.00</div>
+                    </div>
+                    
+                    <div class="divider"></div>
+                    
+                    <div class="section-title">
+                        <i class="fas fa-calculator"></i> 费用设置（优化版）
+                    </div>
+                    
+                    <div class="result-card">
+                        <div class="result-row">
+                            <span class="result-label">交易总值:</span>
+                            <span class="result-value" id="calcTotalValue">RM 0.00</span>
+                        </div>
+                        <div class="result-row">
+                            <span class="result-label">佣金 (0.1% min RM8):</span>
+                            <span class="result-value" id="calcBrokerFee">RM 0.00</span>
+                        </div>
+                        <div class="result-row">
+                            <span class="result-label">印花税:</span>
+                            <span class="result-value" id="calcStampDuty">RM 0.00</span>
+                        </div>
+                        <div class="result-row">
+                            <span class="result-label">清算费:</span>
+                            <span class="result-value" id="calcClearingFee">RM 0.00</span>
+                        </div>
+                        <div class="result-row total-row">
+                            <span class="result-label">净投资总额:</span>
+                            <span class="result-value" id="calcNetInvestment" style="color:var(--danger);">RM 0.00</span>
+                        </div>
+                    </div>
+                    
+                    <div class="divider"></div>
+                    
+                    <div class="section-title">
+                        <i class="fas fa-chart-line"></i> 投资回报分析
+                    </div>
+                    
+                    <div class="result-card">
+                        <div class="result-row">
+                            <span class="result-label">目标卖出总值:</span>
+                            <span class="result-value" id="targetTotalValue">RM 0.00</span>
+                        </div>
+                        <div class="result-row">
+                            <span class="result-label">卖出费用:</span>
+                            <span class="result-value" id="sellCost">RM 0.00</span>
+                        </div>
+                        <div class="result-row">
+                            <span class="result-label">净回酬:</span>
+                            <span class="result-value" id="netReturn">RM 0.00</span>
+                        </div>
+                        <div class="result-row">
+                            <span class="result-label">回报率:</span>
+                            <span class="result-value">
+                                <span id="returnRate">0.00%</span>
+                                <span id="returnRateBadge" class="profit-loss profit" style="margin-left:10px; display:none;">+0.00%</span>
+                            </span>
+                        </div>
+                        <div class="result-row total-row">
+                            <span class="result-label">预计总利润:</span>
+                            <span class="result-value" id="totalProfit" style="color:var(--success);">RM 0.00</span>
+                        </div>
+                    </div>
+                    
+                    <button class="btn-calculate" onclick="calculateFullInvestment()">
+                        <i class="fas fa-calculator"></i> 重新计算完整投资
+                    </button>
+                    
+                    <div class="footer-note">
+                        © 2025 Bursa Malaysia AI分析工具 | 使用真实AI数据<br>
+                        数据源: picks_history.js<br>
+                        支持开发者 <i class="fas fa-mug-hot" style="color:var(--coffee);"></i>
                     </div>
                 </div>
             </div>
 
             <!-- 历史数据页面 -->
             <div id="history-tab" class="tab-content">
-                <div class="history-panel">
-                    <div class="history-controls">
-                        <select id="historyDateSelect" class="history-select">
+                <div class="card">
+                    <div style="display: flex; gap:10px; margin-bottom: 15px; flex-wrap: wrap;">
+                        <select id="historyDateSelect" style="flex:1; padding:10px; border:1px solid #ddd; border-radius:5px;">
                             <option value="">选择日期...</option>
                         </select>
-                        <button onclick="loadSelectedHistory()" class="history-btn">加载</button>
+                        <button onclick="loadSelectedHistory()" style="padding:10px 15px; background:var(--primary); color:white; border:none; border-radius:5px; cursor:pointer;">
+                            加载
+                        </button>
                     </div>
-                    <div style="font-size: 13px; color: #666;">
-                        显示日期: <span id="currentDateDisplay" class="fw-bold">-</span> | 
-                        股票数量: <span id="currentStockCount" class="badge bg-primary">0</span>
+                    <div style="font-size: 13px; color: #666; margin-bottom:15px;">
+                        显示日期: <span id="currentDateDisplay" style="font-weight:bold;">-</span> | 
+                        股票数量: <span id="currentStockCount" style="background:var(--primary); color:white; padding:2px 8px; border-radius:10px;">0</span>
                     </div>
-                </div>
 
-                <div id="historyStocksContainer">
-                    <p style="text-align:center; color:#999; padding:20px;">请选择日期加载数据</p>
+                    <div id="historyStocksContainer">
+                        <p style="text-align:center; color:#999; padding:20px;">请选择日期加载数据</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -381,19 +599,6 @@
                 renderLatest(dates[0]);
             }
             
-            // 添加回车键支持
-            document.getElementById('calc_price').addEventListener('keypress', function(e) {
-                if(e.key === 'Enter') {
-                    calculateTrade();
-                }
-            });
-
-            document.getElementById('calc_lots').addEventListener('keypress', function(e) {
-                if(e.key === 'Enter') {
-                    calculateTrade();
-                }
-            });
-            
             // 初始化咖啡按钮事件
             document.getElementById('coffee-btn').addEventListener('click', showSupportSection);
             
@@ -403,6 +608,9 @@
                     hideSupportSection();
                 }
             });
+            
+            // 初始化计算器
+            updateCalculator();
         }
 
         // 3. 渲染历史数据
@@ -444,7 +652,7 @@
                 
                 // 为所有卡片添加点击功能
                 html += `
-                <div class="stock-card clickable" onclick="selectToCalc('${safeName}', ${price})">
+                <div class="stock-card clickable" onclick="selectStockToCalculator('${safeName}', '${s.code}', ${price})">
                     <div class="stock-title">
                         <span class="stock-name">${s.name}</span>
                         <span class="stock-code">${s.code}</span>
@@ -474,53 +682,141 @@
             container.innerHTML = html;
         }
 
-        // 6. 联动功能：选择股票后跳转计算器
-        function selectToCalc(name, price) {
+        // 6. 选择股票到计算器（增强版）
+        function selectStockToCalculator(name, code, price) {
             // 填充表单
-            document.getElementById('calc_name').value = name;
-            document.getElementById('calc_price').value = price.toFixed(3);
+            document.getElementById('stockName').value = name;
+            document.getElementById('stockCode').value = code;
+            document.getElementById('buyPrice').value = price.toFixed(3);
+            
+            // 设置目标价为买入价的110%（默认建议）
+            const targetPrice = (price * 1.1).toFixed(3);
+            document.getElementById('targetPrice').value = targetPrice;
             
             // 切换到计算器标签
             switchTab('calculator');
             
-            // 立即计算（稍等确保DOM更新）
+            // 立即计算
             setTimeout(() => {
-                calculateTrade();
+                calculateFullInvestment();
             }, 50);
         }
 
-        // 7. 核心计算公式 (依据 Bursa Malaysia 标准)
-        function calculateTrade() {
-            const price = parseFloat(document.getElementById('calc_price').value) || 0;
-            const lots = parseFloat(document.getElementById('calc_lots').value) || 0;
-            const value = price * lots * 100;
-
-            if (price <= 0 || lots <= 0) {
-                document.getElementById('res_total').textContent = 'RM 0.00';
-                document.getElementById('res_broker').textContent = 'RM 0.00';
-                document.getElementById('res_stamp').textContent = 'RM 0.00';
-                document.getElementById('res_clear').textContent = 'RM 0.00';
-                document.getElementById('res_net').textContent = 'RM 0.00';
-                return;
-            }
-
-            // 1. 佣金 (假设 0.1%, 最低 RM8)
-            let brokerFee = Math.max(8, value * 0.001);
-            // 2. 印花税 (每 RM1000 收 RM1.50, 最高 RM1000)
-            let stampDuty = Math.min(1000, Math.ceil(value / 1000) * 1.5);
-            // 3. 清算费 (0.03%)
-            let clearingFee = value * 0.0003;
-
-            const totalCost = brokerFee + stampDuty + clearingFee;
-
-            document.getElementById('res_total').textContent = `RM ${value.toFixed(2)}`;
-            document.getElementById('res_broker').textContent = `RM ${brokerFee.toFixed(2)}`;
-            document.getElementById('res_stamp').textContent = `RM ${stampDuty.toFixed(2)}`;
-            document.getElementById('res_clear').textContent = `RM ${clearingFee.toFixed(2)}`;
-            document.getElementById('res_net').textContent = `RM ${(value + totalCost).toFixed(2)}`;
+        // 7. 更新计算器实时显示
+        function updateCalculator() {
+            const buyPrice = parseFloat(document.getElementById('buyPrice').value) || 0;
+            const lots = parseFloat(document.getElementById('stockLots').value) || 0;
+            const shares = lots * 100;
+            
+            // 更新总股数和投资金额
+            document.getElementById('totalShares').textContent = shares.toLocaleString() + ' 股';
+            
+            const investmentValue = buyPrice * shares;
+            document.getElementById('investmentAmount').textContent = 'RM ' + investmentValue.toFixed(2);
         }
 
-        // 8. 簡化的 Buy Me A Coffee 功能
+        // 8. 完整投资计算函数
+        function calculateFullInvestment() {
+            const buyPrice = parseFloat(document.getElementById('buyPrice').value) || 0;
+            const targetPrice = parseFloat(document.getElementById('targetPrice').value) || 0;
+            const lots = parseFloat(document.getElementById('stockLots').value) || 0;
+            const shares = lots * 100;
+            const totalValue = buyPrice * shares;
+            
+            if (buyPrice <= 0 || lots <= 0) {
+                resetCalculatorResults();
+                return;
+            }
+            
+            // 计算买入成本
+            const buyCosts = calculateBuyCosts(totalValue);
+            
+            // 计算卖出情况
+            const targetTotalValue = targetPrice * shares;
+            const sellCosts = calculateSellCosts(targetTotalValue);
+            
+            // 计算回报
+            const netInvestment = totalValue + buyCosts.total;
+            const netReturn = targetTotalValue - sellCosts.total;
+            const totalProfit = netReturn - netInvestment;
+            const returnRate = (totalProfit / netInvestment) * 100;
+            
+            // 更新买入费用显示
+            document.getElementById('calcTotalValue').textContent = 'RM ' + totalValue.toFixed(2);
+            document.getElementById('calcBrokerFee').textContent = 'RM ' + buyCosts.brokerFee.toFixed(2);
+            document.getElementById('calcStampDuty').textContent = 'RM ' + buyCosts.stampDuty.toFixed(2);
+            document.getElementById('calcClearingFee').textContent = 'RM ' + buyCosts.clearingFee.toFixed(2);
+            document.getElementById('calcNetInvestment').textContent = 'RM ' + netInvestment.toFixed(2);
+            
+            // 更新卖出和回报显示
+            document.getElementById('targetTotalValue').textContent = 'RM ' + targetTotalValue.toFixed(2);
+            document.getElementById('sellCost').textContent = 'RM ' + sellCosts.total.toFixed(2);
+            document.getElementById('netReturn').textContent = 'RM ' + netReturn.toFixed(2);
+            document.getElementById('totalProfit').textContent = 'RM ' + totalProfit.toFixed(2);
+            
+            // 更新回报率
+            const returnRateElement = document.getElementById('returnRate');
+            const returnRateBadge = document.getElementById('returnRateBadge');
+            returnRateElement.textContent = returnRate.toFixed(2) + '%';
+            
+            if (returnRate > 0) {
+                returnRateElement.style.color = 'var(--success)';
+                returnRateBadge.className = 'profit-loss profit';
+                returnRateBadge.textContent = '+' + returnRate.toFixed(2) + '%';
+                returnRateBadge.style.display = 'inline-block';
+            } else if (returnRate < 0) {
+                returnRateElement.style.color = 'var(--danger)';
+                returnRateBadge.className = 'profit-loss loss';
+                returnRateBadge.textContent = returnRate.toFixed(2) + '%';
+                returnRateBadge.style.display = 'inline-block';
+            } else {
+                returnRateElement.style.color = '#666';
+                returnRateBadge.style.display = 'none';
+            }
+        }
+        
+        // 9. 计算买入成本
+        function calculateBuyCosts(totalValue) {
+            // 佣金 (0.1%, 最低 RM8)
+            let brokerFee = Math.max(8, totalValue * 0.001);
+            // 印花税 (每 RM1000 收 RM1.50, 最高 RM1000)
+            let stampDuty = Math.min(1000, Math.ceil(totalValue / 1000) * 1.5);
+            // 清算费 (0.03%)
+            let clearingFee = totalValue * 0.0003;
+            
+            return {
+                brokerFee: brokerFee,
+                stampDuty: stampDuty,
+                clearingFee: clearingFee,
+                total: brokerFee + stampDuty + clearingFee
+            };
+        }
+        
+        // 10. 计算卖出成本（假设与买入相同）
+        function calculateSellCosts(totalValue) {
+            const costs = calculateBuyCosts(totalValue);
+            return {
+                total: costs.total
+            };
+        }
+        
+        // 11. 重置计算器结果
+        function resetCalculatorResults() {
+            const zeroValue = 'RM 0.00';
+            document.getElementById('calcTotalValue').textContent = zeroValue;
+            document.getElementById('calcBrokerFee').textContent = zeroValue;
+            document.getElementById('calcStampDuty').textContent = zeroValue;
+            document.getElementById('calcClearingFee').textContent = zeroValue;
+            document.getElementById('calcNetInvestment').textContent = zeroValue;
+            document.getElementById('targetTotalValue').textContent = zeroValue;
+            document.getElementById('sellCost').textContent = zeroValue;
+            document.getElementById('netReturn').textContent = zeroValue;
+            document.getElementById('totalProfit').textContent = zeroValue;
+            document.getElementById('returnRate').textContent = '0.00%';
+            document.getElementById('returnRateBadge').style.display = 'none';
+        }
+
+        // 12. 簡化的 Buy Me A Coffee 功能
         function showSupportSection() {
             document.getElementById('support-section').style.display = 'flex';
         }
@@ -533,17 +829,24 @@
             document.getElementById('maybank-error').style.display = 'block';
         }
 
-        // 9. 测试函数
+        // 13. 测试函数
         function testData() {
             if(window.allHistoryData) {
                 const count = Object.keys(window.allHistoryData).length;
                 const latestDate = Object.keys(window.allHistoryData).sort().reverse()[0];
                 const latestData = window.allHistoryData[latestDate];
                 
+                // 测试计算器功能
+                document.getElementById('buyPrice').value = 1.500;
+                document.getElementById('targetPrice').value = 1.650;
+                document.getElementById('stockLots').value = 20;
+                calculateFullInvestment();
+                
                 alert("✅ 数据源匹配成功！\n" + 
                       "已加载历史天数: " + count + "天\n" +
                       "最新日期: " + latestDate + "\n" +
-                      "今日推荐股票: " + (latestData.picks ? latestData.picks.length : 0) + "只");
+                      "今日推荐股票: " + (latestData.picks ? latestData.picks.length : 0) + "只\n" +
+                      "已填入测试数据：买入价 RM1.50，目标价 RM1.65，20 lots");
             } else {
                 alert("❌ 找不到 picks_history.js 数据，请检查路径。");
             }
