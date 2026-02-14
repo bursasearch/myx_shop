@@ -5,36 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
    
     <title>Bursa AI投资计算器 - 生产同步版</title>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-<!-- ✅ 先加载配置 -->
-<script src="date_config.js"></script>
-
-<!-- ✅ 然后加载您的 JSON 数据逻辑（内联脚本） -->
-<script>
-    // 直接把您的 fetch 代码放在这里
-    (async function() {
-        try {
-            const response = await fetch('https://bursasearch.github.io/myx_shop/docs/web/picks_latest.json');
-            const latestData = await response.json();
-            
-            // 创建数据结构
-            window.allHistoryData = {};
-            window.allHistoryData[latestData.date_id] = latestData;
-            
-            // 初始化
-            initDateSelector();
-            loadData(latestData.date_id);
-            
-        } catch (error) {
-            console.error("加载失败:", error);
-        }
-    })();
-</script>
-
-<!-- ❌ 移除 picks_history.js 的引用 -->
-<!-- <script src="picks_history.js"></script> -->
-   
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <style>
         /* 保持原有样式 */
         :root {
@@ -322,7 +294,10 @@
     <div class="container">
         <div class="app-header">
             <div class="header-content">
-                <div class="app-title"><i <div style="font-size: 11px; opacity: 0.8; margin-top:5px;">📊 数据实时更新</div>
+                <div class="app-title">Bursa AI投资计算器</div>
+                <div style="font-size: 11px; opacity: 0.8; margin-top:5px;">📊 数据实时更新</div>
+            </div>
+        </div>
 
         <div class="tab-bar">
             <div class="tab active" onclick="switchTab('stocks')">AI选股</div>
@@ -456,10 +431,9 @@
                         <i class="fas fa-calculator"></i> 重新计算完整投资
                     </button>
                     
-                   <div class="footer-note">
-    © 2025 Bursa Malaysia AI分析工具 | 使用真实AI数据<br>
-    数据源: AI实时选股数据 📊
-</div>
+                    <div class="footer-note">
+                        © 2025 Bursa Malaysia AI分析工具 | 使用真实AI数据<br>
+                        数据源: AI实时选股数据 📊<br>
                         支持开发者 <i class="fas fa-mug-hot" style="color:var(--coffee);"></i>
                     </div>
                 </div>
@@ -579,111 +553,77 @@
     </button>
 
     <script>
-        // 1. 标签切换逻辑
-        function switchTab(tabId) {
-            // 移除所有內容的 active
-            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-            
-            // 顯示目標內容
-            document.getElementById(tabId + '-tab').classList.add('active');
-            
-            // 高亮對應標籤
-            const tabs = document.querySelectorAll('.tab');
-            tabs.forEach(tab => {
-                if (tab.textContent.includes('AI选股') && tabId === 'stocks') tab.classList.add('active');
-                if (tab.textContent.includes('计算器') && tabId === 'calculator') tab.classList.add('active');
-                if (tab.textContent.includes('历史数据') && tabId === 'history') tab.classList.add('active');
-            });
+        // ==================== 全局变量 ====================
+        window.allHistoryData = {};
+
+        // ==================== 初始化函数 ====================
+        async function initApp() {
+            try {
+                const response = await fetch('https://bursasearch.github.io/myx_shop/web/picks_latest.json');
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                
+                const latestData = await response.json();
+                
+                console.log('数据加载成功:', latestData);
+                
+                // 创建类似 window.allHistoryData 的结构
+                window.allHistoryData = {};
+                window.allHistoryData[latestData.date_id] = latestData;
+                
+                // 初始化日期下拉菜单
+                initDateSelector();
+                
+                // 加载最新数据
+                loadData(latestData.date_id);
+                
+                // 渲染最新股票列表
+                if (latestData && latestData.picks) {
+                    renderStockList(latestData.picks, 'latestStocksContainer', true);
+                }
+                
+            } catch (error) {
+                console.error("加载数据失败:", error);
+                document.getElementById('latestStocksContainer').innerHTML = 
+                    `<div style="text-align:center; padding:20px; color:#f44336;">
+                        ❌ 错误: 无法加载数据<br>
+                        ${error.message}
+                    </div>`;
+            }
         }
 
-// 2. 初始化：填充下拉菜单
-async function initApp() {
-    try {
-        const response = await fetch('https://bursasearch.github.io/myx_shop/web/picks_latest.json');
-        const latestData = await response.json();
-        
-        console.log('数据加载成功:', latestData);
-        
-        // ✅ 确保这里调用了渲染函数
-        if (latestData && latestData.picks) {
-            renderStockList(latestData.picks, 'latestStocksContainer', true);
-        } else {
-            console.error('数据格式错误:', latestData);
-        }
-
-        // 创建类似 window.allHistoryData 的结构
-        window.allHistoryData = {};
-        window.allHistoryData[latestData.date_id] = latestData;
-        
-        // 初始化日期下拉菜单
-        initDateSelector();
-        
-        // 加载最新数据
-        loadData(latestData.date_id);
-        
-    } catch (error) {
-        console.error("加载数据失败:", error);
-        document.getElementById('latestStocksContainer').innerHTML = 
-            `<div style="text-align:center; padding:20px; color:#f44336;">
-                ❌ 错误: 无法加载数据<br>
-                ${error.message}
-            </div>`;
-    }
-}
-        
-        // 创建类似 window.allHistoryData 的结构
-        window.allHistoryData = {};
-        window.allHistoryData[latestData.date_id] = latestData;
-        
-        // 初始化日期下拉菜单
-        initDateSelector();
-        
-        // 加载最新数据
-        loadData(latestData.date_id);
-        
-    } catch (error) {
-        console.error("加载数据失败:", error);
-        document.getElementById('latestStocksContainer').innerHTML = 
-            `<div style="text-align:center; padding:20px; color:#f44336;">
-                ❌ 错误: 无法加载数据<br>
-                ${error.message}
-            </div>`;
-    }
-}
+        // ==================== 日期选择器初始化 ====================
+        function initDateSelector() {
+            const select = document.getElementById('historyDateSelect');
+            select.innerHTML = '<option value="">选择日期...</option>';
             
             const dates = Object.keys(window.allHistoryData).sort().reverse();
-            const select = document.getElementById('historyDateSelect');
             
             dates.forEach(dateId => {
                 const opt = document.createElement('option');
                 opt.value = dateId;
                 const data = window.allHistoryData[dateId];
-                opt.textContent = `${dateId} (${data.total_picks || data.picks.length}只)`;
+                opt.textContent = `${dateId} (${data.picks ? data.picks.length : 0}只)`;
                 select.appendChild(opt);
             });
 
             if (dates.length > 0) {
                 select.value = dates[0];
                 loadSelectedHistory();
-                renderLatest(dates[0]);
             }
-            
-            // 初始化咖啡按钮事件
-            document.getElementById('coffee-btn').addEventListener('click', showSupportSection);
-            
-            // 点击外部关闭支持面板
-            document.getElementById('support-section').addEventListener('click', function(e) {
-                if (e.target === this) {
-                    hideSupportSection();
-                }
-            });
-            
-            // 初始化计算器
-            updateCalculator();
         }
 
-        // 3. 渲染历史数据
+        // ==================== 加载数据 ====================
+        function loadData(dateId) {
+            const data = window.allHistoryData[dateId];
+            if (data && data.picks) {
+                renderStockList(data.picks, 'latestStocksContainer', true);
+            }
+        }
+
+        // ==================== 加载选中的历史数据 ====================
         function loadSelectedHistory() {
             const dateId = document.getElementById('historyDateSelect').value;
             if (!dateId) return;
@@ -692,22 +632,59 @@ async function initApp() {
             if (!data) return;
 
             document.getElementById('currentDateDisplay').textContent = data.date || dateId;
-            document.getElementById('currentStockCount').textContent = data.picks.length;
+            document.getElementById('currentStockCount').textContent = data.picks ? data.picks.length : 0;
             
             renderStockList(data.picks, 'historyStocksContainer', false);
         }
 
-        // 4. 渲染最新数据到首页
-function renderLatest(dateId) {
-    const data = window.allHistoryData[dateId];
-    if (data && data.picks) {
-        renderStockList(data.picks, 'latestStocksContainer', true);
-    }
-}
+        // ==================== 通用列表渲染函数 ====================
+        function renderStockList(stocks, containerId, isLatest = false) {
+            const container = document.getElementById(containerId);
+            
+            if (!stocks || stocks.length === 0) {
+                container.innerHTML = '<p style="text-align:center; color:#999; padding:20px;">暂无数据</p>';
+                return;
+            }
+            
+            let html = '';
+            stocks.forEach(stock => {
+                const safeName = stock.name.replace(/'/g, "\\'");
+                const price = parseFloat(stock.current_price || stock.price || 0);
+                
+                // 为所有卡片添加点击功能
+                html += `
+                <div class="stock-card clickable" onclick="selectStockToCalculator('${safeName}', '${stock.code}', ${price})">
+                    <div class="stock-title">
+                        <span class="stock-name">${stock.name}</span>
+                        <span class="stock-code">${stock.code}</span>
+                    </div>
+                    <div style="display:flex; justify-content:space-between; margin-top:8px; align-items:center;">
+                        <div style="color:var(--danger); font-weight:bold;">RM ${price.toFixed(3)}</div>
+                        <div class="badge-buy">${stock.recommendation || '买入'}</div>
+                    </div>`;
+                    
+                // 首页显示提示文字
+                if (isLatest) {
+                    html += `
+                    <div style="font-size:11px; color:#999; margin-top:5px;">
+                        点击计算交易成本 →
+                    </div>`;
+                } else {
+                    // 历史页面显示更多信息
+                    html += `
+                    <div style="font-size:11px; color:#999; margin-top:5px;">
+                        评分: ${stock.score || 'N/A'} | 板块: ${stock.sector_name || stock.sector || 'N/A'}
+                    </div>`;
+                }
+                
+                html += `</div>`;
+            });
+            
+            container.innerHTML = html;
+        }
 
-        // 6. 选择股票到计算器（增强版）
-        function selectStockToCalculator(name
- code, price) {
+        // ==================== 选择股票到计算器 ====================
+        function selectStockToCalculator(name, code, price) {
             // 填充表单
             document.getElementById('stockName').value = name;
             document.getElementById('stockCode').value = code;
@@ -723,11 +700,10 @@ function renderLatest(dateId) {
             // 立即计算
             setTimeout(() => {
                 calculateFullInvestment();
-            }
- 50);
+            }, 50);
         }
 
-        // 7. 更新计算器实时显示
+        // ==================== 更新计算器实时显示 ====================
         function updateCalculator() {
             const buyPrice = parseFloat(document.getElementById('buyPrice').value) || 0;
             const lots = parseFloat(document.getElementById('stockLots').value) || 0;
@@ -740,7 +716,7 @@ function renderLatest(dateId) {
             document.getElementById('investmentAmount').textContent = 'RM ' + investmentValue.toFixed(2);
         }
 
-        // 8. 完整投资计算函数
+        // ==================== 完整投资计算函数 ====================
         function calculateFullInvestment() {
             const buyPrice = parseFloat(document.getElementById('buyPrice').value) || 0;
             const targetPrice = parseFloat(document.getElementById('targetPrice').value) || 0;
@@ -800,29 +776,24 @@ function renderLatest(dateId) {
             }
         }
         
-        // 9. 计算买入成本
+        // ==================== 计算买入成本 ====================
         function calculateBuyCosts(totalValue) {
             // 佣金 (0.1%, 最低 RM8)
-            let brokerFee = Math.max(8
-
- totalValue * 0.001);
-            // 印花税 (每 RM1000 收 RM1.50
- 最高 RM1000)
-            let stampDuty = Math.min(1000
- Math.ceil(totalValue / 1000) * 1.5);
+            let brokerFee = Math.max(8, totalValue * 0.001);
+            // 印花税 (每 RM1000 收 RM1.50, 最高 RM1000)
+            let stampDuty = Math.min(1000, Math.ceil(totalValue / 1000) * 1.5);
             // 清算费 (0.03%)
             let clearingFee = totalValue * 0.0003;
             
             return {
-                brokerFee: brokerFee
-
+                brokerFee: brokerFee,
                 stampDuty: stampDuty,
                 clearingFee: clearingFee,
                 total: brokerFee + stampDuty + clearingFee
             };
         }
         
-        // 10. 计算卖出成本（假设与买入相同）
+        // ==================== 计算卖出成本 ====================
         function calculateSellCosts(totalValue) {
             const costs = calculateBuyCosts(totalValue);
             return {
@@ -830,7 +801,7 @@ function renderLatest(dateId) {
             };
         }
         
-        // 11. 重置计算器结果
+        // ==================== 重置计算器结果 ====================
         function resetCalculatorResults() {
             const zeroValue = 'RM 0.00';
             document.getElementById('calcTotalValue').textContent = zeroValue;
@@ -846,7 +817,25 @@ function renderLatest(dateId) {
             document.getElementById('returnRateBadge').style.display = 'none';
         }
 
-        // 12. 簡化的 Buy Me A Coffee 功能
+        // ==================== 标签切换 ====================
+        function switchTab(tabId) {
+            // 移除所有內容的 active
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            
+            // 顯示目標內容
+            document.getElementById(tabId + '-tab').classList.add('active');
+            
+            // 高亮對應標籤
+            const tabs = document.querySelectorAll('.tab');
+            tabs.forEach(tab => {
+                if (tab.textContent.includes('AI选股') && tabId === 'stocks') tab.classList.add('active');
+                if (tab.textContent.includes('计算器') && tabId === 'calculator') tab.classList.add('active');
+                if (tab.textContent.includes('历史数据') && tabId === 'history') tab.classList.add('active');
+            });
+        }
+
+        // ==================== 支持功能 ====================
         function showSupportSection() {
             document.getElementById('support-section').style.display = 'flex';
         }
@@ -859,29 +848,43 @@ function renderLatest(dateId) {
             document.getElementById('maybank-error').style.display = 'block';
         }
 
-// 13. 测试函数
-function testData() {
-    if(window.allHistoryData) {
-        const count = Object.keys(window.allHistoryData).length;
-        const latestDate = Object.keys(window.allHistoryData).sort().reverse()[0];
-        const latestData = window.allHistoryData[latestDate];
-        
-        // 测试计算器功能
-        document.getElementById('buyPrice').value = 1.500;
-        document.getElementById('targetPrice').value = 1.650;
-        document.getElementById('stockLots').value = 20;
-        calculateFullInvestment();
-        
-        alert("✅ 数据源匹配成功！\n" + 
-              "已加载历史天数: " + count + "天\n" +
-              "最新日期: " + latestDate);
-    } else {
-        alert("❌ 无法加载AI选股数据，请稍后重试。");
-    }
-}
+        // ==================== 测试函数 ====================
+        function testData() {
+            if(window.allHistoryData && Object.keys(window.allHistoryData).length > 0) {
+                const count = Object.keys(window.allHistoryData).length;
+                const latestDate = Object.keys(window.allHistoryData).sort().reverse()[0];
+                
+                // 测试计算器功能
+                document.getElementById('buyPrice').value = 1.500;
+                document.getElementById('targetPrice').value = 1.650;
+                document.getElementById('stockLots').value = 20;
+                calculateFullInvestment();
+                
+                alert("✅ 数据源匹配成功！\n" + 
+                      "已加载历史天数: " + count + "天\n" +
+                      "最新日期: " + latestDate);
+            } else {
+                alert("❌ 无法加载AI选股数据，请稍后重试。");
+            }
+        }
 
-        // 页面加载完成后初始化
-        document.addEventListener('DOMContentLoaded', initApp);
+        // ==================== 事件绑定 ====================
+        document.addEventListener('DOMContentLoaded', function() {
+            initApp();
+            
+            // 初始化咖啡按钮事件
+            document.getElementById('coffee-btn').addEventListener('click', showSupportSection);
+            
+            // 点击外部关闭支持面板
+            document.getElementById('support-section').addEventListener('click', function(e) {
+                if (e.target === this) {
+                    hideSupportSection();
+                }
+            });
+            
+            // 初始化计算器
+            updateCalculator();
+        });
     </script>
 </body>
 </html>
