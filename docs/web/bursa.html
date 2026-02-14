@@ -573,14 +573,37 @@
             });
         }
 
-        // 2. 初始化：填充下拉菜单
-        function initApp() {
-            if (!window.allHistoryData) {
-                console.error("未找到数据源 picks_history.js");
-                document.getElementById('latestStocksContainer').innerHTML = 
-                    '<div style="text-align:center; padding:20px; color:#f44336;">❌ 错误: 无法加载数据源 picks_history.js</div>';
-                return;
-            }
+// 2. 初始化：填充下拉菜单
+async function initApp() {
+    try {
+        // ✅ 直接从最新的 JSON 文件加载数据
+        const response = await fetch('https://bursasearch.github.io/myx_shop/web/picks_latest.json');
+        
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
+        const latestData = await response.json();
+        
+        // 创建类似 window.allHistoryData 的结构
+        window.allHistoryData = {};
+        window.allHistoryData[latestData.date_id] = latestData;
+        
+        // 初始化日期下拉菜单
+        initDateSelector();
+        
+        // 加载最新数据
+        loadData(latestData.date_id);
+        
+    } catch (error) {
+        console.error("加载数据失败:", error);
+        document.getElementById('latestStocksContainer').innerHTML = 
+            `<div style="text-align:center; padding:20px; color:#f44336;">
+                ❌ 错误: 无法加载数据<br>
+                ${error.message}
+            </div>`;
+    }
+}
             
             const dates = Object.keys(window.allHistoryData).sort().reverse();
             const select = document.getElementById('historyDateSelect');
