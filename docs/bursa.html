@@ -603,12 +603,18 @@ async function initApp() {
         const response = await fetch('https://bursasearch.github.io/myx_shop/web/picks_latest.json');
         const latestData = await response.json();
         
+        console.log('数据加载成功:', latestData); // 添加调试
+        
         // ✅ 确保这里调用了渲染函数
         if (latestData && latestData.picks) {
             renderStockList(latestData.picks, 'latestStocksContainer', true);
+        } else {
+            console.error('数据格式错误:', latestData);
         }
     } catch (error) {
         console.error('加载失败:', error);
+        document.getElementById('latestStocksContainer').innerHTML = 
+            '<div style="color:red; padding:20px;">加载失败: ' + error.message + '</div>';
     }
 }
         
@@ -703,9 +709,12 @@ function renderStockList(stocks, containerId, isLatest = false) {
                 <span class="stock-code">${stock.code}</span>
                 <span class="stock-name">${stock.name}</span>
                 <span class="stock-sector">${stock.sector_name}</span>
+                <span class="stock-price">RM ${stock.current_price.toFixed(3)}</span>
+                <span class="stock-recommend">${stock.recommendation}</span>
             </div>
         `;
     });
+    
     container.innerHTML = html;
 }
             
