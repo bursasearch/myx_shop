@@ -3,12 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+   
     <title>Bursa AI投资计算器 - 生产同步版</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <script src="picks_history.js"></script>
-    <script src="date_config.js"></script>
-    
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<!-- ✅ 先加载配置 -->
+<script src="date_config.js"></script>
+
+<!-- ✅ 然后加载您的 JSON 数据逻辑（内联脚本） -->
+<script>
+    // 直接把您的 fetch 代码放在这里
+    (async function() {
+        try {
+            const response = await fetch('https://bursasearch.github.io/myx_shop/web/picks_latest.json');
+            const latestData = await response.json();
+            
+            // 创建数据结构
+            window.allHistoryData = {};
+            window.allHistoryData[latestData.date_id] = latestData;
+            
+            // 初始化
+            initDateSelector();
+            loadData(latestData.date_id);
+            
+        } catch (error) {
+            console.error("加载失败:", error);
+        }
+    })();
+</script>
+
+<!-- ❌ 移除 picks_history.js 的引用 -->
+<!-- <script src="picks_history.js"></script> -->
+   
     <style>
         /* 保持原有样式 */
         :root {
@@ -296,10 +322,7 @@
     <div class="container">
         <div class="app-header">
             <div class="header-content">
-                <div class="app-title"><i class="fas fa-chart-line"></i> Bursa AI投资助手</div>
-                <div style="font-size: 11px; opacity: 0.8; margin-top:5px;">更新自: picks_history.js</div>
-            </div>
-        </div>
+                <div class="app-title"><i <div style="font-size: 11px; opacity: 0.8; margin-top:5px;">📊 数据实时更新</div>
 
         <div class="tab-bar">
             <div class="tab active" onclick="switchTab('stocks')">AI选股</div>
@@ -433,9 +456,10 @@
                         <i class="fas fa-calculator"></i> 重新计算完整投资
                     </button>
                     
-                    <div class="footer-note">
-                        © 2025 Bursa Malaysia AI分析工具 | 使用真实AI数据<br>
-                        数据源: picks_history.js<br>
+                   <div class="footer-note">
+    © 2025 Bursa Malaysia AI分析工具 | 使用真实AI数据<br>
+    数据源: AI实时选股数据 📊
+</div>
                         支持开发者 <i class="fas fa-mug-hot" style="color:var(--coffee);"></i>
                     </div>
                 </div>
@@ -659,13 +683,32 @@ async function initApp() {
         }
 
         // 5. 通用列表渲染函数（含点击功能）
+console.log('准备渲染的股票数据:', stocks);
+console.log('第一只股票详情:', stocks[0]);
+renderStockList(stocks, 'latestStocksContainer', true);
+
         function renderStockList(stocks, containerId, isLatest = false) {
-            const container = document.getElementById(containerId);
-            
-            if (!stocks || stocks.length === 0) {
-                container.innerHTML = '<p style="text-align:center; color:#999; padding:20px;">暂无数据</p>';
-                return;
-            }
+    const container = document.getElementById(containerId);
+    
+    if (!stocks || stocks.length === 0) {
+        container.innerHTML = '<p style="text-align:center; color:#999; padding:20px;">暂无数据</p>';
+        return;
+    }
+    
+    let html = '';
+    stocks.forEach(stock => {
+        // ✅ 确保这里有 name 字段
+        html += `
+            <div class="stock-card">
+                <span class="stock-code">${stock.code}</span>
+                <span class="stock-name">${stock.name}</span>
+                <span class="stock-sector">${stock.sector_name}</span>
+            </div>
+        `;
+    });
+    
+    container.innerHTML = html;
+}
             
             let html = '';
 
@@ -868,12 +911,10 @@ async function initApp() {
                 alert("✅ 数据源匹配成功！\n" + 
                       "已加载历史天数: " + count + "天\n" +
                       "最新日期: " + latestDate + "\n" +
-                      "今日推荐股票: " + (latestData.picks ? latestData.picks.length : 0) + "只\n" +
-                      "已填入测试数据：买入价 RM1.50，目标价 RM1.65，20 lots");
-            } else {
-                alert("❌ 找不到 picks_history.js 数据，请检查路径。");
-            }
-        }
+                      } else {
+    console.warn("数据加载失败，使用测试数据");
+    // 使用测试数据继续运行
+}
 
         // 页面加载完成后初始化
         document.addEventListener('DOMContentLoaded', initApp);
