@@ -590,8 +590,6 @@
 async function loadDateConfig() {
     try {
         let response;
-        
-        // 尝试多个可能的路径
         const possiblePaths = [
             `${BASE_PATH}/date_config.js`,
             `date_config.js`,
@@ -599,7 +597,7 @@ async function loadDateConfig() {
             `/docs/web/date_config.js`,
             `/myx_shop/web/date_config.js`
         ];
-        
+
         for (const path of possiblePaths) {
             try {
                 console.log('尝试加载:', path);
@@ -609,36 +607,37 @@ async function loadDateConfig() {
                 console.log('路径失败:', path);
             }
         }
-        
+
         if (!response || !response.ok) {
             throw new Error('所有路径都失败');
         }
-        
+
         // 加载JS文件
         const script = document.createElement('script');
-        script.src = response.url; // 使用成功的URL
+        script.src = response.url;
         document.head.appendChild(script);
-        
+
         // 等待脚本加载
         await new Promise(resolve => setTimeout(resolve, 100));
-        
+
         console.log('✅ 日期配置加载成功:', window.availableDates);
         
+        // ✅ TAMBAH KOD INI: Paksa refresh dropdown
+        initDateSelector();
+
     } catch (error) {
         console.warn('⚠️ date_config.js加载失败，使用硬编码日期:', error);
         window.availableDates = [
             {id: '20260212', display: '2026-02-12', file: 'history/picks_20260212.json'},
             {id: '20260211', display: '2026-02-11', file: 'history/picks_20260211.json'},
-            {id: '20260210', display: '2026-02-10', file: 'history/picks_20260210.json'},
-            {id: '20260209', display: '2026-02-09', file: 'history/picks_20260209.json'},
-            {id: '20260206', display: '2026-02-06', file: 'history/picks_20260206.json'},
-            {id: '20260205', display: '2026-02-05', file: 'history/picks_20260205.json'},
-            {id: '20260204', display: '2026-02-04', file: 'history/picks_20260204.json'},
-            {id: '20260202', display: '2026-02-02', file: 'history/picks_20260202.json'}
+            // ... tarikh lain
         ];
+        
+        // ✅ TAMBAH JUGA DI SINI
+        initDateSelector();
     }
 }
-
+        
         // ==================== 加载最新数据 ====================
         async function loadLatestData() {
             try {
@@ -684,7 +683,7 @@ async function loadSelectedHistory() {
     
     try {
         // 使用正确的路径构建历史文件URL
-        const fileUrl = `${BASE_PATH}/history/${dateInfo.file}`;
+        const fileUrl = `${BASE_PATH}/${dateInfo.file}`;
         console.log('加载历史数据:', fileUrl);
         
         const response = await fetch(fileUrl);
