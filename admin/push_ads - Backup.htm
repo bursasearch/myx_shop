@@ -1,0 +1,2492 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>PushAds Pro - 营销助手</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #25D366;
+            --primary-dark: #128C7E;
+            --secondary: #667eea;
+            --danger: #F44336;
+            --warning: #FF9800;
+            --success: #4CAF50;
+            --dark: #075E54;
+            --light: #f0f2f5;
+            --card: #ffffff;
+            --text: #333333;
+            --text-light: #666666;
+            --border: #e0e0e0;
+            --shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --light: #0b141a;
+                --card: #1e2a38;
+                --text: #e4e6eb;
+                --text-light: #a0a6b1;
+                --border: #2a3849;
+                --shadow: 0 2px 10px rgba(0,0,0,0.3);
+            }
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--light);
+            color: var(--text);
+            line-height: 1.5;
+            font-size: 16px;
+            padding-bottom: 80px;
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--dark), var(--primary-dark));
+            color: white;
+            padding: 15px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: var(--shadow);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .app-title {
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .app-subtitle {
+            font-size: 12px;
+            opacity: 0.9;
+        }
+
+        .header-btn {
+            background: rgba(255,255,255,0.2);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+            margin-left: 5px;
+        }
+
+        .category-tabs {
+            display: flex;
+            overflow-x: auto;
+            padding: 10px 15px;
+            background: var(--card);
+            gap: 8px;
+            position: sticky;
+            top: 70px;
+            z-index: 90;
+        }
+
+        .category-tabs::-webkit-scrollbar {
+            display: none;
+        }
+
+        .category-tab {
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            background: var(--light);
+            color: var(--text);
+            border: 1px solid var(--border);
+            cursor: pointer;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        .category-tab.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            padding: 15px;
+        }
+
+        .stat-card {
+            background: var(--card);
+            border-radius: 12px;
+            padding: 15px;
+            text-align: center;
+            box-shadow: var(--shadow);
+        }
+
+        .stat-value {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: var(--text-light);
+        }
+
+        .main-content {
+            padding: 0 15px 15px;
+        }
+
+        .message-config {
+            background: var(--card);
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 20px;
+            box-shadow: var(--shadow);
+        }
+
+        .section-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin: 15px 0 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-small {
+            padding: 6px 12px;
+            font-size: 12px;
+        }
+
+        .btn-secondary {
+            background: var(--secondary);
+        }
+
+        .btn-warning {
+            background: var(--warning);
+        }
+
+        .drop-zone {
+            border: 2px dashed var(--primary);
+            border-radius: 12px;
+            padding: 30px 20px;
+            text-align: center;
+            background: rgba(37, 211, 102, 0.05);
+            margin: 15px 0;
+            cursor: pointer;
+        }
+
+        .drop-zone-icon {
+            font-size: 40px;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
+        .drop-zone-text {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .drop-zone-subtext {
+            font-size: 14px;
+            color: var(--text-light);
+        }
+
+        select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background: var(--card);
+            color: var(--text);
+            font-size: 16px;
+            margin-bottom: 15px;
+            cursor: pointer;
+        }
+
+        .message-preview {
+            background: var(--light);
+            border-radius: 8px;
+            padding: 15px;
+            font-size: 14px;
+            line-height: 1.6;
+            max-height: 200px;
+            overflow-y: auto;
+            border-left: 4px solid var(--primary);
+            white-space: pre-line;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .btn-group .btn {
+            flex: 1;
+        }
+
+        .customer-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .customer-card {
+            background: var(--card);
+            border-radius: 12px;
+            padding: 15px;
+            box-shadow: var(--shadow);
+            border-left: 4px solid var(--primary);
+        }
+
+        .customer-header {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 10px;
+        }
+
+        .customer-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 10px;
+            background: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 20px;
+            font-weight: bold;
+            margin-right: 12px;
+            position: relative;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+
+        .customer-avatar-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .customer-info {
+            flex: 1;
+        }
+
+        .customer-name {
+            font-weight: bold;
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+
+        .customer-phone {
+            color: var(--primary);
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+
+        .customer-notes {
+            background: var(--light);
+            padding: 10px;
+            border-radius: 8px;
+            font-size: 14px;
+            margin: 10px 0;
+        }
+
+        .customer-photos {
+            display: flex;
+            gap: 10px;
+            margin: 10px 0;
+            flex-wrap: wrap;
+        }
+
+        .customer-photo {
+            width: 80px;
+            height: 80px;
+            border-radius: 8px;
+            object-fit: cover;
+            cursor: pointer;
+            border: 2px solid var(--border);
+        }
+
+        .customer-photo:hover {
+            border-color: var(--primary);
+        }
+
+        .customer-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 15px;
+        }
+
+        .action-btn {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .send-btn {
+            background: var(--primary);
+            color: white;
+        }
+
+        .edit-btn {
+            background: var(--secondary);
+            color: white;
+        }
+
+        .delete-btn {
+            background: var(--danger);
+            color: white;
+        }
+
+        .filter-buttons {
+            display: flex;
+            gap: 8px;
+            margin: 10px 0;
+            overflow-x: auto;
+            padding: 5px 0;
+        }
+
+        .filter-btn {
+            padding: 8px 16px;
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            background: var(--light);
+            color: var(--text);
+            font-size: 14px;
+            cursor: pointer;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        .filter-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: var(--card);
+            display: flex;
+            justify-content: space-around;
+            padding: 12px 0;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+            z-index: 100;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            color: var(--text-light);
+            font-size: 12px;
+            cursor: pointer;
+            padding: 8px;
+        }
+
+        .nav-item.active {
+            color: var(--primary);
+        }
+
+        .nav-icon {
+            font-size: 20px;
+        }
+
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.7);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            padding: 20px;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: var(--card);
+            border-radius: 16px;
+            padding: 20px;
+            width: 100%;
+            max-width: 500px;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .modal-title {
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: var(--text-light);
+            cursor: pointer;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background: var(--card);
+            color: var(--text);
+            font-size: 16px;
+        }
+
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .photo-upload-area {
+            border: 2px dashed var(--border);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            margin-bottom: 15px;
+            transition: all 0.3s;
+        }
+
+        .photo-upload-area:hover {
+            border-color: var(--primary);
+            background: rgba(37, 211, 102, 0.05);
+        }
+
+        .photo-upload-icon {
+            font-size: 40px;
+            color: var(--text-light);
+            margin-bottom: 10px;
+        }
+
+        .photo-preview-container {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 15px;
+        }
+
+        .photo-preview {
+            width: 100px;
+            height: 100px;
+            border-radius: 8px;
+            object-fit: cover;
+            position: relative;
+        }
+
+        .photo-preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        .photo-remove {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: var(--danger);
+            color: white;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            cursor: pointer;
+            border: 2px solid var(--card);
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 12px 20px;
+            border-radius: 8px;
+            color: white;
+            font-weight: bold;
+            z-index: 1100;
+            animation: slideIn 0.3s ease;
+            max-width: 80%;
+            word-break: break-word;
+        }
+
+        .notification.success {
+            background: var(--success);
+        }
+
+        .notification.error {
+            background: var(--danger);
+        }
+
+        .notification.warning {
+            background: var(--warning);
+        }
+
+        .notification.info {
+            background: var(--secondary);
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--text-light);
+        }
+
+        .empty-icon {
+            font-size: 60px;
+            margin-bottom: 20px;
+            opacity: 0.5;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--text-light);
+        }
+
+        .loading i {
+            margin-right: 10px;
+        }
+
+        .photo-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.9);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1200;
+            padding: 20px;
+        }
+
+        .photo-modal.active {
+            display: flex;
+        }
+
+        .photo-modal-content {
+            position: relative;
+            max-width: 90%;
+            max-height: 90%;
+        }
+
+        .photo-modal-img {
+            max-width: 100%;
+            max-height: 80vh;
+            object-fit: contain;
+            border-radius: 8px;
+        }
+
+        .photo-modal-close {
+            position: absolute;
+            top: -20px;
+            right: -20px;
+            background: var(--danger);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            cursor: pointer;
+            border: 2px solid white;
+        }
+
+        /* 分页样式 */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            margin-top: 20px;
+            padding: 15px;
+            background: var(--card);
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+        }
+
+        .page-btn {
+            padding: 8px 16px;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text);
+            cursor: pointer;
+            font-size: 14px;
+            min-width: 80px;
+        }
+
+        .page-btn:hover:not(:disabled) {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .page-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .page-info {
+            color: var(--text-light);
+            font-size: 14px;
+        }
+
+        /* 存储警告样式 */
+        .storage-warning {
+            background: var(--warning);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 8px;
+            margin: 10px 0;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* 工具按钮组 */
+        .tool-buttons {
+            display: flex;
+            gap: 5px;
+            margin-left: auto;
+        }
+
+        /* 压缩指示器 */
+        .compression-badge {
+            position: absolute;
+            bottom: 5px;
+            right: 5px;
+            background: rgba(0,0,0,0.7);
+            color: white;
+            font-size: 10px;
+            padding: 2px 5px;
+            border-radius: 4px;
+        }
+
+        /* 照片信息标签 */
+        .photo-info-badge {
+            position: absolute;
+            bottom: 5px;
+            left: 5px;
+            right: 5px;
+            background: rgba(0,0,0,0.7);
+            color: white;
+            font-size: 9px;
+            padding: 2px 4px;
+            border-radius: 3px;
+            text-align: center;
+            line-height: 1.2;
+        }
+
+        /* 进度条 */
+        .progress-bar {
+            width: 100%;
+            height: 6px;
+            background: var(--light);
+            border-radius: 3px;
+            margin: 10px 0;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--primary);
+            border-radius: 3px;
+            transition: width 0.3s ease;
+        }
+
+        /* 压缩设置面板 */
+        .compression-settings {
+            background: var(--light);
+            border-radius: 8px;
+            padding: 15px;
+            margin: 15px 0;
+            border-left: 4px solid var(--secondary);
+        }
+
+        .compression-settings h4 {
+            margin-bottom: 10px;
+            font-size: 16px;
+            color: var(--text);
+        }
+
+        .compression-option {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .compression-value {
+            color: var(--primary);
+            font-weight: bold;
+            font-size: 13px;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.7; }
+            100% { opacity: 1; }
+        }
+
+        .pulse {
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .spin {
+            animation: spin 1s linear infinite;
+        }
+    </style>
+</head>
+<body>
+    <!-- 顶部栏 -->
+    <div class="header">
+        <div class="header-content">
+            <div>
+                <div class="app-title">PushAds Pro</div>
+                <div class="app-subtitle">营销助手</div>
+            </div>
+            <div class="tool-buttons">
+                <button class="header-btn" onclick="compressExistingPhotos()" title="压缩所有照片">
+                    <i class="fas fa-compress-alt"></i>
+                </button>
+                <button class="header-btn" onclick="cleanupStorage()" title="清理存储空间">
+                    <i class="fas fa-broom"></i>
+                </button>
+                <button class="header-btn" onclick="importBackup()" title="导入备份">
+                    <i class="fas fa-upload"></i>
+                </button>
+                <button class="header-btn" onclick="exportData()" title="导出数据">
+                    <i class="fas fa-download"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 类别标签 -->
+    <div class="category-tabs">
+        <button class="category-tab active" onclick="setCategory('general')">综合</button>
+        <button class="category-tab" onclick="setCategory('ai-stock')">AI选股</button>
+        <button class="category-tab" onclick="setCategory('alliance-shop')">联盟商店</button>
+        <button class="category-tab" onclick="setCategory('used-car')">二手车辆</button>
+        <button class="category-tab" onclick="setCategory('property')">房地产</button>
+    </div>
+
+    <!-- 统计卡片 -->
+    <div class="stats-container">
+        <div class="stat-card">
+            <div class="stat-value" id="totalCustomers">0</div>
+            <div class="stat-label">总客户</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-value" id="pendingCustomers">0</div>
+            <div class="stat-label">待发送</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-value" id="sentToday">0</div>
+            <div class="stat-label">今日已发</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-value" id="totalMessages">0</div>
+            <div class="stat-label">消息模板</div>
+        </div>
+    </div>
+
+    <!-- 存储状态指示器 -->
+    <div id="storageWarning" style="display: none;" class="storage-warning">
+        <i class="fas fa-exclamation-triangle"></i>
+        <span id="storageWarningText">存储空间不足</span>
+    </div>
+
+    <!-- 主内容区 -->
+    <div class="main-content">
+        <!-- 消息配置 -->
+        <div class="message-config">
+            <h3 style="margin-bottom: 15px; font-size: 18px;">消息配置</h3>
+            
+            <!-- 拖放区 -->
+            <div class="drop-zone" id="dropZone" onclick="importMessages()">
+                <div class="drop-zone-icon">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                </div>
+                <div class="drop-zone-text">点击导入消息模板</div>
+                <div class="drop-zone-subtext">或拖放 messages.json 文件</div>
+            </div>
+            
+            <!-- 文件信息 -->
+            <div id="fileInfo" style="display: none; background: var(--light); padding: 15px; border-radius: 8px; margin: 15px 0;">
+                <div id="fileInfoContent"></div>
+                <div style="display: flex; gap: 10px; margin-top: 15px;">
+                    <button class="btn" onclick="confirmImport()" style="flex: 1;">确认导入</button>
+                    <button class="btn btn-secondary" onclick="cancelImport()" style="flex: 1;">取消</button>
+                </div>
+            </div>
+            
+            <!-- 消息选择 -->
+            <select id="messageCategory" onchange="loadTemplates()">
+                <option value="">选择消息类别</option>
+                <option value="general">综合</option>
+                <option value="ai-stock">AI选股</option>
+                <option value="alliance-shop">联盟商店</option>
+                <option value="used-car">二手车辆</option>
+                <option value="property">房地产</option>
+            </select>
+            
+            <select id="messageTemplate" onchange="showPreview()">
+                <option value="">选择消息模板</option>
+            </select>
+            
+            <!-- 消息预览 -->
+            <div class="message-preview" id="messagePreview">
+                请选择消息模板查看预览
+            </div>
+            
+            <!-- 按钮组 -->
+            <div class="btn-group">
+                <button class="btn" onclick="sendToAll()">
+                    <i class="fas fa-paper-plane"></i> 发送给所有客户
+                </button>
+                <button class="btn btn-secondary" onclick="testMessage()">
+                    <i class="fas fa-vial"></i> 测试发送
+                </button>
+            </div>
+        </div>
+
+        <!-- 客户管理 -->
+        <div class="section-title">
+            <span>客户管理 <span id="customerCount" style="font-size: 14px; color: var(--text-light);">(0)</span></span>
+            <button class="btn" onclick="openAddModal()">
+                <i class="fas fa-plus"></i> 添加客户
+            </button>
+        </div>
+
+        <!-- 筛选按钮 -->
+        <div class="filter-buttons">
+            <button class="filter-btn active" onclick="setFilter('all')">全部</button>
+            <button class="filter-btn" onclick="setFilter('pending')">待发送</button>
+            <button class="filter-btn" onclick="setFilter('sent')">已发送</button>
+            <button class="filter-btn" onclick="setFilter('today')">今日新增</button>
+            <button class="filter-btn" onclick="setFilter('hasPhotos')">有照片</button>
+            <button class="filter-btn" onclick="setFilter('noPhotos')">无照片</button>
+        </div>
+
+        <!-- 客户列表 -->
+        <div class="customer-list" id="customerList">
+            <div class="loading">
+                <i class="fas fa-spinner fa-spin"></i> 加载中...
+            </div>
+        </div>
+
+        <!-- 分页控件 -->
+        <div class="pagination" id="pagination" style="display: none;">
+            <button class="page-btn" id="prevPage" onclick="changePage(-1)">上一页</button>
+            <span class="page-info" id="pageInfo">第 1 / 1 页</span>
+            <button class="page-btn" id="nextPage" onclick="changePage(1)">下一页</button>
+        </div>
+    </div>
+
+    <!-- 底部导航 -->
+    <div class="bottom-nav">
+        <div class="nav-item active" onclick="showTab('home')">
+            <i class="fas fa-home nav-icon"></i>
+            <span>首页</span>
+        </div>
+        <div class="nav-item" onclick="showTab('customers')">
+            <i class="fas fa-users nav-icon"></i>
+            <span>客户</span>
+        </div>
+        <div class="nav-item" onclick="showTab('messages')">
+            <i class="fas fa-comments nav-icon"></i>
+            <span>消息</span>
+        </div>
+        <div class="nav-item" onclick="showTab('stats')">
+            <i class="fas fa-chart-bar nav-icon"></i>
+            <span>统计</span>
+        </div>
+    </div>
+
+    <!-- 添加客户模态框 -->
+    <div class="modal" id="addModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="modalTitle">添加新客户</h3>
+                <button class="close-btn" onclick="closeModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <form onsubmit="saveCustomer(event)">
+                <div class="form-group">
+                    <label class="form-label">姓名 *</label>
+                    <input type="text" id="customerName" required>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">电话号码 *</label>
+                    <input type="tel" id="customerPhone" required placeholder="+60 12-345 6789">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">客户类别 *</label>
+                    <select id="customerCategory" required>
+                        <option value="general">综合</option>
+                        <option value="ai-stock">AI选股</option>
+                        <option value="alliance-shop">联盟商店</option>
+                        <option value="used-car">二手车辆</option>
+                        <option value="property">房地产</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">客户照片 (最多3张)</label>
+                    
+                    <!-- 压缩设置 -->
+                    <div class="compression-settings">
+                        <h4><i class="fas fa-cog"></i> 智能压缩设置</h4>
+                        <div class="compression-option">
+                            <span>最大上传大小:</span>
+                            <span class="compression-value">10MB</span>
+                        </div>
+                        <div class="compression-option">
+                            <span>目标大小:</span>
+                            <span class="compression-value">≤300KB/张</span>
+                        </div>
+                        <div class="compression-option">
+                            <span>最大尺寸:</span>
+                            <span class="compression-value">800px</span>
+                        </div>
+                        <div class="compression-option">
+                            <span>自动优化:</span>
+                            <span class="compression-value">开启</span>
+                        </div>
+                    </div>
+                    
+                    <div class="photo-upload-area" onclick="document.getElementById('photoInput').click()">
+                        <div class="photo-upload-icon">
+                            <i class="fas fa-camera"></i>
+                        </div>
+                        <div>点击上传照片</div>
+                        <div style="font-size: 12px; color: var(--text-light); margin-top: 5px;">
+                            支持超大照片，自动智能压缩
+                            <br>10MB以下 → 压缩至300KB以内
+                            <br>5MB以上 → 高质量压缩
+                        </div>
+                    </div>
+                    <input type="file" id="photoInput" accept="image/*" multiple style="display: none;" onchange="handlePhotos(event)">
+                    
+                    <!-- 处理进度 -->
+                    <div id="photoProcessing" style="display: none; text-align: center; margin: 10px 0;">
+                        <i class="fas fa-spinner fa-spin"></i>
+                        <span id="processingText">正在处理照片...</span>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+                        </div>
+                    </div>
+                    
+                    <!-- 照片预览区 -->
+                    <div class="photo-preview-container" id="photoPreview"></div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">感兴趣产品</label>
+                    <input type="text" id="customerProduct" placeholder="例如: iPhone 15">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">备注</label>
+                    <textarea id="customerNotes" placeholder="添加备注..." rows="3"></textarea>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" onclick="closeModal()" style="flex: 1;">取消</button>
+                    <button type="submit" class="btn" style="flex: 1;">保存</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- 照片查看模态框 -->
+    <div class="photo-modal" id="photoModal" onclick="closePhotoModal()">
+        <div class="photo-modal-content" onclick="event.stopPropagation()">
+            <img id="photoModalImg" class="photo-modal-img" src="" alt="照片预览">
+            <button class="photo-modal-close" onclick="closePhotoModal()">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // ==================== 全局变量 ====================
+        let customers = [];
+        let messages = { messages: [] };
+        let currentCategory = 'general';
+        let currentFilter = 'all';
+        let editingId = null;
+        let fileData = null;
+        let currentPhotos = []; // 当前上传的照片
+        
+        // 分页相关
+        let currentPage = 1;
+        const CUSTOMERS_PER_PAGE = 10;
+        let filteredCustomers = [];
+        
+        // 存储限制
+        const STORAGE_LIMIT = 4 * 1024 * 1024; // 4MB安全限制
+        const MAX_PHOTOS_PER_CUSTOMER = 3; // 每个客户最多3张照片
+        
+        // 压缩设置
+        const MAX_FILE_SIZE = 10 * 1024 * 1024; // 最大上传10MB
+        const TARGET_SIZE_KB = 300; // 目标压缩到300KB以内
+
+        // 默认消息
+        const defaultMessages = {
+            "messages": [
+                {
+                    "id": "msg_general_01",
+                    "category": "general",
+                    "title": "综合服务介绍",
+                    "text": "🛍️ 您好！\n\n发现您对优质产品很有品味！MyxShop为您精选：\n\n🍎 健康食品与保健用品\n🏠 家居生活必需品  \n💄 美妆护肤精品\n📱 电子智能设备\n\n✨ 所有产品提供：\n✅ 马来西亚正品保证\n✅ 最优惠价格保证\n✅ 全马快速配送\n✅ 专业售后服务\n\n立即浏览选购： https://example.com\n\n新客专享：首次下单享95折优惠！"
+                },
+                {
+                    "id": "msg_ai_stock_01",
+                    "category": "ai-stock",
+                    "title": "Bursa AI选股专业版",
+                    "text": "📈 您好！\n\n发现您对马来西亚股市(Bursa Malaysia)有兴趣！\n\n我们特别为散户投资者推出AI选股系统：\n\n🤖 AI智能分析技术：\n• 实时监控KLSE/SET股票\n• 技术面+基本面双重分析\n• 自动识别买入/卖出信号\n• 风险评级与止损建议\n\n🎯 专属散户功能：\n✅ 小额投资组合优化\n✅ 马来西亚市场深度分析\n✅ 中文界面与客服\n✅ 每日盘前精选推荐\n\n免费试用7天： https://example.com"
+                }
+            ]
+        };
+
+        // ==================== 照片压缩核心函数 ====================
+        async function compressPhoto(base64Data, maxSizeKB = TARGET_SIZE_KB, maxDimension = 800, initialQuality = 0.8) {
+            return new Promise((resolve, reject) => {
+                // 如果已经很小，直接返回
+                const currentSizeKB = base64Data.length / 1024;
+                if (currentSizeKB <= maxSizeKB) {
+                    resolve(base64Data);
+                    return;
+                }
+                
+                const img = new Image();
+                img.onload = function() {
+                    try {
+                        // 创建canvas
+                        const canvas = document.createElement('canvas');
+                        const ctx = canvas.getContext('2d');
+                        
+                        // 计算新尺寸（保持比例）
+                        let width = img.width;
+                        let height = img.height;
+                        
+                        // 如果尺寸大于最大尺寸，等比例缩放
+                        if (width > maxDimension || height > maxDimension) {
+                            const ratio = Math.min(maxDimension / width, maxDimension / height);
+                            width = Math.round(width * ratio);
+                            height = Math.round(height * ratio);
+                        }
+                        
+                        // 设置canvas尺寸
+                        canvas.width = width;
+                        canvas.height = height;
+                        
+                        // 绘制到canvas（使用白色背景）
+                        ctx.fillStyle = '#FFFFFF';
+                        ctx.fillRect(0, 0, width, height);
+                        ctx.drawImage(img, 0, 0, width, height);
+                        
+                        // 递归压缩函数
+                        const tryCompress = (quality) => {
+                            const compressedData = canvas.toDataURL('image/jpeg', quality);
+                            const compressedSizeKB = compressedData.length / 1024;
+                            
+                            // 如果达到目标大小或质量已经很低，返回结果
+                            if (compressedSizeKB <= maxSizeKB || quality <= 0.3) {
+                                return compressedData;
+                            } else {
+                                // 递归降低质量
+                                return tryCompress(quality - 0.1);
+                            }
+                        };
+                        
+                        // 开始压缩
+                        const finalData = tryCompress(initialQuality);
+                        const finalSizeKB = finalData.length / 1024;
+                        const originalSizeKB = currentSizeKB;
+                        const savedPercent = ((originalSizeKB - finalSizeKB) / originalSizeKB * 100).toFixed(1);
+                        
+                        console.log(`压缩结果: ${originalSizeKB.toFixed(1)}KB → ${finalSizeKB.toFixed(1)}KB (节省${savedPercent}%)`);
+                        
+                        resolve(finalData);
+                        
+                    } catch (error) {
+                        console.error('压缩失败:', error);
+                        // 如果压缩失败，返回原始数据
+                        resolve(base64Data);
+                    }
+                };
+                
+                img.onerror = function() {
+                    console.error('图片加载失败');
+                    resolve(base64Data); // 加载失败返回原图
+                };
+                
+                img.src = base64Data;
+            });
+        }
+
+        // ==================== 存储管理函数 ====================
+        function checkStorage() {
+            let totalSize = 0;
+            for (let i = 0; i < localStorage.length; i++) {
+                const key = localStorage.key(i);
+                const value = localStorage.getItem(key);
+                totalSize += key.length + (value ? value.length : 0);
+            }
+            return totalSize;
+        }
+
+        function updateStorageWarning() {
+            const storageSize = checkStorage();
+            const storagePercent = (storageSize / STORAGE_LIMIT * 100);
+            const warningDiv = document.getElementById('storageWarning');
+            
+            if (storagePercent > 80) {
+                const mb = (storageSize / 1024 / 1024).toFixed(2);
+                document.getElementById('storageWarningText').textContent = 
+                    `存储空间紧张: ${mb}MB (${storagePercent.toFixed(1)}%)，建议清理`;
+                warningDiv.style.display = 'flex';
+                warningDiv.classList.add('pulse');
+            } else if (storagePercent > 60) {
+                const mb = (storageSize / 1024 / 1024).toFixed(2);
+                document.getElementById('storageWarningText').textContent = 
+                    `存储使用: ${mb}MB (${storagePercent.toFixed(1)}%)`;
+                warningDiv.style.display = 'flex';
+                warningDiv.classList.remove('pulse');
+            } else {
+                warningDiv.style.display = 'none';
+            }
+        }
+
+        function cleanupStorage() {
+            if (!confirm('这将清理旧客户的照片数据以释放空间，确定要继续吗？')) {
+                return;
+            }
+            
+            showNotification('正在清理存储空间...', 'info');
+            
+            // 按时间排序客户，保留最近的50个
+            customers.sort((a, b) => {
+                return new Date(b.dateAdded || 0) - new Date(a.dateAdded || 0);
+            });
+            
+            let cleanedCount = 0;
+            customers.forEach((customer, index) => {
+                if (index >= 50 && customer.photos && customer.photos.length > 0) {
+                    cleanedCount += customer.photos.length;
+                    customer.photos = []; // 清除非最近客户的照片
+                }
+            });
+            
+            // 重新保存
+            localStorage.setItem('pushads_customers', JSON.stringify(customers));
+            
+            // 清理发送记录（保留最近30天的）
+            const thirtyDaysAgo = new Date();
+            thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+            
+            let cleanedRecords = 0;
+            for (let i = 0; i < localStorage.length; i++) {
+                const key = localStorage.key(i);
+                if (key.startsWith('sent_') && key !== 'sentToday_') {
+                    try {
+                        const sentDate = new Date(localStorage.getItem(key));
+                        if (sentDate < thirtyDaysAgo) {
+                            localStorage.removeItem(key);
+                            cleanedRecords++;
+                        }
+                    } catch (e) {
+                        // 忽略无效数据
+                    }
+                }
+            }
+            
+            loadData();
+            showNotification(`清理完成: ${cleanedCount}张照片, ${cleanedRecords}条发送记录`, 'success');
+        }
+
+        // ==================== 批量压缩现有照片 ====================
+        async function compressExistingPhotos() {
+            // 检查是否有大照片需要压缩
+            const hasLargePhotos = customers.some(customer => 
+                customer.photos && customer.photos.some(photo => {
+                    const sizeKB = photo.size ? photo.size / 1024 : 0;
+                    return sizeKB > TARGET_SIZE_KB;
+                })
+            );
+            
+            if (!hasLargePhotos) {
+                showNotification('没有发现需要压缩的大照片', 'info');
+                return;
+            }
+            
+            if (!confirm('这将重新压缩所有客户的大照片，优化存储空间。可能需要一些时间，确定要继续吗？')) {
+                return;
+            }
+            
+            showNotification('开始压缩所有照片，请稍候...', 'info');
+            
+            let totalPhotos = 0;
+            let compressedPhotos = 0;
+            let totalOriginalKB = 0;
+            let totalCompressedKB = 0;
+            
+            // 遍历所有客户
+            for (let customer of customers) {
+                if (customer.photos && customer.photos.length > 0) {
+                    for (let photo of customer.photos) {
+                        totalPhotos++;
+                        const originalSizeKB = photo.size ? photo.size / 1024 : (photo.data.length / 1024);
+                        totalOriginalKB += originalSizeKB;
+                        
+                        // 如果照片大于目标大小，重新压缩
+                        if (originalSizeKB > TARGET_SIZE_KB) {
+                            try {
+                                // 根据原始大小选择压缩参数
+                                let targetKB, maxDim, quality;
+                                if (originalSizeKB > 3000) { // >3MB
+                                    targetKB = 200;
+                                    maxDim = 600;
+                                    quality = 0.6;
+                                } else if (originalSizeKB > 1000) { // >1MB
+                                    targetKB = 250;
+                                    maxDim = 700;
+                                    quality = 0.65;
+                                } else { // 300KB-1MB
+                                    targetKB = TARGET_SIZE_KB;
+                                    maxDim = 800;
+                                    quality = 0.7;
+                                }
+                                
+                                const compressedData = await compressPhoto(
+                                    photo.data, 
+                                    targetKB, 
+                                    maxDim, 
+                                    quality
+                                );
+                                
+                                const newSizeKB = compressedData.length / 1024;
+                                
+                                // 如果压缩效果明显，更新照片数据
+                                if (newSizeKB < originalSizeKB * 0.8) { // 至少节省20%
+                                    photo.data = compressedData;
+                                    photo.size = compressedData.length;
+                                    photo.compressed = true;
+                                    photo.lastCompressed = new Date().toISOString();
+                                    compressedPhotos++;
+                                    totalCompressedKB += newSizeKB;
+                                } else {
+                                    totalCompressedKB += originalSizeKB;
+                                }
+                                
+                            } catch (error) {
+                                console.error(`压缩照片失败:`, error);
+                                totalCompressedKB += originalSizeKB;
+                            }
+                        } else {
+                            totalCompressedKB += originalSizeKB;
+                        }
+                    }
+                }
+            }
+            
+            // 保存压缩后的数据
+            if (compressedPhotos > 0) {
+                localStorage.setItem('pushads_customers', JSON.stringify(customers));
+                
+                const savedKB = totalOriginalKB - totalCompressedKB;
+                const savedPercent = (savedKB / totalOriginalKB * 100).toFixed(1);
+                
+                showNotification(
+                    `压缩完成: ${compressedPhotos}/${totalPhotos}张照片已优化，节省${savedKB.toFixed(0)}KB (${savedPercent}%)`, 
+                    'success'
+                );
+                
+                updateStorageWarning();
+                renderCustomers(); // 刷新显示
+            } else {
+                showNotification('所有照片都已是最佳大小', 'info');
+            }
+        }
+
+        // ==================== 初始化函数 ====================
+        document.addEventListener('DOMContentLoaded', function() {
+            loadData();
+            setupDropZone();
+            updateStorageWarning();
+            setTimeout(() => showNotification('系统已就绪！支持10MB照片自动压缩', 'success'), 500);
+        });
+
+        // ==================== 文件处理函数 ====================
+        function setupDropZone() {
+            const dropZone = document.getElementById('dropZone');
+            
+            dropZone.addEventListener('dragover', function(e) {
+                e.preventDefault();
+                dropZone.style.borderColor = '#4CAF50';
+                dropZone.style.borderWidth = '3px';
+                dropZone.style.background = 'rgba(76, 175, 80, 0.1)';
+            });
+            
+            dropZone.addEventListener('dragleave', function() {
+                dropZone.style.borderColor = '';
+                dropZone.style.borderWidth = '';
+                dropZone.style.background = '';
+            });
+            
+            dropZone.addEventListener('drop', function(e) {
+                e.preventDefault();
+                dropZone.style.borderColor = '';
+                dropZone.style.borderWidth = '';
+                dropZone.style.background = '';
+                
+                const file = e.dataTransfer.files[0];
+                if (file && file.name.endsWith('.json')) {
+                    readFile(file);
+                } else {
+                    showNotification('请拖放JSON文件', 'error');
+                }
+            });
+        }
+
+        function importMessages() {
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = '.json';
+            
+            input.onchange = function(e) {
+                const file = e.target.files[0];
+                if (file) {
+                    readFile(file);
+                }
+            };
+            
+            input.click();
+        }
+
+        function readFile(file) {
+            const reader = new FileReader();
+            
+            reader.onload = function(e) {
+                try {
+                    fileData = JSON.parse(e.target.result);
+                    
+                    if (!fileData.messages || !Array.isArray(fileData.messages)) {
+                        throw new Error('无效的消息格式');
+                    }
+                    
+                    document.getElementById('fileInfoContent').innerHTML = `
+                        <div style="margin-bottom: 10px;">
+                            <strong>文件名:</strong> ${file.name}
+                        </div>
+                        <div style="margin-bottom: 10px;">
+                            <strong>大小:</strong> ${(file.size / 1024).toFixed(2)} KB
+                        </div>
+                        <div>
+                            <strong>消息数量:</strong> ${fileData.messages.length} 条
+                        </div>
+                    `;
+                    
+                    document.getElementById('fileInfo').style.display = 'block';
+                    showNotification('文件读取成功', 'success');
+                    
+                } catch (error) {
+                    showNotification('文件格式错误: ' + error.message, 'error');
+                }
+            };
+            
+            reader.readAsText(file);
+        }
+
+        // ==================== 照片上传和压缩处理 ====================
+        async function handlePhotos(event) {
+            const files = event.target.files;
+            const previewContainer = document.getElementById('photoPreview');
+            
+            // 检查照片数量限制
+            if (currentPhotos.length + files.length > MAX_PHOTOS_PER_CUSTOMER) {
+                showNotification(`每个客户最多只能上传${MAX_PHOTOS_PER_CUSTOMER}张照片`, 'error');
+                event.target.value = '';
+                return;
+            }
+            
+            // 显示处理进度
+            const processingDiv = document.getElementById('photoProcessing');
+            const progressFill = document.getElementById('progressFill');
+            const processingText = document.getElementById('processingText');
+            
+            processingDiv.style.display = 'block';
+            processingText.textContent = '正在准备处理照片...';
+            progressFill.style.width = '0%';
+            
+            // 清空旧预览
+            previewContainer.innerHTML = '';
+            
+            try {
+                for (let i = 0; i < files.length; i++) {
+                    const file = files[i];
+                    
+                    // 更新进度
+                    const progressPercent = ((i) / files.length * 100).toFixed(0);
+                    processingText.textContent = `正在处理第${i+1}/${files.length}张照片...`;
+                    progressFill.style.width = `${progressPercent}%`;
+                    
+                    // 检查文件大小
+                    if (file.size > MAX_FILE_SIZE) {
+                        showNotification(`照片${file.name}太大（超过10MB），请选择较小的照片`, 'error');
+                        continue;
+                    }
+                    
+                    const photoData = await new Promise((resolve) => {
+                        const reader = new FileReader();
+                        
+                        reader.onload = async function(e) {
+                            try {
+                                // 根据原始大小选择压缩参数
+                                const originalSizeMB = file.size / 1024 / 1024;
+                                let targetSizeKB = TARGET_SIZE_KB;
+                                let maxDimension = 800;
+                                let quality = 0.7;
+                                
+                                // 智能调整压缩参数
+                                if (originalSizeMB > 5) {
+                                    targetSizeKB = 200;  // 5MB以上 -> 200KB
+                                    maxDimension = 600;
+                                    quality = 0.6;
+                                } else if (originalSizeMB > 2) {
+                                    targetSizeKB = 250;  // 2-5MB -> 250KB
+                                    maxDimension = 700;
+                                    quality = 0.65;
+                                } else if (originalSizeMB > 1) {
+                                    targetSizeKB = 300;  // 1-2MB -> 300KB
+                                    maxDimension = 800;
+                                    quality = 0.7;
+                                } else if (originalSizeMB > 0.5) {
+                                    targetSizeKB = 350;  // 0.5-1MB -> 350KB
+                                    maxDimension = 900;
+                                    quality = 0.75;
+                                }
+                                
+                                // 压缩照片
+                                const compressedData = await compressPhoto(
+                                    e.target.result, 
+                                    targetSizeKB, 
+                                    maxDimension, 
+                                    quality
+                                );
+                                
+                                const photoData = {
+                                    id: 'photo_' + Date.now() + '_' + i,
+                                    data: compressedData,
+                                    name: file.name,
+                                    size: compressedData.length,
+                                    compressed: true,
+                                    originalSize: file.size,
+                                    originalSizeMB: originalSizeMB.toFixed(2),
+                                    compressedSizeKB: (compressedData.length / 1024).toFixed(1)
+                                };
+                                
+                                resolve(photoData);
+                            } catch (error) {
+                                console.error('照片处理失败:', error);
+                                resolve(null);
+                            }
+                        };
+                        reader.readAsDataURL(file);
+                    });
+                    
+                    if (photoData) {
+                        currentPhotos.push(photoData);
+                        
+                        // 立即显示预览
+                        const previewDiv = document.createElement('div');
+                        previewDiv.className = 'photo-preview';
+                        previewDiv.innerHTML = `
+                            <img src="${photoData.data}" alt="照片预览" onclick="viewPhoto('${photoData.id}')">
+                            <div class="photo-remove" onclick="removePhoto('${photoData.id}')">
+                                <i class="fas fa-times"></i>
+                            </div>
+                            <div class="compression-badge">压缩</div>
+                            <div class="photo-info-badge">
+                                ${photoData.originalSizeMB}MB → ${photoData.compressedSizeKB}KB
+                            </div>
+                        `;
+                        previewContainer.appendChild(previewDiv);
+                        
+                        // 显示单张照片处理结果
+                        if (photoData.originalSizeMB > 1) {
+                            showNotification(`${photoData.name}: ${photoData.originalSizeMB}MB → ${photoData.compressedSizeKB}KB`, 'info');
+                        }
+                    }
+                }
+                
+                // 完成进度
+                processingText.textContent = '照片处理完成！';
+                progressFill.style.width = '100%';
+                
+                // 显示总体压缩结果
+                if (currentPhotos.length > 0) {
+                    const originalKB = currentPhotos.reduce((sum, p) => sum + (p.originalSize || 0), 0) / 1024;
+                    const compressedKB = currentPhotos.reduce((sum, p) => sum + p.size, 0) / 1024;
+                    const savedKB = originalKB - compressedKB;
+                    const savedPercent = (savedKB / originalKB * 100).toFixed(1);
+                    
+                    // 添加总体信息
+                    const infoDiv = document.createElement('div');
+                    infoDiv.style.cssText = 'width:100%;text-align:center;color:var(--text-light);font-size:12px;margin-top:10px;padding:10px;background:var(--light);border-radius:8px;';
+                    infoDiv.innerHTML = `
+                        <strong>压缩总结:</strong><br>
+                        已上传 ${currentPhotos.length}/${MAX_PHOTOS_PER_CUSTOMER} 张照片<br>
+                        总大小: ${compressedKB.toFixed(1)}KB<br>
+                        ${savedKB > 0 ? `节省: ${savedKB.toFixed(0)}KB (${savedPercent}%)` : ''}
+                    `;
+                    previewContainer.appendChild(infoDiv);
+                    
+                    if (savedKB > 100) {
+                        setTimeout(() => {
+                            showNotification(`照片压缩完成，节省了${savedKB.toFixed(0)}KB (${savedPercent}%)空间`, 'success');
+                        }, 500);
+                    }
+                }
+                
+                // 隐藏进度条
+                setTimeout(() => {
+                    processingDiv.style.display = 'none';
+                }, 1000);
+                
+            } catch (error) {
+                console.error('照片上传失败:', error);
+                showNotification('照片上传失败，请重试', 'error');
+                processingDiv.style.display = 'none';
+                previewContainer.innerHTML = '上传失败，请重试';
+            } finally {
+                event.target.value = ''; // 重置输入框
+            }
+        }
+
+        function updatePhotoPreview() {
+            const previewContainer = document.getElementById('photoPreview');
+            previewContainer.innerHTML = '';
+            
+            if (currentPhotos.length === 0) {
+                return;
+            }
+            
+            currentPhotos.forEach((photo, index) => {
+                const previewDiv = document.createElement('div');
+                previewDiv.className = 'photo-preview';
+                
+                const originalKB = photo.originalSize ? (photo.originalSize / 1024).toFixed(1) : '?';
+                const compressedKB = (photo.size / 1024).toFixed(1);
+                
+                previewDiv.innerHTML = `
+                    <img src="${photo.data}" alt="照片预览" onclick="viewPhoto('${photo.id}')">
+                    <div class="photo-remove" onclick="removePhoto('${photo.id}')">
+                        <i class="fas fa-times"></i>
+                    </div>
+                    ${photo.compressed ? '<div class="compression-badge">压缩</div>' : ''}
+                    <div class="photo-info-badge">
+                        ${originalKB}KB → ${compressedKB}KB
+                    </div>
+                `;
+                previewContainer.appendChild(previewDiv);
+            });
+            
+            // 显示照片数量信息
+            const infoDiv = document.createElement('div');
+            infoDiv.style.cssText = 'width:100%;text-align:center;color:var(--text-light);font-size:12px;margin-top:10px;';
+            infoDiv.textContent = `已选择 ${currentPhotos.length}/${MAX_PHOTOS_PER_CUSTOMER} 张照片`;
+            previewContainer.appendChild(infoDiv);
+        }
+
+        function removePhoto(photoId) {
+            currentPhotos = currentPhotos.filter(p => p.id !== photoId);
+            updatePhotoPreview();
+        }
+
+        function viewPhoto(photoId) {
+            const photo = currentPhotos.find(p => p.id === photoId) || 
+                          customers.flatMap(c => c.photos || []).find(p => p.id === photoId);
+            if (photo) {
+                document.getElementById('photoModalImg').src = photo.data;
+                document.getElementById('photoModal').classList.add('active');
+            }
+        }
+
+        function closePhotoModal() {
+            document.getElementById('photoModal').classList.remove('active');
+        }
+
+        // ==================== 数据导入/导出 ====================
+        function confirmImport() {
+            if (!fileData || !fileData.messages) {
+                showNotification('没有可导入的数据', 'error');
+                return;
+            }
+            
+            const existing = messages.messages || [];
+            const newMsgs = fileData.messages;
+            const existingIds = new Set(existing.map(m => m.id));
+            
+            const uniqueNew = newMsgs.filter(msg => !existingIds.has(msg.id));
+            
+            if (uniqueNew.length === 0) {
+                showNotification('没有新的消息可以导入', 'info');
+                cancelImport();
+                return;
+            }
+            
+            messages.messages = [...existing, ...uniqueNew];
+            localStorage.setItem('pushads_messages', JSON.stringify(messages));
+            
+            loadTemplates();
+            updateStats();
+            
+            showNotification(`导入 ${uniqueNew.length} 条新消息`, 'success');
+            cancelImport();
+        }
+
+        function cancelImport() {
+            document.getElementById('fileInfo').style.display = 'none';
+            fileData = null;
+        }
+
+        // ==================== 数据管理 ====================
+        function loadData() {
+            // 加载客户
+            const savedCustomers = localStorage.getItem('pushads_customers');
+            if (savedCustomers) {
+                try {
+                    customers = JSON.parse(savedCustomers);
+                    // 确保每个客户都有id
+                    customers.forEach((customer, index) => {
+                        if (!customer.id) {
+                            customer.id = 'cust_' + Date.now() + '_' + index;
+                        }
+                        if (!customer.dateAdded) {
+                            customer.dateAdded = new Date().toISOString();
+                        }
+                        // 确保照片有size属性
+                        if (customer.photos) {
+                            customer.photos.forEach(photo => {
+                                if (!photo.size && photo.data) {
+                                    photo.size = photo.data.length;
+                                }
+                            });
+                        }
+                    });
+                } catch (e) {
+                    console.error('客户数据解析失败:', e);
+                    customers = [];
+                }
+            } else {
+                customers = [];
+            }
+            
+            // 加载消息
+            const savedMessages = localStorage.getItem('pushads_messages');
+            if (savedMessages) {
+                try {
+                    const parsed = JSON.parse(savedMessages);
+                    if (parsed && parsed.messages && Array.isArray(parsed.messages)) {
+                        messages = parsed;
+                    } else if (Array.isArray(parsed)) {
+                        messages = { messages: parsed };
+                    } else {
+                        throw new Error('无效的消息格式');
+                    }
+                } catch (e) {
+                    console.error('消息数据解析失败:', e);
+                    messages = defaultMessages;
+                    localStorage.setItem('pushads_messages', JSON.stringify(messages));
+                }
+            } else {
+                messages = defaultMessages;
+                localStorage.setItem('pushads_messages', JSON.stringify(messages));
+            }
+            
+            loadTemplates();
+            updateStats();
+            renderCustomers();
+            updateStorageWarning();
+        }
+
+        function loadTemplates() {
+            const category = document.getElementById('messageCategory').value;
+            const select = document.getElementById('messageTemplate');
+            
+            select.innerHTML = '<option value="">选择消息模板</option>';
+            
+            if (category && messages.messages) {
+                const filtered = messages.messages.filter(msg => msg.category === category);
+                
+                if (filtered.length === 0) {
+                    const option = document.createElement('option');
+                    option.disabled = true;
+                    option.textContent = '该类别暂无模板';
+                    select.appendChild(option);
+                } else {
+                    filtered.forEach(msg => {
+                        const option = document.createElement('option');
+                        option.value = msg.id;
+                        option.textContent = msg.title + (msg.category ? ` (${msg.category})` : '');
+                        select.appendChild(option);
+                    });
+                }
+            }
+            
+            showPreview();
+        }
+
+        function showPreview() {
+            const id = document.getElementById('messageTemplate').value;
+            const preview = document.getElementById('messagePreview');
+            
+            if (!id) {
+                preview.textContent = '请选择消息模板查看预览';
+                return;
+            }
+            
+            const msg = messages.messages.find(m => m.id === id);
+            if (msg) {
+                preview.textContent = msg.text;
+            } else {
+                preview.textContent = '消息未找到';
+            }
+        }
+
+        // ==================== 客户管理 ====================
+        function setCategory(category) {
+            currentCategory = category;
+            currentPage = 1; // 重置页码
+            
+            document.querySelectorAll('.category-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            document.getElementById('messageCategory').value = category;
+            
+            loadTemplates();
+            renderCustomers();
+        }
+
+        function setFilter(filter) {
+            currentFilter = filter;
+            currentPage = 1; // 重置页码
+            
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            renderCustomers();
+        }
+
+        function openAddModal(id = null) {
+            editingId = id;
+            currentPhotos = [];
+            const modal = document.getElementById('addModal');
+            const title = document.getElementById('modalTitle');
+            
+            // 隐藏处理进度
+            document.getElementById('photoProcessing').style.display = 'none';
+            
+            if (id) {
+                // 编辑模式
+                title.textContent = '编辑客户';
+                const customer = customers.find(c => c.id === id);
+                if (customer) {
+                    document.getElementById('customerName').value = customer.name || '';
+                    document.getElementById('customerPhone').value = customer.phone || '';
+                    document.getElementById('customerCategory').value = customer.category || 'general';
+                    document.getElementById('customerProduct').value = customer.product || '';
+                    document.getElementById('customerNotes').value = customer.notes || '';
+                    
+                    if (customer.photos && customer.photos.length > 0) {
+                        currentPhotos = customer.photos.map(p => ({...p}));
+                        updatePhotoPreview();
+                    }
+                }
+            } else {
+                // 添加模式
+                title.textContent = '添加新客户';
+                document.getElementById('customerName').value = '';
+                document.getElementById('customerPhone').value = '';
+                document.getElementById('customerCategory').value = 'general';
+                document.getElementById('customerProduct').value = '';
+                document.getElementById('customerNotes').value = '';
+                document.getElementById('photoPreview').innerHTML = '';
+            }
+            
+            modal.classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('addModal').classList.remove('active');
+            editingId = null;
+            currentPhotos = [];
+            document.getElementById('photoPreview').innerHTML = '';
+            document.getElementById('photoProcessing').style.display = 'none';
+        }
+
+        async function saveCustomer(event) {
+            event.preventDefault();
+            
+            // 检查存储空间
+            const storageSize = checkStorage();
+            if (storageSize > STORAGE_LIMIT * 0.9) {
+                if (!confirm('存储空间即将用完，保存可能失败。建议先清理空间，要继续吗？')) {
+                    return;
+                }
+            }
+            
+            const customerData = {
+                id: editingId || 'cust_' + Date.now(),
+                name: document.getElementById('customerName').value.trim(),
+                phone: document.getElementById('customerPhone').value.trim(),
+                category: document.getElementById('customerCategory').value,
+                product: document.getElementById('customerProduct').value.trim(),
+                notes: document.getElementById('customerNotes').value.trim(),
+                photos: [...currentPhotos],
+                dateAdded: editingId ? customers.find(c => c.id === editingId)?.dateAdded || new Date().toISOString() : new Date().toISOString(),
+                lastUpdated: new Date().toISOString(),
+                status: 'active'
+            };
+            
+            if (!customerData.name || !customerData.phone) {
+                showNotification('姓名和电话号码是必填项', 'error');
+                return;
+            }
+            
+            if (editingId) {
+                // 更新
+                const index = customers.findIndex(c => c.id === editingId);
+                if (index !== -1) {
+                    customers[index] = customerData;
+                }
+            } else {
+                // 添加 - 检查是否已存在相同电话的客户
+                const existingIndex = customers.findIndex(c => 
+                    c.phone.replace(/[^\d+]/g, '') === customerData.phone.replace(/[^\d+]/g, '')
+                );
+                
+                if (existingIndex !== -1) {
+                    if (!confirm('已存在相同电话号码的客户，要更新现有客户吗？')) {
+                        return;
+                    }
+                    customers[existingIndex] = customerData;
+                } else {
+                    customers.push(customerData);
+                }
+            }
+            
+            // 保存
+            try {
+                localStorage.setItem('pushads_customers', JSON.stringify(customers));
+                
+                closeModal();
+                renderCustomers();
+                updateStats();
+                updateStorageWarning();
+                
+                showNotification(editingId ? '客户已更新' : '新客户已添加', 'success');
+            } catch (error) {
+                if (error.name === 'QuotaExceededError') {
+                    showNotification('存储空间不足，请清理后再试', 'error');
+                    cleanupStorage();
+                } else {
+                    showNotification('保存失败: ' + error.message, 'error');
+                }
+            }
+        }
+
+        // ==================== 分页和渲染 ====================
+        function filterCustomers() {
+            const today = new Date().toISOString().slice(0, 10);
+            
+            filteredCustomers = customers.filter(customer => {
+                if (customer.category !== currentCategory) return false;
+                
+                const phoneKey = customer.phone ? customer.phone.replace(/[^\d+]/g, '') : '';
+                const isSent = phoneKey && localStorage.getItem(`sent_${phoneKey}`);
+                
+                switch (currentFilter) {
+                    case 'pending': return !isSent;
+                    case 'sent': return isSent;
+                    case 'today': 
+                        const date = customer.dateAdded || customer.createdAt;
+                        return date && date.includes(today);
+                    case 'hasPhotos': 
+                        return customer.photos && customer.photos.length > 0;
+                    case 'noPhotos':
+                        return !customer.photos || customer.photos.length === 0;
+                    case 'all':
+                    default: return true;
+                }
+            });
+            
+            // 排序：最近更新的在前
+            filteredCustomers.sort((a, b) => {
+                return new Date(b.lastUpdated || b.dateAdded || 0) - 
+                       new Date(a.lastUpdated || a.dateAdded || 0);
+            });
+            
+            return filteredCustomers;
+        }
+
+        function updatePagination() {
+            const pagination = document.getElementById('pagination');
+            const totalPages = Math.ceil(filteredCustomers.length / CUSTOMERS_PER_PAGE);
+            
+            if (totalPages <= 1) {
+                pagination.style.display = 'none';
+                return;
+            }
+            
+            pagination.style.display = 'flex';
+            document.getElementById('pageInfo').textContent = `第 ${currentPage} / ${totalPages} 页`;
+            
+            document.getElementById('prevPage').disabled = currentPage === 1;
+            document.getElementById('nextPage').disabled = currentPage === totalPages;
+        }
+
+        function changePage(delta) {
+            const totalPages = Math.ceil(filteredCustomers.length / CUSTOMERS_PER_PAGE);
+            const newPage = currentPage + delta;
+            
+            if (newPage >= 1 && newPage <= totalPages) {
+                currentPage = newPage;
+                renderCustomers();
+            }
+        }
+
+        function renderCustomers() {
+            const list = document.getElementById('customerList');
+            
+            // 筛选客户
+            filterCustomers();
+            
+            if (filteredCustomers.length === 0) {
+                list.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div>暂无客户</div>
+                        <div style="margin-top: 10px; font-size: 14px;">
+                            点击"添加客户"按钮开始
+                        </div>
+                    </div>`;
+                document.getElementById('pagination').style.display = 'none';
+                document.getElementById('customerCount').textContent = '(0)';
+                return;
+            }
+            
+            // 分页
+            const startIndex = (currentPage - 1) * CUSTOMERS_PER_PAGE;
+            const endIndex = startIndex + CUSTOMERS_PER_PAGE;
+            const paginated = filteredCustomers.slice(startIndex, endIndex);
+            
+            list.innerHTML = paginated.map(customer => {
+                const phoneKey = customer.phone ? customer.phone.replace(/[^\d+]/g, '') : '';
+                const isSent = phoneKey && localStorage.getItem(`sent_${phoneKey}`);
+                const initials = customer.name ? customer.name.charAt(0).toUpperCase() : '?';
+                const hasPhotos = customer.photos && customer.photos.length > 0;
+                const mainPhoto = hasPhotos ? customer.photos[0].data : null;
+                const dateAdded = customer.dateAdded ? 
+                    new Date(customer.dateAdded).toLocaleDateString('zh-CN') : '';
+                
+                // 计算照片总大小
+                let photosInfo = '';
+                if (hasPhotos) {
+                    const totalSizeKB = customer.photos.reduce((sum, p) => sum + (p.size || p.data.length), 0) / 1024;
+                    photosInfo = `<span style="color:var(--text-light);font-size:11px;">(${totalSizeKB.toFixed(1)}KB)</span>`;
+                }
+                
+                return `
+                    <div class="customer-card">
+                        <div class="customer-header">
+                            <div class="customer-avatar">
+                                ${mainPhoto 
+                                    ? `<img src="${mainPhoto}" class="customer-avatar-img" alt="${customer.name}">`
+                                    : initials
+                                }
+                            </div>
+                            <div class="customer-info">
+                                <div class="customer-name">${customer.name || '未命名'}</div>
+                                <div class="customer-phone">${customer.phone || '无号码'}</div>
+                                <div style="font-size: 12px; color: var(--text-light); margin-top: 5px;">
+                                    ${dateAdded}
+                                    ${isSent ? ' · 已发送' : ''}
+                                    ${hasPhotos ? ` · <i class="fas fa-camera"></i> ${customer.photos.length}张 ${photosInfo}` : ''}
+                                </div>
+                            </div>
+                        </div>
+                        
+                        ${hasPhotos ? `
+                            <div class="customer-photos">
+                                ${customer.photos.slice(0, 3).map(photo => {
+                                    const sizeKB = photo.size ? (photo.size / 1024).toFixed(1) : (photo.data.length / 1024).toFixed(1);
+                                    return `
+                                        <img src="${photo.data}" class="customer-photo" 
+                                             onclick="viewPhoto('${photo.id}')" 
+                                             alt="客户照片"
+                                             title="${photo.name || '照片'} - ${sizeKB}KB">
+                                    `;
+                                }).join('')}
+                                ${customer.photos.length > 3 ? `
+                                    <div style="width: 80px; height: 80px; display: flex; align-items: center; justify-content: center; background: var(--light); border-radius: 8px; font-size: 14px; color: var(--text-light);">
+                                        +${customer.photos.length - 3}张
+                                    </div>
+                                ` : ''}
+                            </div>
+                        ` : ''}
+                        
+                        ${customer.product ? `
+                            <div class="customer-notes">
+                                <strong>感兴趣:</strong> ${customer.product}
+                            </div>
+                        ` : ''}
+                        
+                        ${customer.notes ? `
+                            <div class="customer-notes">
+                                ${customer.notes}
+                            </div>
+                        ` : ''}
+                        
+                        <div class="customer-actions">
+                            ${phoneKey && !isSent ? `
+                                <button class="action-btn send-btn" onclick="sendToCustomer('${customer.id}')">
+                                    <i class="fab fa-whatsapp"></i> 发送
+                                </button>
+                            ` : `
+                                <button class="action-btn" style="background: var(--light); color: var(--text);" ${!isSent ? 'disabled' : ''}>
+                                    ${isSent ? '<i class="fas fa-check"></i> 已发送' : '无号码'}
+                                </button>
+                            `}
+                            
+                            <button class="action-btn edit-btn" onclick="editCustomer('${customer.id}')">
+                                <i class="fas fa-edit"></i> 编辑
+                            </button>
+                            
+                            <button class="action-btn delete-btn" onclick="deleteCustomer('${customer.id}')">
+                                <i class="fas fa-trash"></i> 删除
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+            
+            // 更新计数和分页
+            document.getElementById('customerCount').textContent = `(${filteredCustomers.length})`;
+            updatePagination();
+        }
+
+        function editCustomer(id) {
+            openAddModal(id);
+        }
+
+        function deleteCustomer(id) {
+            if (!confirm('确定要删除这个客户吗？此操作不可撤销。')) {
+                return;
+            }
+            
+            const index = customers.findIndex(c => c.id === id);
+            if (index !== -1) {
+                customers.splice(index, 1);
+                localStorage.setItem('pushads_customers', JSON.stringify(customers));
+                
+                renderCustomers();
+                updateStats();
+                updateStorageWarning();
+                showNotification('客户已删除', 'success');
+            }
+        }
+
+        // ==================== 消息发送 ====================
+        function getSelectedMessage() {
+            const id = document.getElementById('messageTemplate').value;
+            if (!id) return null;
+            
+            return messages.messages.find(m => m.id === id);
+        }
+
+        function sendToAll() {
+            const message = getSelectedMessage();
+            if (!message) {
+                showNotification('请先选择消息模板', 'error');
+                return;
+            }
+            
+            const pending = customers.filter(c => {
+                if (c.category !== currentCategory) return false;
+                const phoneKey = c.phone ? c.phone.replace(/[^\d+]/g, '') : '';
+                return phoneKey && !localStorage.getItem(`sent_${phoneKey}`);
+            });
+            
+            if (pending.length === 0) {
+                showNotification('没有待发送的客户', 'warning');
+                return;
+            }
+            
+            if (!confirm(`发送给 ${pending.length} 个客户？\n\n注意：将逐个打开WhatsApp窗口，请确保允许弹出窗口。`)) {
+                return;
+            }
+            
+            let sentCount = 0;
+            const sendNext = (index) => {
+                if (index >= pending.length) {
+                    setTimeout(() => {
+                        renderCustomers();
+                        updateStats();
+                        showNotification(`已发送给 ${sentCount} 个客户`, 'success');
+                    }, 500);
+                    return;
+                }
+                
+                const customer = pending[index];
+                sendMessage(customer, message, false);
+                sentCount++;
+                
+                // 延迟发送下一个，避免弹出窗口被拦截
+                setTimeout(() => sendNext(index + 1), 1000);
+            };
+            
+            sendNext(0);
+        }
+
+        function testMessage() {
+            const message = getSelectedMessage();
+            if (!message) {
+                showNotification('请先选择消息模板', 'error');
+                return;
+            }
+            
+            const phone = prompt('输入测试电话号码（+60开头）：', '+60');
+            if (!phone) return;
+            
+            if (!phone.startsWith('+60') && !phone.startsWith('60')) {
+                showNotification('请输入马来西亚电话号码（+60开头）', 'error');
+                return;
+            }
+            
+            const testCustomer = {
+                name: '测试客户',
+                phone: phone,
+                product: '测试产品'
+            };
+            
+            sendMessage(testCustomer, message, true);
+        }
+
+        function sendMessage(customer, message, isTest = false) {
+            if (!customer || !customer.phone) {
+                if (!isTest) showNotification('客户无电话号码', 'error');
+                return;
+            }
+            
+            let text = message.text;
+            if (customer.name) {
+                text = text.replace(/\[姓名\]/g, customer.name);
+                text = text.replace(/{{name}}/g, customer.name);
+            }
+            if (customer.product) {
+                text = text.replace(/\[產品\]/g, customer.product);
+                text = text.replace(/\[产品名\]/g, customer.product);
+                text = text.replace(/{{product}}/g, customer.product);
+            }
+            
+            const phoneKey = customer.phone.replace(/[^\d+]/g, '');
+            const waLink = `https://wa.me/${phoneKey}?text=${encodeURIComponent(text)}`;
+            
+            if (!isTest) {
+                localStorage.setItem(`sent_${phoneKey}`, new Date().toISOString());
+                
+                const today = new Date().toISOString().slice(0, 10);
+                const todayCount = parseInt(localStorage.getItem(`sentToday_${today}`)) || 0;
+                localStorage.setItem(`sentToday_${today}`, todayCount + 1);
+            }
+            
+            window.open(waLink, '_blank');
+            
+            if (isTest) {
+                showNotification('测试消息已准备发送', 'success');
+            }
+        }
+
+        function sendToCustomer(customerId) {
+            const customer = customers.find(c => c.id === customerId);
+            if (!customer) return;
+            
+            const message = getSelectedMessage();
+            if (!message) {
+                showNotification('请先选择消息模板', 'error');
+                return;
+            }
+            
+            sendMessage(customer, message, false);
+            
+            setTimeout(() => {
+                renderCustomers();
+                updateStats();
+                showNotification('消息已发送', 'success');
+            }, 500);
+        }
+
+        // ==================== 统计和更新 ====================
+        function updateStats() {
+            const today = new Date().toISOString().slice(0, 10);
+            const sentToday = parseInt(localStorage.getItem(`sentToday_${today}`)) || 0;
+            
+            // 总客户
+            const totalCustomers = customers.length;
+            document.getElementById('totalCustomers').textContent = totalCustomers;
+            
+            // 待发送
+            const pending = customers.filter(c => {
+                const phoneKey = c.phone ? c.phone.replace(/[^\d+]/g, '') : '';
+                return phoneKey && !localStorage.getItem(`sent_${phoneKey}`);
+            }).length;
+            
+            document.getElementById('pendingCustomers').textContent = pending;
+            document.getElementById('sentToday').textContent = sentToday;
+            
+            // 消息模板
+            const msgCount = messages.messages ? messages.messages.length : 0;
+            document.getElementById('totalMessages').textContent = msgCount;
+        }
+
+        function showTab(tab) {
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            event.target.closest('.nav-item').classList.add('active');
+            
+            if (tab === 'customers' || tab === 'messages' || tab === 'stats') {
+                showNotification('功能开发中...', 'info');
+            }
+        }
+
+        // ==================== 导入/导出 ====================
+        function exportData() {
+            // 创建精简版本用于导出
+            const exportData = {
+                customers: customers.map(customer => ({
+                    id: customer.id,
+                    name: customer.name,
+                    phone: customer.phone,
+                    category: customer.category,
+                    product: customer.product,
+                    notes: customer.notes,
+                    dateAdded: customer.dateAdded,
+                    lastUpdated: customer.lastUpdated,
+                    hasPhotos: customer.photos && customer.photos.length > 0,
+                    photoCount: customer.photos ? customer.photos.length : 0
+                })),
+                messages: messages,
+                exportDate: new Date().toISOString(),
+                totalCustomers: customers.length,
+                totalMessages: messages.messages ? messages.messages.length : 0,
+                storageInfo: {
+                    used: checkStorage(),
+                    limit: STORAGE_LIMIT
+                }
+            };
+            
+            const dataStr = JSON.stringify(exportData, null, 2);
+            const dataUri = 'data:application/json;charset=utf-8,' + encodeURIComponent(dataStr);
+            const fileName = `pushads_${new Date().toISOString().slice(0,10)}.json`;
+            
+            const link = document.createElement('a');
+            link.setAttribute('href', dataUri);
+            link.setAttribute('download', fileName);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            
+            showNotification('数据导出成功（照片数据未包含）', 'success');
+        }
+
+        function importBackup() {
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = '.json';
+            
+            input.onchange = function(e) {
+                const file = e.target.files[0];
+                if (!file) return;
+                
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    try {
+                        const backup = JSON.parse(e.target.result);
+                        
+                        if (!backup.customers || !Array.isArray(backup.customers)) {
+                            throw new Error('无效的备份格式');
+                        }
+                        
+                        if (confirm(`确定要导入 ${backup.totalCustomers || backup.customers.length} 个客户吗？\n\n注意：这将替换当前数据。`)) {
+                            // 只导入基本客户信息，照片数据需要重新上传
+                            customers = backup.customers.map(customer => ({
+                                ...customer,
+                                photos: [] // 清空照片，需要重新上传
+                            }));
+                            
+                            messages = backup.messages || { messages: [] };
+                            
+                            localStorage.setItem('pushads_customers', JSON.stringify(customers));
+                            localStorage.setItem('pushads_messages', JSON.stringify(messages));
+                            
+                            loadData();
+                            showNotification('数据导入成功（照片需要重新上传）', 'success');
+                        }
+                    } catch (error) {
+                        showNotification('备份文件格式错误: ' + error.message, 'error');
+                    }
+                };
+                reader.readAsText(file);
+            };
+            
+            input.click();
+        }
+
+        // ==================== 通知函数 ====================
+        function showNotification(message, type = 'success') {
+            // 移除现有通知
+            const existing = document.querySelectorAll('.notification');
+            existing.forEach(n => n.remove());
+            
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            
+            const icon = type === 'success' ? 'check-circle' : 
+                        type === 'error' ? 'exclamation-circle' : 
+                        type === 'warning' ? 'exclamation-triangle' : 'info-circle';
+            
+            notification.innerHTML = `<i class="fas fa-${icon}"></i> ${message}`;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                if (notification.parentNode) {
+                    notification.style.animation = 'slideIn 0.3s ease reverse';
+                    setTimeout(() => {
+                        if (notification.parentNode) {
+                            notification.remove();
+                        }
+                    }, 300);
+                }
+            }, 3000);
+        }
+    </script>
+</body>
+</html>

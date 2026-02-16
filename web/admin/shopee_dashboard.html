@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8" />
+  <title>Shopee 管理后台 - 端口5050優化版</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    body { font-family: system-ui, Arial; margin: 16px; background:#f7f7f7; color:#222; }
+    header { display:flex; flex-wrap:wrap; align-items:center; gap:12px; margin-bottom:16px; }
+    header h1 { margin:0; font-size:20px; }
+    .stats { font-size:14px; color:#555; }
+    .toolbar { display:flex; gap:8px; flex-wrap:wrap; }
+    .card { background:#fff; border:1px solid #ddd; border-radius:8px; padding:12px; margin-bottom:16px; }
+    .grid { overflow-x:auto; }
+    table { width:100%; border-collapse:collapse; }
+    th, td { border-bottom:1px solid #eee; padding:8px; text-align:left; font-size:14px; }
+    th { background:#fafafa; }
+    button { padding:6px 10px; border:1px solid #ccc; border-radius:6px; background:#fff; cursor:pointer; }
+    button.primary { background:#0b74de; color:#fff; border-color:#0b74de; }
+    button.warn { background:#b00020; color:#fff; border-color:#b00020; }
+    button.success { background:#28a745; color:#fff; border-color:#28a745; }
+    input, select { padding:6px 8px; border:1px solid #ccc; border-radius:6px; font-size:14px; width:100%; }
+    form .row { display:flex; gap:8px; flex-wrap:wrap; margin-top:8px; }
+    form .row > * { flex:1 1 160px; }
+    .duplicate-warning { background:#fff3cd; border:1px solid #ffeaa7; border-radius:4px; padding:8px; margin:8px 0; font-size:13px; }
+    .error-input { border-color:#dc3545 !important; background-color:#f8d7da; }
+    .validation-info { font-size:12px; color:#666; margin-top:4px; }
+    .status-badge { padding:2px 6px; border-radius:10px; font-size:11px; font-weight:500; }
+    .status-active { background:#d4edda; color:#155724; }
+    .status-inactive { background:#f8d7da; color:#721c24; }
+    .search-box { margin-bottom:12px; padding:6px 8px; border:1px solid #ccc; border-radius:6px; width:200px; }
+    .filter-bar { display:flex; gap:8px; margin-bottom:12px; flex-wrap:wrap; }
+    .link-cell { max-width:200px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+    .modal { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:1000; }
+    .modal-content { position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); background:white; padding:20px; border-radius:8px; width:90%; max-width:500px; }
+    .modal-buttons { display:flex; gap:8px; justify-content:flex-end; margin-top:16px; }
+    .connection-status { display:inline-block; width:12px; height:12px; border-radius:50%; margin-right:6px; }
+    .connected { background:#28a745; }
+    .disconnected { background:#dc3545; }
+    .checking { background:#ffc107; }
+    .api-status { font-size:12px; color:#666; margin-left:10px; }
+    .server-actions { display:flex; gap:8px; margin-top:10px; }
+    .download-btn { background:#17a2b8; color:white; border:none; padding:4px 8px; border-radius:4px; font-size:12px; cursor:pointer; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>🛍️ Shopee 管理后台 - 端口5050專用</h1>
+    <div class="stats">
+      <span class="connection-status connected"></span>
+      已連接到: <strong>http://127.0.0.1:5050</strong>
+      <span class="api-status">API服務器運行中</span>
+    </div>
+    <div class="toolbar">
+      <button id="refreshBtn">🔄 刷新數據</button>
+      <button id="saveLocalBtn" class="primary">💾 保存到本地</button>
+      <button id="exportBtn" class="success">📤 導出JSON</button>
+      <button id="apiTestBtn">🧪 測試API</button>
+    </div>
+  </header>
+
+  <div class="card">
+    <h3>📊 服務器信息</h3>
+    <div class="server-actions">
+      <button onclick="window.open('http://127.0.0.1:5050/js/shopee_list.json', '_blank')">🔗 查看原始JSON</button>
+      <button onclick="window.open('http://127.0.0.1:5050/shopee.html', '_blank')">🛍️ 打開Shopee前台</button>
+      <button onclick="window.open('http://127.0.0.1:5050/', '_blank')">🏠 打開服務器根目錄</button>
+    </div>
+  </div>
+
+  <section class="card">
+    <h2 style="margin:0 0 8px;">➕ 添加新产品</h2>
+    <form id="addForm">
+      <div class="row">
+        <div>
+          <input name="name" placeholder="产品名称 *" required />
+        </div>
+        <div>
+          <input name="price" type="number" step="0.01" placeholder="价格 (RM) *" required />
+        </div>
+        <div>
+          <input name="stock" type="number" placeholder="库存数量 *" required />
+        </div>
+        <div>
+          <input name="image" placeholder="图片文件名" />
+          <div class="validation-info">如: sh-61_1112.png</div>
+        </div>
+        <div>
+          <input name="link" placeholder="Shopee商品链接" />
+        </div>
+        <div>
+          <select name="category" required>
+            <option value="">选择分类 *</option>
+            <option value="health">保健养生</option>
+            <option value="home">家居生活</option>
+            <option value="electronic">电子产品</option>
+            <option value="book">图书文具</option>
+          </select>
+        </div>
+      </div>
+      <div class="row">
+        <button type="submit" class="primary">✅ 添加产品</button>
+        <button type="button" onclick="clearForm()">🗑️ 清空表单</button>
+      </div>
+    </form>
+  </section>
+
+  <section class="card">
+    <div class="filter-bar">
+      <input type="text" id="searchInput" placeholder="🔍 搜索产品名称..." class="search-box" />
+      <select id="statusFilter">
+        <option value="all">所有状态</option>
+        <option value="active">仅上架</option>
+        <option value="inactive">仅下架</option>
+      </select>
+      <select id="categoryFilter">
+        <option value="all">所有分类</option>
+        <option value="health">保健养生</option>
+        <option value="home">家居生活</option>
+        <option value="electronic">电子产品</option>
+        <option value="book">图书文具</option>
+      </select>
+    </div>
+    
+    <div class="grid">
+      <table id="productTable">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>名称</th>
+            <th>价格</th>
+            <th>库存</th>
+            <th>状态</th>
+            <th>分类</th>
+            <th>图片</th>
+            <th>Shopee链接</th>
+            <th>操作</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- 编辑产品模态框 -->
+  <div id="editModal" class="modal">
+    <div class="modal-content">
+      <h3>编辑产品</h3>
+      <form id="editForm">
+        <input type="hidden" id="editId" name="id">
+        <div class="row">
+          <div>
+            <label>产品名称 *</label>
+            <input type="text" id="editName" name="name" required>
+          </div>
+          <div>
+            <label>价格 (RM) *</label>
+            <input type="number" step="0.01" id="editPrice" name="price" required>
+          </div>
+          <div>
+            <label>库存数量 *</label>
+            <input type="number" id="editStock" name="stock" required>
+          </div>
+        </div>
+        <div class="row">
+          <div>
+            <label>图片文件名</label>
+            <input type="text" id="editImage" name="image">
+          </div>
+          <div>
+            <label>Shopee商品链接</label>
+            <input type="text" id="editLink" name="link">
+          </div>
+          <div>
+            <label>分类 *</label>
+            <select id="editCategory" name="category" required>
+              <option value="health">保健养生</option>
+              <option value="home">家居生活</option>
+              <option value="electronic">电子产品</option>
+              <option value="book">图书文具</option>
+            </select>
+          </div>
+        </div>
+        <div class="modal-buttons">
+          <button type="button" onclick="closeEditModal()">取消</button>
+          <button type="submit" class="primary">保存更改</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    // =============================================
+    // 配置
+    // =============================================
+    const SERVER_URL = 'http://127.0.0.1:5050';
+    const JSON_URL = `${SERVER_URL}/js/shopee_list.json`;
+    
+    let allProducts = [];
+
+    // =============================================
+    // 數據加載
+    // =============================================
+    async function loadData() {
+      try {
+        console.log(`📥 從 ${JSON_URL} 加載數據...`);
+        
+        const response = await fetch(JSON_URL);
+        if (!response.ok) {
+          throw new Error(`HTTP錯誤: ${response.status}`);
+        }
+        
+        const data = await response.json();
+        
+        if (!data.products || !Array.isArray(data.products)) {
+          throw new Error('JSON格式不正確');
+        }
+        
+        allProducts = data.products;
+        console.log(`✅ 成功加載 ${allProducts.length} 個產品`);
+        
+        updateDisplay();
+        
+      } catch (error) {
+        console.error('❌ 加載失敗:', error);
+        alert(`加載數據失敗:\n${error.message}\n\n請確保服務器正在運行: ${SERVER_URL}`);
+      }
+    }
+
+    // =============================================
+    // 數據顯示
+    // =============================================
+    function updateDisplay() {
+      const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+      const statusFilter = document.getElementById('statusFilter').value;
+      const categoryFilter = document.getElementById('categoryFilter').value;
+
+      const filteredProducts = allProducts.filter(p => {
+        const matchesSearch = p.name.toLowerCase().includes(searchTerm);
+        const matchesStatus = statusFilter === 'all' || p.status === statusFilter;
+        const matchesCategory = categoryFilter === 'all' || p.category === categoryFilter;
+        return matchesSearch && matchesStatus && matchesCategory;
+      });
+
+      renderTable(filteredProducts);
+    }
+
+    function renderTable(products) {
+      const tbody = document.querySelector("#productTable tbody");
+      
+      if (products.length === 0) {
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="9" style="text-align:center; padding:20px; color:#6c757d;">
+              沒有找到匹配的產品
+            </td>
+          </tr>
+        `;
+        return;
+      }
+      
+      let html = '';
+      
+      products.forEach(p => {
+        const categoryName = getCategoryName(p.category);
+        const statusText = p.status === 'active' ? '上架' : '下架';
+        const statusClass = p.status === 'active' ? 'status-active' : 'status-inactive';
+        
+        html += `
+          <tr>
+            <td>${p.id}</td>
+            <td><strong>${p.name}</strong></td>
+            <td>RM ${Number(p.price).toFixed(2)}</td>
+            <td>${p.stock}</td>
+            <td><span class="status-badge ${statusClass}">${statusText}</span></td>
+            <td>${categoryName}</td>
+            <td>${p.image ? `<small>${p.image}</small>` : '—'}</td>
+            <td class="link-cell">
+              ${p.link ? `
+                <a href="${p.link}" target="_blank" title="${p.link}">
+                  查看
+                </a>
+                <button class="download-btn" onclick="copyToClipboard('${p.link}')" title="複製鏈接">
+                  📋
+                </button>
+              ` : '—'}
+            </td>
+            <td>
+              <button onclick="openEditModal(${p.id})" title="編輯">✏️</button>
+              <button class="${p.status === 'active' ? 'warn' : 'success'}" 
+                      onclick="toggleProductStatus(${p.id})"
+                      title="${p.status === 'active' ? '下架' : '上架'}">
+                ${p.status === 'active' ? '⬇️' : '⬆️'}
+              </button>
+              <button class="warn" onclick="deleteProduct(${p.id})" title="刪除">🗑️</button>
+            </td>
+          </tr>
+        `;
+      });
+      
+      tbody.innerHTML = html;
+    }
+
+    function getCategoryName(category) {
+      const map = {
+        'health': '保健养生',
+        'home': '家居生活', 
+        'electronic': '电子产品',
+        'book': '图书文具'
+      };
+      return map[category] || category || '其他';
+    }
+
+    // =============================================
+    // 數據保存（本地保存方案）
+    // =============================================
+    function saveToLocal() {
+      const dataToSave = {
+        products: allProducts,
+        totalProducts: allProducts.length,
+        lastUpdated: new Date().toISOString()
+      };
+      
+      // 創建下載鏈接
+      const blob = new Blob([JSON.stringify(dataToSave, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `shopee_data_${new Date().toISOString().slice(0,10)}.json`;
+      
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+      
+      alert(`✅ 已導出 ${allProducts.length} 個產品\n\n請將下載的文件複製到:\n/storage/emulated/0/bursasearch/myx_shop/js/shopee_list.json\n\n然後重啟服務器使更改生效。`);
+    }
+
+    function exportJSON() {
+      const dataToSave = {
+        products: allProducts,
+        totalProducts: allProducts.length,
+        lastUpdated: new Date().toISOString()
+      };
+      
+      const jsonStr = JSON.stringify(dataToSave, null, 2);
+      const textarea = document.createElement('textarea');
+      textarea.value = jsonStr;
+      textarea.style.position = 'fixed';
+      textarea.style.opacity = '0';
+      document.body.appendChild(textarea);
+      textarea.select();
+      document.execCommand('copy');
+      document.body.removeChild(textarea);
+      
+      alert(`✅ 已複製 ${allProducts.length} 個產品的JSON數據到剪貼板\n\n您可以將內容保存到文件中。`);
+    }
+
+    // =============================================
+    // 產品操作
+    // =============================================
+    document.getElementById("addForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const form = e.target;
+      
+      try {
+        // 生成新ID
+        const newId = allProducts.length > 0 ? Math.max(...allProducts.map(p => p.id)) + 1 : 1;
+        
+        const newProduct = {
+          id: newId,
+          name: form.name.value.trim(),
+          price: parseFloat(form.price.value),
+          stock: parseInt(form.stock.value),
+          image: form.image.value.trim() || `sh-${newId}.png`,
+          link: form.link.value.trim(),
+          category: form.category.value || 'health',
+          status: "active",
+          sales: 0
+        };
+
+        // 檢查重複
+        const nameDuplicate = allProducts.find(p => 
+          p.name.toLowerCase() === newProduct.name.toLowerCase()
+        );
+        
+        if (nameDuplicate) {
+          if (!confirm(`產品名稱重複: "${newProduct.name}" (ID: ${nameDuplicate.id})\n\n仍然要添加嗎？`)) {
+            return;
+          }
+        }
+
+        // 添加到本地列表
+        allProducts.push(newProduct);
+        form.reset();
+        
+        updateDisplay();
+        
+        alert(`✅ 產品 "${newProduct.name}" 已添加到本地列表\n\n請點擊「保存到本地」按鈕導出數據，然後手動更新服務器文件。`);
+        
+      } catch (error) {
+        alert("錯誤: " + error.message);
+      }
+    });
+
+    function openEditModal(id) {
+      const product = allProducts.find(p => p.id === id);
+      if (!product) return;
+
+      document.getElementById('editId').value = product.id;
+      document.getElementById('editName').value = product.name;
+      document.getElementById('editPrice').value = product.price;
+      document.getElementById('editStock').value = product.stock;
+      document.getElementById('editImage').value = product.image || '';
+      document.getElementById('editLink').value = product.link || '';
+      document.getElementById('editCategory').value = product.category || 'health';
+
+      document.getElementById('editModal').style.display = 'block';
+    }
+
+    function closeEditModal() {
+      document.getElementById('editModal').style.display = 'none';
+    }
+
+    document.getElementById('editForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      
+      const id = parseInt(document.getElementById('editId').value);
+      const updates = {
+        name: document.getElementById('editName').value.trim(),
+        price: parseFloat(document.getElementById('editPrice').value),
+        stock: parseInt(document.getElementById('editStock').value),
+        image: document.getElementById('editImage').value.trim(),
+        link: document.getElementById('editLink').value.trim(),
+        category: document.getElementById('editCategory').value
+      };
+
+      // 更新本地列表
+      const index = allProducts.findIndex(p => p.id === id);
+      if (index !== -1) {
+        allProducts[index] = { ...allProducts[index], ...updates };
+        updateDisplay();
+        closeEditModal();
+        alert('✅ 產品已更新（本地修改）\n\n請記得保存到文件。');
+      }
+    });
+
+    function toggleProductStatus(id) {
+      const product = allProducts.find(p => p.id === id);
+      if (!product) return;
+      
+      const newStatus = product.status === 'active' ? 'inactive' : 'active';
+      const confirmMessage = newStatus === 'inactive' ? 
+        '確定要下架這個產品嗎？' : '確定要重新上架這個產品嗎？';
+      
+      if (!confirm(confirmMessage)) return;
+      
+      product.status = newStatus;
+      updateDisplay();
+      
+      alert(`產品已${newStatus === 'inactive' ? '下架' : '上架'}（本地修改）\n\n請記得保存到文件。`);
+    }
+
+    function deleteProduct(id) {
+      const product = allProducts.find(p => p.id === id);
+      if (!product) return;
+
+      if (!confirm(`確定要刪除產品嗎？\n\nID: ${product.id}\n名稱: ${product.name}`)) return;
+
+      allProducts = allProducts.filter(p => p.id !== id);
+      updateDisplay();
+      
+      alert('✅ 產品已刪除（本地修改）\n\n請記得保存到文件。');
+    }
+
+    function clearForm() {
+      document.getElementById('addForm').reset();
+    }
+
+    // =============================================
+    // 工具函數
+    // =============================================
+    function copyToClipboard(text) {
+      navigator.clipboard.writeText(text).then(() => {
+        alert('✅ 鏈接已複製到剪貼板');
+      }).catch(err => {
+        console.error('複製失敗:', err);
+      });
+    }
+
+    async function testAPI() {
+      try {
+        alert(`🧪 測試API連接...\n\nURL: ${SERVER_URL}`);
+        
+        // 測試服務器根目錄
+        const rootResponse = await fetch(SERVER_URL);
+        console.log('根目錄響應:', rootResponse.status);
+        
+        // 測試JSON文件
+        const jsonResponse = await fetch(JSON_URL);
+        console.log('JSON文件響應:', jsonResponse.status);
+        
+        let message = `API測試結果:\n\n`;
+        message += `1. 服務器根目錄: ${rootResponse.ok ? '✅ 正常' : '❌ 異常'}\n`;
+        message += `2. JSON文件: ${jsonResponse.ok ? '✅ 正常' : '❌ 異常'}\n`;
+        message += `\n當前產品數: ${allProducts.length}\n`;
+        message += `服務器URL: ${SERVER_URL}`;
+        
+        alert(message);
+        
+      } catch (error) {
+        alert(`❌ API測試失敗:\n${error.message}\n\n請確保服務器正在運行。`);
+      }
+    }
+
+    // =============================================
+    // 事件監聽器
+    // =============================================
+    document.getElementById("refreshBtn").addEventListener("click", loadData);
+    document.getElementById("saveLocalBtn").addEventListener("click", saveToLocal);
+    document.getElementById("exportBtn").addEventListener("click", exportJSON);
+    document.getElementById("apiTestBtn").addEventListener("click", testAPI);
+    
+    document.getElementById("searchInput").addEventListener("input", updateDisplay);
+    document.getElementById("statusFilter").addEventListener("change", updateDisplay);
+    document.getElementById("categoryFilter").addEventListener("change", updateDisplay);
+
+    // 點擊模態框外部關閉
+    document.getElementById('editModal').addEventListener('click', (e) => {
+      if (e.target.id === 'editModal') {
+        closeEditModal();
+      }
+    });
+
+    // =============================================
+    // 初始化
+    // =============================================
+    async function init() {
+      console.log('🚀 Shopee管理後台初始化...');
+      console.log(`服務器: ${SERVER_URL}`);
+      console.log(`JSON文件: ${JSON_URL}`);
+      
+      // 顯示歡迎信息
+      alert(`歡迎使用Shopee管理後台！\n\n連接至: ${SERVER_URL}\n\n請注意：修改會先保存在瀏覽器中，完成後請點擊「保存到本地」導出文件。`);
+      
+      // 加載數據
+      await loadData();
+      
+      console.log('✅ 初始化完成');
+    }
+
+    // 頁面加載完成後初始化
+    document.addEventListener('DOMContentLoaded', init);
+  </script>
+</body>
+</html>

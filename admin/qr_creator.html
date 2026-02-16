@@ -1,0 +1,8 @@
+<!-- 使用 qrcode.js -->
+<script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+<div id="qrcode"></div>
+<script>
+  QRCode.toCanvas(document.getElementById('qrcode'), 
+    'https://bursasearch.github.io/myx_shop/', 
+    { width: 200 });
+</script>

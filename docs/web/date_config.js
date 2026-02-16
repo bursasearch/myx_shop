@@ -1,5 +1,15 @@
-// 自动生成
+// 自动生成 - 更新至 2026-02-15
 window.availableDates = [
+  {
+    "id": "20260215",
+    "display": "2026-02-15",
+    "file": "history/picks_20260215.json"
+  },
+  {
+    "id": "20260213",
+    "display": "2026-02-13",
+    "file": "history/picks_20260213.json"
+  },
   {
     "id": "20260212",
     "display": "2026-02-12",
@@ -41,4 +51,4 @@ window.availableDates = [
     "file": "history/picks_20260202.json"
   }
 ];
-window.latestDate = "20260212";
+window.latestDate = "20260215";

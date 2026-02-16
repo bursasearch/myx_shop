@@ -1,0 +1,88 @@
+[2026-02-05 16:23:18] 开始同步任务...
+[2026-02-05 16:23:18] 🔄 开始完整同步...
+[2026-02-05 16:23:19] 📄 同步HTML页面...
+[2026-02-05 16:23:19]   ✅ index.html
+[2026-02-05 16:23:19]   ✅ vehicles.html
+[2026-02-05 16:23:19]   ✅ shopee.html
+[2026-02-05 16:23:19]   ✅ products.html
+[2026-02-05 16:23:19]   ✅ lazada.html
+[2026-02-05 16:23:19]   ✅ temu.html
+[2026-02-05 16:23:19]   ✅ real-estate.html
+[2026-02-05 16:23:19]   ✅ vehicles_notice.html
+[2026-02-05 16:23:19]   ✅ verification.html
+[2026-02-05 16:23:19] 🌐 同步web目录...
+[2026-02-05 16:23:19]   ✅ web/date_config.js
+[2026-02-05 16:23:19]   ✅ web/picks_history.js
+[2026-02-05 16:23:19]   ✅ web/latest_price.json
+[2026-02-05 16:23:19]   ✅ web/data.json
+[2026-02-05 16:23:19]   ✅ web/picks_latest.json
+[2026-02-05 16:23:19]   ✅ web/history/*.json (2 文件)
+[2026-02-05 16:23:19] 🎨 同步资源文件...
+[2026-02-05 16:23:20]   ✅ images/
+[2026-02-05 16:23:20]   ✅ js/
+[2026-02-05 16:23:20]   ✅ admin/
+[2026-02-05 16:23:20] 🎉 完整同步完成！
+=== 同步开始: Thu Feb 12 09:46:43 +08 2026 ===
+============================================================
+🏦 Bursa Malaysia EOD处理器 - GitHub Pages版本
+============================================================
+🔍 查找最新的EOD文件...
+❌ 没有找到CSV文件
+❌ 处理失败
+AI选股生成失败: Thu Feb 12 09:46:45 +08 2026
+🚀 开始部署到docs目录...
+📁 创建目录结构...
+📄 复制AI监控仪表板...
+📊 复制数据文件...
+🔗 更新导航链接...
+📋 生成部署报告...
+🔍 验证部署...
+⚠️  警告: /data/data/com.termux/files/home/storage/shared/bursasearch/myx_shop/docs/admin/admin_vehicles.html 可能包含404链接
+⚠️  警告: /data/data/com.termux/files/home/storage/shared/bursasearch/myx_shop/docs/admin/shopee_simple.html 可能包含404链接
+
+✅ 部署完成!
+📁 输出目录: /data/data/com.termux/files/home/storage/shared/bursasearch/myx_shop/docs
+📊 总文件数: 99
+
+📋 下一步操作:
+1. 检查部署报告: /data/data/com.termux/files/home/storage/shared/bursasearch/myx_shop/docs/DEPLOYMENT.md
+2. 在浏览器中测试:
+   - file:///data/data/com.termux/files/home/storage/shared/bursasearch/myx_shop/docs/ai-monitor.html
+3. 提交到GitHub:
+   cd /data/data/com.termux/files/home/storage/shared/bursasearch/myx_shop/docs
+   git add . && git commit -m '更新部署' && git push
+
+🎉 AI选股监控系统已准备就绪!
+=== 同步完成: Thu Feb 12 09:46:47 +08 2026 ===
+📊 同步统计:
+- JSON文件: 5
+- 历史记录: 7
+=== 同步开始: Thu Feb 12 09:54:37 +08 2026 ===
+AI选股生成成功: Thu Feb 12 09:54:39 +08 2026
+🚀 开始部署到docs目录...
+📁 创建目录结构...
+📄 复制AI监控仪表板...
+📊 复制数据文件...
+🔗 更新导航链接...
+📋 生成部署报告...
+🔍 验证部署...
+⚠️  警告: /data/data/com.termux/files/home/storage/shared/bursasearch/myx_shop/docs/admin/admin_vehicles.html 可能包含404链接
+⚠️  警告: /data/data/com.termux/files/home/storage/shared/bursasearch/myx_shop/docs/admin/shopee_simple.html 可能包含404链接
+
+✅ 部署完成!
+📁 输出目录: /data/data/com.termux/files/home/storage/shared/bursasearch/myx_shop/docs
+📊 总文件数: 100
+
+📋 下一步操作:
+1. 检查部署报告: /data/data/com.termux/files/home/storage/shared/bursasearch/myx_shop/docs/DEPLOYMENT.md
+2. 在浏览器中测试:
+   - file:///data/data/com.termux/files/home/storage/shared/bursasearch/myx_shop/docs/ai-monitor.html
+3. 提交到GitHub:
+   cd /data/data/com.termux/files/home/storage/shared/bursasearch/myx_shop/docs
+   git add . && git commit -m '更新部署' && git push
+
+🎉 AI选股监控系统已准备就绪!
+=== 同步完成: Thu Feb 12 09:54:41 +08 2026 ===
+📊 同步统计:
+- JSON文件: 5
+- 历史记录: 7

@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>本地測試 - Bursa AI</title>
+    <script>
+        // 自動跳轉到 bursa.html
+        window.location.href = "web/bursa.html";
+    </script>
+</head>
+<body>
+    <h1>Bursa AI 投資助手 - 本地測試</h1>
+    <p>如果沒有自動跳轉，請點擊：</p>
+    <ul>
+        <li><a href="web/bursa.html">主要應用 (bursa.html)</a></li>
+        <li><a href="docs/index.html">GitHub Pages 版本</a></li>
+    </ul>
+</body>
+</html>
