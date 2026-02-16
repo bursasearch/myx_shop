@@ -668,14 +668,8 @@ async function loadDateConfig() {
 
         // ==================== 加载选中的历史数据 ====================
 async function loadSelectedHistory() {
-    const dateId = document.getElementById('historyDateSelect').value;
-    if (!dateId) return;
-    
-    // ✅ Baca terus dari file JSON dalam folder history
-    const response = await fetch(`web/history/picks_${dateId}.json`);
-    const data = await response.json();
-    // ... render data
-}
+    const select = document.getElementById('historyDateSelect');
+    if (!select) return;
     
     const dateId = select.value;
     if (!dateId) return;
