@@ -1,0 +1,89 @@
+{
+  "date": "2026-02-20",
+  "total_picks": 15,
+  "warrant_count": 0,
+  "stock_count": 15,
+  "warrants": [],
+  "stocks": [
+    {
+      "code": "1287",
+      "name": "EXSIMHB",
+      "score": 98,
+      "b_percent": 72.0,
+      "price": 0.335,
+      "rank": 1
+    },
+    {
+      "code": "5327",
+      "name": "MEGAFB",
+      "score": 98,
+      "b_percent": 80.0,
+      "price": 0.97,
+      "rank": 2
+    },
+    {
+      "code": "4324",
+      "name": "HENGYUAN",
+      "score": 98,
+      "b_percent": 62.0,
+      "price": 0.975,
+      "rank": 3
+    },
+    {
+      "code": "5205",
+      "name": "SENDAI",
+      "score": 98,
+      "b_percent": 73.0,
+      "price": 0.52,
+      "rank": 4
+    },
+    {
+      "code": "8664",
+      "name": "SPSETIA",
+      "score": 96,
+      "b_percent": 67.0,
+      "price": 0.975,
+      "rank": 5
+    },
+    {
+      "code": "1171",
+      "name": "MBSB",
+      "score": 96,
+      "b_percent": 62.0,
+      "price": 0.765,
+      "rank": 6
+    },
+    {
+      "code": "0376",
+      "name": "IAB",
+      "score": 95,
+      "b_percent": 60.0,
+      "price": 1.7,
+      "rank": 7
+    },
+    {
+      "code": "0208",
+      "name": "GREATEC",
+      "score": 95,
+      "b_percent": 64.0,
+      "price": 1.89,
+      "rank": 8
+    },
+    {
+      "code": "0375",
+      "name": "THMY",
+      "score": 95,
+      "b_percent": 68.0,
+      "price": 1.17,
+      "rank": 9
+    },
+    {
+      "code": "7148",
+      "name": "DPHARMA",
+      "score": 95,
+      "b_percent": 64.0,
+      "price": 1.55,
+      "rank": 10
+    }
+  ]
+}

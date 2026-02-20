@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daihatsu Feroza - 车辆详情 | Myx Shop</title>
+    <meta name="google" content="notranslate">
+    <meta http-equiv="Content-Language" content="zh">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Microsoft JhengHei', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+        }
+        
+        .header {
+            background: #2d3748;
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 0.5rem;
+        }
+        
+        .price {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #ff6b35;
+            margin: 1rem 0;
+        }
+        
+        .content {
+            padding: 2rem;
+        }
+        
+        .photo-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+        
+        .photo-item {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 1rem;
+            text-align: center;
+        }
+        
+        .photo-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            background: #e9ecef;
+        }
+        
+        .photo-checkbox {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .checklist {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin: 2rem 0;
+        }
+        
+        .check-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.8rem 0;
+            border-bottom: 1px solid #e9ecef;
+        }
+        
+        .check-item:last-child {
+            border-bottom: none;
+        }
+        
+        .check-item input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+        }
+        
+        .vehicle-info {
+            background: #e8f4fd;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin: 2rem 0;
+            border-left: 5px solid #3498db;
+        }
+        
+        .actions {
+            display: flex;
+            gap: 1rem;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+        
+        .action-btn {
+            flex: 1;
+            padding: 15px 25px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            text-decoration: none;
+            min-width: 200px;
+        }
+        
+        .btn-primary {
+            background: #667eea;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #5a6fd8;
+            transform: translateY(-2px);
+        }
+        
+        .btn-whatsapp {
+            background: #25D366;
+            color: white;
+        }
+        
+        .btn-whatsapp:hover {
+            background: #20bd5c;
+            transform: translateY(-2px);
+        }
+        
+        .btn-back {
+            background: #f8f9fa;
+            color: #333;
+            border: 2px solid #e9ecef;
+        }
+        
+        .btn-back:hover {
+            background: #e9ecef;
+            transform: translateY(-2px);
+        }
+        
+        .footer {
+            text-align: center;
+            color: #666;
+            padding: 2rem;
+            background: #f8f9fa;
+            margin-top: 2rem;
+        }
+        
+        @media (max-width: 768px) {
+            .photo-gallery {
+                grid-template-columns: 1fr;
+            }
+            
+            .actions {
+                flex-direction: column;
+            }
+            
+            .action-btn {
+                min-width: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Daihatsu Feroza</h1>
+            <div class="price">售價: RM 25,000</div>
+            <p>經典四輪驅動越野車，保養良好，性能可靠</p>
+        </div>
+        
+        <div class="content">
+            <div class="vehicle-info">
+                <h3>車輛描述</h3>
+                <p>經典四輪驅動越野車，保養良好，性能可靠，適合越野愛好者。完整保養記錄，無事故歷史。</p>
+            </div>
+            
+            <div class="checklist">
+                <h3>車輛照片檢查清單</h3>
+                <div class="check-item">
+                    <input type="checkbox" id="cover" checked>
+                    <label for="cover">封面照片 - 車輛封面照</label>
+                </div>
+                <div class="check-item">
+                    <input type="checkbox" id="right-side" checked>
+                    <label for="right-side">右側面照片 - 車輛右側面視圖</label>
+                </div>
+                <div class="check-item">
+                    <input type="checkbox" id="left-side" checked>
+                    <label for="left-side">左側面照片 - 車輛左側面視圖</label>
+                </div>
+                <div class="check-item">
+                    <input type="checkbox" id="rear" checked>
+                    <label for="rear">車尾照片 - 車尾視圖</label>
+                </div>
+                <div class="check-item">
+                    <input type="checkbox" id="internal-rear" checked>
+                    <label for="internal-rear">後方內側照片 - 後方內飾</label>
+                </div>
+                <div class="check-item">
+                    <input type="checkbox" id="internal-left" checked>
+                    <label for="internal-left">左內側照片 - 左側內飾</label>
+                </div>
+            </div>
+            
+            <div class="photo-gallery">
+                <!-- 1. 封面照片 -->
+                <div class="photo-item">
+                    <div class="photo-checkbox">
+                        <input type="checkbox" id="gallery-cover" checked>
+                        <label for="gallery-cover">封面照片</label>
+                    </div>
+                    <img src="images/vehicles/ABC1111/cover.jpg" alt="封面照片" class="photo-image">
+                </div>
+                
+                <!-- 2. 右侧面照片 -->
+                <div class="photo-item">
+                    <div class="photo-checkbox">
+                        <input type="checkbox" id="gallery-side1" checked>
+                        <label for="gallery-side1">右側面照片</label>
+                    </div>
+                    <img src="images/vehicles/ABC1111/side_01.jpg" alt="右側面照片" class="photo-image">
+                </div>
+                
+                <!-- 3. 左侧面照片 -->
+                <div class="photo-item">
+                    <div class="photo-checkbox">
+                        <input type="checkbox" id="gallery-side2" checked>
+                        <label for="gallery-side2">左側面照片</label>
+                    </div>
+                    <img src="images/vehicles/ABC1111/side_02.jpg" alt="左側面照片" class="photo-image">
+                </div>
+                
+                <!-- 4. 车尾照片 -->
+                <div class="photo-item">
+                    <div class="photo-checkbox">
+                        <input type="checkbox" id="gallery-rear" checked>
+                        <label for="gallery-rear">車尾照片</label>
+                    </div>
+                    <img src="images/vehicles/ABC1111/rear.jpg" alt="車尾照片" class="photo-image">
+                </div>
+                
+                <!-- 5. 后方内侧照片 -->
+                <div class="photo-item">
+                    <div class="photo-checkbox">
+                        <input type="checkbox" id="gallery-internal1" checked>
+                        <label for="gallery-internal1">後方內側照片</label>
+                    </div>
+                    <img src="images/vehicles/ABC1111/internal_01.jpg" alt="後方內側照片" class="photo-image">
+                </div>
+                
+                <!-- 6. 左内侧照片 -->
+                <div class="photo-item">
+                    <div class="photo-checkbox">
+                        <input type="checkbox" id="gallery-internal2" checked>
+                        <label for="gallery-internal2">左內側照片</label>
+                    </div>
+                    <img src="images/vehicles/ABC1111/internal_02.jpg" alt="左內側照片" class="photo-image">
+                </div>
+            </div>
+            
+            <div class="actions">
+                <a href="https://wa.me/60189848128?text=我對您擺放在 Myx Shop 的 1996 年份的 Daihatsu Feroza 車輛有興趣，請提供更多詳情和試車安排" 
+                   class="action-btn btn-whatsapp" target="_blank">
+                    <i class="fab fa-whatsapp"></i> WhatsApp 聯繫
+                </a>
+                <a href="vehicles.html" class="action-btn btn-back">
+                    <i class="fas fa-arrow-left"></i> 返回車輛列表
+                </a>
+                <a href="index.html" class="action-btn btn-primary">
+                    <i class="fas fa-home"></i> 返回首頁
+                </a>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>© 2025 Myx Shop | 專業二手車買賣平台</p>
+            <p style="margin-top: 10px; font-size: 0.9em;">
+                SSM注册: 202510210078 (JM1034075-K) | +60196819069
+            </p>
+        </div>
+    </div>
+</body>
+</html>

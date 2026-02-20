@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Myx Shop - Shopee 產品商店</title>
+    <meta name="description" content="Myx Shop - 精選Shopee優質產品">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    
+    <style>
+        /* CSS完全保持不變，因為沒問題 */
+        :root {
+            --primary: #667eea;
+            --primary-dark: #5a6fd8;
+            --danger: #f56565;
+            --success: #48bb78;
+            --warning: #f6ad55;
+            --gray-100: #f7fafc;
+            --gray-200: #e2e8f0;
+            --gray-600: #4a5568;
+            --gray-800: #2d3748;
+            --radius: 12px;
+            --shadow: 0 5px 15px rgba(0,0,0,0.1);
+            --transition: all 0.3s ease;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            min-height: 100vh;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 2rem;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .header-nav {
+            margin-top: 1rem;
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .nav-btn {
+            background: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            text-decoration: none;
+            color: var(--primary);
+            font-weight: 600;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-btn:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        /* 篩選器 */
+        .filters {
+            background: white;
+            padding: 1.5rem;
+            border-radius: var(--radius);
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow);
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .filter-group {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .filter-select {
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--gray-200);
+            border-radius: 8px;
+            background: white;
+            font-size: 0.9rem;
+            cursor: pointer;
+        }
+
+        .search-box {
+            flex: 1;
+            min-width: 200px;
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--gray-200);
+            border-radius: 8px;
+            font-size: 0.9rem;
+        }
+
+        /* 產品網格 */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            background: var(--gray-100);
+            transition: var(--transition);
+        }
+
+        .product-card:hover .product-image {
+            transform: scale(1.05);
+        }
+
+        .product-info {
+            padding: 1.5rem;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .product-name {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--gray-800);
+            line-height: 1.4;
+        }
+
+        .product-price {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .product-meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.9rem;
+            color: var(--gray-600);
+            margin-bottom: 1rem;
+        }
+
+        .stock {
+            font-weight: 500;
+        }
+
+        .stock.in-stock {
+            color: var(--success);
+        }
+
+        .stock.low-stock {
+            color: var(--warning);
+        }
+
+        .stock.out-of-stock {
+            color: var(--danger);
+        }
+
+        .buy-btn {
+            display: block;
+            width: 100%;
+            padding: 0.75rem;
+            background: var(--primary);
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: var(--transition);
+            margin-top: auto;
+            border: none;
+            cursor: pointer;
+        }
+
+        .buy-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .buy-btn:disabled {
+            background: var(--gray-600);
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* 空狀態 */
+        .empty-state {
+            text-align: center;
+            padding: 3rem;
+            color: white;
+            background: rgba(255,255,255,0.1);
+            border-radius: var(--radius);
+            margin: 2rem 0;
+        }
+
+        .empty-state i {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            opacity: 0.7;
+        }
+
+        .empty-state h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        /* 加載狀態 */
+        .loading {
+            text-align: center;
+            padding: 2rem;
+            color: white;
+        }
+
+        .loading-spinner {
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-top: 4px solid white;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* 產品統計 */
+        .products-stats {
+            background: white;
+            padding: 1rem;
+            border-radius: var(--radius);
+            margin-bottom: 1rem;
+            box-shadow: var(--shadow);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .stat-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+            color: var(--gray-600);
+        }
+
+        .stat-number {
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        /* 響應式 */
+        @media (max-width: 768px) {
+            .filters {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .filter-group {
+                justify-content: space-between;
+            }
+            
+            .products-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+            
+            .header-nav {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .nav-btn {
+                width: 100%;
+                max-width: 300px;
+                justify-content: center;
+            }
+            
+            .products-stats {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .container {
+                padding: 10px;
+            }
+        }
+
+        /* 分類標簽 */
+        .category-tag {
+            display: inline-block;
+            padding: 0.2rem 0.6rem;
+            background: var(--gray-100);
+            color: var(--gray-600);
+            border-radius: 12px;
+            font-size: 0.7rem;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+
+        .category-health { background: #e6fffa; color: #234e52; }
+        .category-home { background: #fffaf0; color: #744210; }
+        .category-electronic { background: #ebf8ff; color: #1a365d; }
+        .category-book { background: #faf5ff; color: #44337a; }
+
+        /* 狀態標簽 */
+        .status-badge {
+            display: inline-block;
+            padding: 0.2rem 0.6rem;
+            border-radius: 12px;
+            font-size: 0.7rem;
+            font-weight: 500;
+            margin-left: 0.5rem;
+        }
+
+        .status-active { background: #e6fffa; color: #234e52; }
+        .status-inactive { background: #fed7d7; color: #c53030; }
+
+        /* 刷新按鈕 */
+        .refresh-btn {
+            background: var(--success);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .refresh-btn:hover {
+            background: #38a169;
+            transform: translateY(-2px);
+        }
+
+        /* Toast通知 */
+        .custom-toast {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%) translateY(-100px);
+            background: white;
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            z-index: 1000;
+            transition: transform 0.3s ease;
+            border-left: 4px solid var(--primary);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .custom-toast.success { border-left-color: var(--success); }
+        .custom-toast.error { border-left-color: var(--danger); }
+        .custom-toast.info { border-left-color: var(--primary); }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="header">
+            <h1><i class="fab fa-shopify"></i> Myx Shop</h1>
+            <p>精選 Shopee 優質產品 - 一站式購物體驗</p>
+            
+            <!-- 導航鏈接保持不變 -->
+            <div class="header-nav">
+                <a href="admin/shopee_dashboard.html" class="nav-btn">
+                    <i class="fas fa-cog"></i> 管理後台
+                </a>
+                <a href="index.html" class="nav-btn">
+                    <i class="fas fa-home"></i> 回到主頁
+                </a>
+                <a href="bursa.html" class="nav-btn">
+                    <i class="fas fa-chart-line"></i> 回到AI選股
+                </a>
+            </div>
+        </div>
+
+        <!-- 產品統計 -->
+        <div class="products-stats">
+            <div class="stat-item">
+                <i class="fas fa-cubes"></i>
+                <span>總產品數: <span class="stat-number" id="totalProducts">0</span></span>
+            </div>
+            <div class="stat-item">
+                <i class="fas fa-check-circle"></i>
+                <span>有庫存: <span class="stat-number" id="availableProducts">0</span></span>
+            </div>
+            <div class="stat-item">
+                <i class="fas fa-sync-alt"></i>
+                <span>最後更新: <span class="stat-number" id="lastUpdated">-</span></span>
+            </div>
+            <button class="refresh-btn" onclick="ProductStore.loadProducts()">
+                <i class="fas fa-redo"></i> 刷新數據
+            </button>
+        </div>
+
+        <!-- 篩選器 -->
+        <div class="filters">
+            <div class="filter-group">
+                <label for="categoryFilter">分類:</label>
+                <select id="categoryFilter" class="filter-select">
+                    <option value="all">所有分類</option>
+                    <option value="health">保健養生</option>
+                    <option value="home">家居生活</option>
+                    <option value="electronic">電子產品</option>
+                    <option value="book">圖書文具</option>
+                </select>
+            </div>
+            
+            <div class="filter-group">
+                <label for="sortFilter">排序:</label>
+                <select id="sortFilter" class="filter-select">
+                    <option value="name">按名稱</option>
+                    <option value="price-low">價格從低到高</option>
+                    <option value="price-high">價格從高到低</option>
+                    <option value="stock">庫存量</option>
+                </select>
+            </div>
+            
+            <input type="text" id="searchInput" class="search-box" placeholder="🔍 搜索產品名稱...">
+        </div>
+
+        <!-- 產品容器 -->
+        <div id="productsContainer">
+            <div class="loading">
+                <div class="loading-spinner"></div>
+                <p>正在加載產品數據...</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ==================== 圖片路徑處理函數 ====================
+        function getProductImagePath(imagePath) {
+            if (!imagePath) {
+                return 'https://via.placeholder.com/300x200/cccccc/000000?text=產品圖片';
+            }
+            
+            // 如果是完整URL，直接返回
+            if (imagePath.startsWith('http://') || imagePath.startsWith('https://') || imagePath.startsWith('//')) {
+                return imagePath;
+            }
+            
+            // 使用正確的路徑 - 根據你的目錄結構
+            return 'images/products/shopee/' + imagePath;
+        }
+
+        // ==================== 分類標簽映射 ====================
+        const categoryMap = {
+            'health': { name: '保健養生', class: 'category-health' },
+            'home': { name: '家居生活', class: 'category-home' },
+            'electronic': { name: '電子產品', class: 'category-electronic' },
+            'book': { name: '圖書文具', class: 'category-book' }
+        };
+
+        // ==================== 產品管理器 ====================
+        const ProductStore = {
+            products: [],
+            filteredProducts: [],
+            lastUpdated: null,
+            
+            // 從JSON文件加載產品數據
+            async loadProducts() {
+                try {
+                    console.log('開始加載產品數據...');
+                    
+                    // 關鍵修改：使用正確的文件名 shopee_list.json（單數）
+                    const response = await fetch('js/shopee_list.json');
+                    
+                    if (!response.ok) {
+                        throw new Error(`HTTP錯誤! 狀態: ${response.status}`);
+                    }
+                    
+                    const data = await response.json();
+                    console.log('成功加載數據:', data);
+                    
+                    if (data && data.products && Array.isArray(data.products)) {
+                        this.products = data.products;
+                        this.filteredProducts = [...this.products];
+                        this.lastUpdated = data.lastUpdated || new Date().toISOString();
+                        
+                        console.log(`✅ 成功加載 ${this.products.length} 個產品`);
+                        console.log('產品列表:', this.products.map(p => ({id: p.id, name: p.name, category: p.category})));
+                        
+                        this.updateStats();
+                        this.renderProducts();
+                        this.showToast('✅ 數據加載成功', 'success');
+                    } else {
+                        throw new Error('JSON文件格式不正確');
+                    }
+                    
+                } catch (error) {
+                    console.error('❌ 加載產品數據失敗:', error);
+                    
+                    // 顯示詳細的錯誤信息
+                    let errorMsg = '加載產品數據失敗: ' + error.message;
+                    errorMsg += '\n\n可能原因:';
+                    errorMsg += '\n1. 文件路徑錯誤: js/shopee_list.json';
+                    errorMsg += '\n2. JSON格式不正確';
+                    errorMsg += '\n3. 文件權限問題';
+                    
+                    this.showError(errorMsg);
+                }
+            },
+            
+            // 更新統計信息
+            updateStats() {
+                const totalProducts = this.products.length;
+                const availableProducts = this.products.filter(p => p.stock > 0).length;
+                
+                document.getElementById('totalProducts').textContent = totalProducts;
+                document.getElementById('availableProducts').textContent = availableProducts;
+                
+                if (this.lastUpdated) {
+                    const date = new Date(this.lastUpdated);
+                    document.getElementById('lastUpdated').textContent = date.toLocaleString('zh-CN');
+                }
+            },
+            
+            // 篩選產品
+            filterProducts() {
+                const category = document.getElementById('categoryFilter').value;
+                const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+                const sortBy = document.getElementById('sortFilter').value;
+                
+                let filtered = this.products.filter(product => {
+                    // 狀態篩選（如果有status字段）
+                    if (product.status === 'inactive') {
+                        return false;
+                    }
+                    
+                    // 分類篩選
+                    if (category !== 'all' && product.category !== category) {
+                        return false;
+                    }
+                    
+                    // 搜索篩選
+                    if (searchTerm && !product.name.toLowerCase().includes(searchTerm)) {
+                        return false;
+                    }
+                    
+                    return true;
+                });
+                
+                // 排序
+                filtered.sort((a, b) => {
+                    switch (sortBy) {
+                        case 'price-low':
+                            return a.price - b.price;
+                        case 'price-high':
+                            return b.price - a.price;
+                        case 'stock':
+                            return b.stock - a.stock;
+                        case 'name':
+                        default:
+                            return a.name.localeCompare(b.name);
+                    }
+                });
+                
+                this.filteredProducts = filtered;
+                this.renderProducts();
+            },
+            
+            // 渲染產品
+            renderProducts() {
+                const container = document.getElementById('productsContainer');
+                
+                if (this.filteredProducts.length === 0) {
+                    container.innerHTML = `
+                        <div class="empty-state">
+                            <i class="fas fa-box-open"></i>
+                            <h3>暫無產品</h3>
+                            <p>沒有找到符合條件的產品，請嘗試其他篩選條件</p>
+                            <div style="margin-top: 1rem; font-size: 0.9rem;">
+                                <p><i class="fas fa-info-circle"></i> 當前有 ${this.products.length} 個產品，但篩選後為0</p>
+                                <p>檢查篩選條件：分類=${document.getElementById('categoryFilter').value}, 搜索=${document.getElementById('searchInput').value}</p>
+                            </div>
+                        </div>
+                    `;
+                    return;
+                }
+                
+                let html = '<div class="products-grid">';
+                
+                this.filteredProducts.forEach(product => {
+                    const stockStatus = this.getStockStatus(product.stock);
+                    const categoryInfo = categoryMap[product.category] || { name: '其他', class: 'category-tag' };
+                    const imagePath = getProductImagePath(product.image);
+                    
+                    html += `
+                        <div class="product-card">
+                            <img src="${imagePath}" 
+                                 alt="${product.name}" 
+                                 class="product-image"
+                                 onerror="this.src='https://via.placeholder.com/300x200/cccccc/000000?text=圖片加載失敗'">
+                            <div class="product-info">
+                                <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                                    <span class="category-tag ${categoryInfo.class}">${categoryInfo.name}</span>
+                                    ${product.status ? 
+                                        `<span class="status-badge ${product.status === 'active' ? 'status-active' : 'status-inactive'}">
+                                            ${product.status === 'active' ? '上架' : '下架'}
+                                        </span>` : ''
+                                    }
+                                </div>
+                                <h3 class="product-name">${product.name}</h3>
+                                <div class="product-price">RM ${parseFloat(product.price).toFixed(2)}</div>
+                                <div class="product-meta">
+                                    <span class="stock ${stockStatus.class}">
+                                        <i class="fas ${stockStatus.icon}"></i> ${stockStatus.text}
+                                    </span>
+                                    <span>銷量: ${product.sales || 0}</span>
+                                </div>
+                                ${product.stock > 0 && product.status !== 'inactive' ? 
+                                    `<a href="${product.link || '#'}" class="buy-btn" target="_blank" rel="noopener">
+                                        <i class="fas fa-shopping-cart"></i> 立即購買
+                                    </a>` :
+                                    `<button class="buy-btn" disabled>
+                                        <i class="fas fa-times-circle"></i> ${product.status === 'inactive' ? '已下架' : '已售罄'}
+                                    </button>`
+                                }
+                            </div>
+                        </div>
+                    `;
+                });
+                
+                html += '</div>';
+                container.innerHTML = html;
+            },
+            
+            // 獲取庫存狀態
+            getStockStatus(stock) {
+                if (stock <= 0) {
+                    return { text: '已售罄', class: 'out-of-stock', icon: 'fa-times-circle' };
+                } else if (stock <= 10) {
+                    return { text: `僅剩 ${stock} 件`, class: 'low-stock', icon: 'fa-exclamation-triangle' };
+                } else {
+                    return { text: `有庫存`, class: 'in-stock', icon: 'fa-check-circle' };
+                }
+            },
+            
+            // 顯示錯誤信息
+            showError(message) {
+                const container = document.getElementById('productsContainer');
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <h3>加載失敗</h3>
+                        <p>${message}</p>
+                        <div style="margin-top: 1rem; text-align: left; background: rgba(255,255,255,0.1); padding: 1rem; border-radius: 8px;">
+                            <p style="margin-bottom: 0.5rem;"><strong>解決方案:</strong></p>
+                            <ol style="text-align: left; padding-left: 1.5rem;">
+                                <li>確認文件名: <code>js/shopee_list.json</code>（注意是單數list）</li>
+                                <li>確認圖片路徑: <code>images/products/shopee/</code></li>
+                                <li>檢查JSON格式是否正確</li>
+                                <li>查看瀏覽器控制台錯誤信息（按F12）</li>
+                            </ol>
+                        </div>
+                        <button class="refresh-btn" onclick="ProductStore.loadProducts()" style="margin-top: 1rem;">
+                            <i class="fas fa-redo"></i> 重試加載
+                        </button>
+                    </div>
+                `;
+            },
+            
+            // 初始化
+            init() {
+                console.log('初始化Myx Shop...');
+                console.log('將嘗試加載: js/shopee_list.json');
+                
+                this.loadProducts();
+                
+                // 添加事件監聽器
+                document.getElementById('categoryFilter').addEventListener('change', () => {
+                    this.filterProducts();
+                });
+                
+                document.getElementById('sortFilter').addEventListener('change', () => {
+                    this.filterProducts();
+                });
+                
+                document.getElementById('searchInput').addEventListener('input', () => {
+                    this.filterProducts();
+                });
+
+                // 添加鍵盤快捷鍵
+                document.addEventListener('keydown', (e) => {
+                    if (e.ctrlKey && e.key === 'r') {
+                        e.preventDefault();
+                        this.loadProducts();
+                        this.showToast('🔄 數據已刷新', 'info');
+                    }
+                });
+
+                console.log('✅ Myx Shop 初始化完成');
+            },
+
+            // 顯示Toast通知
+            showToast(message, type = 'info') {
+                // 移除現有的toast
+                const existingToast = document.querySelector('.custom-toast');
+                if (existingToast) {
+                    existingToast.remove();
+                }
+
+                const toast = document.createElement('div');
+                toast.className = `custom-toast ${type}`;
+                toast.innerHTML = `
+                    <i class="fas ${type === 'info' ? 'fa-info-circle' : type === 'success' ? 'fa-check-circle' : 'fa-exclamation-triangle'}"></i>
+                    ${message}
+                `;
+                
+                document.body.appendChild(toast);
+                
+                setTimeout(() => {
+                    toast.style.transform = 'translateX(-50%) translateY(0)';
+                }, 100);
+                
+                setTimeout(() => {
+                    toast.style.transform = 'translateX(-50%) translateY(-100px)';
+                    setTimeout(() => toast.remove(), 300);
+                }, 3000);
+            }
+        };
+
+        // 頁面加載完成後初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            ProductStore.init();
+            
+            // 添加頁面可見性檢測
+            document.addEventListener('visibilitychange', function() {
+                if (!document.hidden) {
+                    ProductStore.loadProducts();
+                }
+            });
+        });
+
+        // 調試信息
+        console.log('Myx Shop調試信息:');
+        console.log('1. 期望加載: js/shopee_list.json');
+        console.log('2. 圖片路徑: images/products/shopee/');
+        console.log('3. 預期產品數: 6個');
+    </script>
+</body>
+</html>

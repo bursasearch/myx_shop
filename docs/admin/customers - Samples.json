@@ -1,0 +1,45 @@
+{
+  "exportDate": "2025-11-30T23:15:45.554Z",
+  "totalClients": 3,
+  "clients": [
+    {
+      "id": "milgwunfemludm8xkwq",
+      "name": "Stranger_001",
+      "phone": "+60123456789",
+      "email": "gmail_001@gmail.com",
+      "source": "other",
+      "status": "new",
+      "interest": 
+        "general"
+      ],
+      "notes": " potential cust_001.",
+      "updatedAt": "2025-11-30T23:11:55.809Z"
+    },
+    {
+      "id": "millnilg1teemols662",
+      "name": "Stranger_002",
+      "phone": "+601987654321",
+      "email": "gmail_002@gmail.com",
+      "source": "other",
+      "status": "new",
+      "interest": [
+        "general"
+      ],
+      "notes": "",
+      "updatedAt": "2025-11-30T23:13:20.124Z"
+    },
+    {
+      "id": "milnmawspyfe18jpfvg",
+      "name": "Stranger_003",
+      "phone": "+60188888888",
+      "email": "",
+      "source": "other",
+      "status": "new",
+      "interest": [
+        "general"
+      ],
+      "notes": "",
+      "updatedAt": "2025-11-30T23:13:46.553Z"
+    }
+  ]
+}

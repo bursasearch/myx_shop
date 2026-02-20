@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin路徑測試</title>
+    <style>
+        body { font-family: Arial; padding: 20px; }
+        button { padding: 10px; margin: 5px; }
+        .success { color: green; }
+        .error { color: red; }
+    </style>
+</head>
+<body>
+    <h1>🧪 Admin後台路徑測試</h1>
+    
+    <button onclick="testRelative()">測試相對路徑 (../js/shopee_list.json)</button>
+    <button onclick="testAbsolute()">測試絕對路徑 (/js/shopee_list.json)</button>
+    <button onclick="testCurrent()">測試當前路徑 (js/shopee_list.json)</button>
+    
+    <div id="result" style="margin-top: 20px; padding: 15px; border: 1px solid #ccc;"></div>
+    
+    <script>
+    async function testPath(path, desc) {
+        const resultDiv = document.getElementById('result');
+        resultDiv.innerHTML = `<h3>測試: ${desc}</h3><p>路徑: ${path}</p>`;
+        
+        try {
+            const start = Date.now();
+            const response = await fetch(path);
+            const time = Date.now() - start;
+            
+            if (response.ok) {
+                const data = await response.json();
+                resultDiv.innerHTML += `
+                    <p class="success">✅ 成功 (${time}ms)</p>
+                    <p>產品數量: ${data.products?.length || 0}</p>
+                    <p>最後更新: ${data.lastUpdated || '未知'}</p>
+                    <h4>前3個產品：</h4>
+                    <ul>
+                        ${(data.products?.slice(0, 3) || []).map(p => 
+                            `<li>${p.id}. ${p.name} - RM${p.price}</li>`
+                        ).join('')}
+                    </ul>
+                    <p><strong>建議：</strong>使用此路徑</p>
+                `;
+                return true;
+            } else {
+                resultDiv.innerHTML += `<p class="error">❌ HTTP錯誤: ${response.status}</p>`;
+                return false;
+            }
+        } catch (error) {
+            resultDiv.innerHTML += `<p class="error">❌ 錯誤: ${error.message}</p>`;
+            return false;
+        }
+    }
+    
+    function testRelative() {
+        testPath('../js/shopee_list.json', '相對路徑 (從admin目錄)');
+    }
+    
+    function testAbsolute() {
+        testPath('/js/shopee_list.json', '絕對路徑');
+    }
+    
+    function testCurrent() {
+        testPath('js/shopee_list.json', '當前目錄路徑');
+    }
+    
+    // 自動測試
+    setTimeout(() => {
+        testRelative();
+    }, 500);
+    </script>
+</body>
+</html>

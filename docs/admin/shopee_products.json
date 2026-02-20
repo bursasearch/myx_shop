@@ -1,0 +1,72 @@
+{
+  "products": [
+    {
+      "id": 1,
+      "name": "白花蛇舌草 -100 gm",
+      "price": 5.5,
+      "stock": 99999,
+      "image": "sh-61_1111.png",
+      "link": "https://s.shopee.com.my/6pt3uich6K",
+      "category": "health",
+      "status": "active",
+      "sales": 0
+    },
+    {
+      "id": 2,
+      "name": "红糖/黄糖/黑糖 - 250 gm",
+      "price": 2.5,
+      "stock": 99998,
+      "image": "sh-61_1112.png",
+      "link": "https://s.shopee.com.my/60JwZnRk6G",
+      "category": "health",
+      "status": "active",
+      "sales": 0
+    },
+    {
+      "id": 3,
+      "name": "半枝蓮 - 100 gm",
+      "price": 5.5,
+      "stock": 99997,
+      "image": "sh-61_1113.png",
+      "link": "https://s.shopee.com.my/7KpKVl2HPk",
+      "category": "health",
+      "status": "active",
+      "sales": 0
+    },
+    {
+      "id": 4,
+      "name": "藍牙耳机 - Bluetooth Earphone with LED Touch Control",
+      "price": 6.99,
+      "stock": 99996,
+      "image": "sh-51_1111.jpg",
+      "link": "https://s.shopee.com.my/50RSHc60hM",
+      "category": "electronic",
+      "status": "active",
+      "sales": 0
+    },
+    {
+      "id": 5,
+      "name": "CaPybaRa 儿童背包大容量书包",
+      "price": 18.9,
+      "stock": 9995,
+      "image": "sh-41_1111.jpg",
+      "link": "https://s.shopee.com.my/6KwptJRN1z",
+      "category": "book",
+      "status": "active",
+      "sales": 0
+    },
+    {
+      "id": 6,
+      "name": "电飯煲 1.8L Rice Cooker",
+      "price": 20.69,
+      "stock": 9994,
+      "image": "sh-31_1111.jpg",
+      "link": "https://s.shopee.com.my/5VNrZgmDt3",
+      "category": "home",
+      "status": "active",
+      "sales": 0
+    }
+  ],
+  "totalProducts": 6,
+  "lastUpdated": "2025-12-07T17:32:36.824073"
+}

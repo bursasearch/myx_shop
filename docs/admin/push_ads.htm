@@ -1,0 +1,1641 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>PushAds Pro - 营销助手</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #25D366;
+            --primary-dark: #128C7E;
+            --secondary: #667eea;
+            --danger: #F44336;
+            --warning: #FF9800;
+            --success: #4CAF50;
+            --dark: #075E54;
+            --light: #f0f2f5;
+            --card: #ffffff;
+            --text: #333333;
+            --text-light: #666666;
+            --border: #e0e0e0;
+            --shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --light: #0b141a;
+                --card: #1e2a38;
+                --text: #e4e6eb;
+                --text-light: #a0a6b1;
+                --border: #2a3849;
+                --shadow: 0 2px 10px rgba(0,0,0,0.3);
+            }
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--light);
+            color: var(--text);
+            line-height: 1.5;
+            font-size: 16px;
+            padding-bottom: 80px;
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--dark), var(--primary-dark));
+            color: white;
+            padding: 15px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: var(--shadow);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .app-title {
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .app-subtitle {
+            font-size: 12px;
+            opacity: 0.9;
+        }
+
+        .header-btn {
+            background: rgba(255,255,255,0.2);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+        .category-tabs {
+            display: flex;
+            overflow-x: auto;
+            padding: 10px 15px;
+            background: var(--card);
+            gap: 8px;
+            position: sticky;
+            top: 70px;
+            z-index: 90;
+        }
+
+        .category-tabs::-webkit-scrollbar {
+            display: none;
+        }
+
+        .category-tab {
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            background: var(--light);
+            color: var(--text);
+            border: 1px solid var(--border);
+            cursor: pointer;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        .category-tab.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            padding: 15px;
+        }
+
+        .stat-card {
+            background: var(--card);
+            border-radius: 12px;
+            padding: 15px;
+            text-align: center;
+            box-shadow: var(--shadow);
+        }
+
+        .stat-value {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: var(--text-light);
+        }
+
+        .main-content {
+            padding: 0 15px 15px;
+        }
+
+        .message-config {
+            background: var(--card);
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 20px;
+            box-shadow: var(--shadow);
+        }
+
+        .section-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin: 15px 0 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-small {
+            padding: 6px 12px;
+            font-size: 12px;
+        }
+
+        .btn-secondary {
+            background: var(--secondary);
+        }
+
+        .drop-zone {
+            border: 2px dashed var(--primary);
+            border-radius: 12px;
+            padding: 30px 20px;
+            text-align: center;
+            background: rgba(37, 211, 102, 0.05);
+            margin: 15px 0;
+            cursor: pointer;
+        }
+
+        .drop-zone-icon {
+            font-size: 40px;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
+        .drop-zone-text {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .drop-zone-subtext {
+            font-size: 14px;
+            color: var(--text-light);
+        }
+
+        select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background: var(--card);
+            color: var(--text);
+            font-size: 16px;
+            margin-bottom: 15px;
+            cursor: pointer;
+        }
+
+        .message-preview {
+            background: var(--light);
+            border-radius: 8px;
+            padding: 15px;
+            font-size: 14px;
+            line-height: 1.6;
+            max-height: 200px;
+            overflow-y: auto;
+            border-left: 4px solid var(--primary);
+            white-space: pre-line;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .btn-group .btn {
+            flex: 1;
+        }
+
+        .customer-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .customer-card {
+            background: var(--card);
+            border-radius: 12px;
+            padding: 15px;
+            box-shadow: var(--shadow);
+            border-left: 4px solid var(--primary);
+        }
+
+        .customer-header {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 10px;
+        }
+
+        .customer-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 10px;
+            background: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 20px;
+            font-weight: bold;
+            margin-right: 12px;
+            position: relative;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+
+        .customer-avatar-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .customer-info {
+            flex: 1;
+        }
+
+        .customer-name {
+            font-weight: bold;
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+
+        .customer-phone {
+            color: var(--primary);
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+
+        .customer-notes {
+            background: var(--light);
+            padding: 10px;
+            border-radius: 8px;
+            font-size: 14px;
+            margin: 10px 0;
+        }
+
+        .customer-photos {
+            display: flex;
+            gap: 10px;
+            margin: 10px 0;
+            flex-wrap: wrap;
+        }
+
+        .customer-photo {
+            width: 80px;
+            height: 80px;
+            border-radius: 8px;
+            object-fit: cover;
+            cursor: pointer;
+            border: 2px solid var(--border);
+        }
+
+        .customer-photo:hover {
+            border-color: var(--primary);
+        }
+
+        .customer-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 15px;
+        }
+
+        .action-btn {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .send-btn {
+            background: var(--primary);
+            color: white;
+        }
+
+        .edit-btn {
+            background: var(--secondary);
+            color: white;
+        }
+
+        .delete-btn {
+            background: var(--danger);
+            color: white;
+        }
+
+        .filter-buttons {
+            display: flex;
+            gap: 8px;
+            margin: 10px 0;
+            overflow-x: auto;
+            padding: 5px 0;
+        }
+
+        .filter-btn {
+            padding: 8px 16px;
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            background: var(--light);
+            color: var(--text);
+            font-size: 14px;
+            cursor: pointer;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        .filter-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: var(--card);
+            display: flex;
+            justify-content: space-around;
+            padding: 12px 0;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+            z-index: 100;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            color: var(--text-light);
+            font-size: 12px;
+            cursor: pointer;
+            padding: 8px;
+        }
+
+        .nav-item.active {
+            color: var(--primary);
+        }
+
+        .nav-icon {
+            font-size: 20px;
+        }
+
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.7);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            padding: 20px;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: var(--card);
+            border-radius: 16px;
+            padding: 20px;
+            width: 100%;
+            max-width: 500px;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .modal-title {
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: var(--text-light);
+            cursor: pointer;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background: var(--card);
+            color: var(--text);
+            font-size: 16px;
+        }
+
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .photo-upload-area {
+            border: 2px dashed var(--border);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            margin-bottom: 15px;
+            transition: all 0.3s;
+        }
+
+        .photo-upload-area:hover {
+            border-color: var(--primary);
+            background: rgba(37, 211, 102, 0.05);
+        }
+
+        .photo-upload-icon {
+            font-size: 40px;
+            color: var(--text-light);
+            margin-bottom: 10px;
+        }
+
+        .photo-preview-container {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 15px;
+        }
+
+        .photo-preview {
+            width: 100px;
+            height: 100px;
+            border-radius: 8px;
+            object-fit: cover;
+            position: relative;
+        }
+
+        .photo-preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        .photo-remove {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: var(--danger);
+            color: white;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            cursor: pointer;
+            border: 2px solid var(--card);
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 12px 20px;
+            border-radius: 8px;
+            color: white;
+            font-weight: bold;
+            z-index: 1100;
+            animation: slideIn 0.3s ease;
+        }
+
+        .notification.success {
+            background: var(--success);
+        }
+
+        .notification.error {
+            background: var(--danger);
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--text-light);
+        }
+
+        .empty-icon {
+            font-size: 60px;
+            margin-bottom: 20px;
+            opacity: 0.5;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--text-light);
+        }
+
+        .loading i {
+            margin-right: 10px;
+        }
+
+        .photo-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.9);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1200;
+            padding: 20px;
+        }
+
+        .photo-modal.active {
+            display: flex;
+        }
+
+        .photo-modal-content {
+            position: relative;
+            max-width: 90%;
+            max-height: 90%;
+        }
+
+        .photo-modal-img {
+            max-width: 100%;
+            max-height: 80vh;
+            object-fit: contain;
+            border-radius: 8px;
+        }
+
+        .photo-modal-close {
+            position: absolute;
+            top: -20px;
+            right: -20px;
+            background: var(--danger);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            cursor: pointer;
+            border: 2px solid white;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 顶部栏 -->
+    <div class="header">
+        <div class="header-content">
+            <div>
+                <div class="app-title">PushAds Pro</div>
+                <div class="app-subtitle">营销助手</div>
+            </div>
+            <div>
+                <button class="header-btn" onclick="exportData()">
+                    <i class="fas fa-download"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 类别标签 -->
+    <div class="category-tabs">
+        <button class="category-tab active" onclick="setCategory('general')">综合</button>
+        <button class="category-tab" onclick="setCategory('ai-stock')">AI选股</button>
+        <button class="category-tab" onclick="setCategory('alliance-shop')">联盟商店</button>
+        <button class="category-tab" onclick="setCategory('used-car')">二手车辆</button>
+        <button class="category-tab" onclick="setCategory('property')">房地产</button>
+    </div>
+
+    <!-- 统计卡片 -->
+    <div class="stats-container">
+        <div class="stat-card">
+            <div class="stat-value" id="totalCustomers">0</div>
+            <div class="stat-label">总客户</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-value" id="pendingCustomers">0</div>
+            <div class="stat-label">待发送</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-value" id="sentToday">0</div>
+            <div class="stat-label">今日已发</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-value" id="totalMessages">0</div>
+            <div class="stat-label">消息模板</div>
+        </div>
+    </div>
+
+    <!-- 主内容区 -->
+    <div class="main-content">
+        <!-- 消息配置 -->
+        <div class="message-config">
+            <h3 style="margin-bottom: 15px; font-size: 18px;">消息配置</h3>
+            
+            <!-- 拖放区 -->
+            <div class="drop-zone" id="dropZone" onclick="importMessages()">
+                <div class="drop-zone-icon">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                </div>
+                <div class="drop-zone-text">点击导入消息模板</div>
+                <div class="drop-zone-subtext">或拖放 messages.json 文件</div>
+            </div>
+            
+            <!-- 文件信息 -->
+            <div id="fileInfo" style="display: none; background: var(--light); padding: 15px; border-radius: 8px; margin: 15px 0;">
+                <div id="fileInfoContent"></div>
+                <div style="display: flex; gap: 10px; margin-top: 15px;">
+                    <button class="btn" onclick="confirmImport()" style="flex: 1;">确认导入</button>
+                    <button class="btn btn-secondary" onclick="cancelImport()" style="flex: 1;">取消</button>
+                </div>
+            </div>
+            
+            <!-- 消息选择 -->
+            <select id="messageCategory" onchange="loadTemplates()">
+                <option value="">选择消息类别</option>
+                <option value="general">综合</option>
+                <option value="ai-stock">AI选股</option>
+                <option value="alliance-shop">联盟商店</option>
+                <option value="used-car">二手车辆</option>
+                <option value="property">房地产</option>
+            </select>
+            
+            <select id="messageTemplate" onchange="showPreview()">
+                <option value="">选择消息模板</option>
+            </select>
+            
+            <!-- 消息预览 -->
+            <div class="message-preview" id="messagePreview">
+                请选择消息模板查看预览
+            </div>
+            
+            <!-- 按钮组 -->
+            <div class="btn-group">
+                <button class="btn" onclick="sendToAll()">
+                    <i class="fas fa-paper-plane"></i> 发送给所有客户
+                </button>
+                <button class="btn btn-secondary" onclick="testMessage()">
+                    <i class="fas fa-vial"></i> 测试发送
+                </button>
+            </div>
+        </div>
+
+        <!-- 客户管理 -->
+        <div class="section-title">
+            客户管理
+            <button class="btn" onclick="openAddModal()">
+                <i class="fas fa-plus"></i> 添加客户
+            </button>
+        </div>
+
+        <!-- 筛选按钮 -->
+        <div class="filter-buttons">
+            <button class="filter-btn active" onclick="setFilter('all')">全部</button>
+            <button class="filter-btn" onclick="setFilter('pending')">待发送</button>
+            <button class="filter-btn" onclick="setFilter('sent')">已发送</button>
+            <button class="filter-btn" onclick="setFilter('today')">今日新增</button>
+            <button class="filter-btn" onclick="setFilter('hasPhotos')">有照片</button>
+        </div>
+
+        <!-- 客户列表 -->
+        <div class="customer-list" id="customerList">
+            <div class="loading">
+                <i class="fas fa-spinner fa-spin"></i> 加载中...
+            </div>
+        </div>
+    </div>
+
+    <!-- 底部导航 -->
+    <div class="bottom-nav">
+        <div class="nav-item active" onclick="showTab('home')">
+            <i class="fas fa-home nav-icon"></i>
+            <span>首页</span>
+        </div>
+        <div class="nav-item" onclick="showTab('customers')">
+            <i class="fas fa-users nav-icon"></i>
+            <span>客户</span>
+        </div>
+        <div class="nav-item" onclick="showTab('messages')">
+            <i class="fas fa-comments nav-icon"></i>
+            <span>消息</span>
+        </div>
+        <div class="nav-item" onclick="showTab('stats')">
+            <i class="fas fa-chart-bar nav-icon"></i>
+            <span>统计</span>
+        </div>
+    </div>
+
+    <!-- 添加客户模态框 -->
+    <div class="modal" id="addModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="modalTitle">添加新客户</h3>
+                <button class="close-btn" onclick="closeModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <form onsubmit="saveCustomer(event)">
+                <div class="form-group">
+                    <label class="form-label">姓名 *</label>
+                    <input type="text" id="customerName" required>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">电话号码 *</label>
+                    <input type="tel" id="customerPhone" required placeholder="+60 12-345 6789">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">客户类别 *</label>
+                    <select id="customerCategory" required>
+                        <option value="general">综合</option>
+                        <option value="ai-stock">AI选股</option>
+                        <option value="alliance-shop">联盟商店</option>
+                        <option value="used-car">二手车辆</option>
+                        <option value="property">房地产</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">客户照片</label>
+                    <div class="photo-upload-area" onclick="document.getElementById('photoInput').click()">
+                        <div class="photo-upload-icon">
+                            <i class="fas fa-camera"></i>
+                        </div>
+                        <div>点击上传照片</div>
+                        <div style="font-size: 12px; color: var(--text-light); margin-top: 5px;">
+                            支持 JPG、PNG 格式
+                        </div>
+                    </div>
+                    <input type="file" id="photoInput" accept="image/*" multiple style="display: none;" onchange="handlePhotos(event)">
+                    
+                    <!-- 照片预览区 -->
+                    <div class="photo-preview-container" id="photoPreview"></div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">感兴趣产品</label>
+                    <input type="text" id="customerProduct" placeholder="例如: iPhone 15">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">备注</label>
+                    <textarea id="customerNotes" placeholder="添加备注..." rows="3"></textarea>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" onclick="closeModal()" style="flex: 1;">取消</button>
+                    <button type="submit" class="btn" style="flex: 1;">保存</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- 照片查看模态框 -->
+    <div class="photo-modal" id="photoModal" onclick="closePhotoModal()">
+        <div class="photo-modal-content" onclick="event.stopPropagation()">
+            <img id="photoModalImg" class="photo-modal-img" src="" alt="照片预览">
+            <button class="photo-modal-close" onclick="closePhotoModal()">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // 全局变量
+        let customers = [];
+        let messages = { messages: [] };
+        let currentCategory = 'general';
+        let currentFilter = 'all';
+        let editingId = null;
+        let fileData = null;
+        let currentPhotos = []; // 当前上传的照片
+        
+        // 默认消息
+        const defaultMessages = {
+            "messages": [
+                {
+                    "id": "msg_general_01",
+                    "category": "general",
+                    "title": "综合服务介绍",
+                    "text": "🛍️ 您好！\n\n发现您对优质产品很有品味！MyxShop为您精选：\n\n🍎 健康食品与保健用品\n🏠 家居生活必需品  \n💄 美妆护肤精品\n📱 电子智能设备\n\n✨ 所有产品提供：\n✅ 马来西亚正品保证\n✅ 最优惠价格保证\n✅ 全马快速配送\n✅ 专业售后服务\n\n立即浏览选购： https://example.com\n\n新客专享：首次下单享95折优惠！"
+                },
+                {
+                    "id": "msg_ai_stock_01",
+                    "category": "ai-stock",
+                    "title": "Bursa AI选股专业版",
+                    "text": "📈 您好！\n\n发现您对马来西亚股市(Bursa Malaysia)有兴趣！\n\n我们特别为散户投资者推出AI选股系统：\n\n🤖 AI智能分析技术：\n• 实时监控KLSE/SET股票\n• 技术面+基本面双重分析\n• 自动识别买入/卖出信号\n• 风险评级与止损建议\n\n🎯 专属散户功能：\n✅ 小额投资组合优化\n✅ 马来西亚市场深度分析\n✅ 中文界面与客服\n✅ 每日盘前精选推荐\n\n免费试用7天： https://example.com"
+                }
+            ]
+        };
+
+        // 初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            loadData();
+            setupDropZone();
+            setTimeout(() => showNotification('系统已就绪！', 'success'), 500);
+        });
+
+        // 设置拖放区
+        function setupDropZone() {
+            const dropZone = document.getElementById('dropZone');
+            
+            dropZone.addEventListener('dragover', function(e) {
+                e.preventDefault();
+                dropZone.style.borderColor = '#4CAF50';
+                dropZone.style.background = 'rgba(76, 175, 80, 0.1)';
+            });
+            
+            dropZone.addEventListener('dragleave', function() {
+                dropZone.style.borderColor = '';
+                dropZone.style.background = '';
+            });
+            
+            dropZone.addEventListener('drop', function(e) {
+                e.preventDefault();
+                dropZone.style.borderColor = '';
+                dropZone.style.background = '';
+                
+                const file = e.dataTransfer.files[0];
+                if (file && file.name.endsWith('.json')) {
+                    readFile(file);
+                } else {
+                    showNotification('请拖放JSON文件', 'error');
+                }
+            });
+        }
+
+        // 导入消息
+        function importMessages() {
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = '.json';
+            
+            input.onchange = function(e) {
+                const file = e.target.files[0];
+                if (file) {
+                    readFile(file);
+                }
+            };
+            
+            input.click();
+        }
+
+        // 读取文件
+        function readFile(file) {
+            const reader = new FileReader();
+            
+            reader.onload = function(e) {
+                try {
+                    fileData = JSON.parse(e.target.result);
+                    
+                    // 显示文件信息
+                    document.getElementById('fileInfoContent').innerHTML = `
+                        <div style="margin-bottom: 10px;">
+                            <strong>文件名:</strong> ${file.name}
+                        </div>
+                        <div style="margin-bottom: 10px;">
+                            <strong>大小:</strong> ${(file.size / 1024).toFixed(2)} KB
+                        </div>
+                        <div>
+                            <strong>消息数量:</strong> ${fileData.messages ? fileData.messages.length : 0} 条
+                        </div>
+                    `;
+                    
+                    document.getElementById('fileInfo').style.display = 'block';
+                    showNotification('文件读取成功', 'success');
+                    
+                } catch (error) {
+                    showNotification('文件格式错误', 'error');
+                }
+            };
+            
+            reader.readAsText(file);
+        }
+
+        // 处理照片上传
+        function handlePhotos(event) {
+            const files = event.target.files;
+            const previewContainer = document.getElementById('photoPreview');
+            
+            currentPhotos = []; // 清空当前照片
+            
+            for (let i = 0; i < files.length; i++) {
+                const file = files[i];
+                const reader = new FileReader();
+                
+                reader.onload = function(e) {
+                    const photoData = {
+                        id: 'photo_' + Date.now() + '_' + i,
+                        data: e.target.result,
+                        name: file.name,
+                        size: file.size
+                    };
+                    
+                    currentPhotos.push(photoData);
+                    
+                    // 创建预览
+                    const previewDiv = document.createElement('div');
+                    previewDiv.className = 'photo-preview';
+                    previewDiv.innerHTML = `
+                        <img src="${e.target.result}" alt="照片预览" onclick="viewPhoto('${photoData.id}')">
+                        <div class="photo-remove" onclick="removePhoto('${photoData.id}')">
+                            <i class="fas fa-times"></i>
+                        </div>
+                    `;
+                    
+                    previewContainer.appendChild(previewDiv);
+                };
+                
+                reader.readAsDataURL(file);
+            }
+            
+            event.target.value = ''; // 重置输入框
+        }
+
+        // 移除照片
+        function removePhoto(photoId) {
+            currentPhotos = currentPhotos.filter(p => p.id !== photoId);
+            updatePhotoPreview();
+        }
+
+        // 更新照片预览
+        function updatePhotoPreview() {
+            const previewContainer = document.getElementById('photoPreview');
+            previewContainer.innerHTML = '';
+            
+            currentPhotos.forEach(photo => {
+                const previewDiv = document.createElement('div');
+                previewDiv.className = 'photo-preview';
+                previewDiv.innerHTML = `
+                    <img src="${photo.data}" alt="照片预览" onclick="viewPhoto('${photo.id}')">
+                    <div class="photo-remove" onclick="removePhoto('${photo.id}')">
+                        <i class="fas fa-times"></i>
+                    </div>
+                `;
+                previewContainer.appendChild(previewDiv);
+            });
+        }
+
+        // 查看照片
+        function viewPhoto(photoId) {
+            const photo = currentPhotos.find(p => p.id === photoId);
+            if (photo) {
+                document.getElementById('photoModalImg').src = photo.data;
+                document.getElementById('photoModal').classList.add('active');
+            }
+        }
+
+        // 关闭照片查看
+        function closePhotoModal() {
+            document.getElementById('photoModal').classList.remove('active');
+        }
+
+        // 确认导入
+        function confirmImport() {
+            if (!fileData || !fileData.messages) {
+                showNotification('没有可导入的数据', 'error');
+                return;
+            }
+            
+            // 合并消息
+            const existing = messages.messages || [];
+            const newMsgs = fileData.messages;
+            const existingIds = new Set(existing.map(m => m.id));
+            
+            // 去重
+            const uniqueNew = newMsgs.filter(msg => !existingIds.has(msg.id));
+            
+            messages.messages = [...existing, ...uniqueNew];
+            
+            // 保存
+            localStorage.setItem('pushads_messages', JSON.stringify(messages));
+            
+            // 更新界面
+            loadTemplates();
+            updateStats();
+            
+            showNotification(`导入 ${uniqueNew.length} 条新消息`, 'success');
+            cancelImport();
+        }
+
+        // 取消导入
+        function cancelImport() {
+            document.getElementById('fileInfo').style.display = 'none';
+            fileData = null;
+        }
+
+        // 加载数据
+        function loadData() {
+            // 加载客户
+            const savedCustomers = localStorage.getItem('pushads_customers');
+            if (savedCustomers) {
+                try {
+                    customers = JSON.parse(savedCustomers);
+                } catch (e) {
+                    customers = [];
+                }
+            }
+            
+            // 加载消息
+            const savedMessages = localStorage.getItem('pushads_messages');
+            if (savedMessages) {
+                try {
+                    const parsed = JSON.parse(savedMessages);
+                    if (parsed && parsed.messages) {
+                        messages = parsed;
+                    } else if (Array.isArray(parsed)) {
+                        messages = { messages: parsed };
+                    }
+                } catch (e) {
+                    messages = defaultMessages;
+                }
+            } else {
+                messages = defaultMessages;
+                localStorage.setItem('pushads_messages', JSON.stringify(messages));
+            }
+            
+            loadTemplates();
+            updateStats();
+            renderCustomers();
+        }
+
+        // 加载模板
+        function loadTemplates() {
+            const category = document.getElementById('messageCategory').value;
+            const select = document.getElementById('messageTemplate');
+            
+            select.innerHTML = '<option value="">选择消息模板</option>';
+            
+            if (category && messages.messages) {
+                const filtered = messages.messages.filter(msg => msg.category === category);
+                
+                filtered.forEach(msg => {
+                    const option = document.createElement('option');
+                    option.value = msg.id;
+                    option.textContent = msg.title;
+                    select.appendChild(option);
+                });
+            }
+            
+            showPreview();
+        }
+
+        // 显示预览
+        function showPreview() {
+            const id = document.getElementById('messageTemplate').value;
+            const preview = document.getElementById('messagePreview');
+            
+            if (!id) {
+                preview.textContent = '请选择消息模板查看预览';
+                return;
+            }
+            
+            const msg = messages.messages.find(m => m.id === id);
+            if (msg) {
+                preview.textContent = msg.text;
+            } else {
+                preview.textContent = '消息未找到';
+            }
+        }
+
+        // 设置类别
+        function setCategory(category) {
+            currentCategory = category;
+            
+            // 更新标签
+            document.querySelectorAll('.category-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            // 更新消息类别选择
+            document.getElementById('messageCategory').value = category;
+            
+            loadTemplates();
+            renderCustomers();
+        }
+
+        // 设置筛选
+        function setFilter(filter) {
+            currentFilter = filter;
+            
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            renderCustomers();
+        }
+
+        // 打开添加模态框
+        function openAddModal(id = null) {
+            editingId = id;
+            currentPhotos = []; // 清空照片
+            const modal = document.getElementById('addModal');
+            const title = document.getElementById('modalTitle');
+            
+            if (id) {
+                // 编辑模式
+                title.textContent = '编辑客户';
+                const customer = customers.find(c => c.id === id);
+                if (customer) {
+                    document.getElementById('customerName').value = customer.name || '';
+                    document.getElementById('customerPhone').value = customer.phone || '';
+                    document.getElementById('customerCategory').value = customer.category || 'general';
+                    document.getElementById('customerProduct').value = customer.product || '';
+                    document.getElementById('customerNotes').value = customer.notes || '';
+                    
+                    // 加载照片
+                    if (customer.photos && customer.photos.length > 0) {
+                        currentPhotos = customer.photos;
+                        updatePhotoPreview();
+                    }
+                }
+            } else {
+                // 添加模式
+                title.textContent = '添加新客户';
+                document.getElementById('customerName').value = '';
+                document.getElementById('customerPhone').value = '';
+                document.getElementById('customerCategory').value = 'general';
+                document.getElementById('customerProduct').value = '';
+                document.getElementById('customerNotes').value = '';
+                
+                // 清空照片预览
+                document.getElementById('photoPreview').innerHTML = '';
+            }
+            
+            modal.classList.add('active');
+        }
+
+        // 关闭模态框
+        function closeModal() {
+            document.getElementById('addModal').classList.remove('active');
+            editingId = null;
+            currentPhotos = [];
+            document.getElementById('photoPreview').innerHTML = '';
+        }
+
+        // 保存客户
+        function saveCustomer(event) {
+            event.preventDefault();
+            
+            const customerData = {
+                id: editingId || 'cust_' + Date.now(),
+                name: document.getElementById('customerName').value.trim(),
+                phone: document.getElementById('customerPhone').value.trim(),
+                category: document.getElementById('customerCategory').value,
+                product: document.getElementById('customerProduct').value.trim(),
+                notes: document.getElementById('customerNotes').value.trim(),
+                photos: [...currentPhotos], // 复制照片数组
+                dateAdded: new Date().toISOString(),
+                lastUpdated: new Date().toISOString(),
+                status: 'new'
+            };
+            
+            if (editingId) {
+                // 更新
+                const index = customers.findIndex(c => c.id === editingId);
+                if (index !== -1) {
+                    customers[index] = customerData;
+                }
+            } else {
+                // 添加
+                customers.push(customerData);
+            }
+            
+            // 保存
+            localStorage.setItem('pushads_customers', JSON.stringify(customers));
+            
+            // 更新界面
+            closeModal();
+            renderCustomers();
+            updateStats();
+            
+            showNotification(editingId ? '客户已更新' : '新客户已添加', 'success');
+        }
+
+        // 渲染客户列表
+        function renderCustomers() {
+            const list = document.getElementById('customerList');
+            const today = new Date().toISOString().slice(0, 10);
+            
+            // 筛选客户
+            let filtered = customers.filter(customer => {
+                if (customer.category !== currentCategory) return false;
+                
+                const phoneKey = customer.phone ? customer.phone.replace(/[^\d+]/g, '') : '';
+                const isSent = phoneKey && localStorage.getItem(`sent_${phoneKey}`);
+                
+                if (currentFilter === 'pending') return !isSent;
+                if (currentFilter === 'sent') return isSent;
+                if (currentFilter === 'today') {
+                    const date = customer.dateAdded || customer.createdAt;
+                    return date && date.includes(today);
+                }
+                if (currentFilter === 'hasPhotos') {
+                    return customer.photos && customer.photos.length > 0;
+                }
+                
+                return true;
+            });
+            
+            if (filtered.length === 0) {
+                list.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div>暂无客户</div>
+                        <div style="margin-top: 10px; font-size: 14px;">
+                            点击"添加客户"按钮开始
+                        </div>
+                    </div>`;
+                return;
+            }
+            
+            list.innerHTML = filtered.map(customer => {
+                const phoneKey = customer.phone ? customer.phone.replace(/[^\d+]/g, '') : '';
+                const isSent = phoneKey && localStorage.getItem(`sent_${phoneKey}`);
+                const initials = customer.name ? customer.name.charAt(0).toUpperCase() : '?';
+                const hasPhotos = customer.photos && customer.photos.length > 0;
+                const mainPhoto = hasPhotos ? customer.photos[0].data : null;
+                
+                return `
+                    <div class="customer-card">
+                        <div class="customer-header">
+                            <div class="customer-avatar">
+                                ${mainPhoto 
+                                    ? `<img src="${mainPhoto}" class="customer-avatar-img" alt="${customer.name}">`
+                                    : initials
+                                }
+                            </div>
+                            <div class="customer-info">
+                                <div class="customer-name">${customer.name || '未命名'}</div>
+                                <div class="customer-phone">${customer.phone || '无号码'}</div>
+                                <div style="font-size: 12px; color: var(--text-light); margin-top: 5px;">
+                                    ${customer.dateAdded ? customer.dateAdded.slice(0,10) : ''}
+                                    ${isSent ? ' · 已发送' : ''}
+                                    ${hasPhotos ? ' · <i class="fas fa-camera"></i>' : ''}
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- 照片展示 -->
+                        ${hasPhotos ? `
+                            <div class="customer-photos">
+                                ${customer.photos.slice(0, 3).map(photo => `
+                                    <img src="${photo.data}" class="customer-photo" 
+                                         onclick="viewPhoto('${photo.id}')" 
+                                         alt="客户照片">
+                                `).join('')}
+                                ${customer.photos.length > 3 ? `
+                                    <div style="width: 80px; height: 80px; display: flex; align-items: center; justify-content: center; background: var(--light); border-radius: 8px; font-size: 14px; color: var(--text-light);">
+                                        +${customer.photos.length - 3}张
+                                    </div>
+                                ` : ''}
+                            </div>
+                        ` : ''}
+                        
+                        ${customer.product ? `
+                            <div class="customer-notes">
+                                <strong>感兴趣:</strong> ${customer.product}
+                            </div>
+                        ` : ''}
+                        
+                        ${customer.notes ? `
+                            <div class="customer-notes">
+                                ${customer.notes}
+                            </div>
+                        ` : ''}
+                        
+                        <div class="customer-actions">
+                            ${phoneKey && !isSent ? `
+                                <button class="action-btn send-btn" onclick="sendToCustomer('${customer.id}')">
+                                    <i class="fab fa-whatsapp"></i> 发送
+                                </button>
+                            ` : `
+                                <button class="action-btn" style="background: var(--light); color: var(--text);" ${!isSent ? 'disabled' : ''}>
+                                    ${isSent ? '<i class="fas fa-check"></i> 已发送' : '无号码'}
+                                </button>
+                            `}
+                            
+                            <button class="action-btn edit-btn" onclick="editCustomer('${customer.id}')">
+                                <i class="fas fa-edit"></i> 编辑
+                            </button>
+                            
+                            <button class="action-btn delete-btn" onclick="deleteCustomer('${customer.id}')">
+                                <i class="fas fa-trash"></i> 删除
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // 编辑客户
+        function editCustomer(id) {
+            openAddModal(id);
+        }
+
+        // 删除客户
+        function deleteCustomer(id) {
+            if (!confirm('确定要删除这个客户吗？')) {
+                return;
+            }
+            
+            customers = customers.filter(c => c.id !== id);
+            localStorage.setItem('pushads_customers', JSON.stringify(customers));
+            
+            renderCustomers();
+            updateStats();
+            showNotification('客户已删除', 'success');
+        }
+
+        // 获取选择的消息
+        function getSelectedMessage() {
+            const id = document.getElementById('messageTemplate').value;
+            if (!id) return null;
+            
+            return messages.messages.find(m => m.id === id);
+        }
+
+        // 发送给所有客户
+        function sendToAll() {
+            const message = getSelectedMessage();
+            if (!message) {
+                showNotification('请先选择消息模板', 'error');
+                return;
+            }
+            
+            const pending = customers.filter(c => {
+                if (c.category !== currentCategory) return false;
+                const phoneKey = c.phone ? c.phone.replace(/[^\d+]/g, '') : '';
+                return phoneKey && !localStorage.getItem(`sent_${phoneKey}`);
+            });
+            
+            if (pending.length === 0) {
+                showNotification('没有待发送的客户', 'warning');
+                return;
+            }
+            
+            if (!confirm(`发送给 ${pending.length} 个客户？`)) {
+                return;
+            }
+            
+            pending.forEach(customer => {
+                sendMessage(customer, message, false);
+            });
+            
+            setTimeout(() => {
+                renderCustomers();
+                updateStats();
+                showNotification(`已发送给 ${pending.length} 个客户`, 'success');
+            }, 500);
+        }
+
+        // 测试发送
+        function testMessage() {
+            const message = getSelectedMessage();
+            if (!message) {
+                showNotification('请先选择消息模板', 'error');
+                return;
+            }
+            
+            const phone = prompt('输入测试电话号码（+60开头）：');
+            if (!phone) return;
+            
+            const testCustomer = {
+                name: '测试客户',
+                phone: phone,
+                product: '测试产品'
+            };
+            
+            sendMessage(testCustomer, message, true);
+        }
+
+        // 发送消息
+        function sendMessage(customer, message, isTest = false) {
+            if (!customer || !customer.phone) {
+                if (!isTest) showNotification('客户无电话号码', 'error');
+                return;
+            }
+            
+            let text = message.text;
+            if (customer.name) {
+                text = text.replace(/\[姓名\]/g, customer.name);
+            }
+            if (customer.product) {
+                text = text.replace(/\[產品\]/g, customer.product);
+                text = text.replace(/\[产品名\]/g, customer.product);
+            }
+            
+            const phoneKey = customer.phone.replace(/[^\d+]/g, '');
+            const waLink = `https://wa.me/${phoneKey}?text=${encodeURIComponent(text)}`;
+            
+            if (!isTest) {
+                localStorage.setItem(`sent_${phoneKey}`, new Date().toISOString());
+                
+                const today = new Date().toISOString().slice(0, 10);
+                const todayCount = parseInt(localStorage.getItem(`sentToday_${today}`)) || 0;
+                localStorage.setItem(`sentToday_${today}`, todayCount + 1);
+            }
+            
+            window.open(waLink, '_blank');
+            
+            if (isTest) {
+                showNotification('测试消息已准备发送', 'success');
+            }
+        }
+
+        // 发送给单个客户
+        function sendToCustomer(customerId) {
+            const customer = customers.find(c => c.id === customerId);
+            if (!customer) return;
+            
+            const message = getSelectedMessage();
+            if (!message) {
+                showNotification('请先选择消息模板', 'error');
+                return;
+            }
+            
+            sendMessage(customer, message, false);
+            
+            setTimeout(() => {
+                renderCustomers();
+                updateStats();
+                showNotification('消息已发送', 'success');
+            }, 500);
+        }
+
+        // 更新统计
+        function updateStats() {
+            const today = new Date().toISOString().slice(0, 10);
+            const sentToday = parseInt(localStorage.getItem(`sentToday_${today}`)) || 0;
+            
+            // 总客户
+            document.getElementById('totalCustomers').textContent = customers.length;
+            
+            // 待发送
+            const pending = customers.filter(c => {
+                const phoneKey = c.phone ? c.phone.replace(/[^\d+]/g, '') : '';
+                return phoneKey && !localStorage.getItem(`sent_${phoneKey}`);
+            }).length;
+            
+            document.getElementById('pendingCustomers').textContent = pending;
+            document.getElementById('sentToday').textContent = sentToday;
+            
+            // 消息模板
+            const msgCount = messages.messages ? messages.messages.length : 0;
+            document.getElementById('totalMessages').textContent = msgCount;
+        }
+
+        // 显示标签页
+        function showTab(tab) {
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            event.target.closest('.nav-item').classList.add('active');
+            
+            if (tab === 'customers' || tab === 'messages' || tab === 'stats') {
+                showNotification('功能开发中...', 'info');
+            }
+        }
+
+        // 导出数据
+        function exportData() {
+            // 导出时照片数据可能很大，提示用户
+            if (!confirm('导出数据包含照片，文件可能较大，确定要继续吗？')) {
+                return;
+            }
+            
+            const exportData = {
+                customers: customers,
+                messages: messages,
+                exportDate: new Date().toISOString()
+            };
+            
+            const dataStr = JSON.stringify(exportData, null, 2);
+            const dataUri = 'data:application/json;charset=utf-8,' + encodeURIComponent(dataStr);
+            const fileName = `pushads_${new Date().toISOString().slice(0,10)}.json`;
+            
+            const link = document.createElement('a');
+            link.setAttribute('href', dataUri);
+            link.setAttribute('download', fileName);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            
+            showNotification('数据导出成功', 'success');
+        }
+
+        // 显示通知
+        function showNotification(message, type = 'success') {
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            
+            const icon = type === 'success' ? 'check-circle' : 
+                        type === 'error' ? 'exclamation-circle' : 'info-circle';
+            
+            notification.innerHTML = `<i class="fas fa-${icon}"></i> ${message}`;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.remove();
+            }, 3000);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,45 @@
+{
+  "exportDate": "2025-11-30T23:15:45.554Z",
+  "totalClients": 3,
+  "clients": [
+    {
+      "id": "milgwunfemludm8xkwq",
+      "name": "Eskay Wong",
+      "phone": "+60196819069",
+      "email": "bursasearch@gmail.com",
+      "source": "other",
+      "status": "new",
+      "interest": 
+        "general"
+      ],
+      "notes": "My own contact number.",
+      "updatedAt": "2025-11-30T23:11:55.809Z"
+    },
+    {
+      "id": "millnilg1teemols662",
+      "name": "Ba Xa",
+      "phone": "+60173912256",
+      "email": "kasisikitduit@gmail.com",
+      "source": "other",
+      "status": "new",
+      "interest": [
+        "general"
+      ],
+      "notes": "",
+      "updatedAt": "2025-11-30T23:13:20.124Z"
+    },
+    {
+      "id": "milnmawspyfe18jpfvg",
+      "name": "ThuyDan",
+      "phone": "+60177032274",
+      "email": "",
+      "source": "other",
+      "status": "new",
+      "interest": [
+        "general"
+      ],
+      "notes": "",
+      "updatedAt": "2025-11-30T23:13:46.553Z"
+    }
+  ]
+}

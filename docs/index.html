@@ -1,1 +1,299 @@
-[上面提供的完整HTML内容]
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Myx Shop - SSM註冊企業</title>
+    
+    <!-- Google Analytics 4 (GA4) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-92XTNG247J"></script>
+    <script>
+        const GA_MEASUREMENT_ID = 'G-92XTNG247J';
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', GA_MEASUREMENT_ID, {
+            page_title: 'Myx Shop - 主頁',
+            page_location: window.location.href,
+            time_zone: 'Asia/Kuala_Lumpur'
+        });
+    </script>
+    
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Segoe UI', 'Microsoft JhengHei', sans-serif; 
+            background: #f5f5f5;
+            min-height: 100vh; 
+            color: #333;
+        }
+        .container { 
+            max-width: 1000px; 
+            margin: 0 auto; 
+            padding: 20px; 
+        }
+        
+        header {
+            background: white;
+            padding: 20px;
+            text-align: center;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        h1 { 
+            color: #2d3748; 
+            font-size: 24px; 
+            margin-bottom: 10px; 
+        }
+        
+        .ssm-badge {
+            background: #48bb78;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            display: inline-block;
+            margin-bottom: 15px;
+            font-size: 14px;
+        }
+        
+        .ga-status-box {
+            background: #d4edda;
+            border: 1px solid #b1dfbb;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 15px 0;
+            text-align: center;
+        }
+        
+        .ga-id-box {
+            background: #155724;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-family: monospace;
+            font-size: 14px;
+            margin: 10px 0;
+            display: inline-block;
+        }
+        
+        .timezone-box {
+            background: #d1ecf1;
+            border: 1px solid #abdde5;
+            border-radius: 10px;
+            padding: 12px;
+            margin: 15px 0;
+            font-size: 14px;
+        }
+        
+        .ga-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin: 20px 0;
+        }
+        
+        .ga-btn {
+            background: #4285f4;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+            transition: opacity 0.3s;
+        }
+        
+        .ga-btn:hover {
+            opacity: 0.9;
+        }
+        
+        .nav-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .nav-card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-decoration: none;
+            color: inherit;
+            transition: transform 0.2s;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        
+        .nav-card:hover {
+            transform: translateY(-3px);
+        }
+        
+        footer {
+            background: white;
+            padding: 20px;
+            text-align: center;
+            border-radius: 10px;
+            margin-top: 20px;
+            font-size: 14px;
+            color: #666;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .ga-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .ga-btn {
+                width: 100%;
+                max-width: 300px;
+            }
+            
+            .nav-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Myx Shop</h1>
+            <p>SSM註冊企業 | 多元化服務平台</p>
+            
+            <div class="ssm-badge">
+                SSM註冊: 202510210078 (JM1034075-K)
+            </div>
+            
+            <div class="ga-status-box">
+                <strong>Google Analytics 4 已設置</strong>
+                <div class="ga-id-box">
+                    測量ID: G-92XTNG247J
+                </div>
+                <p>正在收集真實分析數據</p>
+            </div>
+            
+            <div class="timezone-box">
+                <strong>時區設置:</strong> Asia/Kuala_Lumpur (UTC+8)<br>
+                數據以馬來西亞時間記錄
+            </div>
+            
+            <div class="ga-buttons">
+                <button class="ga-btn" style="background:#4285f4;" onclick="openGAConsole()">
+                    查看GA數據
+                </button>
+                <button class="ga-btn" style="background:#34a853;" onclick="showGASetup()">
+                    GA設置說明
+                </button>
+                <button class="ga-btn" style="background:#fbbc05;" onclick="copyGAID()">
+                    複製GA ID
+                </button>
+                <button class="ga-btn" style="background:#ea4335;" onclick="showRealTimeInfo()">
+                    實時報告
+                </button>
+            </div>
+            
+            <a href="verification.html" style="display:inline-block; background:#667eea; color:white; padding:8px 20px; border-radius:20px; margin-top:15px; text-decoration:none;">
+                驗證商業資訊
+            </a>
+        </header>
+
+        <div class="nav-grid">
+            <a href="/myx_shop/bursa.html" class="nav-card">
+                <h3>AI選股分析</h3>
+                <p>智能選股策略與市場分析</p>
+            </a>
+            
+            <a href="products.html" class="nav-card">
+                <h3>聯盟商店</h3>
+                <p>熱門產品推薦與優惠</p>
+            </a>
+            
+            <a href="vehicles.html" class="nav-card">
+                <h3>二手車輛</h3>
+                <p>車輛資訊與市場分析</p>
+            </a>
+            
+            <a href="real-estate.html" class="nav-card">
+                <h3>房地產代理</h3>
+                <p>專業房地產服務與物業資訊</p>
+            </a>
+        </div>
+
+        <footer>
+            <p><strong>Myx Shop</strong></p>
+            <p>SSM Reg No: 202510210078 (JM1034075-K)</p>
+            <p>© 2025 Myx Shop. 保留所有權利。</p>
+            <p>網站分析: Google Analytics 4 (ID: G-92XTNG247J)</p>
+        </footer>
+    </div>
+
+    <script>
+    // 注意：这里不再声明 GA_MEASUREMENT_ID，因为已经在头部声明过了
+    
+    function openGAConsole() {
+        const gaURL = `https://analytics.google.com/analytics/web/#/p${GA_MEASUREMENT_ID}/reports/intelligenthome`;
+        window.open(gaURL, '_blank');
+        alert('正在打開 Google Analytics 控制台');
+    }
+
+    function copyGAID() {
+        navigator.clipboard.writeText(GA_MEASUREMENT_ID)
+            .then(() => {
+                alert('已複製 GA4 測量ID: ' + GA_MEASUREMENT_ID);
+            })
+            .catch(err => {
+                console.error('复制失败:', err);
+                // 备用复制方法
+                const textArea = document.createElement('textarea');
+                textArea.value = GA_MEASUREMENT_ID;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                alert('已複製 GA4 測量ID: ' + GA_MEASUREMENT_ID);
+            });
+    }
+
+    function showGASetup() {
+        alert('GA4 測量ID: ' + GA_MEASUREMENT_ID + '\n狀態: 正常運作\n時區: Asia/Kuala_Lumpur');
+    }
+    
+    function showRealTimeInfo() {
+        alert('實時數據請在 Google Analytics 控制台中查看\n網址: https://analytics.google.com');
+    }
+    
+    document.addEventListener('DOMContentLoaded', function() {
+        // 基本 GA4 追蹤
+        if (typeof gtag === 'function') {
+            gtag('event', 'page_view', {
+                page_title: 'Myx Shop - 主頁',
+                business_name: 'Myx Shop',
+                ssm_number: '202510210078'
+            });
+        }
+        
+        // 追蹤導航點擊
+        document.querySelectorAll('.nav-card').forEach(card => {
+            card.addEventListener('click', function(e) {
+                if (typeof gtag === 'function') {
+                    const section = this.querySelector('h3').textContent;
+                    gtag('event', 'navigation_click', {
+                        event_category: 'Navigation',
+                        event_label: section
+                    });
+                }
+            });
+        });
+    });
+</script>
+</body>
+</html>
