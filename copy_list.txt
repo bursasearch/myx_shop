@@ -1,0 +1,8 @@
+docs/index.html
+docs/vehicles.html
+docs/stock-detail.html
+docs/verification.html
+docs/js/
+docs/images/vehicles/ABC1111/
+docs/images/vehicles/ABC1234/
+docs/web/picks_latest.json
