@@ -713,9 +713,10 @@ async function loadDateConfig() {
             }
             
             try {
-                // 构建文件路径 - 使用正确的相对路径
-                const fileUrl = BASE_PATH + `/web/history/picks_${dateId}.json`;
-                console.log('正在加载:', fileUrl);
+                 // 构建文件路径 - 自动检测基础路径
+const basePath = window.location.pathname.includes('myx_shop_dev') ? '/myx_shop_dev' : '';
+const fileUrl = basePath + `/web/history/picks_${dateId}.json`;
+console.log('正在加载:', fileUrl);
                 
                 // 显示加载状态
                 document.getElementById('historyStocksContainer').innerHTML = 

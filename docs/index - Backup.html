@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+!DOCTYPE html>
 <html lang="zh">
 <head>
     <meta charset="UTF-8">
@@ -8,7 +8,6 @@
     <!-- Google Analytics 4 (GA4) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-92XTNG247J"></script>
     <script>
-        // 使用 const 聲明，避免污染全局
         const GA_MEASUREMENT_ID = 'G-92XTNG247J';
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
@@ -208,7 +207,6 @@
         </header>
 
         <div class="nav-grid">
-            <!-- 修正链接：使用相对路径，确保链接有效 -->
             <a href="/myx_shop_dev/web/bursa.html" class="nav-card">
                 <h3>AI選股分析</h3>
                 <p>智能選股策略與市場分析</p>
@@ -239,13 +237,10 @@
     </div>
 
     <script>
-    // GA_MEASUREMENT_ID 已经在全局定义（来自 head 中的 const），这里可以直接使用
-    // 无需再次声明，以避免潜在的重复声明错误（尽管在函数内使用是安全的）
+    // 注意：这里不再声明 GA_MEASUREMENT_ID，因为已经在头部声明过了
     
     function openGAConsole() {
-        // 修正 GA console URL 格式，標準格式為 /p[property-id]/reports
-        // 使用插值字符串
-        const gaURL = `https://analytics.google.com/analytics/web/#/p${GA_MEASUREMENT_ID.replace('G-', '')}/reports/intelligenthome`;
+        const gaURL = `https://analytics.google.com/analytics/web/#/p${GA_MEASUREMENT_ID}/reports/intelligenthome`;
         window.open(gaURL, '_blank');
         alert('正在打開 Google Analytics 控制台');
     }
@@ -299,6 +294,6 @@
             });
         });
     });
-    </script>
+</script>
 </body>
 </html>
