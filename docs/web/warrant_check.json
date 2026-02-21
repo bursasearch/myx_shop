@@ -1,42 +1,17 @@
 {
   "date": "2026-02-21",
   "total_picks": 15,
-  "warrant_count": 1,
-  "stock_count": 14,
-  "warrants": [
-    {
-      "code": "5099WA",
-      "name": "CAPITALA-WA",
-      "score": 93,
-      "b_percent": 54.0,
-      "price": 0.37,
-      "rank": 1
-    }
-  ],
+  "warrant_count": 0,
+  "stock_count": 15,
+  "warrants": [],
   "stocks": [
-    {
-      "code": "5205",
-      "name": "SENDAI",
-      "score": 96,
-      "b_percent": 63.0,
-      "price": 0.535,
-      "rank": 1
-    },
-    {
-      "code": "5142",
-      "name": "WASCO",
-      "score": 96,
-      "b_percent": 71.0,
-      "price": 0.95,
-      "rank": 2
-    },
     {
       "code": "5199",
       "name": "HIBISCS",
       "score": 95,
       "b_percent": 67.0,
       "price": 1.69,
-      "rank": 3
+      "rank": 1
     },
     {
       "code": "524945",
@@ -44,23 +19,7 @@
       "score": 95,
       "b_percent": 60.0,
       "price": 0.305,
-      "rank": 4
-    },
-    {
-      "code": "524941",
-      "name": "IOIPG-C41",
-      "score": 93,
-      "b_percent": 48.0,
-      "price": 0.425,
-      "rank": 5
-    },
-    {
-      "code": "2429",
-      "name": "TANCO",
-      "score": 93,
-      "b_percent": 64.0,
-      "price": 1.46,
-      "rank": 6
+      "rank": 2
     },
     {
       "code": "0193",
@@ -68,14 +27,46 @@
       "score": 93,
       "b_percent": 70.0,
       "price": 0.39,
+      "rank": 3
+    },
+    {
+      "code": "2429",
+      "name": "TANCO",
+      "score": 93,
+      "b_percent": 64.0,
+      "price": 1.46,
+      "rank": 4
+    },
+    {
+      "code": "7081",
+      "name": "PHARMA",
+      "score": 93,
+      "b_percent": 68.0,
+      "price": 0.31,
+      "rank": 5
+    },
+    {
+      "code": "5327",
+      "name": "MEGAFB",
+      "score": 93,
+      "b_percent": 79.0,
+      "price": 0.97,
+      "rank": 6
+    },
+    {
+      "code": "1171",
+      "name": "MBSB",
+      "score": 93,
+      "b_percent": 60.0,
+      "price": 0.765,
       "rank": 7
     },
     {
-      "code": "0339",
-      "name": "CBHB",
+      "code": "5243",
+      "name": "VELESTO",
       "score": 93,
-      "b_percent": 55.0,
-      "price": 0.57,
+      "b_percent": 51.0,
+      "price": 0.315,
       "rank": 8
     },
     {
@@ -87,11 +78,11 @@
       "rank": 9
     },
     {
-      "code": "5243",
-      "name": "VELESTO",
-      "score": 93,
-      "b_percent": 51.0,
-      "price": 0.315,
+      "code": "8664",
+      "name": "SPSETIA",
+      "score": 92,
+      "b_percent": 61.0,
+      "price": 0.955,
       "rank": 10
     }
   ]

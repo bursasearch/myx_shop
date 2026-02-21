@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bursa AI投资计算器</title>
+    <style>
+        body { font-family: Arial; max-width: 800px; margin: 0 auto; padding: 20px; }
+        .stock-card { border: 1px solid #ddd; padding: 10px; margin: 10px 0; border-radius: 5px; }
+        .price { font-size: 20px; font-weight: bold; color: #4CAF50; }
+    </style>
+</head>
+<body>
+    <h1>Bursa AI投资计算器</h1>
+    <p>📊 数据实时更新</p>
+    
+    <div id="stockList">加载中...</div>
+
+    <script>
+        // 直接加载数据
+        fetch('/web/picks_latest.json')
+            .then(response => response.json())
+            .then(data => {
+                console.log('成功加载数据:', data);
+                let html = '<h2>今日AI推荐</h2>';
+                data.picks.forEach(stock => {
+                    html += '<div class="stock-card">';
+                    html += `<h3>${stock.code} ${stock.name}</h3>`;
+                    html += `<p class="price">RM ${stock.price}</p>`;
+                    html += `<p>板块: ${stock.sector_name}</p>`;
+                    html += `<p>得分: ${stock.total_score}</p>`;
+                    html += '</div>';
+                });
+                document.getElementById('stockList').innerHTML = html;
+            })
+            .catch(error => {
+                console.error('加载失败:', error);
+                document.getElementById('stockList').innerHTML = '加载失败: ' + error.message;
+            });
+    </script>
+</body>
+</html>

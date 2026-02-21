@@ -1,5 +1,30 @@
-// 自动生成
+// 自动生成的历史日期列表
 window.availableDates = [
+  {
+    "id": "20260221",
+    "display": "2026-02-21",
+    "file": "history/picks_20260221.json"
+  },
+  {
+    "id": "20260220",
+    "display": "2026-02-20",
+    "file": "history/picks_20260220.json"
+  },
+  {
+    "id": "20260219",
+    "display": "2026-02-19",
+    "file": "history/picks_20260219.json"
+  },
+  {
+    "id": "20260216",
+    "display": "2026-02-16",
+    "file": "history/picks_20260216.json"
+  },
+  {
+    "id": "20260213",
+    "display": "2026-02-13",
+    "file": "history/picks_20260213.json"
+  },
   {
     "id": "20260212",
     "display": "2026-02-12",
@@ -41,4 +66,4 @@ window.availableDates = [
     "file": "history/picks_20260202.json"
   }
 ];
-window.latestDate = "20260212";
+window.latestDate = "20260221";
