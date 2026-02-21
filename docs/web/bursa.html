@@ -714,8 +714,8 @@ async function loadDateConfig() {
             
             try {
                 // 构建文件路径 - 使用正确的相对路径
-                const fileUrl = BASE_PATH + `/web/history/picks_${dateId}.json`;
-                console.log('正在加载:', fileUrl);
+const fileUrl = `/docs/web/history/picks_${dateId}.json`;
+console.log('正在加载:', fileUrl);
                 
                 // 显示加载状态
                 document.getElementById('historyStocksContainer').innerHTML = 
