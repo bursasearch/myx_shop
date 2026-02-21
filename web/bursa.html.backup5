@@ -570,19 +570,19 @@
     console.log('当前路径:', currentPath);
     
     // 情况 1: 直接在 web/ 目录下 (docs/web/bursa.html)
-    if (currentPath.includes('/myx_shop/docs/web/bursa.html')) {
+    if (currentPath.includes('/docs/web/bursa.html')) {
         return '';
     }
     // 情况 2: 在 docs/ 目录下 (docs/bursa.html)
-    else if (currentPath.includes('/myx_shop/docs/bursa.html')) {
+    else if (currentPath.includes('/docs/bursa.html')) {
         return 'web/';
     }
     // 情况 3: 在 GitHub Pages 根目录 (myx_shop/bursa.html)
-    else if (currentPath.includes('/myx_shop/bursa.html')) {
+    else if (currentPath.includes('/bursa.html')) {
         return 'web/';
     }
     // 情况 4: 在 web/ 目录下 (web/bursa.html) - untuk localhost
-    else if (currentPath.includes('/myx_shop/web/bursa.html')) {
+    else if (currentPath.includes('/web/bursa.html')) {
         return '';
     }
     // 默认情况
@@ -590,7 +590,7 @@
         return '';
     }
 }
-        const BASE_PATH = getBasePath();
+        const BASE_PATH = "./";
         console.log('基础路径设置为:', BASE_PATH);
 
         // ==================== 初始化函数 - 加载历史数据 ====================
@@ -645,16 +645,16 @@ async function loadDateConfig() {
         console.warn('⚠️ date_config.js加载失败:', error);
         // 使用实际存在的硬编码日期
         window.availableDates = [
-            {id: '20260216', display: '2026-02-16', file: '/web/history/picks_20260216.json'},
-            {id: '20260213', display: '2026-02-13', file: '/web/history/picks_20260213.json'},
-            {id: '20260212', display: '2026-02-12', file: '/web/history/picks_20260212.json'},
-            {id: '20260211', display: '2026-02-11', file: '/web/history/picks_20260211.json'},
-            {id: '20260210', display: '2026-02-10', file: '/web/history/picks_20260210.json'},
-            {id: '20260209', display: '2026-02-09', file: '/web/history/picks_20260209.json'},
-            {id: '20260206', display: '2026-02-06', file: '/web/history/picks_20260206.json'},
-            {id: '20260205', display: '2026-02-05', file: '/web/history/picks_20260205.json'},
-            {id: '20260204', display: '2026-02-04', file: '/web/history/picks_20260204.json'},
-            {id: '20260202', display: '2026-02-02', file: '/web/history/picks_20260202.json'}
+            {id: '20260216', display: '2026-02-16', file: 'history/picks_20260216.json'},
+            {id: '20260213', display: '2026-02-13', file: 'history/picks_20260213.json'},
+            {id: '20260212', display: '2026-02-12', file: 'history/picks_20260212.json'},
+            {id: '20260211', display: '2026-02-11', file: 'history/picks_20260211.json'},
+            {id: '20260210', display: '2026-02-10', file: 'history/picks_20260210.json'},
+            {id: '20260209', display: '2026-02-09', file: 'history/picks_20260209.json'},
+            {id: '20260206', display: '2026-02-06', file: 'history/picks_20260206.json'},
+            {id: '20260205', display: '2026-02-05', file: 'history/picks_20260205.json'},
+            {id: '20260204', display: '2026-02-04', file: 'history/picks_20260204.json'},
+            {id: '20260202', display: '2026-02-02', file: 'history/picks_20260202.json'}
         ];
         
         console.log('使用硬编码日期，共', window.availableDates.length, '天');
@@ -714,7 +714,7 @@ async function loadDateConfig() {
             
             try {
                 // 构建文件路径 - 使用正确的相对路径
-                const fileUrl = BASE_PATH + `/web/history/picks_${dateId}.json`;
+                const fileUrl = "/history/picks_${dateId}.json`;
                 console.log('正在加载:', fileUrl);
                 
                 // 显示加载状态
@@ -802,7 +802,7 @@ async function loadDateConfig() {
             for (const dateId of knownDates) {
                 try {
                     // 使用正确的相对路径
-                    const url = BASE_PATH + `/web/history/picks_${dateId}.json`;
+                    const url = "/history/picks_${dateId}.json`;
                     
                     console.log(`检查文件: ${url}`);
                     
@@ -818,7 +818,7 @@ async function loadDateConfig() {
                             window.availableDates.push({
                                 id: dateId,
                                 display: `${dateId.slice(0,4)}-${dateId.slice(4,6)}-${dateId.slice(6,8)}`,
-                                file: `/web/history/picks_${dateId}.json`
+                                file: `history/picks_${dateId}.json`
                             });
                             console.log(`✅ 发现历史: ${dateId}`);
                         }
@@ -835,11 +835,11 @@ async function loadDateConfig() {
             if (window.availableDates.length === 0) {
                 console.log('使用硬编码日期作为后备');
                 window.availableDates = [
-                    {id: '20260216', display: '2026-02-16', file: '/web/history/picks_20260216.json'},
-                    {id: '20260215', display: '2026-02-15', file: '/web/history/picks_20260215.json'},
-                    {id: '20260213', display: '2026-02-13', file: '/web/history/picks_20260213.json'},
-                    {id: '20260212', display: '2026-02-12', file: '/web/history/picks_20260212.json'},
-                    {id: '20260211', display: '2026-02-11', file: '/web/history/picks_20260211.json'}
+                    {id: '20260216', display: '2026-02-16', file: 'history/picks_20260216.json'},
+                    {id: '20260215', display: '2026-02-15', file: 'history/picks_20260215.json'},
+                    {id: '20260213', display: '2026-02-13', file: 'history/picks_20260213.json'},
+                    {id: '20260212', display: '2026-02-12', file: 'history/picks_20260212.json'},
+                    {id: '20260211', display: '2026-02-11', file: 'history/picks_20260211.json'}
                 ];
             }
             

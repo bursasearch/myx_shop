@@ -1,88 +1,97 @@
 {
-  "date": "2026-02-20",
+  "date": "2026-02-21",
   "total_picks": 15,
-  "warrant_count": 0,
-  "stock_count": 15,
-  "warrants": [],
-  "stocks": [
+  "warrant_count": 1,
+  "stock_count": 14,
+  "warrants": [
     {
-      "code": "1287",
-      "name": "EXSIMHB",
-      "score": 98,
-      "b_percent": 72.0,
-      "price": 0.335,
+      "code": "5099WA",
+      "name": "CAPITALA-WA",
+      "score": 93,
+      "b_percent": 54.0,
+      "price": 0.37,
       "rank": 1
-    },
-    {
-      "code": "5327",
-      "name": "MEGAFB",
-      "score": 98,
-      "b_percent": 80.0,
-      "price": 0.97,
-      "rank": 2
-    },
-    {
-      "code": "4324",
-      "name": "HENGYUAN",
-      "score": 98,
-      "b_percent": 62.0,
-      "price": 0.975,
-      "rank": 3
-    },
+    }
+  ],
+  "stocks": [
     {
       "code": "5205",
       "name": "SENDAI",
-      "score": 98,
-      "b_percent": 73.0,
-      "price": 0.52,
+      "score": 96,
+      "b_percent": 63.0,
+      "price": 0.535,
+      "rank": 1
+    },
+    {
+      "code": "5142",
+      "name": "WASCO",
+      "score": 96,
+      "b_percent": 71.0,
+      "price": 0.95,
+      "rank": 2
+    },
+    {
+      "code": "5199",
+      "name": "HIBISCS",
+      "score": 95,
+      "b_percent": 67.0,
+      "price": 1.69,
+      "rank": 3
+    },
+    {
+      "code": "524945",
+      "name": "IOIPG-C45",
+      "score": 95,
+      "b_percent": 60.0,
+      "price": 0.305,
       "rank": 4
     },
     {
-      "code": "8664",
-      "name": "SPSETIA",
-      "score": 96,
-      "b_percent": 67.0,
-      "price": 0.975,
+      "code": "524941",
+      "name": "IOIPG-C41",
+      "score": 93,
+      "b_percent": 48.0,
+      "price": 0.425,
       "rank": 5
     },
     {
-      "code": "1171",
-      "name": "MBSB",
-      "score": 96,
-      "b_percent": 62.0,
-      "price": 0.765,
+      "code": "2429",
+      "name": "TANCO",
+      "score": 93,
+      "b_percent": 64.0,
+      "price": 1.46,
       "rank": 6
     },
     {
-      "code": "0376",
-      "name": "IAB",
-      "score": 95,
-      "b_percent": 60.0,
-      "price": 1.7,
+      "code": "0193",
+      "name": "KINERGY",
+      "score": 93,
+      "b_percent": 70.0,
+      "price": 0.39,
       "rank": 7
     },
     {
-      "code": "0208",
-      "name": "GREATEC",
-      "score": 95,
-      "b_percent": 64.0,
-      "price": 1.89,
+      "code": "0339",
+      "name": "CBHB",
+      "score": 93,
+      "b_percent": 55.0,
+      "price": 0.57,
       "rank": 8
     },
     {
-      "code": "0375",
-      "name": "THMY",
-      "score": 95,
-      "b_percent": 68.0,
-      "price": 1.17,
+      "code": "5099",
+      "name": "CAPITALA",
+      "score": 93,
+      "b_percent": 51.0,
+      "price": 0.595,
       "rank": 9
     },
     {
-      "code": "7148",
-      "name": "DPHARMA",
-      "score": 95,
-      "b_percent": 64.0,
-      "price": 1.55,
+      "code": "5243",
+      "name": "VELESTO",
+      "score": 93,
+      "b_percent": 51.0,
+      "price": 0.315,
       "rank": 10
     }
   ]

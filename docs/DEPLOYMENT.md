@@ -1,7 +1,7 @@
 # 部署报告
-- 部署时间: 2026-02-20 14:29:09
+- 部署时间: 2026-02-21 15:22:31
 - 源目录: /data/data/com.termux/files/home/storage/shared/bursasearch/myx_shop
-- 目标目录: /data/data/com.termux/files/home/storage/shared/bursasearch/myx_shop/docs
+- 目标目录: /data/data/com.termux/files/home/storage/shared/bursasearch/myx_shop_dev/docs
 
 ## 已部署文件
 - ✅ ai-monitor.html - AI选股监控仪表板
@@ -37,8 +37,8 @@ https://[您的GitHub用户名].github.io/[仓库名]/
 ## 手动操作步骤
 如果需要手动更新GitHub Pages:
 ```bash
-cd /data/data/com.termux/files/home/storage/shared/bursasearch/myx_shop/docs
+cd /data/data/com.termux/files/home/storage/shared/bursasearch/myx_shop_dev/docs
 git add .
-git commit -m "更新AI选股监控系统 - 2026-02-20 14:29:09"
+git commit -m "更新AI选股监控系统 - 2026-02-21 15:22:31"
 git push origin main
 ```

@@ -1,0 +1,89 @@
+{
+  "date": "2026-02-21",
+  "total_picks": 15,
+  "warrant_count": 0,
+  "stock_count": 15,
+  "warrants": [],
+  "stocks": [
+    {
+      "code": "5199",
+      "name": "HIBISCS",
+      "score": 95,
+      "b_percent": 67.0,
+      "price": 1.69,
+      "rank": 1
+    },
+    {
+      "code": "524945",
+      "name": "IOIPG-C45",
+      "score": 95,
+      "b_percent": 60.0,
+      "price": 0.305,
+      "rank": 2
+    },
+    {
+      "code": "0193",
+      "name": "KINERGY",
+      "score": 93,
+      "b_percent": 70.0,
+      "price": 0.39,
+      "rank": 3
+    },
+    {
+      "code": "2429",
+      "name": "TANCO",
+      "score": 93,
+      "b_percent": 64.0,
+      "price": 1.46,
+      "rank": 4
+    },
+    {
+      "code": "7081",
+      "name": "PHARMA",
+      "score": 93,
+      "b_percent": 68.0,
+      "price": 0.31,
+      "rank": 5
+    },
+    {
+      "code": "5327",
+      "name": "MEGAFB",
+      "score": 93,
+      "b_percent": 79.0,
+      "price": 0.97,
+      "rank": 6
+    },
+    {
+      "code": "1171",
+      "name": "MBSB",
+      "score": 93,
+      "b_percent": 60.0,
+      "price": 0.765,
+      "rank": 7
+    },
+    {
+      "code": "5243",
+      "name": "VELESTO",
+      "score": 93,
+      "b_percent": 51.0,
+      "price": 0.315,
+      "rank": 8
+    },
+    {
+      "code": "5099",
+      "name": "CAPITALA",
+      "score": 93,
+      "b_percent": 51.0,
+      "price": 0.595,
+      "rank": 9
+    },
+    {
+      "code": "8664",
+      "name": "SPSETIA",
+      "score": 92,
+      "b_percent": 61.0,
+      "price": 0.955,
+      "rank": 10
+    }
+  ]
+}
