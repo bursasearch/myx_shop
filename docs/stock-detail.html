@@ -409,31 +409,52 @@
         }
 
         async function loadStockData() {
-            try {
-                // 1. 尝试加载最新数据
-                const response = await fetch(`${CONFIG.dataSource}?t=${Date.now()}`);
-                if (response.ok) {
-                    const data = await response.json();
-                    allPicks = data.picks || [];
-                    
-                    // 查找当前股票（支持多种匹配方式）
-                    stockData = findStockByCode(stockCode, allPicks);
-                    
-                    if (stockData) {
-                        renderStockDetail();
-                        return;
-                    }
-                }
-                
-                // 2. 如果最新数据中没有，尝试从历史数据查找
-                await searchInHistory();
-                
-            } catch (error) {
-                console.warn('加载最新数据失败，尝试历史数据:', error);
-                await searchInHistory();
+    console.log('🔍 loadStockData 開始執行');
+    console.log('📌 stockCode:', stockCode);
+    console.log('📁 CONFIG.dataSource:', CONFIG.dataSource);
+    
+    try {
+        // 1. 尝试加载最新数据
+        const url = `${CONFIG.dataSource}?t=${Date.now()}`;
+        console.log('🌐 請求 URL:', url);
+        
+        const response = await fetch(url);
+        console.log('📡 響應狀態:', response.status);
+        
+        if (response.ok) {
+            const data = await response.json();
+            console.log('✅ 數據加載成功');
+            console.log('📦 數據結構:', Object.keys(data));
+            console.log('🎯 picks 長度:', data.picks?.length);
+            
+            allPicks = data.picks || [];
+            console.log('📋 allPicks 第一支:', allPicks[0]);
+            
+            // 查找当前股票（支持多种匹配方式）
+            console.log('🔎 開始查找股票:', stockCode);
+            stockData = findStockByCode(stockCode, allPicks);
+            console.log('🔎 查找結果 stockData:', stockData);
+            
+            if (stockData) {
+                console.log('💰 找到股票，價格:', stockData.price);
+                renderStockDetail();
+                return;
+            } else {
+                console.log('❌ 未找到股票:', stockCode);
             }
+        } else {
+            console.log('❌ 響應錯誤:', response.status);
         }
-
+        
+        // 2. 如果最新数据中没有，尝试从历史数据查找
+        console.log('📚 嘗試從歷史數據查找');
+        await searchInHistory();
+        
+    } catch (error) {
+        console.error('❌ 加載失敗:', error);
+        await searchInHistory();
+    }
+}
         function findStockByCode(code, picksList) {
             if (!code || !picksList) return null;
             
@@ -485,7 +506,7 @@
             // 准备数据
             const isWarrant = stockData.instrument_type === 'Warrant';
             const isStock = !isWarrant;
-            const currentPrice = stockData.current_price || 0;
+            const currentPrice = stockData.price || 0;
             const dailyChange = stockData.daily_change || 0;
             const changeClass = getChangeClass(dailyChange);
             const changeSign = getChangeSign(dailyChange);

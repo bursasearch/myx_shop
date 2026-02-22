@@ -97,18 +97,18 @@
 </head>
 <body>
     <!-- 導航欄 -->
-    <nav class="navbar navbar-expand-lg navbar-dark" style="background: var(--primary);">
-        <div class="container">
-            <a class="navbar-brand" href="#">
-                <i class="fas fa-chart-line"></i> MyX Shop AI Trader
-            </a>
-            <div class="navbar-nav">
-                <a class="nav-link" href="#"><i class="fas fa-home"></i> 首页</a>
-                <a class="nav-link active" href="#"><i class="fas fa-robot"></i> AI选股监控</a>
-                <a class="nav-link" href="#"><i class="fas fa-mobile-alt"></i> KLSE指南</a>
-            </div>
+<nav class="navbar navbar-expand-lg navbar-dark" style="background: var(--primary);">
+    <div class="container">
+        <a class="navbar-brand" href="/">
+            <i class="fas fa-chart-line"></i> MyX Shop AI Trader
+        </a>
+        <div class="navbar-nav">
+            <a class="nav-link" href="/"><i class="fas fa-home"></i> 首页</a>
+            <a class="nav-link active" href="/ai-monitor.html"><i class="fas fa-robot"></i> AI选股监控</a>
+            <a class="nav-link" href="/klse-guide.html"><i class="fas fa-mobile-alt"></i> KLSE指南</a>
         </div>
-    </nav>
+    </div>
+</nav>
 
     <div class="container my-5">
         <div class="dashboard-container">
@@ -189,7 +189,7 @@
                         </ol>
                     </div>
                 </div>
-                <button class="btn klse-action-btn" onclick="window.open('#', '_blank')">
+                <button class="btn klse-action-btn" onclick="window.open('klse-guide.html', '_blank')">
                     <i class="fas fa-book"></i> 查看完整KLSE使用教程
                 </button>
             </div>
@@ -229,12 +229,14 @@
     <!-- JavaScript -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        // ========== 配置数据源路径 ==========
-        const DATA_SOURCES = {
-            latest: '/web/picks_latest.json',
-            history: '/web/history/',
-            prices: '/web/latest_price.json'
-        };
+console.log('🚀 ai-monitor.html 開始執行');
+
+    // ========== 配置数据源路径 ==========
+const DATA_SOURCES = {
+    latest: '/web/picks_latest.json',        // 從本地加載
+    history: '/web/history/',                 // 從本地 history 目錄
+    prices: '/web/latest_price.json'          // 從本地加載
+};
 
         // ========== 主数据对象 ==========
         let aiStocks = [];
@@ -242,67 +244,55 @@
 
         // ========== 添加 KLSE Screener 連結函數 ==========
         function openKLSEInApp(code) {
+            // 嘗試打開 KLSE Screener App
             window.location.href = `klsescreener://stock/${code}`;
+            
+            // 如果 App 未安裝，500ms 後打開網頁版
             setTimeout(() => {
                 window.open(`https://www.klsescreener.com/v2/stocks/view/${code}`, '_blank');
             }, 500);
         }
 
-        // ========== 初始化页面 ==========
-        async function initDashboard() {
-            console.log('初始化仪表板...');
-            
-            try {
-                // 嘗試加載實際數據，如果失敗則使用示例數據
-                await loadStockData();
-            } catch (error) {
-                console.log('加載實際數據失敗，使用示例數據:', error);
-                loadSampleData();
-            }
-        }
-
-       // ========== 加載股票數據 ==========
-async function loadStockData() {
-    const url = 'http://127.0.0.1:9090/web/picks_latest.json?t=' + Date.now();
-
+       // ========== 初始化页面 ==========
+async function initDashboard() {
+    console.log('📊 initDashboard 開始執行');
+    console.log('🔍 DATA_SOURCES.latest =', DATA_SOURCES.latest);
+    
     try {
+        // 1. 加载最新AI选股数据
+        const url = '/web/picks_latest.json?t=' + Date.now();
+        console.log('🌐 請求 URL:', url);
+        
         const response = await fetch(url);
-        if (!response.ok) throw new Error('無法加載數據');
+        console.log('📡 響應狀態:', response.status);
+        
+        if (!response.ok) throw new Error('无法加载数据');
 
         const data = await response.json();
+        console.log('✅ 數據加載成功');
+        console.log('📦 數據結構:', Object.keys(data));
+        console.log('🎯 picks 長度:', data.picks?.length);
         
-        if (data && data.picks && data.picks.length > 0) {
-            aiStocks = data.picks.map(pick => ({
-                code: pick.code || '未知',
-                name: pick.name || '',
-                instrument_type: pick.instrument_type || 'Stock',
-                price: pick.price || 0,
-                daily_change: pick.daily_change || 0,
-                score: pick.total_score || 70,
-                sector_name: pick.sector_name || '其他'
-            }));
-            
-            lastUpdateTime = data.last_updated || data.date || new Date().toLocaleString();
-        } else {
-            throw new Error('數據格式錯誤');
-        }
+        aiStocks = data.picks || [];
+        lastUpdateTime = data.last_updated || data.date;
+        
+        console.log('📊 aiStocks 長度:', aiStocks.length);
+        
+        // 2. 更新UI
+        updateStatistics();
+        renderStockCards();
+        updateLastUpdateTime();
+        
     } catch (error) {
-        console.error('加載失敗:', error);
-        throw error;
+        console.error('❌ 初始化失敗:', error);
     }
-    
-    updateStatistics();
-    renderStockCards();
-    updateLastUpdateTime();
 }
 
         // ========== 更新统计数据 ==========
         function updateStatistics() {
             document.getElementById('totalStocks').textContent = aiStocks.length;
             
-            const avgChange = aiStocks.length > 0 
-                ? aiStocks.reduce((sum, stock) => sum + (stock.daily_change || 0), 0) / aiStocks.length 
-                : 0;
+            const avgChange = aiStocks.reduce((sum, stock) => sum + (stock.daily_change || 0), 0) / aiStocks.length;
             document.getElementById('avgReturn').textContent = avgChange.toFixed(2) + '%';
             
             const warrantCount = aiStocks.filter(s => s.instrument_type === 'Warrant').length;
@@ -312,7 +302,7 @@ async function loadStockData() {
             document.getElementById('highRiskCount').textContent = highRiskCount;
         }
 
-        // ========== 渲染股票卡片 ==========
+        // ========== 渲染股票卡片（已添加 KLSE 連結）==========
         function renderStockCards() {
             const container = document.getElementById('stocksContainer');
             
@@ -330,89 +320,92 @@ async function loadStockData() {
             let html = '';
             
             aiStocks.forEach(stock => {
-                const isWarrant = stock.instrument_type === 'Warrant';
-                const cardClass = isWarrant ? 'warrant' : 'stock';
-                const changeClass = (stock.daily_change || 0) >= 0 ? 'positive' : 'negative';
-                const changeSign = (stock.daily_change || 0) >= 0 ? '+' : '';
-                
-                const currentPrice = stock.price || 0;
-                const targetPrice = (currentPrice * 1.1).toFixed(3);
-                const stopLossRatio = isWarrant ? 0.80 : (stock.score >= 80 ? 0.92 : 0.90);
-                const stopLossPrice = (currentPrice * stopLossRatio).toFixed(3);
+    const isWarrant = stock.instrument_type === 'Warrant';
+    const cardClass = isWarrant ? 'warrant' : 'stock';
+    const changeClass = (stock.daily_change || 0) >= 0 ? 'positive' : 'negative';
+    const changeSign = (stock.daily_change || 0) >= 0 ? '+' : '';
+
+    const currentPrice = stock.price || 0;
+    const targetPrice = (currentPrice * 1.1).toFixed(3);
+    const stopLossRatio = isWarrant ? 0.80 : (stock.score >= 80 ? 0.92 : 0.90);
+    const stopLossPrice = (currentPrice * stopLossRatio).toFixed(3);
+    
+    // 然後才是 HTML 模板...
+});
                 
                 html += `
-                    <div class="col-md-6 col-lg-4">
-                        <div class="card stock-card ${cardClass}" onclick="openKLSEInApp('${stock.code}')">
-                            <div class="card-body">
-                                <div class="d-flex justify-content-between align-items-start mb-3">
-                                    <div>
-                                        <h5 class="card-title mb-1">
-                                            ${stock.code} 
-                                            <small class="text-muted">${stock.name || ''}</small>
-                                        </h5>
-                                        <span class="badge ${isWarrant ? 'bg-danger' : 'bg-success'}">
-                                            ${isWarrant ? '📈 WARRANT' : '📊 STOCK'}
-                                        </span>
-                                        <span class="badge bg-secondary">${stock.sector_name || 'Other'}</span>
-                                    </div>
-                                    <div class="text-end">
-                                        <h4 class="${changeClass} mb-0">
-                                            RM ${currentPrice.toFixed(3)}
-                                        </h4>
-                                        <small class="${changeClass}">
-                                            ${changeSign}${(stock.daily_change || 0).toFixed(2)}%
-                                        </small>
-                                    </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="card stock-card ${cardClass}" onclick="openKLSEInApp('${stock.code}')">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-start mb-3">
+                                <div>
+                                    <h5 class="card-title mb-1">
+                                        ${stock.code} 
+                                        <small class="text-muted">${stock.name || ''}</small>
+                                    </h5>
+                                    <span class="badge ${isWarrant ? 'bg-danger' : 'bg-success'}">
+                                        ${isWarrant ? '📈 WARRANT' : '📊 STOCK'}
+                                    </span>
+                                    <span class="badge bg-secondary">${stock.sector_name || 'Other'}</span>
                                 </div>
-                                
-                                <!-- 评分进度条 -->
-                                <div class="mb-3">
-                                    <div class="d-flex justify-content-between mb-1">
-                                        <small>AI评分</small>
-                                        <small>${stock.score || 0}/100</small>
-                                    </div>
-                                    <div class="progress progress-bar-custom">
-                                        <div class="progress-bar ${stock.score >= 80 ? 'bg-success' : stock.score >= 70 ? 'bg-warning' : 'bg-danger'}" 
-                                             style="width: ${stock.score || 0}%">
-                                        </div>
-                                    </div>
+                                <div class="text-end">
+                                    <h4 class="${changeClass} mb-0">
+                                        RM ${currentPrice.toFixed(3)}
+                                    </h4>
+                                    <small class="${changeClass}">
+                                        ${changeSign}${(stock.daily_change || 0).toFixed(2)}%
+                                    </small>
                                 </div>
-                                
-                                <!-- KLSE操作指南 -->
-                                <div class="alert alert-light p-2 mb-2">
-                                    <small><strong>🎯 KLSE Screener设置：</strong></small>
-                                    <table class="table table-sm table-borderless mb-0">
-                                        <tr>
-                                            <td><i class="fas fa-bullseye text-success"></i></td>
-                                            <td>盈利目标</td>
-                                            <td class="text-end"><strong>RM ${targetPrice}</strong></td>
-                                        </tr>
-                                        <tr>
-                                            <td><i class="fas fa-shield-alt text-danger"></i></td>
-                                            <td>止损位</td>
-                                            <td class="text-end"><strong>RM ${stopLossPrice}</strong></td>
-                                        </tr>
-                                    </table>
-                                </div>
-
-                                <!-- 操作按钮 -->
-                                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                                    <button class="btn btn-sm btn-outline-primary"
-                                            onclick="event.stopPropagation(); copyKLSEAlert('${stock.code}', ${currentPrice}, ${targetPrice}, ${stopLossPrice})">
-                                        <i class="fas fa-copy"></i> 复制设置
-                                    </button>
-                                    <button class="btn btn-sm klse-action-btn"
-                                            onclick="event.stopPropagation(); window.open('stock-detail.html?code=${stock.code}', '_blank')">
-                                        <i class="fas fa-search"></i> 查看详情
-                                    </button>
-                                </div>
-
-                                <small class="text-muted d-block text-center mt-2">
-                                    👆 点击卡片直接打开 KLSE Screener
-                                </small>
                             </div>
+                            
+                            <!-- 评分进度条 -->
+                            <div class="mb-3">
+                                <div class="d-flex justify-content-between mb-1">
+                                    <small>AI评分</small>
+                                    <small>${stock.score || 0}/100</small>
+                                </div>
+                                <div class="progress progress-bar-custom">
+                                    <div class="progress-bar ${stock.score >= 80 ? 'bg-success' : stock.score >= 70 ? 'bg-warning' : 'bg-danger'}" 
+                                         style="width: ${stock.score || 0}%">
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- KLSE操作指南 -->
+<div class="alert alert-light p-2 mb-2">
+    <small><strong>🎯 KLSE Screener设置：</strong></small>
+    <table class="table table-sm table-borderless mb-0">
+        <tr>
+            <td><i class="fas fa-bullseye text-success"></i></td>
+            <td>盈利目标</td>
+            <td class="text-end"><strong>RM ${targetPrice}</strong></td>
+        </tr>
+        <tr>
+            <td><i class="fas fa-shield-alt text-danger"></i></td>
+            <td>止损位</td>
+            <td class="text-end"><strong>RM ${stopLossPrice}</strong></td>
+        </tr>
+    </table>
+</div>
+
+<!-- 操作按钮 -->
+<div class="d-grid gap-2 d-md-flex justify-content-md-end">
+    <button class="btn btn-sm btn-outline-primary"
+            onclick="event.stopPropagation(); copyKLSEAlert('${stock.code}', ${currentPrice}, ${targetPrice}, ${stopLossPrice})">
+        <i class="fas fa-copy"></i> 复制设置
+    </button>
+    <button class="btn btn-sm klse-action-btn"
+            onclick="event.stopPropagation(); window.open('stock-detail.html?code=${stock.code}', '_blank')">
+        <i class="fas fa-search"></i> 查看详情
+    </button>
+</div>
+
+<small class="text-muted d-block text-center mt-2">
+    👆 点击卡片直接打开 KLSE Screener
+</small>
                         </div>
                     </div>
+                </div>
                 `;
             });
             
@@ -433,11 +426,6 @@ async function loadStockData() {
 
         // ========== 生成KLSE导入文件 ==========
         function generateKLSEImport() {
-            if (aiStocks.length === 0) {
-                alert('❌ 沒有股票數據可導出');
-                return;
-            }
-            
             const importData = {
                 generated_at: new Date().toISOString(),
                 watchlist_name: `AI_Picks_${new Date().toISOString().slice(0,10)}`,
@@ -465,6 +453,12 @@ async function loadStockData() {
             alert('✅ KLSE导入文件已生成！');
         }
 
+        // ========== 查看股票详情 ==========
+        function viewStockDetails(code) {
+            event.stopPropagation();
+            window.open(`stock-detail.html?code=${code}`, '_blank');
+        }
+
         // ========== 刷新数据 ==========
         function refreshData() {
             location.reload();
@@ -482,7 +476,7 @@ async function loadStockData() {
                     code: '5296',
                     name: 'MR DIY',
                     instrument_type: 'Stock',
-                    price: 1.65,
+                    current_price: 1.65,
                     daily_change: 2.5,
                     score: 85,
                     sector_name: 'Retail'
@@ -491,26 +485,16 @@ async function loadStockData() {
                     code: '5285',
                     name: 'SUNWAY',
                     instrument_type: 'Stock',
-                    price: 2.12,
+                    current_price: 2.12,
                     daily_change: 1.8,
                     score: 82,
                     sector_name: 'Property'
-                },
-                {
-                    code: '7153',
-                    name: 'KOSSAN',
-                    instrument_type: 'Stock',
-                    price: 1.98,
-                    daily_change: -1.2,
-                    score: 75,
-                    sector_name: 'Healthcare'
                 }
             ];
             
-            lastUpdateTime = '2024-02-10 14:30 (示例数据)';
             updateStatistics();
             renderStockCards();
-            updateLastUpdateTime();
+            document.getElementById('lastUpdateTime').textContent = '2024-02-10 (示例数据)';
         }
 
         // ========== 页面加载完成后初始化 ==========
