@@ -286,17 +286,26 @@
         function updateStatistics() {
             document.getElementById('totalStocks').textContent = aiStocks.length;
             
+            // 计算平均回报率 - 使用 daily_change 字段
             const avgChange = aiStocks.reduce((sum, stock) => sum + (stock.daily_change || 0), 0) / aiStocks.length;
             document.getElementById('avgReturn').textContent = avgChange.toFixed(2) + '%';
             
-            const warrantCount = aiStocks.filter(s => s.instrument_type === 'Warrant').length;
+            // 计算凭单数量 - 需要根据代码判断是否为凭单（通常包含-WB, -Cx等后缀）
+            const warrantCount = aiStocks.filter(s => {
+                // 简单的凭单判断：如果代码包含字母后缀或价格较低（通常凭单价位低）
+                return s.code.includes('-C') || s.code.includes('-W') || (s.price && s.price < 0.5 && s.price > 0);
+            }).length;
             document.getElementById('warrantCount').textContent = warrantCount;
             
-            const highRiskCount = aiStocks.filter(s => s.instrument_type === 'Warrant' || (s.score || 0) < 70).length;
+            // 计算高风险股票 (凭单或评分低于70)
+            const highRiskCount = aiStocks.filter(s => {
+                const isWarrant = s.code.includes('-C') || s.code.includes('-W') || (s.price && s.price < 0.5 && s.price > 0);
+                return isWarrant || (s.total_score || 0) < 70;
+            }).length;
             document.getElementById('highRiskCount').textContent = highRiskCount;
         }
 
-        // ========== 渲染股票卡片（已添加 KLSE 連結）==========
+        // ========== 渲染股票卡片 ==========
         function renderStockCards() {
             const container = document.getElementById('stocksContainer');
             
@@ -314,15 +323,22 @@
             let html = '';
             
             aiStocks.forEach(stock => {
-                const isWarrant = stock.instrument_type === 'Warrant';
+                // 判断是否为凭单（通过代码后缀和价格综合判断）
+                const isWarrant = stock.code.includes('-C') || stock.code.includes('-W') || (stock.price < 0.5 && stock.price > 0);
                 const cardClass = isWarrant ? 'warrant' : 'stock';
                 const changeClass = (stock.daily_change || 0) >= 0 ? 'positive' : 'negative';
                 const changeSign = (stock.daily_change || 0) >= 0 ? '+' : '';
                 
-                const currentPrice = stock.current_price || 0;
+                // 修复：使用 price 而不是 current_price
+                const currentPrice = stock.price || 0;
                 const targetPrice = (currentPrice * 1.1).toFixed(3);
-                const stopLossRatio = isWarrant ? 0.80 : (stock.score >= 80 ? 0.92 : 0.90);
+                // 修复：使用 total_score 而不是 score
+                const stopLossRatio = isWarrant ? 0.80 : (stock.total_score >= 80 ? 0.92 : 0.90);
                 const stopLossPrice = (currentPrice * stopLossRatio).toFixed(3);
+                
+                // 修复：进度条颜色基于 total_score
+                const scoreValue = stock.total_score || 0;
+                const scoreColorClass = scoreValue >= 80 ? 'bg-success' : (scoreValue >= 70 ? 'bg-warning' : 'bg-danger');
                 
                 html += `
                 <div class="col-md-6 col-lg-4">
@@ -349,15 +365,15 @@
                                 </div>
                             </div>
                             
-                            <!-- 评分进度条 -->
+                            <!-- 评分进度条 - 修复：使用 total_score -->
                             <div class="mb-3">
                                 <div class="d-flex justify-content-between mb-1">
                                     <small>AI评分</small>
-                                    <small>${stock.score || 0}/100</small>
+                                    <small>${scoreValue}/100</small>
                                 </div>
                                 <div class="progress progress-bar-custom">
-                                    <div class="progress-bar ${stock.score >= 80 ? 'bg-success' : stock.score >= 70 ? 'bg-warning' : 'bg-danger'}" 
-                                         style="width: ${stock.score || 0}%">
+                                    <div class="progress-bar ${scoreColorClass}" 
+                                         style="width: ${scoreValue}%">
                                     </div>
                                 </div>
                             </div>
@@ -419,14 +435,17 @@
             const importData = {
                 generated_at: new Date().toISOString(),
                 watchlist_name: `AI_Picks_${new Date().toISOString().slice(0,10)}`,
-                stocks: aiStocks.map(stock => ({
-                    code: stock.code,
-                    name: stock.name,
-                    type: stock.instrument_type,
-                    current_price: stock.current_price,
-                    target_price: (stock.current_price * 1.1).toFixed(3),
-                    stop_loss_price: (stock.current_price * (stock.instrument_type === 'Warrant' ? 0.80 : 0.90)).toFixed(3)
-                }))
+                stocks: aiStocks.map(stock => {
+                    const isWarrant = stock.code.includes('-C') || stock.code.includes('-W') || (stock.price < 0.5 && stock.price > 0);
+                    return {
+                        code: stock.code,
+                        name: stock.name,
+                        type: isWarrant ? 'Warrant' : 'Stock',
+                        current_price: stock.price,  // 修复：使用 price
+                        target_price: (stock.price * 1.1).toFixed(3),
+                        stop_loss_price: (stock.price * (isWarrant ? 0.80 : 0.90)).toFixed(3)
+                    };
+                })
             };
             
             const jsonStr = JSON.stringify(importData, null, 2);
@@ -459,25 +478,23 @@
             document.getElementById('lastUpdateTime').textContent = lastUpdateTime || '未知';
         }
 
-        // ========== 加载示例数据 ==========
+        // ========== 加载示例数据（备用） ==========
         function loadSampleData() {
             aiStocks = [
                 {
                     code: '5296',
                     name: 'MR DIY',
-                    instrument_type: 'Stock',
-                    current_price: 1.65,
+                    price: 1.65,
                     daily_change: 2.5,
-                    score: 85,
+                    total_score: 85,
                     sector_name: 'Retail'
                 },
                 {
                     code: '5285',
                     name: 'SUNWAY',
-                    instrument_type: 'Stock',
-                    current_price: 2.12,
+                    price: 2.12,
                     daily_change: 1.8,
-                    score: 82,
+                    total_score: 82,
                     sector_name: 'Property'
                 }
             ];
