@@ -4,21 +4,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
    
-    <title>Bursa AI投资计算器 - 生产同步版</title>
+    <title>SGX AI投资计算器 - 新加坡交易所版</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
-        /* 保持原有样式 - 这里省略以节省空间，请保留您原有的CSS */
+        /* 基础样式保持不变，只修改主题色为新加坡风格 */
         :root {
-            --primary: #2196F3; --primary-dark: #1976D2; --secondary: #4CAF50;
-            --warning: #FF9800; --danger: #F44336; --light: #F5F7FA;
-            --dark: #333333; --gray: #666666; --coffee: #FF9800;
+            --primary: #E53E3E; /* 新加坡红 */
+            --primary-dark: #C53030;
+            --secondary: #4CAF50;
+            --warning: #FF9800;
+            --danger: #F44336;
+            --light: #F5F7FA;
+            --dark: #333333;
+            --gray: #666666;
+            --coffee: #FF9800;
             --success: #4CAF50;
         }
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #E53E3E 0%, #9B2C2C 100%);
             color: var(--dark); line-height: 1.5; min-height: 100vh;
         }
         .container {
@@ -40,7 +46,6 @@
         .tab-content.active { display: block; animation: fadeIn 0.3s ease; }
         .card { background: white; border-radius: 12px; padding: 15px; margin-bottom: 15px; border: 1px solid var(--light); box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
         
-        /* 計算器卡片樣式 */
         .calculator-card {
             background: white;
             border-radius: 12px;
@@ -92,7 +97,7 @@
         .input-field input:focus {
             border-color: var(--primary);
             outline: none;
-            box-shadow: 0 0 0 2px rgba(33, 150, 243, 0.1);
+            box-shadow: 0 0 0 2px rgba(229, 62, 62, 0.1);
         }
         
         .info-text {
@@ -205,14 +210,13 @@
         
         .btn-calculate:hover {
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(33, 150, 243, 0.3);
+            box-shadow: 0 5px 15px rgba(229, 62, 62, 0.3);
         }
         
         .btn-calculate:active {
             transform: translateY(0);
         }
         
-        /* 股票卡片樣式 */
         .stock-card { 
             border: 1px solid #eee; 
             border-radius: 8px; 
@@ -234,7 +238,6 @@
         .stock-code { color: #666; font-size: 12px; background: #eee; padding: 2px 5px; border-radius: 4px; }
         .badge-buy { background: #e8f5e9; color: #2e7d32; padding: 2px 8px; border-radius: 10px; font-size: 12px; font-weight: bold; }
         
-        /* 支持页面样式 */
         .support-panel {
             position: fixed;
             top: 0;
@@ -260,7 +263,6 @@
             to { transform: translateY(0); opacity: 1; }
         }
         
-        /* 咖啡按钮样式 */
         #coffee-btn {
             transition: all 0.3s ease;
         }
@@ -294,8 +296,8 @@
     <div class="container">
         <div class="app-header">
             <div class="header-content">
-                <div class="app-title">Bursa AI投资计算器</div>
-                <div style="font-size: 11px; opacity: 0.8; margin-top:5px;">📊 数据实时更新</div>
+                <div class="app-title">SGX AI投资计算器</div>
+                <div style="font-size: 11px; opacity: 0.8; margin-top:5px;">📊 新加坡交易所 | 数据基于EOD分析</div>
             </div>
         </div>
 
@@ -311,7 +313,7 @@
                 <div class="card">
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
                         <h3 style="font-size: 16px; color: var(--primary);">
-                            <i class="fas fa-star"></i> 今日AI推荐
+                            <i class="fas fa-star"></i> 今日AI推荐 (SGX)
                         </h3>
                         <div style="font-size: 11px; color: #999;">点击股票卡片自动填充计算器</div>
                     </div>
@@ -319,7 +321,7 @@
                 </div>
             </div>
 
-            <!-- 计算器页面 - 全新设计 -->
+            <!-- 计算器页面 - SGX版本 -->
             <div id="calculator-tab" class="tab-content">
                 <div class="calculator-card">
                     <div class="section-title">
@@ -329,7 +331,7 @@
                     <div class="input-group">
                         <label class="input-label">股票代码</label>
                         <div class="input-field">
-                            <input type="text" id="stockCode" placeholder="例如: 53473N" oninput="updateCalculator()">
+                            <input type="text" id="stockCode" placeholder="例如: D05" oninput="updateCalculator()">
                         </div>
                     </div>
                     
@@ -342,20 +344,20 @@
                     
                     <div class="input-row">
                         <div class="input-field">
-                            <label class="input-label">买入价 (RM)</label>
+                            <label class="input-label">买入价 (SGD)</label>
                             <input type="number" id="buyPrice" step="0.001" placeholder="0.000" oninput="updateCalculator()">
                         </div>
                         <div class="input-field">
-                            <label class="input-label">目标价 (RM)</label>
+                            <label class="input-label">目标价 (SGD)</label>
                             <input type="number" id="targetPrice" step="0.001" placeholder="0.000" oninput="updateCalculator()">
                         </div>
                     </div>
                     
                     <div class="input-group">
-                        <label class="input-label">购买股数 (单位: 100股)</label>
+                        <label class="input-label">购买股数</label>
                         <div class="input-field">
-                            <input type="number" id="stockLots" value="10" min="1" oninput="updateCalculator()">
-                            <span class="info-text">1 Lot = 100 股</span>
+                            <input type="number" id="stockLots" value="1000" min="100" step="100" oninput="updateCalculator()">
+                            <span class="info-text">SGX最小交易单位：100股</span>
                         </div>
                     </div>
                     
@@ -363,35 +365,35 @@
                         <div class="summary-text">总股数</div>
                         <div class="summary-value" id="totalShares">1,000 股</div>
                         <div class="summary-text" style="margin-top:10px;">投资金额</div>
-                        <div class="summary-value" id="investmentAmount">RM 0.00</div>
+                        <div class="summary-value" id="investmentAmount">SGD 0.00</div>
                     </div>
                     
                     <div class="divider"></div>
                     
                     <div class="section-title">
-                        <i class="fas fa-calculator"></i> 费用设置（优化版）
+                        <i class="fas fa-calculator"></i> 交易费用 (SGX标准)
                     </div>
                     
                     <div class="result-card">
                         <div class="result-row">
                             <span class="result-label">交易总值:</span>
-                            <span class="result-value" id="calcTotalValue">RM 0.00</span>
+                            <span class="result-value" id="calcTotalValue">SGD 0.00</span>
                         </div>
                         <div class="result-row">
-                            <span class="result-label">佣金 (0.1% min RM8):</span>
-                            <span class="result-value" id="calcBrokerFee">RM 0.00</span>
+                            <span class="result-label">佣金 (0.25% min SGD25):</span>
+                            <span class="result-value" id="calcBrokerFee">SGD 0.00</span>
                         </div>
                         <div class="result-row">
-                            <span class="result-label">印花税:</span>
-                            <span class="result-value" id="calcStampDuty">RM 0.00</span>
+                            <span class="result-label">清算费 (0.0325%):</span>
+                            <span class="result-value" id="calcClearingFee">SGD 0.00</span>
                         </div>
                         <div class="result-row">
-                            <span class="result-label">清算费:</span>
-                            <span class="result-value" id="calcClearingFee">RM 0.00</span>
+                            <span class="result-label">交易税 (0.0075%):</span>
+                            <span class="result-value" id="calcTradingTax">SGD 0.00</span>
                         </div>
                         <div class="result-row total-row">
                             <span class="result-label">净投资总额:</span>
-                            <span class="result-value" id="calcNetInvestment" style="color:var(--danger);">RM 0.00</span>
+                            <span class="result-value" id="calcNetInvestment" style="color:var(--danger);">SGD 0.00</span>
                         </div>
                     </div>
                     
@@ -404,15 +406,15 @@
                     <div class="result-card">
                         <div class="result-row">
                             <span class="result-label">目标卖出总值:</span>
-                            <span class="result-value" id="targetTotalValue">RM 0.00</span>
+                            <span class="result-value" id="targetTotalValue">SGD 0.00</span>
                         </div>
                         <div class="result-row">
                             <span class="result-label">卖出费用:</span>
-                            <span class="result-value" id="sellCost">RM 0.00</span>
+                            <span class="result-value" id="sellCost">SGD 0.00</span>
                         </div>
                         <div class="result-row">
                             <span class="result-label">净回酬:</span>
-                            <span class="result-value" id="netReturn">RM 0.00</span>
+                            <span class="result-value" id="netReturn">SGD 0.00</span>
                         </div>
                         <div class="result-row">
                             <span class="result-label">回报率:</span>
@@ -423,7 +425,7 @@
                         </div>
                         <div class="result-row total-row">
                             <span class="result-label">预计总利润:</span>
-                            <span class="result-value" id="totalProfit" style="color:var(--success);">RM 0.00</span>
+                            <span class="result-value" id="totalProfit" style="color:var(--success);">SGD 0.00</span>
                         </div>
                     </div>
                     
@@ -432,8 +434,8 @@
                     </button>
                     
                     <div class="footer-note">
-                        © 2025 Bursa Malaysia AI分析工具 | 使用真实AI数据<br>
-                        数据源: AI实时选股数据 📊<br>
+                        © 2025 SGX AI分析工具 | 基于EOD数据生成<br>
+                        数据源: 新加坡交易所公开数据 (仅供个人参考)<br>
                         支持开发者 <i class="fas fa-mug-hot" style="color:var(--coffee);"></i>
                     </div>
                 </div>
@@ -469,7 +471,7 @@
         </div>
     </div>
     
-    <!-- 簡化版支持区域 - 只显示Maybank QR -->
+    <!-- 支持区域 -->
     <div id="support-section" class="support-panel">
         <div class="card">
             <button class="close-btn" onclick="hideSupportSection()">
@@ -484,13 +486,13 @@
                     如果这个工具对您有帮助，欢迎支持一下
                 </div>
                 
-                <!-- Maybank QR Code 顯示 - 修正路徑和語法 -->
-<div style="background:#f0f0f0; padding:15px; border-radius:8px; margin:0 auto 15px; width:220px;">
-    <img src="images/maybank-qr.jpg" 
-     alt="Maybank QR Pay" 
-     style="width:100%; max-width:280px; height:auto; border-radius:10px; display:block; margin:0 auto;"
-     onerror="showQRCodeError()">
-</div>
+                <!-- Maybank QR Code (可替换为其他支付方式) -->
+                <div style="background:#f0f0f0; padding:15px; border-radius:8px; margin:0 auto 15px; width:220px;">
+                    <img src="images/maybank-qr.jpg" 
+                         alt="Maybank QR Pay" 
+                         style="width:100%; max-width:280px; height:auto; border-radius:10px; display:block; margin:0 auto;"
+                         onerror="showQRCodeError()">
+                </div>
                 
                 <!-- QR码加载失败提示 -->
                 <div id="maybank-error" style="color:#f44336; font-size:12px; display:none; padding:10px; background:#ffeaea; border-radius:5px; margin-bottom:15px;">
@@ -565,108 +567,87 @@
 
         // ==================== 根据当前文件位置自动检测基础路径 ====================
         function getBasePath() {
-    // 获取当前脚本的路径
-    const currentPath = window.location.pathname;
-    console.log('当前路径:', currentPath);
-    
-    // 情况 1: 直接在 web/ 目录下 (docs/web/bursa.html)
-    if (currentPath.includes('/docs/web/bursa.html')) {
-        return '';
-    }
-    // 情况 2: 在 docs/ 目录下 (docs/bursa.html)
-    else if (currentPath.includes('/docs/bursa.html')) {
-        return 'web/';
-    }
-    // 情况 3: 在 GitHub Pages 根目录 (myx_shop/bursa.html)
-    else if (currentPath.includes('/bursa.html')) {
-        return 'web/';
-    }
-    // 情况 4: 在 web/ 目录下 (web/bursa.html) - untuk localhost
-    else if (currentPath.includes('/web/bursa.html')) {
-        return '';
-    }
-    // 默认情况
-    else {
-        return '';
-    }
-}
-        const BASE_PATH = "./";
+            const currentPath = window.location.pathname;
+            console.log('当前路径:', currentPath);
+            
+            // SGX版本的文件路径处理
+            if (currentPath.includes('/myx_shop/docs/web/sgx.html')) {
+                return '';
+            }
+            else if (currentPath.includes('/myx_shop/docs/sgx.html')) {
+                return 'web/';
+            }
+            else if (currentPath.includes('/myx_shop/sgx.html')) {
+                return 'web/';
+            }
+            else if (currentPath.includes('/myx_shop/web/sgx.html')) {
+                return '';
+            }
+            else {
+                return '';
+            }
+        }
+        const BASE_PATH = getBasePath();
         console.log('基础路径设置为:', BASE_PATH);
 
-        // ==================== 初始化函数 - 加载历史数据 ====================
+        // ==================== 初始化函数 ====================
         async function initApp() {
             try {
-                // 先尝试加载date_config.js
                 await loadDateConfig();
-                
-                // 然后加载最新数据
                 await loadLatestData();
-                
+                await loadHistoryFromDirectory();
             } catch (error) {
                 console.error("初始化失败:", error);
-                // 如果date_config.js失败，尝试直接探测历史文件
                 await loadHistoryFromDirectory();
             }
         }
 
-// ==================== 加载日期配置 ====================
-async function loadDateConfig() {
-    try {
-        // 构建正确的URL
-        const configUrl = BASE_PATH + 'date_config.js';
-        
-        console.log('尝试加载日期配置:', configUrl);
-        const response = await fetch(configUrl);
-        
-        if (!response.ok) {
-            throw new Error(`HTTP ${response.status}`);
+        // ==================== 加载日期配置 ====================
+        async function loadDateConfig() {
+            try {
+                const configUrl = 'sgx_date_config.js';
+                console.log('尝试加载日期配置:', configUrl);
+                const response = await fetch(configUrl);
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}`);
+                }
+
+                const script = document.createElement('script');
+                script.src = configUrl;
+                document.head.appendChild(script);
+
+                await new Promise(resolve => setTimeout(resolve, 200));
+
+                console.log('✅ 日期配置加载成功:', window.availableDates);
+                
+                if (window.availableDates) {
+                    // SGX版本可在此过滤不需要的日期
+                    window.availableDates = window.availableDates.filter(d => d.id !== '20260215');
+                }
+                
+                initDateSelector();
+
+            } catch (error) {
+                console.warn('⚠️ date_config.js加载失败:', error);
+                // SGX版本的硬编码日期（可根据实际数据调整）
+                window.availableDates = [
+                    {id: '20260216', display: '2026-02-16', file: '/web/history/picks_20260216.json'},
+                    {id: '20260213', display: '2026-02-13', file: '/web/history/picks_20260213.json'},
+                    {id: '20260212', display: '2026-02-12', file: '/web/history/picks_20260212.json'},
+                    {id: '20260211', display: '2026-02-11', file: '/web/history/picks_20260211.json'},
+                    {id: '20260210', display: '2026-02-10', file: '/web/history/picks_20260210.json'}
+                ];
+                
+                console.log('使用硬编码日期，共', window.availableDates.length, '天');
+                initDateSelector();
+            }
         }
-
-        // 加载JS文件
-        const script = document.createElement('script');
-        script.src = configUrl;
-        document.head.appendChild(script);
-
-        // 等待脚本加载
-        await new Promise(resolve => setTimeout(resolve, 200));
-
-        console.log('✅ 日期配置加载成功:', window.availableDates);
-        
-        // 过滤掉不存在的日期文件（可选）
-        if (window.availableDates) {
-            // 移除 2026-02-15 如果存在
-            window.availableDates = window.availableDates.filter(d => d.id !== '20260215');
-        }
-        
-        // 初始化日期选择器
-        initDateSelector();
-
-    } catch (error) {
-        console.warn('⚠️ date_config.js加载失败:', error);
-        // 使用实际存在的硬编码日期
-        window.availableDates = [
-            {id: '20260216', display: '2026-02-16', file: 'history/picks_20260216.json'},
-            {id: '20260213', display: '2026-02-13', file: 'history/picks_20260213.json'},
-            {id: '20260212', display: '2026-02-12', file: 'history/picks_20260212.json'},
-            {id: '20260211', display: '2026-02-11', file: 'history/picks_20260211.json'},
-            {id: '20260210', display: '2026-02-10', file: 'history/picks_20260210.json'},
-            {id: '20260209', display: '2026-02-09', file: 'history/picks_20260209.json'},
-            {id: '20260206', display: '2026-02-06', file: 'history/picks_20260206.json'},
-            {id: '20260205', display: '2026-02-05', file: 'history/picks_20260205.json'},
-            {id: '20260204', display: '2026-02-04', file: 'history/picks_20260204.json'},
-            {id: '20260202', display: '2026-02-02', file: 'history/picks_20260202.json'}
-        ];
-        
-        console.log('使用硬编码日期，共', window.availableDates.length, '天');
-        initDateSelector();
-    }
-}
         
         // ==================== 加载最新数据 ====================
         async function loadLatestData() {
             try {
-                // picks_latest.json 在同级目录
-                const latestUrl = BASE_PATH + 'picks_latest.json';
+                const latestUrl = 'sgx_picks_latest.json';
                 console.log('尝试加载最新数据:', latestUrl);
                 
                 const response = await fetch(latestUrl);
@@ -675,15 +656,12 @@ async function loadDateConfig() {
                 const data = await response.json();
                 console.log('最新数据:', data);
                 
-                // 渲染到页面
                 if (data && data.picks) {
                     renderStockList(data.picks, 'latestStocksContainer', true);
                     
-                    // 同时把最新数据加入历史数据对象
                     window.allHistoryData = window.allHistoryData || {};
                     window.allHistoryData[data.date_id] = data;
                     
-                    // 更新历史天数统计
                     updateHistoryStats();
                 }
                 
@@ -713,11 +691,9 @@ async function loadDateConfig() {
             }
             
             try {
-                // 构建文件路径 - 使用正确的相对路径
-                const fileUrl = "/history/picks_${dateId}.json`;
+                const fileUrl = `history/sgx_picks_${dateId}.json`;
                 console.log('正在加载:', fileUrl);
                 
-                // 显示加载状态
                 document.getElementById('historyStocksContainer').innerHTML = 
                     '<p style="text-align:center; color:#999; padding:20px;">加载中...</p>';
                 
@@ -731,7 +707,6 @@ async function loadDateConfig() {
                 const data = await response.json();
                 console.log('数据接收成功, 股票数量:', data.picks ? data.picks.length : 0);
                 
-                // 更新显示
                 document.getElementById('currentDateDisplay').textContent = data.date || dateId;
                 document.getElementById('currentStockCount').textContent = data.picks ? data.picks.length : 0;
                 
@@ -767,12 +742,10 @@ async function loadDateConfig() {
                 return;
             }
             
-            // 按日期倒序排序（最新的在前）
             const sortedDates = [...window.availableDates].sort((a, b) => b.id.localeCompare(a.id));
             
             console.log('可用日期:', sortedDates.map(d => d.id));
             
-            // 添加到下拉框 - 显示所有日期
             sortedDates.forEach(dateInfo => {
                 const opt = document.createElement('option');
                 opt.value = dateInfo.id;
@@ -780,7 +753,6 @@ async function loadDateConfig() {
                 select.appendChild(opt);
             });
             
-            // 默认选择最新日期
             if (sortedDates.length > 0) {
                 select.value = sortedDates[0].id;
                 loadSelectedHistory();
@@ -801,8 +773,7 @@ async function loadDateConfig() {
             
             for (const dateId of knownDates) {
                 try {
-                    // 使用正确的相对路径
-                    const url = "/history/picks_${dateId}.json`;
+                    const url = `/web/history/picks_${dateId}.json`;
                     
                     console.log(`检查文件: ${url}`);
                     
@@ -818,28 +789,26 @@ async function loadDateConfig() {
                             window.availableDates.push({
                                 id: dateId,
                                 display: `${dateId.slice(0,4)}-${dateId.slice(4,6)}-${dateId.slice(6,8)}`,
-                                file: `history/picks_${dateId}.json`
+                                file: `/web/history/picks_${dateId}.json`
                             });
                             console.log(`✅ 发现历史: ${dateId}`);
                         }
                     }
                 } catch (e) {
-                    // 忽略错误
                     console.log(`❌ ${dateId} 不存在`);
                 }
             }
             
             console.log(`📊 共发现 ${window.availableDates.length} 天历史数据`);
             
-            // 如果没有发现任何文件，使用硬编码
             if (window.availableDates.length === 0) {
                 console.log('使用硬编码日期作为后备');
                 window.availableDates = [
-                    {id: '20260216', display: '2026-02-16', file: 'history/picks_20260216.json'},
-                    {id: '20260215', display: '2026-02-15', file: 'history/picks_20260215.json'},
-                    {id: '20260213', display: '2026-02-13', file: 'history/picks_20260213.json'},
-                    {id: '20260212', display: '2026-02-12', file: 'history/picks_20260212.json'},
-                    {id: '20260211', display: '2026-02-11', file: 'history/picks_20260211.json'}
+                    {id: '20260216', display: '2026-02-16', file: '/web/history/picks_20260216.json'},
+                    {id: '20260215', display: '2026-02-15', file: '/web/history/picks_20260215.json'},
+                    {id: '20260213', display: '2026-02-13', file: '/web/history/picks_20260213.json'},
+                    {id: '20260212', display: '2026-02-12', file: '/web/history/picks_20260212.json'},
+                    {id: '20260211', display: '2026-02-11', file: '/web/history/picks_20260211.json'}
                 ];
             }
             
@@ -879,7 +848,7 @@ async function loadDateConfig() {
                         板块: ${sector}
                     </div>
                     <div style="display:flex; justify-content:space-between; margin-top:8px; align-items:center;">
-                        <div style="color:var(--danger); font-weight:bold;">RM ${price.toFixed(3)}</div>
+                        <div style="color:var(--danger); font-weight:bold;">SGD ${price.toFixed(3)}</div>
                         <div class="badge-buy">${stock.recommendation || '买入'}</div>
                     </div>`;
 
@@ -896,19 +865,15 @@ async function loadDateConfig() {
 
         // ==================== 选择股票到计算器 ====================
         function selectStockToCalculator(name, code, price) {
-            // 填充表单
             document.getElementById('stockName').value = name;
             document.getElementById('stockCode').value = code;
             document.getElementById('buyPrice').value = price.toFixed(3);
             
-            // 设置目标价为买入价的110%（默认建议）
             const targetPrice = (price * 1.1).toFixed(3);
             document.getElementById('targetPrice').value = targetPrice;
             
-            // 切换到计算器标签
             switchTab('calculator');
             
-            // 立即计算
             setTimeout(() => {
                 calculateFullInvestment();
             }, 50);
@@ -917,139 +882,129 @@ async function loadDateConfig() {
         // ==================== 更新计算器实时显示 ====================
         function updateCalculator() {
             const buyPrice = parseFloat(document.getElementById('buyPrice').value) || 0;
-            const lots = parseFloat(document.getElementById('stockLots').value) || 0;
-            const shares = lots * 100;
+            const shares = parseFloat(document.getElementById('stockLots').value) || 0;
             
-            // 更新总股数和投资金额
+            // 更新总股数显示
             document.getElementById('totalShares').textContent = shares.toLocaleString() + ' 股';
             
-            const investmentValue = buyPrice * shares;
-            document.getElementById('investmentAmount').textContent = 'RM ' + investmentValue.toFixed(2);
+            // 计算投资金额
+            const investment = buyPrice * shares;
+            document.getElementById('investmentAmount').textContent = 'SGD ' + investment.toFixed(2);
+            
+            // 计算交易费用
+            calculateFees();
         }
-
-        // ==================== 完整投资计算函数 ====================
-        function calculateFullInvestment() {
+        
+        // ==================== 计算SGX交易费用 ====================
+        function calculateFees() {
             const buyPrice = parseFloat(document.getElementById('buyPrice').value) || 0;
             const targetPrice = parseFloat(document.getElementById('targetPrice').value) || 0;
-            const lots = parseFloat(document.getElementById('stockLots').value) || 0;
-            const shares = lots * 100;
-            const totalValue = buyPrice * shares;
+            const shares = parseFloat(document.getElementById('stockLots').value) || 0;
             
-            if (buyPrice <= 0 || lots <= 0) {
-                resetCalculatorResults();
-                return;
+            // 买入总值
+            const buyTotal = buyPrice * shares;
+            
+            // 佣金 (0.25% 最低 SGD 25)
+            let commission = buyTotal * 0.0025;
+            if (commission < 25) commission = 25;
+            
+            // 清算费 (0.0325%)
+            const clearingFee = buyTotal * 0.000325;
+            
+            // 交易税 (0.0075%)
+            const tradingTax = buyTotal * 0.000075;
+            
+            // 净投资总额
+            const netInvestment = buyTotal + commission + clearingFee + tradingTax;
+            
+            // 更新显示
+            document.getElementById('calcTotalValue').textContent = 'SGD ' + buyTotal.toFixed(2);
+            document.getElementById('calcBrokerFee').textContent = 'SGD ' + commission.toFixed(2);
+            document.getElementById('calcClearingFee').textContent = 'SGD ' + clearingFee.toFixed(2);
+            document.getElementById('calcTradingTax').textContent = 'SGD ' + tradingTax.toFixed(2);
+            document.getElementById('calcNetInvestment').textContent = 'SGD ' + netInvestment.toFixed(2);
+            
+            // 如果有目标价，计算卖出费用
+            if (targetPrice > 0) {
+                const sellTotal = targetPrice * shares;
+                
+                // 卖出佣金
+                let sellCommission = sellTotal * 0.0025;
+                if (sellCommission < 25) sellCommission = 25;
+                
+                // 卖出清算费
+                const sellClearingFee = sellTotal * 0.000325;
+                
+                // 卖出交易税
+                const sellTradingTax = sellTotal * 0.000075;
+                
+                // 总卖出费用
+                const totalSellCost = sellCommission + sellClearingFee + sellTradingTax;
+                
+                // 目标卖出总值
+                document.getElementById('targetTotalValue').textContent = 'SGD ' + sellTotal.toFixed(2);
+                document.getElementById('sellCost').textContent = 'SGD ' + totalSellCost.toFixed(2);
+                
+                // 净回酬 (卖出后净得)
+                const netReturn = sellTotal - totalSellCost;
+                document.getElementById('netReturn').textContent = 'SGD ' + netReturn.toFixed(2);
+                
+                // 总利润
+                const totalProfit = netReturn - netInvestment;
+                document.getElementById('totalProfit').textContent = 'SGD ' + totalProfit.toFixed(2);
+                
+                // 回报率
+                const returnRate = (totalProfit / netInvestment) * 100;
+                document.getElementById('returnRate').innerHTML = returnRate.toFixed(2) + '%';
+                
+                // 更新徽章
+                const badge = document.getElementById('returnRateBadge');
+                if (totalProfit > 0) {
+                    badge.className = 'profit-loss profit';
+                    badge.innerHTML = '+' + returnRate.toFixed(2) + '%';
+                    badge.style.display = 'inline-block';
+                } else if (totalProfit < 0) {
+                    badge.className = 'profit-loss loss';
+                    badge.innerHTML = returnRate.toFixed(2) + '%';
+                    badge.style.display = 'inline-block';
+                } else {
+                    badge.style.display = 'none';
+                }
             }
-            
-            // 计算买入成本
-            const buyCosts = calculateBuyCosts(totalValue);
-            
-            // 计算卖出情况
-            const targetTotalValue = targetPrice * shares;
-            const sellCosts = calculateSellCosts(targetTotalValue);
-            
-            // 计算回报
-            const netInvestment = totalValue + buyCosts.total;
-            const netReturn = targetTotalValue - sellCosts.total;
-            const totalProfit = netReturn - netInvestment;
-            const returnRate = (totalProfit / netInvestment) * 100;
-            
-            // 更新买入费用显示
-            document.getElementById('calcTotalValue').textContent = 'RM ' + totalValue.toFixed(2);
-            document.getElementById('calcBrokerFee').textContent = 'RM ' + buyCosts.brokerFee.toFixed(2);
-            document.getElementById('calcStampDuty').textContent = 'RM ' + buyCosts.stampDuty.toFixed(2);
-            document.getElementById('calcClearingFee').textContent = 'RM ' + buyCosts.clearingFee.toFixed(2);
-            document.getElementById('calcNetInvestment').textContent = 'RM ' + netInvestment.toFixed(2);
-            
-            // 更新卖出和回报显示
-            document.getElementById('targetTotalValue').textContent = 'RM ' + targetTotalValue.toFixed(2);
-            document.getElementById('sellCost').textContent = 'RM ' + sellCosts.total.toFixed(2);
-            document.getElementById('netReturn').textContent = 'RM ' + netReturn.toFixed(2);
-            document.getElementById('totalProfit').textContent = 'RM ' + totalProfit.toFixed(2);
-            
-            // 更新回报率
-            const returnRateElement = document.getElementById('returnRate');
-            const returnRateBadge = document.getElementById('returnRateBadge');
-            returnRateElement.textContent = returnRate.toFixed(2) + '%';
-            
-            if (returnRate > 0) {
-                returnRateElement.style.color = 'var(--success)';
-                returnRateBadge.className = 'profit-loss profit';
-                returnRateBadge.textContent = '+' + returnRate.toFixed(2) + '%';
-                returnRateBadge.style.display = 'inline-block';
-            } else if (returnRate < 0) {
-                returnRateElement.style.color = 'var(--danger)';
-                returnRateBadge.className = 'profit-loss loss';
-                returnRateBadge.textContent = returnRate.toFixed(2) + '%';
-                returnRateBadge.style.display = 'inline-block';
-            } else {
-                returnRateElement.style.color = '#666';
-                returnRateBadge.style.display = 'none';
-            }
         }
         
-        // ==================== 计算买入成本 ====================
-        function calculateBuyCosts(totalValue) {
-            // 佣金 (0.1%, 最低 RM8)
-            let brokerFee = Math.max(8, totalValue * 0.001);
-            // 印花税 (每 RM1000 收 RM1.50, 最高 RM1000)
-            let stampDuty = Math.min(1000, Math.ceil(totalValue / 1000) * 1.5);
-            // 清算费 (0.03%)
-            let clearingFee = totalValue * 0.0003;
-            
-            return {
-                brokerFee: brokerFee,
-                stampDuty: stampDuty,
-                clearingFee: clearingFee,
-                total: brokerFee + stampDuty + clearingFee
-            };
-        }
-        
-        // ==================== 计算卖出成本 ====================
-        function calculateSellCosts(totalValue) {
-            const costs = calculateBuyCosts(totalValue);
-            return {
-                total: costs.total
-            };
-        }
-        
-        // ==================== 重置计算器结果 ====================
-        function resetCalculatorResults() {
-            const zeroValue = 'RM 0.00';
-            document.getElementById('calcTotalValue').textContent = zeroValue;
-            document.getElementById('calcBrokerFee').textContent = zeroValue;
-            document.getElementById('calcStampDuty').textContent = zeroValue;
-            document.getElementById('calcClearingFee').textContent = zeroValue;
-            document.getElementById('calcNetInvestment').textContent = zeroValue;
-            document.getElementById('targetTotalValue').textContent = zeroValue;
-            document.getElementById('sellCost').textContent = zeroValue;
-            document.getElementById('netReturn').textContent = zeroValue;
-            document.getElementById('totalProfit').textContent = zeroValue;
-            document.getElementById('returnRate').textContent = '0.00%';
-            document.getElementById('returnRateBadge').style.display = 'none';
+        // ==================== 完整计算 ====================
+        function calculateFullInvestment() {
+            calculateFees();
         }
 
-        // ==================== 标签切换 ====================
-        function switchTab(tabId) {
-            // 移除所有內容的 active
-            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-            
-            // 顯示目標內容
-            document.getElementById(tabId + '-tab').classList.add('active');
-            
-            // 高亮對應標籤
-            const tabs = document.querySelectorAll('.tab');
-            tabs.forEach(tab => {
-                if (tab.textContent.includes('AI选股') && tabId === 'stocks') tab.classList.add('active');
-                if (tab.textContent.includes('计算器') && tabId === 'calculator') tab.classList.add('active');
-                if (tab.textContent.includes('历史数据') && tabId === 'history') tab.classList.add('active');
+        // ==================== 切换标签页 ====================
+        function switchTab(tabName) {
+            // 隐藏所有标签页
+            document.querySelectorAll('.tab-content').forEach(el => {
+                el.classList.remove('active');
             });
+            
+            // 显示选中的标签页
+            document.getElementById(tabName + '-tab').classList.add('active');
+            
+            // 更新标签按钮状态
+            document.querySelectorAll('.tab').forEach(el => {
+                el.classList.remove('active');
+            });
+            
+            // 找到对应的标签按钮并激活
+            const tabs = document.querySelectorAll('.tab');
+            const tabIndex = tabName === 'stocks' ? 0 : (tabName === 'calculator' ? 1 : 2);
+            if (tabs[tabIndex]) {
+                tabs[tabIndex].classList.add('active');
+            }
         }
 
-        // ==================== 支持功能 ====================
-        function showSupportSection() {
+        // ==================== 支持区域控制 ====================
+        document.getElementById('coffee-btn').addEventListener('click', function() {
             document.getElementById('support-section').style.display = 'flex';
-        }
+        });
         
         function hideSupportSection() {
             document.getElementById('support-section').style.display = 'none';
@@ -1061,62 +1016,18 @@ async function loadDateConfig() {
 
         // ==================== 测试函数 ====================
         function testData() {
-            if(window.allHistoryData && Object.keys(window.allHistoryData).length > 0) {
-                const count = Object.keys(window.allHistoryData).length;
-                const latestDate = Object.keys(window.allHistoryData).sort().reverse()[0];
-                
-                // 测试计算器功能
-                document.getElementById('buyPrice').value = 1.500;
-                document.getElementById('targetPrice').value = 1.650;
-                document.getElementById('stockLots').value = 20;
-                calculateFullInvestment();
-                
-                alert("✅ 数据源匹配成功！\n" + 
-                      "已加载历史天数: " + count + "天\n" +
-                      "最新日期: " + latestDate + "\n" +
-                      "可用历史日期: " + window.availableDates.length + "天\n" +
-                      "基础路径: " + BASE_PATH);
-            } else {
-                alert("❌ 无法加载AI选股数据，请稍后重试。");
-            }
+            console.log('测试数据加载');
+            alert('测试模式：尝试加载最新数据');
+            loadLatestData();
         }
 
-// ==================== 初始化函数 - 加载历史数据 ====================
-async function initApp() {
-    try {
-        // 先尝试加载date_config.js
-        await loadDateConfig();
-        
-        // 然后加载最新数据
-        await loadLatestData();
-        
-        // ✅ 强制加载历史文件列表
-        await loadHistoryFromDirectory();
-        
-    } catch (error) {
-        console.error("初始化失败:", error);
-        // 如果date_config.js失败，尝试直接探测历史文件
-        await loadHistoryFromDirectory();
-    }
-}
-
-// ==================== 事件绑定 ====================
-document.addEventListener('DOMContentLoaded', function() {
-    initApp();
-    
-    // 初始化咖啡按钮事件
-    document.getElementById('coffee-btn').addEventListener('click', showSupportSection);
-    
-    // 点击外部关闭支持面板
-    document.getElementById('support-section').addEventListener('click', function(e) {
-        if (e.target === this) {
-            hideSupportSection();
-        }
-    });
-    
-    // 初始化计算器
-    updateCalculator();
-});
+        // ==================== 初始化应用 ====================
+        document.addEventListener('DOMContentLoaded', function() {
+            initApp();
+            
+            // 初始化计算器显示
+            updateCalculator();
+        });
     </script>
 </body>
 </html>

@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
-        /* 保持原有样式 - 这里省略以节省空间，请保留您原有的CSS */
+        /* 保持原有样式 */
         :root {
             --primary: #2196F3; --primary-dark: #1976D2; --secondary: #4CAF50;
             --warning: #FF9800; --danger: #F44336; --light: #F5F7FA;
@@ -39,6 +39,47 @@
         .tab-content { display: none; }
         .tab-content.active { display: block; animation: fadeIn 0.3s ease; }
         .card { background: white; border-radius: 12px; padding: 15px; margin-bottom: 15px; border: 1px solid var(--light); box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+        
+        /* 導航按鈕樣式 */
+        .nav-buttons {
+            display: flex;
+            gap: 10px;
+            padding: 10px 0;
+            margin-bottom: 15px;
+            background: white;
+            border-radius: 8px;
+        }
+        
+        .nav-btn {
+            flex: 1;
+            padding: 12px;
+            text-align: center;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .home-btn {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .home-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+        
+        .sgx-btn {
+            background: #4CAF50;
+            color: white;
+        }
+        
+        .sgx-btn:hover {
+            background: #388E3C;
+            transform: translateY(-2px);
+        }
         
         /* 計算器卡片樣式 */
         .calculator-card {
@@ -304,10 +345,20 @@
             <div class="tab" onclick="switchTab('calculator')">计算器</div>
             <div class="tab" onclick="switchTab('history')">历史数据</div>
         </div>
-        
+
         <div class="content">
             <!-- AI选股页面 -->
             <div id="stocks-tab" class="tab-content active">
+                <!-- 兩個導航按鈕 - 修正位置和結構 -->
+                <div class="nav-buttons">
+                    <a href="../index.html" class="nav-btn home-btn">
+                        <i class="fas fa-home"></i> 返回首頁
+                    </a>
+                    <a href="../sgx.html" class="nav-btn sgx-btn">
+                        <i class="fas fa-chart-line"></i> 前往 SGX
+                    </a>
+                </div>
+                
                 <div class="card">
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
                         <h3 style="font-size: 16px; color: var(--primary);">
@@ -485,12 +536,12 @@
                 </div>
                 
                 <!-- Maybank QR Code 顯示 - 修正路徑和語法 -->
-<div style="background:#f0f0f0; padding:15px; border-radius:8px; margin:0 auto 15px; width:220px;">
-    <img src="images/maybank-qr.jpg" 
-     alt="Maybank QR Pay" 
-     style="width:100%; max-width:280px; height:auto; border-radius:10px; display:block; margin:0 auto;"
-     onerror="showQRCodeError()">
-</div>
+                <div style="background:#f0f0f0; padding:15px; border-radius:8px; margin:0 auto 15px; width:220px;">
+                    <img src="images/maybank-qr.jpg" 
+                         alt="Maybank QR Pay" 
+                         style="width:100%; max-width:280px; height:auto; border-radius:10px; display:block; margin:0 auto;"
+                         onerror="showQRCodeError()">
+                </div>
                 
                 <!-- QR码加载失败提示 -->
                 <div id="maybank-error" style="color:#f44336; font-size:12px; display:none; padding:10px; background:#ffeaea; border-radius:5px; margin-bottom:15px;">
@@ -565,31 +616,31 @@
 
         // ==================== 根据当前文件位置自动检测基础路径 ====================
         function getBasePath() {
-    // 获取当前脚本的路径
-    const currentPath = window.location.pathname;
-    console.log('当前路径:', currentPath);
-    
-    // 情况 1: 直接在 web/ 目录下 (docs/web/bursa.html)
-    if (currentPath.includes('/myx_shop/docs/web/bursa.html')) {
-        return '';
-    }
-    // 情况 2: 在 docs/ 目录下 (docs/bursa.html)
-    else if (currentPath.includes('/myx_shop/docs/bursa.html')) {
-        return 'web/';
-    }
-    // 情况 3: 在 GitHub Pages 根目录 (myx_shop/bursa.html)
-    else if (currentPath.includes('/myx_shop/bursa.html')) {
-        return 'web/';
-    }
-    // 情况 4: 在 web/ 目录下 (web/bursa.html) - untuk localhost
-    else if (currentPath.includes('/myx_shop/web/bursa.html')) {
-        return '';
-    }
-    // 默认情况
-    else {
-        return '';
-    }
-}
+            // 获取当前脚本的路径
+            const currentPath = window.location.pathname;
+            console.log('当前路径:', currentPath);
+            
+            // 情况 1: 直接在 web/ 目录下 (docs/web/bursa.html)
+            if (currentPath.includes('/myx_shop/docs/web/bursa.html')) {
+                return '';
+            }
+            // 情况 2: 在 docs/ 目录下 (docs/bursa.html)
+            else if (currentPath.includes('/myx_shop/docs/bursa.html')) {
+                return 'web/';
+            }
+            // 情况 3: 在 GitHub Pages 根目录 (myx_shop/bursa.html)
+            else if (currentPath.includes('/myx_shop/bursa.html')) {
+                return 'web/';
+            }
+            // 情况 4: 在 web/ 目录下 (web/bursa.html) - untuk localhost
+            else if (currentPath.includes('/myx_shop/web/bursa.html')) {
+                return '';
+            }
+            // 默认情况
+            else {
+                return '';
+            }
+        }
         const BASE_PATH = getBasePath();
         console.log('基础路径设置为:', BASE_PATH);
 
@@ -602,6 +653,9 @@
                 // 然后加载最新数据
                 await loadLatestData();
                 
+                // 强制加载历史文件列表
+                await loadHistoryFromDirectory();
+                
             } catch (error) {
                 console.error("初始化失败:", error);
                 // 如果date_config.js失败，尝试直接探测历史文件
@@ -609,58 +663,58 @@
             }
         }
 
-// ==================== 加载日期配置 ====================
-async function loadDateConfig() {
-    try {
-        // 构建正确的URL
-        const configUrl = BASE_PATH + 'date_config.js';
-        
-        console.log('尝试加载日期配置:', configUrl);
-        const response = await fetch(configUrl);
-        
-        if (!response.ok) {
-            throw new Error(`HTTP ${response.status}`);
+        // ==================== 加载日期配置 ====================
+        async function loadDateConfig() {
+            try {
+                // 构建正确的URL
+                const configUrl = BASE_PATH + 'date_config.js';
+                
+                console.log('尝试加载日期配置:', configUrl);
+                const response = await fetch(configUrl);
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}`);
+                }
+
+                // 加载JS文件
+                const script = document.createElement('script');
+                script.src = configUrl;
+                document.head.appendChild(script);
+
+                // 等待脚本加载
+                await new Promise(resolve => setTimeout(resolve, 200));
+
+                console.log('✅ 日期配置加载成功:', window.availableDates);
+                
+                // 过滤掉不存在的日期文件（可选）
+                if (window.availableDates) {
+                    // 移除 2026-02-15 如果存在
+                    window.availableDates = window.availableDates.filter(d => d.id !== '20260215');
+                }
+                
+                // 初始化日期选择器
+                initDateSelector();
+
+            } catch (error) {
+                console.warn('⚠️ date_config.js加载失败:', error);
+                // 使用实际存在的硬编码日期
+                window.availableDates = [
+                    {id: '20260216', display: '2026-02-16', file: '/web/history/picks_20260216.json'},
+                    {id: '20260213', display: '2026-02-13', file: '/web/history/picks_20260213.json'},
+                    {id: '20260212', display: '2026-02-12', file: '/web/history/picks_20260212.json'},
+                    {id: '20260211', display: '2026-02-11', file: '/web/history/picks_20260211.json'},
+                    {id: '20260210', display: '2026-02-10', file: '/web/history/picks_20260210.json'},
+                    {id: '20260209', display: '2026-02-09', file: '/web/history/picks_20260209.json'},
+                    {id: '20260206', display: '2026-02-06', file: '/web/history/picks_20260206.json'},
+                    {id: '20260205', display: '2026-02-05', file: '/web/history/picks_20260205.json'},
+                    {id: '20260204', display: '2026-02-04', file: '/web/history/picks_20260204.json'},
+                    {id: '20260202', display: '2026-02-02', file: '/web/history/picks_20260202.json'}
+                ];
+                
+                console.log('使用硬编码日期，共', window.availableDates.length, '天');
+                initDateSelector();
+            }
         }
-
-        // 加载JS文件
-        const script = document.createElement('script');
-        script.src = configUrl;
-        document.head.appendChild(script);
-
-        // 等待脚本加载
-        await new Promise(resolve => setTimeout(resolve, 200));
-
-        console.log('✅ 日期配置加载成功:', window.availableDates);
-        
-        // 过滤掉不存在的日期文件（可选）
-        if (window.availableDates) {
-            // 移除 2026-02-15 如果存在
-            window.availableDates = window.availableDates.filter(d => d.id !== '20260215');
-        }
-        
-        // 初始化日期选择器
-        initDateSelector();
-
-    } catch (error) {
-        console.warn('⚠️ date_config.js加载失败:', error);
-        // 使用实际存在的硬编码日期
-        window.availableDates = [
-            {id: '20260216', display: '2026-02-16', file: '/web/history/picks_20260216.json'},
-            {id: '20260213', display: '2026-02-13', file: '/web/history/picks_20260213.json'},
-            {id: '20260212', display: '2026-02-12', file: '/web/history/picks_20260212.json'},
-            {id: '20260211', display: '2026-02-11', file: '/web/history/picks_20260211.json'},
-            {id: '20260210', display: '2026-02-10', file: '/web/history/picks_20260210.json'},
-            {id: '20260209', display: '2026-02-09', file: '/web/history/picks_20260209.json'},
-            {id: '20260206', display: '2026-02-06', file: '/web/history/picks_20260206.json'},
-            {id: '20260205', display: '2026-02-05', file: '/web/history/picks_20260205.json'},
-            {id: '20260204', display: '2026-02-04', file: '/web/history/picks_20260204.json'},
-            {id: '20260202', display: '2026-02-02', file: '/web/history/picks_20260202.json'}
-        ];
-        
-        console.log('使用硬编码日期，共', window.availableDates.length, '天');
-        initDateSelector();
-    }
-}
         
         // ==================== 加载最新数据 ====================
         async function loadLatestData() {
@@ -713,9 +767,9 @@ async function loadDateConfig() {
             }
             
             try {
-               // 构建文件路径 - 使用完整的项目路径
-const fileUrl = `history/picks_${dateId}.json`;
-console.log('正在加载:', fileUrl);
+                // 构建文件路径 - 使用完整的项目路径
+                const fileUrl = `history/picks_${dateId}.json`;
+                console.log('正在加载:', fileUrl);
                 
                 // 显示加载状态
                 document.getElementById('historyStocksContainer').innerHTML = 
@@ -1081,42 +1135,23 @@ console.log('正在加载:', fileUrl);
             }
         }
 
-// ==================== 初始化函数 - 加载历史数据 ====================
-async function initApp() {
-    try {
-        // 先尝试加载date_config.js
-        await loadDateConfig();
-        
-        // 然后加载最新数据
-        await loadLatestData();
-        
-        // ✅ 强制加载历史文件列表
-        await loadHistoryFromDirectory();
-        
-    } catch (error) {
-        console.error("初始化失败:", error);
-        // 如果date_config.js失败，尝试直接探测历史文件
-        await loadHistoryFromDirectory();
-    }
-}
-
-// ==================== 事件绑定 ====================
-document.addEventListener('DOMContentLoaded', function() {
-    initApp();
-    
-    // 初始化咖啡按钮事件
-    document.getElementById('coffee-btn').addEventListener('click', showSupportSection);
-    
-    // 点击外部关闭支持面板
-    document.getElementById('support-section').addEventListener('click', function(e) {
-        if (e.target === this) {
-            hideSupportSection();
-        }
-    });
-    
-    // 初始化计算器
-    updateCalculator();
-});
+        // ==================== 事件绑定 ====================
+        document.addEventListener('DOMContentLoaded', function() {
+            initApp();
+            
+            // 初始化咖啡按钮事件
+            document.getElementById('coffee-btn').addEventListener('click', showSupportSection);
+            
+            // 点击外部关闭支持面板
+            document.getElementById('support-section').addEventListener('click', function(e) {
+                if (e.target === this) {
+                    hideSupportSection();
+                }
+            });
+            
+            // 初始化计算器
+            updateCalculator();
+        });
     </script>
 </body>
 </html>

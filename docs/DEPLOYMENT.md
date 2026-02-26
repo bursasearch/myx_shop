@@ -1,7 +1,7 @@
 # 部署报告
-- 部署时间: 2026-02-24 19:05:48
-- 源目录: /storage/emulated/0/bursasearch/myx_shop
-- 目标目录: /storage/emulated/0/bursasearch/myx_shop/docs
+- 部署时间: 2026-02-24 20:56:04
+- 源目录: /storage/emulated/0/bursasearch/myx_shop_dev
+- 目标目录: /storage/emulated/0/bursasearch/myx_shop_dev/docs
 
 ## 已部署文件
 - ✅ ai-monitor.html - AI选股监控仪表板
@@ -10,9 +10,9 @@
 - ✅ bursa.html - AI投资计算器
 
 ## GitHub Pages访问地址
-- 主页: https://bursasearch.github.io/myx_shop/
-- AI监控: https://bursasearch.github.io/myx_shop/ai-monitor.html
-- 投资计算器: https://bursasearch.github.io/myx_shop/bursa.html
+- 主页: https://bursasearch.github.io/myx_shop_dev/
+- AI监控: https://bursasearch.github.io/myx_shop_dev/ai-monitor.html
+- 投资计算器: https://bursasearch.github.io/myx_shop_dev/bursa.html
 
 ## 重要文件说明
 1. `ai-monitor.html` - 主监控页面
@@ -37,8 +37,8 @@
 ## 手动操作步骤
 如果需要手动更新GitHub Pages:
 ```bash
-cd /storage/emulated/0/bursasearch/myx_shop/docs
+cd /storage/emulated/0/bursasearch/myx_shop_dev/docs
 git add .
-git commit -m "更新AI选股监控系统 - 2026-02-24 19:05:48"
+git commit -m "更新AI选股监控系统 - 2026-02-24 20:56:04"
 git push origin master
 ```
