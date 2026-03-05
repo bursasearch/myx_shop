@@ -4,297 +4,576 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
    
-    <title>Bursa AI投资计算器 - 生产同步版</title>
+    <title>Bursa Ai 投资计算器 - 生产同步版</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<style>
+    /* ==================== 变量定义 ==================== */
+    :root {
+        --primary: #2196F3;
+        --primary-dark: #1976D2;
+        --primary-rgb: 33, 150, 243; /* 添加RGB值用于透明度 */
+        --secondary: #4CAF50;
+        --warning: #FF9800;
+        --danger: #F44336;
+        --light: #F5F7FA;
+        --dark: #333333;
+        --gray: #666666;
+        --gray-light: #999999;
+        --coffee: #FF9800;
+        --success: #4CAF50;
+        
+        /* 间距统一 */
+        --spacing-xs: 4px;
+        --spacing-sm: 8px;
+        --spacing-md: 12px;
+        --spacing-lg: 16px;
+        --spacing-xl: 20px;
+        
+        /* 圆角统一 */
+        --radius-sm: 4px;
+        --radius-md: 8px;
+        --radius-lg: 12px;
+    }
     
-    <style>
-        /* 保持原有样式 - 这里省略以节省空间，请保留您原有的CSS */
-        :root {
-            --primary: #2196F3; --primary-dark: #1976D2; --secondary: #4CAF50;
-            --warning: #FF9800; --danger: #F44336; --light: #F5F7FA;
-            --dark: #333333; --gray: #666666; --coffee: #FF9800;
-            --success: #4CAF50;
+    * { 
+        box-sizing: border-box; 
+        margin: 0; 
+        padding: 0; 
+    }
+    
+    body {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: var(--dark);
+        line-height: 1.5;
+        min-height: 100vh;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+    
+    .container {
+        width: 100%;
+        max-width: 500px;
+        margin: 0 auto;
+        background: white;
+        min-height: 100vh;
+        position: relative;
+        box-shadow: 0 0 20px rgba(0,0,0,0.2);
+    }
+    
+    /* ==================== 头部 ==================== */
+    .app-header {
+        background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+        color: white;
+        padding: var(--spacing-xl) var(--spacing-lg);
+        position: sticky;
+        top: 0;
+        z-index: 100;
+    }
+    
+    .app-title {
+        font-size: 1.25rem;
+        font-weight: 600;
+    }
+    
+    /* ==================== 标签栏 ==================== */
+    .tab-bar {
+        display: flex;
+        background: white;
+        border-bottom: 1px solid var(--light);
+        position: sticky;
+        top: 70px; /* 根据头部高度调整 */
+        z-index: 99;
+    }
+    
+    .tab { 
+        flex: 1; 
+        padding: var(--spacing-lg); 
+        text-align: center; 
+        color: var(--gray); 
+        cursor: pointer;
+        transition: all 0.2s ease;
+        font-weight: 500;
+    }
+    
+    .tab.active { 
+        color: var(--primary); 
+        border-bottom: 3px solid var(--primary); 
+        font-weight: 600; 
+    }
+    
+    .tab:active {
+        background-color: rgba(var(--primary-rgb), 0.1);
+    }
+    
+    /* ==================== 内容区域 ==================== */
+    .content { 
+        padding: var(--spacing-lg); 
+    }
+    
+    .tab-content { 
+        display: none; 
+    }
+    
+    .tab-content.active { 
+        display: block; 
+        animation: fadeIn 0.3s ease; 
+    }
+    
+    /* ==================== 卡片通用样式 ==================== */
+    .card { 
+        background: white; 
+        border-radius: var(--radius-lg); 
+        padding: var(--spacing-lg); 
+        margin-bottom: var(--spacing-lg); 
+        border: 1px solid var(--light); 
+        box-shadow: 0 2px 10px rgba(0,0,0,0.05); 
+    }
+    
+    /* ==================== 导航按钮 ==================== */
+    .nav-buttons {
+        display: flex;
+        gap: 10px;
+        margin-bottom: var(--spacing-lg);
+    }
+    
+    .nav-btn {
+        flex: 1;
+        padding: var(--spacing-md) var(--spacing-lg);
+        text-align: center;
+        border-radius: var(--radius-md);
+        text-decoration: none;
+        font-size: 14px;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        border: none;
+        cursor: pointer;
+    }
+    
+    .nav-btn i {
+        margin-right: var(--spacing-xs);
+    }
+    
+    .home-btn {
+        background: var(--primary);
+        color: white;
+    }
+    
+    .home-btn:hover {
+        background: var(--primary-dark);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(var(--primary-rgb), 0.3);
+    }
+    
+    .sgx-btn {
+        background: #4CAF50;
+        color: white;
+    }
+    
+    .sgx-btn:hover {
+        background: #388E3C;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
+    }
+    
+    .nav-btn:active {
+        transform: translateY(0);
+    }
+    
+    /* ==================== 计算器卡片 ==================== */
+    .calculator-card {
+        background: white;
+        border-radius: var(--radius-lg);
+        padding: var(--spacing-xl);
+        margin-bottom: var(--spacing-lg);
+        border: 1px solid #e0e0e0;
+    }
+    
+    .section-title {
+        font-size: 1.125rem;
+        font-weight: 600;
+        margin-bottom: var(--spacing-lg);
+        color: var(--dark);
+        border-left: 4px solid var(--primary);
+        padding-left: 10px;
+    }
+    
+    /* ==================== 表单元素 ==================== */
+    .input-group {
+        margin-bottom: var(--spacing-lg);
+    }
+    
+    .input-label {
+        display: block;
+        font-size: 0.875rem;
+        color: var(--gray);
+        margin-bottom: var(--spacing-xs);
+        font-weight: 500;
+    }
+    
+    .input-row {
+        display: flex;
+        gap: 10px;
+        margin-bottom: var(--spacing-lg);
+    }
+    
+    .input-field {
+        flex: 1;
+    }
+    
+    .input-field input {
+        width: 100%;
+        padding: var(--spacing-md) var(--spacing-lg);
+        border: 2px solid #e0e0e0;
+        border-radius: var(--radius-md);
+        font-size: 1rem;
+        transition: all 0.3s ease;
+        font-family: inherit;
+    }
+    
+    .input-field input:focus {
+        border-color: var(--primary);
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(var(--primary-rgb), 0.1);
+    }
+    
+    .input-field input[readonly] {
+        background: #f5f5f5;
+        cursor: default;
+    }
+    
+    .info-text {
+        font-size: 0.75rem;
+        color: var(--gray-light);
+        margin-top: var(--spacing-xs);
+        display: block;
+    }
+    
+    /* ==================== 摘要框 ==================== */
+    .summary-box {
+        background: #f8f9fa;
+        border-radius: var(--radius-md);
+        padding: var(--spacing-lg);
+        margin-top: 10px;
+        text-align: center;
+        border: 1px solid #e9ecef;
+    }
+    
+    .summary-text {
+        font-size: 0.875rem;
+        color: var(--gray);
+    }
+    
+    .summary-value {
+        font-size: 1.125rem;
+        font-weight: bold;
+        color: var(--primary);
+        margin-top: var(--spacing-xs);
+    }
+    
+    /* ==================== 分隔线 ==================== */
+    .divider {
+        height: 1px;
+        background: #e0e0e0;
+        margin: var(--spacing-xl) 0;
+    }
+    
+    /* ==================== 结果卡片 ==================== */
+    .result-card {
+        background: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
+        border-radius: var(--radius-md);
+        padding: var(--spacing-lg);
+        margin-top: var(--spacing-xl);
+        border: 1px solid #d0d7e2;
+    }
+    
+    .result-row {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 10px;
+        align-items: center;
+    }
+    
+    .result-label {
+        font-size: 0.875rem;
+        color: var(--gray);
+    }
+    
+    .result-value {
+        font-size: 1rem;
+        font-weight: 600;
+        color: var(--dark);
+    }
+    
+    .total-row {
+        border-top: 2px solid #ddd;
+        padding-top: 10px;
+        margin-top: 10px;
+        font-weight: bold;
+    }
+    
+    /* ==================== 盈亏标签 ==================== */
+    .profit-loss {
+        display: inline-block;
+        padding: var(--spacing-xs) 10px;
+        border-radius: 15px;
+        font-size: 0.75rem;
+        font-weight: bold;
+    }
+    
+    .profit {
+        background: #e8f5e9;
+        color: #2e7d32;
+    }
+    
+    .loss {
+        background: #ffebee;
+        color: #c62828;
+    }
+    
+    /* ==================== 按钮 ==================== */
+    .btn-calculate {
+        width: 100%;
+        padding: var(--spacing-lg);
+        background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+        color: white;
+        border: none;
+        border-radius: var(--radius-md);
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        margin-top: var(--spacing-lg);
+        transition: all 0.3s ease;
+        font-family: inherit;
+    }
+    
+    .btn-calculate:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(var(--primary-rgb), 0.3);
+    }
+    
+    .btn-calculate:active {
+        transform: translateY(0);
+    }
+    
+    .btn-calculate:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+    }
+    
+    /* ==================== 股票卡片 ==================== */
+    .stock-card { 
+        border: 1px solid #eee; 
+        border-radius: var(--radius-md); 
+        padding: var(--spacing-md); 
+        margin-bottom: 10px; 
+        transition: all 0.2s ease;
+        cursor: pointer;
+    }
+    
+    .stock-card:hover { 
+        background-color: #f9f9f9; 
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        transform: translateY(-2px);
+    }
+    
+    .stock-card.clickable { 
+        border-left: 4px solid var(--primary); 
+    }
+    
+    .stock-title { 
+        display: flex; 
+        justify-content: space-between; 
+        align-items: center; 
+        margin-bottom: var(--spacing-xs);
+    }
+    
+    .stock-name { 
+        font-weight: bold; 
+        font-size: 1rem; 
+    }
+    
+    .stock-code { 
+        color: var(--gray); 
+        font-size: 0.75rem; 
+        background: #eee; 
+        padding: 2px var(--spacing-xs); 
+        border-radius: var(--radius-sm); 
+    }
+    
+    .badge-buy { 
+        background: #e8f5e9; 
+        color: #2e7d32; 
+        padding: 2px var(--spacing-md); 
+        border-radius: 12px; 
+        font-size: 0.75rem; 
+        font-weight: bold; 
+    }
+    
+    /* ==================== 支持面板 ==================== */
+    .support-panel {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0,0,0,0.7);
+        z-index: 1000;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        padding: var(--spacing-xl);
+        backdrop-filter: blur(3px);
+    }
+
+    .support-panel > .card {
+        max-width: 300px;
+        animation: slideUp 0.3s ease;
+        position: relative;
+        border: none;
+    }
+
+    @keyframes slideUp {
+        from { 
+            transform: translateY(50px); 
+            opacity: 0; 
         }
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: var(--dark); line-height: 1.5; min-height: 100vh;
+        to { 
+            transform: translateY(0); 
+            opacity: 1; 
         }
-        .container {
-            width: 100%; max-width: 500px; margin: 0 auto; background: white;
-            min-height: 100vh; position: relative; box-shadow: 0 0 20px rgba(0,0,0,0.2);
-        }
+    }
+    
+    /* ==================== 咖啡按钮 ==================== */
+    #coffee-btn {
+        transition: all 0.3s ease;
+    }
+    
+    #coffee-btn:hover {
+        background: #F57C00;
+        transform: scale(1.1);
+        box-shadow: 0 5px 15px rgba(255, 152, 0, 0.4);
+    }
+    
+    /* ==================== 关闭按钮 ==================== */
+    .close-btn {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background: none;
+        border: none;
+        font-size: 1.25rem;
+        color: var(--gray);
+        cursor: pointer;
+        padding: var(--spacing-xs);
+        width: 32px;
+        height: 32px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        transition: all 0.2s ease;
+    }
+    
+    .close-btn:hover {
+        background: rgba(0,0,0,0.1);
+        color: var(--danger);
+    }
+    
+    /* ==================== 动画 ==================== */
+    @keyframes fadeIn { 
+        from { opacity: 0; } 
+        to { opacity: 1; } 
+    }
+    
+    /* ==================== 加载动画 ==================== */
+    .loading-spinner {
+        display: inline-block;
+        width: 40px;
+        height: 40px;
+        border: 3px solid rgba(var(--primary-rgb), 0.3);
+        border-radius: 50%;
+        border-top-color: var(--primary);
+        animation: spin 1s ease-in-out infinite;
+    }
+    
+    @keyframes spin {
+        to { transform: rotate(360deg); }
+    }
+    
+    /* ==================== 响应式调整 ==================== */
+    @media (max-width: 480px) {
         .app-header {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-            color: white; padding: 20px 15px; position: sticky; top: 0; z-index: 100;
-        }
-        .tab-bar {
-            display: flex; background: white; border-bottom: 1px solid var(--light);
-            position: sticky; top: 90px; z-index: 99;
-        }
-        .tab { flex: 1; padding: 15px; text-align: center; color: var(--gray); cursor: pointer; }
-        .tab.active { color: var(--primary); border-bottom: 3px solid var(--primary); font-weight: 600; }
-        .content { padding: 15px; }
-        .tab-content { display: none; }
-        .tab-content.active { display: block; animation: fadeIn 0.3s ease; }
-        .card { background: white; border-radius: 12px; padding: 15px; margin-bottom: 15px; border: 1px solid var(--light); box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
-        
-        /* 計算器卡片樣式 */
-        .calculator-card {
-            background: white;
-            border-radius: 12px;
-            padding: 20px;
-            margin-bottom: 15px;
-            border: 1px solid #e0e0e0;
+            padding: var(--spacing-lg) var(--spacing-md);
         }
         
-        .section-title {
-            font-size: 18px;
-            font-weight: 600;
-            margin-bottom: 15px;
-            color: var(--dark);
-            border-left: 4px solid var(--primary);
-            padding-left: 10px;
-        }
-        
-        .input-group {
-            margin-bottom: 15px;
-        }
-        
-        .input-label {
-            display: block;
-            font-size: 14px;
-            color: #666;
-            margin-bottom: 5px;
-            font-weight: 500;
+        .content {
+            padding: var(--spacing-md);
         }
         
         .input-row {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 15px;
+            flex-direction: column;
+            gap: var(--spacing-md);
         }
         
-        .input-field {
-            flex: 1;
+        .nav-buttons {
+            flex-direction: column;
         }
         
-        .input-field input {
-            width: 100%;
-            padding: 12px 15px;
-            border: 2px solid #e0e0e0;
-            border-radius: 8px;
-            font-size: 16px;
-            transition: all 0.3s ease;
+        .tab {
+            padding: var(--spacing-md);
+            font-size: 0.875rem;
+        }
+    }
+    
+    /* ==================== 暗色模式支持 ==================== */
+    @media (prefers-color-scheme: dark) {
+        .container {
+            background: #1a1a1a;
         }
         
-        .input-field input:focus {
-            border-color: var(--primary);
-            outline: none;
-            box-shadow: 0 0 0 2px rgba(33, 150, 243, 0.1);
-        }
-        
-        .info-text {
-            font-size: 12px;
-            color: #999;
-            margin-top: 5px;
-            display: block;
-        }
-        
-        .summary-box {
-            background: #f8f9fa;
-            border-radius: 10px;
-            padding: 15px;
-            margin-top: 10px;
-            text-align: center;
-            border: 1px solid #e9ecef;
-        }
-        
-        .summary-text {
-            font-size: 14px;
-            color: #666;
-        }
-        
-        .summary-value {
-            font-size: 18px;
-            font-weight: bold;
-            color: var(--primary);
-            margin-top: 5px;
-        }
-        
-        .divider {
-            height: 1px;
-            background: #e0e0e0;
-            margin: 20px 0;
+        .card, .calculator-card {
+            background: #2d2d2d;
+            border-color: #404040;
         }
         
         .result-card {
-            background: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
-            border-radius: 10px;
-            padding: 15px;
-            margin-top: 20px;
-            border: 1px solid #d0d7e2;
+            background: linear-gradient(135deg, #2d2d2d 0%, #353535 100%);
+            border-color: #404040;
         }
         
-        .result-row {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 10px;
-            align-items: center;
+        .input-field input {
+            background: #333;
+            border-color: #404040;
+            color: #fff;
         }
         
-        .result-label {
-            font-size: 14px;
-            color: #666;
-        }
-        
-        .result-value {
-            font-size: 16px;
-            font-weight: 600;
-            color: var(--dark);
-        }
-        
-        .profit-loss {
-            display: inline-block;
-            padding: 4px 10px;
-            border-radius: 15px;
-            font-size: 12px;
-            font-weight: bold;
-        }
-        
-        .profit {
-            background: #e8f5e9;
-            color: #2e7d32;
-        }
-        
-        .loss {
-            background: #ffebee;
-            color: #c62828;
-        }
-        
-        .total-row {
-            border-top: 2px solid #ddd;
-            padding-top: 10px;
-            margin-top: 10px;
-            font-weight: bold;
-        }
-        
-        .footer-note {
-            text-align: center;
-            font-size: 11px;
+        .input-field input[readonly] {
+            background: #2a2a2a;
             color: #999;
-            margin-top: 20px;
-            padding-top: 15px;
-            border-top: 1px solid #eee;
         }
         
-        .btn-calculate {
-            width: 100%;
-            padding: 15px;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-            color: white;
-            border: none;
-            border-radius: 10px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            margin-top: 15px;
-            transition: all 0.3s ease;
+        .stock-card {
+            border-color: #404040;
         }
         
-        .btn-calculate:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(33, 150, 243, 0.3);
+        .stock-card:hover {
+            background: #333;
         }
         
-        .btn-calculate:active {
-            transform: translateY(0);
+        .summary-box {
+            background: #333;
+            border-color: #404040;
         }
-        
-        /* 股票卡片樣式 */
-        .stock-card { 
-            border: 1px solid #eee; 
-            border-radius: 8px; 
-            padding: 12px; 
-            margin-bottom: 10px; 
-            transition: all 0.2s ease;
-            cursor: pointer;
-        }
-        .stock-card:hover { 
-            background-color: #f9f9f9; 
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            transform: translateY(-2px);
-        }
-        .stock-card.clickable { 
-            border-left: 4px solid var(--primary); 
-        }
-        .stock-title { display: flex; justify-content: space-between; align-items: center; }
-        .stock-name { font-weight: bold; font-size: 16px; }
-        .stock-code { color: #666; font-size: 12px; background: #eee; padding: 2px 5px; border-radius: 4px; }
-        .badge-buy { background: #e8f5e9; color: #2e7d32; padding: 2px 8px; border-radius: 10px; font-size: 12px; font-weight: bold; }
-        
-        /* 支持页面样式 */
-        .support-panel {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.7);
-            z-index: 1000;
-            display: none;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-        }
-
-        .support-panel > .card {
-            max-width: 300px;
-            animation: slideUp 0.3s ease;
-            position: relative;
-        }
-
-        @keyframes slideUp {
-            from { transform: translateY(50px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
-        }
-        
-        /* 咖啡按钮样式 */
-        #coffee-btn {
-            transition: all 0.3s ease;
-        }
-        
-        #coffee-btn:hover {
-            background: #F57C00;
-            transform: scale(1.1);
-            box-shadow: 0 5px 15px rgba(255, 152, 0, 0.4);
-        }
-        
-        .close-btn {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background: none;
-            border: none;
-            font-size: 20px;
-            color: #666;
-            cursor: pointer;
-            padding: 5px;
-        }
-        
-        .close-btn:hover {
-            color: var(--danger);
-        }
-        
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-    </style>
+    }
+</style>
 </head>
 <body>
     <div class="container">
         <div class="app-header">
             <div class="header-content">
-                <div class="app-title">Bursa AI投资计算器</div>
+                <div class="app-title">Bursa Ai 投资计算器</div>
                 <div style="font-size: 11px; opacity: 0.8; margin-top:5px;">📊 数据实时更新</div>
             </div>
         </div>
@@ -304,10 +583,20 @@
             <div class="tab" onclick="switchTab('calculator')">计算器</div>
             <div class="tab" onclick="switchTab('history')">历史数据</div>
         </div>
-        
+
         <div class="content">
             <!-- AI选股页面 -->
             <div id="stocks-tab" class="tab-content active">
+                <!-- 兩個導航按鈕 - 修正位置和結構 -->
+                <div class="nav-buttons">
+                    <a href="../index.html" class="nav-btn home-btn">
+                        <i class="fas fa-home"></i> 返回首頁
+                    </a>
+                    <a href="../sgx.html" class="nav-btn sgx-btn">
+                        <i class="fas fa-chart-line"></i> 前往 SGX
+                    </a>
+                </div>
+                
                 <div class="card">
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
                         <h3 style="font-size: 16px; color: var(--primary);">
@@ -485,12 +774,12 @@
                 </div>
                 
                 <!-- Maybank QR Code 顯示 - 修正路徑和語法 -->
-<div style="background:#f0f0f0; padding:15px; border-radius:8px; margin:0 auto 15px; width:220px;">
-    <img src="images/maybank-qr.jpg" 
-     alt="Maybank QR Pay" 
-     style="width:100%; max-width:280px; height:auto; border-radius:10px; display:block; margin:0 auto;"
-     onerror="showQRCodeError()">
-</div>
+                <div style="background:#f0f0f0; padding:15px; border-radius:8px; margin:0 auto 15px; width:220px;">
+                    <img src="images/maybank-qr.jpg" 
+                         alt="Maybank QR Pay" 
+                         style="width:100%; max-width:280px; height:auto; border-radius:10px; display:block; margin:0 auto;"
+                         onerror="showQRCodeError()">
+                </div>
                 
                 <!-- QR码加载失败提示 -->
                 <div id="maybank-error" style="color:#f44336; font-size:12px; display:none; padding:10px; background:#ffeaea; border-radius:5px; margin-bottom:15px;">
@@ -560,38 +849,20 @@
 
     <script>
         // ==================== 全局变量 ====================
-        window.allHistoryData = {};
-        window.availableDates = [];
+window.allHistoryData = {};
+window.availableDates = [];
 
-        // ==================== 根据当前文件位置自动检测基础路径 ====================
-        function getBasePath() {
-    // 获取当前脚本的路径
+// ==================== 根据当前文件位置自动检测基础路径 ====================
+function getBasePath() {
     const currentPath = window.location.pathname;
-    console.log('当前路径:', currentPath);
+    console.log('當前路徑:', currentPath);
     
-    // 情况 1: 直接在 web/ 目录下 (docs/web/bursa.html)
-    if (currentPath.includes('/myx_shop/docs/web/bursa.html')) {
-        return '';
-    }
-    // 情况 2: 在 docs/ 目录下 (docs/bursa.html)
-    else if (currentPath.includes('/myx_shop/docs/bursa.html')) {
-        return 'web/';
-    }
-    // 情况 3: 在 GitHub Pages 根目录 (myx_shop/bursa.html)
-    else if (currentPath.includes('/myx_shop/bursa.html')) {
-        return 'web/';
-    }
-    // 情况 4: 在 web/ 目录下 (web/bursa.html) - untuk localhost
-    else if (currentPath.includes('/myx_shop/web/bursa.html')) {
-        return '';
-    }
-    // 默认情况
-    else {
-        return '';
-    }
+    // 因為所有文件都在 docs/web/ 目錄，JSON文件就在當前目錄
+    // 所以不需要任何前綴，直接返回空字符串
+    return '';
 }
-        const BASE_PATH = getBasePath();
-        console.log('基础路径设置为:', BASE_PATH);
+const BASE_PATH = getBasePath();
+console.log('基础路径设置为:', BASE_PATH);
 
         // ==================== 初始化函数 - 加载历史数据 ====================
         async function initApp() {
@@ -602,6 +873,9 @@
                 // 然后加载最新数据
                 await loadLatestData();
                 
+                // 强制加载历史文件列表
+                await loadHistoryFromDirectory();
+                
             } catch (error) {
                 console.error("初始化失败:", error);
                 // 如果date_config.js失败，尝试直接探测历史文件
@@ -609,13 +883,12 @@
             }
         }
 
-// ==================== 加载日期配置 ====================
+        // ==================== 加载日期配置 ====================
 async function loadDateConfig() {
     try {
-        // 构建正确的URL
         const configUrl = BASE_PATH + 'date_config.js';
-        
         console.log('尝试加载日期配置:', configUrl);
+        
         const response = await fetch(configUrl);
         
         if (!response.ok) {
@@ -634,7 +907,6 @@ async function loadDateConfig() {
         
         // 过滤掉不存在的日期文件（可选）
         if (window.availableDates) {
-            // 移除 2026-02-15 如果存在
             window.availableDates = window.availableDates.filter(d => d.id !== '20260215');
         }
         
@@ -661,38 +933,37 @@ async function loadDateConfig() {
         initDateSelector();
     }
 }
+
+// ==================== 加载最新数据 ====================
+async function loadLatestData() {
+    try {
+        const latestUrl = BASE_PATH + 'picks_latest.json';
+        console.log('尝试加载最新数据:', latestUrl);
         
-        // ==================== 加载最新数据 ====================
-        async function loadLatestData() {
-            try {
-                // picks_latest.json 在同级目录
-                const latestUrl = BASE_PATH + 'picks_latest.json';
-                console.log('尝试加载最新数据:', latestUrl);
-                
-                const response = await fetch(latestUrl);
-                if (!response.ok) throw new Error(`HTTP ${response.status}`);
-                
-                const data = await response.json();
-                console.log('最新数据:', data);
-                
-                // 渲染到页面
-                if (data && data.picks) {
-                    renderStockList(data.picks, 'latestStocksContainer', true);
-                    
-                    // 同时把最新数据加入历史数据对象
-                    window.allHistoryData = window.allHistoryData || {};
-                    window.allHistoryData[data.date_id] = data;
-                    
-                    // 更新历史天数统计
-                    updateHistoryStats();
-                }
-                
-            } catch (error) {
-                console.error('加载最新数据失败:', error);
-                document.getElementById('latestStocksContainer').innerHTML = 
-                    `<div style="color:red; padding:20px;">❌ 加载失败: ${error.message}</div>`;
-            }
+        const response = await fetch(latestUrl);
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        
+        const data = await response.json();
+        console.log('最新数据:', data);
+        
+        // 渲染到页面
+        if (data && data.picks) {
+            renderStockList(data.picks, 'latestStocksContainer', true);
+            
+            // 同时把最新数据加入历史数据对象
+            window.allHistoryData = window.allHistoryData || {};
+            window.allHistoryData[data.date_id] = data;
+            
+            // 更新历史天数统计
+            updateHistoryStats();
         }
+        
+    } catch (error) {
+        console.error('加载最新数据失败:', error);
+        document.getElementById('latestStocksContainer').innerHTML = 
+            `<div style="color:red; padding:20px;">❌ 加载失败: ${error.message}</div>`;
+    }
+}
 
         // ==================== 加载选中的历史数据 ====================
         async function loadSelectedHistory() {
@@ -713,9 +984,9 @@ async function loadDateConfig() {
             }
             
             try {
-               // 构建文件路径 - 使用完整的项目路径
-const fileUrl = `history/picks_${dateId}.json`;
-console.log('正在加载:', fileUrl);
+                // 构建文件路径 - 使用完整的项目路径
+                const fileUrl = `history/picks_${dateId}.json`;
+                console.log('正在加载:', fileUrl);
                 
                 // 显示加载状态
                 document.getElementById('historyStocksContainer').innerHTML = 
@@ -1081,42 +1352,23 @@ console.log('正在加载:', fileUrl);
             }
         }
 
-// ==================== 初始化函数 - 加载历史数据 ====================
-async function initApp() {
-    try {
-        // 先尝试加载date_config.js
-        await loadDateConfig();
-        
-        // 然后加载最新数据
-        await loadLatestData();
-        
-        // ✅ 强制加载历史文件列表
-        await loadHistoryFromDirectory();
-        
-    } catch (error) {
-        console.error("初始化失败:", error);
-        // 如果date_config.js失败，尝试直接探测历史文件
-        await loadHistoryFromDirectory();
-    }
-}
-
-// ==================== 事件绑定 ====================
-document.addEventListener('DOMContentLoaded', function() {
-    initApp();
-    
-    // 初始化咖啡按钮事件
-    document.getElementById('coffee-btn').addEventListener('click', showSupportSection);
-    
-    // 点击外部关闭支持面板
-    document.getElementById('support-section').addEventListener('click', function(e) {
-        if (e.target === this) {
-            hideSupportSection();
-        }
-    });
-    
-    // 初始化计算器
-    updateCalculator();
-});
+        // ==================== 事件绑定 ====================
+        document.addEventListener('DOMContentLoaded', function() {
+            initApp();
+            
+            // 初始化咖啡按钮事件
+            document.getElementById('coffee-btn').addEventListener('click', showSupportSection);
+            
+            // 点击外部关闭支持面板
+            document.getElementById('support-section').addEventListener('click', function(e) {
+                if (e.target === this) {
+                    hideSupportSection();
+                }
+            });
+            
+            // 初始化计算器
+            updateCalculator();
+        });
     </script>
 </body>
 </html>
