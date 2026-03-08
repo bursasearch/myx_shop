@@ -1,10 +1,124 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
 <head>
-    <meta http-equiv="refresh" content="0; url=./web/bursa.html">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Myx Shop - 投資分析工具</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .container {
+            max-width: 500px;
+            width: 100%;
+            background: white;
+            border-radius: 20px;
+            padding: 30px 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            text-align: center;
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 24px;
+        }
+        .ssm {
+            background: #f0f0f0;
+            padding: 8px;
+            border-radius: 20px;
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 30px;
+        }
+        .tools {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin: 30px 0;
+        }
+        .tool-card {
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
+            border-radius: 15px;
+            padding: 20px;
+            text-decoration: none;
+            color: #333;
+            transition: transform 0.2s, box-shadow 0.2s;
+            border: 1px solid #d0d7e2;
+        }
+        .tool-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        .tool-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #2196F3;
+            margin-bottom: 5px;
+        }
+        .tool-desc {
+            font-size: 13px;
+            color: #666;
+        }
+        .sgx-card .tool-title {
+            color: #E53E3E;
+        }
+        .footer {
+            margin-top: 30px;
+            font-size: 11px;
+            color: #999;
+        }
+        .badge {
+            background: #4CAF50;
+            color: white;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 10px;
+            display: inline-block;
+            margin-left: 5px;
+        }
+    </style>
 </head>
 <body>
-    <p>正在跳轉到 <a href="./web/bursa.html">Bursa AI 選股工具</a>...</p>
+    <div class="container">
+        <h1>📊 Myx Shop AI 選股平台</h1>
+        <div class="ssm">SSM註冊: 202510210078 (JM1034075-K)</div>
+        
+        <div class="tools">
+            <a href="./web/bursa.html" class="tool-card">
+                <div class="tool-title">🇲🇾 Bursa Malaysia <span class="badge">12天歷史</span></div>
+                <div class="tool-desc">馬來西亞股市智能分析 • AI選股 • 交易計算</div>
+            </a>
+            
+            <a href="./web/sgx.html" class="tool-card sgx-card">
+                <div class="tool-title">🇸🇬 SGX 新加坡交易所 <span class="badge">5天歷史</span></div>
+                <div class="tool-desc">新加坡股市數據 • 即時分析 • 投資評分</div>
+            </a>
+        </div>
+
+        <div style="background: #f8f9fa; border-radius: 10px; padding: 15px; margin: 20px 0; font-size: 13px;">
+            <div style="color: #666; margin-bottom: 8px;">📈 今日數據狀態</div>
+            <div style="display: flex; justify-content: space-around;">
+                <div><span style="color: #2196F3;">Bursa:</span> 15支推薦</div>
+                <div><span style="color: #E53E3E;">SGX:</span> 10支推薦</div>
+                <div><span style="color: #4CAF50;">更新: 每日EOD</span></div>
+            </div>
+        </div>
+
+        <div style="font-size: 12px; color: #666; background: #f0f0f0; padding: 10px; border-radius: 8px;">
+            📊 Google Analytics 已啟用 (G-92XTNG247J)
+        </div>
+        
+        <div class="footer">
+            © 2025 Myx Shop. 保留所有權利。<br>
+            SSM註冊企業: JM1034075-K
+        </div>
+    </div>
 </body>
 </html>
