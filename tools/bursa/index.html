@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bursa AI 工具 - 重定向</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+        }
+        
+        .container {
+            max-width: 800px;
+            width: 90%;
+            padding: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+        
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            color: white;
+        }
+        
+        .logo {
+            font-size: 4em;
+            margin-bottom: 20px;
+        }
+        
+        .loading {
+            margin: 30px 0;
+        }
+        
+        .spinner {
+            width: 60px;
+            height: 60px;
+            border: 5px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+            margin: 0 auto;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        .message {
+            font-size: 1.2em;
+            margin: 20px 0;
+            line-height: 1.6;
+        }
+        
+        .link-btn {
+            display: inline-block;
+            margin: 20px 10px;
+            padding: 15px 30px;
+            background: white;
+            color: #667eea;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: 1.1em;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .link-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .link-btn i {
+            margin-right: 8px;
+        }
+        
+        .info-box {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 30px;
+            text-align: left;
+        }
+        
+        .info-box h3 {
+            margin-bottom: 10px;
+            color: #FFD166;
+        }
+        
+        .info-box ul {
+            list-style: none;
+            padding-left: 20px;
+        }
+        
+        .info-box li {
+            margin: 8px 0;
+            position: relative;
+        }
+        
+        .info-box li:before {
+            content: "✓";
+            color: #4CAF50;
+            position: absolute;
+            left: -20px;
+        }
+        
+        .footer {
+            margin-top: 30px;
+            font-size: 0.9em;
+            color: rgba(255, 255, 255, 0.8);
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 2em;
+            }
+            
+            .link-btn {
+                display: block;
+                margin: 10px 0;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <div class="logo">
+            <i class="fas fa-chart-line"></i>
+        </div>
+        
+        <h1>Bursa AI 投资计算器</h1>
+        
+        <div class="loading">
+            <div class="spinner"></div>
+        </div>
+        
+        <div class="message">
+            正在加载 AI 股票分析工具...
+        </div>
+        
+        <div>
+            <a href="../web/bursa.html" class="link-btn" id="direct-link">
+                <i class="fas fa-rocket"></i> 直接进入工具
+            </a>
+            
+            <a href="../index.html" class="link-btn" style="background: rgba(255, 255, 255, 0.2); color: white;">
+                <i class="fas fa-home"></i> 返回首页
+            </a>
+        </div>
+        
+        <div class="info-box">
+            <h3><i class="fas fa-star"></i> 工具特色</h3>
+            <ul>
+                <li>AI智能选股推荐</li>
+                <li>精确的投资费用计算</li>
+                <li>实时股价数据更新</li>
+                <li>历史数据分析</li>
+                <li>移动设备优化</li>
+            </ul>
+        </div>
+        
+        <div class="footer">
+            <p>© 2024 Bursa Malaysia AI分析工具 | 免费使用</p>
+            <p><i class="fas fa-sync-alt"></i> 数据每日更新</p>
+        </div>
+    </div>
+    
+    <script>
+        // 自动重定向到主工具页面
+        setTimeout(() => {
+            window.location.href = '../web/bursa.html';
+        }, 3000);
+        
+        // 显示倒计时
+        let countdown = 3;
+        const messageEl = document.querySelector('.message');
+        const countdownInterval = setInterval(() => {
+            messageEl.textContent = `正在加载 AI 股票分析工具... ${countdown}秒`;
+            countdown--;
+            if (countdown < 0) {
+                clearInterval(countdownInterval);
+            }
+        }, 1000);
+        
+        // 点击直接链接时停止自动重定向
+        document.getElementById('direct-link').addEventListener('click', function(e) {
+            clearInterval(countdownInterval);
+            // 允许正常导航
+        });
+    </script>
+</body>
+</html>
