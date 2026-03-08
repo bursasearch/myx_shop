@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
-        /* 保持原有样式不变 */
+        /* 保持原有样式 */
         :root {
             --primary: #2196F3; --primary-dark: #1976D2; --secondary: #4CAF50;
             --warning: #FF9800; --danger: #F44336; --light: #F5F7FA;
@@ -349,6 +349,7 @@
         <div class="content">
             <!-- AI选股页面 -->
             <div id="stocks-tab" class="tab-content active">
+                <!-- 兩個導航按鈕 - 修正位置和結構 -->
                 <div class="nav-buttons">
                     <a href="../index.html" class="nav-btn home-btn">
                         <i class="fas fa-home"></i> 返回首頁
@@ -369,7 +370,7 @@
                 </div>
             </div>
 
-            <!-- 计算器页面 -->
+            <!-- 计算器页面 - 全新设计 -->
             <div id="calculator-tab" class="tab-content">
                 <div class="calculator-card">
                     <div class="section-title">
@@ -489,12 +490,12 @@
                 </div>
             </div>
 
-            <!-- 历史数据页面 - 修复版 -->
+            <!-- 历史数据页面 -->
             <div id="history-tab" class="tab-content">
                 <div class="card">
                     <div style="display: flex; gap:10px; margin-bottom: 15px; flex-wrap: wrap;">
                         <select id="historyDateSelect" style="flex:1; padding:10px; border:1px solid #ddd; border-radius:5px;">
-                            <option value="">加载中...</option>
+                            <option value="">选择日期...</option>
                         </select>
                         <button onclick="loadSelectedHistory()" style="padding:10px 15px; background:var(--primary); color:white; border:none; border-radius:5px; cursor:pointer;">
                             加载
@@ -503,7 +504,7 @@
 
                     <!-- 提示信息 -->
                     <div style="font-size:12px; color:#666; margin-bottom:10px; background:#f0f0f0; padding:5px 10px; border-radius:4px;">
-                        <i class="fas fa-info-circle"></i> 共发现 <span id="totalHistoryDays">0</span> 天历史数据
+                        <i class="fas fa-info-circle"></i> 显示最新5个交易日数据（共<span id="totalHistoryDays">0</span>天历史）
                     </div>
                     
                     <div style="font-size: 13px; color: #666; margin-bottom:15px;">
@@ -519,7 +520,7 @@
         </div>
     </div>
     
-    <!-- 簡化版支持区域 -->
+    <!-- 簡化版支持区域 - 只显示Maybank QR -->
     <div id="support-section" class="support-panel">
         <div class="card">
             <button class="close-btn" onclick="hideSupportSection()">
@@ -534,6 +535,7 @@
                     如果这个工具对您有帮助，欢迎支持一下
                 </div>
                 
+                <!-- Maybank QR Code 顯示 - 修正路徑和語法 -->
                 <div style="background:#f0f0f0; padding:15px; border-radius:8px; margin:0 auto 15px; width:220px;">
                     <img src="images/maybank-qr.jpg" 
                          alt="Maybank QR Pay" 
@@ -541,10 +543,12 @@
                          onerror="showQRCodeError()">
                 </div>
                 
+                <!-- QR码加载失败提示 -->
                 <div id="maybank-error" style="color:#f44336; font-size:12px; display:none; padding:10px; background:#ffeaea; border-radius:5px; margin-bottom:15px;">
                     <i class="fas fa-exclamation-circle"></i> QR码加载失败，请检查文件路径
                 </div>
                 
+                <!-- 简单说明 -->
                 <div style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:13px; margin-bottom:15px;">
                     <div style="color:var(--primary); margin-bottom:5px;">
                         <i class="fas fa-info-circle"></i> 使用说明：
@@ -556,6 +560,7 @@
                     </div>
                 </div>
                 
+                <!-- 感谢信息 -->
                 <div style="background:#e8f5e9; padding:10px; border-radius:6px; margin-top:10px;">
                     <div style="color:#2e7d32; font-size:14px;">
                         <i class="fas fa-heart"></i> 感谢您的支持！
@@ -565,6 +570,7 @@
         </div>
     </div>
     
+    <!-- 固定位置的咖啡按钮 -->
     <button id="coffee-btn" style="
         position:fixed; 
         bottom:80px; 
@@ -585,6 +591,7 @@
         <i class="fas fa-mug-hot"></i>
     </button>
 
+    <!-- 测试按钮 -->
     <button class="test-button" style="
         position:fixed; 
         bottom:20px; 
@@ -603,156 +610,145 @@
     </button>
 
     <script>
-        // ==================== 修复版 - 确保历史数据能正确加载 ====================
-        
-        // 全局变量
+        // ==================== 全局变量 ====================
         window.allHistoryData = {};
         window.availableDates = [];
 
         // ==================== 根据当前文件位置自动检测基础路径 ====================
         function getBasePath() {
+            // 获取当前脚本的路径
             const currentPath = window.location.pathname;
             console.log('当前路径:', currentPath);
             
-            // 检测当前文件位置并返回正确的相对路径
+            // 情况 1: 直接在 web/ 目录下 (docs/web/bursa.html)
             if (currentPath.includes('/myx_shop/docs/web/bursa.html')) {
-                return ''; // 在 web 子目录中
+                return '';
             }
+            // 情况 2: 在 docs/ 目录下 (docs/bursa.html)
             else if (currentPath.includes('/myx_shop/docs/bursa.html')) {
-                return 'web/'; // 在 docs 目录，需要指向 web 子目录
+                return 'web/';
             }
+            // 情况 3: 在 GitHub Pages 根目录 (myx_shop/bursa.html)
             else if (currentPath.includes('/myx_shop/bursa.html')) {
-                return 'web/'; // 在根目录，需要指向 web 子目录
+                return 'web/';
             }
+            // 情况 4: 在 web/ 目录下 (web/bursa.html) - untuk localhost
             else if (currentPath.includes('/myx_shop/web/bursa.html')) {
-                return ''; // 直接在 web 目录
+                return '';
             }
+            // 默认情况
             else {
-                // 默认假设在 web 目录
                 return '';
             }
         }
-        
         const BASE_PATH = getBasePath();
         console.log('基础路径设置为:', BASE_PATH);
 
-        // ==================== 初始化函数 - 修复版 ====================
+        // ==================== 初始化函数 - 加载历史数据 ====================
         async function initApp() {
             try {
-                // 直接探测历史文件，不依赖 date_config.js
-                await discoverHistoryFiles();
+                // 先尝试加载date_config.js
+                await loadDateConfig();
                 
-                // 加载最新数据
+                // 然后加载最新数据
                 await loadLatestData();
+                
+                // 强制加载历史文件列表
+                await loadHistoryFromDirectory();
                 
             } catch (error) {
                 console.error("初始化失败:", error);
-                showErrorMessage("初始化失败: " + error.message);
+                // 如果date_config.js失败，尝试直接探测历史文件
+                await loadHistoryFromDirectory();
             }
         }
 
-        // ==================== 修复版：探测历史文件 ====================
-        async function discoverHistoryFiles() {
-            console.log('开始探测历史文件...');
-            
-            // 首先尝试从 picks_latest.json 获取最新日期
+        // ==================== 加载日期配置 ====================
+        async function loadDateConfig() {
             try {
-                const latestUrl = BASE_PATH + 'picks_latest.json';
-                const response = await fetch(latestUrl);
-                if (response.ok) {
-                    const data = await response.json();
-                    if (data && data.date_id) {
-                        // 将最新日期添加到 availableDates
-                        window.availableDates.push({
-                            id: data.date_id,
-                            display: formatDateId(data.date_id),
-                            file: `history/picks_${data.date_id}.json`
-                        });
-                        console.log(`✅ 从最新数据获取日期: ${data.date_id}`);
-                    }
+                // 构建正确的URL
+                const configUrl = BASE_PATH + 'date_config.js';
+                
+                console.log('尝试加载日期配置:', configUrl);
+                const response = await fetch(configUrl);
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}`);
                 }
-            } catch (e) {
-                console.log('无法从最新数据获取日期');
-            }
-            
-            // 预定义的日期列表（按时间倒序）
-            const possibleDates = [
-                '20260216', '20260215', '20260213', '20260212',
-                '20260211', '20260210', '20260209', '20260206',
-                '20260205', '20260204', '20260203', '20260202'
-            ];
-            
-            // 逐个检查文件是否存在
-            for (const dateId of possibleDates) {
-                // 跳过已经添加的日期
-                if (window.availableDates.some(d => d.id === dateId)) {
-                    continue;
+
+                // 加载JS文件
+                const script = document.createElement('script');
+                script.src = configUrl;
+                document.head.appendChild(script);
+
+                // 等待脚本加载
+                await new Promise(resolve => setTimeout(resolve, 200));
+
+                console.log('✅ 日期配置加载成功:', window.availableDates);
+                
+                // 过滤掉不存在的日期文件（可选）
+                if (window.availableDates) {
+                    // 移除 2026-02-15 如果存在
+                    window.availableDates = window.availableDates.filter(d => d.id !== '20260215');
                 }
                 
-                try {
-                    // 使用 HEAD 请求检查文件是否存在
-                    const fileUrl = `history/picks_${dateId}.json`;
-                    const response = await fetch(fileUrl, { method: 'HEAD' });
+                // 初始化日期选择器
+                initDateSelector();
+
+            } catch (error) {
+                console.warn('⚠️ date_config.js加载失败:', error);
+                // 使用实际存在的硬编码日期
+                window.availableDates = [
+                    {id: '20260216', display: '2026-02-16', file: '/web/history/picks_20260216.json'},
+                    {id: '20260213', display: '2026-02-13', file: '/web/history/picks_20260213.json'},
+                    {id: '20260212', display: '2026-02-12', file: '/web/history/picks_20260212.json'},
+                    {id: '20260211', display: '2026-02-11', file: '/web/history/picks_20260211.json'},
+                    {id: '20260210', display: '2026-02-10', file: '/web/history/picks_20260210.json'},
+                    {id: '20260209', display: '2026-02-09', file: '/web/history/picks_20260209.json'},
+                    {id: '20260206', display: '2026-02-06', file: '/web/history/picks_20260206.json'},
+                    {id: '20260205', display: '2026-02-05', file: '/web/history/picks_20260205.json'},
+                    {id: '20260204', display: '2026-02-04', file: '/web/history/picks_20260204.json'},
+                    {id: '20260202', display: '2026-02-02', file: '/web/history/picks_20260202.json'}
+                ];
+                
+                console.log('使用硬编码日期，共', window.availableDates.length, '天');
+                initDateSelector();
+            }
+        }
+        
+        // ==================== 加载最新数据 ====================
+        async function loadLatestData() {
+            try {
+                // picks_latest.json 在同级目录
+                const latestUrl = BASE_PATH + 'picks_latest.json';
+                console.log('尝试加载最新数据:', latestUrl);
+                
+                const response = await fetch(latestUrl);
+                if (!response.ok) throw new Error(`HTTP ${response.status}`);
+                
+                const data = await response.json();
+                console.log('最新数据:', data);
+                
+                // 渲染到页面
+                if (data && data.picks) {
+                    renderStockList(data.picks, 'latestStocksContainer', true);
                     
-                    if (response.ok) {
-                        window.availableDates.push({
-                            id: dateId,
-                            display: formatDateId(dateId),
-                            file: fileUrl
-                        });
-                        console.log(`✅ 发现历史文件: ${dateId}`);
-                    }
-                } catch (e) {
-                    // 文件不存在，忽略
-                    console.log(`❌ 文件不存在: ${dateId}`);
+                    // 同时把最新数据加入历史数据对象
+                    window.allHistoryData = window.allHistoryData || {};
+                    window.allHistoryData[data.date_id] = data;
+                    
+                    // 更新历史天数统计
+                    updateHistoryStats();
                 }
-            }
-            
-            // 按日期倒序排序
-            window.availableDates.sort((a, b) => b.id.localeCompare(a.id));
-            
-            console.log(`📊 共发现 ${window.availableDates.length} 天历史数据:`, 
-                       window.availableDates.map(d => d.display));
-            
-            // 更新日期选择器
-            updateDateSelector();
-            
-            // 更新历史天数统计
-            updateHistoryStats();
-        }
-
-        // ==================== 格式化日期显示 ====================
-        function formatDateId(dateId) {
-            if (!dateId || dateId.length !== 8) return dateId;
-            return `${dateId.slice(0,4)}-${dateId.slice(4,6)}-${dateId.slice(6,8)}`;
-        }
-
-        // ==================== 更新日期选择器 ====================
-        function updateDateSelector() {
-            const select = document.getElementById('historyDateSelect');
-            if (!select) return;
-            
-            if (window.availableDates.length === 0) {
-                select.innerHTML = '<option value="">暂无历史数据</option>';
-                return;
-            }
-            
-            let options = '<option value="">选择日期...</option>';
-            window.availableDates.forEach(dateInfo => {
-                options += `<option value="${dateInfo.id}">${dateInfo.display}</option>`;
-            });
-            
-            select.innerHTML = options;
-            
-            // 默认选择第一个日期
-            if (window.availableDates.length > 0) {
-                select.value = window.availableDates[0].id;
-                // 自动加载第一个日期的数据
-                loadSelectedHistory();
+                
+            } catch (error) {
+                console.error('加载最新数据失败:', error);
+                document.getElementById('latestStocksContainer').innerHTML = 
+                    `<div style="color:red; padding:20px;">❌ 加载失败: ${error.message}</div>`;
             }
         }
 
-        // ==================== 修复版：加载选中的历史数据 ====================
+        // ==================== 加载选中的历史数据 ====================
         async function loadSelectedHistory() {
             console.log('开始加载历史数据');
             
@@ -766,20 +762,12 @@
             console.log('选择的日期:', dateId);
             
             if (!dateId) {
-                document.getElementById('historyStocksContainer').innerHTML = 
-                    '<p style="text-align:center; color:#999; padding:20px;">请选择日期</p>';
-                return;
-            }
-            
-            // 先检查是否已经加载过
-            if (window.allHistoryData[dateId]) {
-                console.log('使用缓存的历史数据');
-                displayHistoryData(window.allHistoryData[dateId]);
+                console.log('未选择日期');
                 return;
             }
             
             try {
-                // 构建文件路径 - 使用正确的相对路径
+                // 构建文件路径 - 使用完整的项目路径
                 const fileUrl = `history/picks_${dateId}.json`;
                 console.log('正在加载:', fileUrl);
                 
@@ -791,106 +779,132 @@
                 console.log('响应状态:', response.status);
                 
                 if (!response.ok) {
-                    throw new Error(`文件不存在 (HTTP ${response.status})`);
+                    throw new Error(`HTTP ${response.status}`);
                 }
                 
                 const data = await response.json();
-                console.log('数据接收成功:', data);
+                console.log('数据接收成功, 股票数量:', data.picks ? data.picks.length : 0);
                 
-                // 保存到缓存
-                window.allHistoryData[dateId] = data;
+                // 更新显示
+                document.getElementById('currentDateDisplay').textContent = data.date || dateId;
+                document.getElementById('currentStockCount').textContent = data.picks ? data.picks.length : 0;
                 
-                // 显示数据
-                displayHistoryData(data);
+                if (data.picks && data.picks.length > 0) {
+                    renderStockList(data.picks, 'historyStocksContainer', false);
+                } else {
+                    document.getElementById('historyStocksContainer').innerHTML = 
+                        '<p style="text-align:center; color:#999; padding:20px;">该日期没有股票数据</p>';
+                }
+                console.log('历史数据加载完成');
                 
             } catch (error) {
                 console.error('加载失败:', error.message);
                 document.getElementById('historyStocksContainer').innerHTML = 
-                    `<p style="text-align:center; color:red; padding:20px;">
-                        <i class="fas fa-exclamation-circle"></i> 加载失败: ${error.message}<br>
-                        <small>文件: history/picks_${dateId}.json</small>
-                    </p>`;
+                    `<p style="text-align:center; color:red; padding:20px;">加载失败: ${error.message}</p>`;
             }
         }
 
-        // ==================== 显示历史数据 ====================
-        function displayHistoryData(data) {
-            // 更新显示信息
-            const displayDate = data.date || formatDateId(data.date_id) || '未知日期';
-            document.getElementById('currentDateDisplay').textContent = displayDate;
+        // ==================== 初始化日期选择器 ====================
+        function initDateSelector() {
+            const select = document.getElementById('historyDateSelect');
+            if (!select) return;
             
-            const stockCount = data.picks ? data.picks.length : 0;
-            document.getElementById('currentStockCount').textContent = stockCount;
+            select.innerHTML = '<option value="">选择日期...</option>';
             
-            if (data.picks && data.picks.length > 0) {
-                renderStockList(data.picks, 'historyStocksContainer', false);
-            } else {
-                document.getElementById('historyStocksContainer').innerHTML = 
-                    '<p style="text-align:center; color:#999; padding:20px;">该日期没有股票数据</p>';
+            if (!window.availableDates || window.availableDates.length === 0) {
+                select.innerHTML = '<option value="">暂无历史数据</option>';
+                
+                const container = document.getElementById('historyStocksContainer');
+                if (container) {
+                    container.innerHTML = '<p style="text-align:center; color:#999; padding:20px;">暂无历史数据，请先加载最新数据</p>';
+                }
+                return;
             }
             
-            console.log('历史数据展示完成');
+            // 按日期倒序排序（最新的在前）
+            const sortedDates = [...window.availableDates].sort((a, b) => b.id.localeCompare(a.id));
+            
+            console.log('可用日期:', sortedDates.map(d => d.id));
+            
+            // 添加到下拉框 - 显示所有日期
+            sortedDates.forEach(dateInfo => {
+                const opt = document.createElement('option');
+                opt.value = dateInfo.id;
+                opt.textContent = `${dateInfo.display}`;
+                select.appendChild(opt);
+            });
+            
+            // 默认选择最新日期
+            if (sortedDates.length > 0) {
+                select.value = sortedDates[0].id;
+                loadSelectedHistory();
+            }
         }
 
-        // ==================== 加载最新数据 ====================
-        async function loadLatestData() {
-            try {
-                const latestUrl = BASE_PATH + 'picks_latest.json';
-                console.log('尝试加载最新数据:', latestUrl);
-                
-                const response = await fetch(latestUrl);
-                if (!response.ok) throw new Error(`HTTP ${response.status}`);
-                
-                const data = await response.json();
-                console.log('最新数据:', data);
-                
-                if (data && data.picks) {
-                    renderStockList(data.picks, 'latestStocksContainer', true);
+        // ==================== 后备方案：直接探测历史文件 ====================
+        async function loadHistoryFromDirectory() {
+            console.log('尝试直接探测历史文件...');
+            
+            const knownDates = [
+                '20260216', '20260215', '20260213', '20260212',
+                '20260211', '20260210', '20260209',
+                '20260206', '20260205', '20260204', '20260202'
+            ];
+            
+            window.availableDates = [];
+            
+            for (const dateId of knownDates) {
+                try {
+                    // 使用正确的相对路径
+                    const url = `/web/history/picks_${dateId}.json`;
                     
-                    // 同时把最新数据加入历史数据对象
-                    if (data.date_id) {
-                        window.allHistoryData[data.date_id] = data;
-                        
-                        // 如果这个日期不在 availableDates 中，添加它
-                        if (!window.availableDates.some(d => d.id === data.date_id)) {
-                            window.availableDates.unshift({
-                                id: data.date_id,
-                                display: formatDateId(data.date_id),
-                                file: `history/picks_${data.date_id}.json`
+                    console.log(`检查文件: ${url}`);
+                    
+                    const controller = new AbortController();
+                    const timeoutId = setTimeout(() => controller.abort(), 1000);
+                    
+                    const response = await fetch(url, { signal: controller.signal });
+                    clearTimeout(timeoutId);
+                    
+                    if (response.ok) {
+                        const text = await response.text();
+                        if (text.trim().startsWith('{')) {
+                            window.availableDates.push({
+                                id: dateId,
+                                display: `${dateId.slice(0,4)}-${dateId.slice(4,6)}-${dateId.slice(6,8)}`,
+                                file: `/web/history/picks_${dateId}.json`
                             });
-                            updateDateSelector();
+                            console.log(`✅ 发现历史: ${dateId}`);
                         }
                     }
-                    
-                    updateHistoryStats();
+                } catch (e) {
+                    // 忽略错误
+                    console.log(`❌ ${dateId} 不存在`);
                 }
-                
-            } catch (error) {
-                console.error('加载最新数据失败:', error);
-                document.getElementById('latestStocksContainer').innerHTML = 
-                    `<div style="color:red; padding:20px;">
-                        <i class="fas fa-exclamation-circle"></i> 加载失败: ${error.message}
-                    </div>`;
             }
+            
+            console.log(`📊 共发现 ${window.availableDates.length} 天历史数据`);
+            
+            // 如果没有发现任何文件，使用硬编码
+            if (window.availableDates.length === 0) {
+                console.log('使用硬编码日期作为后备');
+                window.availableDates = [
+                    {id: '20260216', display: '2026-02-16', file: '/web/history/picks_20260216.json'},
+                    {id: '20260215', display: '2026-02-15', file: '/web/history/picks_20260215.json'},
+                    {id: '20260213', display: '2026-02-13', file: '/web/history/picks_20260213.json'},
+                    {id: '20260212', display: '2026-02-12', file: '/web/history/picks_20260212.json'},
+                    {id: '20260211', display: '2026-02-11', file: '/web/history/picks_20260211.json'}
+                ];
+            }
+            
+            initDateSelector();
         }
-
+        
         // ==================== 更新历史数据统计 ====================
         function updateHistoryStats() {
+            const totalDays = Object.keys(window.allHistoryData || {}).length;
             const totalElem = document.getElementById('totalHistoryDays');
-            if (totalElem) {
-                totalElem.textContent = window.availableDates.length;
-            }
-        }
-
-        // ==================== 显示错误信息 ====================
-        function showErrorMessage(message) {
-            const containers = ['latestStocksContainer', 'historyStocksContainer'];
-            containers.forEach(id => {
-                const elem = document.getElementById(id);
-                if (elem) {
-                    elem.innerHTML = `<p style="text-align:center; color:red; padding:20px;">${message}</p>`;
-                }
-            });
+            if (totalElem) totalElem.textContent = totalDays;
         }
 
         // ==================== 通用列表渲染函数 ====================
@@ -936,15 +950,19 @@
 
         // ==================== 选择股票到计算器 ====================
         function selectStockToCalculator(name, code, price) {
+            // 填充表单
             document.getElementById('stockName').value = name;
             document.getElementById('stockCode').value = code;
             document.getElementById('buyPrice').value = price.toFixed(3);
             
+            // 设置目标价为买入价的110%（默认建议）
             const targetPrice = (price * 1.1).toFixed(3);
             document.getElementById('targetPrice').value = targetPrice;
             
+            // 切换到计算器标签
             switchTab('calculator');
             
+            // 立即计算
             setTimeout(() => {
                 calculateFullInvestment();
             }, 50);
@@ -956,6 +974,7 @@
             const lots = parseFloat(document.getElementById('stockLots').value) || 0;
             const shares = lots * 100;
             
+            // 更新总股数和投资金额
             document.getElementById('totalShares').textContent = shares.toLocaleString() + ' 股';
             
             const investmentValue = buyPrice * shares;
@@ -975,26 +994,33 @@
                 return;
             }
             
+            // 计算买入成本
             const buyCosts = calculateBuyCosts(totalValue);
+            
+            // 计算卖出情况
             const targetTotalValue = targetPrice * shares;
             const sellCosts = calculateSellCosts(targetTotalValue);
             
+            // 计算回报
             const netInvestment = totalValue + buyCosts.total;
             const netReturn = targetTotalValue - sellCosts.total;
             const totalProfit = netReturn - netInvestment;
             const returnRate = (totalProfit / netInvestment) * 100;
             
+            // 更新买入费用显示
             document.getElementById('calcTotalValue').textContent = 'RM ' + totalValue.toFixed(2);
             document.getElementById('calcBrokerFee').textContent = 'RM ' + buyCosts.brokerFee.toFixed(2);
             document.getElementById('calcStampDuty').textContent = 'RM ' + buyCosts.stampDuty.toFixed(2);
             document.getElementById('calcClearingFee').textContent = 'RM ' + buyCosts.clearingFee.toFixed(2);
             document.getElementById('calcNetInvestment').textContent = 'RM ' + netInvestment.toFixed(2);
             
+            // 更新卖出和回报显示
             document.getElementById('targetTotalValue').textContent = 'RM ' + targetTotalValue.toFixed(2);
             document.getElementById('sellCost').textContent = 'RM ' + sellCosts.total.toFixed(2);
             document.getElementById('netReturn').textContent = 'RM ' + netReturn.toFixed(2);
             document.getElementById('totalProfit').textContent = 'RM ' + totalProfit.toFixed(2);
             
+            // 更新回报率
             const returnRateElement = document.getElementById('returnRate');
             const returnRateBadge = document.getElementById('returnRateBadge');
             returnRateElement.textContent = returnRate.toFixed(2) + '%';
@@ -1015,9 +1041,13 @@
             }
         }
         
+        // ==================== 计算买入成本 ====================
         function calculateBuyCosts(totalValue) {
+            // 佣金 (0.1%, 最低 RM8)
             let brokerFee = Math.max(8, totalValue * 0.001);
+            // 印花税 (每 RM1000 收 RM1.50, 最高 RM1000)
             let stampDuty = Math.min(1000, Math.ceil(totalValue / 1000) * 1.5);
+            // 清算费 (0.03%)
             let clearingFee = totalValue * 0.0003;
             
             return {
@@ -1028,11 +1058,15 @@
             };
         }
         
+        // ==================== 计算卖出成本 ====================
         function calculateSellCosts(totalValue) {
             const costs = calculateBuyCosts(totalValue);
-            return { total: costs.total };
+            return {
+                total: costs.total
+            };
         }
         
+        // ==================== 重置计算器结果 ====================
         function resetCalculatorResults() {
             const zeroValue = 'RM 0.00';
             document.getElementById('calcTotalValue').textContent = zeroValue;
@@ -1048,12 +1082,16 @@
             document.getElementById('returnRateBadge').style.display = 'none';
         }
 
+        // ==================== 标签切换 ====================
         function switchTab(tabId) {
+            // 移除所有內容的 active
             document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
             document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
             
+            // 顯示目標內容
             document.getElementById(tabId + '-tab').classList.add('active');
             
+            // 高亮對應標籤
             const tabs = document.querySelectorAll('.tab');
             tabs.forEach(tab => {
                 if (tab.textContent.includes('AI选股') && tabId === 'stocks') tab.classList.add('active');
@@ -1062,6 +1100,7 @@
             });
         }
 
+        // ==================== 支持功能 ====================
         function showSupportSection() {
             document.getElementById('support-section').style.display = 'flex';
         }
@@ -1074,35 +1113,43 @@
             document.getElementById('maybank-error').style.display = 'block';
         }
 
-        // ==================== 测试函数 - 修复版 ====================
+        // ==================== 测试函数 ====================
         function testData() {
-            const message = `
-✅ 诊断信息:
-- 历史天数: ${window.availableDates.length}
-- 缓存数据: ${Object.keys(window.allHistoryData).length}
-- 基础路径: ${BASE_PATH}
-- 可用日期: ${window.availableDates.map(d => d.display).join(', ') || '无'}
-
-${window.availableDates.length > 0 ? '✓ 历史数据可用' : '✗ 未找到历史数据'}
-            `;
-            
-            alert(message);
-            console.log('可用日期:', window.availableDates);
-            console.log('缓存数据:', window.allHistoryData);
+            if(window.allHistoryData && Object.keys(window.allHistoryData).length > 0) {
+                const count = Object.keys(window.allHistoryData).length;
+                const latestDate = Object.keys(window.allHistoryData).sort().reverse()[0];
+                
+                // 测试计算器功能
+                document.getElementById('buyPrice').value = 1.500;
+                document.getElementById('targetPrice').value = 1.650;
+                document.getElementById('stockLots').value = 20;
+                calculateFullInvestment();
+                
+                alert("✅ 数据源匹配成功！\n" + 
+                      "已加载历史天数: " + count + "天\n" +
+                      "最新日期: " + latestDate + "\n" +
+                      "可用历史日期: " + window.availableDates.length + "天\n" +
+                      "基础路径: " + BASE_PATH);
+            } else {
+                alert("❌ 无法加载AI选股数据，请稍后重试。");
+            }
         }
 
         // ==================== 事件绑定 ====================
         document.addEventListener('DOMContentLoaded', function() {
             initApp();
             
+            // 初始化咖啡按钮事件
             document.getElementById('coffee-btn').addEventListener('click', showSupportSection);
             
+            // 点击外部关闭支持面板
             document.getElementById('support-section').addEventListener('click', function(e) {
                 if (e.target === this) {
                     hideSupportSection();
                 }
             });
             
+            // 初始化计算器
             updateCalculator();
         });
     </script>
