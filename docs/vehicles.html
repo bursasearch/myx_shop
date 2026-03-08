@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>二手車輛列表 | Myx Shop</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Microsoft JhengHei', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+            padding: 20px;
+        }
+        .container { max-width: 1200px; margin: 0 auto; }
+
+        /* Header */
+        .header { 
+            text-align: center; 
+            color: white; 
+            margin-bottom: 40px; 
+            padding: 30px 20px; 
+            position: relative;
+        }
+        .header h1 { font-size: 3em; margin-bottom: 15px; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); }
+        .header p { font-size: 1.3em; opacity: 0.9; max-width: 600px; margin: 0 auto; }
+        
+        /* 回到主页按钮 */
+        .home-btn {
+            position: absolute;
+            top: 20px;
+            left: 0;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255, 255, 255, 0.9);
+            color: #333;
+            padding: 10px 20px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border: none;
+            cursor: pointer;
+            font-family: inherit;
+        }
+        .home-btn:hover {
+            background: white;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+        }
+        @media (max-width: 768px) {
+            .home-btn {
+                position: relative;
+                top: 0;
+                left: 0;
+                margin-bottom: 15px;
+                display: inline-flex;
+            }
+        }
+
+        /* Search */
+        .search-box { max-width: 500px; margin: 0 auto 40px; position: relative; }
+        .search-box input {
+            width: 100%; padding: 18px 50px 18px 25px; border: none; border-radius: 50px;
+            font-size: 16px; box-shadow: 0 8px 25px rgba(0,0,0,0.15); transition: all 0.3s ease;
+        }
+        .search-box input:focus { outline: none; box-shadow: 0 12px 35px rgba(0,0,0,0.2); transform: translateY(-2px); }
+        .search-box i { position: absolute; right: 25px; top: 50%; transform: translateY(-50%); color: #667eea; font-size: 18px; }
+
+        /* Filters */
+        .filters {
+            display: flex; flex-wrap: wrap; justify-content: center; gap: 12px;
+            margin-bottom: 40px;
+        }
+        .filter-btn {
+            background: rgba(255, 255, 255, 0.9); border: none; padding: 12px 25px;
+            border-radius: 25px; font-weight: 600; cursor: pointer; transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1); white-space: nowrap;
+        }
+        .filter-btn:hover { background: white; transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.15); }
+        .filter-btn.active { background: #667eea; color: white; }
+
+        /* Sell Button */
+        .sell-btn {
+            background: #28a745; color: white; display: flex; align-items: center; gap: 8px;
+            margin-top: 8px; text-decoration: none;
+        }
+        .sell-btn:hover { background: #218838; }
+
+        /* Grid */
+        .vehicles-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 25px; margin-bottom: 50px; }
+
+        .vehicle-card { background: white; border-radius: 20px; overflow: hidden; box-shadow: 0 12px 35px rgba(0,0,0,0.15); transition: all 0.3s ease; cursor: pointer; }
+        .vehicle-card:hover { transform: translateY(-8px); box-shadow: 0 20px 45px rgba(0,0,0,0.25); }
+
+        .card-header { position: relative; height: 220px; background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); overflow: hidden; }
+        .vehicle-image { width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s ease; }
+        .vehicle-card:hover .vehicle-image { transform: scale(1.05); }
+        .vehicle-placeholder {
+            font-size: 4em; color: #667eea; opacity: 0.7; display: flex; align-items: center;
+            justify-content: center; height: 100%; width: 100%; position: absolute; top: 0; left: 0;
+        }
+
+        .plate-badge { position: absolute; top: 15px; right: 15px; background: rgba(255, 107, 53, 0.95); color: white; padding: 8px 15px; border-radius: 25px; font-family: monospace; font-weight: bold; font-size: 1.1em; box-shadow: 0 4px 15px rgba(255, 107, 53, 0.3); }
+
+        .vehicle-info { padding: 25px; }
+        .vehicle-model { font-size: 1.4em; font-weight: bold; color: #333; margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center; }
+        .vehicle-year { color: #667eea; font-size: 1em; font-weight: normal; }
+        .vehicle-description { color: #666; margin-bottom: 15px; line-height: 1.5; }
+        .vehicle-status { display: inline-block; padding: 6px 15px; border-radius: 20px; font-size: 0.85em; font-weight: bold; margin-bottom: 15px; }
+        .status-available { background: #e8f5e8; color: #2ecc71; }
+        .status-sold { background: #ffeaa7; color: #f39c12; }
+        .status-reserved { background: #e8f4fd; color: #3498db; }
+        .vehicle-price { font-size: 1.8em; font-weight: bold; color: #ff6b35; margin-bottom: 15px; }
+        .vehicle-features { display: flex; gap: 15px; margin-bottom: 20px; flex-wrap: wrap; }
+        .feature-tag { background: #f8f9fa; padding: 5px 12px; border-radius: 15px; font-size: 0.8em; color: #666; border: 1px solid #e9ecef; }
+        .card-actions { display: flex; gap: 10px; }
+        .action-btn { flex: 1; padding: 12px; border: none; border-radius: 10px; font-weight: 600; cursor: pointer; transition: all 0.3s ease; text-align: center; text-decoration: none; font-size: 0.9em; }
+        .btn-primary { background: #667eea; color: white; }
+        .btn-primary:hover { background: #5a6fd8; transform: translateY(-2px); }
+        .btn-whatsapp { background: #25D366; color: white; }
+        .btn-whatsapp:hover { background: #20bd5c; transform: translateY(-2px); }
+
+        .no-results { text-align: center; color: white; padding: 60px 20px; font-size: 1.2em; }
+
+        .admin-section { text-align: center; margin-top: 50px; padding: 30px; background: rgba(255, 255, 255, 0.1); border-radius: 20px; backdrop-filter: blur(10px); }
+        .admin-btn { display: inline-flex; align-items: center; gap: 10px; background: rgba(255, 255, 255, 0.9); color: #333; padding: 15px 30px; border-radius: 50px; text-decoration: none; font-weight: bold; transition: all 0.3s ease; box-shadow: 0 8px 25px rgba(0,0,0,0.15); }
+        .admin-btn:hover { background: white; transform: translateY(-3px); box-shadow: 0 12px 35px rgba(0,0,0,0.2); }
+
+        .footer { text-align: center; color: white; margin-top: 60px; padding: 30px; opacity: 0.8; }
+        .whatsapp-global {
+            display: inline-flex; align-items: center; gap: 8px; background: #25D366; color: white;
+            padding: 10px 20px; border-radius: 50px; text-decoration: none; font-weight: 600; margin-top: 10px;
+            transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
+        }
+        .whatsapp-global:hover { background: #1da851; transform: translateY(-2px); }
+
+        @media (max-width: 768px) {
+            .header h1 { font-size: 2.2em; }
+            .vehicles-grid { grid-template-columns: 1fr; }
+            .filters { flex-direction: column; align-items: center; }
+            .filter-btn, .sell-btn { width: 220px; justify-content: center; }
+            .card-actions { flex-direction: column; }
+            .header {
+                padding-top: 60px;
+            }
+        }
+/* Admin Entry */
+.admin-entry {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    z-index: 1000;
+}
+.admin-entry-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(231, 76, 60, 0.8);
+    color: white;
+    padding: 8px 15px;
+    border-radius: 20px;
+    text-decoration: none;
+    font-size: 0.8em;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.2);
+    cursor: pointer;
+    font-family: 'Microsoft JhengHei', sans-serif;
+}
+.admin-entry-btn:hover {
+    background: rgba(192, 57, 43, 0.9);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+/* 屏幕閱讀器專用 */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+    </style>
+</head>
+<body>
+    <div class="container">
+
+        <!-- HEADER -->
+        <div class="header">
+            <!-- 回到主页按钮 -->
+            <button class="home-btn" onclick="goToHomePage()">
+                <i class="fas fa-home"></i> 回到主页
+            </button>
+            
+            <h1>精選二手車輛</h1>
+            <p>發掘高品質二手車，價格實惠，車況透明</p>
+        </div>
+
+        <!-- SEARCH -->
+        <div class="search-box">
+            <label for="searchInput" class="sr-only">搜索車輛</label>
+            <input type="text" id="searchInput" placeholder="搜索車輛型號、品牌或特點..." aria-label="搜索車輛">
+            <i class="fas fa-search"></i>
+        </div>
+
+        <!-- FILTERS + SELL BUTTON -->
+        <div class="filters">
+            <button class="filter-btn active" data-category="all">全部車輛</button>
+            <button class="filter-btn" data-category="available">待售中</button>
+            <button class="filter-btn" data-category="suv">SUV/越野車</button>
+            <button class="filter-btn" data-category="sedan">轎車</button>
+            <button class="filter-btn" data-category="budget">經濟實惠</button>
+
+            <!-- SELL CAR BUTTON -->
+            <a href="vehicles_notice.html" class="filter-btn sell-btn">
+                <i class="fas fa-plus-circle"></i> 有意在本網站賣二手者
+            </a>
+        </div>
+
+        <!-- VEHICLES GRID -->
+        <div class="vehicles-grid" id="vehiclesGrid"></div>
+
+                <!-- FOOTER -->
+        <div class="footer">
+            <p>© 2025 Myx Shop | 專業二手車買賣平台</p>
+            <p style="margin-top: 10px; font-size: 0.9em;">
+                <a href="https://wa.me/60196819069?text=%E4%BD%A0%E5%A5%BD%EF%BC%8C%E6%88%91%E5%B0%8D%E4%BD%A0%E5%80%91%E7%9A%84%E4%BA%8C%E6%89%8B%E8%BB%8A%E6%9C%89%E8%88%88%E8%B6%A3%EF%BC%81" 
+                   class="whatsapp-global" target="_blank">
+                    <i class="fab fa-whatsapp"></i> WhatsApp 聯繫我們
+                </a>
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // 回到主页函数
+        function goToHomePage() {
+            // 这里可以修改为您的主页URL
+            window.location.href = 'index.html'; // 请根据实际情况修改主页URL
+        }
+
+        // 车辆数据
+        const vehicles = [
+            {
+                id: "Daihatsu",
+                model: "Daihatsu Feroza",
+                year: 1996,
+                plate: "車牌保密",
+                price: "RM 25,000",
+                status: "available",
+                category: ["suv", "4wd"],
+                description: "經典四輪驅動越野車，保養良好，性能可靠，適合越野愛好者。",
+                features: ["四輪驅動", "手動變速箱", "高離地間隙", "定期保養"],
+                image: "images/vehicles/ABC1111/cover.jpg",
+                link: "ABC1111.html",
+                whatsapp: "60189848128"
+            },
+            {
+                id: "storm",
+                model: "Mitsubishi Storm",
+                year: 2002,
+                plate: "車牌保密",
+                price: "RM 28,500",
+                status: "available",
+                category: ["pickup", "4wd"],
+                description: "耐用四驅皮卡車，載貨能力強，適合工作和休閒使用。",
+                features: ["四輪驅動", "柴油引擎", "貨斗", "強勁扭矩"],
+                image: "images/vehicles/ABC1234A/cover.jpg",
+                link: "ABC1234A.html",
+                whatsapp: "60173912256"
+            },
+            {
+                id: "kembara",
+                model: "Perodua Kembara",
+                year: 2001,
+                plate: "車牌保密",
+                price: "RM 15,800",
+                status: "reserved",
+                category: ["suv", "compact"],
+                description: "緊湊型SUV，經濟省油，城市駕駛靈活，保養成本低。",
+                features: ["經濟省油", "易於保養", "城市駕駛", "緊湊尺寸"],
+                image: "images/vehicles/ABC1234/cover.jpg",
+                link: "ABC1234.html",
+                whatsapp: "60173912256"
+            }
+        ];
+
+        // 狀態信息映射
+        function getStatusInfo(status) {
+            const map = {
+                'available': { text: '待售中', class: 'status-available' },
+                'sold': { text: '已售出', class: 'status-sold' },
+                'reserved': { text: '已預訂', class: 'status-reserved' }
+            };
+            return map[status] || { text: status, class: 'status-available' };
+        }
+
+        // 生成WhatsApp消息
+        function generateWhatsAppMessage(vehicle) {
+            return encodeURIComponent(`我對您擺放在 Myx Shop 的《${vehicle.model}》有興趣，請提供更多詳情和試車。`);
+        }
+
+        // 圖片錯誤處理
+        function handleImageError(img) {
+            img.style.display = 'none';
+            const placeholder = img.nextElementSibling;
+            if (placeholder && placeholder.classList.contains('vehicle-placeholder')) {
+                placeholder.style.display = 'flex';
+            }
+        }
+
+        // 渲染車輛列表
+        function renderVehicles(list = vehicles) {
+            const grid = document.getElementById('vehiclesGrid');
+            if (!list.length) {
+                grid.innerHTML = `<div class="no-results">
+                    <i class="fas fa-car" style="font-size: 3em; margin-bottom: 20px;"></i>
+                    <h3>找不到符合條件的車輛</h3>
+                    <p>請嘗試其他搜索關鍵詞或篩選條件</p>
+                </div>`;
+                return;
+            }
+            
+            grid.innerHTML = '';
+            list.forEach(vehicle => {
+                const status = getStatusInfo(vehicle.status);
+                const waMsg = generateWhatsAppMessage(vehicle);
+                const waUrl = `https://wa.me/${vehicle.whatsapp}?text=${waMsg}`;
+
+                const card = document.createElement('div');
+                card.className = 'vehicle-card';
+                card.onclick = () => openVehiclePage(vehicle.link);
+
+                card.innerHTML = `
+                    <div class="card-header">
+                        <img src="${vehicle.image}" alt="${vehicle.model}" class="vehicle-image"
+                             onerror="handleImageError(this)">
+                        <div class="vehicle-placeholder" style="display:none;">車</div>
+                        <div class="plate-badge">${vehicle.plate}</div>
+                    </div>
+                    <div class="vehicle-info">
+                        <div class="vehicle-model">${vehicle.model} <span class="vehicle-year">${vehicle.year}</span></div>
+                        <div class="vehicle-status ${status.class}">${status.text}</div>
+                        <p class="vehicle-description">${vehicle.description}</p>
+                        <div class="vehicle-features">
+                            ${vehicle.features.map(feature => `<span class="feature-tag">${feature}</span>`).join('')}
+                        </div>
+                        <div class="vehicle-price">${vehicle.price}</div>
+                        <div class="card-actions">
+                            <a href="${vehicle.link}" class="action-btn btn-primary" onclick="event.stopPropagation()">
+                                <i class="fas fa-eye"></i> 查看詳情
+                            </a>
+                            <a href="${waUrl}" class="action-btn btn-whatsapp" onclick="event.stopPropagation()" target="_blank">
+                                <i class="fab fa-whatsapp"></i> 聯繫車主
+                            </a>
+                        </div>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // 搜索功能（帶防抖）
+        let searchTimeout;
+        function searchVehicles() {
+            clearTimeout(searchTimeout);
+            searchTimeout = setTimeout(() => {
+                const term = document.getElementById('searchInput').value.toLowerCase().trim();
+                const filtered = vehicles.filter(vehicle =>
+                    vehicle.model.toLowerCase().includes(term) ||
+                    vehicle.description.toLowerCase().includes(term) ||
+                    vehicle.features.some(feature => feature.toLowerCase().includes(term))
+                );
+                renderVehicles(filtered);
+            }, 300);
+        }
+
+        // 篩選功能
+        function filterVehicles(category) {
+            let filtered = vehicles;
+            if (category === 'available') filtered = vehicles.filter(v => v.status === 'available');
+            else if (category === 'suv') filtered = vehicles.filter(v => v.category.includes('suv'));
+            else if (category === 'sedan') filtered = vehicles.filter(v => v.category.includes('sedan'));
+            else if (category === 'budget') {
+                // 定義經濟實惠為價格低於 20,000
+                filtered = vehicles.filter(v => {
+                    const price = parseInt(v.price.replace(/[^\d]/g, ''));
+                    return price < 20000;
+                });
+            }
+            renderVehicles(filtered);
+            document.getElementById('searchInput').value = '';
+        }
+
+        // 打開車輛詳情頁
+        function openVehiclePage(link) {
+            if (link && link !== '#') window.location.href = link;
+        }
+
+        // 管理員訪問檢查
+        function checkAdminAccess() {
+            const password = prompt('請輸入管理員密碼:');
+            // 請更改這個密碼為您想要的密碼
+            if (password === 'admin123') {
+                window.location.href = 'admin/admin_vehicles.html';
+            } else if (password !== null) {
+                alert('密碼錯誤！');
+            }
+        }
+
+        // 添加管理員入口到頁面
+        function addAdminEntry() {
+            const adminBtn = document.createElement('div');
+            adminBtn.className = 'admin-entry';
+            adminBtn.innerHTML = `
+                <a href="javascript:void(0)" onclick="checkAdminAccess()" class="admin-entry-btn">
+                    <i class="fas fa-user-shield"></i>
+                    <span>管理員</span>
+                </a>
+            `;
+            document.body.appendChild(adminBtn);
+        }
+
+        // 初始化
+        document.addEventListener('DOMContentLoaded', () => {
+            renderVehicles();
+
+            // 搜索事件監聽
+            const searchInput = document.getElementById('searchInput');
+            searchInput.addEventListener('input', searchVehicles);
+            searchInput.addEventListener('keypress', e => {
+                if (e.key === 'Enter') searchVehicles();
+            });
+
+            // 篩選按鈕事件
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    filterVehicles(this.dataset.category);
+                });
+            });
+            
+            // 添加管理員入口
+            addAdminEntry();
+        });
+    </script>
+</body>
+</html>

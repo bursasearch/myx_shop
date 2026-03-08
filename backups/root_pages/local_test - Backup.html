@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>本地測試頁面</title>
+    <style>
+        body { font-family: Arial; padding: 20px; background: #f0f0f0; }
+        .env-box { 
+            background: white; 
+            border-radius: 8px; 
+            padding: 15px; 
+            margin-bottom: 20px;
+            border-left: 4px solid #2196F3;
+        }
+        .env-box.sgx { border-left-color: #E53E3E; }
+        h2 { margin-top: 0; color: #333; }
+        .links { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px; }
+        .link-card {
+            background: white;
+            border-radius: 8px;
+            padding: 15px;
+            text-decoration: none;
+            color: #333;
+            border: 1px solid #ddd;
+            transition: all 0.3s;
+        }
+        .link-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        .link-card .path { font-size: 12px; color: #666; margin-top: 5px; }
+        .badge {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            margin-left: 8px;
+        }
+        .badge.local { background: #4CAF50; color: white; }
+        .badge.remote { background: #FF9800; color: white; }
+    </style>
+</head>
+<body>
+    <h1>📊 本地測試環境</h1>
+    <p>選擇要預覽的頁面：</p>
+    <div class="env-box">
+    <h2>🇲🇾 Bursa Malaysia</h2>
+    <div class="links">
+        <a href="web/bursa.html" class="link-card">
+            <div style="font-weight: bold;">Bursa 生產版 <span class="badge remote">docs/web/</span></div>
+            <div class="path">/web/bursa.html</div>
+            <div style="font-size:11px; color:#999; margin-top:8px;">模擬 GitHub Pages 環境</div>
+        </a>
+        <a href="web/bursa.html" class="link-card">
+            <div style="font-weight: bold;">Bursa 開發版 <span class="badge local">web/</span></div>
+            <div class="path">/web/bursa.html</div>
+            <div style="font-size:11px; color:#999; margin-top:8px;">本地開發版本</div>
+        </a>
+    </div>
+</div>
+
+<div class="env-box sgx">
+    <h2>🇸🇬 SGX Singapore</h2>
+    <div class="links">
+        <!-- 生產版：文件在 docs/web/ -->
+        <a href="docs/web/sgx.html" class="link-card">
+            <div style="font-weight: bold;">SGX 生產版 <span class="badge remote">docs/web/</span></div>
+            <div class="path">/docs/web/sgx.html</div>
+            <div style="font-size:11px; color:#999; margin-top:8px;">模擬 GitHub Pages 環境</div>
+        </a>
+        
+        <!-- 開發版：文件在 web/ -->
+        <a href="web/sgx.html" class="link-card">
+            <div style="font-weight: bold;">SGX 開發版 <span class="badge local">web/</span></div>
+            <div class="path">/web/sgx.html</div>
+            <div style="font-size:11px; color:#999; margin-top:8px;">本地開發版本</div>
+        </a>
+    </div>
+</div>
+    
+    <div style="margin-top: 30px; padding: 15px; background: #fff3e0; border-radius: 8px;">
+        <h3>📁 目錄結構：</h3>
+        <pre style="background: #f5f5f5; padding: 10px; border-radius: 5px;">
+myx_shop/
+├── docs/              # GitHub Pages 版本
+│   ├── bursa.html
+ |.      |_____ ai-monitor html
+│   ├── sgx.html
+│   └── web/
+│       ├── picks_latest.json
+│       └── history/
+├── web/               # 本地開發版本
+│   ├── bursa.html
+│   ├── sgx.html
+│   ├── picks_latest.json
+│   └── history/
+└── local_test.html    # 這個測試頁面
+        </pre>
+    </div>
+    
+    <script>
+        // 顯示當前訪問路徑
+        console.log('當前路徑:', window.location.href);
+    </script>
+</body>
+</html>

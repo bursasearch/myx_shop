@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>车辆摆卖说明 - Myx Shop</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Microsoft JhengHei', 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+        }
+        .header { text-align: center; margin-bottom: 30px; }
+        .header h1 { color: #2d3748; margin-bottom: 10px; }
+        .notice-section {
+            background: #f8f9fa; padding: 25px; border-radius: 15px;
+            margin-bottom: 20px; border-left: 5px solid #667eea;
+        }
+        .steps { margin: 25px 0; }
+        .step {
+            display: flex; align-items: flex-start; margin-bottom: 20px;
+            padding: 15px; background: white; border-radius: 10px;
+            border: 1px solid #e9ecef;
+        }
+        .step-number {
+            background: #667eea; color: white; width: 30px; height: 30px;
+            border-radius: 50%; display: flex; align-items: center;
+            justify-content: center; margin-right: 15px; flex-shrink: 0;
+            font-weight: bold; font-size: 0.9em;
+        }
+        .payment-info {
+            background: #fff3cd; padding: 20px; border-radius: 10px;
+            border: 2px solid #ffc107; text-align: center; margin: 25px 0;
+        }
+        .qr-codes {
+            display: flex; justify-content: center; gap: 30px;
+            margin: 20px 0; flex-wrap: wrap;
+        }
+        .qr-item { text-align: center; }
+        .qr-item img {
+            width: 150px; height: 150px; border: 2px solid #ddd;
+            border-radius: 10px; padding: 5px; background: white;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .warning {
+            background: #ffeaa7; padding: 15px; border-radius: 8px;
+            margin: 15px 0; border-left: 4px solid #fdcb6e;
+        }
+        .refund-notice {
+            background: #ffeaa7; padding: 15px; border-radius: 8px;
+            margin: 20px 0; border-left: 4px solid #e53e3e;
+        }
+        .highlight { color: #e53e3e; font-weight: bold; }
+
+        /* WhatsApp 按钮 */
+        .whatsapp-btn {
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 12px 20px; background: #25D366; color: white;
+            text-decoration: none; border-radius: 50px; font-weight: bold;
+            font-size: 1em; margin: 10px 0; transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3);
+        }
+        .whatsapp-btn:hover {
+            background: #1DA851; transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(37, 211, 102, 0.4);
+        }
+        .whatsapp-btn i { font-size: 1.2em; }
+        .payment-btn { background: #f39c12; }
+        .payment-btn:hover { background: #e67e22; }
+        .contact-btn { background: #667eea; font-size: 0.9em; }
+        .contact-btn:hover { background: #5a6fd8; }
+
+        /* 导航按钮 */
+        .nav-buttons {
+            display: flex; gap: 15px; margin: 30px 0;
+            justify-content: center; flex-wrap: wrap;
+        }
+        .nav-btn {
+            padding: 12px 25px; background: #667eea; color: white;
+            text-decoration: none; border-radius: 8px; font-weight: bold;
+            transition: all 0.3s ease; border: none; cursor: pointer;
+            display: inline-flex; align-items: center; gap: 8px;
+        }
+        .nav-btn:hover {
+            background: #5a6fd8; transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        .nav-btn.home { background: #48bb78; }
+        .nav-btn.home:hover { background: #38a169; }
+        .nav-btn.vehicles { background: #ed8936; }
+        .nav-btn.vehicles:hover { background: #dd6b20; }
+
+        .footer {
+            text-align: center; margin-top: 30px; padding-top: 20px;
+            border-top: 1px solid #e9ecef; color: #666; font-size: 0.9em;
+        }
+
+        @media (max-width: 768px) {
+            .container { padding: 20px; }
+            .qr-codes { flex-direction: column; gap: 20px; align-items: center; }
+            .step { flex-direction: column; text-align: center; }
+            .step-number { margin-bottom: 10px; }
+            .nav-buttons, .whatsapp-btn { flex-direction: column; width: 100%; justify-content: center; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 页眉 -->
+        <div class="header">
+            <h1>🚗 车辆摆卖说明</h1>
+            <p>Myx Shop - 专业二手车买卖平台</p>
+        </div>
+
+        <!-- 公告 -->
+        <div class="notice-section">
+            <h2>有意在【二手車輛資訊】摆卖车辆？</h2>
+            <p>有意在【二手車輛資訊】摆卖手车辆的顾客只须 WhatsApp 您尊车清晰照片（前面、侧面、后面、内部的设备等）和车牌号码包括车卡副本就行了！</p>
+        </div>
+
+        <!-- 步骤1：提交资料 -->
+        <div class="step">
+            <div class="step-number">1</div>
+            <div>
+                <h3>提交车辆资料</h3>
+                <p>请 WhatsApp 发送以下资料至 <span class="highlight">019-6819069</span>：</p>
+                <ul style="margin-left: 20px; margin-top: 10px;">
+                    <li>车辆清晰照片（前面、侧面、后面、内部设备等）</li>
+                    <li>车牌号码</li>
+                    <li>车卡副本</li>
+                </ul>
+                <br>
+                <a href="https://wa.me/60196819069?text=我對在MyxShop擺賣車輛有興趣，請提供更多詳情。" class="whatsapp-btn" target="_blank">
+                    <i class="fab fa-whatsapp"></i> 立即 WhatsApp 提交资料
+                </a>
+            </div>
+        </div>
+
+        <!-- 步骤2：预览 -->
+        <div class="step">
+            <div class="step-number">2</div>
+            <div>
+                <h3>预览专属网页</h3>
+                <p>我们的工作人员将尽快打造与呈上预售的网页连接给您过目。</p>
+                <div class="warning">
+                    <p class="highlight">⚠️ 重要：只有您能浏览该网页，所以不要把我们寄送的网页链接分享给他人！</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 步骤3：付款 -->
+        <div class="step">
+            <div class="step-number">3</div>
+            <div>
+                <h3>确认并付款</h3>
+                <p>一旦您满意网页设计，请通过扫描二维码方式付款。</p>
+                
+                <div class="payment-info">
+                    <h3>💰 费用说明</h3>
+                    <p style="font-size: 1.5em; color: #e53e3e; font-weight: bold;">目前仅象征式收取 RM 5</p>
+                    <p>（服务费包含网页制作及30天展示）</p>
+                    
+                    <!-- 退款声明 -->
+                    <div class="refund-notice">
+                        <h4 style="color: #e53e3e; margin-bottom: 10px;">⚠️ 重要退款声明</h4>
+                        <p style="margin: 5px 0;"><strong>一旦扫码付款，恕不退款。</strong></p>
+                        <p style="margin: 5px 0; font-size: 0.9em;">除非愿意等待报警备案处理，并提供相关证明文件。</p>
+                    </div>
+                    
+                    <div class="qr-codes">
+                        <div class="qr-item">
+                            <p>Touch 'n Go</p>
+                            <img src="images/tng-qr.jpg" alt="TnG QR Code">
+                        </div>
+                        <div class="qr-item">
+                            <p>Maybank QR</p>
+                            <img src="images/maybank-qr.jpg" alt="Maybank QR Code">
+                        </div>
+                    </div>
+                    
+                    <p style="margin-top: 15px; font-size: 0.9em;">
+                        💡 收到付款后的24小时之内，您的车辆的车牌号码在"受到保护"的情况下摆在本公司网站售卖。
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 步骤4：正式上架 -->
+        <div class="step">
+            <div class="step-number">4</div>
+            <div>
+                <h3>正式上架销售</h3>
+                <p>收到付款后的 <span class="highlight">24小时之内</span>，您的车辆将在以下条件下上架：</p>
+                <ul style="margin-left: 20px; margin-top: 10px;">
+                    <li>车牌号码在"受到保护"的情况下摆在本公司网站售卖</li>
+                    <li>在 Myx Shop 官方网站正式售卖</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- 步骤5：广告期限 -->
+        <div class="step">
+            <div class="step-number">5</div>
+            <div>
+                <h3>广告期限</h3>
+                <p>广告展示期为 <span class="highlight">30天</span>。</p>
+                <p>在30天期限过后，本公司有权将您的广告下架！</p>
+            </div>
+        </div>
+
+        <!-- 导航按钮 -->
+        <div class="nav-buttons">
+            <a href="../index.html" class="nav-btn home">
+                <i class="fas fa-home"></i> 回到主頁
+            </a>
+            <a href="vehicles.html" class="nav-btn vehicles">
+                <i class="fas fa-car"></i> 回到二手車專區
+            </a>
+        </div>
+
+        <!-- 页脚 -->
+        <div class="footer">
+            <p>© 2025 Myx Shop | 专业二手车买卖平台</p>
+            <p>SSM注册: 202510210078 (JM1034075-K) | 联系电话: +60196819069</p>
+            <br>
+            <a href="https://wa.me/60196819069?text=我有關於MyxShop車輛擺賣的問題想詢問。" class="whatsapp-btn contact-btn" target="_blank">
+                <i class="fas fa-headset"></i> 联系客服询问详情
+            </a>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lazada - 聯盟商店</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: "Microsoft JhengHei", "Segoe UI", sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            text-align: center;
+            max-width: 500px;
+            width: 100%;
+        }
+        h1 {
+            color: #333;
+            font-size: 2.5em;
+            margin-bottom: 30px;
+            font-weight: 700;
+        }
+        .status-box {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 30px;
+            margin: 20px 0;
+            border-left: 5px solid #667eea;
+        }
+        .upgrade-text {
+            font-size: 1.2em;
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+        .progress-container {
+            background: #e9ecef;
+            border-radius: 10px;
+            height: 20px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+        .progress-bar {
+            background: linear-gradient(90deg, #4CAF50, #45a049);
+            height: 100%;
+            width: 65%;
+            border-radius: 10px;
+            transition: width 0.5s ease;
+        }
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.9em;
+            color: #666;
+            margin-top: 10px;
+        }
+        .more-products {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 12px 30px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+        }
+        .more-products:hover {
+            background: #5a6fd8;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+        .platform-logo {
+            font-size: 3em;
+            margin-bottom: 20px;
+        }
+        
+        /* 新增：Shopee 引导区块样式 */
+        .shopee-redirect {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+            color: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin-top: 30px;
+            border-left: 5px solid #ff9ff3;
+        }
+        .shopee-redirect h3 {
+            font-size: 1.4em;
+            margin-bottom: 10px;
+        }
+        .shopee-redirect p {
+            font-size: 1em;
+            margin-bottom: 15px;
+            opacity: 0.9;
+        }
+        .shopee-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: white;
+            color: #ee5a24;
+            padding: 12px 25px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 700;
+            transition: all 0.3s ease;
+        }
+        .shopee-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(238, 90, 36, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="platform-logo">🛒</div>
+        <h1>Lazada</h1>
+        
+        <div class="status-box">
+            <p class="upgrade-text">系統正在升級中</p>
+            <p class="upgrade-text">我們正在為您打造更優質的購物體驗</p>
+            
+            <div class="progress-container">
+                <div class="progress-bar"></div>
+            </div>
+            
+            <div class="progress-info">
+                <span>升級進度：65%</span>
+                <span>預計完成時間：2天</span>
+            </div>
+        </div>
+        
+        <a href="#" class="more-products">更多商品</a>
+        
+        <!-- 新增：Shopee 引导区块 -->
+        <div class="shopee-redirect">
+            <h3>🚀 不想等待？</h3>
+            <p>我們精心準備的 Shopee 商店已經全面上線，海量精選好物等您來發現！</p>
+            <a href="https://bursasearch.github.io/myx_shop/shopee.html" class="shopee-button">
+                前往 Shopee 
+                <span style="font-size: 1.2em;">👉</span>
+            </a>
+        </div>
+    </div>
+
+    <script>
+        // 簡單的進度條動畫
+        document.addEventListener("DOMContentLoaded", function() {
+            const progressBar = document.querySelector(".progress-bar");
+            let progress = 65;
+            
+            // 模擬進度更新
+            setInterval(() => {
+                if (progress < 100) {
+                    progress += Math.random() * 0.5;
+                    progressBar.style.width = Math.min(progress, 100) + "%";
+                }
+            }, 2000);
+        });
+    </script>
+</body>
+</html>
