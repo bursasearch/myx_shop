@@ -49,28 +49,28 @@ mkdir -p "$BASE_DIR/logs"
     fi
 
     ## ==================== 步驟3：處理 SGX 數據 ====================
-    echo "📥 處理 SGX EOD DAT..."
-    SGX_FILE="$SGX_EOD_DIR/$(date +%Y%m%d).dat"
+echo "📥 處理 SGX EOD DAT..."
+SGX_FILE="$SGX_EOD_DIR/$(date +%Y%m%d).dat"
+SGX_PROCESSOR_DIR="/storage/emulated/0/deepseek/sgx"  # ✅ 修正這裡！
+
+if [ -f "$SGX_FILE" ]; then
+    echo "✅ 找到 SGX DAT: $SGX_FILE"
     
-    if [ -f "$SGX_FILE" ]; then
-        echo "✅ 找到 SGX DAT: $SGX_FILE"
-        
-        # 複製到 deepseek 目錄並處理
-        cp "$SGX_FILE" "$DEEPSEEK_DIR/"
-        cd "$DEEPSEEK_DIR"
-        python3 sgx_eod_processor.py "$SGX_FILE"
-        
-        # 複製生成的 JSON 到正確位置
-        if [ -f "sgx_picks_latest.json" ]; then
-            cp sgx_picks_latest.json "$BASE_DIR/web/"
-            cp sgx_picks_latest.json "$BASE_DIR/docs/web/"
-            echo "✅ SGX 數據已更新"
-        fi
-        
-        cd "$BASE_DIR"
-    else
-        echo "⚠️ 找不到 SGX DAT 文件: $SGX_FILE"
+    # 進入正確的 SGX 處理器目錄
+    cd "$SGX_PROCESSOR_DIR"  # ✅ 使用修正後的路徑
+    python3 sgx_eod_processor.py "$SGX_FILE"
+    
+    # 複製生成的 JSON 到正確位置
+    if [ -f "sgx_picks_latest.json" ]; then
+        cp sgx_picks_latest.json "$BASE_DIR/web/"
+        cp sgx_picks_latest.json "$BASE_DIR/docs/web/"
+        echo "✅ SGX 數據已更新"
     fi
+    
+    cd "$BASE_DIR"
+else
+    echo "⚠️ 找不到 SGX DAT 文件: $SGX_FILE"
+fi
 
     ## ==================== 步驟4：同步所有文件到 docs/ ====================
     echo "📋 同步文件到 docs/ 目錄..."
