@@ -1,5 +1,5 @@
 #!/data/data/com.termux/files/usr/bin/bash
-# push_eod_update.sh - 完整 EOD 自動化腳本（修正版）
+# push_eod_update.sh - 完整 EOD 自動化腳本
 # 包含：處理 Bursa & SGX 數據、同步文件、推送到 GitHub
 
 echo "==================================="
@@ -8,9 +8,7 @@ echo "==================================="
 
 # 設定變數
 BASE_DIR="/storage/emulated/0/bursasearch/myx_shop"
-DEEPSEEK_DIR="/storage/emulated/0/deepseek/bursa"
-BURSA_EOD_DIR="/storage/emulated/0/eskay9761/stock_data/Myx_Data/EOD"
-SGX_EOD_DIR="/storage/emulated/0/eskay9761/stock_data/SGX_Data/EOD"
+EOD_DIR="/storage/emulated/0/deepseek"  # 假設下載的檔案在這裡
 LOG_FILE="$BASE_DIR/logs/eod_$(date +%Y%m%d).log"
 
 # 創建日誌目錄
@@ -18,7 +16,6 @@ mkdir -p "$BASE_DIR/logs"
 
 {
     echo "📊 開始 EOD 處理..."
-    echo "📅 日期: $(date +%Y%m%d)"
 
     ## ==================== 步驟1：進入工作目錄 ====================
     cd "$BASE_DIR" || exit 1
@@ -26,50 +23,22 @@ mkdir -p "$BASE_DIR/logs"
 
     ## ==================== 步驟2：處理 Bursa 數據 ====================
     echo "📥 處理 Bursa EOD CSV..."
-    BURSA_FILE="$BURSA_EOD_DIR/$(date +%Y%m%d).csv"
-    
-    if [ -f "$BURSA_FILE" ]; then
-        echo "✅ 找到 Bursa CSV: $BURSA_FILE"
-        
-        # 複製到 deepseek 目錄並處理
-        cp "$BURSA_FILE" "$DEEPSEEK_DIR/"
-        cd "$DEEPSEEK_DIR"
-        python3 eod_processor.py "$BURSA_FILE"
-        
-        # 複製生成的 JSON 到正確位置
-        if [ -f "picks_latest.json" ]; then
-            cp picks_latest.json "$BASE_DIR/web/"
-            cp picks_latest.json "$BASE_DIR/docs/web/"
-            echo "✅ Bursa 數據已更新"
-        fi
-        
-        cd "$BASE_DIR"
+    if [ -f "$EOD_DIR/bursa_$(date +%Y%m%d).csv" ]; then
+        cp "$EOD_DIR/bursa_$(date +%Y%m%d).csv" "$BASE_DIR/"
+        python3 bursa_eod_processor.py "bursa_$(date +%Y%m%d).csv" --output web/ --top 15
+        echo "✅ Bursa 處理完成"
     else
-        echo "⚠️ 找不到 Bursa CSV 文件: $BURSA_FILE"
+        echo "⚠️ 找不到 Bursa CSV 文件"
     fi
 
     ## ==================== 步驟3：處理 SGX 數據 ====================
     echo "📥 處理 SGX EOD DAT..."
-    SGX_FILE="$SGX_EOD_DIR/$(date +%Y%m%d).dat"
-    
-    if [ -f "$SGX_FILE" ]; then
-        echo "✅ 找到 SGX DAT: $SGX_FILE"
-        
-        # 複製到 deepseek 目錄並處理
-        cp "$SGX_FILE" "$DEEPSEEK_DIR/"
-        cd "$DEEPSEEK_DIR"
-        python3 sgx_eod_processor.py "$SGX_FILE"
-        
-        # 複製生成的 JSON 到正確位置
-        if [ -f "sgx_picks_latest.json" ]; then
-            cp sgx_picks_latest.json "$BASE_DIR/web/"
-            cp sgx_picks_latest.json "$BASE_DIR/docs/web/"
-            echo "✅ SGX 數據已更新"
-        fi
-        
-        cd "$BASE_DIR"
+    if [ -f "$EOD_DIR/sgx_$(date +%Y%m%d).dat" ]; then
+        cp "$EOD_DIR/sgx_$(date +%Y%m%d).dat" "$BASE_DIR/"
+        python3 sgx_eod_processor.py "sgx_$(date +%Y%m%d).dat" --output web/ --top 10
+        echo "✅ SGX 處理完成"
     else
-        echo "⚠️ 找不到 SGX DAT 文件: $SGX_FILE"
+        echo "⚠️ 找不到 SGX DAT 文件"
     fi
 
     ## ==================== 步驟4：同步所有文件到 docs/ ====================
@@ -88,7 +57,7 @@ mkdir -p "$BASE_DIR/logs"
     cp -f web/date_config.js docs/ 2>/dev/null && echo "✅ 複製 date_config.js"
     cp -rf web/history/picks_*.json docs/web/history/ 2>/dev/null && echo "✅ 複製 Bursa 歷史數據"
 
-    # 複製 SGX JSON 文件
+    # 複製 SGX JSON 文件（從 web/ 到 docs/）
     cp -f web/sgx_picks_latest.json docs/web/ 2>/dev/null && echo "✅ 複製 sgx_picks_latest.json"
     cp -f web/sgx_date_config.js docs/ 2>/dev/null && echo "✅ 複製 sgx_date_config.js"
     cp -rf web/history/sgx_picks_*.json docs/history/ 2>/dev/null && echo "✅ 複製 SGX 歷史數據"
@@ -123,7 +92,7 @@ mkdir -p "$BASE_DIR/logs"
 
     ## ==================== 步驟6：清理暫存文件 ====================
     echo "🧹 清理暫存文件..."
-    rm -f "$DEEPSEEK_DIR"/*.csv "$DEEPSEEK_DIR"/*.dat 2>/dev/null
+    rm -f "$BASE_DIR"/bursa_*.csv "$BASE_DIR"/sgx_*.dat 2>/dev/null
 
     ## ==================== 步驟7：生成報告 ====================
     echo "📊 生成報告..."
