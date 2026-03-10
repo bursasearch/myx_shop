@@ -909,44 +909,33 @@
 
         // ==================== 通用列表渲染函数 ====================
         function renderStockList(stocks, containerId, isLatest = false) {
-            const container = document.getElementById(containerId);
-            
-            if (!stocks || stocks.length === 0) {
-                container.innerHTML = '<p style="text-align:center; color:#999; padding:20px;">暂无数据</p>';
-                return;
-            }
-             
-            let html = '';
-            stocks.forEach(stock => {
-                const sector = stock.sector_name || stock.sector || '其他';
-                const displayName = stock.name || '未知';
-                const safeName = displayName.replace(/'/g, "\\'");
-                const price = parseFloat(stock.current_price || stock.price || 0);
-
-                html += `
-                <div class="stock-card clickable" onclick="selectStockToCalculator('${safeName}', '${stock.code}', ${price})">
-                    <div class="stock-title">
-                        <span class="stock-name">${displayName}</span>
-                        <span class="stock-code">${stock.code}</span>
-                    </div>
-                    <div style="font-size:12px; color:#666; margin-top:4px;">
-                        板块: ${sector}
-                    </div>
-                    <div style="display:flex; justify-content:space-between; margin-top:8px; align-items:center;">
-                        <div style="color:var(--danger); font-weight:bold;">RM ${price.toFixed(3)}</div>
-                        <div class="badge-buy">${stock.recommendation || '买入'}</div>
-                    </div>`;
-
-                if (isLatest) {
-                    html += `<div style="font-size:11px; color:#999; margin-top:5px;">点击计算交易成本 →</div>`;
-                } else {
-                    html += `<div style="font-size:11px; color:#999; margin-top:5px;">评分: ${stock.score || 'N/A'}</div>`;
-                }
-
-                html += `</div>`;
-            });
-            container.innerHTML = html;
-        }
+    const container = document.getElementById(containerId);
+    
+    if (!stocks || stocks.length === 0) {
+        container.innerHTML = '<p style="text-align:center; color:#999; padding:20px;">暂无数据</p>';
+        return;
+    }
+    
+    // ===== 新增：過濾低分股票（只顯示分數 ≥ 60 的股票）=====
+    const MIN_SCORE_FOR_DISPLAY = 60;
+    let filteredStocks = stocks;
+    
+    // 只有在 AI選股頁籤才過濾
+    if (containerId === 'latestStocksContainer') {
+        filteredStocks = stocks.filter(stock => {
+            const score = stock.total_score || stock.score || 0;
+            return score >= MIN_SCORE_FOR_DISPLAY;
+        });
+        console.log(`過濾後顯示 ${filteredStocks.length}/${stocks.length} 支股票`);
+    }
+    
+    let html = '';
+    filteredStocks.forEach(stock => {
+        // ... 原有的顯示邏輯 ...
+    });
+    
+    container.innerHTML = html;
+}
 
         // ==================== 选择股票到计算器 ====================
         function selectStockToCalculator(name, code, price) {
