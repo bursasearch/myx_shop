@@ -882,7 +882,152 @@
         // ==================== 更新计算器实时显示 ====================
         function updateCalculator() {
             const buyPrice = parseFloat(document.getElementById('buyPrice').value) || 0;
-            const lots = parseFloat(document.getElementById('stockLots').value) || 0;
-            const shares = lots;
+            const shares = parseFloat(document.getElementById('stockLots').value) || 0;
             
-            document.getElementById('
+            // 更新总股数显示
+            document.getElementById('totalShares').textContent = shares.toLocaleString() + ' 股';
+            
+            // 计算投资金额
+            const investment = buyPrice * shares;
+            document.getElementById('investmentAmount').textContent = 'SGD ' + investment.toFixed(2);
+            
+            // 计算交易费用
+            calculateFees();
+        }
+        
+        // ==================== 计算SGX交易费用 ====================
+        function calculateFees() {
+            const buyPrice = parseFloat(document.getElementById('buyPrice').value) || 0;
+            const targetPrice = parseFloat(document.getElementById('targetPrice').value) || 0;
+            const shares = parseFloat(document.getElementById('stockLots').value) || 0;
+            
+            // 买入总值
+            const buyTotal = buyPrice * shares;
+            
+            // 佣金 (0.25% 最低 SGD 25)
+            let commission = buyTotal * 0.0025;
+            if (commission < 25) commission = 25;
+            
+            // 清算费 (0.0325%)
+            const clearingFee = buyTotal * 0.000325;
+            
+            // 交易税 (0.0075%)
+            const tradingTax = buyTotal * 0.000075;
+            
+            // 净投资总额
+            const netInvestment = buyTotal + commission + clearingFee + tradingTax;
+            
+            // 更新显示
+            document.getElementById('calcTotalValue').textContent = 'SGD ' + buyTotal.toFixed(2);
+            document.getElementById('calcBrokerFee').textContent = 'SGD ' + commission.toFixed(2);
+            document.getElementById('calcClearingFee').textContent = 'SGD ' + clearingFee.toFixed(2);
+            document.getElementById('calcTradingTax').textContent = 'SGD ' + tradingTax.toFixed(2);
+            document.getElementById('calcNetInvestment').textContent = 'SGD ' + netInvestment.toFixed(2);
+            
+            // 如果有目标价，计算卖出费用
+            if (targetPrice > 0) {
+                const sellTotal = targetPrice * shares;
+                
+                // 卖出佣金
+                let sellCommission = sellTotal * 0.0025;
+                if (sellCommission < 25) sellCommission = 25;
+                
+                // 卖出清算费
+                const sellClearingFee = sellTotal * 0.000325;
+                
+                // 卖出交易税
+                const sellTradingTax = sellTotal * 0.000075;
+                
+                // 总卖出费用
+                const totalSellCost = sellCommission + sellClearingFee + sellTradingTax;
+                
+                // 目标卖出总值
+                document.getElementById('targetTotalValue').textContent = 'SGD ' + sellTotal.toFixed(2);
+                document.getElementById('sellCost').textContent = 'SGD ' + totalSellCost.toFixed(2);
+                
+                // 净回酬 (卖出后净得)
+                const netReturn = sellTotal - totalSellCost;
+                document.getElementById('netReturn').textContent = 'SGD ' + netReturn.toFixed(2);
+                
+                // 总利润
+                const totalProfit = netReturn - netInvestment;
+                document.getElementById('totalProfit').textContent = 'SGD ' + totalProfit.toFixed(2);
+                
+                // 回报率
+                const returnRate = (totalProfit / netInvestment) * 100;
+                document.getElementById('returnRate').innerHTML = returnRate.toFixed(2) + '%';
+                
+                // 更新徽章
+                const badge = document.getElementById('returnRateBadge');
+                if (totalProfit > 0) {
+                    badge.className = 'profit-loss profit';
+                    badge.innerHTML = '+' + returnRate.toFixed(2) + '%';
+                    badge.style.display = 'inline-block';
+                } else if (totalProfit < 0) {
+                    badge.className = 'profit-loss loss';
+                    badge.innerHTML = returnRate.toFixed(2) + '%';
+                    badge.style.display = 'inline-block';
+                } else {
+                    badge.style.display = 'none';
+                }
+            }
+        }
+        
+        // ==================== 完整计算 ====================
+        function calculateFullInvestment() {
+            calculateFees();
+        }
+
+        // ==================== 切换标签页 ====================
+        function switchTab(tabName) {
+            // 隐藏所有标签页
+            document.querySelectorAll('.tab-content').forEach(el => {
+                el.classList.remove('active');
+            });
+            
+            // 显示选中的标签页
+            document.getElementById(tabName + '-tab').classList.add('active');
+            
+            // 更新标签按钮状态
+            document.querySelectorAll('.tab').forEach(el => {
+                el.classList.remove('active');
+            });
+            
+            // 找到对应的标签按钮并激活
+            const tabs = document.querySelectorAll('.tab');
+            const tabIndex = tabName === 'stocks' ? 0 : (tabName === 'calculator' ? 1 : 2);
+            if (tabs[tabIndex]) {
+                tabs[tabIndex].classList.add('active');
+            }
+        }
+
+        // ==================== 支持区域控制 ====================
+        document.getElementById('coffee-btn').addEventListener('click', function() {
+            document.getElementById('support-section').style.display = 'flex';
+        });
+        
+        function hideSupportSection() {
+            document.getElementById('support-section').style.display = 'none';
+        }
+        
+        function showQRCodeError() {
+            document.getElementById('maybank-error').style.display = 'block';
+        }
+
+        // ==================== 测试函数 ====================
+        function testData() {
+            console.log('测试数据加载');
+            alert('测试模式：尝试加载最新数据');
+            loadLatestData();
+        }
+
+        // ==================== 初始化应用 ====================
+        document.addEventListener('DOMContentLoaded', function() {
+            initApp();
+            
+            // 初始化计算器显示
+            updateCalculator();
+        });
+    </script>
+</body>
+</html>
