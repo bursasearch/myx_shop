@@ -210,6 +210,23 @@
       "risk": "\u4f4e"
     },
     {
+      "code": "4324",
+      "name": "HENGYUAN",
+      "price": 1.49,
+      "volume": 685362,
+      "b_percent": 50.0,
+      "rsi": 50,
+      "macd": 0.208,
+      "sector_code": "161",
+      "sector_name": "Industrial & Consumer Products",
+      "total_score": 87,
+      "vol_ratio": 0.04,
+      "daily_change": -0.41,
+      "reasons": "B% 50.0%; RSI\u4e2d\u6027; MACD\u91d1\u53c9",
+      "risk_label": "",
+      "risk": "\u4f4e"
+    },
+    {
       "code": "0652QE",
       "name": "HSI-CWQE",
       "price": 0.43,
@@ -240,23 +257,6 @@
       "vol_ratio": 1.0,
       "daily_change": 0.115,
       "reasons": "B% 63.0%; RSI\u4e2d\u6027",
-      "risk_label": "",
-      "risk": "\u4f4e"
-    },
-    {
-      "code": "4324",
-      "name": "HENGYUAN",
-      "price": 1.49,
-      "volume": 685362,
-      "b_percent": 50.0,
-      "rsi": 50,
-      "macd": 0.208,
-      "sector_code": "161",
-      "sector_name": "Industrial & Consumer Products",
-      "total_score": 30,
-      "vol_ratio": 0.04,
-      "daily_change": -0.41,
-      "reasons": "B% 50.0%; RSI\u4e2d\u6027; MACD\u91d1\u53c9",
       "risk_label": "",
       "risk": "\u4f4e"
     }
