@@ -917,23 +917,54 @@
     }
     
     // ===== 新增：過濾低分股票（只顯示分數 ≥ 60 的股票）=====
-    const MIN_SCORE_FOR_DISPLAY = 60;
-    let filteredStocks = stocks;
-    
-    // 只有在 AI選股頁籤才過濾
+    let stocksToRender = stocks;
     if (containerId === 'latestStocksContainer') {
-        filteredStocks = stocks.filter(stock => {
+        // 過濾掉分數低於 60 的股票
+        stocksToRender = stocks.filter(stock => {
             const score = stock.total_score || stock.score || 0;
-            return score >= MIN_SCORE_FOR_DISPLAY;
+            return score >= 60;
         });
-        console.log(`過濾後顯示 ${filteredStocks.length}/${stocks.length} 支股票`);
+        console.log(`📊 過濾後顯示 ${stocksToRender.length}/${stocks.length} 支股票`);
+        
+        // 如果過濾後沒有股票，顯示提示
+        if (stocksToRender.length === 0) {
+            container.innerHTML = '<p style="text-align:center; color:#999; padding:20px;">今日沒有高分推薦股票</p>';
+            return;
+        }
     }
     
     let html = '';
-    filteredStocks.forEach(stock => {
-        // ... 原有的顯示邏輯 ...
+    stocksToRender.forEach(stock => {
+        const sector = stock.sector_name || stock.sector || '其他';
+        const displayName = stock.name || '未知';
+        const safeName = displayName.replace(/'/g, "\\'");
+        const price = parseFloat(stock.current_price || stock.price || 0);
+        
+        // 獲取評分用於調試（可選）
+        const score = stock.total_score || stock.score || 0;
+        
+        html += `
+        <div class="stock-card clickable" onclick="selectStockToCalculator('${safeName}', '${stock.code}', ${price})">
+            <div class="stock-title">
+                <span class="stock-name">${displayName}</span>
+                <span class="stock-code">${stock.code}</span>
+            </div>
+            <div style="font-size:12px; color:#666; margin-top:4px;">
+                板块: ${sector}
+            </div>
+            <div style="display:flex; justify-content:space-between; margin-top:8px; align-items:center;">
+                <div style="color:var(--danger); font-weight:bold;">RM ${price.toFixed(3)}</div>
+                <div class="badge-buy">${stock.recommendation || '买入'}</div>
+            </div>`;
+        
+        if (isLatest) {
+            html += `<div style="font-size:11px; color:#999; margin-top:5px;">点击计算交易成本 →</div>`;
+        } else {
+            html += `<div style="font-size:11px; color:#999; margin-top:5px;">评分: ${stock.score || 'N/A'}</div>`;
+        }
+        
+        html += `</div>`;
     });
-    
     container.innerHTML = html;
 }
 
