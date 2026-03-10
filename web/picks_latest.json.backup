@@ -18,9 +18,43 @@
       "total_score": 96,
       "vol_ratio": 0.02,
       "daily_change": 0.03,
-      "reasons": "B% 61.0%; RSI\u4e2d\u6027; MACD\u91d1\u53c9",
+      "reasons": "B% 61.0%; RSI中性; MACD金叉",
       "risk_label": "",
-      "risk": "\u4f4e"
+      "risk": "低"
+    },
+    {
+      "code": "0652QE",
+      "name": "HSI-CWQE",
+      "price": 0.43,
+      "volume": 60692,
+      "b_percent": 65.0,
+      "rsi": 50,
+      "macd": 0.0,
+      "sector_code": "358",
+      "sector_name": "Technology",
+      "total_score": 95,
+      "vol_ratio": 1.0,
+      "daily_change": 0.09,
+      "reasons": "B% 65.0%; RSI中性",
+      "risk_label": "",
+      "risk": "低"
+    },
+    {
+      "code": "0652QB",
+      "name": "HSI-CWQB",
+      "price": 0.51,
+      "volume": 51050,
+      "b_percent": 63.0,
+      "rsi": 50,
+      "macd": 0.0,
+      "sector_code": "358",
+      "sector_name": "Technology",
+      "total_score": 95,
+      "vol_ratio": 1.0,
+      "daily_change": 0.115,
+      "reasons": "B% 63.0%; RSI中性",
+      "risk_label": "",
+      "risk": "低"
     },
     {
       "code": "0248",
@@ -35,9 +69,9 @@
       "total_score": 93,
       "vol_ratio": 0.01,
       "daily_change": 0.0,
-      "reasons": "B% 76.0%; RSI\u4e2d\u6027; MACD\u91d1\u53c9",
+      "reasons": "B% 76.0%; RSI中性; MACD金叉",
       "risk_label": "",
-      "risk": "\u4f4e"
+      "risk": "低"
     },
     {
       "code": "2429",
@@ -52,9 +86,9 @@
       "total_score": 93,
       "vol_ratio": 0.01,
       "daily_change": 0.02,
-      "reasons": "B% 53.0%; RSI\u4e2d\u6027; MACD\u91d1\u53c9",
+      "reasons": "B% 53.0%; RSI中性; MACD金叉",
       "risk_label": "",
-      "risk": "\u4f4e"
+      "risk": "低"
     },
     {
       "code": "0129",
@@ -69,9 +103,9 @@
       "total_score": 93,
       "vol_ratio": 0.01,
       "daily_change": 0.005,
-      "reasons": "B% 69.0%; RSI\u4e2d\u6027; MACD\u91d1\u53c9",
+      "reasons": "B% 69.0%; RSI中性; MACD金叉",
       "risk_label": "",
-      "risk": "\u4f4e"
+      "risk": "低"
     },
     {
       "code": "0388",
@@ -86,9 +120,9 @@
       "total_score": 93,
       "vol_ratio": 0.01,
       "daily_change": 0.005,
-      "reasons": "B% 59.0%; RSI\u4e2d\u6027; MACD\u91d1\u53c9",
+      "reasons": "B% 59.0%; RSI中性; MACD金叉",
       "risk_label": "",
-      "risk": "\u4f4e"
+      "risk": "低"
     },
     {
       "code": "5243",
@@ -103,9 +137,9 @@
       "total_score": 92,
       "vol_ratio": 0.01,
       "daily_change": -0.015,
-      "reasons": "B% 60.0%; RSI\u4e2d\u6027; MACD\u91d1\u53c9",
+      "reasons": "B% 60.0%; RSI中性; MACD金叉",
       "risk_label": "",
-      "risk": "\u4f4e"
+      "risk": "低"
     },
     {
       "code": "5327",
@@ -120,9 +154,9 @@
       "total_score": 92,
       "vol_ratio": 0.01,
       "daily_change": -0.015,
-      "reasons": "B% 77.0%; RSI\u4e2d\u6027; MACD\u91d1\u53c9",
+      "reasons": "B% 77.0%; RSI中性; MACD金叉",
       "risk_label": "",
-      "risk": "\u4f4e"
+      "risk": "低"
     },
     {
       "code": "1066",
@@ -137,9 +171,9 @@
       "total_score": 91,
       "vol_ratio": 0.01,
       "daily_change": 0.2,
-      "reasons": "B% 62.0%; RSI\u4e2d\u6027; MACD\u91d1\u53c9",
+      "reasons": "B% 62.0%; RSI中性; MACD金叉",
       "risk_label": "",
-      "risk": "\u4f4e"
+      "risk": "低"
     },
     {
       "code": "5284",
@@ -154,9 +188,9 @@
       "total_score": 90,
       "vol_ratio": 0.03,
       "daily_change": -0.075,
-      "reasons": "B% 51.0%; RSI\u4e2d\u6027; MACD\u91d1\u53c9",
+      "reasons": "B% 51.0%; RSI中性; MACD金叉",
       "risk_label": "",
-      "risk": "\u4f4e"
+      "risk": "低"
     },
     {
       "code": "5218",
@@ -171,9 +205,9 @@
       "total_score": 90,
       "vol_ratio": 0.02,
       "daily_change": -0.04,
-      "reasons": "B% 50.0%; RSI\u4e2d\u6027; MACD\u91d1\u53c9",
+      "reasons": "B% 50.0%; RSI中性; MACD金叉",
       "risk_label": "",
-      "risk": "\u4f4e"
+      "risk": "低"
     },
     {
       "code": "5102",
@@ -188,9 +222,9 @@
       "total_score": 89,
       "vol_ratio": 0.02,
       "daily_change": 0.05,
-      "reasons": "B% 66.0%; RSI\u4e2d\u6027",
+      "reasons": "B% 66.0%; RSI中性",
       "risk_label": "",
-      "risk": "\u4f4e"
+      "risk": "低"
     },
     {
       "code": "0219",
@@ -205,9 +239,9 @@
       "total_score": 88,
       "vol_ratio": 0.01,
       "daily_change": -0.005,
-      "reasons": "B% 69.0%; RSI\u4e2d\u6027; MACD\u91d1\u53c9",
+      "reasons": "B% 69.0%; RSI中性; MACD金叉",
       "risk_label": "",
-      "risk": "\u4f4e"
+      "risk": "低"
     },
     {
       "code": "4324",
@@ -222,43 +256,9 @@
       "total_score": 87,
       "vol_ratio": 0.04,
       "daily_change": -0.41,
-      "reasons": "B% 50.0%; RSI\u4e2d\u6027; MACD\u91d1\u53c9",
+      "reasons": "B% 50.0%; RSI中性; MACD金叉",
       "risk_label": "",
-      "risk": "\u4f4e"
-    },
-    {
-      "code": "0652QE",
-      "name": "HSI-CWQE",
-      "price": 0.43,
-      "volume": 60692,
-      "b_percent": 65.0,
-      "rsi": 50,
-      "macd": 0.0,
-      "sector_code": "358",
-      "sector_name": "Technology",
-      "total_score": 75,
-      "vol_ratio": 1.0,
-      "daily_change": 0.09,
-      "reasons": "B% 65.0%; RSI\u4e2d\u6027",
-      "risk_label": "",
-      "risk": "\u4f4e"
-    },
-    {
-      "code": "0652QB",
-      "name": "HSI-CWQB",
-      "price": 0.51,
-      "volume": 51050,
-      "b_percent": 63.0,
-      "rsi": 50,
-      "macd": 0.0,
-      "sector_code": "358",
-      "sector_name": "Technology",
-      "total_score": 75,
-      "vol_ratio": 1.0,
-      "daily_change": 0.115,
-      "reasons": "B% 63.0%; RSI\u4e2d\u6027",
-      "risk_label": "",
-      "risk": "\u4f4e"
+      "risk": "低"
     }
   ]
 }
