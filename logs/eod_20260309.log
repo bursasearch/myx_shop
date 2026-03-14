@@ -1,0 +1,223 @@
+📊 開始 EOD 處理...
+✅ 進入目錄: /storage/emulated/0/bursasearch/myx_shop
+📥 處理 Bursa EOD CSV...
+⚠️ 找不到 Bursa CSV 文件
+📥 處理 SGX EOD DAT...
+⚠️ 找不到 SGX DAT 文件
+📋 同步文件到 docs/ 目錄...
+✅ 複製 HTML 到 docs/web/
+✅ 複製 picks_latest.json
+✅ 複製 date_config.js
+✅ 複製 Bursa 歷史數據
+✅ 複製 JS 文件
+📦 Git 操作...
+[master 5ff20d8] 每日EOD更新 - 20260309
+ 2 files changed, 326 insertions(+), 326 deletions(-)
+To https://github.com/bursasearch/myx_shop.git
+   62e666a..5ff20d8  master -> master
+✅ 推送完成
+🧹 清理暫存文件...
+📊 生成報告...
+✅ 報告已生成
+📊 開始 EOD 處理...
+📅 日期: 20260309
+✅ 進入目錄: /storage/emulated/0/bursasearch/myx_shop
+📥 處理 Bursa EOD CSV...
+✅ 找到 Bursa CSV: /storage/emulated/0/eskay9761/stock_data/Myx_Data/EOD/20260309.csv
+📋 共有 30 只凭单在黑名单中
+
+======================================================================
+🚀 开始 AI 选股 - 2026-03-09 19:28:21
+======================================================================
+📁 加载文件: 20260309.csv
+✅ 使用编码: utf-8
+✅ 加载成功: 2645行 × 20列
+📋 列名: ['Code', 'Stock', 'Prv Close', 'High', 'Low', 'Last', 'Vol', 'Status', 'P/E', 'EPS*', 'MACD (26, 12)', 'Vol MA (20)', 'DY*', 'Y-Low', 'Y-High', 'RSI (14)', 'Open', 'Sector', 'Chg', 'B%']
+🤖 生成增强版AI推荐 (使用B%和技术指标)...
+📊 基础过滤后: 58 只股票（价格≥0.20，成交量≥100,000，B%≥50，排除高风险凭单）
+✅ 生成 15 个AI推荐
+
+📁 保存到主数据目录...
+✅ 主数据: /storage/emulated/0/bursasearch/myx_shop/web/picks_latest.json
+📚 历史记录: /storage/emulated/0/bursasearch/myx_shop/web/history/picks_20260309.json
+✅ 生成 date_config.js: 4 个历史日期
+
+📁 保存到 GitHub Pages 目录...
+✅ GitHub Pages: /storage/emulated/0/bursasearch/myx_shop/docs/web/picks_latest.json
+✅ 复制 bursa.html 到 docs/
+
+🔥 前5名推荐:
+1. 6742HJ YTLPOWR-HJ - RM0.3 (得分: 98)
+   行业: Technology, B%: 54.0%, RSI: 50
+   B% 54.0%; RSI中性; MACD金叉
+2. 5133 PENERGY - RM0.835 (得分: 98)
+   行业: Industrial & Consumer Products, B%: 52.0%, RSI: 50
+   B% 52.0%; RSI中性; MACD金叉
+3. 519989 HIBISCS-C89 - RM0.325 (得分: 95)
+   行业: Technology, B%: 55.0%, RSI: 50
+   B% 55.0%; RSI中性
+4. 5186 MHB - RM0.43 (得分: 93)
+   行业: Industrial & Consumer Products, B%: 52.0%, RSI: 50
+   B% 52.0%; RSI中性; MACD金叉
+5. 0321 SDCG - RM0.62 (得分: 93)
+   行业: Property, B%: 65.0%, RSI: 50
+   B% 65.0%; RSI中性; MACD金叉
+
+======================================================================
+✅ AI选股完成！
+======================================================================
+📁 输入文件: /storage/emulated/0/eskay9761/stock_data/Myx_Data/EOD/20260309.csv
+📊 处理股票数: 2645
+🎯 推荐股票数: 15
+
+📌 文件位置:
+   📁 主数据: /storage/emulated/0/bursasearch/myx_shop/web/picks_latest.json
+   📁 GitHub: /storage/emulated/0/bursasearch/myx_shop/docs/web/picks_latest.json
+   📁 历史记录: /storage/emulated/0/bursasearch/myx_shop/web/history/
+======================================================================
+
+👉 运行以下命令部署到 GitHub:
+   cd ~/bursasearch/myx_shop/docs
+   git add web/picks_latest.json
+   git commit -m "更新选股数据"
+   git push
+📥 處理 SGX EOD DAT...
+✅ 找到 SGX DAT: /storage/emulated/0/eskay9761/stock_data/SGX_Data/EOD/20260309.dat
+python3: can't open file '/storage/emulated/0/deepseek/bursa/sgx_eod_processor.py': [Errno 2] No such file or directory
+📋 同步文件到 docs/ 目錄...
+✅ 複製 HTML 到 docs/web/
+✅ 複製 picks_latest.json
+✅ 複製 date_config.js
+✅ 複製 Bursa 歷史數據
+✅ 複製 JS 文件
+📦 Git 操作...
+[master 6ab6348] 每日EOD更新 - 20260309
+ 9 files changed, 1037 insertions(+), 331 deletions(-)
+ create mode 100644 docs/web/history/picks_20260309.json
+ create mode 100644 push_eod_update - Backup.sh
+ create mode 100644 web/history/picks_20260309.json
+To https://github.com/bursasearch/myx_shop.git
+   5ff20d8..6ab6348  master -> master
+✅ 推送完成
+🧹 清理暫存文件...
+📊 生成報告...
+✅ 報告已生成
+📊 開始 EOD 處理...
+📅 日期: 20260309
+✅ 進入目錄: /storage/emulated/0/bursasearch/myx_shop
+📥 處理 Bursa EOD CSV...
+✅ 找到 Bursa CSV: /storage/emulated/0/eskay9761/stock_data/Myx_Data/EOD/20260309.csv
+📋 共有 30 只凭单在黑名单中
+
+======================================================================
+🚀 开始 AI 选股 - 2026-03-09 19:42:54
+======================================================================
+📁 加载文件: 20260309.csv
+✅ 使用编码: utf-8
+✅ 加载成功: 2645行 × 20列
+📋 列名: ['Code', 'Stock', 'Prv Close', 'High', 'Low', 'Last', 'Vol', 'Status', 'P/E', 'EPS*', 'MACD (26, 12)', 'Vol MA (20)', 'DY*', 'Y-Low', 'Y-High', 'RSI (14)', 'Open', 'Sector', 'Chg', 'B%']
+🤖 生成增强版AI推荐 (使用B%和技术指标)...
+📊 基础过滤后: 58 只股票（价格≥0.20，成交量≥100,000，B%≥50，排除高风险凭单）
+✅ 生成 15 个AI推荐
+
+📁 保存到主数据目录...
+✅ 主数据: /storage/emulated/0/bursasearch/myx_shop/web/picks_latest.json
+📚 历史记录: /storage/emulated/0/bursasearch/myx_shop/web/history/picks_20260309.json
+✅ 生成 date_config.js: 4 个历史日期
+
+📁 保存到 GitHub Pages 目录...
+✅ GitHub Pages: /storage/emulated/0/bursasearch/myx_shop/docs/web/picks_latest.json
+✅ 复制 bursa.html 到 docs/
+
+🔥 前5名推荐:
+1. 6742HJ YTLPOWR-HJ - RM0.3 (得分: 98)
+   行业: Technology, B%: 54.0%, RSI: 50
+   B% 54.0%; RSI中性; MACD金叉
+2. 5133 PENERGY - RM0.835 (得分: 98)
+   行业: Industrial & Consumer Products, B%: 52.0%, RSI: 50
+   B% 52.0%; RSI中性; MACD金叉
+3. 519989 HIBISCS-C89 - RM0.325 (得分: 95)
+   行业: Technology, B%: 55.0%, RSI: 50
+   B% 55.0%; RSI中性
+4. 5186 MHB - RM0.43 (得分: 93)
+   行业: Industrial & Consumer Products, B%: 52.0%, RSI: 50
+   B% 52.0%; RSI中性; MACD金叉
+5. 0321 SDCG - RM0.62 (得分: 93)
+   行业: Property, B%: 65.0%, RSI: 50
+   B% 65.0%; RSI中性; MACD金叉
+
+======================================================================
+✅ AI选股完成！
+======================================================================
+📁 输入文件: /storage/emulated/0/eskay9761/stock_data/Myx_Data/EOD/20260309.csv
+📊 处理股票数: 2645
+🎯 推荐股票数: 15
+
+📌 文件位置:
+   📁 主数据: /storage/emulated/0/bursasearch/myx_shop/web/picks_latest.json
+   📁 GitHub: /storage/emulated/0/bursasearch/myx_shop/docs/web/picks_latest.json
+   📁 历史记录: /storage/emulated/0/bursasearch/myx_shop/web/history/
+======================================================================
+
+👉 运行以下命令部署到 GitHub:
+   cd ~/bursasearch/myx_shop/docs
+   git add web/picks_latest.json
+   git commit -m "更新选股数据"
+   git push
+📥 處理 SGX EOD DAT...
+✅ 找到 SGX DAT: /storage/emulated/0/eskay9761/stock_data/SGX_Data/EOD/20260309.dat
+/storage/emulated/0/deepseek/sgx/sgx_eod_processor.py:163: UserWarning: Boolean Series key will be reindexed to match DataFrame index.
+  self.stats['penny_removed'] = len(df_filtered[~penny_mask]) if len(df_filtered) > 0 else 0
+/storage/emulated/0/deepseek/sgx/sgx_eod_processor.py:170: UserWarning: Boolean Series key will be reindexed to match DataFrame index.
+  self.stats['low_volume_removed'] = len(df_filtered[~volume_mask]) if len(df_filtered) > 0 else 0
+============================================================
+📈 SGX EOD 數據處理器 - 前10推薦版
+============================================================
+輸入: /storage/emulated/0/eskay9761/stock_data/SGX_Data/EOD/20260309.dat
+輸出: .
+閾值: SGD 0.2
+最小成交量: 10000 股
+推薦數量: 10 (只輸出前10名)
+------------------------------------------------------------
+
+🚀 开始处理: 20260309.dat
+📅 日期: 20260309
+📂 读取文件: /storage/emulated/0/eskay9761/stock_data/SGX_Data/EOD/20260309.dat
+✅ 读取成功，共 1219 行，17 欄位
+🧹 清洗数据...
+✅ 清洗完成，有效數據: 1206 行
+🔍 应用过滤条件 (股价 >= SGD 0.2)...
+   - 去除停牌股: 51 支
+   - 去除Penny Stocks (股价<0.2): 0 支
+   - 去除低成交量 (<10000股): 0 支
+✅ 过滤完成: 421 支股票 (从 1206 支中筛选)
+🤖 计算AI选股评分...
+✅ 评分完成，最高分: 85.0
+💾 保存最新數據 (前10支): ./sgx_picks_latest.json
+💾 保存歷史數據 (完整421支): ./history/sgx_picks_20260309.json
+📅 更新日期配置: ./sgx_date_config.js (共 2 天)
+✅ 處理完成! AI推薦 10 支股票 (前10名)
+📊 統計: 總股票 1219 -> 過濾後 421
+   - 停牌: 51
+   - Penny: 0
+   - 低量: 0
+============================================================
+✅ 所有處理完成！
+============================================================
+✅ SGX 數據已更新
+📋 同步文件到 docs/ 目錄...
+✅ 複製 HTML 到 docs/web/
+✅ 複製 picks_latest.json
+✅ 複製 date_config.js
+✅ 複製 Bursa 歷史數據
+✅ 複製 sgx_picks_latest.json
+✅ 複製 JS 文件
+📦 Git 操作...
+[master b31c39a] 每日EOD更新 - 20260309
+ 7 files changed, 26 insertions(+), 26 deletions(-)
+To https://github.com/bursasearch/myx_shop.git
+   6641852..b31c39a  master -> master
+✅ 推送完成
+🧹 清理暫存文件...
+📊 生成報告...
+✅ 報告已生成

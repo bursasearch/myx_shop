@@ -1,0 +1,188 @@
+📊 開始 EOD 處理...
+📅 日期: 20260310
+✅ 進入目錄: /storage/emulated/0/bursasearch/myx_shop
+📥 處理 Bursa EOD CSV...
+✅ 找到 Bursa CSV: /storage/emulated/0/eskay9761/stock_data/Myx_Data/EOD/20260310.csv
+📋 共有 30 只凭单在黑名单中
+
+======================================================================
+🚀 开始 AI 选股 - 2026-03-10 20:23:54
+======================================================================
+📁 加载文件: 20260310.csv
+✅ 使用编码: utf-8
+✅ 加载成功: 2680行 × 20列
+📋 列名: ['Code', 'Stock', 'Prv Close', 'High', 'Low', 'Last', 'Vol', 'Status', 'P/E', 'EPS*', 'MACD (26, 12)', 'Vol MA (20)', 'DY*', 'Y-Low', 'Y-High', 'RSI (14)', 'Open', 'Sector', 'Chg', 'B%']
+🤖 生成增强版AI推荐 (使用B%和技术指标)...
+📊 基础过滤后: 57 只股票（价格≥0.20，成交量≥100,000，B%≥50，排除高风险凭单）
+✅ 生成 15 个AI推荐
+
+📁 保存到主数据目录...
+✅ 主数据: /storage/emulated/0/bursasearch/myx_shop/web/picks_latest.json
+📚 历史记录: /storage/emulated/0/bursasearch/myx_shop/web/history/picks_20260310.json
+✅ 生成 date_config.js: 5 个历史日期
+
+📁 保存到 GitHub Pages 目录...
+✅ GitHub Pages: /storage/emulated/0/bursasearch/myx_shop/docs/web/picks_latest.json
+✅ 复制 bursa.html 到 docs/
+
+🔥 前5名推荐:
+1. 8664 SPSETIA - RM0.925 (得分: 96)
+   行业: Industrial & Consumer Products, B%: 61.0%, RSI: 50
+   B% 61.0%; RSI中性; MACD金叉
+2. 0652QE HSI-CWQE - RM0.43 (得分: 95)
+   行业: Technology, B%: 65.0%, RSI: 50
+   B% 65.0%; RSI中性
+3. 0652QB HSI-CWQB - RM0.51 (得分: 95)
+   行业: Technology, B%: 63.0%, RSI: 50
+   B% 63.0%; RSI中性
+4. 0248 YEWLEE - RM0.505 (得分: 93)
+   行业: Property, B%: 76.0%, RSI: 50
+   B% 76.0%; RSI中性; MACD金叉
+5. 2429 TANCO - RM1.53 (得分: 93)
+   行业: Industrial & Consumer Products, B%: 53.0%, RSI: 50
+   B% 53.0%; RSI中性; MACD金叉
+
+======================================================================
+✅ AI选股完成！
+======================================================================
+📁 输入文件: /storage/emulated/0/eskay9761/stock_data/Myx_Data/EOD/20260310.csv
+📊 处理股票数: 2680
+🎯 推荐股票数: 15
+
+📌 文件位置:
+   📁 主数据: /storage/emulated/0/bursasearch/myx_shop/web/picks_latest.json
+   📁 GitHub: /storage/emulated/0/bursasearch/myx_shop/docs/web/picks_latest.json
+   📁 历史记录: /storage/emulated/0/bursasearch/myx_shop/web/history/
+======================================================================
+
+👉 运行以下命令部署到 GitHub:
+   cd ~/bursasearch/myx_shop/docs
+   git add web/picks_latest.json
+   git commit -m "更新选股数据"
+   git push
+📥 處理 SGX EOD DAT...
+✅ 找到 SGX DAT: /storage/emulated/0/eskay9761/stock_data/SGX_Data/EOD/20260310.dat
+/storage/emulated/0/deepseek/sgx/sgx_eod_processor.py:163: UserWarning: Boolean Series key will be reindexed to match DataFrame index.
+  self.stats['penny_removed'] = len(df_filtered[~penny_mask]) if len(df_filtered) > 0 else 0
+/storage/emulated/0/deepseek/sgx/sgx_eod_processor.py:170: UserWarning: Boolean Series key will be reindexed to match DataFrame index.
+  self.stats['low_volume_removed'] = len(df_filtered[~volume_mask]) if len(df_filtered) > 0 else 0
+============================================================
+📈 SGX EOD 數據處理器 - 前10推薦版
+============================================================
+輸入: /storage/emulated/0/eskay9761/stock_data/SGX_Data/EOD/20260310.dat
+輸出: .
+閾值: SGD 0.2
+最小成交量: 10000 股
+推薦數量: 10 (只輸出前10名)
+------------------------------------------------------------
+
+🚀 开始处理: 20260310.dat
+📅 日期: 20260310
+📂 读取文件: /storage/emulated/0/eskay9761/stock_data/SGX_Data/EOD/20260310.dat
+✅ 读取成功，共 1221 行，17 欄位
+🧹 清洗数据...
+✅ 清洗完成，有效數據: 1207 行
+🔍 应用过滤条件 (股价 >= SGD 0.2)...
+   - 去除停牌股: 51 支
+   - 去除Penny Stocks (股价<0.2): 0 支
+   - 去除低成交量 (<10000股): 0 支
+✅ 过滤完成: 374 支股票 (从 1207 支中筛选)
+🤖 计算AI选股评分...
+✅ 评分完成，最高分: 85.0
+💾 保存最新數據 (前10支): ./sgx_picks_latest.json
+💾 保存歷史數據 (完整374支): ./history/sgx_picks_20260310.json
+📅 更新日期配置: ./sgx_date_config.js (共 3 天)
+✅ 處理完成! AI推薦 10 支股票 (前10名)
+📊 統計: 總股票 1221 -> 過濾後 374
+   - 停牌: 51
+   - Penny: 0
+   - 低量: 0
+============================================================
+✅ 所有處理完成！
+============================================================
+✅ SGX 數據已更新
+📋 同步文件到 docs/ 目錄...
+✅ 複製 HTML 到 docs/web/
+✅ 複製 picks_latest.json
+✅ 複製 date_config.js
+✅ 複製 Bursa 歷史數據
+✅ 複製 sgx_picks_latest.json
+✅ 複製 JS 文件
+📦 Git 操作...
+[master 43ae07a] 每日EOD更新 - 20260310
+ 10 files changed, 1210 insertions(+), 522 deletions(-)
+ create mode 100644 docs/web/history/picks_20260310.json
+ create mode 100644 web/history/picks_20260310.json
+To https://github.com/bursasearch/myx_shop.git
+   b31c39a..43ae07a  master -> master
+✅ 推送完成
+🧹 清理暫存文件...
+📊 生成報告...
+✅ 報告已生成
+📊 開始 EOD 處理...
+📅 日期: 20260310
+✅ 進入目錄: /storage/emulated/0/bursasearch/myx_shop
+📥 處理 Bursa EOD CSV...
+✅ 找到 Bursa CSV: /storage/emulated/0/eskay9761/stock_data/Myx_Data/EOD/20260310.csv
+  File "/storage/emulated/0/deepseek/bursa/eod_processor.py", line 438
+    return []
+    ^^^^^^^^^
+SyntaxError: 'return' outside function
+📥 處理 SGX EOD DAT...
+✅ 找到 SGX DAT: /storage/emulated/0/eskay9761/stock_data/SGX_Data/EOD/20260310.dat
+/storage/emulated/0/deepseek/sgx/sgx_eod_processor.py:163: UserWarning: Boolean Series key will be reindexed to match DataFrame index.
+  self.stats['penny_removed'] = len(df_filtered[~penny_mask]) if len(df_filtered) > 0 else 0
+/storage/emulated/0/deepseek/sgx/sgx_eod_processor.py:170: UserWarning: Boolean Series key will be reindexed to match DataFrame index.
+  self.stats['low_volume_removed'] = len(df_filtered[~volume_mask]) if len(df_filtered) > 0 else 0
+============================================================
+📈 SGX EOD 數據處理器 - 前10推薦版
+============================================================
+輸入: /storage/emulated/0/eskay9761/stock_data/SGX_Data/EOD/20260310.dat
+輸出: .
+閾值: SGD 0.2
+最小成交量: 10000 股
+推薦數量: 10 (只輸出前10名)
+------------------------------------------------------------
+
+🚀 开始处理: 20260310.dat
+📅 日期: 20260310
+📂 读取文件: /storage/emulated/0/eskay9761/stock_data/SGX_Data/EOD/20260310.dat
+✅ 读取成功，共 1221 行，17 欄位
+🧹 清洗数据...
+✅ 清洗完成，有效數據: 1207 行
+🔍 应用过滤条件 (股价 >= SGD 0.2)...
+   - 去除停牌股: 51 支
+   - 去除Penny Stocks (股价<0.2): 0 支
+   - 去除低成交量 (<10000股): 0 支
+✅ 过滤完成: 374 支股票 (从 1207 支中筛选)
+🤖 计算AI选股评分...
+✅ 评分完成，最高分: 85.0
+💾 保存最新數據 (前10支): ./sgx_picks_latest.json
+💾 保存歷史數據 (完整374支): ./history/sgx_picks_20260310.json
+📅 更新日期配置: ./sgx_date_config.js (共 3 天)
+✅ 處理完成! AI推薦 10 支股票 (前10名)
+📊 統計: 總股票 1221 -> 過濾後 374
+   - 停牌: 51
+   - Penny: 0
+   - 低量: 0
+============================================================
+✅ 所有處理完成！
+============================================================
+✅ SGX 數據已更新
+📋 同步文件到 docs/ 目錄...
+✅ 複製 HTML 到 docs/web/
+✅ 複製 picks_latest.json
+✅ 複製 date_config.js
+✅ 複製 Bursa 歷史數據
+✅ 複製 sgx_picks_latest.json
+✅ 複製 JS 文件
+📦 Git 操作...
+[master 5dd39a5] 每日EOD更新 - 20260310
+ 10 files changed, 440 insertions(+), 236 deletions(-)
+ create mode 100644 web/picks_latest.json.backup2
+To https://github.com/bursasearch/myx_shop.git
+   ef6a0c3..5dd39a5  master -> master
+✅ 推送完成
+🧹 清理暫存文件...
+📊 生成報告...
+✅ 報告已生成
