@@ -1,12 +1,84 @@
-// 自動生成的日期配置文件 - Bursa
+// 自动生成的历史日期列表
 window.availableDates = [
-    {id: '20260313', display: '2026-03-13', file: 'history/picks_20260313.json'},
-    {id: '20260312', display: '2026-03-12', file: 'history/picks_20260312.json'},
-    {id: '20260311', display: '2026-03-11', file: 'history/picks_20260311.json'},
-    {id: '20260310', display: '2026-03-10', file: 'history/picks_20260310.json'},
-    {id: '20260309', display: '2026-03-09', file: 'history/picks_20260309.json'},
-    {id: '20260308', display: '2026-03-08', file: 'history/picks_20260308.json'},
-    {id: '20260224', display: '2026-02-24', file: 'history/picks_20260224.json'},
-    {id: '20260223', display: '2026-02-23', file: 'history/picks_20260223.json'},
+  {
+    "id": "20260327",
+    "display": "2026-03-27",
+    "file": "history/picks_20260327.json"
+  },
+  {
+    "id": "20260326",
+    "display": "2026-03-26",
+    "file": "history/picks_20260326.json"
+  },
+  {
+    "id": "20260325",
+    "display": "2026-03-25",
+    "file": "history/picks_20260325.json"
+  },
+  {
+    "id": "20260324",
+    "display": "2026-03-24",
+    "file": "history/picks_20260324.json"
+  },
+  {
+    "id": "20260319",
+    "display": "2026-03-19",
+    "file": "history/picks_20260319.json"
+  },
+  {
+    "id": "20260318",
+    "display": "2026-03-18",
+    "file": "history/picks_20260318.json"
+  },
+  {
+    "id": "20260317",
+    "display": "2026-03-17",
+    "file": "history/picks_20260317.json"
+  },
+  {
+    "id": "20260316",
+    "display": "2026-03-16",
+    "file": "history/picks_20260316.json"
+  },
+  {
+    "id": "20260313",
+    "display": "2026-03-13",
+    "file": "history/picks_20260313.json"
+  },
+  {
+    "id": "20260312",
+    "display": "2026-03-12",
+    "file": "history/picks_20260312.json"
+  },
+  {
+    "id": "20260311",
+    "display": "2026-03-11",
+    "file": "history/picks_20260311.json"
+  },
+  {
+    "id": "20260310",
+    "display": "2026-03-10",
+    "file": "history/picks_20260310.json"
+  },
+  {
+    "id": "20260309",
+    "display": "2026-03-09",
+    "file": "history/picks_20260309.json"
+  },
+  {
+    "id": "20260308",
+    "display": "2026-03-08",
+    "file": "history/picks_20260308.json"
+  },
+  {
+    "id": "20260224",
+    "display": "2026-02-24",
+    "file": "history/picks_20260224.json"
+  },
+  {
+    "id": "20260223",
+    "display": "2026-02-23",
+    "file": "history/picks_20260223.json"
+  }
 ];
-window.latestDate = "20260313";
+window.latestDate = "20260327";
