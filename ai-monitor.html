@@ -439,12 +439,10 @@
         let aiStocks = [];
         let lastUpdateTime = '';
 
-        function openKLSEInApp(code) {
-            window.location.href = `klsescreener://stock/${code}`;
-            setTimeout(() => {
-                window.open(`https://www.klsescreener.com/v2/stocks/view/${code}`, '_blank');
-            }, 500);
-        }
+function viewStockDetails(code) {
+    event.stopPropagation();
+    window.open(`https://www.klsescreener.com/v2/stocks/view/${code}`, '_blank');
+}
 
         async function initDashboard() {
             try {
@@ -613,11 +611,6 @@
             a.click();
             document.body.removeChild(a);
             alert('✅ 参考文件已生成 (仅作学习用途)');
-        }
-
-        function viewStockDetails(code) {
-            event.stopPropagation();
-            window.open(`stock-detail.html?code=${code}`, '_blank');
         }
 
         function refreshData() { location.reload(); }
