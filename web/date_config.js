@@ -1,6 +1,46 @@
 // 自动生成的历史日期列表
 window.availableDates = [
   {
+    "id": "20260410",
+    "display": "2026-04-10",
+    "file": "history/picks_20260410.json"
+  },
+  {
+    "id": "20260407",
+    "display": "2026-04-07",
+    "file": "history/picks_20260407.json"
+  },
+  {
+    "id": "20260406",
+    "display": "2026-04-06",
+    "file": "history/picks_20260406.json"
+  },
+  {
+    "id": "20260403",
+    "display": "2026-04-03",
+    "file": "history/picks_20260403.json"
+  },
+  {
+    "id": "20260402",
+    "display": "2026-04-02",
+    "file": "history/picks_20260402.json"
+  },
+  {
+    "id": "20260401",
+    "display": "2026-04-01",
+    "file": "history/picks_20260401.json"
+  },
+  {
+    "id": "20260331",
+    "display": "2026-03-31",
+    "file": "history/picks_20260331.json"
+  },
+  {
+    "id": "20260330",
+    "display": "2026-03-30",
+    "file": "history/picks_20260330.json"
+  },
+  {
     "id": "20260327",
     "display": "2026-03-27",
     "file": "history/picks_20260327.json"
@@ -71,6 +111,11 @@ window.availableDates = [
     "file": "history/picks_20260308.json"
   },
   {
+    "id": "20260304",
+    "display": "2026-03-04",
+    "file": "history/picks_20260304.json"
+  },
+  {
     "id": "20260224",
     "display": "2026-02-24",
     "file": "history/picks_20260224.json"
@@ -81,4 +126,4 @@ window.availableDates = [
     "file": "history/picks_20260223.json"
   }
 ];
-window.latestDate = "20260327";
+window.latestDate = "20260410";
