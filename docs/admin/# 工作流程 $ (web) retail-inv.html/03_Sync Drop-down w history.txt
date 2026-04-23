@@ -1,0 +1,59 @@
+# 创建每日更新脚本
+cat > /storage/emulated/0/bursasearch/myx_shop/scripts/update_dates_daily.sh << 'EOF'
+#!/bin/bash
+# 每日更新日期列表
+
+cd /storage/emulated/0/bursasearch/myx_shop
+
+echo "📅 更新日期选择器列表"
+echo "时间: $(date '+%Y-%m-%d %H:%M:%S')"
+echo ""
+
+# 获取实际存在的日期文件
+echo "实际存在的文件："
+DATES_ARRAY=""
+for file in web/history/picks_*.json; do
+    if [ -f "$file" ]; then
+        DATE_NUM=$(basename "$file" | sed 's/picks_\(.*\)\.json/\1/')
+        # 转换格式：20251221 → 2025-12-21
+        YEAR=${DATE_NUM:0:4}
+        MONTH=${DATE_NUM:4:2}
+        DAY=${DATE_NUM:6:2}
+        DATE_STR="$YEAR-$MONTH-$DAY"
+        DATES_ARRAY="$DATES_ARRAY'$DATE_STR', "
+        echo "  ✅ $DATE_STR"
+    fi
+done
+
+# 移除最后的逗号和空格
+DATES_ARRAY=$(echo "$DATES_ARRAY" | sed 's/, $//')
+
+echo -e "\n生成的数组："
+echo "const availableDates = [$DATES_ARRAY];"
+
+# 更新HTML文件
+echo -e "\n🔧 更新retail-inv.html..."
+if [ -n "$DATES_ARRAY" ]; then
+    # 备份
+    cp web/retail-inv.html web/retail-inv.html.bak_$(date +%Y%m%d)
+    
+    # 替换日期数组
+    sed -i "s/const availableDates = \[.*\];/const availableDates = [$DATES_ARRAY];/" web/retail-inv.html
+    
+    echo "✅ 已更新日期列表"
+    echo "   添加了 $(echo "$DATES_ARRAY" | tr -cd "'" | wc -c) 个日期"
+else
+    echo "⚠️  没有找到历史文件"
+fi
+
+echo -e "\n📋 明日操作："
+echo "1. 运行EOD脚本生成新数据"
+echo "2. 运行此脚本更新日期列表："
+echo "   bash scripts/update_dates_daily.sh"
+echo "3. 推送到GitHub"
+EOF
+
+chmod +x /storage/emulated/0/bursasearch/myx_shop/scripts/update_dates_daily.sh
+
+echo "✅ 创建每日更新脚本"
+echo "文件: scripts/update_dates_daily.sh"

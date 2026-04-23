@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>家庭求助档案 · Myx Shop</title>
+    <!-- 使用与主站一致的风格 -->
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+        }
+        body {
+            background: #f5f7fa;
+            color: #1e293b;
+            line-height: 1.6;
+            padding: 2rem 1rem;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 24px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            overflow: hidden;
+            border: 1px solid #e9eef2;
+        }
+        .header {
+            background: linear-gradient(145deg, #0b2a4a, #123b66);
+            color: white;
+            padding: 2rem 2rem 1.5rem;
+        }
+        .header h1 {
+            font-size: 2rem;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            margin-bottom: 0.25rem;
+        }
+        .header .sub {
+            font-size: 1rem;
+            opacity: 0.85;
+            border-left: 3px solid #ffb347;
+            padding-left: 1rem;
+            margin-top: 0.5rem;
+        }
+        .badge {
+            background: #ffb34720;
+            color: #ffb347;
+            padding: 0.25rem 0.8rem;
+            border-radius: 40px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            display: inline-block;
+            border: 1px solid #ffb34740;
+            margin-top: 1rem;
+        }
+        .section {
+            padding: 2rem;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        .section:last-child {
+            border-bottom: none;
+        }
+        .section h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #0f2b42;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .section h2:before {
+            content: "●";
+            color: #ffb347;
+            font-size: 1.8rem;
+            line-height: 1;
+        }
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+        .info-card {
+            background: #f8fafc;
+            border-radius: 20px;
+            padding: 1.5rem;
+            border: 1px solid #dde3e9;
+        }
+        .info-card h3 {
+            font-weight: 600;
+            font-size: 1.2rem;
+            margin-bottom: 1.2rem;
+            color: #1e3a5f;
+            border-bottom: 2px solid #ffb34760;
+            padding-bottom: 0.5rem;
+        }
+        .info-row {
+            display: flex;
+            margin-bottom: 0.75rem;
+        }
+        .info-label {
+            width: 110px;
+            font-weight: 500;
+            color: #475569;
+        }
+        .info-value {
+            flex: 1;
+            font-weight: 500;
+        }
+        .evidence-box {
+            background: #fff9f0;
+            border-left: 4px solid #ffb347;
+            padding: 1.2rem 1.5rem;
+            border-radius: 12px;
+            margin: 1.5rem 0;
+        }
+        .btn {
+            background: #0b2a4a;
+            color: white;
+            border: none;
+            padding: 0.7rem 1.8rem;
+            border-radius: 40px;
+            font-weight: 500;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: 0.2s;
+            text-decoration: none;
+            display: inline-block;
+            border: 1px solid #0b2a4a;
+        }
+        .btn-outline {
+            background: transparent;
+            color: #0b2a4a;
+            border: 1px solid #0b2a4a;
+        }
+        .btn:hover {
+            background: #123b66;
+            border-color: #123b66;
+            color: white;
+        }
+        .timeline-item {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .timeline-date {
+            min-width: 110px;
+            font-weight: 600;
+            color: #ffb347;
+            background: #fff2df;
+            padding: 0.3rem 0.8rem;
+            border-radius: 30px;
+            text-align: center;
+            font-size: 0.9rem;
+            height: fit-content;
+        }
+        .timeline-desc {
+            background: #f1f5f9;
+            padding: 0.8rem 1.2rem;
+            border-radius: 16px;
+            flex: 1;
+        }
+        .highlight {
+            background: #fff2e0;
+            padding: 0.2rem 0.5rem;
+            border-radius: 12px;
+            font-weight: 500;
+            color: #b45b0f;
+        }
+        footer {
+            background: #f1f5f9;
+            padding: 1.5rem 2rem;
+            text-align: center;
+            color: #556b82;
+            font-size: 0.9rem;
+            border-top: 1px solid #dde3e9;
+        }
+        @media (max-width: 700px) {
+            .grid-2 { grid-template-columns: 1fr; }
+            .timeline-item { flex-direction: column; gap: 0.3rem; }
+            .timeline-date { text-align: left; }
+        }
+        .evidence-thumb {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            margin-top: 1rem;
+        }
+        .evidence-thumb span {
+            background: #eef2f6;
+            padding: 0.3rem 1rem;
+            border-radius: 30px;
+            font-size: 0.85rem;
+            border: 1px dashed #9aaebf;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h1>🛡️ 家庭援助 · 实况档案</h1>
+        <div class="sub">超过60岁 · 视障 · 妻子患癌 · 女儿心脏病 · 幼儿10岁</div>
+        <div class="badge">ID KES JKM: 831459 · 最后更新: 2026年3月</div>
+    </div>
+
+    <!-- 快速导航说明 -->
+    <div style="padding: 1rem 2rem 0; font-size:0.95rem; color:#3f5468;">
+        ⏱️ 本档案供 YB、JKM、媒体、NGO 快速核实。所有证据均有截图备查。
+    </div>
+
+    <!-- 1. 家庭成员概况 -->
+    <div class="section">
+        <h2>👥 家庭成员与健康状况</h2>
+        <div class="grid-2">
+            <div class="info-card">
+                <h3>👤 本人 (Wong Seng Koon)</h3>
+                <div class="info-row"><span class="info-label">年龄</span><span class="info-value">>60岁</span></div>
+                <div class="info-row"><span class="info-label">身体状况</span><span class="info-value">色盲 · 斜视 (OKU视觉障碍)</span></div>
+                <div class="info-row"><span class="info-label">工作能力</span><span class="info-value">受限制 — 曾因此离职 (Hitachi / 新加坡绘图)</span></div>
+                <div class="info-row"><span class="info-label">目前收入</span><span class="info-value">无固定收入，尝试小规模网店 (Myx Shop)</span></div>
+            </div>
+            <div class="info-card">
+                <h3>👩 妻子</h3>
+                <div class="info-row"><span class="info-label">诊断</span><span class="info-value"><strong>左側侵襲性乳癌</strong> (2024.3 化療+手術)</span></div>
+                <div class="info-row"><span class="info-label">术后状况</span><span class="info-value">帶引流管出院，需長期服藥 (Tramal止痛)</span></div>
+                <div class="info-row"><span class="info-label">追蹤</span><span class="info-value">Breast Clinic 定期複診</span></div>
+                <div style="margin-top:0.8rem;"><span class="highlight">📄 出院摘要 21-23/3/2024</span></div>
+            </div>
+            <div class="info-card">
+                <h3>👧 大女兒</h3>
+                <div class="info-row"><span class="info-label">诊断</span><span class="info-value"><strong>VSD 心臟病</strong> (心室中膈缺損)</span></div>
+                <div class="info-row"><span class="info-label">手術</span><span class="info-value">2018年於 IJN 手術</span></div>
+                <div class="info-row"><span class="info-label">現狀</span><span class="info-value">每年 IJN 複診，最近預約: 24/09/2026</span></div>
+                <div style="margin-top:0.8rem;"><span class="highlight">📱 IJNCare 預約截圖</span></div>
+            </div>
+            <div class="info-card">
+                <h3>👦 小兒子</h3>
+                <div class="info-row"><span class="info-label">年龄</span><span class="info-value">10歲</span></div>
+                <div class="info-row"><span class="info-label">就學</span><span class="info-value">小學在學</span></div>
+                <div class="info-row"><span class="info-label">備註</span><span class="info-value">需要照顧，妻子化療期間需額外支援</span></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. 现有援助与缺口 -->
+    <div class="section">
+        <h2>📦 目前已獲援助 vs 實際需要</h2>
+        <div class="grid-2" style="gap:1.5rem;">
+            <div style="background:#e6f7ec; border-radius:20px; padding:1.5rem;">
+                <h3 style="color:#1f7b4d;">✅ 每月獲得</h3>
+                <ul style="list-style-type: none; margin-top:1rem;">
+                    <li style="padding:0.4rem 0;">• Bantuan Kanak-Kanak (3孩) —— <strong>RM 600</strong></li>
+                    <li style="padding:0.4rem 0;">• mySARA —— <strong>RM 100</strong></li>
+                </ul>
+                <p style="margin-top:1rem; background: white; padding:0.8rem; border-radius:12px;">合計 <strong>RM 700 / 月</strong> 需養5人 + 醫療</p>
+            </div>
+            <div style="background:#fff0ed; border-radius:20px; padding:1.5rem;">
+                <h3 style="color:#b33c2b;">❌ 應得而未獲</h3>
+                <ul style="list-style-type: none; margin-top:1rem;">
+                    <li style="padding:0.4rem 0;">• Bantuan OKU (本人視障) —— RM 300–450</li>
+                    <li style="padding:0.4rem 0;">• Bantuan Pesakit Kronik (妻子癌症) —— 每月/一次性</li>
+                    <li style="padding:0.4rem 0;">• Bantuan Am (家庭貧困) —— 最高可達 RM 1000</li>
+                    <li style="padding:0.4rem 0;">• mySARA 應為 RM 200 (目前僅 RM 100)</li>
+                    <li style="padding:0.4rem 0;">• 交通/藥物補助 (IJN複診、化療)</li>
+                </ul>
+            </div>
+        </div>
+        <div class="evidence-box" style="margin-top:1.5rem;">
+            <strong>📌 合理訴求：</strong> mySARA 調至 RM 200，並立即審核 Bantuan OKU / Pesakit Kronik / Bantuan Am，補助癌症藥物與 IJN 交通。
+        </div>
+    </div>
+
+    <!-- 3. 申訴時間線 (證明已跑遍所有管道) -->
+    <div class="section">
+        <h2>⏳ 申訴與被忽視的記錄</h2>
+        <div class="timeline-item">
+            <div class="timeline-date">2025年9月19日</div>
+            <div class="timeline-desc"><strong>📧 寄給 NCBM (Majlis Buta)</strong> 及 MAB, PKOCM — 無具體回應</div>
+        </div>
+        <div class="timeline-item">
+            <div class="timeline-date">2025年12月31日</div>
+            <div class="timeline-desc"><strong>📬 追問 YB/Dato</strong> 「為何年底無任何行動」— 未獲答覆</div>
+        </div>
+        <div class="timeline-item">
+            <div class="timeline-date">2026年3月6日</div>
+            <div class="timeline-desc"><strong>📧 電郵 PKMD Melaka Tengah (ID 831459)</strong> 並CC 婦女部、Talian Kasih — 至今<strong>無回覆</strong></div>
+        </div>
+        <div class="timeline-item">
+            <div class="timeline-date">ADUN 辦公室</div>
+            <div class="timeline-desc"><strong>🗣️ 當面求助遭冷語</strong> 「Bantuan kerajaan bukan untuk bagi makan keluarga awak」 — 羞辱性回應</div>
+        </div>
+        <div class="timeline-item">
+            <div class="timeline-date">2026年2月 & 3月</div>
+            <div class="timeline-desc"><strong>📞 Talian Kasih 15999 / JKM</strong> 僅轉介，無實際行動</div>
+        </div>
+        <p style="margin-top:1rem; background:#f1f5f9; padding:1rem; border-radius:16px;">
+        🔍 <strong>ID KES JKM: 831459</strong> · 最後一次跟進：2026年3月6日至今靜默。
+        </p>
+    </div>
+
+    <!-- 4. 證據縮圖 (實際連結可替換為你的圖片網址) -->
+    <div class="section">
+        <h2>🖼️ 關鍵證據 (可點擊放大)</h2>
+        <div style="display: flex; flex-wrap: wrap; gap: 1.5rem;">
+            <div style="flex:1; min-width:200px;">
+                <div style="background:#eee; border-radius:16px; padding:1rem; text-align:center;">
+                    <div style="font-size:3rem;">🩺</div>
+                    <div><strong>出院摘要</strong> (乳癌·化療)</div>
+                    <div style="font-size:0.8rem; color:gray;">21-23/3/2024</div>
+                </div>
+            </div>
+            <div style="flex:1; min-width:200px;">
+                <div style="background:#eee; border-radius:16px; padding:1rem; text-align:center;">
+                    <div style="font-size:3rem;">❤️</div>
+                    <div><strong>IJN 預約</strong> (VSD 複診)</div>
+                    <div style="font-size:0.8rem; color:gray;">24/09/2026 9:20 AM</div>
+                </div>
+            </div>
+            <div style="flex:1; min-width:200px;">
+                <div style="background:#eee; border-radius:16px; padding:1rem; text-align:center;">
+                    <div style="font-size:3rem;">📧</div>
+                    <div><strong>電郵記錄</strong> (NCBM, JKM, YB)</div>
+                    <div style="font-size:0.8rem; color:gray;">19/9/25 · 6/3/26</div>
+                </div>
+            </div>
+        </div>
+        <div class="evidence-thumb">
+            <span>📸 Discharge note 21/3/24</span>
+            <span>📸 IJNCare 截圖 24/9/26</span>
+            <span>📸 Email to PKMD 6/3/26</span>
+            <span>📸 寄給 NCBM 19/9/25</span>
+            <span>📸 ADUN 回應文字紀錄</span>
+        </div>
+        <p style="margin-top:1.5rem;">※ 所有圖片因隱私僅供說明，必要時可提供完整版本。</p>
+    </div>
+
+    <!-- 5. 訴求總結 + 聯絡/分享按鈕 -->
+    <div class="section" style="background:#f2f7ff;">
+        <h2>📢 請協助我們</h2>
+        <p style="font-size:1.1rem;">我們不求特權，只求依法獲得應有的福利：</p>
+        <ul style="margin:1rem 0 1.5rem 2rem;">
+            <li>✔️ 重新審核 mySARA 從 RM 100 調至 RM 200</li>
+            <li>✔️ 批准 Bantuan OKU (本人視障) 及 Bantuan Pesakit Kronik (妻子癌症)</li>
+            <li>✔️ 追查 JKM 案件 ID 831459 為何長期不回應</li>
+            <li>✔️ 提供交通/藥物補貼 (IJN, 癌症藥物)</li>
+        </ul>
+        <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+            <a href="mailto:pkmd.mlktgh@jkm.gov.my?cc=nancy@women.gov.my,taliankasih@kpwkm.gov.my&subject=Kes%20Keluarga%20OKU%20Kanser%20VSD%20(ID%20831459)%20mohon%20semakan%20segera&body=Saya%20Wong%20Seng%20Koon%2C%20lebih%2060%20tahun%2C%20OKU%20penglihatan.%20Isteri%20kanser%2C%20anak%20VSD%2C%20anak%2010%20tahun.%20Telah%20laporkan%20kepada%20JKM%20(ID%20831459)%2C%20ADUN%2C%20NCBM%20tetapi%20tiada%20penyelesaian.%20Sila%20lihat%20butiran%20di%20https%3A%2F%2Fbursasearch.github.io%2Fmyx_shop%2Fappeal.html%20." class="btn">📨 直接寄信給 JKM + YB</a>
+            <a href="#" onclick="window.print();return false;" class="btn btn-outline">🖨️ 下載/列印本頁</a>
+        </div>
+        <p style="margin-top: 2rem; font-size:0.9rem;">🙏 如果您是媒體或 NGO，歡迎轉載本檔案。每一個分享都可能幫助一個被遺忘的家庭。</p>
+    </div>
+
+    <footer>
+        Myx Shop · SSM 202510210078 (JM1034075-K) · 本頁為真實求助檔案 · 最後更新 2026年3月
+    </footer>
+</div>
+
+<!-- 簡單 GA (保留主站的 GA 即可) -->
+</body>
+</html>

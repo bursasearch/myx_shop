@@ -1,0 +1,1033 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+   
+    <title>SGX AI投资计算器 - 新加坡交易所版</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* 基础样式保持不变，只修改主题色为新加坡风格 */
+        :root {
+            --primary: #E53E3E; /* 新加坡红 */
+            --primary-dark: #C53030;
+            --secondary: #4CAF50;
+            --warning: #FF9800;
+            --danger: #F44336;
+            --light: #F5F7FA;
+            --dark: #333333;
+            --gray: #666666;
+            --coffee: #FF9800;
+            --success: #4CAF50;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #E53E3E 0%, #9B2C2C 100%);
+            color: var(--dark); line-height: 1.5; min-height: 100vh;
+        }
+        .container {
+            width: 100%; max-width: 500px; margin: 0 auto; background: white;
+            min-height: 100vh; position: relative; box-shadow: 0 0 20px rgba(0,0,0,0.2);
+        }
+        .app-header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white; padding: 20px 15px; position: sticky; top: 0; z-index: 100;
+        }
+        .tab-bar {
+            display: flex; background: white; border-bottom: 1px solid var(--light);
+            position: sticky; top: 90px; z-index: 99;
+        }
+        .tab { flex: 1; padding: 15px; text-align: center; color: var(--gray); cursor: pointer; }
+        .tab.active { color: var(--primary); border-bottom: 3px solid var(--primary); font-weight: 600; }
+        .content { padding: 15px; }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; animation: fadeIn 0.3s ease; }
+        .card { background: white; border-radius: 12px; padding: 15px; margin-bottom: 15px; border: 1px solid var(--light); box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+        
+        .calculator-card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 15px;
+            border: 1px solid #e0e0e0;
+        }
+        
+        .section-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: var(--dark);
+            border-left: 4px solid var(--primary);
+            padding-left: 10px;
+        }
+        
+        .input-group {
+            margin-bottom: 15px;
+        }
+        
+        .input-label {
+            display: block;
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+        
+        .input-row {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .input-field {
+            flex: 1;
+        }
+        
+        .input-field input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+        
+        .input-field input:focus {
+            border-color: var(--primary);
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(229, 62, 62, 0.1);
+        }
+        
+        .info-text {
+            font-size: 12px;
+            color: #999;
+            margin-top: 5px;
+            display: block;
+        }
+        
+        .summary-box {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 10px;
+            text-align: center;
+            border: 1px solid #e9ecef;
+        }
+        
+        .summary-text {
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .summary-value {
+            font-size: 18px;
+            font-weight: bold;
+            color: var(--primary);
+            margin-top: 5px;
+        }
+        
+        .divider {
+            height: 1px;
+            background: #e0e0e0;
+            margin: 20px 0;
+        }
+        
+        .result-card {
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 20px;
+            border: 1px solid #d0d7e2;
+        }
+        
+        .result-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            align-items: center;
+        }
+        
+        .result-label {
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .result-value {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--dark);
+        }
+        
+        .profit-loss {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        
+        .profit {
+            background: #e8f5e9;
+            color: #2e7d32;
+        }
+        
+        .loss {
+            background: #ffebee;
+            color: #c62828;
+        }
+        
+        .total-row {
+            border-top: 2px solid #ddd;
+            padding-top: 10px;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+        
+        .footer-note {
+            text-align: center;
+            font-size: 11px;
+            color: #999;
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 1px solid #eee;
+        }
+        
+        .btn-calculate {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 15px;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-calculate:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(229, 62, 62, 0.3);
+        }
+        
+        .btn-calculate:active {
+            transform: translateY(0);
+        }
+        
+        .stock-card { 
+            border: 1px solid #eee; 
+            border-radius: 8px; 
+            padding: 12px; 
+            margin-bottom: 10px; 
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+        .stock-card:hover { 
+            background-color: #f9f9f9; 
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            transform: translateY(-2px);
+        }
+        .stock-card.clickable { 
+            border-left: 4px solid var(--primary); 
+        }
+        .stock-title { display: flex; justify-content: space-between; align-items: center; }
+        .stock-name { font-weight: bold; font-size: 16px; }
+        .stock-code { color: #666; font-size: 12px; background: #eee; padding: 2px 5px; border-radius: 4px; }
+        .badge-buy { background: #e8f5e9; color: #2e7d32; padding: 2px 8px; border-radius: 10px; font-size: 12px; font-weight: bold; }
+        
+        .support-panel {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            z-index: 1000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .support-panel > .card {
+            max-width: 300px;
+            animation: slideUp 0.3s ease;
+            position: relative;
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        
+        #coffee-btn {
+            transition: all 0.3s ease;
+        }
+        
+        #coffee-btn:hover {
+            background: #F57C00;
+            transform: scale(1.1);
+            box-shadow: 0 5px 15px rgba(255, 152, 0, 0.4);
+        }
+        
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: none;
+            border: none;
+            font-size: 20px;
+            color: #666;
+            cursor: pointer;
+            padding: 5px;
+        }
+        
+        .close-btn:hover {
+            color: var(--danger);
+        }
+        
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="app-header">
+            <div class="header-content">
+                <div class="app-title">SGX AI投资计算器</div>
+                <div style="font-size: 11px; opacity: 0.8; margin-top:5px;">📊 新加坡交易所 | 数据基于EOD分析</div>
+            </div>
+        </div>
+
+        <div class="tab-bar">
+            <div class="tab active" onclick="switchTab('stocks')">AI选股</div>
+            <div class="tab" onclick="switchTab('calculator')">计算器</div>
+            <div class="tab" onclick="switchTab('history')">历史数据</div>
+        </div>
+        
+        <div class="content">
+            <!-- AI选股页面 -->
+            <div id="stocks-tab" class="tab-content active">
+                <div class="card">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                        <h3 style="font-size: 16px; color: var(--primary);">
+                            <i class="fas fa-star"></i> 今日AI推荐 (SGX)
+                        </h3>
+                        <div style="font-size: 11px; color: #999;">点击股票卡片自动填充计算器</div>
+                    </div>
+                    <div id="latestStocksContainer">加载中...</div>
+                </div>
+            </div>
+
+            <!-- 计算器页面 - SGX版本 -->
+            <div id="calculator-tab" class="tab-content">
+                <div class="calculator-card">
+                    <div class="section-title">
+                        <i class="fas fa-chart-bar"></i> 股票信息
+                    </div>
+                    
+                    <div class="input-group">
+                        <label class="input-label">股票代码</label>
+                        <div class="input-field">
+                            <input type="text" id="stockCode" placeholder="例如: D05" oninput="updateCalculator()">
+                        </div>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label class="input-label">股票名称</label>
+                        <div class="input-field">
+                            <input type="text" id="stockName" placeholder="选择股票后自动填充" readonly style="background:#f5f5f5;">
+                        </div>
+                    </div>
+                    
+                    <div class="input-row">
+                        <div class="input-field">
+                            <label class="input-label">买入价 (SGD)</label>
+                            <input type="number" id="buyPrice" step="0.001" placeholder="0.000" oninput="updateCalculator()">
+                        </div>
+                        <div class="input-field">
+                            <label class="input-label">目标价 (SGD)</label>
+                            <input type="number" id="targetPrice" step="0.001" placeholder="0.000" oninput="updateCalculator()">
+                        </div>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label class="input-label">购买股数</label>
+                        <div class="input-field">
+                            <input type="number" id="stockLots" value="1000" min="100" step="100" oninput="updateCalculator()">
+                            <span class="info-text">SGX最小交易单位：100股</span>
+                        </div>
+                    </div>
+                    
+                    <div class="summary-box">
+                        <div class="summary-text">总股数</div>
+                        <div class="summary-value" id="totalShares">1,000 股</div>
+                        <div class="summary-text" style="margin-top:10px;">投资金额</div>
+                        <div class="summary-value" id="investmentAmount">SGD 0.00</div>
+                    </div>
+                    
+                    <div class="divider"></div>
+                    
+                    <div class="section-title">
+                        <i class="fas fa-calculator"></i> 交易费用 (SGX标准)
+                    </div>
+                    
+                    <div class="result-card">
+                        <div class="result-row">
+                            <span class="result-label">交易总值:</span>
+                            <span class="result-value" id="calcTotalValue">SGD 0.00</span>
+                        </div>
+                        <div class="result-row">
+                            <span class="result-label">佣金 (0.25% min SGD25):</span>
+                            <span class="result-value" id="calcBrokerFee">SGD 0.00</span>
+                        </div>
+                        <div class="result-row">
+                            <span class="result-label">清算费 (0.0325%):</span>
+                            <span class="result-value" id="calcClearingFee">SGD 0.00</span>
+                        </div>
+                        <div class="result-row">
+                            <span class="result-label">交易税 (0.0075%):</span>
+                            <span class="result-value" id="calcTradingTax">SGD 0.00</span>
+                        </div>
+                        <div class="result-row total-row">
+                            <span class="result-label">净投资总额:</span>
+                            <span class="result-value" id="calcNetInvestment" style="color:var(--danger);">SGD 0.00</span>
+                        </div>
+                    </div>
+                    
+                    <div class="divider"></div>
+                    
+                    <div class="section-title">
+                        <i class="fas fa-chart-line"></i> 投资回报分析
+                    </div>
+                    
+                    <div class="result-card">
+                        <div class="result-row">
+                            <span class="result-label">目标卖出总值:</span>
+                            <span class="result-value" id="targetTotalValue">SGD 0.00</span>
+                        </div>
+                        <div class="result-row">
+                            <span class="result-label">卖出费用:</span>
+                            <span class="result-value" id="sellCost">SGD 0.00</span>
+                        </div>
+                        <div class="result-row">
+                            <span class="result-label">净回酬:</span>
+                            <span class="result-value" id="netReturn">SGD 0.00</span>
+                        </div>
+                        <div class="result-row">
+                            <span class="result-label">回报率:</span>
+                            <span class="result-value">
+                                <span id="returnRate">0.00%</span>
+                                <span id="returnRateBadge" class="profit-loss profit" style="margin-left:10px; display:none;">+0.00%</span>
+                            </span>
+                        </div>
+                        <div class="result-row total-row">
+                            <span class="result-label">预计总利润:</span>
+                            <span class="result-value" id="totalProfit" style="color:var(--success);">SGD 0.00</span>
+                        </div>
+                    </div>
+                    
+                    <button class="btn-calculate" onclick="calculateFullInvestment()">
+                        <i class="fas fa-calculator"></i> 重新计算完整投资
+                    </button>
+                    
+                    <div class="footer-note">
+                        © 2025 SGX AI分析工具 | 基于EOD数据生成<br>
+                        数据源: 新加坡交易所公开数据 (仅供个人参考)<br>
+                        支持开发者 <i class="fas fa-mug-hot" style="color:var(--coffee);"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 历史数据页面 -->
+            <div id="history-tab" class="tab-content">
+                <div class="card">
+                    <div style="display: flex; gap:10px; margin-bottom: 15px; flex-wrap: wrap;">
+                        <select id="historyDateSelect" style="flex:1; padding:10px; border:1px solid #ddd; border-radius:5px;">
+                            <option value="">选择日期...</option>
+                        </select>
+                        <button onclick="loadSelectedHistory()" style="padding:10px 15px; background:var(--primary); color:white; border:none; border-radius:5px; cursor:pointer;">
+                            加载
+                        </button>
+                    </div>
+
+                    <!-- 提示信息 -->
+                    <div style="font-size:12px; color:#666; margin-bottom:10px; background:#f0f0f0; padding:5px 10px; border-radius:4px;">
+                        <i class="fas fa-info-circle"></i> 显示最新5个交易日数据（共<span id="totalHistoryDays">0</span>天历史）
+                    </div>
+                    
+                    <div style="font-size: 13px; color: #666; margin-bottom:15px;">
+                        显示日期: <span id="currentDateDisplay" style="font-weight:bold;">-</span> | 
+                        股票数量: <span id="currentStockCount" style="background:var(--primary); color:white; padding:2px 8px; border-radius:10px;">0</span>
+                    </div>
+
+                    <div id="historyStocksContainer">
+                        <p style="text-align:center; color:#999; padding:20px;">请选择日期加载数据</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 支持区域 -->
+    <div id="support-section" class="support-panel">
+        <div class="card">
+            <button class="close-btn" onclick="hideSupportSection()">
+                <i class="fas fa-times"></i>
+            </button>
+            
+            <div style="text-align:center; padding:15px; padding-top:25px;">
+                <div style="color:var(--coffee); font-size:20px; margin-bottom:10px;">
+                    <i class="fas fa-mug-hot"></i> 请我喝杯咖啡
+                </div>
+                <div style="color:#666; font-size:14px; margin-bottom:15px;">
+                    如果这个工具对您有帮助，欢迎支持一下
+                </div>
+                
+                <!-- Maybank QR Code (可替换为其他支付方式) -->
+                <div style="background:#f0f0f0; padding:15px; border-radius:8px; margin:0 auto 15px; width:220px;">
+                    <img src="images/maybank-qr.jpg" 
+                         alt="Maybank QR Pay" 
+                         style="width:100%; max-width:280px; height:auto; border-radius:10px; display:block; margin:0 auto;"
+                         onerror="showQRCodeError()">
+                </div>
+                
+                <!-- QR码加载失败提示 -->
+                <div id="maybank-error" style="color:#f44336; font-size:12px; display:none; padding:10px; background:#ffeaea; border-radius:5px; margin-bottom:15px;">
+                    <i class="fas fa-exclamation-circle"></i> QR码加载失败，请检查文件路径
+                </div>
+                
+                <!-- 简单说明 -->
+                <div style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:13px; margin-bottom:15px;">
+                    <div style="color:var(--primary); margin-bottom:5px;">
+                        <i class="fas fa-info-circle"></i> 使用说明：
+                    </div>
+                    <div style="font-size:12px; color:#666;">
+                        1. 使用Maybank App扫描QR码<br>
+                        2. 输入您想支持的金额<br>
+                        3. 确认转账即可
+                    </div>
+                </div>
+                
+                <!-- 感谢信息 -->
+                <div style="background:#e8f5e9; padding:10px; border-radius:6px; margin-top:10px;">
+                    <div style="color:#2e7d32; font-size:14px;">
+                        <i class="fas fa-heart"></i> 感谢您的支持！
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 固定位置的咖啡按钮 -->
+    <button id="coffee-btn" style="
+        position:fixed; 
+        bottom:80px; 
+        right:20px; 
+        z-index:999; 
+        background:#FF9800; 
+        color:white; 
+        border:none; 
+        border-radius:50%; 
+        width:50px; 
+        height:50px; 
+        font-size:20px; 
+        cursor:pointer;
+        box-shadow:0 3px 10px rgba(0,0,0,0.2);
+        display:flex;
+        align-items:center;
+        justify-content:center;">
+        <i class="fas fa-mug-hot"></i>
+    </button>
+
+    <!-- 测试按钮 -->
+    <button class="test-button" style="
+        position:fixed; 
+        bottom:20px; 
+        right:20px; 
+        z-index:999; 
+        background: var(--primary); 
+        color: white; 
+        border: none; 
+        border-radius: 50%; 
+        width: 50px; 
+        height: 50px; 
+        font-size: 12px; 
+        cursor: pointer;" 
+        onclick="testData()">
+        ✅ 测试
+    </button>
+
+    <script>
+        // ==================== 全局变量 ====================
+        window.allHistoryData = {};
+        window.availableDates = [];
+
+        // ==================== 根据当前文件位置自动检测基础路径 ====================
+        function getBasePath() {
+            const currentPath = window.location.pathname;
+            console.log('当前路径:', currentPath);
+            
+            // SGX版本的文件路径处理
+            if (currentPath.includes('/myx_shop/docs/web/sgx.html')) {
+                return '';
+            }
+            else if (currentPath.includes('/myx_shop/docs/sgx.html')) {
+                return 'web/';
+            }
+            else if (currentPath.includes('/myx_shop/sgx.html')) {
+                return 'web/';
+            }
+            else if (currentPath.includes('/myx_shop/web/sgx.html')) {
+                return '';
+            }
+            else {
+                return '';
+            }
+        }
+        const BASE_PATH = getBasePath();
+        console.log('基础路径设置为:', BASE_PATH);
+
+        // ==================== 初始化函数 ====================
+        async function initApp() {
+            try {
+                await loadDateConfig();
+                await loadLatestData();
+                await loadHistoryFromDirectory();
+            } catch (error) {
+                console.error("初始化失败:", error);
+                await loadHistoryFromDirectory();
+            }
+        }
+
+        // ==================== 加载日期配置 ====================
+        async function loadDateConfig() {
+            try {
+                const configUrl = 'sgx_date_config.js';
+                console.log('尝试加载日期配置:', configUrl);
+                const response = await fetch(configUrl);
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}`);
+                }
+
+                const script = document.createElement('script');
+                script.src = configUrl;
+                document.head.appendChild(script);
+
+                await new Promise(resolve => setTimeout(resolve, 200));
+
+                console.log('✅ 日期配置加载成功:', window.availableDates);
+                
+                if (window.availableDates) {
+                    // SGX版本可在此过滤不需要的日期
+                    window.availableDates = window.availableDates.filter(d => d.id !== '20260215');
+                }
+                
+                initDateSelector();
+
+            } catch (error) {
+                console.warn('⚠️ date_config.js加载失败:', error);
+                // SGX版本的硬编码日期（可根据实际数据调整）
+                window.availableDates = [
+                    {id: '20260216', display: '2026-02-16', file: '/web/history/picks_20260216.json'},
+                    {id: '20260213', display: '2026-02-13', file: '/web/history/picks_20260213.json'},
+                    {id: '20260212', display: '2026-02-12', file: '/web/history/picks_20260212.json'},
+                    {id: '20260211', display: '2026-02-11', file: '/web/history/picks_20260211.json'},
+                    {id: '20260210', display: '2026-02-10', file: '/web/history/picks_20260210.json'}
+                ];
+                
+                console.log('使用硬编码日期，共', window.availableDates.length, '天');
+                initDateSelector();
+            }
+        }
+        
+        // ==================== 加载最新数据 ====================
+        async function loadLatestData() {
+            try {
+                const latestUrl = 'sgx_picks_latest.json';
+                console.log('尝试加载最新数据:', latestUrl);
+                
+                const response = await fetch(latestUrl);
+                if (!response.ok) throw new Error(`HTTP ${response.status}`);
+                
+                const data = await response.json();
+                console.log('最新数据:', data);
+                
+                if (data && data.picks) {
+                    renderStockList(data.picks, 'latestStocksContainer', true);
+                    
+                    window.allHistoryData = window.allHistoryData || {};
+                    window.allHistoryData[data.date_id] = data;
+                    
+                    updateHistoryStats();
+                }
+                
+            } catch (error) {
+                console.error('加载最新数据失败:', error);
+                document.getElementById('latestStocksContainer').innerHTML = 
+                    `<div style="color:red; padding:20px;">❌ 加载失败: ${error.message}</div>`;
+            }
+        }
+
+        // ==================== 加载选中的历史数据 ====================
+        async function loadSelectedHistory() {
+            console.log('开始加载历史数据');
+            
+            const select = document.getElementById('historyDateSelect');
+            if (!select) {
+                console.log('找不到日期选择器');
+                return;
+            }
+            
+            const dateId = select.value;
+            console.log('选择的日期:', dateId);
+            
+            if (!dateId) {
+                console.log('未选择日期');
+                return;
+            }
+            
+            try {
+                const fileUrl = `history/sgx_picks_${dateId}.json`;
+                console.log('正在加载:', fileUrl);
+                
+                document.getElementById('historyStocksContainer').innerHTML = 
+                    '<p style="text-align:center; color:#999; padding:20px;">加载中...</p>';
+                
+                const response = await fetch(fileUrl);
+                console.log('响应状态:', response.status);
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}`);
+                }
+                
+                const data = await response.json();
+                console.log('数据接收成功, 股票数量:', data.picks ? data.picks.length : 0);
+                
+                document.getElementById('currentDateDisplay').textContent = data.date || dateId;
+                document.getElementById('currentStockCount').textContent = data.picks ? data.picks.length : 0;
+                
+                if (data.picks && data.picks.length > 0) {
+                    renderStockList(data.picks, 'historyStocksContainer', false);
+                } else {
+                    document.getElementById('historyStocksContainer').innerHTML = 
+                        '<p style="text-align:center; color:#999; padding:20px;">该日期没有股票数据</p>';
+                }
+                console.log('历史数据加载完成');
+                
+            } catch (error) {
+                console.error('加载失败:', error.message);
+                document.getElementById('historyStocksContainer').innerHTML = 
+                    `<p style="text-align:center; color:red; padding:20px;">加载失败: ${error.message}</p>`;
+            }
+        }
+
+        // ==================== 初始化日期选择器 ====================
+        function initDateSelector() {
+            const select = document.getElementById('historyDateSelect');
+            if (!select) return;
+            
+            select.innerHTML = '<option value="">选择日期...</option>';
+            
+            if (!window.availableDates || window.availableDates.length === 0) {
+                select.innerHTML = '<option value="">暂无历史数据</option>';
+                
+                const container = document.getElementById('historyStocksContainer');
+                if (container) {
+                    container.innerHTML = '<p style="text-align:center; color:#999; padding:20px;">暂无历史数据，请先加载最新数据</p>';
+                }
+                return;
+            }
+            
+            const sortedDates = [...window.availableDates].sort((a, b) => b.id.localeCompare(a.id));
+            
+            console.log('可用日期:', sortedDates.map(d => d.id));
+            
+            sortedDates.forEach(dateInfo => {
+                const opt = document.createElement('option');
+                opt.value = dateInfo.id;
+                opt.textContent = `${dateInfo.display}`;
+                select.appendChild(opt);
+            });
+            
+            if (sortedDates.length > 0) {
+                select.value = sortedDates[0].id;
+                loadSelectedHistory();
+            }
+        }
+
+        // ==================== 后备方案：直接探测历史文件 ====================
+        async function loadHistoryFromDirectory() {
+            console.log('尝试直接探测历史文件...');
+            
+            const knownDates = [
+                '20260216', '20260215', '20260213', '20260212',
+                '20260211', '20260210', '20260209',
+                '20260206', '20260205', '20260204', '20260202'
+            ];
+            
+            window.availableDates = [];
+            
+            for (const dateId of knownDates) {
+                try {
+                    const url = `/web/history/picks_${dateId}.json`;
+                    
+                    console.log(`检查文件: ${url}`);
+                    
+                    const controller = new AbortController();
+                    const timeoutId = setTimeout(() => controller.abort(), 1000);
+                    
+                    const response = await fetch(url, { signal: controller.signal });
+                    clearTimeout(timeoutId);
+                    
+                    if (response.ok) {
+                        const text = await response.text();
+                        if (text.trim().startsWith('{')) {
+                            window.availableDates.push({
+                                id: dateId,
+                                display: `${dateId.slice(0,4)}-${dateId.slice(4,6)}-${dateId.slice(6,8)}`,
+                                file: `/web/history/picks_${dateId}.json`
+                            });
+                            console.log(`✅ 发现历史: ${dateId}`);
+                        }
+                    }
+                } catch (e) {
+                    console.log(`❌ ${dateId} 不存在`);
+                }
+            }
+            
+            console.log(`📊 共发现 ${window.availableDates.length} 天历史数据`);
+            
+            if (window.availableDates.length === 0) {
+                console.log('使用硬编码日期作为后备');
+                window.availableDates = [
+                    {id: '20260216', display: '2026-02-16', file: '/web/history/picks_20260216.json'},
+                    {id: '20260215', display: '2026-02-15', file: '/web/history/picks_20260215.json'},
+                    {id: '20260213', display: '2026-02-13', file: '/web/history/picks_20260213.json'},
+                    {id: '20260212', display: '2026-02-12', file: '/web/history/picks_20260212.json'},
+                    {id: '20260211', display: '2026-02-11', file: '/web/history/picks_20260211.json'}
+                ];
+            }
+            
+            initDateSelector();
+        }
+        
+        // ==================== 更新历史数据统计 ====================
+        function updateHistoryStats() {
+            const totalDays = Object.keys(window.allHistoryData || {}).length;
+            const totalElem = document.getElementById('totalHistoryDays');
+            if (totalElem) totalElem.textContent = totalDays;
+        }
+
+        // ==================== 通用列表渲染函数 ====================
+        function renderStockList(stocks, containerId, isLatest = false) {
+            const container = document.getElementById(containerId);
+            
+            if (!stocks || stocks.length === 0) {
+                container.innerHTML = '<p style="text-align:center; color:#999; padding:20px;">暂无数据</p>';
+                return;
+            }
+             
+            let html = '';
+            stocks.forEach(stock => {
+                const sector = stock.sector_name || stock.sector || '其他';
+                const displayName = stock.name || '未知';
+                const safeName = displayName.replace(/'/g, "\\'");
+                const price = parseFloat(stock.current_price || stock.price || 0);
+
+                html += `
+                <div class="stock-card clickable" onclick="selectStockToCalculator('${safeName}', '${stock.code}', ${price})">
+                    <div class="stock-title">
+                        <span class="stock-name">${displayName}</span>
+                        <span class="stock-code">${stock.code}</span>
+                    </div>
+                    <div style="font-size:12px; color:#666; margin-top:4px;">
+                        板块: ${sector}
+                    </div>
+                    <div style="display:flex; justify-content:space-between; margin-top:8px; align-items:center;">
+                        <div style="color:var(--danger); font-weight:bold;">SGD ${price.toFixed(3)}</div>
+                        <div class="badge-buy">${stock.recommendation || '买入'}</div>
+                    </div>`;
+
+                if (isLatest) {
+                    html += `<div style="font-size:11px; color:#999; margin-top:5px;">点击计算交易成本 →</div>`;
+                } else {
+                    html += `<div style="font-size:11px; color:#999; margin-top:5px;">评分: ${stock.score || 'N/A'}</div>`;
+                }
+
+                html += `</div>`;
+            });
+            container.innerHTML = html;
+        }
+
+        // ==================== 选择股票到计算器 ====================
+        function selectStockToCalculator(name, code, price) {
+            document.getElementById('stockName').value = name;
+            document.getElementById('stockCode').value = code;
+            document.getElementById('buyPrice').value = price.toFixed(3);
+            
+            const targetPrice = (price * 1.1).toFixed(3);
+            document.getElementById('targetPrice').value = targetPrice;
+            
+            switchTab('calculator');
+            
+            setTimeout(() => {
+                calculateFullInvestment();
+            }, 50);
+        }
+
+        // ==================== 更新计算器实时显示 ====================
+        function updateCalculator() {
+            const buyPrice = parseFloat(document.getElementById('buyPrice').value) || 0;
+            const shares = parseFloat(document.getElementById('stockLots').value) || 0;
+            
+            // 更新总股数显示
+            document.getElementById('totalShares').textContent = shares.toLocaleString() + ' 股';
+            
+            // 计算投资金额
+            const investment = buyPrice * shares;
+            document.getElementById('investmentAmount').textContent = 'SGD ' + investment.toFixed(2);
+            
+            // 计算交易费用
+            calculateFees();
+        }
+        
+        // ==================== 计算SGX交易费用 ====================
+        function calculateFees() {
+            const buyPrice = parseFloat(document.getElementById('buyPrice').value) || 0;
+            const targetPrice = parseFloat(document.getElementById('targetPrice').value) || 0;
+            const shares = parseFloat(document.getElementById('stockLots').value) || 0;
+            
+            // 买入总值
+            const buyTotal = buyPrice * shares;
+            
+            // 佣金 (0.25% 最低 SGD 25)
+            let commission = buyTotal * 0.0025;
+            if (commission < 25) commission = 25;
+            
+            // 清算费 (0.0325%)
+            const clearingFee = buyTotal * 0.000325;
+            
+            // 交易税 (0.0075%)
+            const tradingTax = buyTotal * 0.000075;
+            
+            // 净投资总额
+            const netInvestment = buyTotal + commission + clearingFee + tradingTax;
+            
+            // 更新显示
+            document.getElementById('calcTotalValue').textContent = 'SGD ' + buyTotal.toFixed(2);
+            document.getElementById('calcBrokerFee').textContent = 'SGD ' + commission.toFixed(2);
+            document.getElementById('calcClearingFee').textContent = 'SGD ' + clearingFee.toFixed(2);
+            document.getElementById('calcTradingTax').textContent = 'SGD ' + tradingTax.toFixed(2);
+            document.getElementById('calcNetInvestment').textContent = 'SGD ' + netInvestment.toFixed(2);
+            
+            // 如果有目标价，计算卖出费用
+            if (targetPrice > 0) {
+                const sellTotal = targetPrice * shares;
+                
+                // 卖出佣金
+                let sellCommission = sellTotal * 0.0025;
+                if (sellCommission < 25) sellCommission = 25;
+                
+                // 卖出清算费
+                const sellClearingFee = sellTotal * 0.000325;
+                
+                // 卖出交易税
+                const sellTradingTax = sellTotal * 0.000075;
+                
+                // 总卖出费用
+                const totalSellCost = sellCommission + sellClearingFee + sellTradingTax;
+                
+                // 目标卖出总值
+                document.getElementById('targetTotalValue').textContent = 'SGD ' + sellTotal.toFixed(2);
+                document.getElementById('sellCost').textContent = 'SGD ' + totalSellCost.toFixed(2);
+                
+                // 净回酬 (卖出后净得)
+                const netReturn = sellTotal - totalSellCost;
+                document.getElementById('netReturn').textContent = 'SGD ' + netReturn.toFixed(2);
+                
+                // 总利润
+                const totalProfit = netReturn - netInvestment;
+                document.getElementById('totalProfit').textContent = 'SGD ' + totalProfit.toFixed(2);
+                
+                // 回报率
+                const returnRate = (totalProfit / netInvestment) * 100;
+                document.getElementById('returnRate').innerHTML = returnRate.toFixed(2) + '%';
+                
+                // 更新徽章
+                const badge = document.getElementById('returnRateBadge');
+                if (totalProfit > 0) {
+                    badge.className = 'profit-loss profit';
+                    badge.innerHTML = '+' + returnRate.toFixed(2) + '%';
+                    badge.style.display = 'inline-block';
+                } else if (totalProfit < 0) {
+                    badge.className = 'profit-loss loss';
+                    badge.innerHTML = returnRate.toFixed(2) + '%';
+                    badge.style.display = 'inline-block';
+                } else {
+                    badge.style.display = 'none';
+                }
+            }
+        }
+        
+        // ==================== 完整计算 ====================
+        function calculateFullInvestment() {
+            calculateFees();
+        }
+
+        // ==================== 切换标签页 ====================
+        function switchTab(tabName) {
+            // 隐藏所有标签页
+            document.querySelectorAll('.tab-content').forEach(el => {
+                el.classList.remove('active');
+            });
+            
+            // 显示选中的标签页
+            document.getElementById(tabName + '-tab').classList.add('active');
+            
+            // 更新标签按钮状态
+            document.querySelectorAll('.tab').forEach(el => {
+                el.classList.remove('active');
+            });
+            
+            // 找到对应的标签按钮并激活
+            const tabs = document.querySelectorAll('.tab');
+            const tabIndex = tabName === 'stocks' ? 0 : (tabName === 'calculator' ? 1 : 2);
+            if (tabs[tabIndex]) {
+                tabs[tabIndex].classList.add('active');
+            }
+        }
+
+        // ==================== 支持区域控制 ====================
+        document.getElementById('coffee-btn').addEventListener('click', function() {
+            document.getElementById('support-section').style.display = 'flex';
+        });
+        
+        function hideSupportSection() {
+            document.getElementById('support-section').style.display = 'none';
+        }
+        
+        function showQRCodeError() {
+            document.getElementById('maybank-error').style.display = 'block';
+        }
+
+        // ==================== 测试函数 ====================
+        function testData() {
+            console.log('测试数据加载');
+            alert('测试模式：尝试加载最新数据');
+            loadLatestData();
+        }
+
+        // ==================== 初始化应用 ====================
+        document.addEventListener('DOMContentLoaded', function() {
+            initApp();
+            
+            // 初始化计算器显示
+            updateCalculator();
+        });
+    </script>
+</body>
+</html>

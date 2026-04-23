@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>本地測試頁面</title>
+    <style>
+        body { font-family: Arial; padding: 20px; background: #f0f0f0; }
+        .env-box { 
+            background: white; 
+            border-radius: 8px; 
+            padding: 15px; 
+            margin-bottom: 20px;
+            border-left: 4px solid #2196F3;
+        }
+        .env-box.sgx { border-left-color: #E53E3E; }
+        .env-box.ai-monitor { border-left-color: #9C27B0; } /* 紫色表示AI监控 */
+        h2 { margin-top: 0; color: #333; }
+        .links { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px; }
+        .link-card {
+            background: white;
+            border-radius: 8px;
+            padding: 15px;
+            text-decoration: none;
+            color: #333;
+            border: 1px solid #ddd;
+            transition: all 0.3s;
+            position: relative;
+        }
+        .link-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        .link-card .path { font-size: 12px; color: #666; margin-top: 5px; }
+        .badge {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            margin-left: 8px;
+        }
+        .badge.local { background: #4CAF50; color: white; }
+        .badge.remote { background: #FF9800; color: white; }
+        .badge.ai { background: #9C27B0; color: white; } /* AI监控专属徽章 */
+        .section-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        .section-title h2 {
+            margin: 0;
+        }
+        .icon {
+            font-size: 24px;
+        }
+        .note {
+            font-size: 12px;
+            color: #666;
+            margin-top: 5px;
+            padding: 5px;
+            background: #f9f9f9;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <h1>📊 本地測試環境</h1>
+    <p>選擇要預覽的頁面：</p>
+
+    <!-- Bursa Malaysia 部分 - 添加 ai-monitor -->
+    <div class="env-box">
+        <div class="section-title">
+            <span class="icon">🇲🇾</span>
+            <h2>Bursa Malaysia</h2>
+        </div>
+        
+        <div class="links">
+            <!-- Bursa 生產版 -->
+            <a href="web/bursa.html" class="link-card">
+                <div style="font-weight: bold;">
+                    Bursa 生產版 
+                    <span class="badge remote">docs/web/</span>
+                </div>
+                <div class="path">/web/bursa.html</div>
+                <div style="font-size:11px; color:#999; margin-top:8px;">模擬 GitHub Pages 環境</div>
+            </a>
+            
+            <!-- Bursa 開發版 -->
+            <a href="web/bursa.html" class="link-card">
+                <div style="font-weight: bold;">
+                    Bursa 開發版 
+                    <span class="badge local">web/</span>
+                </div>
+                <div class="path">/web/bursa.html</div>
+                <div style="font-size:11px; color:#999; margin-top:8px;">本地開發版本</div>
+            </a>
+
+            <!-- Bursa AI 監控 - 生產版 (新添加) -->
+            <a href="docs/web/ai-monitor.html" class="link-card">
+                <div style="font-weight: bold;">
+                    Bursa AI監控 生產版 
+                    <span class="badge remote">docs/web/</span>
+                    <span class="badge ai">AI</span>
+                </div>
+                <div class="path">/docs/web/ai-monitor.html</div>
+                <div style="font-size:11px; color:#999; margin-top:8px;">AI選股監控面板 (生產)</div>
+            </a>
+
+            <!-- Bursa AI 監控 - 開發版 (新添加) -->
+            <a href="web/ai-monitor.html" class="link-card">
+                <div style="font-weight: bold;">
+                    Bursa AI監控 開發版 
+                    <span class="badge local">web/</span>
+                    <span class="badge ai">AI</span>
+                </div>
+                <div class="path">/web/ai-monitor.html</div>
+                <div style="font-size:11px; color:#999; margin-top:8px;">AI選股監控面板 (開發)</div>
+            </a>
+        </div>
+        <div class="note">
+            <i class="fas fa-info-circle"></i> AI監控面板顯示實時選股評分和推薦
+        </div>
+    </div>
+
+    <!-- SGX Singapore 部分 - 添加 ai-monitor -->
+    <div class="env-box sgx">
+        <div class="section-title">
+            <span class="icon">🇸🇬</span>
+            <h2>SGX Singapore</h2>
+        </div>
+        
+        <div class="links">
+            <!-- SGX 生產版 -->
+            <a href="docs/web/sgx.html" class="link-card">
+                <div style="font-weight: bold;">
+                    SGX 生產版 
+                    <span class="badge remote">docs/web/</span>
+                </div>
+                <div class="path">/docs/web/sgx.html</div>
+                <div style="font-size:11px; color:#999; margin-top:8px;">模擬 GitHub Pages 環境</div>
+            </a>
+            
+            <!-- SGX 開發版 -->
+            <a href="web/sgx.html" class="link-card">
+                <div style="font-weight: bold;">
+                    SGX 開發版 
+                    <span class="badge local">web/</span>
+                </div>
+                <div class="path">/web/sgx.html</div>
+                <div style="font-size:11px; color:#999; margin-top:8px;">本地開發版本</div>
+            </a>
+
+            <!-- SGX AI 監控 - 生產版 (新添加) -->
+            <a href="docs/web/ai-monitor.html" class="link-card">
+                <div style="font-weight: bold;">
+                    SGX AI監控 生產版 
+                    <span class="badge remote">docs/web/</span>
+                    <span class="badge ai">AI</span>
+                </div>
+                <div class="path">/docs/web/ai-monitor.html</div>
+                <div style="font-size:11px; color:#999; margin-top:8px;">AI選股監控面板 (生產)</div>
+            </a>
+
+            <!-- SGX AI 監控 - 開發版 (新添加) -->
+            <a href="web/ai-monitor.html" class="link-card">
+                <div style="font-weight: bold;">
+                    SGX AI監控 開發版 
+                    <span class="badge local">web/</span>
+                    <span class="badge ai">AI</span>
+                </div>
+                <div class="path">/web/ai-monitor.html</div>
+                <div style="font-size:11px; color:#999; margin-top:8px;">AI選股監控面板 (開發)</div>
+            </a>
+        </div>
+        <div class="note">
+            <i class="fas fa-info-circle"></i> SGX版本AI監控，包含新加坡交易所數據
+        </div>
+    </div>
+
+    <!-- 快速訪問區域 -->
+    <div style="margin-top: 30px; padding: 15px; background: #e3f2fd; border-radius: 8px;">
+        <h3>🚀 快速訪問 AI 監控</h3>
+        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+            <a href="docs/web/ai-monitor.html" style="background: #9C27B0; color: white; padding: 10px 20px; border-radius: 5px; text-decoration: none;">
+                <i class="fas fa-chart-line"></i> Bursa AI監控 (生產)
+            </a>
+            <a href="web/ai-monitor.html" style="background: #7B1FA2; color: white; padding: 10px 20px; border-radius: 5px; text-decoration: none;">
+                <i class="fas fa-code"></i> Bursa AI監控 (開發)
+            </a>
+            <a href="docs/web/sgx-ai-monitor.html" style="background: #E53E3E; color: white; padding: 10px 20px; border-radius: 5px; text-decoration: none;">
+                <i class="fas fa-chart-line"></i> SGX AI監控 (生產)
+            </a>
+            <a href="web/sgx-ai-monitor.html" style="background: #C53030; color: white; padding: 10px 20px; border-radius: 5px; text-decoration: none;">
+                <i class="fas fa-code"></i> SGX AI監控 (開發)
+            </a>
+        </div>
+    </div>
+    
+    <!-- 目錄結構說明 -->
+    <div style="margin-top: 30px; padding: 15px; background: #fff3e0; border-radius: 8px;">
+        <h3>📁 目錄結構（更新版）：</h3>
+        <pre style="background: #f5f5f5; padding: 10px; border-radius: 5px; overflow-x: auto;">
+myx_shop/
+├── docs/                    # GitHub Pages 版本
+│   ├── bursa.html          # Bursa 主頁面
+│   ├── sgx.html             # SGX 主頁面
+│   ├── ai-monitor.html      # Bursa AI監控 (新增)
+│   ├── sgx-ai-monitor.html  # SGX AI監控 (新增)
+│   └── web/
+│       ├── picks_latest.json
+│       ├── sgx_picks_latest.json
+│       └── history/
+│           ├── picks_*.json
+│           └── sgx_picks_*.json
+├── web/                     # 本地開發版本
+│   ├── bursa.html
+│   ├── sgx.html
+│   ├── ai-monitor.html      # Bursa AI監控開發版
+│   ├── sgx-ai-monitor.html  # SGX AI監控開發版
+│   ├── picks_latest.json
+│   ├── sgx_picks_latest.json
+│   └── history/
+│       ├── picks_*.json
+│       └── sgx_picks_*.json
+└── local_test.html          # 這個測試頁面
+        </pre>
+    </div>
+    
+    <!-- 使用說明 -->
+    <div style="margin-top: 20px; padding: 15px; background: #e8f5e8; border-radius: 8px;">
+        <h3>📌 使用說明：</h3>
+        <ul style="margin: 10px 0 0 20px;">
+            <li><strong>生產版 (docs/web/)</strong> - 模擬 GitHub Pages 環境，路徑與實際部署一致</li>
+            <li><strong>開發版 (web/)</strong> - 本地開發版本，便於調試和修改</li>
+            <li><strong>AI監控</strong> - 紫色徽章標記，包含實時AI選股評分和監控面板</li>
+            <li>點擊連結即可在當前窗口打開對應頁面</li>
+        </ul>
+    </div>
+
+    <!-- Font Awesome 圖標庫（用於圖標顯示） -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>
+        // 顯示當前訪問路徑
+        console.log('當前路徑:', window.location.href);
+        
+        // 添加路徑檢測，如果文件不存在給出提示
+        document.querySelectorAll('.link-card').forEach(link => {
+            link.addEventListener('click', function(e) {
+                const href = this.getAttribute('href');
+                // 這只是一個友好提示，不會阻止跳轉
+                console.log('正在訪問:', href);
+            });
+        });
+
+        // 檢測是否為本地開發環境
+        if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+            console.log('🌍 本地開發環境');
+        }
+    </script>
+</body>
+</html>

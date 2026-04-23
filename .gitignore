@@ -1,0 +1,6 @@
+# 備份 .gitignore
+cp .gitignore .gitignore.bak
+
+# 編輯 .gitignore，註解掉或刪除相關規則
+nano .gitignore
+# 允許 JSON 數據文件

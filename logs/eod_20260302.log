@@ -1,0 +1,317 @@
+📊 開始 EOD 處理...
+✅ 進入目錄: /storage/emulated/0/bursasearch/myx_shop
+📥 處理 Bursa EOD CSV...
+⚠️ 找不到 Bursa CSV 文件
+📥 處理 SGX EOD DAT...
+⚠️ 找不到 SGX DAT 文件
+📋 同步文件到 docs/ 目錄...
+✅ 複製 HTML 到 docs/web/
+✅ 複製 HTML 到 docs/
+✅ 複製 picks_latest.json
+✅ 複製 date_config.js
+✅ 複製 Bursa 歷史數據
+✅ 複製 sgx_date_config.js
+✅ 複製 JS 文件
+📦 Git 操作...
+[master 112be5e] 每日EOD更新 - 20260302
+ 280 files changed, 1611 insertions(+), 98811 deletions(-)
+ delete mode 100644 docs/bursa - Backup.html
+ delete mode 100644 "docs/docs/admin/# \345\267\245\344\275\234\346\265\201\347\250\213 $ (web) retail-inv.html/03_Sync Drop-down w history.txt"
+ delete mode 100644 docs/docs/admin/admin_ai_picker.html
+ delete mode 100644 docs/docs/admin/admin_vehicles.html
+ delete mode 100644 docs/docs/admin/customers - Samples.json
+ delete mode 100644 docs/docs/admin/customers.json
+ delete mode 100644 docs/docs/admin/images/customer/Ba Xa_compressed.jpg
+ delete mode 100644 docs/docs/admin/images/customer/Eskay_compressed.jpg
+ delete mode 100644 docs/docs/admin/images/customer/GenX Truck_compressed.jpg
+ delete mode 100644 docs/docs/admin/images/customer/JianGuan Plaster Ceiling_compressed.jpg
+ delete mode 100644 docs/docs/admin/images/customer/Joanne Gan_compressed.jpg
+ delete mode 100644 docs/docs/admin/images/customer/ThuyBinh_compressed.jpg
+ delete mode 100644 docs/docs/admin/images/customer/Thuydan_compressed.jpg
+ delete mode 100644 docs/docs/admin/images_compressor - Backup.html
+ delete mode 100644 docs/docs/admin/images_compressor.html
+ delete mode 100644 docs/docs/admin/messages.json
+ delete mode 100644 docs/docs/admin/messages_ori.json
+ delete mode 100644 docs/docs/admin/push_ads - Backup.htm
+ delete mode 100644 docs/docs/admin/push_ads-ori.html
+ delete mode 100644 docs/docs/admin/push_ads.htm
+ delete mode 100644 docs/docs/admin/qr_creator.html
+ delete mode 100644 docs/docs/admin/shopee_adapter.py
+ delete mode 100644 docs/docs/admin/shopee_adapter_fixed.py
+ delete mode 100644 docs/docs/admin/shopee_dashboard.html
+ delete mode 100644 docs/docs/admin/shopee_dashboard.html.backup
+ delete mode 100644 docs/docs/admin/shopee_products.json
+ delete mode 100644 docs/docs/admin/shopee_simple.html
+ delete mode 100644 docs/docs/admin/test_admin.html
+ delete mode 100644 docs/docs/bursa.html
+ delete mode 100644 docs/docs/docs/ABC1111.html
+ delete mode 100644 docs/docs/docs/ABC1234.html
+ delete mode 100644 docs/docs/docs/ABC1234A.html
+ delete mode 100644 docs/docs/docs/DEPLOYMENT.md
+ delete mode 100644 docs/docs/docs/DEPLOYMENT_README.txt
+ delete mode 100644 docs/docs/docs/DEPLOYMENT_REPORT.md
+ delete mode 100644 "docs/docs/docs/admin/# \345\267\245\344\275\234\346\265\201\347\250\213 $ (web) retail-inv.html/03_Sync Drop-down w history.txt"
+ delete mode 100644 docs/docs/docs/admin/admin_ai_picker.html
+ delete mode 100644 docs/docs/docs/admin/admin_vehicles.html
+ delete mode 100644 docs/docs/docs/admin/customers - Samples.json
+ delete mode 100644 docs/docs/docs/admin/customers.json
+ delete mode 100644 docs/docs/docs/admin/images/customer/Ba Xa_compressed.jpg
+ delete mode 100644 docs/docs/docs/admin/images/customer/Eskay_compressed.jpg
+ delete mode 100644 docs/docs/docs/admin/images/customer/GenX Truck_compressed.jpg
+ delete mode 100644 docs/docs/docs/admin/images/customer/JianGuan Plaster Ceiling_compressed.jpg
+ delete mode 100644 docs/docs/docs/admin/images/customer/Joanne Gan_compressed.jpg
+ delete mode 100644 docs/docs/docs/admin/images/customer/ThuyBinh_compressed.jpg
+ delete mode 100644 docs/docs/docs/admin/images/customer/Thuydan_compressed.jpg
+ delete mode 100644 docs/docs/docs/admin/images_compressor - Backup.html
+ delete mode 100644 docs/docs/docs/admin/images_compressor.html
+ delete mode 100644 docs/docs/docs/admin/messages.json
+ delete mode 100644 docs/docs/docs/admin/messages_ori.json
+ delete mode 100644 docs/docs/docs/admin/push_ads - Backup.htm
+ delete mode 100644 docs/docs/docs/admin/push_ads-ori.html
+ delete mode 100644 docs/docs/docs/admin/push_ads.htm
+ delete mode 100644 docs/docs/docs/admin/qr_creator.html
+ delete mode 100644 docs/docs/docs/admin/shopee_adapter.py
+ delete mode 100644 docs/docs/docs/admin/shopee_adapter_fixed.py
+ delete mode 100644 docs/docs/docs/admin/shopee_dashboard.html
+ delete mode 100644 docs/docs/docs/admin/shopee_dashboard.html.backup
+ delete mode 100644 docs/docs/docs/admin/shopee_products.json
+ delete mode 100644 docs/docs/docs/admin/shopee_simple.html
+ delete mode 100644 docs/docs/docs/admin/test_admin.html
+ delete mode 100644 docs/docs/docs/ai-monitor.html
+ delete mode 100644 docs/docs/docs/bursa.html
+ delete mode 100644 docs/docs/docs/images/maybank-qr.jpg
+ delete mode 100644 docs/docs/docs/images/maybank-qr.jpg_spare
+ delete mode 100644 docs/docs/docs/images/myx_shop.png
+ delete mode 100644 docs/docs/docs/images/products/shopee/sh-31_1111.jpg
+ delete mode 100644 docs/docs/docs/images/products/shopee/sh-41_1111.jpg
+ delete mode 100644 docs/docs/docs/images/products/shopee/sh-51_1111.jpg
+ delete mode 100644 docs/docs/docs/images/products/shopee/sh-61_1111.png
+ delete mode 100644 docs/docs/docs/images/products/shopee/sh-61_1112.png
+ delete mode 100644 docs/docs/docs/images/products/shopee/sh-61_1113.png
+ delete mode 100644 docs/docs/docs/images/tng-qr.jpg
+ delete mode 100644 docs/docs/docs/images/vehicles/ABC1111/cover.jpg
+ delete mode 100644 docs/docs/docs/images/vehicles/ABC1111/internal_01.jpg
+ delete mode 100644 docs/docs/docs/images/vehicles/ABC1111/internal_02.jpg
+ delete mode 100644 docs/docs/docs/images/vehicles/ABC1111/rear.jpg
+ delete mode 100644 docs/docs/docs/images/vehicles/ABC1111/side_01.jpg
+ delete mode 100644 docs/docs/docs/images/vehicles/ABC1111/side_02.jpg
+ delete mode 100644 docs/docs/docs/images/vehicles/ABC1234/cover.jpg
+ delete mode 100644 docs/docs/docs/images/vehicles/ABC1234/internal_01.jpg
+ delete mode 100644 docs/docs/docs/images/vehicles/ABC1234/internal_02.jpg
+ delete mode 100644 docs/docs/docs/images/vehicles/ABC1234/rear.jpg
+ delete mode 100644 docs/docs/docs/images/vehicles/ABC1234/side_02.jpg
+ delete mode 100644 docs/docs/docs/images/vehicles/ABC1234A/cover.jpg
+ delete mode 100644 docs/docs/docs/images/vehicles/ABC1234A/internal_01.jpg
+ delete mode 100644 docs/docs/docs/images/vehicles/ABC1234A/internal_02.jpg
+ delete mode 100644 docs/docs/docs/images/vehicles/ABC1234A/rear.jpg
+ delete mode 100644 docs/docs/docs/images/vehicles/ABC1234A/side_01.jpg
+ delete mode 100644 docs/docs/docs/images/vehicles/ABC1234A/side_02.jpg
+ delete mode 100644 docs/docs/docs/index.html
+ delete mode 100644 docs/docs/docs/index.html.bak
+ delete mode 100644 docs/docs/docs/js/activation-local.js
+ delete mode 100644 docs/docs/docs/js/activation-simple.js
+ delete mode 100644 docs/docs/docs/js/google-sheet-integration.js
+ delete mode 100644 docs/docs/docs/js/shopee_list.json
+ delete mode 100644 docs/docs/docs/products.html
+ delete mode 100644 docs/docs/docs/version.txt
+ delete mode 100644 docs/docs/docs/web/README.md
+ delete mode 100644 docs/docs/docs/web/all_history.js
+ delete mode 100644 docs/docs/docs/web/bursa.html
+ delete mode 100644 docs/docs/docs/web/bursa.html.backup
+ delete mode 100644 docs/docs/docs/web/bursa.html.backup4
+ delete mode 100644 docs/docs/docs/web/bursa.html.backup5
+ delete mode 100644 docs/docs/docs/web/bursa.html.backup7
+ delete mode 100644 docs/docs/docs/web/bursa.html.backup8
+ delete mode 100644 docs/docs/docs/web/bursa.html.simple
+ delete mode 100644 docs/docs/docs/web/data.json
+ delete mode 100644 docs/docs/docs/web/date_config.js
+ delete mode 100644 docs/docs/docs/web/history/picks_20260202.json
+ delete mode 100644 docs/docs/docs/web/history/picks_20260204.json
+ delete mode 100644 docs/docs/docs/web/history/picks_20260205.json
+ delete mode 100644 docs/docs/docs/web/history/picks_20260206.json
+ delete mode 100644 docs/docs/docs/web/history/picks_20260209.json
+ delete mode 100644 docs/docs/docs/web/history/picks_20260210.json
+ delete mode 100644 docs/docs/docs/web/history/picks_20260211.json
+ delete mode 100644 docs/docs/docs/web/history/picks_20260212.json
+ delete mode 100644 docs/docs/docs/web/history/picks_20260213.json
+ delete mode 100644 docs/docs/docs/web/history/picks_20260216.json
+ delete mode 100644 docs/docs/docs/web/history/picks_20260219.json
+ delete mode 100644 docs/docs/docs/web/history/picks_20260220.json
+ delete mode 100644 docs/docs/docs/web/history/picks_20260221.json
+ delete mode 100644 docs/docs/docs/web/history/picks_20260223.json
+ delete mode 100644 docs/docs/docs/web/history/picks_20260224.json
+ delete mode 100644 docs/docs/docs/web/history/picks_20260225.json
+ delete mode 100644 docs/docs/docs/web/images/maybank-qr.jpg
+ delete mode 100644 docs/docs/docs/web/images/tng-qr.jpg
+ delete mode 100644 docs/docs/docs/web/index.html
+ delete mode 100644 docs/docs/docs/web/latest_price.json
+ delete mode 100644 docs/docs/docs/web/picks_history.js
+ delete mode 100644 docs/docs/docs/web/picks_history_backup.js
+ delete mode 100644 docs/docs/docs/web/picks_latest.csv
+ delete mode 100644 docs/docs/docs/web/picks_latest.json
+ delete mode 100644 docs/docs/docs/web/picks_latest.json.json
+ delete mode 100644 docs/docs/docs/web/simple_data.js
+ delete mode 100644 docs/docs/docs/web/sync_info.json
+ delete mode 100644 docs/docs/docs/web/version.txt
+ delete mode 100644 docs/docs/docs/web/warrant_check.json
+ delete mode 100644 docs/docs/docs/web/web_data.json
+ delete mode 100644 docs/docs/images/maybank-qr.jpg
+ delete mode 100644 docs/docs/images/maybank-qr.jpg_spare
+ delete mode 100644 docs/docs/images/myx_shop.png
+ delete mode 100644 docs/docs/images/products/shopee/sh-31_1111.jpg
+ delete mode 100644 docs/docs/images/products/shopee/sh-41_1111.jpg
+ delete mode 100644 docs/docs/images/products/shopee/sh-51_1111.jpg
+ delete mode 100644 docs/docs/images/products/shopee/sh-61_1111.png
+ delete mode 100644 docs/docs/images/products/shopee/sh-61_1112.png
+ delete mode 100644 docs/docs/images/products/shopee/sh-61_1113.png
+ delete mode 100644 docs/docs/images/tng-qr.jpg
+ delete mode 100644 docs/docs/images/vehicles/ABC1111/cover.jpg
+ delete mode 100644 docs/docs/images/vehicles/ABC1111/internal_01.jpg
+ delete mode 100644 docs/docs/images/vehicles/ABC1111/internal_02.jpg
+ delete mode 100644 docs/docs/images/vehicles/ABC1111/rear.jpg
+ delete mode 100644 docs/docs/images/vehicles/ABC1111/side_01.jpg
+ delete mode 100644 docs/docs/images/vehicles/ABC1111/side_02.jpg
+ delete mode 100644 docs/docs/images/vehicles/ABC1234/cover.jpg
+ delete mode 100644 docs/docs/images/vehicles/ABC1234/internal_01.jpg
+ delete mode 100644 docs/docs/images/vehicles/ABC1234/internal_02.jpg
+ delete mode 100644 docs/docs/images/vehicles/ABC1234/rear.jpg
+ delete mode 100644 docs/docs/images/vehicles/ABC1234/side_02.jpg
+ delete mode 100644 docs/docs/images/vehicles/ABC1234A/cover.jpg
+ delete mode 100644 docs/docs/images/vehicles/ABC1234A/internal_01.jpg
+ delete mode 100644 docs/docs/images/vehicles/ABC1234A/internal_02.jpg
+ delete mode 100644 docs/docs/images/vehicles/ABC1234A/rear.jpg
+ delete mode 100644 docs/docs/images/vehicles/ABC1234A/side_01.jpg
+ delete mode 100644 docs/docs/images/vehicles/ABC1234A/side_02.jpg
+ delete mode 100644 docs/docs/index.html
+ delete mode 100644 docs/docs/index.html.bak
+ delete mode 100644 docs/docs/js/activation-local.js
+ delete mode 100644 docs/docs/js/activation-simple.js
+ delete mode 100644 docs/docs/js/google-sheet-integration.js
+ delete mode 100644 docs/docs/js/shopee_list.json
+ delete mode 100644 docs/docs/klse-guide.html
+ delete mode 100644 docs/docs/lazada.html
+ delete mode 100644 docs/docs/real-estate.html
+ delete mode 100644 docs/docs/shopee.html
+ delete mode 100644 docs/docs/shopee.html.backup
+ delete mode 100644 docs/docs/stock-detail.html
+ delete mode 100644 docs/docs/temu.html
+ delete mode 100644 docs/docs/test_ai_scores.html
+ delete mode 100644 docs/docs/vehicles.html
+ delete mode 100644 docs/docs/vehicles_notice.html
+ delete mode 100644 docs/docs/verification.html
+ delete mode 100644 docs/docs/version.txt
+ delete mode 100644 docs/docs/web/README.md
+ delete mode 100644 docs/docs/web/all_history.js
+ delete mode 100644 docs/docs/web/bursa.html
+ delete mode 100644 docs/docs/web/bursa.html.backup
+ delete mode 100644 docs/docs/web/bursa.html.backup4
+ delete mode 100644 docs/docs/web/bursa.html.backup5
+ delete mode 100644 docs/docs/web/bursa.html.backup7
+ delete mode 100644 docs/docs/web/bursa.html.backup8
+ delete mode 100644 docs/docs/web/bursa.html.simple
+ delete mode 100644 docs/docs/web/data.json
+ delete mode 100644 docs/docs/web/date_config.js
+ delete mode 100644 docs/docs/web/history/picks_20260202.json
+ delete mode 100644 docs/docs/web/history/picks_20260204.json
+ delete mode 100644 docs/docs/web/history/picks_20260205.json
+ delete mode 100644 docs/docs/web/history/picks_20260206.json
+ delete mode 100644 docs/docs/web/history/picks_20260209.json
+ delete mode 100644 docs/docs/web/history/picks_20260210.json
+ delete mode 100644 docs/docs/web/history/picks_20260211.json
+ delete mode 100644 docs/docs/web/history/picks_20260212.json
+ delete mode 100644 docs/docs/web/history/picks_20260213.json
+ delete mode 100644 docs/docs/web/history/picks_20260216.json
+ delete mode 100644 docs/docs/web/history/picks_20260219.json
+ delete mode 100644 docs/docs/web/history/picks_20260220.json
+ delete mode 100644 docs/docs/web/history/picks_20260221.json
+ delete mode 100644 docs/docs/web/history/picks_20260223.json
+ delete mode 100644 docs/docs/web/history/picks_20260224.json
+ delete mode 100644 docs/docs/web/history/picks_20260225.json
+ delete mode 100644 docs/docs/web/history/picks_20260226.json
+ delete mode 100644 docs/docs/web/images/maybank-qr.jpg
+ delete mode 100644 docs/docs/web/images/tng-qr.jpg
+ delete mode 100644 docs/docs/web/index.html
+ delete mode 100644 docs/docs/web/latest_price.json
+ delete mode 100644 docs/docs/web/picks_history.js
+ delete mode 100644 docs/docs/web/picks_history_backup.js
+ delete mode 100644 docs/docs/web/picks_latest.csv
+ delete mode 100644 docs/docs/web/picks_latest.json
+ delete mode 100644 docs/docs/web/picks_latest.json.json
+ delete mode 100644 docs/docs/web/simple_data.js
+ delete mode 100644 docs/docs/web/sync_info.json
+ delete mode 100644 docs/docs/web/version.txt
+ delete mode 100644 docs/docs/web/warrant_check.json
+ delete mode 100644 docs/docs/web/web_data.json
+ rename docs/{docs/docs/index - Backup.html => index - Backup - Copy.html} (100%)
+ delete mode 100644 docs/index - Backup.html
+ create mode 100644 docs/index - Backup_1.html
+ delete mode 100644 docs/index.html.bak
+ delete mode 100644 docs/sgx - Backup.html
+ rename docs/{docs => web}/ABC1111.html (100%)
+ rename docs/{docs => web}/ABC1234.html (100%)
+ rename docs/{docs => web}/ABC1234A.html (100%)
+ rename docs/{docs => web}/DEPLOYMENT.md (100%)
+ rename docs/{docs => web}/DEPLOYMENT_README.txt (100%)
+ rename docs/{docs => web}/DEPLOYMENT_REPORT.md (100%)
+ rename docs/{docs/ai-monitor.html => web/ai-monitor - Backup.html} (100%)
+ create mode 100644 docs/web/api_test.html
+ delete mode 100644 docs/web/bursa - Backup.html
+ rename docs/{docs => web}/copy_list.txt (100%)
+ delete mode 100644 docs/web/history/picks_20260202.json
+ delete mode 100644 docs/web/history/picks_20260204.json
+ delete mode 100644 docs/web/history/picks_20260205.json
+ delete mode 100644 docs/web/history/picks_20260206.json
+ delete mode 100644 docs/web/history/picks_20260209.json
+ delete mode 100644 docs/web/history/picks_20260210.json
+ delete mode 100644 docs/web/history/picks_20260211.json
+ delete mode 100644 docs/web/history/picks_20260212.json
+ delete mode 100644 docs/web/history/picks_20260213.json
+ delete mode 100644 docs/web/history/picks_20260216.json
+ delete mode 100644 docs/web/history/picks_20260219.json
+ delete mode 100644 docs/web/history/picks_20260220.json
+ delete mode 100644 docs/web/history/picks_20260221.json
+ delete mode 100644 docs/web/history/sgx_picks_20260226.json
+ delete mode 100644 docs/web/images/maybank-qr.jpg
+ delete mode 100644 docs/web/images/tng-qr.jpg
+ rename docs/{docs/index - Backup.html => web/index - Backup - Copy.html} (100%)
+ create mode 100644 docs/web/index - Backup_1.html
+ rename docs/{docs/docs => web}/klse-guide.html (100%)
+ rename docs/{docs/docs => web}/lazada.html (100%)
+ create mode 100644 docs/web/local_test - Backup.html
+ create mode 100644 docs/web/local_test.html
+ rename docs/{docs => web}/products.html (99%)
+ rename docs/{docs/docs => web}/real-estate.html (100%)
+ rename docs/{docs/docs => web}/shopee.html (100%)
+ rename docs/{docs/docs => web}/shopee.html.backup (100%)
+ rename docs/{docs/docs => web}/stock-detail.html (100%)
+ rename docs/{docs/docs => web}/temu.html (100%)
+ rename docs/{docs/docs => web}/test_ai_scores.html (100%)
+ rename docs/{docs/docs => web}/vehicles.html (100%)
+ rename docs/{docs/docs => web}/vehicles_notice.html (100%)
+ rename docs/{docs/docs => web}/verification.html (100%)
+ delete mode 100644 docs/web/web/history/picks_20260227.json
+To https://github.com/bursasearch/myx_shop.git
+   60a3159..112be5e  master -> master
+✅ 推送完成
+🧹 清理暫存文件...
+📊 生成報告...
+✅ 報告已生成
+📊 開始 EOD 處理...
+✅ 進入目錄: /storage/emulated/0/bursasearch/myx_shop
+📥 處理 Bursa EOD CSV...
+⚠️ 找不到 Bursa CSV 文件
+📥 處理 SGX EOD DAT...
+⚠️ 找不到 SGX DAT 文件
+📋 同步文件到 docs/ 目錄...
+✅ 複製 HTML 到 docs/web/
+✅ 複製 HTML 到 docs/
+✅ 複製 picks_latest.json
+✅ 複製 date_config.js
+✅ 複製 Bursa 歷史數據
+✅ 複製 sgx_date_config.js
+✅ 複製 JS 文件
+📦 Git 操作...
+ℹ️ 沒有新的變更
+🧹 清理暫存文件...
+📊 生成報告...
+✅ 報告已生成

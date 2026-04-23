@@ -1,0 +1,303 @@
+# 在根目錄創建 api_test.html
+cat > /storage/emulated/0/bursasearch/myx_shop/api_test.html << 'EOF'
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API 路徑測試工具</title>
+    <style>
+        body { font-family: Arial; padding: 20px; background: #f0f0f0; }
+        .container { max-width: 800px; margin: 0 auto; }
+        .card { 
+            background: white; 
+            border-radius: 8px; 
+            padding: 15px; 
+            margin-bottom: 15px;
+            border-left: 4px solid #2196F3;
+        }
+        .card.success { border-left-color: #4CAF50; }
+        .card.error { border-left-color: #f44336; }
+        h2 { margin-top: 0; }
+        .path { 
+            background: #f5f5f5; 
+            padding: 10px; 
+            border-radius: 4px;
+            font-family: monospace;
+            word-break: break-all;
+        }
+        .status {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        .status.success { background: #4CAF50; color: white; }
+        .status.error { background: #f44336; color: white; }
+        .status.pending { background: #FF9800; color: white; }
+        button {
+            background: #2196F3;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+        button:hover { background: #1976D2; }
+        pre {
+            background: #2d2d2d;
+            color: #fff;
+            padding: 10px;
+            border-radius: 4px;
+            overflow-x: auto;
+            max-height: 300px;
+        }
+        .summary {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .stat-box {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .stat-number {
+            font-size: 24px;
+            font-weight: bold;
+            color: #2196F3;
+        }
+        .test-btn {
+            background: #9C27B0;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔍 API 路徑測試工具</h1>
+        <p>測試日期: <span id="currentDate"></span></p>
+        
+        <!-- 統計摘要 -->
+        <div class="summary">
+            <div class="stat-box">
+                <div class="stat-number" id="totalTests">0</div>
+                <div>總測試數</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-number" id="successCount">0</div>
+                <div>成功</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-number" id="failCount">0</div>
+                <div>失敗</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-number" id="stockCount">0</div>
+                <div>股票數量</div>
+            </div>
+        </div>
+        
+        <!-- 快速測試按鈕 -->
+        <div style="margin-bottom: 20px;">
+            <button onclick="testAllPaths()">🧪 測試所有路徑</button>
+            <button onclick="testLatestData()">📊 測試最新數據</button>
+            <button onclick="checkHistoryFiles()">📁 檢查歷史文件</button>
+            <button class="test-btn" onclick="testBursaAPI()">🇲🇾 測試 Bursa API</button>
+            <button class="test-btn" onclick="testSGXAPI()">🇸🇬 測試 SGX API</button>
+        </div>
+        
+        <!-- 路徑測試結果將顯示在這裡 -->
+        <div id="results"></div>
+    </div>
+
+    <script>
+        const currentDate = new Date().toISOString().slice(0,10).replace(/-/g, '');
+        document.getElementById('currentDate').textContent = currentDate;
+        
+        // 要測試的所有路徑
+        const testPaths = [
+            // Bursa 歷史數據路徑
+            { name: 'Bursa Web History', path: `web/history/picks_${currentDate}.json` },
+            { name: 'Bursa Docs Web History', path: `docs/web/web/history/picks_${currentDate}.json` },
+            { name: 'Bursa Root History', path: `history/picks_${currentDate}.json` },
+            
+            // SGX 歷史數據路徑
+            { name: 'SGX Web History', path: `web/history/sgx_picks_${currentDate}.json` },
+            { name: 'SGX Docs History', path: `docs/history/sgx_picks_${currentDate}.json` },
+            
+            // 最新數據路徑
+            { name: 'Bursa Latest', path: 'web/picks_latest.json' },
+            { name: 'SGX Latest', path: 'web/sgx_picks_latest.json' },
+            { name: 'Docs Bursa Latest', path: 'docs/web/picks_latest.json' },
+            { name: 'Docs SGX Latest', path: 'docs/web/sgx_picks_latest.json' },
+            
+            // 配置文件
+            { name: 'Date Config', path: 'web/date_config.js' },
+            { name: 'SGX Date Config', path: 'web/sgx_date_config.js' }
+        ];
+        
+        let successCount = 0;
+        let failCount = 0;
+        
+        async function testPath(pathInfo) {
+            const card = document.createElement('div');
+            card.className = 'card pending';
+            card.innerHTML = `
+                <div style="display: flex; justify-content: space-between;">
+                    <strong>${pathInfo.name}</strong>
+                    <span class="status pending">測試中...</span>
+                </div>
+                <div class="path">${pathInfo.path}</div>
+                <div id="result-${pathInfo.name.replace(/\s/g,'')}"></div>
+            `;
+            document.getElementById('results').appendChild(card);
+            
+            try {
+                const response = await fetch(pathInfo.path);
+                const resultDiv = document.getElementById(`result-${pathInfo.name.replace(/\s/g,'')}`);
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    card.className = 'card success';
+                    card.querySelector('.status').className = 'status success';
+                    card.querySelector('.status').textContent = '✅ 成功';
+                    
+                    let stockInfo = '';
+                    if (data.picks) {
+                        stockInfo = `<br>📊 股票數量: ${data.picks.length}`;
+                        if (data.picks.length > 0) {
+                            stockInfo += `<br>🏆 最高分: ${data.picks[0].code} (${data.picks[0].total_score || data.picks[0].score})`;
+                        }
+                    }
+                    
+                    resultDiv.innerHTML = `
+                        <div style="font-size: 12px; color: #4CAF50;">
+                            狀態: ${response.status}<br>
+                            類型: ${response.headers.get('content-type')}<br>
+                            大小: ${response.headers.get('content-length') || '未知'} bytes
+                            ${stockInfo}
+                        </div>
+                    `;
+                    
+                    successCount++;
+                    if (data.picks) updateStockCount(data.picks.length);
+                } else {
+                    card.className = 'card error';
+                    card.querySelector('.status').className = 'status error';
+                    card.querySelector('.status').textContent = '❌ 失敗';
+                    resultDiv.innerHTML = `<div style="color: #f44336;">錯誤: ${response.status} ${response.statusText}</div>`;
+                    failCount++;
+                }
+            } catch (error) {
+                card.className = 'card error';
+                card.querySelector('.status').className = 'status error';
+                card.querySelector('.status').textContent = '❌ 錯誤';
+                document.getElementById(`result-${pathInfo.name.replace(/\s/g,'')}`).innerHTML = 
+                    `<div style="color: #f44336;">網絡錯誤: ${error.message}</div>`;
+                failCount++;
+            }
+            
+            updateStats();
+        }
+        
+        function updateStats() {
+            document.getElementById('totalTests').textContent = successCount + failCount;
+            document.getElementById('successCount').textContent = successCount;
+            document.getElementById('failCount').textContent = failCount;
+        }
+        
+        function updateStockCount(count) {
+            const current = parseInt(document.getElementById('stockCount').textContent) || 0;
+            document.getElementById('stockCount').textContent = Math.max(current, count);
+        }
+        
+        async function testAllPaths() {
+            document.getElementById('results').innerHTML = '';
+            successCount = 0;
+            failCount = 0;
+            document.getElementById('stockCount').textContent = '0';
+            
+            for (const path of testPaths) {
+                await testPath(path);
+                await new Promise(resolve => setTimeout(resolve, 100));
+            }
+        }
+        
+        async function testLatestData() {
+            document.getElementById('results').innerHTML = '';
+            successCount = 0;
+            failCount = 0;
+            
+            const latestPaths = testPaths.filter(p => p.name.includes('Latest'));
+            for (const path of latestPaths) {
+                await testPath(path);
+            }
+        }
+        
+        async function checkHistoryFiles() {
+            document.getElementById('results').innerHTML = '';
+            successCount = 0;
+            failCount = 0;
+            
+            // 檢查過去7天的歷史文件
+            const dates = [];
+            for (let i = 0; i < 7; i++) {
+                const d = new Date();
+                d.setDate(d.getDate() - i);
+                const dateStr = d.toISOString().slice(0,10).replace(/-/g, '');
+                dates.push(dateStr);
+            }
+            
+            for (const date of dates) {
+                await testPath({
+                    name: `歷史數據 ${date}`,
+                    path: `web/history/picks_${date}.json`
+                });
+            }
+        }
+        
+        async function testBursaAPI() {
+            document.getElementById('results').innerHTML = '';
+            successCount = 0;
+            failCount = 0;
+            
+            const bursaPaths = testPaths.filter(p => 
+                p.name.includes('Bursa') || p.name.includes('Date Config')
+            );
+            
+            for (const path of bursaPaths) {
+                await testPath(path);
+            }
+        }
+        
+        async function testSGXAPI() {
+            document.getElementById('results').innerHTML = '';
+            successCount = 0;
+            failCount = 0;
+            
+            const sgxPaths = testPaths.filter(p => 
+                p.name.includes('SGX') || p.name.includes('SGX Date')
+            );
+            
+            for (const path of sgxPaths) {
+                await testPath(path);
+            }
+        }
+        
+        // 自動執行基本測試
+        window.onload = () => {
+            testAllPaths();
+        };
+    </script>
+</body>
+</html>
+EOF
+
+echo "✅ API測試頁面已創建在根目錄"
+echo "訪問: http://localhost:5050/api_test.html"

@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8" />
+  <title>Shopee 产品管理 - API版</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Segoe UI', Arial, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; padding: 20px; }
+    .container { max-width: 1400px; margin: 0 auto; }
+    
+    /* API状态指示器 */
+    .api-status {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      padding: 10px 15px;
+      border-radius: 25px;
+      color: white;
+      font-size: 12px;
+      font-weight: 500;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.3s;
+    }
+    .api-status.connected {
+      background: linear-gradient(135deg, #4CAF50 0%, #2E7D32 100%);
+    }
+    .api-status.disconnected {
+      background: linear-gradient(135deg, #FF5252 0%, #D32F2F 100%);
+    }
+    .api-status.connecting {
+      background: linear-gradient(135deg, #FF9800 0%, #F57C00 100%);
+    }
+    
+    /* API配置面板 */
+    .api-config {
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 10px;
+      padding: 15px;
+      margin-bottom: 15px;
+      border-left: 4px solid #667eea;
+      display: none;
+    }
+    .api-config.show {
+      display: block;
+    }
+    .api-config label {
+      font-size: 12px;
+      color: #666;
+      display: block;
+      margin-bottom: 5px;
+    }
+    .api-config input {
+      width: 100%;
+      padding: 8px 12px;
+      border: 2px solid #e0e0e0;
+      border-radius: 6px;
+      font-size: 14px;
+      margin-bottom: 10px;
+    }
+    .api-config input:focus {
+      border-color: #667eea;
+      outline: none;
+    }
+    
+    /* 头部 */
+    .header { background: white; padding: 25px; border-radius: 15px; margin-bottom: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+    .header h1 { color: #333; margin-bottom: 15px; font-size: 28px; }
+    .header h1 i { color: #ff6b6b; margin-right: 10px; }
+    
+    /* 统计卡片 */
+    .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin: 20px 0; }
+    .stat-card { background: #f8f9fa; padding: 20px; border-radius: 10px; border-left: 5px solid #4CAF50; }
+    .stat-card h3 { color: #666; font-size: 14px; margin-bottom: 10px; }
+    .stat-card .number { font-size: 32px; font-weight: bold; color: #333; }
+    
+    /* 按钮 */
+    .btn { padding: 12px 24px; border: none; border-radius: 8px; cursor: pointer; font-size: 14px; font-weight: 500; transition: all 0.3s; display: inline-flex; align-items: center; gap: 8px; }
+    .btn:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
+    .btn-primary { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; }
+    .btn-success { background: linear-gradient(135deg, #4CAF50 0%, #2E7D32 100%); color: white; }
+    .btn-warning { background: linear-gradient(135deg, #FF9800 0%, #F57C00 100%); color: white; }
+    .btn-danger { background: linear-gradient(135deg, #FF5252 0%, #D32F2F 100%); color: white; }
+    .btn-info { background: linear-gradient(135deg, #2196F3 0%, #0D47A1 100%); color: white; }
+    
+    /* 添加产品表单 */
+    .add-form { background: white; padding: 25px; border-radius: 15px; margin-bottom: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+    .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
+    .form-group label { display: block; margin-bottom: 8px; color: #555; font-weight: 500; }
+    .form-group input, .form-group select { width: 100%; padding: 12px; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 14px; transition: border 0.3s; }
+    .form-group input:focus, .form-group select:focus { border-color: #667eea; outline: none; }
+    
+    /* 产品卡片网格 */
+    .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 25px; }
+    .product-card { background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 5px 20px rgba(0,0,0,0.1); transition: all 0.3s; }
+    .product-card:hover { transform: translateY(-5px); box-shadow: 0 15px 30px rgba(0,0,0,0.2); }
+    .product-image { width: 100%; height: 200px; object-fit: cover; }
+    .product-info { padding: 20px; }
+    .product-name { font-size: 18px; font-weight: 600; color: #333; margin-bottom: 10px; }
+    .product-price { font-size: 24px; font-weight: bold; color: #4CAF50; margin-bottom: 10px; }
+    .product-details { display: flex; justify-content: space-between; color: #666; font-size: 14px; margin-bottom: 15px; }
+    .product-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+    
+    /* 搜索框 */
+    .search-box { position: relative; margin-bottom: 25px; }
+    .search-box input { width: 100%; padding: 15px 20px 15px 50px; border: 2px solid #e0e0e0; border-radius: 50px; font-size: 16px; background: white url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%23666' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='11' cy='11' r='8'%3E%3C/circle%3E%3Cline x1='21' y1='21' x2='16.65' y2='16.65'%3E%3C/line%3E%3C/svg%3E") no-repeat 20px center; }
+    .search-box input:focus { border-color: #667eea; outline: none; }
+    
+    /* 消息提示 */
+    .message { position: fixed; top: 20px; right: 20px; padding: 15px 25px; border-radius: 10px; color: white; font-weight: 500; z-index: 1000; animation: slideIn 0.3s ease-out; }
+    .message.success { background: linear-gradient(135deg, #4CAF50 0%, #2E7D32 100%); }
+    .message.error { background: linear-gradient(135deg, #FF5252 0%, #D32F2F 100%); }
+    .message.warning { background: linear-gradient(135deg, #FF9800 0%, #F57C00 100%); }
+    @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+    
+    /* 响应式 */
+    @media (max-width: 768px) {
+      .form-grid { grid-template-columns: 1fr; }
+      .products-grid { grid-template-columns: 1fr; }
+      .stats-grid { grid-template-columns: 1fr; }
+      .api-status { top: 10px; right: 10px; }
+    }
+  </style>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+  <!-- API状态指示器 -->
+  <div id="apiStatus" class="api-status connecting">
+    <i class="fas fa-circle-notch fa-spin"></i>
+    <span>连接API中...</span>
+  </div>
+
+  <!-- API配置面板 -->
+  <div id="apiConfig" class="api-config">
+    <h3 style="margin-bottom: 15px; color: #333;"><i class="fas fa-cog"></i> API 配置</h3>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+      <div>
+        <label>API 基础URL</label>
+        <input type="text" id="apiBaseUrl" value="http://localhost:3000/api" placeholder="http://localhost:3000/api">
+      </div>
+      <div>
+        <label>API密钥 (可选)</label>
+        <input type="text" id="apiKey" placeholder="输入API密钥">
+      </div>
+    </div>
+    <button class="btn btn-primary" onclick="saveApiConfig()" style="margin-top: 10px; padding: 8px 16px;">
+      <i class="fas fa-save"></i> 保存配置
+    </button>
+  </div>
+
+  <div class="container">
+    <!-- 头部 -->
+    <div class="header">
+      <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+        <div>
+          <h1><i class="fas fa-store"></i> Shopee 产品管理系统 - API版</h1>
+          <p style="color: #666; margin-top: 5px;">连接到本地或远程API服务器</p>
+        </div>
+        <button class="btn btn-info" onclick="toggleApiConfig()">
+          <i class="fas fa-cog"></i> API设置
+        </button>
+      </div>
+      
+      <div class="stats-grid">
+        <div class="stat-card">
+          <h3>产品总数</h3>
+          <div class="number" id="totalCount">0</div>
+        </div>
+        <div class="stat-card">
+          <h3>总库存</h3>
+          <div class="number" id="totalStock">0</div>
+        </div>
+        <div class="stat-card">
+          <h3>API状态</h3>
+          <div class="number" id="apiStatusText">检查中</div>
+        </div>
+      </div>
+      
+      <div style="display: flex; gap: 15px; margin-top: 20px; flex-wrap: wrap;">
+        <button class="btn btn-primary" onclick="fetchProducts()">
+          <i class="fas fa-sync-alt"></i> 从API加载
+        </button>
+        <button class="btn btn-success" onclick="syncToApi()">
+          <i class="fas fa-cloud-upload-alt"></i> 同步到API
+        </button>
+        <button class="btn btn-warning" onclick="exportData()">
+          <i class="fas fa-download"></i> 导出JSON
+        </button>
+        <button class="btn btn-danger" onclick="deleteAllProducts()">
+          <i class="fas fa-trash"></i> 清空本地
+        </button>
+      </div>
+    </div>
+
+    <!-- 搜索框 -->
+    <div class="search-box">
+      <input type="text" id="searchInput" placeholder="🔍 搜索产品名称、分类..." oninput="filterProducts()">
+    </div>
+
+    <!-- 添加产品表单 -->
+    <div class="add-form">
+      <h2 style="margin-bottom: 20px; color: #333;"><i class="fas fa-plus-circle"></i> 添加新产品</h2>
+      <form id="addForm">
+        <div class="form-grid">
+          <div class="form-group">
+            <label><i class="fas fa-tag"></i> 产品名称 *</label>
+            <input type="text" id="productName" placeholder="输入产品名称" required>
+          </div>
+          <div class="form-group">
+            <label><i class="fas fa-money-bill-wave"></i> 价格 (RM) *</label>
+            <input type="number" step="0.01" id="productPrice" placeholder="0.00" required>
+          </div>
+          <div class="form-group">
+            <label><i class="fas fa-boxes"></i> 库存数量 *</label>
+            <input type="number" id="productStock" placeholder="0" required>
+          </div>
+          <div class="form-group">
+            <label><i class="fas fa-folder"></i> 分类 *</label>
+            <select id="productCategory" required>
+              <option value="">选择分类</option>
+              <option value="health">保健养生</option>
+              <option value="home">家居生活</option>
+              <option value="electronic">电子产品</option>
+              <option value="book">图书文具</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label><i class="fas fa-image"></i> 图片文件名</label>
+            <input type="text" id="productImage" placeholder="例如: sh-61_1111.png">
+          </div>
+          <div class="form-group">
+            <label><i class="fas fa-link"></i> Shopee链接</label>
+            <input type="text" id="productLink" placeholder="https://shopee.com.my/...">
+          </div>
+        </div>
+        <div style="margin-top: 25px; display: flex; gap: 15px;">
+          <button type="submit" class="btn btn-primary">
+            <i class="fas fa-check-circle"></i> 添加产品
+          </button>
+          <button type="button" class="btn btn-warning" onclick="addToApi()">
+            <i class="fas fa-cloud-upload"></i> 直接添加到API
+          </button>
+          <button type="button" class="btn" onclick="clearForm()" style="background: #6c757d; color: white;">
+            <i class="fas fa-trash-alt"></i> 清空表单
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <!-- 产品卡片网格 -->
+    <div id="productsContainer">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+        <h2 style="color: white;" id="productsTitle">产品列表 (0)</h2>
+        <div style="color: white; font-size: 14px;">
+          本地数据 | 
+          <button class="btn btn-success" onclick="syncAllToApi()" style="padding: 5px 10px; font-size: 12px;">
+            <i class="fas fa-cloud-upload-alt"></i> 同步全部到API
+          </button>
+        </div>
+      </div>
+      <div class="products-grid" id="productsGrid"></div>
+    </div>
+  </div>
+
+  <!-- 消息提示容器 -->
+  <div id="messageContainer"></div>
+
+  <script>
+    // API配置
+    let apiConfig = {
+      baseUrl: 'http://localhost:3000/api',
+      apiKey: '',
+      connected: false
+    };
+    
+    let products = [];
+    let currentId = 1;
+
+    // 初始化API配置
+    function initApiConfig() {
+      const savedConfig = localStorage.getItem('shopeeApiConfig');
+      if (savedConfig) {
+        apiConfig = JSON.parse(savedConfig);
+        document.getElementById('apiBaseUrl').value = apiConfig.baseUrl;
+        document.getElementById('apiKey').value = apiConfig.apiKey;
+      }
+      checkApiConnection();
+    }
+
+    // 切换API配置面板
+    function toggleApiConfig() {
+      const configPanel = document.getElementById('apiConfig');
+      configPanel.classList.toggle('show');
+    }
+
+    // 保存API配置
+    function saveApiConfig() {
+      apiConfig.baseUrl = document.getElementById('apiBaseUrl').value.trim();
+      apiConfig.apiKey = document.getElementById('apiKey').value.trim();
+      
+      localStorage.setItem('shopeeApiConfig', JSON.stringify(apiConfig));
+      showMessage('✅ API配置已保存', 'success');
+      checkApiConnection();
+    }
+
+    // 检查API连接
+    async function checkApiConnection() {
+      updateApiStatus('connecting', '连接API中...');
+      
+      try {
+        // 尝试连接健康检查端点
+        const response = await fetch(`${apiConfig.baseUrl}/health`, {
+          method: 'GET',
+          headers: getApiHeaders(),
+          timeout: 5000
+        });
+        
+        if (response.ok) {
+          apiConfig.connected = true;
+          updateApiStatus('connected', 'API已连接');
+          showMessage('✅ API服务器连接成功', 'success');
+        } else {
+          apiConfig.connected = false;
+          updateApiStatus('disconnected', 'API连接失败');
+          showMessage('⚠️ API服务器不可用，使用本地模式', 'warning');
+        }
+      } catch (error) {
+        apiConfig.connected = false;
+        updateApiStatus('disconnected', 'API无响应');
+        showMessage('⚠️ API服务器连接失败，使用本地模式', 'warning');
+      }
+    }
+
+    // 更新API状态显示
+    function updateApiStatus(status, text) {
+      const statusEl = document.getElementById('apiStatus');
+      const textEl = document.getElementById('apiStatusText');
+      
+      statusEl.className = `api-status ${status}`;
+      statusEl.innerHTML = `<i class="fas fa-${getStatusIcon(status)}"></i> <span>${text}</span>`;
+      if (textEl) textEl.textContent = text;
+    }
+
+    function getStatusIcon(status) {
+      switch(status) {
+        case 'connected': return 'check-circle';
+        case 'disconnected': return 'times-circle';
+        case 'connecting': return 'circle-notch fa-spin';
+        default: return 'question-circle';
+      }
+    }
+
+    // 获取API请求头
+    function getApiHeaders() {
+      const headers = {
+        'Content-Type': 'application/json'
+      };
+      
+      if (apiConfig.apiKey) {
+        headers['Authorization'] = `Bearer ${apiConfig.apiKey}`;
+      }
+      
+      return headers;
+    }
+
+    // 从API获取产品
+    async function fetchProducts() {
+      if (!apiConfig.connected) {
+        showMessage('❌ API未连接，请检查配置', 'error');
+        return;
+      }
+      
+      try {
+        showMessage('正在从API加载数据...', 'success');
+        const response = await fetch(`${apiConfig.baseUrl}/products`, {
+          method: 'GET',
+          headers: getApiHeaders()
+        });
+        
+        if (!response.ok) throw new Error(`HTTP错误: ${response.status}`);
+        
+        const data = await response.json();
+        products = data.products || data;
+        currentId = Math.max(...products.map(p => p.id), 0) + 1;
+        
+        updateDisplay();
+        showMessage(`✅ 从API加载成功！共 ${products.length} 个产品`, 'success');
+      } catch (error) {
+        console.error('API加载失败:', error);
+        showMessage(`❌ API加载失败: ${error.message}`, 'error');
+      }
+    }
+
+    // 添加产品到API
+    async function addToApi() {
+      if (!apiConfig.connected) {
+        showMessage('❌ API未连接，请先检查连接', 'error');
+        return;
+      }
+      
+      const product = {
+        name: document.getElementById('productName').value.trim(),
+        price: parseFloat(document.getElementById('productPrice').value),
+        stock: parseInt(document.getElementById('productStock').value),
+        image: document.getElementById('productImage').value.trim() || `sh-${currentId}.jpg`,
+        link: document.getElementById('productLink').value.trim(),
+        category: document.getElementById('productCategory').value,
+        status: "active",
+        sales: 0
+      };
+      
+      if (!product.name || !product.category) {
+        showMessage('❌ 请填写产品名称和分类', 'error');
+        return;
+      }
+      
+      try {
+        const response = await fetch(`${apiConfig.baseUrl}/products`, {
+          method: 'POST',
+          headers: getApiHeaders(),
+          body: JSON.stringify(product)
+        });
+        
+        if (!response.ok) throw new Error(`HTTP错误: ${response.status}`);
+        
+        const newProduct = await response.json();
+        products.push(newProduct);
+        updateDisplay();
+        document.getElementById('addForm').reset();
+        showMessage(`✅ 产品已成功添加到API！ID: ${newProduct.id}`, 'success');
+      } catch (error) {
+        showMessage(`❌ 添加到API失败: ${error.message}`, 'error');
+      }
+    }
+
+    // 同步单个产品到API
+    async function syncProductToApi(product) {
+      try {
+        // 检查产品是否已存在
+        const response = await fetch(`${apiConfig.baseUrl}/products/${product.id}`, {
+          method: 'GET',
+          headers: getApiHeaders()
+        });
+        
+        let apiResponse;
+        if (response.status === 404) {
+          // 产品不存在，创建新记录
+          apiResponse = await fetch(`${apiConfig.baseUrl}/products`, {
+            method: 'POST',
+            headers: getApiHeaders(),
+            body: JSON.stringify(product)
+          });
+        } else {
+          // 产品存在，更新记录
+          apiResponse = await fetch(`${apiConfig.baseUrl}/products/${product.id}`, {
+            method: 'PUT',
+            headers: getApiHeaders(),
+            body: JSON.stringify(product)
+          });
+        }
+        
+        if (!apiResponse.ok) throw new Error(`HTTP错误: ${apiResponse.status}`);
+        
+        return await apiResponse.json();
+      } catch (error) {
+        throw error;
+      }
+    }
+
+    // 同步所有产品到API
+    async function syncAllToApi() {
+      if (!apiConfig.connected) {
+        showMessage('❌ API未连接', 'error');
+        return;
+      }
+      
+      if (products.length === 0) {
+        showMessage('❌ 没有产品可同步', 'error');
+        return;
+      }
+      
+      showMessage('正在同步产品到API...', 'success');
+      
+      let successCount = 0;
+      let failCount = 0;
+      
+      for (const product of products) {
+        try {
+          await syncProductToApi(product);
+          successCount++;
+        } catch (error) {
+          console.error(`同步产品 ${product.id} 失败:`, error);
+          failCount++;
+        }
+      }
+      
+      showMessage(`✅ 同步完成！成功: ${successCount}, 失败: ${failCount}`, 
+                  failCount > 0 ? 'warning' : 'success');
+    }
+
+    // 同步到API（批量）
+    async function syncToApi() {
+      if (!apiConfig.connected) {
+        showMessage('❌ API未连接', 'error');
+        return;
+      }
+      
+      try {
+        const response = await fetch(`${apiConfig.baseUrl}/products/batch`, {
+          method: 'POST',
+          headers: getApiHeaders(),
+          body: JSON.stringify({ products })
+        });
+        
+        if (!response.ok) throw new Error(`HTTP错误: ${response.status}`);
+        
+        const result = await response.json();
+        showMessage(`✅ 批量同步成功！更新了 ${result.updated || products.length} 个产品`, 'success');
+      } catch (error) {
+        // 如果批量接口不存在，尝试逐个同步
+        if (error.message.includes('404') || error.message.includes('batch')) {
+          await syncAllToApi();
+        } else {
+          showMessage(`❌ 同步失败: ${error.message}`, 'error');
+        }
+      }
+    }
+
+    // 删除所有本地产品
+    function deleteAllProducts() {
+      if (!confirm('确定要清空所有本地产品数据吗？此操作不可撤销！')) return;
+      
+      products = [];
+      updateDisplay();
+      showMessage('✅ 所有本地产品数据已清空', 'success');
+    }
+
+    // 其他函数保持不变（updateDisplay, renderProducts, getSampleData等）
+    function updateDisplay() {
+      const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+      const filtered = products.filter(p => 
+        p.name.toLowerCase().includes(searchTerm) || 
+        (p.category && p.category.toLowerCase().includes(searchTerm))
+      );
+      
+      document.getElementById('totalCount').textContent = products.length;
+      document.getElementById('totalStock').textContent = products.reduce((sum, p) => sum + (p.stock || 0), 0);
+      document.getElementById('productsTitle').textContent = `产品列表 (${filtered.length})`;
+      
+      renderProducts(filtered);
+    }
+
+    function renderProducts(productsToShow) {
+      const grid = document.getElementById('productsGrid');
+      
+      if (productsToShow.length === 0) {
+        grid.innerHTML = `
+          <div style="grid-column: 1 / -1; text-align: center; padding: 60px; background: white; border-radius: 15px;">
+            <i class="fas fa-box-open" style="font-size: 60px; color: #ccc; margin-bottom: 20px;"></i>
+            <h3 style="color: #666;">没有找到产品</h3>
+            <p style="color: #999;">请添加新产品或从API加载</p>
+          </div>
+        `;
+        return;
+      }
+      
+      grid.innerHTML = '';
+      
+      productsToShow.forEach(product => {
+        const card = document.createElement('div');
+        card.className = 'product-card';
+        
+        const imagePath = product.image ? `../images/products/shopee/${product.image}` : 
+          'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="400" height="200" viewBox="0 0 400 200"><rect width="400" height="200" fill="%23f5f5f5"/><text x="200" y="100" font-family="Arial" font-size="16" text-anchor="middle" fill="%23999">无图片</text></svg>';
+        
+        const categoryIcons = {
+          health: 'fas fa-heart',
+          home: 'fas fa-home',
+          electronic: 'fas fa-laptop',
+          book: 'fas fa-book'
+        };
+        
+        card.innerHTML = `
+          <img src="${imagePath}" 
+               alt="${product.name}" 
+               class="product-image"
+               onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%22200%22 viewBox=%220 0 400 200%22><rect width=%22400%22 height=%22200%22 fill=%22%23f5f5f5%22/><text x=%22200%22 y=%22100%22 font-family=%22Arial%22 font-size=%2216%22 text-anchor=%22middle%22 fill=%22%23999%22>图片加载失败</text></svg>'">
+          <div class="product-info">
+            <div class="product-name">${product.name}</div>
+            <div class="product-price">RM ${Number(product.price).toFixed(2)}</div>
+            <div class="product-details">
+              <span><i class="fas fa-box"></i> 库存: ${product.stock}</span>
+              <span><i class="${categoryIcons[product.category] || 'fas fa-tag'}"></i> ${getCategoryName(product.category)}</span>
+            </div>
+            <div class="product-actions">
+              <button class="btn btn-primary" onclick="editProduct(${product.id})" style="padding: 8px 16px; font-size: 12px;">
+                <i class="fas fa-edit"></i> 编辑
+              </button>
+              <button class="btn btn-danger" onclick="deleteProduct(${product.id})" style="padding: 8px 16px; font-size: 12px;">
+                <i class="fas fa-trash"></i> 删除
+              </button>
+              <button class="btn btn-success" onclick="syncSingleToApi(${product.id})" style="padding: 8px 16px; font-size: 12px;">
+                <i class="fas fa-cloud-upload"></i> 同步
+              </button>
+              ${product.link ? `
+                <a href="${product.link}" target="_blank" class="btn btn-warning" style="padding: 8px 16px; font-size: 12px; text-decoration: none;">
+                  <i class="fas fa-external-link-alt"></i> 查看
+                </a>
+              ` : ''}
+            </div>
+          </div>
+        `;
+        
+        grid.appendChild(card);
+      });
+    }
+
+    function getCategoryName(category) {
+      const map = {
+        'health': '保健养生',
+        'home': '家居生活',
+        'electronic': '电子产品',
+        'book': '图书文具'
+      };
+      return map[category] || category;
+    }
+
+    // 显示消息
+    function showMessage(text, type = 'success') {
+      const container = document.getElementById('messageContainer');
+      const message = document.createElement('div');
+      message.className = `message ${type}`;
+      message.innerHTML = `<i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'times-circle' : 'exclamation-circle'}"></i> ${text}`;
+      
+      container.appendChild(message);
+      
+      setTimeout(() => {
+        message.style.animation = 'slideIn 0.3s ease-out reverse';
+        setTimeout(() => message.remove(), 300);
+      }, 3000);
+    }
+
+    // 编辑产品
+    function editProduct(id) {
+      const product = products.find(p => p.id === id);
+      if (!product) return;
+      
+      const newName = prompt('输入新的产品名称:', product.name);
+      if (newName === null) return;
+      
+      const newPrice = prompt('输入新的价格:', product.price);
+      const newStock = prompt('输入新的库存:', product.stock);
+      const newImage = prompt('输入新的图片文件名:', product.image || '');
+      const newLink = prompt('输入新的Shopee链接:', product.link || '');
+      const newCategory = prompt('输入新的分类 (health/home/electronic/book):', product.category);
+      
+      if (newName) product.name = newName;
+      if (newPrice && !isNaN(newPrice)) product.price = parseFloat(newPrice);
+      if (newStock && !isNaN(newStock)) product.stock = parseInt(newStock);
+      if (newImage !== null) product.image = newImage;
+      if (newLink !== null) product.link = newLink;
+      if (newCategory && ['health', 'home', 'electronic', 'book'].includes(newCategory)) product.category = newCategory;
+      
+      updateDisplay();
+      showMessage(`✅ 产品 ID: ${id} 更新成功`, 'success');
+    }
+
+    // 删除产品
+    function deleteProduct(id) {
+      const product = products.find(p => p.id === id);
+      if (!product) return;
+      
+      if (!confirm(`确定要删除产品吗？\n\nID: ${product.id}\n名称: ${product.name}`)) return;
+      
+      products = products.filter(p => p.id !== id);
+      updateDisplay();
+      showMessage(`✅ 产品 ID: ${id} 删除成功`, 'success');
+    }
+
+    // 同步单个产品到API
+    async function syncSingleToApi(id) {
+      const product = products.find(p => p.id === id);
+      if (!product) return;
+      
+      if (!apiConfig.connected) {
+        showMessage('❌ API未连接', 'error');
+        return;
+      }
+      
+      try {
+        await syncProductToApi(product);
+        showMessage(`✅ 产品 ID: ${id} 同步成功`, 'success');
+      } catch (error) {
+        showMessage(`❌ 同步失败: ${error.message}`, 'error');
+      }
+    }
+
+    // 导出数据
+    function exportData() {
+      if (products.length === 0) {
+        showMessage('❌ 没有数据可导出', 'error');
+        return;
+      }
+      
+      const dataStr = JSON.stringify(products, null, 2);
+      const dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(dataStr);
+      
+      const linkElement = document.createElement('a');
+      linkElement.setAttribute('href', dataUri);
+      linkElement.setAttribute('download', 'shopee_products_export.json');
+      linkElement.click();
+      
+      showMessage('✅ 数据已导出', 'success');
+    }
+
+    // 清空表单
+    function clearForm() {
+      document.getElementById('addForm').reset();
+      showMessage('表单已清空', 'success');
+    }
+
+    // 搜索过滤
+    function filterProducts() {
+      updateDisplay();
+    }
+
+    // 页面加载
+    window.onload = function() {
+      initApiConfig();
+      console.log('Shopee API版管理系统已加载');
+    };
+  </script>
+</body>
+</html>
