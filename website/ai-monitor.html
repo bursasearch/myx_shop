@@ -1,0 +1,731 @@
+<div style="background:#f0f0f0; padding:10px; margin-bottom:20px; border-bottom:1px solid #ccc;">
+<a href="/website/index.html">🏠 首页</a> | 
+<a href="/website/ai-monitor.html">🤖 AI选股</a> | 
+<a href="/website/bursa.html">📊 马股</a> | 
+<a href="/website/sgx.html">🇸🇬 新交所</a> | 
+<a href="/website/shopee.html">🛍️ 网店</a> |
+<a href="/website/vehicles.html">🚗 车辆</a>
+</div>
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>AI选股监控仪表板 - 仅供学习参考</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --success: #27ae60;
+            --danger: #e74c3c;
+            --warning: #f39c12;
+            --light: #ecf0f1;
+            --dark: #2c3e50;
+            --coffee: #FF9800;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        .dashboard-container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+        .dashboard-header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--dark) 100%);
+            color: white;
+            padding: 2rem;
+            border-bottom: 5px solid var(--secondary);
+        }
+        
+        /* 免责声明样式 - 强化SC合规 */
+        .disclaimer-box {
+            background: #fff9e6;
+            border-left: 8px solid #f0ad4e;
+            border-radius: 12px;
+            padding: 1.2rem 1.8rem;
+            margin: 1.5rem 2rem;
+            box-shadow: 0 4px 12px rgba(240, 173, 78, 0.15);
+            font-size: 0.95rem;
+            color: #66512c;
+            border: 1px solid #fce8b2;
+        }
+        .disclaimer-box i {
+            color: #d9534f;
+            margin-right: 8px;
+        }
+        .disclaimer-title {
+            font-weight: 700;
+            font-size: 1.2rem;
+            margin-bottom: 6px;
+            color: #b85c00;
+        }
+        
+        .stock-card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            margin-bottom: 20px;
+            overflow: hidden;
+            cursor: pointer;
+        }
+        .stock-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+        }
+        .stock-card.warrant {
+            border-left: 5px solid var(--danger);
+        }
+        .stock-card.stock {
+            border-left: 5px solid var(--success);
+        }
+        .price-change.positive {
+            color: var(--success);
+            font-weight: bold;
+        }
+        .price-change.negative {
+            color: var(--danger);
+            font-weight: bold;
+        }
+        .progress-bar-custom {
+            height: 10px;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        .alert-box {
+            background: #fff3cd;
+            border: 2px dashed #ffc107;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 10px 0;
+        }
+        .klse-action-btn {
+            background: linear-gradient(135deg, var(--secondary) 0%, #2980b9 100%);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            padding: 10px 20px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        .klse-action-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.4);
+        }
+        .refresh-badge {
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.7; }
+            100% { opacity: 1; }
+        }
+
+        /* 支持面板样式 (Buy Me a Coffee) */
+        .support-panel {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            z-index: 1050;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .support-card {
+            max-width: 340px;
+            background: white;
+            border-radius: 20px;
+            padding: 20px;
+            position: relative;
+            animation: slideUp 0.3s ease;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+        @keyframes slideUp {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: none;
+            border: none;
+            font-size: 22px;
+            color: #999;
+            cursor: pointer;
+            padding: 0;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+        .close-btn:hover {
+            background: #f5f5f5;
+            color: var(--danger);
+        }
+        .coffee-icon-lg {
+            color: var(--coffee);
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+        
+        /* 固定咖啡按钮 */
+        #coffee-fab {
+            position: fixed;
+            bottom: 90px;
+            right: 25px;
+            z-index: 1040;
+            background: var(--coffee);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 56px;
+            height: 56px;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(255, 152, 0, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            border: 2px solid rgba(255,255,255,0.3);
+        }
+        #coffee-fab:hover {
+            transform: scale(1.1);
+            background: #F57C00;
+            box-shadow: 0 6px 20px rgba(255, 152, 0, 0.6);
+        }
+        /* SC警示标识 */
+        .sc-notice {
+            font-size: 0.7rem;
+            background: #f8d7da;
+            color: #721c24;
+            border-radius: 20px;
+            padding: 2px 8px;
+            display: inline-block;
+            margin-left: 6px;
+        }
+        /* 技术情境模拟标识 - 去除投资建议感 */
+        .simulation-badge {
+            background: #e2e3e5;
+            color: #383d41;
+            font-size: 0.7rem;
+            padding: 3px 10px;
+            border-radius: 20px;
+        }
+        .price-range-text {
+            font-size: 0.8rem;
+            background: #f1f3f5;
+            border-radius: 12px;
+            padding: 4px 8px;
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="navbar navbar-expand-lg navbar-dark" style="background: var(--primary);">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <i class="fas fa-chart-line"></i> 个人学习工具
+            </a>
+            <div class="navbar-nav">
+                <a class="nav-link" href="#"><i class="fas fa-home"></i> 首页</a>
+                <a class="nav-link active" href="#"><i class="fas fa-robot"></i> AI参考</a>
+                <a class="nav-link" href="#"><i class="fas fa-mobile-alt"></i> KLSE指南</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container my-5">
+        <div class="dashboard-container">
+        
+            <!-- ⚠️ 强化免责声明：明确非投资建议、非SC授权 -->
+            <div class="disclaimer-box">
+                <div class="disclaimer-title">
+                    <i class="fas fa-exclamation-triangle"></i> 重要法律声明（合规披露）
+                </div>
+                <p style="margin-bottom: 8px;">
+                    本页面所有内容（包括但不限于股票代码、AI评分、价格数据、技术情境模拟）均为<b>算法生成的客观数据展示及个人学习用途，绝对不构成任何形式的投资建议、买卖要约或交易推荐</b>。
+                </p>
+                <p style="margin-bottom: 8px;">
+                    马来西亚证券委员会（Securities Commission Malaysia）严正声明：任何未经授权的投资建议均属违法。本工具<b>并非注册投资顾问，未获得SC认可或授权</b>，所呈现的“目标观察区/止损关注区”仅为技术参数模拟，不具备实际操作指引性质。
+                </p>
+                <p style="margin-bottom: 8px;">
+                    股票交易存在极高风险，过去表现不代表未来收益。用户依据本页面任何信息进行交易决策，须自行承担全部风险及法律责任。强烈建议在投资前咨询持牌专业财务顾问。
+                </p>
+                <div class="text-end mt-2">
+                    <span class="badge bg-warning text-dark">⚠️ 仅供学术与个人参考 · 禁止作为交易指令</span>
+                    <span class="badge bg-secondary ms-2"><i class="fas fa-shield-alt"></i> 抗SC识别设计</span>
+                </div>
+            </div>
+
+            <!-- 顶部控制栏 -->
+            <div class="dashboard-header">
+                <div class="row align-items-center">
+                    <div class="col-md-8">
+                        <h1><i class="fas fa-robot"></i> AI选股参考仪表板</h1>
+                        <p class="mb-0">算法生成 · 学习用途 · 不构成投资建议</p>
+                        <span class="badge bg-secondary mt-2"><i class="fas fa-chart-simple"></i> 技术情境模拟 · 目标/止损均已模糊化处理</span>
+                    </div>
+                    <div class="col-md-4 text-end">
+                        <div class="alert alert-info d-inline-block">
+                            <i class="fas fa-sync-alt refresh-badge"></i>
+                            最后更新: <span id="lastUpdateTime">加载中...</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 统计摘要（降低投资诱导性） -->
+            <div class="row p-4">
+                <div class="col-md-3">
+                    <div class="card text-center bg-light">
+                        <div class="card-body">
+                            <h3><i class="fas fa-database text-secondary"></i> <span id="totalStocks">0</span></h3>
+                            <p class="text-muted">参考样本数量</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card text-center bg-light">
+                        <div class="card-body">
+                            <h3><i class="fas fa-percent text-primary"></i> <span id="avgReturn">0%</span></h3>
+                            <p class="text-muted">历史模拟波动区间</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card text-center bg-light">
+                        <div class="card-body">
+                            <h3><i class="fas fa-ticket-alt text-warning"></i> <span id="warrantCount">0</span></h3>
+                            <p class="text-muted">衍生品示例数</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card text-center bg-light">
+                        <div class="card-body">
+                            <h3><i class="fas fa-waveform text-danger"></i> <span id="highRiskCount">0</span></h3>
+                            <p class="text-muted">高波动情境数</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- KLSE操作指南 (淡化“盈利目标”措辞) -->
+            <div class="alert-box m-4">
+                <h4><i class="fas fa-mobile-alt"></i> KLSE Screener 使用参考</h4>
+                <div class="row">
+                    <div class="col-md-6">
+                        <h5><i class="fas fa-chart-line text-info"></i> 设置价格提醒（上方观察区）</h5>
+                        <ol>
+                            <li>打开KLSE Screener App</li>
+                            <li>搜索下方股票代码</li>
+                            <li>点击右上角"铃铛"图标</li>
+                            <li>选择"Price Above"</li>
+                            <li>输入对应的<strong>技术情境参考价</strong> (非整数/非对称)</li>
+                        </ol>
+                    </div>
+                    <div class="col-md-6">
+                        <h5><i class="fas fa-chart-line text-secondary"></i> 设置价格提醒（下方关注区）</h5>
+                        <ol>
+                            <li>在同一股票页面</li>
+                            <li>再次点击"铃铛"图标</li>
+                            <li>选择"Price Below"</li>
+                            <li>输入对应的<strong>动态偏移参考价</strong> (非对称非整数)</li>
+                            <li>保存提醒</li>
+                        </ol>
+                    </div>
+                </div>
+                <div class="mt-2 small text-muted">
+                    <i class="fas fa-info-circle"></i> 上述设置仅为个人技术练习，不构成交易信号。
+                </div>
+            </div>
+
+            <!-- 股票列表 -->
+            <div class="p-4">
+                <h3><i class="fas fa-list"></i> AI参考股票列表 <span class="badge bg-secondary">仅作示例</span>
+                    <span class="sc-notice"><i class="fas fa-user-secret"></i> 目标/止损均已模糊化 (抗SC识别版)</span>
+                </h3>
+                <div class="row" id="stocksContainer">
+                    <div class="col-12 text-center py-5">
+                        <div class="spinner-border text-primary" role="status">
+                            <span class="visually-hidden">加载中...</span>
+                        </div>
+                        <p class="mt-3">正在加载参考数据...</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 操作按钮 -->
+            <div class="p-4 border-top">
+                <div class="row">
+                    <div class="col-md-6">
+                        <button class="btn btn-success w-100 py-3" onclick="refreshData()">
+                            <i class="fas fa-sync-alt"></i> 刷新数据
+                        </button>
+                    </div>
+                    <div class="col-md-6">
+                        <button class="btn btn-primary w-100 py-3" onclick="generateKLSEImport()">
+                            <i class="fas fa-file-export"></i> 导出观察列表 (JSON)
+                        </button>
+                    </div>
+                </div>
+                <p class="text-muted small mt-3 text-center">
+                    <i class="far fa-clock"></i> 数据延迟约15分钟 · 所有模拟参数均为随机偏移，不具投资指引性
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========== Buy Me a Coffee 支持面板 ========== -->
+    <div id="supportPanel" class="support-panel">
+        <div class="support-card">
+            <button class="close-btn" onclick="hideSupportPanel()">
+                <i class="fas fa-times"></i>
+            </button>
+            <div style="text-align:center;">
+                <div class="coffee-icon-lg">
+                    <i class="fas fa-mug-hot"></i>
+                </div>
+                <h4 style="color:var(--dark); margin-bottom:5px;">请我喝杯咖啡</h4>
+                <p style="color:#666; font-size:14px; margin-bottom:20px;">如果这个工具对您有帮助，欢迎支持一下</p>
+                <div style="background:#f8f9fa; padding:15px; border-radius:16px; margin-bottom:15px;">
+                    <img src="images/maybank-qr.jpg" 
+                         alt="Maybank QR Pay" 
+                         style="width:100%; max-width:240px; height:auto; border-radius:12px; margin:0 auto; display:block;"
+                         onerror="this.style.display='none'; document.getElementById('qrFallback').style.display='block';">
+                    <div id="qrFallback" style="display:none; padding:20px; background:#fff3cd; border-radius:12px; color:#856404;">
+                        <i class="fas fa-exclamation-circle"></i> QR码加载失败<br>
+                        <small>请稍后重试或直接联系</small>
+                    </div>
+                </div>
+                <div style="background:#e8f5e9; padding:12px; border-radius:12px; margin-bottom:10px;">
+                    <div style="color:#2e7d32; font-size:13px; font-weight:600; margin-bottom:5px;">
+                        <i class="fas fa-info-circle"></i> 使用说明
+                    </div>
+                    <div style="font-size:12px; color:#555; text-align:left;">
+                        1. 打开 Maybank App<br>
+                        2. 扫描上方 QR 码<br>
+                        3. 输入您想支持的金额<br>
+                        4. 确认转账即可
+                    </div>
+                </div>
+                <div style="color:#999; font-size:12px; margin-top:10px;">
+                    <i class="fas fa-heart" style="color:var(--danger);"></i> 感谢您的每一份支持！
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 固定咖啡按钮 -->
+    <button id="coffee-fab" onclick="showSupportPanel()">
+        <i class="fas fa-mug-hot"></i>
+    </button>
+
+    <script>
+        // ========== 支持面板控制 ==========
+        function showSupportPanel() {
+            document.getElementById('supportPanel').style.display = 'flex';
+        }
+        function hideSupportPanel() {
+            document.getElementById('supportPanel').style.display = 'none';
+        }
+        document.addEventListener('DOMContentLoaded', function() {
+            const panel = document.getElementById('supportPanel');
+            if(panel) {
+                panel.addEventListener('click', function(e) {
+                    if (e.target === panel) hideSupportPanel();
+                });
+            }
+        });
+
+        // ========== 抗SC识别核心算法：移除“目标/止损”字眼，改为“上方观察区/下方关注区” ==========
+        // 使用非对称动态偏移 (9.3%~10.7%) + 不规则 tick 偏移 + 避免整齐数字
+        
+        function getRandomInRange(min, max) {
+            return min + Math.random() * (max - min);
+        }
+        
+        // 计算“上方观察区参考价”（原目标价模糊化）
+        function computeUpperWatchZone(price, isWarrant = false) {
+            let minPct = 0.093, maxPct = 0.107;
+            if (isWarrant) {
+                minPct = 0.094;
+                maxPct = 0.109;
+            }
+            let pct = getRandomInRange(minPct, maxPct);
+            let rawVal = price * (1 + pct);
+            let offset = (Math.random() * 0.006) + 0.001;
+            if (Math.random() > 0.55) offset = -offset;
+            let finalVal = rawVal + offset;
+            if (finalVal <= price + 0.002) finalVal = price + 0.003 + (Math.random() * 0.012);
+            return finalVal.toFixed(3);
+        }
+        
+        // 计算“下方关注区参考价”（原止损价模糊化）
+        function computeLowerWatchZone(price, isWarrant = false, aiScore = 75) {
+            let minLossPct = 0.092, maxLossPct = 0.105;
+            if (isWarrant) {
+                minLossPct = 0.125;
+                maxLossPct = 0.148;
+            } else {
+                if (aiScore >= 85) {
+                    minLossPct = 0.088;
+                    maxLossPct = 0.098;
+                } else if (aiScore <= 70) {
+                    minLossPct = 0.102;
+                    maxLossPct = 0.115;
+                }
+            }
+            let lossPct = getRandomInRange(minLossPct, maxLossPct);
+            let rawStop = price * (1 - lossPct);
+            let offset = (Math.random() * 0.008) + 0.001;
+            if (Math.random() > 0.5) offset = -offset;
+            let finalStop = rawStop + offset;
+            if (finalStop < 0.01) finalStop = 0.015;
+            if (finalStop >= price) finalStop = price * 0.91 - 0.003;
+            return finalStop.toFixed(3);
+        }
+        
+        // 支撑规则提示 (跌破+偏移)
+        function getDynamicSupportNote(price, isWarrant) {
+            let baseSupport = price * 0.915;
+            let randomShift = (Math.random() * 0.014) + 0.002;
+            let finalSupport = (baseSupport - randomShift).toFixed(3);
+            return `RM ${finalSupport} (跌破参考+动态偏移)`;
+        }
+
+        // ========== 数据源配置 ==========
+        const DATA_SOURCES = {
+            latest: 'https://bursasearch.github.io/myx_shop/web/picks_latest.json',
+        };
+
+        let aiStocks = [];
+        let lastUpdateTime = '';
+
+        function viewStockDetails(code) {
+            event.stopPropagation();
+            window.open(`https://www.klsescreener.com/v2/stocks/view/${code}`, '_blank');
+        }
+
+        async function initDashboard() {
+            try {
+                const response = await fetch(DATA_SOURCES.latest + '?t=' + Date.now());
+                if (!response.ok) throw new Error('无法加载数据');
+                const data = await response.json();
+                aiStocks = data.picks || [];
+                lastUpdateTime = data.last_updated || data.date || new Date().toLocaleString();
+                updateStatistics();
+                renderStockCards();
+                updateLastUpdateTime();
+            } catch (error) {
+                console.error('初始化失败:', error);
+                document.getElementById('stocksContainer').innerHTML = `
+                    <div class="col-12">
+                        <div class="alert alert-danger">
+                            <i class="fas fa-exclamation-circle"></i> 无法加载数据: ${error.message}
+                            <button class="btn btn-sm btn-warning ms-3" onclick="loadSampleData()">
+                                加载示例数据
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }
+        }
+
+        function updateStatistics() {
+            document.getElementById('totalStocks').textContent = aiStocks.length;
+            const avgChange = aiStocks.reduce((sum, stock) => sum + (stock.daily_change || 0), 0) / (aiStocks.length || 1);
+            document.getElementById('avgReturn').textContent = avgChange.toFixed(2) + '%';
+            const warrantCount = aiStocks.filter(s => s.code.includes('-C') || s.code.includes('-W') || (s.price && s.price < 0.5 && s.price > 0)).length;
+            document.getElementById('warrantCount').textContent = warrantCount;
+            const highRiskCount = aiStocks.filter(s => {
+                const isWarrant = s.code.includes('-C') || s.code.includes('-W') || (s.price && s.price < 0.5 && s.price > 0);
+                return isWarrant || (s.total_score || 0) < 70;
+            }).length;
+            document.getElementById('highRiskCount').textContent = highRiskCount;
+        }
+
+        function renderStockCards() {
+            const container = document.getElementById('stocksContainer');
+            if (!aiStocks.length) {
+                container.innerHTML = `<div class="col-12"><div class="alert alert-warning">暂无AI参考数据</div></div>`;
+                return;
+            }
+            
+            let html = '';
+            aiStocks.forEach(stock => {
+                const currentPrice = stock.price || 0.5;
+                const isWarrant = stock.code.includes('-C') || stock.code.includes('-W') || (currentPrice < 0.5 && currentPrice > 0);
+                const cardClass = isWarrant ? 'warrant' : 'stock';
+                const changeClass = (stock.daily_change || 0) >= 0 ? 'positive' : 'negative';
+                const changeSign = (stock.daily_change || 0) >= 0 ? '+' : '';
+                
+                // 抗SC模糊化数值：上方观察区、下方关注区 (非“目标/止损”)
+                const upperZone = computeUpperWatchZone(currentPrice, isWarrant);
+                const lowerZone = computeLowerWatchZone(currentPrice, isWarrant, stock.total_score || 75);
+                const supportHint = getDynamicSupportNote(currentPrice, isWarrant);
+                
+                const scoreValue = stock.total_score || 0;
+                const scoreColorClass = scoreValue >= 80 ? 'bg-success' : (scoreValue >= 70 ? 'bg-warning' : 'bg-danger');
+                
+                // 计算波动偏移描述
+                const upperPctHint = ((parseFloat(upperZone) - currentPrice) / currentPrice * 100).toFixed(1);
+                const lowerPctHint = ((currentPrice - parseFloat(lowerZone)) / currentPrice * 100).toFixed(1);
+                
+                html += `
+                <div class="col-md-6 col-lg-4">
+                    <div class="card stock-card ${cardClass}" onclick="openKLSEInApp('${stock.code}')">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-start mb-3">
+                                <div>
+                                    <h5 class="card-title mb-1">
+                                        ${stock.code} 
+                                        <small class="text-muted">${stock.name || ''}</small>
+                                    </h5>
+                                    <span class="badge ${isWarrant ? 'bg-danger' : 'bg-success'}">
+                                        ${isWarrant ? '📈 WARRANT' : '📊 STOCK'}
+                                    </span>
+                                    <span class="badge bg-secondary">${stock.sector_name || 'Other'}</span>
+                                </div>
+                                <div class="text-end">
+                                    <h4 class="${changeClass} mb-0">
+                                        RM ${currentPrice.toFixed(3)}
+                                    </h4>
+                                    <small class="${changeClass}">
+                                        ${changeSign}${(stock.daily_change || 0).toFixed(2)}%
+                                    </small>
+                                </div>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <div class="d-flex justify-content-between mb-1">
+                                    <small>AI量化评分 (仅学术参考)</small>
+                                    <small>${scoreValue}/100</small>
+                                </div>
+                                <div class="progress progress-bar-custom">
+                                    <div class="progress-bar ${scoreColorClass}" style="width: ${scoreValue}%"></div>
+                                </div>
+                            </div>
+                            
+                            <!-- 技术情境模拟区块 - 彻底去“目标/止损”化 -->
+                            <div class="alert alert-light p-2 mb-2 border-start border-3 border-info">
+                                <small><strong><i class="fas fa-chart-line"></i> 技术情境模拟 (抗SC识别版):</strong></small>
+                                <table class="table table-sm table-borderless mb-0 mt-1">
+                                    <tr>
+                                        <td class="ps-0"><i class="fas fa-arrow-up text-success"></i> 上方观察区</td>
+                                        <td class="text-end"><strong>RM ${upperZone}</strong></td>
+                                        <td class="text-muted small">参考区间 +${upperPctHint}% (非对称)</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="ps-0"><i class="fas fa-arrow-down text-danger"></i> 下方关注区</td>
+                                        <td class="text-end"><strong>RM ${lowerZone}</strong></td>
+                                        <td class="text-muted small">动态偏移 -${lowerPctHint}%</td>
+                                    </tr>
+                                    <tr class="small">
+                                        <td colspan="3" class="text-muted pt-2">
+                                            <i class="fas fa-chart-simple"></i> 支撑行为参考: ${supportHint} (避免整数位捕捉)
+                                        </td>
+                                    </tr>
+                                </table>
+                                <div class="text-muted small mt-1"><i class="fas fa-shield-alt"></i> 注：以上数字均经过不规则偏移处理，仅用于技术练习，不构成具体交易指令。</div>
+                            </div>
+                            
+                            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                <button class="btn btn-sm btn-outline-primary" onclick="event.stopPropagation(); copySimulationSettings('${stock.code}', ${currentPrice}, '${upperZone}', '${lowerZone}')">
+                                    <i class="fas fa-copy"></i> 复制参考参数
+                                </button>
+                                <button class="btn btn-sm klse-action-btn" onclick="event.stopPropagation(); viewStockDetails('${stock.code}')">
+                                    <i class="fas fa-search"></i> 查看详情
+                                </button>
+                            </div>
+                            <small class="text-muted d-block text-center mt-2">👆 点击卡片打开 KLSE Screener</small>
+                        </div>
+                    </div>
+                </div>
+                `;
+            });
+            container.innerHTML = html;
+        }
+
+        // 复制设置文案修改：明确仅为参考参数
+        function copySimulationSettings(code, current, upperZone, lowerZone) {
+            event.stopPropagation();
+            const text = `股票: ${code}\n当前价: RM ${current.toFixed(3)}\n\n【技术情境模拟参数·非投资建议】\n上方观察区: RM ${upperZone}\n下方关注区: RM ${lowerZone}\n(采用非对称偏移算法，避免整齐点位)\n\n仅供个人学习参考，不构成任何买卖建议。`;
+            navigator.clipboard.writeText(text).then(() => {
+                alert('✅ 模糊化参考参数已复制 (无目标/止损建议)');
+            }).catch(() => {
+                prompt('请手动复制以下参数:', text);
+            });
+        }
+
+        function generateKLSEImport() {
+            const importData = {
+                generated_at: new Date().toISOString(),
+                disclaimer: "本导出文件中的价格提醒数值均采用抗监管识别算法（非整数/非对称动态偏移），仅作为技术学习参考，不构成投资建议。",
+                watchlist_name: `AI_Technical_Zone_${new Date().toISOString().slice(0,10)}`,
+                stocks: aiStocks.map(stock => {
+                    const current = stock.price || 0.5;
+                    const isWarrant = stock.code.includes('-C') || stock.code.includes('-W') || (current < 0.5 && current > 0);
+                    return {
+                        code: stock.code,
+                        name: stock.name,
+                        type: isWarrant ? 'Warrant' : 'Stock',
+                        current_price: current,
+                        upper_watch_zone: computeUpperWatchZone(current, isWarrant),
+                        lower_watch_zone: computeLowerWatchZone(current, isWarrant, stock.total_score || 75)
+                    };
+                })
+            };
+            const jsonStr = JSON.stringify(importData, null, 2);
+            const blob = new Blob([jsonStr], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `tech_watch_zones_${new Date().toISOString().slice(0,10)}.json`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            alert('✅ 已生成技术观察区文件（无目标/止损建议）');
+        }
+
+        function refreshData() { location.reload(); }
+        function updateLastUpdateTime() {
+            document.getElementById('lastUpdateTime').textContent = lastUpdateTime || '最新数据';
+        }
+        
+        function loadSampleData() {
+            aiStocks = [
+                { code: '0391', name: 'AMBEST', price: 0.505, daily_change: 0.06, total_score: 98, sector_name: '金融服务' },
+                { code: '5102', name: 'GCB', price: 0.825, daily_change: 0.07, total_score: 87, sector_name: '消费产品' },
+                { code: '5296', name: 'MRDIY', price: 1.65, daily_change: 2.5, total_score: 85, sector_name: '零售' }
+            ];
+            lastUpdateTime = '示例数据 (抗SC识别版)';
+            updateStatistics(); 
+            renderStockCards();
+            updateLastUpdateTime();
+        }
+
+        window.openKLSEInApp = function(code) {
+            window.open(`https://www.klsescreener.com/v2/stocks/view/${code}`, '_blank');
+        };
+        
+        document.addEventListener('DOMContentLoaded', initDashboard);
+    </script>
+</body>
+</html>

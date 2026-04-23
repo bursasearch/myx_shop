@@ -1,0 +1,80 @@
+<div style="background:#f0f0f0; padding:10px; margin-bottom:20px; border-bottom:1px solid #ccc;">
+<a href="/website/index.html">🏠 首页</a> | 
+<a href="/website/ai-monitor.html">🤖 AI选股</a> | 
+<a href="/website/bursa.html">📊 马股</a> | 
+<a href="/website/sgx.html">🇸🇬 新交所</a> | 
+<a href="/website/shopee.html">🛍️ 网店</a> |
+<a href="/website/vehicles.html">🚗 车辆</a>
+</div>
+<div style="background:#f0f0f0; padding:10px; margin-bottom:20px; border-bottom:1px solid #ccc;">
+<a href="/website/index.html">🏠 首页</a> | 
+<a href="/website/ai-monitor.html">🤖 AI选股</a> | 
+<a href="/website/bursa.html">📊 马股</a> | 
+<a href="/website/sgx.html">🇸🇬 新交所</a> | 
+<a href="/website/shopee.html">🛍️ 网店</a> |
+<a href="/website/vehicles.html">🚗 车辆</a>
+</div>
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Myx Shop - 蝦皮賣場</title>
+    <!-- 0秒後自動跳轉到蝦皮連結 -->
+    <meta http-equiv="refresh" content="0; url=https://my.shp.ee/cllr4k9t?smtt=0.0.9">
+    <style>
+        body {
+            font-family: sans-serif;
+            text-align: center;
+            padding: 2rem;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+        .message {
+            background: rgba(0,0,0,0.3);
+            padding: 2rem;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+        }
+        a {
+            color: #ffd700;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        .spinner {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            border: 4px solid rgba(255,255,255,0.3);
+            border-top: 4px solid white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 1rem;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="message">
+        <div class="spinner"></div>
+        <h2><i class="fab fa-shopify"></i> 前往 Myx Shop 蝦皮賣場</h2>
+        <p>正在為您轉跳至蝦皮...</p>
+        <p class="mt-3">若無自動跳轉，請 <a href="https://my.shp.ee/cllr4k9t?smtt=0.0.9">點擊這裡</a>。</p>
+    </div>
+    <script>
+        setTimeout(function() {
+            window.location.href = "shopee://";
+        }, 100);
+    </script>
+</body>
+</html>

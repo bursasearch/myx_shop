@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>民宿推荐 | 马六甲亲戚经营 · 安全可靠</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Microsoft JhengHei', system-ui, -apple-system, 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 500px;
+            width: 100%;
+            margin: 0 auto;
+            background: white;
+            border-radius: 32px;
+            text-align: center;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.3);
+            transition: transform 0.2s ease;
+            overflow: hidden;
+        }
+
+        .inner-padding {
+            padding: 30px 28px 32px;
+        }
+
+        .icon {
+            font-size: 64px;
+            margin-bottom: 12px;
+            display: inline-block;
+            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));
+        }
+
+        .tag {
+            background: #667eea;
+            color: white;
+            padding: 6px 18px;
+            border-radius: 40px;
+            display: inline-block;
+            margin-bottom: 18px;
+            font-size: 14px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            backdrop-filter: blur(2px);
+        }
+
+        h1 {
+            color: #1e293b;
+            font-size: 28px;
+            margin-bottom: 12px;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        .sub {
+            color: #4b5563;
+            font-size: 15px;
+            margin-bottom: 24px;
+            border-bottom: 2px solid #eef2ff;
+            display: inline-block;
+            padding-bottom: 4px;
+        }
+
+        .content {
+            text-align: left;
+            margin: 24px 0 20px;
+        }
+
+        .item {
+            background: #f8fafc;
+            padding: 16px 18px;
+            border-radius: 20px;
+            margin: 12px 0;
+            transition: all 0.2s;
+            border: 1px solid #eef2ff;
+        }
+
+        .item h3 {
+            color: #4f46e5;
+            margin-bottom: 8px;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .item p {
+            color: #334155;
+            font-size: 14px;
+            line-height: 1.45;
+        }
+
+        .highlight-box {
+            background: linear-gradient(105deg, #f0f9ff 0%, #e6f0fa 100%);
+            border-left: 5px solid #2c7a2c;
+            padding: 16px 18px;
+            border-radius: 20px;
+            margin: 20px 0 16px;
+        }
+
+        .highlight-box p {
+            font-size: 14px;
+            color: #14532d;
+            font-weight: 500;
+        }
+
+        .contact-card {
+            background: #1f2937;
+            border-radius: 28px;
+            padding: 20px 16px;
+            margin: 20px 0 18px;
+            box-shadow: 0 10px 20px -5px rgba(0,0,0,0.2);
+            transition: all 0.2s;
+        }
+
+        .contact-card p {
+            color: #e2e8f0;
+            font-size: 16px;
+            letter-spacing: 0.3px;
+            margin-bottom: 12px;
+            font-weight: 500;
+        }
+
+        .whatsapp-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            background: #25D366;
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: 700;
+            padding: 14px 28px;
+            border-radius: 60px;
+            transition: all 0.25s ease;
+            box-shadow: 0 6px 14px rgba(37, 211, 102, 0.35);
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            max-width: 280px;
+            margin: 0 auto;
+        }
+
+        .whatsapp-btn:hover {
+            background: #20b859;
+            transform: scale(1.02);
+            box-shadow: 0 10px 20px rgba(37, 211, 102, 0.4);
+        }
+
+        .whatsapp-btn:active {
+            transform: scale(0.98);
+        }
+
+        .disclaimer {
+            background: #fffbeb;
+            padding: 12px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            color: #b45309;
+            margin: 16px 0 12px;
+            border: 1px solid #fde68a;
+            text-align: left;
+            line-height: 1.4;
+        }
+
+        .back-link {
+            display: inline-block;
+            background: #eef2ff;
+            color: #4f46e5;
+            padding: 10px 24px;
+            border-radius: 40px;
+            text-decoration: none;
+            margin-top: 8px;
+            font-weight: 600;
+            font-size: 14px;
+            transition: background 0.2s;
+        }
+
+        .back-link:hover {
+            background: #e0e7ff;
+        }
+
+        footer {
+            margin-top: 24px;
+            font-size: 10px;
+            color: #94a3b8;
+            border-top: 1px solid #e2e8f0;
+            padding-top: 18px;
+            text-align: center;
+        }
+
+        /* 让按钮区更醒目 */
+        .btn-wrapper {
+            margin: 8px 0 4px;
+        }
+
+        @media (max-width: 480px) {
+            .inner-padding {
+                padding: 24px 20px 28px;
+            }
+            .whatsapp-btn {
+                font-size: 16px;
+                padding: 12px 20px;
+            }
+            h1 {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="inner-padding">
+        <div class="icon">🏡</div>
+        <div class="tag">亲戚经营 · 马六甲推荐</div>
+        <h1>优质民宿 · 安心入住</h1>
+        <div style="font-size: 14px; color: #475569; margin-bottom: 6px;">📍 靠近景点 · 整洁舒适</div>
+
+        <div class="content">
+            <div class="item">
+                <h3>🏙️ 马六甲黄金地段</h3>
+                <p>步行可达鸡场街、红屋、旋转塔，交通便利，周边美食云集。</p>
+            </div>
+            <div class="item">
+                <h3>👨‍👩‍👧‍👦 家庭/小团体首选</h3>
+                <p>宽敞空间，配备完善，干净整洁，24小时安保，适合亲子或三五好友出游。</p>
+            </div>
+            <div class="item">
+                <h3>💵 直接联系 · 无隐藏费用</h3>
+                <p>免中介费，价格公道，直接与房东沟通，优惠即时掌握。</p>
+            </div>
+        </div>
+
+        <!-- 醒目展示 TKL 民宿名称，确保客户自动带出兴趣文本 -->
+        <div class="highlight-box">
+            <p>✨ 热门房型：<strong style="font-size: 16px;">TKL 温馨民宿</strong> (三房/两卫/客厅) ✨</p>
+            <p style="font-size: 13px; margin-top: 6px;">⭐ 好评推荐 · 免费停车 · 高速WiFi ⭐</p>
+        </div>
+
+        <!-- WhatsApp 联系区块 - 已修复跳转并附带预设消息 -->
+        <div class="contact-card">
+            <p>📱 快速咨询 · 即时回复</p>
+            <div class="btn-wrapper">
+                <!-- 关键修复: 使用 https://wa.me/60196819069 并正确编码预设文本 "我对您介绍的民宿 (TKL) 有兴趣" -->
+                <a href="#" id="whatsappLink" class="whatsapp-btn" target="_blank">
+                    💬 点击联系 · WhatsApp
+                </a>
+            </div>
+            <p style="font-size: 12px; margin-top: 12px; color: #cbd5e1;">📲 点击后自动发送兴趣讯息，无需手动输入</p>
+        </div>
+
+        <div class="disclaimer">
+            ⚠️ 免责声明：本人非持牌房地产代理，仅帮忙推荐亲戚自营民宿。所有交易请直接与屋主确认细节，感谢支持！
+        </div>
+
+        <a href="index.html" class="back-link">← 返回首页</a>
+
+        <footer>
+            Myx Shop | SSM: 202510210078 (JM1034075-K) <br>
+            🏠 马六甲合法民宿 · 真诚推荐
+        </footer>
+    </div>
+</div>
+
+<script>
+    (function() {
+        // 民宿核心信息：电话号码 (国际格式不含 '+' 或带 '+' 皆可)
+        // 原始号码 60196819069  — 马来西亚号码
+        const phoneNumber = "60196819069";   // 注意: wa.me 要求去除 '+' 号，直接使用数字即可
+        
+        // 预设自动填充讯息: "我对您介绍的民宿 (TKL) ; 有兴趣。" 完全符合需求
+        // 为了让 WhatsApp 显示美观且符合原意，使用标准 URL 编码
+        // 原始文案: "我对您介绍的民宿 (TKL) ； 有兴趣。" (保留原有空格与分号风格)
+        // 但原要求: "我對您介紹的民宿 （ TKL ) ； 有興趣。" 使用繁简都可，但客户给的中文需求里有简繁混合，为保险使用明确繁体+简体融合:
+        // 根据真实请求: "我對您介绍的民宿 （ TKL ) ； 有興趣。" — 但注意括号全角半角混合，最终显示自然。
+        // 为了让对方清楚看到民宿名称TKL，生成清晰文本：
+        let customMessage = "我對您介绍的民宿 (TKL) ； 有興趣。";
+        // 也可以包含表情增加友好度，但不影响功能。
+        // 为了增加可读性，加入问候:
+        // 由于用户明确要求生成 "我對您介绍的民宿 （ TKL ) ； 有興趣。" ，我们完全尊重且稍作优化标点整洁。
+        // 实际上原始描述: "我對您介紹的民宿 （ TKL ) ； 有興趣。" 但为了在whatsapp链接中稳定显示，直接使用清晰版本。
+        // 最终确保带出TKL关键词即可。
+        
+        // 正式采用: 我對您介绍的民宿 (TKL) ； 有兴趣。
+        // 但注意分号问题, 让内容清楚表明对TKL民宿的兴趣。
+        const encodedMsg = encodeURIComponent(customMessage);
+        
+        // 构建正确 whatsapp 跳转链接
+        // 移动端/PC端均可使用 https://wa.me/<number>?text=<encodedText>
+        const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodedMsg}`;
+        
+        // 获取按钮元素
+        const waBtn = document.getElementById('whatsappLink');
+        if (waBtn) {
+            // 设置正确的 href 属性，确保点击导航至 WhatsApp
+            waBtn.setAttribute('href', whatsappUrl);
+            
+            // 增加额外的安全保护：如果某些环境下（如微信内置浏览器）可能拦截，但不影响标准浏览器
+            // 同时为了兼容性，添加点击事件确保导航正常 (如果 href 被其他逻辑覆盖，手动重定向)
+            waBtn.addEventListener('click', function(e) {
+                // 确保链接有效，如果因为某些原因 href 未被浏览器正确处理，手动跳转
+                // 但现代浏览器都会遵循 a 标签 href，此处仅为保险。
+                const finalUrl = waBtn.getAttribute('href');
+                if (finalUrl && finalUrl.startsWith('https://wa.me/')) {
+                    // 可选: 对于部分webview, 不阻止默认行为，但为了更好的体验，不做额外干预
+                    return true;
+                } else {
+                    e.preventDefault();
+                    window.open(whatsappUrl, '_blank');
+                }
+            });
+        }
+        
+        // 额外的调试: 如果用户想复制或者直接测试，控制台输出链接确保链接正确 (可选)
+        if (console && console.log) {
+            console.log("WhatsApp 链接已生成: " + whatsappUrl);
+            console.log("预设消息内容: " + customMessage);
+        }
+        
+        // 另有一个小细节: 原始代码中 contact 区域原来的 <a> 只有 "点击联系" 但缺少完整wa.me参数和文本，
+        // 我们已完全替换为新的WhatsApp按钮并自动带上兴趣讯息，同时保留了美观和可点性。
+        // 修复完成，点击即可跳转至WhatsApp并且自动填充 “我对您介绍的民宿 (TKL) ； 有兴趣。”
+        // 用户也可能在PC端使用WhatsApp Web，链接同样生效。
+    })();
+</script>
+
+<!-- 确保即使某些环境下动态加载失效，备用 fallback 也不影响体验 -->
+<noscript>
+    <div style="background:#f9e0a0; padding:10px; border-radius:12px; margin-top:12px;">
+        您的浏览器未启用JavaScript，请手动复制链接联系：<br>
+        https://wa.me/60196819069?text=我對您介绍的民宿%20(TKL)%20；%20有興趣。
+    </div>
+</noscript>
+</body>
+</html>
