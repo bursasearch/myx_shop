@@ -81,16 +81,16 @@ fi
 
     # 複製 HTML 文件
     cp -f web/*.html docs/web/ 2>/dev/null && echo "✅ 複製 HTML 到 docs/web/"
-    # cp -f *.html docs/ 2>/dev/null && echo "✅ 複製 HTML 到 docs/"
+    cp -f *.html docs/ 2>/dev/null && echo "✅ 複製 HTML 到 docs/"
 
     # 複製 Bursa JSON 文件
     cp -f web/picks_latest.json docs/web/ 2>/dev/null && echo "✅ 複製 picks_latest.json"
-    # cp -f web/date_config.js docs/ 2>/dev/null && echo "✅ 複製 date_config.js"
+    cp -f web/date_config.js docs/ 2>/dev/null && echo "✅ 複製 date_config.js"
     cp -rf web/history/picks_*.json docs/web/history/ 2>/dev/null && echo "✅ 複製 Bursa 歷史數據"
 
     # 複製 SGX JSON 文件
     cp -f web/sgx_picks_latest.json docs/web/ 2>/dev/null && echo "✅ 複製 sgx_picks_latest.json"
-    # cp -f web/sgx_date_config.js docs/ 2>/dev/null && echo "✅ 複製 sgx_date_config.js"
+    cp -f web/sgx_date_config.js docs/ 2>/dev/null && echo "✅ 複製 sgx_date_config.js"
     cp -rf web/history/sgx_picks_*.json docs/history/ 2>/dev/null && echo "✅ 複製 SGX 歷史數據"
 
     # 複製其他必要文件

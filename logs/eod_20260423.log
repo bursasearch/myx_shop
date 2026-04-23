@@ -1,0 +1,202 @@
+📊 開始 EOD 處理...
+📅 日期: 20260423
+✅ 進入目錄: /storage/emulated/0/bursasearch/myx_shop
+📥 處理 Bursa EOD CSV...
+✅ 找到 Bursa CSV: /storage/emulated/0/eskay9761/stock_data/Myx_Data/EOD/20260423.csv
+======================================================================
+📈 Bursa EOD 數據處理器 - 三倉庫同步版 (彻底排除凭单)
+======================================================================
+推薦數量: 15
+同步倉庫: 是
+憑單處理: 彻底排除所有凭单
+----------------------------------------------------------------------
+
+======================================================================
+🚀 开始处理 Bursa 数据: 20260423.csv
+======================================================================
+📅 日期: 20260423 (2026-04-23)
+📁 加载文件: 20260423.csv
+✅ 使用编码: utf-8
+✅ 加载成功: 2796行 × 19列
+📋 列名: ['Code', 'Stock', 'Sector', 'Open', 'Last', 'Chg', 'High', 'Low', 'Y-High', 'Y-Low', 'Vol', 'DY*', 'B%', 'Vol MA (20)', 'RSI (14)', 'MACD (26, 12)', 'EPS*', 'P/E', 'Status']
+🤖 生成增强版AI推荐 (使用B%和技术指标，彻底排除凭单)...
+📊 检测到凭单数量: 1076 只
+📊 普通股票数量: 1720 只
+📊 基础过滤后: 59 只股票（价格≥0.20，成交量≥50,000，B%≥50，已排除凭单）
+✅ 生成 15 个AI推荐（已排除所有凭单）
+
+📊 處理統計:
+   - 總股票數: 2796
+   - 過濾後股票: 59
+   - AI推薦: 15 支
+
+🔥 前5名推荐:
+1. 7113 TOPGLOV - RM0.75 (得分: 98)
+   行业: Industrial & Consumer Products, B%: 71.0%, RSI: 50
+   B% 71.0%; RSI中性; MACD金叉; 大涨3.5%
+2. 5210 ARMADA - RM0.415 (得分: 96)
+   行业: Industrial & Consumer Products, B%: 71.0%, RSI: 50
+   B% 71.0%; RSI中性; MACD金叉; 涨3.0%
+3. 0083 NOTION - RM0.455 (得分: 96)
+   行业: Industrial & Consumer Products, B%: 74.0%, RSI: 50
+   B% 74.0%; RSI中性; MACD金叉; 涨2.0%
+4. 0277 CLOUDPT - RM0.57 (得分: 96)
+   行业: Industrial & Consumer Products, B%: 54.0%, RSI: 50
+   B% 54.0%; RSI中性; MACD金叉; 涨1.5%
+5. 5317 CPETECH - RM0.775 (得分: 96)
+   行业: Industrial & Consumer Products, B%: 57.0%, RSI: 50
+   B% 57.0%; RSI中性; MACD金叉; 涨3.0%
+
+======================================================================
+🔄 同步到三個倉庫
+======================================================================
+
+📦 保存到倉庫: /storage/emulated/0/bursasearch/myx_shop
+   ✅ web/picks_latest.json (15 支推薦)
+   ✅ web/history/picks_20260423.json
+   ✅ docs/web/picks_latest.json
+   ✅ 日期配置已更新
+
+📦 保存到倉庫: /storage/emulated/0/bursasearch/myx_shop_dev
+   ✅ web/picks_latest.json (15 支推薦)
+   ✅ web/history/picks_20260423.json
+   ✅ docs/web/picks_latest.json
+   ✅ 日期配置已更新
+
+📦 保存到倉庫: /storage/emulated/0/bursasearch/myx_shop_test
+   ✅ web/picks_latest.json (15 支推薦)
+   ✅ web/history/picks_20260423.json
+   ✅ docs/web/picks_latest.json
+   ✅ 日期配置已更新
+
+======================================================================
+✅ 同步完成: 3/3 個倉庫
+======================================================================
+
+======================================================================
+✅ 所有處理完成！
+======================================================================
+📥 處理 SGX EOD DAT...
+✅ 找到 SGX DAT: /storage/emulated/0/eskay9761/stock_data/SGX_Data/EOD/20260423.dat
+============================================================
+📈 SGX EOD 數據處理器 - 三倉庫同步版
+============================================================
+閾值: SGD 0.2
+最小成交量: 10000 股
+推薦數量: 10 (只輸出前10名)
+同步倉庫: 是
+------------------------------------------------------------
+
+============================================================
+🚀 开始处理: 20260423.dat
+============================================================
+📅 日期: 20260423 (2026-04-23)
+📂 读取文件: /storage/emulated/0/eskay9761/stock_data/SGX_Data/EOD/20260423.dat
+✅ 读取成功，共 1240 行，17 欄位
+🧹 清洗数据...
+✅ 清洗完成，有效數據: 1220 行
+🔍 应用过滤条件 (股价 >= SGD 0.2)...
+   - 去除停牌股: 45 支
+   - 去除Penny Stocks (股价<0.2): 491 支
+   - 去除低成交量 (<10000股): 332 支
+✅ 过滤完成: 352 支股票 (从 1220 支中筛选)
+🤖 计算AI选股评分...
+✅ 评分完成，最高分: 90.0
+
+📊 處理統計:
+   - 原始股票: 1240
+   - 停牌去除: 45
+   - Penny去除: 491
+   - 低量去除: 332
+   - 最終股票: 352
+   - AI推薦: 10 支 (前10名)
+
+============================================================
+🔄 同步到三個倉庫
+============================================================
+
+📦 保存到倉庫: /storage/emulated/0/bursasearch/myx_shop
+   ✅ web/sgx_picks_latest.json (前10支)
+   ✅ docs/web/sgx_picks_latest.json (前10支)
+   ✅ 日期配置已更新
+
+📦 保存到倉庫: /storage/emulated/0/bursasearch/myx_shop_dev
+   ✅ web/sgx_picks_latest.json (前10支)
+   ✅ docs/web/sgx_picks_latest.json (前10支)
+   ✅ 日期配置已更新
+
+📦 保存到倉庫: /storage/emulated/0/bursasearch/myx_shop_test
+   ✅ web/sgx_picks_latest.json (前10支)
+   ✅ docs/web/sgx_picks_latest.json (前10支)
+   ✅ 日期配置已更新
+
+============================================================
+✅ 同步完成: 3/3 個倉庫
+============================================================
+
+============================================================
+✅ 所有處理完成！
+============================================================
+✅ SGX 數據已更新
+📋 同步文件到 docs/ 目錄...
+✅ 複製 HTML 到 docs/web/
+✅ 複製 HTML 到 docs/
+✅ 複製 picks_latest.json
+✅ 複製 date_config.js
+✅ 複製 Bursa 歷史數據
+✅ 複製 sgx_picks_latest.json
+✅ 複製 sgx_date_config.js
+✅ 複製 SGX 歷史數據
+✅ 複製 JS 文件
+📦 Git 操作...
+[master 81977e5] 每日EOD更新 - 20260423
+ 55 files changed, 13993 insertions(+), 1912 deletions(-)
+ create mode 100644 bursa.html
+ create mode 100644 bursa_recycle.html
+ create mode 100644 docs/ai-monitor.html
+ delete mode 100644 docs/bursa - Backup.html
+ create mode 100644 docs/bursa - no_recycle.html
+ create mode 100644 docs/bursa_recycle.html
+ create mode 100644 docs/history/sgx_picks_latest.json
+ create mode 100644 docs/web/ai-monitor.html
+ create mode 100644 docs/web/history/picks_20260304.json
+ create mode 100644 docs/web/history/picks_20260316.json
+ create mode 100644 docs/web/history/picks_20260317.json
+ create mode 100644 docs/web/history/picks_20260318.json
+ create mode 100644 docs/web/history/picks_20260319.json
+ create mode 100644 docs/web/history/picks_20260324.json
+ create mode 100644 docs/web/history/picks_20260325.json
+ create mode 100644 docs/web/history/picks_20260326.json
+ create mode 100644 docs/web/history/picks_20260327.json
+ create mode 100644 docs/web/history/picks_20260330.json
+ create mode 100644 docs/web/history/picks_20260331.json
+ create mode 100644 docs/web/history/picks_20260401.json
+ create mode 100644 docs/web/history/picks_20260402.json
+ create mode 100644 docs/web/history/picks_20260403.json
+ create mode 100644 docs/web/history/picks_20260406.json
+ create mode 100644 docs/web/history/picks_20260407.json
+ create mode 100644 docs/web/history/picks_20260410.json
+ create mode 100644 docs/web/history/picks_20260413.json
+ create mode 100644 docs/web/history/picks_20260414.json
+ create mode 100644 docs/web/history/picks_20260415.json
+ create mode 100644 docs/web/history/picks_20260416.json
+ create mode 100644 docs/web/history/picks_20260417.json
+ create mode 100644 docs/web/history/picks_20260420.json
+ create mode 100644 docs/web/history/picks_20260421.json
+ create mode 100644 docs/web/history/picks_20260422.json
+ create mode 100644 docs/web/history/picks_20260423.json
+ create mode 100644 web/history/picks_20260413.json
+ create mode 100644 web/history/picks_20260414.json
+ create mode 100644 web/history/picks_20260415.json
+ create mode 100644 web/history/picks_20260416.json
+ create mode 100644 web/history/picks_20260417.json
+ create mode 100644 web/history/picks_20260420.json
+ create mode 100644 web/history/picks_20260421.json
+ create mode 100644 web/history/picks_20260422.json
+ create mode 100644 web/history/picks_20260423.json
+To https://github.com/bursasearch/myx_shop_dev.git
+   273d59b..81977e5  master -> master
+✅ 推送完成
+🧹 清理暫存文件...
+📊 生成報告...
+✅ 報告已生成
