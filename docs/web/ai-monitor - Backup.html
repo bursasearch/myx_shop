@@ -81,12 +81,24 @@
             color: var(--danger);
             font-weight: bold;
         }
+        .progress-bar-custom {
+            height: 10px;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        .alert-box {
+            background: #fff3cd;
+            border: 2px dashed #ffc107;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 10px 0;
+        }
         .klse-action-btn {
             background: linear-gradient(135deg, var(--secondary) 0%, #2980b9 100%);
             color: white;
             border: none;
             border-radius: 25px;
-            padding: 8px 16px;
+            padding: 10px 20px;
             font-weight: bold;
             transition: all 0.3s ease;
         }
@@ -120,6 +132,7 @@
 
     <div class="container my-5">
         <div class="dashboard-container">
+        
             <div class="disclaimer-box">
                 <div class="disclaimer-title">
                     <i class="fas fa-exclamation-triangle"></i> 重要声明
@@ -132,9 +145,6 @@
                 </p>
                 <p style="margin-bottom: 0;">
                     <strong>本页面未获马来西亚证券委员会 (SC) 认可或授权。</strong>
-                </p>
-                <p style="margin-bottom: 0; margin-top: 8px; color: #d9534f;">
-                    <strong>⚠️ 本页面不提供任何买入、卖出或持有建议。所有数据仅供参考。</strong>
                 </p>
                 <div class="text-end mt-2">
                     <span class="badge bg-warning text-dark">📚 仅供学习参考</span>
@@ -228,7 +238,11 @@
                 renderCards();
                 document.getElementById('lastUpdateTime').textContent = lastUpdate;
             } catch (error) {
-                document.getElementById('stocksContainer').innerHTML = '<div class="col-12"><div class="alert alert-danger">数据加载失败: ' + error.message + '</div></div>';
+                document.getElementById('stocksContainer').innerHTML = `
+                    <div class="col-12">
+                        <div class="alert alert-danger">数据加载失败: ${error.message}</div>
+                    </div>
+                `;
             }
         }
 
@@ -252,13 +266,36 @@
                 const changeClass = (s.daily_change || 0) >= 0 ? 'positive' : 'negative';
                 const changeSign = (s.daily_change || 0) >= 0 ? '+' : '';
                 const price = s.price || 0;
-                html += '<div class="col-md-6 col-lg-4"><div class="card stock-card ' + (isWarrant ? 'warrant' : 'stock') + '" onclick="openKLSE(\'' + s.code + '\')"><div class="card-body"><div class="d-flex justify-content-between align-items-start mb-3"><div><h5 class="card-title mb-1">' + s.code + ' <small class="text-muted">' + (s.name || '') + '</small></h5><span class="badge ' + (isWarrant ? 'bg-danger' : 'bg-success') + '">' + (isWarrant ? '凭单类' : '普通股') + '</span><span class="badge bg-secondary">' + (s.sector_name || '其他') + '</span></div><div class="text-end"><h4 class="' + changeClass + ' mb-0">RM ' + price.toFixed(3) + '</h4><small class="' + changeClass + '">' + changeSign + ((s.daily_change || 0) * 100).toFixed(2) + '%</small></div></div><div class="d-grid gap-2"><button class="btn btn-sm klse-action-btn" onclick="event.stopPropagation(); openKLSE(\'' + s.code + '\')"><i class="fas fa-chart-line"></i> 查看详情</button></div><small class="text-muted d-block text-center mt-2">点击卡片查看详情</small></div></div></div>';
+                html += `
+                <div class="col-md-6 col-lg-4">
+                    <div class="card stock-card ${isWarrant ? 'warrant' : 'stock'}" onclick="openKLSE('${s.code}')">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-start mb-3">
+                                <div>
+                                    <h5 class="card-title mb-1">${s.code} <small class="text-muted">${s.name || ''}</small></h5>
+                                    <span class="badge ${isWarrant ? 'bg-danger' : 'bg-success'}">${isWarrant ? '凭单类' : '普通股'}</span>
+                                    <span class="badge bg-secondary">${s.sector_name || '其他'}</span>
+                                </div>
+                                <div class="text-end">
+                                    <h4 class="${changeClass} mb-0">RM ${price.toFixed(3)}</h4>
+                                    <small class="${changeClass}">${changeSign}${((s.daily_change || 0) * 100).toFixed(2)}%</small>
+                                </div>
+                            </div>
+                            <div class="d-grid gap-2">
+                                <button class="btn btn-sm klse-action-btn" onclick="event.stopPropagation(); openKLSE('${s.code}')">
+                                    <i class="fas fa-chart-line"></i> 查看详情
+                                </button>
+                            </div>
+                            <small class="text-muted d-block text-center mt-2">点击卡片查看详情</small>
+                        </div>
+                    </div>
+                </div>`;
             });
             container.innerHTML = html;
         }
 
         function openKLSE(code) {
-            window.open('https://www.klsescreener.com/v2/stocks/view/' + code, '_blank');
+            window.open(`https://www.klsescreener.com/v2/stocks/view/${code}`, '_blank');
         }
 
         function refreshData() {
