@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Bernama Audio: Malaysia & Laluan Selat Hormuz</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(145deg, #f0f4fa 0%, #e6edf4 100%);
+            font-family: 'Segoe UI', Roboto, 'Noto Sans', system-ui, -apple-system, 'Helvetica Neue', sans-serif;
+            padding: 24px 20px;
+            color: #1a2c3e;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* card utama */
+        .audio-card {
+            background: #ffffff;
+            border-radius: 48px 32px 48px 32px;
+            box-shadow: 0 20px 35px -12px rgba(0, 0, 0, 0.15), 0 2px 5px rgba(0, 0, 0, 0.02);
+            overflow: hidden;
+            transition: all 0.2s ease;
+            margin-bottom: 32px;
+        }
+
+        .header-bernama {
+            background: #0033a0; /* biru Bernama corporat */
+            padding: 20px 32px;
+            display: flex;
+            align-items: baseline;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            color: white;
+            border-bottom: 4px solid #ffcc00;
+        }
+
+        .logo-area h1 {
+            font-size: 1.9rem;
+            font-weight: 700;
+            letter-spacing: -0.3px;
+            display: inline-block;
+            background: #ffcc00;
+            color: #0033a0;
+            padding: 0 12px 0 16px;
+            border-radius: 60px;
+            line-height: 1.4;
+        }
+
+        .logo-area span {
+            font-size: 0.9rem;
+            font-weight: 500;
+            margin-left: 12px;
+            opacity: 0.9;
+        }
+
+        .date-badge {
+            background: rgba(255,255,255,0.2);
+            backdrop-filter: blur(4px);
+            padding: 8px 18px;
+            border-radius: 40px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        /* kawalan audio */
+        .audio-player-panel {
+            padding: 28px 32px 32px 32px;
+            background: #fefefe;
+            border-bottom: 1px solid #e2edf2;
+        }
+
+        .tts-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            flex-wrap: wrap;
+            margin-bottom: 24px;
+        }
+
+        .tts-header h2 {
+            font-size: 1.6rem;
+            font-weight: 600;
+            background: linear-gradient(135deg, #0033a0, #0066cc);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+        }
+
+        .badge-ai {
+            background: #eef2ff;
+            border-radius: 100px;
+            padding: 6px 18px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #0033a0;
+            border: 1px solid #cddcff;
+        }
+
+        .controls-wrapper {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            align-items: center;
+            justify-content: space-between;
+            background: #f8fafd;
+            padding: 20px 24px;
+            border-radius: 60px;
+            margin: 16px 0 8px 0;
+        }
+
+        .play-buttons {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+        }
+
+        .btn {
+            border: none;
+            background: white;
+            padding: 12px 28px;
+            border-radius: 100px;
+            font-weight: 600;
+            font-size: 1rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            transition: 0.2s;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+            font-family: inherit;
+        }
+
+        .btn-primary {
+            background: #0033a0;
+            color: white;
+            box-shadow: 0 6px 14px rgba(0,51,160,0.3);
+        }
+
+        .btn-primary:hover {
+            background: #00267a;
+            transform: scale(0.98);
+        }
+
+        .btn-secondary {
+            background: #eef2ff;
+            color: #1f3a6b;
+            border: 1px solid #cbdffc;
+        }
+
+        .btn-secondary:hover {
+            background: #e0e9ff;
+        }
+
+        .btn-stop {
+            background: #fef3f2;
+            color: #b91c1c;
+            border: 1px solid #ffcdcd;
+        }
+
+        .btn-stop:hover {
+            background: #ffe4e2;
+        }
+
+        .status-area {
+            background: #eef2fa;
+            border-radius: 40px;
+            padding: 10px 24px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .status-led {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #2b9348;
+            box-shadow: 0 0 5px #2b9348;
+            transition: 0.2s;
+        }
+
+        .status-led.speaking {
+            background: #e85d04;
+            box-shadow: 0 0 8px #e85d04;
+            animation: pulse 1s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 0.5; transform: scale(0.9);}
+            100% { opacity: 1; transform: scale(1.2);}
+        }
+
+        /* berita content */
+        .news-content {
+            padding: 32px 36px;
+            background: white;
+        }
+
+        .news-title {
+            font-size: 1.9rem;
+            font-weight: 800;
+            line-height: 1.3;
+            margin-bottom: 20px;
+            border-left: 5px solid #ffcc00;
+            padding-left: 24px;
+            color: #002266;
+        }
+
+        .meta-info {
+            display: flex;
+            gap: 28px;
+            margin-bottom: 28px;
+            font-size: 0.85rem;
+            color: #59748f;
+            border-bottom: 1px dashed #cddfe7;
+            padding-bottom: 18px;
+        }
+
+        .article-text {
+            font-size: 1.08rem;
+            line-height: 1.65;
+            color: #1f2f3e;
+            text-align: justify;
+        }
+
+        .article-text p {
+            margin-bottom: 1.35rem;
+        }
+
+        .article-text strong {
+            color: #0033a0;
+        }
+
+        .quote {
+            background: #f0f6fe;
+            border-left: 4px solid #ffcc00;
+            padding: 18px 24px;
+            margin: 1.5rem 0;
+            border-radius: 20px;
+            font-style: normal;
+            font-weight: 500;
+        }
+
+        footer {
+            text-align: center;
+            font-size: 0.75rem;
+            color: #5f7f9e;
+            padding: 28px 16px 12px;
+            border-top: 1px solid #dce7f0;
+            margin-top: 20px;
+        }
+
+        @media (max-width: 650px) {
+            body {
+                padding: 16px;
+            }
+            .news-title {
+                font-size: 1.5rem;
+            }
+            .controls-wrapper {
+                flex-direction: column;
+                align-items: stretch;
+                border-radius: 32px;
+            }
+            .play-buttons {
+                justify-content: center;
+            }
+            .news-content {
+                padding: 24px 20px;
+            }
+            .header-bernama {
+                flex-direction: column;
+                gap: 12px;
+            }
+        }
+
+        button:active {
+            transform: scale(0.97);
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="audio-card">
+        <div class="header-bernama">
+            <div class="logo-area">
+                <h1>BERNAMA</h1>
+                <span>News Hub · Suara Berita</span>
+            </div>
+            <div class="date-badge">
+                📅 26 April 2026 – Analisis EKONOMI
+            </div>
+        </div>
+
+        <!-- bahagian kawalan voice synthesis dengan pembacaan berfokus (Chunk) -->
+        <div class="audio-player-panel">
+            <div class="tts-header">
+                <h2>🎙️ Dengarkan Berita Penuh</h2>
+                <div class="badge-ai">⚡ Bacaan Suara Natural · Pecahan Ayat Stabil</div>
+            </div>
+            <div class="controls-wrapper">
+                <div class="play-buttons">
+                    <button id="playBtn" class="btn btn-primary">▶ Mainkan Berita</button>
+                    <button id="pauseBtn" class="btn btn-secondary">⏸ Jeda</button>
+                    <button id="stopBtn" class="btn btn-stop">⏹ Henti / Batal</button>
+                </div>
+                <div class="status-area" id="statusArea">
+                    <span class="status-led" id="statusLed"></span>
+                    <span id="statusText">🎧 Sedia untuk main</span>
+                </div>
+            </div>
+            <div style="font-size: 0.8rem; margin-top: 12px; padding-left: 8px; color:#46688a;">
+                💡 Fungsi suara membaca artikel penuh (Bahasa Melayu) menggunakan Web Speech API.<br>
+                ✅ Teknik pecahan ayat (chunk) bagi mengelakkan gangguan baca & ralat.
+            </div>
+        </div>
+
+        <!-- Kandungan berita (teks penuh dari Bernama) -->
+        <div class="news-content">
+            <div class="news-title">
+                Malaysia Berada Di Kedudukan Strategik Manfaat Pengalihan Laluan Selat Hormuz, Kecekapan Operasi Jadi Penentu – Pakar
+            </div>
+            <div class="meta-info">
+                <span>📰 Oleh Nur Athirah Mohd Shaharuddin</span>
+                <span>🕘 26 April 2026 10:57 AM</span>
+                <span>🏷️ EKONOMI & LOGISTIK</span>
+            </div>
+            <div class="article-text" id="articleText">
+                <p><strong>KUALA LUMPUR, 26 April (Bernama)</strong> -- Malaysia berada dalam kedudukan strategik untuk menyerap peningkatan aliran perdagangan yang dialihkan melalui Selat Melaka sekiranya pengendali perkapalan memilih laluan alternatif bagi mengelakkan ketegangan di Selat Hormuz yang terjejas konflik.</p>
+                
+                <p>Kelebihan ini dipacu oleh kekuatan geostrategik Malaysia sebagai hab rantaian bekalan serantau, menurut <strong>Profesor Dr Nor Aida Abdul Rahman</strong> dari Universiti Kuala Lumpur.</p>
+                
+                <p>“Namun, ia hanya menjadi kelebihan komersial sebenar apabila disokong oleh kecekapan operasi,” katanya kepada Bernama ketika mengulas kesan konflik Asia Barat terhadap industri rantaian bekalan negara.</p>
+                
+                <p>Nor Aida yang juga Profesor Rantaian Bekalan dan Strategi/Pengurusan Penerbangan universiti berkenaan, berkata <strong>Pelan Induk Logistik dan Pemudahcaraan Perdagangan Kementerian Pengangkutan</strong> secara jelas meletakkan Malaysia sebagai “Gerbang Logistik Pilihan ke Asia”.</p>
+                
+                <p>Menurutnya, kedudukan geografi tersebut perlu diterjemahkan kepada produktiviti lebih tinggi, kebolehpercayaan sistem serta pemudahcaraan perdagangan yang berkesan.</p>
+                
+                <div class="quote">
+                    “Bagi memperkukuh kedudukan ini, Malaysia boleh terus menambah baik masa pusing ganti pelabuhan, melancarkan proses kastam serta memperkukuh integrasi antara zon perindustrian dan rangkaian logistik daratan. Jumlah rekod kontena yang dikendalikan oleh Pelabuhan Klang dan Pelabuhan Tanjung Pelepas menunjukkan Malaysia sudah mempunyai asas kapasiti yang kukuh serta kerelevanan dalam pasaran.”
+                </div>
+                
+                <p>Beliau berkata insentif seperti skim Kompleks Logistik Pintar oleh Lembaga Pembangunan Pelaburan Malaysia (MIDA) turut menyokong pelaburan dalam pembangunan infrastruktur logistik yang lebih pintar dan cekap.</p>
+                
+                <p>Selain berfungsi sebagai lokasi transit, Nor Aida berkata Malaysia berpotensi besar untuk dibangunkan sebagai hab pengedaran serantau, pusat pemenuhan (fulfilment centre) serta pangkalan logistik bernilai tambah.</p>
+                
+                <p>Dengan kelebihan sedia ada, beliau berkata Malaysia berada dalam kedudukan baik untuk menyerap sebahagian pengalihan aliran perdagangan global, susulan kesiapsiagaan infrastruktur pelabuhan dan logistik negara. Namun begitu, beliau menegaskan kelebihan itu perlu disokong oleh penambahbaikan berterusan merangkumi keseluruhan ekosistem logistik.</p>
+                
+                <p>Antara aspek utama ialah integrasi digital, penyelarasan lebih kukuh antara pelabuhan dan kawasan hinterland serta pengurangan tempoh pemprosesan bagi memastikan kapasiti fizikal dapat diterjemahkan kepada keupayaan operasi yang sebenar.</p>
+                
+                <p>Beliau berkata Pelabuhan Klang dan Pelabuhan Tanjung Pelepas terus mencatat jumlah kontena yang tinggi, manakala data rasmi Lembaga Pelabuhan Klang menunjukkan kapasiti terminal serta kemudahan sokongan yang kukuh bagi operasi kontena.</p>
+                
+                <p>“Ini menunjukkan Malaysia tidak bermula daripada kedudukan yang lemah dari segi keupayaan pelabuhan utama. Namun, keupayaan menyerap perdagangan tambahan tidak hanya bergantung kepada pelabuhan semata-mata. Ia turut bergantung kepada kecekapan pengangkutan daratan, ketersediaan gudang, aliran kastam, penyelarasan operator serta kesalinghubungan digital antara agensi dan pemain industri,” katanya.</p>
+                
+                <p>Dalam senario lonjakan mendadak, tekanan boleh beralih daripada pelabuhan kepada pergerakan hinterland atau proses pelepasan kargo sekiranya penyelarasan tidak cukup pantas dan responsif, tambahnya.</p>
+                
+                <p>Sementara itu, penganalisis geostrategik Malaysia, <strong>Profesor Dr Azmi Hassan</strong> berkata pergolakan di Selat Hormuz telah kembali menonjolkan kepentingan laluan sempit strategik dunia serta menyerlahkan kestabilan laluan perairan Asia Tenggara.</p>
+                
+                <p>Beliau berkata Malaysia bersama negara pesisir Selat Melaka termasuk Indonesia dan Singapura secara konsisten mengekalkan prinsip memastikan laluan maritim utama kekal terbuka dan bebas daripada pengaruh geopolitik.</p>
+                
+                <div class="quote">
+                    Azmi berkata perkembangan positif bagi kebebasan laluan pelayaran ialah negara-negara ASEAN tidak pernah menjadikan laluan strategik seperti Selat Melaka dan Laut China Selatan sebagai alat geopolitik, berbeza dengan ketegangan di Selat Hormuz.
+                </div>
+                
+                <p>Walaupun Laut China Selatan merupakan kawasan sensitif dengan persaingan kuasa besar, laluan itu kekal terbuka kepada navigasi antarabangsa, mencerminkan komitmen rantau ini terhadap kelancaran perdagangan global.</p>
+                
+                <p>“Begitu juga Selat Melaka, walaupun sempit dan sangat sibuk, ia tidak pernah digunakan oleh Malaysia atau Indonesia sebagai instrumen geopolitik,” katanya.</p>
+                
+                <p style="margin-top: 24px; font-size: 0.85rem; color: #4f6f8f;">-- BERNAMA --<br>Hakcipta terpelihara. Berita sahih dan komprehensif.</p>
+            </div>
+        </div>
+        <footer>
+            🎧 Fungsi suara menggunakan SpeechSynthesis dengan teknik potongan ayat (Chunk) bagi kestabilan maksimum. Sumber: BERNAMA 26 April 2026 (ID:2549487)<br>
+            ✅ Disokong penuh oleh Chrome, Edge, Safari. Klik "Mainkan Berita" selepas halaman dimuat.
+        </footer>
+    </div>
+</div>
+
+<script>
+    (function() {
+        // ---------------- Elemen Dom ----------------
+        const articleDiv = document.getElementById('articleText');
+        const synth = window.speechSynthesis;
+        
+        let utteranceChunks = [];      // Senarai teks pendek (ayat)
+        let currentChunkIndex = 0;
+        let isPausedFlag = false;
+        let currentUtterance = null;   // Untuk rujukan jika perlu cancel
+        
+        const statusTextSpan = document.getElementById('statusText');
+        const statusLed = document.getElementById('statusLed');
+        
+        // ---------- Fungsi update UI ----------
+        function updateUIStatus(status) {
+            const states = {
+                'ready': { text: '🎧 Sedia untuk main. Tekan Mainkan Berita', class: '' },
+                'speaking': { text: '🔊 Sedang membaca berita (Bahasa Melayu)...', class: 'speaking' },
+                'paused': { text: '⏸ Dijeda. Tekan main untuk sambung semula.', class: '' },
+                'stopped': { text: '🛑 Bacaan dihentikan. Sedia untuk ulang.', class: '' },
+                'error': { text: '⚠️ Ralat suara. Sila muat semula halaman atau guna Chrome/Edge.', class: '' },
+                'noSupport': { text: '❌ Pelayar tidak menyokong Web Speech API. Guna Chrome, Edge atau Safari.', class: '' }
+            };
+            const currentState = states[status] || states.ready;
+            statusTextSpan.innerText = currentState.text;
+            statusLed.className = 'status-led ' + currentState.class;
+        }
+        
+        // ---------- Fungsi pecah teks kepada ayat-ayat pendek (elak silent gap & ralat Chrome) ----------
+        function splitTextIntoChunks(fullText) {
+            // Bersihkan teks: ganti baris baru, carriage return
+            let cleaned = fullText.replace(/\r?\n/g, ' ').replace(/\s+/g, ' ').trim();
+            // Pecah berdasarkan tanda baca ayat: . ! ? . (juga titik bertindih tapi utamakan ayat)
+            // Pattern:  nampak . ! ?  atau  ."  atau  ?"  diikuti ruang atau akhir string
+            let sentences = cleaned.split(/(?<=[.!?])\s+(?=[A-Z"“])/);
+            // Jika still terlalu panjang (> 200 aksara) potong lagi berdasarkan koma utama atau selepas 180 chars
+            const finalChunks = [];
+            for (let sent of sentences) {
+                if (sent.length <= 200) {
+                    finalChunks.push(sent.trim());
+                } else {
+                    // pecah dengan koma atau titik koma
+                    let parts = sent.split(/[,;]/);
+                    let temp = '';
+                    for (let part of parts) {
+                        if ((temp + part).length < 200) {
+                            temp += (temp ? ',' : '') + part;
+                        } else {
+                            if (temp.trim()) finalChunks.push(temp.trim());
+                            temp = part;
+                        }
+                    }
+                    if (temp.trim()) finalChunks.push(temp.trim());
+                }
+            }
+            // filter kosong
+            return finalChunks.filter(c => c.length > 5);
+        }
+        
+        // ----- Fungsi main Chunk seterusnya (Rantai) -----
+        function speakNextChunk() {
+            // Jika tiada lagi chunk atau keadaan tidak sesuai, tamatkan
+            if (currentChunkIndex >= utteranceChunks.length) {
+                updateUIStatus('ready');
+                currentUtterance = null;
+                return;
+            }
+            
+            // Jika dalam keadaan pause, jangan main
+            if (isPausedFlag) {
+                return;
+            }
+            
+            const textToSpeak = utteranceChunks[currentChunkIndex];
+            if (!textToSpeak) {
+                currentChunkIndex++;
+                speakNextChunk();
+                return;
+            }
+            
+            const utter = new SpeechSynthesisUtterance(textToSpeak);
+            utter.lang = 'ms-MY';
+            utter.rate = 0.92;      // Sederhana jelas
+            utter.pitch = 1.0;
+            utter.volume = 1;
+            
+            utter.onstart = () => {
+                currentUtterance = utter;
+                updateUIStatus('speaking');
+            };
+            
+            utter.onend = () => {
+                // Bila satu chunk habis, terus ke chunk seterusnya jika tidak dijeda
+                if (!isPausedFlag) {
+                    currentChunkIndex++;
+                    speakNextChunk();
+                } else {
+                    // jika dijeda, kita tunggu resume
+                }
+                currentUtterance = null;
+            };
+            
+            utter.onerror = (event) => {
+                console.warn("Speech error pada chunk:", event);
+                // Jangan henti terus, cuba next chunk jika ralat minor (contoh interrupted tidak perlu)
+                if (event.error === 'interrupted' || event.error === 'canceled') {
+                    // ianya dijeda atau dihentikan oleh pengguna
+                    if (!isPausedFlag && currentChunkIndex < utteranceChunks.length) {
+                        // jika bukan disebabkan pause, skip ralat minor dan terus
+                    }
+                } else {
+                    // Ralat lain: example "synthesis failed" – kita teruskan ke chunk seterusnya
+                    if (!isPausedFlag) {
+                        currentChunkIndex++;
+                        speakNextChunk();
+                    }
+                }
+                currentUtterance = null;
+            };
+            
+            // Hanya bercakap jika synth tidak dalam keadaan dibatalkan secara rawak
+            if (!synth.speaking || synth.paused) {
+                synth.speak(utter);
+            } else {
+                // fallback: beri sedikit masa, cancel dulu
+                synth.cancel();
+                setTimeout(() => {
+                    if (!isPausedFlag) synth.speak(utter);
+                }, 50);
+            }
+        }
+        
+        // ---------- Main penuh (reset dan mula) ----------
+        function startFullReading() {
+            if (!synth) {
+                updateUIStatus('noSupport');
+                return;
+            }
+            // Hentikan semua bacaan sebelumnya
+            synth.cancel();
+            currentUtterance = null;
+            
+            // Ambil teks dari bahagian artikel (termasuk semua petikan & perenggan)
+            let rawText = articleDiv.innerText || articleDiv.textContent;
+            if (!rawText || rawText.length < 10) {
+                updateUIStatus('error');
+                return;
+            }
+            
+            // Pecah kepada ayat-ayat kecil yang stabil
+            utteranceChunks = splitTextIntoChunks(rawText);
+            if (utteranceChunks.length === 0) {
+                utteranceChunks = [rawText.substring(0, 300)]; // fallback
+            }
+            
+            currentChunkIndex = 0;
+            isPausedFlag = false;
+            
+            // Debug: console jumlah chunk
+            console.log(`Jumlah chunk: ${utteranceChunks.length} untuk bacaan stabil`);
+            speakNextChunk();
+        }
+        
+        // ---------- Jeda (Pause) ----------
+        function pauseReading() {
+            if (!synth) return;
+            // Jika sedang bercakap dan tidak dijeda
+            if (synth.speaking && !synth.paused) {
+                synth.pause();
+                isPausedFlag = true;
+                updateUIStatus('paused');
+            } 
+            else if (synth.paused) {
+                // sudah dijeda, hanya maklum
+                statusTextSpan.innerText = '⏸ Sudah dijeda, tekan Main untuk sambung.';
+            }
+            else if (utteranceChunks.length > 0 && currentChunkIndex < utteranceChunks.length && !synth.speaking) {
+                // keadaan di tengah-tengah tapi speech belum main? tandakan pause supaya resume nanti
+                isPausedFlag = true;
+                updateUIStatus('paused');
+            }
+            else {
+                // tiada bacaan aktif
+                if (utteranceChunks.length === 0) {
+                    updateUIStatus('ready');
+                } else {
+                    updateUIStatus('ready');
+                }
+            }
+        }
+        
+        // ---------- Sambung semula (Resume) ----------
+        function resumeReading() {
+            if (!synth) return;
+            // Jika dalam keadaan pause Web Speech API
+            if (synth.paused) {
+                synth.resume();
+                isPausedFlag = false;
+                updateUIStatus('speaking');
+            }
+            else if (isPausedFlag && !synth.speaking) {
+                // Kita dalam state pause secara logical (antara chunk)
+                isPausedFlag = false;
+                // Sambung chunk seterusnya
+                speakNextChunk();
+            }
+            else if (!synth.speaking && utteranceChunks.length > 0 && currentChunkIndex < utteranceChunks.length && !isPausedFlag) {
+                // Jika tidak bercakap tetapi belum habis dan tidak dijeda, mulakan dari chunk semasa
+                speakNextChunk();
+            }
+            else if (currentChunkIndex >= utteranceChunks.length && utteranceChunks.length > 0) {
+                // Sudah habis, jadikan ready
+                updateUIStatus('ready');
+                currentChunkIndex = 0;
+                isPausedFlag = false;
+            }
+            else {
+                // Tiada sesi bacaan, mungkin perlu tekan play semula
+                if (utteranceChunks.length === 0) {
+                    updateUIStatus('ready');
+                } else {
+                    startFullReading();
+                }
+            }
+        }
+        
+        // ---------- Henti total (Stop & cancel) ----------
+        function stopReading() {
+            if (!synth) return;
+            synth.cancel();
+            currentUtterance = null;
+            isPausedFlag = false;
+            currentChunkIndex = 0;
+            utteranceChunks = [];
+            updateUIStatus('stopped');
+            // Selepas sekejap, kembalikan ke ready tanpa teks chunk
+            setTimeout(() => {
+                if (!synth.speaking) {
+                    updateUIStatus('ready');
+                }
+            }, 200);
+        }
+        
+        // ---------- Butang event ----------
+        const playBtn = document.getElementById('playBtn');
+        const pauseBtn = document.getElementById('pauseBtn');
+        const stopBtn = document.getElementById('stopBtn');
+        
+        if (playBtn) {
+            playBtn.addEventListener('click', () => {
+                // Jika dalam keadaan 'paused' logical, sambung
+                if (isPausedFlag || (synth && synth.paused)) {
+                    resumeReading();
+                } 
+                else if (utteranceChunks.length > 0 && currentChunkIndex < utteranceChunks.length && !synth.speaking) {
+                    // Ada sesi sebelumnya yang terhenti bukan pause, sambung
+                    resumeReading();
+                }
+                else {
+                    // Mulakan bacaan baru dari awal
+                    startFullReading();
+                }
+            });
+        }
+        
+        if (pauseBtn) {
+            pauseBtn.addEventListener('click', () => {
+                if (synth && (synth.speaking || utteranceChunks.length > 0)) {
+                    pauseReading();
+                } else {
+                    statusTextSpan.innerText = 'Tiada bacaan aktif untuk dijeda.';
+                    setTimeout(() => {
+                        if (!synth.speaking) updateUIStatus('ready');
+                    }, 800);
+                }
+            });
+        }
+        
+        if (stopBtn) {
+            stopBtn.addEventListener('click', () => {
+                stopReading();
+            });
+        }
+        
+        // ---------- Inisiasi awal: semak sokongan SpeechSynthesis ----------
+        if (!synth) {
+            updateUIStatus('noSupport');
+            if(playBtn) playBtn.disabled = true;
+            if(pauseBtn) pauseBtn.disabled = true;
+            if(stopBtn) stopBtn.disabled = true;
+        } else {
+            updateUIStatus('ready');
+            // Sediakan keperluan pemanasan (warmup) untuk pastikan voice loaded
+            const silentUtter = new SpeechSynthesisUtterance(' ');
+            silentUtter.lang = 'ms-MY';
+            synth.speak(silentUtter);
+            synth.cancel(); // terus cancel supaya tak berbunyi
+        }
+        
+        // Tambahan: mengelak isu Chrome yang menggantung speech apabila tab tidak aktif, 
+        // tetapi hanyalah small precaution.
+        window.addEventListener('beforeunload', () => {
+            if (synth && synth.speaking) {
+                synth.cancel();
+            }
+        });
+    })();
+</script>
+</body>
+</html>

@@ -37,9 +37,9 @@ mkdir -p "$BASE_DIR/logs"
         python3 eod_processor.py "$BURSA_FILE"
         
         # 複製生成的 JSON 到正確位置
-        if [ -f "picks_latest.json" ]; then
-            cp picks_latest.json "$BASE_DIR/web/"
-            cp picks_latest.json "$BASE_DIR/docs/web/"
+        if [ -f "docs/web/picks_latest.json" ]; then
+            cp docs/web/picks_latest.json "$BASE_DIR/web/"
+            cp docs/web/picks_latest.json "$BASE_DIR/docs/web/"
             echo "✅ Bursa 數據已更新"
         fi
         
@@ -61,9 +61,9 @@ if [ -f "$SGX_FILE" ]; then
     python3 sgx_eod_processor.py "$SGX_FILE"
     
     # 複製生成的 JSON 到正確位置
-    if [ -f "sgx_picks_latest.json" ]; then
-        cp sgx_picks_latest.json "$BASE_DIR/web/"
-        cp sgx_picks_latest.json "$BASE_DIR/docs/web/"
+    if [ -f "docs/web/sgx_picks_latest.json" ]; then
+        cp docs/web/sgx_picks_latest.json "$BASE_DIR/web/"
+        cp docs/web/sgx_picks_latest.json "$BASE_DIR/docs/web/"
         echo "✅ SGX 數據已更新"
     fi
     
@@ -84,12 +84,12 @@ fi
     # cp -f *.html docs/ 2>/dev/null && echo "✅ 複製 HTML 到 docs/"
 
     # 複製 Bursa JSON 文件
-    cp -f web/picks_latest.json docs/web/ 2>/dev/null && echo "✅ 複製 picks_latest.json"
+    cp -f docs/web/picks_latest.json docs/web/ 2>/dev/null && echo "✅ 複製 picks_latest.json"
     # cp -f web/date_config.js docs/ 2>/dev/null && echo "✅ 複製 date_config.js"
     cp -rf web/history/picks_*.json docs/web/history/ 2>/dev/null && echo "✅ 複製 Bursa 歷史數據"
 
     # 複製 SGX JSON 文件
-    cp -f web/sgx_picks_latest.json docs/web/ 2>/dev/null && echo "✅ 複製 sgx_picks_latest.json"
+    cp -f docs/web/sgx_picks_latest.json docs/web/ 2>/dev/null && echo "✅ 複製 sgx_picks_latest.json"
     # cp -f web/sgx_date_config.js docs/ 2>/dev/null && echo "✅ 複製 sgx_date_config.js"
     cp -rf web/history/sgx_picks_*.json docs/history/ 2>/dev/null && echo "✅ 複製 SGX 歷史數據"
 
