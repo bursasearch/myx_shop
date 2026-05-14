@@ -1,6 +1,11 @@
 // 自动生成的历史日期列表
 window.availableDates = [
   {
+    "id": "20260514",
+    "display": "2026-05-14",
+    "file": "history/picks_20260514.json"
+  },
+  {
     "id": "20260513",
     "display": "2026-05-13",
     "file": "history/picks_20260513.json"
@@ -144,11 +149,6 @@ window.availableDates = [
     "id": "20260331",
     "display": "2026-03-31",
     "file": "history/picks_20260331.json"
-  },
-  {
-    "id": "20260330",
-    "display": "2026-03-30",
-    "file": "history/picks_20260330.json"
   }
 ];
-window.latestDate = "20260513";
+window.latestDate = "20260514";
