@@ -401,6 +401,143 @@
             color: #5f735f;
         }
 
+        /* 支持面板样式 (QR码弹窗) */
+        .support-panel {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            z-index: 1050;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .support-card {
+            max-width: 380px;
+            background: white;
+            border-radius: 28px;
+            padding: 20px;
+            position: relative;
+            animation: slideUp 0.3s ease;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+        @keyframes slideUp {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: none;
+            border: none;
+            font-size: 22px;
+            color: #999;
+            cursor: pointer;
+            padding: 0;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+        .close-btn:hover {
+            background: #f5f5f5;
+            color: var(--danger);
+        }
+        .qr-switch-tabs {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 20px;
+            background: #f0f0f0;
+            padding: 6px;
+            border-radius: 60px;
+        }
+        .qr-tab {
+            flex: 1;
+            text-align: center;
+            padding: 10px 0;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s;
+            font-size: 1rem;
+        }
+        .qr-tab.active {
+            background: #2c7a2c;
+            color: white;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .qr-tab:not(.active) {
+            background: transparent;
+            color: #666;
+        }
+        .qr-container {
+            text-align: center;
+            margin: 15px 0;
+        }
+        .qr-code-img {
+            width: 100%;
+            max-width: 240px;
+            height: auto;
+            border-radius: 16px;
+            margin: 0 auto;
+            display: block;
+            border: 1px solid #ddd;
+            background: white;
+            padding: 8px;
+        }
+        .qr-note {
+            background: #e8f5e9;
+            padding: 12px;
+            border-radius: 16px;
+            margin-top: 15px;
+            font-size: 13px;
+            color: #2e7d32;
+            text-align: left;
+        }
+        .qr-note i {
+            margin-right: 6px;
+        }
+        .coffee-icon-lg {
+            text-align: center;
+            font-size: 32px;
+            margin-bottom: 10px;
+            color: #FF9800;
+        }
+
+        /* 固定咖啡按钮 */
+        #coffee-fab {
+            position: fixed;
+            bottom: 90px;
+            right: 25px;
+            z-index: 1040;
+            background: #FF9800;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 56px;
+            height: 56px;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(255, 152, 0, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            border: 2px solid rgba(255,255,255,0.3);
+        }
+        #coffee-fab:hover {
+            transform: scale(1.1);
+            background: #F57C00;
+            box-shadow: 0 6px 20px rgba(255, 152, 0, 0.6);
+        }
+
         @media (max-width: 480px) {
             .recycle-card {
                 padding: 20px 16px;
@@ -439,23 +576,23 @@
             </a>
         </div>
 
-        <!-- 免责声明（避免证券委员会问题） -->
+        <!-- 免责声明 -->
         <div class="disclaimer-box">
             <i class="fas fa-exclamation-triangle"></i>
             <strong>免责声明：</strong>本页面为个人旧报纸回收服务，非注册公司，与任何证券或投资业务无关。
         </div>
 
-<!-- 在 bursa.html 的油价通知处添加 -->
-<div class="notice-box">
-    <div class="notice-icon">⛽🚛</div>
-    <div>
-        <strong>暫停服務通知</strong><br>
-        <span style="font-size:0.9rem;">
-            因柴油價格高企 (RM6/升) 及車輛維修中，<br>
-            回收服務暫時停止，敬請見諒。
-        </span>
-    </div>
-</div>
+        <!-- 暂停服务通知 -->
+        <div class="notice-box">
+            <div class="notice-icon">⛽🚛</div>
+            <div>
+                <strong>暫停服務通知</strong><br>
+                <span style="font-size:0.9rem;">
+                    因柴油價格高企 (RM6/升) 及車輛維修中，<br>
+                    回收服務暫時停止，敬請見諒。
+                </span>
+            </div>
+        </div>
 
         <!-- 服务区域 -->
         <div class="area-highlight">
@@ -533,7 +670,121 @@
         </div>
     </div>
 
+    <!-- ========== 支持面板 (Maybank + TnG QR码) ========== -->
+    <div id="supportPanel" class="support-panel">
+        <div class="support-card">
+            <button class="close-btn" onclick="hideSupportPanel()">
+                <i class="fas fa-times"></i>
+            </button>
+            
+            <div class="coffee-icon-lg">
+                <i class="fas fa-mug-hot"></i>
+            </div>
+            <h4 style="text-align:center; margin-bottom:8px;">请我喝杯咖啡 ☕</h4>
+            <p style="text-align:center; color:#666; font-size:13px; margin-bottom:20px;">
+                如果回收服务对您有帮助，欢迎随意支持
+            </p>
+
+            <!-- 切换选项卡 -->
+            <div class="qr-switch-tabs">
+                <div class="qr-tab active" id="tabMaybank" onclick="switchQR('maybank')">
+                    <i class="fas fa-university"></i> Maybank
+                </div>
+                <div class="qr-tab" id="tabTng" onclick="switchQR('tng')">
+                    <i class="fas fa-mobile-alt"></i> TnG eWallet
+                </div>
+            </div>
+
+            <!-- Maybank QR 容器 -->
+            <div id="maybankQR" class="qr-container">
+                <img src="images/maybank-qr.jpg" 
+                     alt="Maybank QR Pay" 
+                     class="qr-code-img"
+                     onerror="this.style.display='none'; document.getElementById('maybankFallback').style.display='block';">
+                <div id="maybankFallback" style="display:none; background:#fff3cd; padding:15px; border-radius:12px; color:#856404;">
+                    <i class="fas fa-exclamation-circle"></i> Maybank QR码加载失败<br>
+                    <small>请稍后重试或使用TnG</small>
+                </div>
+            </div>
+
+            <!-- TnG QR 容器 (初始隐藏) -->
+            <div id="tngQR" class="qr-container" style="display:none;">
+                <img src="images/tng-qr.jpg" 
+                     alt="TnG eWallet QR" 
+                     class="qr-code-img"
+                     onerror="this.style.display='none'; document.getElementById('tngFallback').style.display='block';">
+                <div id="tngFallback" style="display:none; background:#fff3cd; padding:15px; border-radius:12px; color:#856404;">
+                    <i class="fas fa-exclamation-circle"></i> TnG QR码加载失败<br>
+                    <small>请稍后重试或使用Maybank</small>
+                </div>
+            </div>
+
+            <!-- 使用说明 -->
+            <div class="qr-note">
+                <i class="fas fa-info-circle"></i> <strong>使用说明</strong><br>
+                <span style="font-size:12px;">
+                    1. 打开 Maybank App 或 TnG eWallet<br>
+                    2. 选择 "DuitNow QR" / "扫描付款"<br>
+                    3. 扫描上方 QR 码<br>
+                    4. 输入您想支持的金额<br>
+                    5. 确认转账即可
+                </span>
+            </div>
+            
+            <div style="color:#999; font-size:12px; text-align:center; margin-top:12px;">
+                <i class="fas fa-heart" style="color:#e74c3c;"></i> 感谢每一份支持！
+            </div>
+        </div>
+    </div>
+
+    <!-- 固定咖啡按钮 -->
+    <button id="coffee-fab" onclick="showSupportPanel()">
+        <i class="fas fa-mug-hot"></i>
+    </button>
+
     <!-- Font Awesome 图标库 -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+    
+    <script>
+        // ========== 支持面板控制 ==========
+        function showSupportPanel() {
+            document.getElementById('supportPanel').style.display = 'flex';
+        }
+        function hideSupportPanel() {
+            document.getElementById('supportPanel').style.display = 'none';
+        }
+        
+        // 点击背景关闭
+        document.addEventListener('DOMContentLoaded', function() {
+            const panel = document.getElementById('supportPanel');
+            if (panel) {
+                panel.addEventListener('click', function(e) {
+                    if (e.target === panel) {
+                        hideSupportPanel();
+                    }
+                });
+            }
+        });
+
+        // ========== 切换 QR 码 ==========
+        function switchQR(type) {
+            const maybankDiv = document.getElementById('maybankQR');
+            const tngDiv = document.getElementById('tngQR');
+            const tabMaybank = document.getElementById('tabMaybank');
+            const tabTng = document.getElementById('tabTng');
+            
+            if (type === 'maybank') {
+                maybankDiv.style.display = 'block';
+                tngDiv.style.display = 'none';
+                tabMaybank.classList.add('active');
+                tabTng.classList.remove('active');
+            } else {
+                maybankDiv.style.display = 'none';
+                tngDiv.style.display = 'block';
+                tabMaybank.classList.remove('active');
+                tabTng.classList.add('active');
+            }
+        }
+    </script>
 </body>
 </html>
