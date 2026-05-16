@@ -24,8 +24,7 @@
         import * as iztroLib from 'iztro';
         window.iztroLib = iztroLib;
         window.iztroReady = true;
-        console.log('iztro 已加载', iztroLib);
-        console.log('astro 方法:', iztroLib.astro);
+        console.log('iztro 已加载');
     </script>
 </head>
 <body>
@@ -73,8 +72,8 @@
         const today = new Date();
         document.getElementById('birthDate').value = `${today.getFullYear()}-${String(today.getMonth()+1).padStart(2,'0')}-${String(today.getDate()).padStart(2,'0')}`;
         
-        // 时辰索引转小时
-        const hourMap = [23, 1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21];
+        // 时辰索引转小时（子时特殊处理为0）
+        const hourMap = [0, 1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21];
         
         window.getAstrolabe = async function() {
             const loading = document.getElementById('loading');
@@ -94,18 +93,33 @@
                 if (!birthDate) throw new Error('请选择日期');
                 if (isNaN(hourIndex)) throw new Error('请选择时辰');
                 
-                const hour = hourMap[hourIndex];
+                let hour = hourMap[hourIndex];
+                
+                // 子时特殊处理：如果 hour 是 0，可能需要传递 0 而不是 23
                 console.log(`日期: ${birthDate}, 时辰索引: ${hourIndex}, 小时: ${hour}`);
                 
                 // 解析日期
                 const [year, month, day] = birthDate.split('-').map(Number);
                 
-                // 方法1: 使用 bySolar (参数: year, month, day, hour, minute, gender)
-                // gender: 0=男, 1=女
+                // 性别代码: 0=男, 1=女
                 const genderCode = gender === 'male' ? 0 : 1;
                 
-                console.log(`调用 bySolar(${year}, ${month}, ${day}, ${hour}, 0, ${genderCode})`);
-                const data = iztroLib.astro.bySolar(year, month, day, hour, 0, genderCode);
+                let data;
+                
+                // 对于子时 (hour=0)，尝试不同的值
+                if (hourIndex === 0) {
+                    // 子时：尝试用 0 或 23？先试 0
+                    try {
+                        data = iztroLib.astro.bySolar(year, month, day, 0, 0, genderCode);
+                        console.log('子时使用 hour=0 成功');
+                    } catch(e) {
+                        console.log('hour=0 失败，尝试 hour=23');
+                        data = iztroLib.astro.bySolar(year, month, day, 23, 0, genderCode);
+                        console.log('子时使用 hour=23 成功');
+                    }
+                } else {
+                    data = iztroLib.astro.bySolar(year, month, day, hour, 0, genderCode);
+                }
                 
                 console.log('排盘结果:', data);
                 
@@ -125,7 +139,6 @@
         function displayResult(data, dateInfo) {
             const result = document.getElementById('result');
             
-            // 获取宫位数据
             const palaces = data.palaces || [];
             
             if (palaces.length === 0) {
@@ -134,7 +147,6 @@
                 return;
             }
             
-            // 获取八字信息
             let bazi = '';
             if (data.rawDates && data.rawDates.chineseDate) {
                 const cd = data.rawDates.chineseDate;
