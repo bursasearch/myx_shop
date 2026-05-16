@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>紫微斗数免费排盘 | 命盘解析 | 手动输入日期</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #eee;
+        }
+        .container { max-width: 1200px; margin: 0 auto; }
+        .card {
+            background: rgba(255,255,255,0.08);
+            backdrop-filter: blur(10px);
+            border-radius: 32px;
+            padding: 24px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(255,215,0,0.2);
+        }
+        h1 { text-align: center; color: #FFD966; margin-bottom: 20px; font-size: 1.8rem; }
+        h2, h3 { color: #FFD966; margin-bottom: 15px; }
+        .form-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 20px;
+            justify-content: center;
+        }
+        .input-field { flex: 1; min-width: 150px; }
+        label { display: block; margin-bottom: 5px; color: #FFD966; font-weight: 500; }
+        input, select {
+            width: 100%;
+            padding: 12px;
+            border-radius: 16px;
+            border: 1px solid #FFD966;
+            background: rgba(0,0,0,0.6);
+            color: white;
+            font-size: 16px;
+        }
+        .date-input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            width: 100%;
+        }
+        .date-mode-switch {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 6px;
+        }
+        .mode-btn {
+            flex: 1;
+            background: rgba(255,215,0,0.15);
+            border: 1px solid #FFD966;
+            border-radius: 40px;
+            padding: 8px 12px;
+            text-align: center;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.2s;
+            color: #eee;
+        }
+        .mode-btn.active {
+            background: #FFD966;
+            color: #1a1a2e;
+            border-color: #FFD966;
+        }
+        .manual-date-inputs {
+            display: none;
+            gap: 12px;
+        }
+        .manual-date-inputs.active {
+            display: flex;
+            flex-wrap: wrap;
+        }
+        .manual-date-inputs input {
+            flex: 1;
+            min-width: 80px;
+        }
+        .picker-date-input {
+            display: block;
+        }
+        .picker-date-input.hide {
+            display: none;
+        }
+        .date-hint {
+            font-size: 11px;
+            text-align: center;
+            margin-top: 6px;
+            color: #ccc;
+        }
+        .calendar-type {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 15px;
+            justify-content: center;
+        }
+        .calendar-type label { display: inline-flex; align-items: center; gap: 6px; cursor: pointer; }
+        .btn-container { text-align: center; margin-top: 20px; }
+        button {
+            background: linear-gradient(135deg, #FFD966, #FFB347);
+            border: none;
+            padding: 12px 30px;
+            border-radius: 40px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #1a1a2e;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        button:hover { transform: scale(1.02); }
+        .result-area { overflow-x: auto; display: none; }
+        .palace-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            margin-top: 20px;
+        }
+        .palace-card {
+            background: rgba(0,0,0,0.5);
+            border-radius: 16px;
+            padding: 12px;
+            border-left: 4px solid #FFD966;
+            min-height: 120px;
+        }
+        .palace-name { font-size: 16px; font-weight: bold; color: #FFD966; margin-bottom: 8px; }
+        .palace-dz { float: right; color: #aaa; font-size: 12px; }
+        .major-star { color: #ff8888; font-weight: bold; font-size: 14px; margin-bottom: 4px; }
+        .minor-star { color: #88ff88; font-size: 12px; }
+        .loading {
+            text-align: center;
+            padding: 40px;
+            display: none;
+        }
+        .spinner {
+            border: 4px solid rgba(255,215,0,0.3);
+            border-top: 4px solid #FFD966;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .info-text { font-size: 12px; color: #aaa; text-align: center; margin-top: 10px; }
+        @media (max-width: 768px) { .palace-grid { grid-template-columns: repeat(2, 1fr); } }
+
+        /* 贊助彈窗與懸浮按鈕 */
+        .support-panel {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            z-index: 1050;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .support-panel.active { display: flex; }
+        .support-card {
+            width: 100%;
+            max-width: 380px;
+            background: white;
+            border-radius: 28px;
+            padding: 24px;
+            position: relative;
+            animation: slideUp 0.3s ease;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            color: #333;
+        }
+        @keyframes slideUp {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            width: 30px;
+            height: 30px;
+            color: #999;
+        }
+        .qr-switch-tabs {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 20px;
+            background: #f0f0f0;
+            padding: 6px;
+            border-radius: 60px;
+        }
+        .qr-tab {
+            flex: 1;
+            text-align: center;
+            padding: 10px 0;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s;
+            color: #666;
+        }
+        .qr-tab.active { background: #2c7a2c; color: white; }
+        .qr-container { text-align: center; margin: 15px 0; }
+        .qr-code-img {
+            width: 100%;
+            max-width: 200px;
+            height: auto;
+            border-radius: 16px;
+            margin: 0 auto;
+            display: block;
+            border: 1px solid #ddd;
+            padding: 8px;
+            background: white;
+        }
+        .qr-note {
+            background: #e8f5e9;
+            padding: 12px;
+            border-radius: 16px;
+            margin-top: 15px;
+            font-size: 13px;
+            color: #2e7d32;
+            text-align: left;
+        }
+        .coffee-icon-lg { text-align: center; font-size: 32px; margin-bottom: 10px; color: #FF9800; }
+        #coffee-fab {
+            position: fixed;
+            bottom: 30px;
+            right: 25px;
+            z-index: 1040;
+            background: #FF9800;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 56px;
+            height: 56px;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(255, 152, 0, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="card">
+        <h1>🔮 紫微斗數免費排盤</h1>
+        
+        <div class="calendar-type">
+            <label><input type="radio" name="calendar" value="solar" checked> 公曆 (陽曆)</label>
+            <label><input type="radio" name="calendar" value="lunar"> 農曆 (陰曆)</label>
+        </div>
+
+        <div class="form-group">
+            <div class="input-field" style="flex: 2; min-width: 280px;">
+                <label>出生日期</label>
+                <div class="date-input-group">
+                    <div class="date-mode-switch">
+                        <div class="mode-btn active" id="btn-picker">日曆選擇</div>
+                        <div class="mode-btn" id="btn-manual">手動輸入</div>
+                    </div>
+                    <input type="date" id="date-picker" class="picker-date-input" value="1995-01-01">
+                    <div class="manual-date-inputs" id="manual-inputs">
+                        <input type="number" id="in-year" placeholder="年" min="1900" max="2100" value="1995">
+                        <input type="number" id="in-month" placeholder="月" min="1" max="12" value="1">
+                        <input type="number" id="in-day" placeholder="日" min="1" max="31" value="1">
+                    </div>
+                </div>
+            </div>
+
+            <div class="input-field">
+                <label>出生時辰</label>
+                <select id="birth-time">
+                    <option value="0">子時 (23:00-01:00)</option>
+                    <option value="1">丑時 (01:00-03:00)</option>
+                    <option value="2">寅時 (03:00-05:00)</option>
+                    <option value="3">卯時 (05:00-07:00)</option>
+                    <option value="4">辰時 (07:00-09:00)</option>
+                    <option value="5">巳時 (09:00-11:00)</option>
+                    <option value="6">午時 (11:00-13:00)</option>
+                    <option value="7">未時 (13:00-15:00)</option>
+                    <option value="8">申時 (15:00-17:00)</option>
+                    <option value="9">酉時 (17:00-19:00)</option>
+                    <option value="10">戌時 (19:00-21:00)</option>
+                    <option value="11">亥時 (21:00-23:00)</option>
+                </select>
+            </div>
+
+            <div class="input-field">
+                <label>性別</label>
+                <select id="gender">
+                    <option value="male">乾造 (男)</option>
+                    <option value="female">坤造 (女)</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="btn-container">
+            <button id="start-btn">開始精準排盤</button>
+        </div>
+        <p class="info-text">※ 提示：本工具目前依輸入數值直接模擬安星，專業排盤建議比對真太陽時。</p>
+    </div>
+
+    <div class="loading" id="loading-area">
+        <div class="spinner"></div>
+        <p style="margin-top: 15px; color: #FFD966;">正在觀星演數，推算命盤中...</p>
+    </div>
+
+    <div class="card result-area" id="result-area">
+        <h2>✨ 您的紫微斗數命盤</h2>
+        <div class="palace-grid" id="palace-grid"></div>
+    </div>
+</div>
+
+<!-- 贊助懸浮按鈕 -->
+<button id="coffee-fab">☕</button>
+
+<!-- 贊助彈窗面板 -->
+<div class="support-panel" id="support-panel">
+    <div class="support-card">
+        <button class="close-btn" id="close-support">×</button>
+        <div class="coffee-icon-lg">☕</div>
+        <h3 style="text-align: center; color: #333; margin-bottom: 15px;">請維護者喝杯咖啡</h3>
+        <div class="qr-switch-tabs">
+            <div class="qr-tab active" id="tab-wx">微信支付</div>
+            <div class="qr-tab" id="tab-zfb">支付寶</div>
+        </div>
+        <div class="qr-container">
+            <!-- 實際使用時請替換成您的真實收款二維碼圖片 URL -->
+            <img src="https://placeholder.com" alt="收款碼" class="qr-code-img" id="qr-img">
+        </div>
+        <div class="qr-note">
+            您的支持是我們持續優化排盤精準度與維持伺服器運作的最大動力！感恩合十。
+        </div>
+    </div>
+</div>
+
+<script>
+    // 1. 介面切換邏輯 (日曆選取 vs 手動輸入)
+    const btnPicker = document.getElementById('btn-picker');
+    const btnManual = document.getElementById('btn-manual');
+    const datePicker = document.getElementById('date-picker');
+    const manualInputs = document.getElementById('manual-inputs');
+
+    btnPicker.addEventListener('click', () => {
+        btnPicker.classList.add('active');
+        btnManual.classList.remove('active');
+        datePicker.classList.remove('hide');
+        manualInputs.classList.remove('active');
+    });
+
+    btnManual.addEventListener('click', () => {
+        btnManual.classList.add('active');
+        btnPicker.classList.remove('active');
+        datePicker.classList.add('hide');
+        manualInputs.classList.add('active');
+    });
+
+    // 2. 贊助彈窗交互
+    const coffeeFab = document.getElementById('coffee-fab');
+    const supportPanel = document.getElementById('support-panel');
+    const closeSupport = document.getElementById('close-support');
+    const tabWx = document.getElementById('tab-wx');
+    const tabZfb = document.getElementById('tab-zfb');
+    const qrImg = document.getElementById('qr-img');
+
+    coffeeFab.addEventListener('click', () => supportPanel.classList.add('active'));
+    closeSupport.addEventListener('click', () => supportPanel.classList.remove('active'));
+    supportPanel.addEventListener('click', (e) => { if(e.target === supportPanel) supportPanel.classList.remove('active'); });
+
+    tabWx.addEventListener('click', () => {
+        tabWx.classList.add('active');
+        tabZfb.classList.remove('active');
+        qrImg.src = "https://placeholder.com"; // 替換為微信碼
+    });
+    tabZfb.addEventListener('click', () => {
+        tabZfb.classList.add('active');
+        tabWx.classList.remove('active');
+        qrImg.src = "https://placeholder.com"; // 替換為支付寶碼
+    });
+
+    // 3. 紫微斗數簡易排盤引擎 (以基本地支與主星規則模擬)
+    const dzNames = ["子", "丑", "寅", "卯", "辰", "巳", "午", "未", "申", "酉", "戌", "亥"];
+    const basePalaces = ["命宮", "兄弟", "夫妻", "子女", "財帛", "疾厄", "遷移", "交友", "官祿", "田宅", "福德", "父母"];
+    
+    // 模擬主星分佈算法 (依據時辰與月份決定命宮位置)
+    function calculateZiwu(month, timeIdx, day) {
+        // 紫微斗數：由寅宮起正月，順數月、逆數時安命宮
+        // 命宮地支索引 (寅宮是2)
+        let mPalaceIdx = (2 + (month - 1) - timeIdx + 12) % 12;
+        
+        let grids = [];
+        for(let i=0; i<12; i++) {
+            // 計算當前地支格子對應的十二宮名稱
+            let pNameIdx = (i - mPalaceIdx + 12) % 12;
+            grids.push({
+                dz: dzNames[i],
+                name: basePalaces[pNameIdx],
+                major: "",
+                minor: ""
+            });
+        }
+
+        // 簡單模擬安主星 (實際算法極其複雜，此處依生日作特徵分布展示)
+        let mainStars = ["紫微", "天機", "太陽", "武曲", "天同", "廉貞", "天府", "太陰", "貪狼", "巨門", "天相", "天梁", "七殺", "破軍"];
+        grids[(mPalaceIdx) % 12].major = mainStars[day % 14];
+        grids[(mPalaceIdx + 4) % 12].major = mainStars[(day + 4) % 14];
+        grids[(mPalaceIdx + 8) % 12].major = mainStars[(day + 8) % 14];
+        
+        // 增加六吉六煞模擬
+        grids[(timeIdx) % 12].minor = "文曲";
+        grids[(12 - timeIdx) % 12].minor += " 文昌";
+
+        return grids;
+    }
+
+    // 4. 開始排盤觸發
+    document.getElementById('start-btn').addEventListener('click', () => {
+        let year, month, day;
+        
+        if(btnPicker.classList.contains('active')) {
+            const dVal = datePicker.value;
+            if(!dVal) { alert("請選擇日期！"); return; }
+            let parts = dVal.split('-');
+            year = parseInt(parts[0]);
+            month = parseInt(parts[1]);
+            day = parseInt(parts[2]);
+        } else {
+            year = parseInt(document.getElementById('in-year').value);
+            month = parseInt(document.getElementById('in-month').value);
+            day = parseInt(document.getElementById('in-day').value);
+            if(!year || !month || !day) { alert("請完整輸入年月日！"); return; }
+        }
+
+        const timeIdx = parseInt(document.getElementById('birth-time').value);
+
+        // 顯示載入動畫
+        document.getElementById('loading-area').style.display = 'block';
+        document.getElementById('result-area').style.display = 'none';
+
+        setTimeout(() => {
+            document.getElementById('loading-area').style.display = 'none';
+            const resultArea = document.getElementById('result-area');
+            const palaceGrid = document.getElementById('palace-grid');
+            palaceGrid.innerHTML = "";
+
+            // 計算命盤
+            let pData = calculateZiwu(month, timeIdx, day);
+
+            // 按照紫微斗數傳統方盤排列（此處簡化為網格順序，您也可以進一步客製化成中空12宮盤）
+            pData.forEach(item => {
+                let card = document.createElement('div');
+                card.className = 'palace-card';
+                card.innerHTML = `
+                    <div class="palace-name">${item.name} <span class="palace-dz">${item.dz}</span></div>
+                    <div class="major-star">${item.major || '🌲 平和'}</div>
+                    <div class="minor-star">${item.minor || ''}</div>
+                `;
+                palaceGrid.appendChild(card);
+            });
+
+            resultArea.style.display = 'block';
+            resultArea.scrollIntoView({ behavior: 'smooth' });
+        }, 1000);
+    });
+</script>
+
+</body>
+</html>
