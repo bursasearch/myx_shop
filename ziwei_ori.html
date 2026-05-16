@@ -286,7 +286,6 @@
     </style>
     <!-- 尝试多个 CDN 加载 iztro -->
     <script>
-        // 备用 CDN 列表
         const cdnList = [
             'https://unpkg.com/iztro@2.4.7/dist/iztro.umd.js',
             'https://cdn.jsdelivr.net/npm/iztro@2.4.7/dist/iztro.umd.js',
@@ -297,13 +296,7 @@
         
         function loadIztro() {
             if (currentCdnIndex >= cdnList.length) {
-                const loadingDiv = document.getElementById('loading');
-                const resultDiv = document.getElementById('result');
-                if (loadingDiv) loadingDiv.style.display = 'none';
-                if (resultDiv) {
-                    resultDiv.innerHTML = '<div class="error-msg">⚠️ 排盘库加载失败，请刷新页面重试<br><small>如果持续失败，请联系管理员</small></div>';
-                    resultDiv.style.display = 'block';
-                }
+                console.error('所有 CDN 均加载失败');
                 return;
             }
             
@@ -311,6 +304,7 @@
             script.src = cdnList[currentCdnIndex];
             script.onload = function() {
                 console.log('iztro 加载成功:', cdnList[currentCdnIndex]);
+                window.iztroLoaded = true;
             };
             script.onerror = function() {
                 console.log('iztro 加载失败:', cdnList[currentCdnIndex]);
@@ -425,420 +419,179 @@
 <button id="coffee-fab" onclick="showSupportPanel()">☕</button>
 
 <script>
-    // =========================
-    // 默认日期
-    // =========================
+    // 初始化设置当前日期
     const today = new Date();
     const yyyy = today.getFullYear();
     const mm = String(today.getMonth() + 1).padStart(2, '0');
     const dd = String(today.getDate()).padStart(2, '0');
-
     document.getElementById('birthDate').value = `${yyyy}-${mm}-${dd}`;
 
-    // =========================
-    // 排盘
-    // =========================
-    async function getAstrolabe() {
-
+    function getAstrolabe() {
         const loadingDiv = document.getElementById('loading');
         const resultDiv = document.getElementById('result');
-
-        resultDiv.style.display = 'none';
+        
+        // 动态获取当前的库，支持 window.iztro 或直接使用全局 iztro
+        const iztroLib = window.iztro || (typeof iztro !== 'undefined' ? iztro : null);
+        
+        if (!iztroLib) {
+            resultDiv.innerHTML = '<div class="error-msg">❌ 排盘库仍在努力加载中，请稍等 2 秒再试或刷新页面</div>';
+            resultDiv.style.display = 'block';
+            return;
+        }
+        
         loadingDiv.style.display = 'block';
+        resultDiv.style.display = 'none';
+        resultDiv.innerHTML = '';
 
         try {
-
-            // -------------------------
-            // 检查 iztro
-            // -------------------------
-            const iztroLib =
-                window.iztro ||
-                (typeof iztro !== 'undefined' ? iztro : null);
-
-            console.log('iztro =>', iztroLib);
-
-            if (!iztroLib) {
-                throw new Error('iztro 排盘库加载失败');
-            }
-
-            // -------------------------
-            // 获取输入
-            // -------------------------
-            const birthDate =
-                document.getElementById('birthDate').value;
-
-            const hour =
-                parseInt(
-                    document.getElementById('birthHour').value
-                );
-
-            const gender =
-                document.getElementById('gender').value;
-
-            const calendarType =
-                document.querySelector(
-                    'input[name="calendarType"]:checked'
-                ).value;
+            const birthDate = document.getElementById('birthDate').value;
+            const hour = parseInt(document.getElementById('birthHour').value);
+            const gender = document.getElementById('gender').value;
+            const calendarType = document.querySelector('input[name="calendarType"]:checked').value;
 
             if (!birthDate) {
                 throw new Error('请选择出生日期');
             }
 
-            const [year, month, day] =
-                birthDate.split('-').map(Number);
-
-            // -------------------------
-            // 排盘
-            // -------------------------
-            let data;
-
-            if (
-                iztroLib.astro &&
-                typeof iztroLib.astro.bySolar === 'function'
-            ) {
-
-                if (calendarType === 'solar') {
-
-                    data = iztroLib.astro.bySolar(
-                        year,
-                        month,
-                        day,
-                        hour,
-                        gender === 'male' ? 0 : 1
-                    );
-
-                } else {
-
-                    data = iztroLib.astro.byLunar(
-                        year,
-                        month,
-                        day,
-                        hour,
-                        gender === 'male' ? 0 : 1
-                    );
-                }
-
+            // iztro 的标准入参格式：'yyyy-m-d' 的字符串
+            let [year, month, day] = birthDate.split('-').map(Number);
+            const dateStr = `${year}-${month}-${day}`;
+            
+            let astrolabeData;
+            const genderValue = gender === 'male' ? 1 : 0;
+            
+            if (calendarType === 'solar') {
+                astrolabeData = iztroLib.astrolabe({
+                    solarDate: dateStr,
+                    hour: hour,
+                    gender: genderValue,
+                    language: 'zh-CN'
+                });
             } else {
-
-                throw new Error(
-                    '当前 iztro 版本不支持 astro.bySolar()'
-                );
+                astrolabeData = iztroLib.astrolabe({
+                    lunarDate: dateStr,
+                    hour: hour,
+                    gender: genderValue,
+                    language: 'zh-CN'
+                });
             }
-
-            console.log('排盘数据 =>', data);
-
-            if (!data) {
-                throw new Error('排盘失败');
+            
+            if (!astrolabeData) {
+                throw new Error('排盘数据生成失败，请检查日期是否有效');
             }
-
-            displayAstrolabe(
-                data,
-                calendarType,
-                { year, month, day }
-            );
-
-        } catch (err) {
-
-            console.error(err);
-
-            resultDiv.innerHTML = `
-                <div class="error-msg">
-                    ❌ ${err.message}
-                </div>
-            `;
-
+            
+            displayAstrolabe(astrolabeData, calendarType, {year, month, day});
+            
+        } catch (error) {
+            console.error(error);
+            const currentYear = new Date().getFullYear();
+            resultDiv.innerHTML = `<div class="error-msg">❌ ${error.message || `排盘出错，请检查输入（年份建议1900-${currentYear}）`}</div>`;
             resultDiv.style.display = 'block';
-
         } finally {
-
             loadingDiv.style.display = 'none';
         }
     }
 
-    // =========================
-    // 显示命盘
-    // =========================
-    function displayAstrolabe(
-        data,
-        calendarType,
-        dateInfo
-    ) {
-
-        const resultDiv =
-            document.getElementById('result');
-
-        // -------------------------
-        // 兼容字段
-        // -------------------------
-        const palaces =
-            data.palaces ||
-            data.houses ||
-            [];
-
-        if (!Array.isArray(palaces)) {
-
-            resultDiv.innerHTML = `
-                <div class="error-msg">
-                    ❌ 命盘数据格式错误
-                </div>
-            `;
-
+    function displayAstrolabe(data, calendarType, dateInfo) {
+        const resultDiv = document.getElementById('result');
+        
+        if (!data || !data.houses) {
+            resultDiv.innerHTML = '<div class="error-msg">排盘数据异常，请重试</div>';
             resultDiv.style.display = 'block';
-
             return;
         }
-
-        // -------------------------
-        // 八字
-        // -------------------------
-        let baziText = '未知';
-
-        if (Array.isArray(data.bazi)) {
-
+        
+        // 安全处理八字输出，将 data.gengzi 修改为标准的 data.bazi
+        let baziText = '计算中';
+        if (data.bazi && Array.isArray(data.bazi)) {
             baziText = data.bazi.join(' ');
         }
-
-        // -------------------------
-        // HTML
-        // -------------------------
+        
         let html = `
             <div class="card">
-
-                <h2>
-                    📅 输入时间：
-                    ${calendarType === 'solar' ? '阳历' : '农历'}
-                    ${dateInfo.year}年
-                    ${dateInfo.month}月
-                    ${dateInfo.day}日
-                </h2>
-
-                <h3 style="
-                    color:#aaa;
-                    font-size:14px;
-                    margin-top:5px;
-                    line-height:1.6;
-                ">
-
-                    性别：${data.gender || '未知'}
-                    ｜ 八字：${baziText}
-                    ｜ 五行局：${data.fiveElement || '未知'}
-
+                <h2>📅 输入时间：${calendarType === 'solar' ? '阳历' : '农历'} ${dateInfo.year}年${dateInfo.month}月${dateInfo.day}日</h2>
+                <h3 style="color: #aaa; font-size: 14px; margin-top: 5px; line-height: 1.6;">
+                    性别：${data.gender || '未知'} ｜ 
+                    八字：${baziText} ｜ 
+                    五行局：${data.fiveElement || '计算中'}
                 </h3>
-
             </div>
-
             <div class="card">
-
                 <h2>🌟 命盘十二宫 🌟</h2>
-
                 <div class="palace-grid">
         `;
-
-        // =========================
-        // 十二宫
-        // =========================
-        palaces.forEach(palace => {
-
-            // -------------------------
-            // 主星
-            // -------------------------
-            const majorStars =
-                palace.majorStars ||
-                palace.major_star ||
-                [];
-
-            let majorText = '无主星';
-
-            if (Array.isArray(majorStars)) {
-
-                majorText =
-                    majorStars.map(star => {
-
-                        let name =
-                            star.name || star;
-
-                        if (star.mutagen) {
-                            name += `(${star.mutagen})`;
-                        }
-
-                        return name;
-
-                    }).join(' · ');
+        
+        const houses = data.houses;
+        houses.forEach(palace => {
+            // 解析主星名及四化
+            let majorStarsText = [];
+            if (palace.majorStars && Array.isArray(palace.majorStars)) {
+                majorStarsText = palace.majorStars.map(s => {
+                    let name = s.name;
+                    if (s.mutagen) name += `(${s.mutagen})`;
+                    return name;
+                });
             }
 
-            // -------------------------
-            // 副星
-            // -------------------------
-            let minorList = [];
-
-            const minorStars =
-                palace.minorStars || [];
-
-            const badStars =
-                palace.badStars || [];
-
-            const adjectiveStars =
-                palace.adjectiveStars || [];
-
-            minorStars.forEach(s => {
-                minorList.push(s.name || s);
-            });
-
-            badStars.forEach(s => {
-                minorList.push(s.name || s);
-            });
-
-            adjectiveStars.forEach(s => {
-                minorList.push(s.name || s);
-            });
-
-            // -------------------------
-            // 宫位名称
-            // -------------------------
-            const palaceName =
-                palace.name ||
-                palace.palaceName ||
-                '未知宫';
-
+            // 合并副星与杂曜
+            let allMinorStars = [];
+            if (palace.minorStars) allMinorStars.push(...palace.minorStars.map(s => s.name));
+            if (palace.badStars) allMinorStars.push(...palace.badStars.map(s => s.name));
+            if (palace.adjectiveStars) allMinorStars.push(...palace.adjectiveStars.map(s => s.name));
+            
             html += `
                 <div class="palace-card">
-
-                    <div class="palace-name">
-
-                        ${palaceName}
-
-                        <span style="
-                            font-size:12px;
-                            color:#aaa;
-                        ">
-                            (${palace.decadalKey || ''})
-                        </span>
-
+                    <div class="palace-name">${palace.name} <span style="font-size:12px; color:#aaa;">(${palace.decadalKey})</span></div>
+                    <div class="major-star">${majorStarsText.length > 0 ? majorStarsText.join(' · ') : '无主星'}</div>
+                    <div class="minor-star" style="margin-top: 5px; min-height: 30px; line-height: 1.4;">
+                        ${allMinorStars.length > 0 ? allMinorStars.slice(0, 6).join(' ') : '无'}
                     </div>
-
-                    <div class="major-star">
-                        ${majorText}
-                    </div>
-
-                    <div class="minor-star"
-                         style="
-                            margin-top:5px;
-                            min-height:30px;
-                            line-height:1.4;
-                         ">
-
-                        ${
-                            minorList.length > 0
-                            ? minorList.slice(0, 8).join(' ')
-                            : '无'
-                        }
-
-                    </div>
-
                 </div>
             `;
         });
-
-        html += `
-                </div>
-            </div>
-        `;
-
-        // =========================
-        // 命主 身主
-        // =========================
+        
+        html += `</div></div>`;
+        
         if (data.lifeLord || data.bodyLord) {
-
             html += `
                 <div class="card">
-
                     <h3>📿 核心星曜</h3>
-
-                    <p style="margin-top:10px;">
-
-                        <span style="
-                            margin-right:20px;
-                            background:rgba(255,215,0,0.1);
-                            padding:6px 12px;
-                            border-radius:10px;
-                        ">
-                            命主：
-                            ${data.lifeLord || '无'}
-                        </span>
-
-                        <span style="
-                            background:rgba(255,215,0,0.1);
-                            padding:6px 12px;
-                            border-radius:10px;
-                        ">
-                            身主：
-                            ${data.bodyLord || '无'}
-                        </span>
-
+                    <p style="margin-top: 5px;">
+                        <span style="margin-right: 20px; background: rgba(255,215,0,0.1); padding: 6px 12px; border-radius: 10px;">命主：${data.lifeLord || '无'}</span>
+                        <span style="background: rgba(255,215,0,0.1); padding: 6px 12px; border-radius: 10px;">身主：${data.bodyLord || '无'}</span>
                     </p>
-
                 </div>
             `;
         }
-
-        // =========================
-        // 输出
-        // =========================
+        
         resultDiv.innerHTML = html;
         resultDiv.style.display = 'block';
     }
 
-    // =========================
-    // 支持面板
-    // =========================
     function showSupportPanel() {
-        document.getElementById(
-            'supportPanel'
-        ).style.display = 'flex';
+        document.getElementById('supportPanel').style.display = 'flex';
     }
-
     function hideSupportPanel() {
-        document.getElementById(
-            'supportPanel'
-        ).style.display = 'none';
+        document.getElementById('supportPanel').style.display = 'none';
     }
-
-    document.getElementById(
-        'supportPanel'
-    )?.addEventListener('click', function(e) {
-
-        if (e.target === this) {
-            hideSupportPanel();
-        }
+    
+    document.getElementById('supportPanel')?.addEventListener('click', function(e) {
+        if (e.target === this) hideSupportPanel();
     });
 
-    // =========================
-    // QR 切换
-    // =========================
     function switchQR(type) {
-
-        const maybankDiv =
-            document.getElementById('maybankQR');
-
-        const tngDiv =
-            document.getElementById('tngQR');
-
-        const tabs =
-            document.querySelectorAll('.qr-tab');
-
+        const maybankDiv = document.getElementById('maybankQR');
+        const tngDiv = document.getElementById('tngQR');
+        const tabs = document.querySelectorAll('.qr-tab');
+        
         if (type === 'maybank') {
-
             maybankDiv.style.display = 'block';
             tngDiv.style.display = 'none';
-
             tabs[0].classList.add('active');
             tabs[1].classList.remove('active');
-
         } else {
-
             maybankDiv.style.display = 'none';
             tngDiv.style.display = 'block';
-
             tabs[0].classList.remove('active');
             tabs[1].classList.add('active');
         }
