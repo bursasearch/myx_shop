@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-    <title>紫微斗数免费排盘 | 命盘解析</title>
+    <title>紫微斗数免费排盘 | 命盘解析 | 手动输入日期</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -41,6 +41,59 @@
             background: rgba(0,0,0,0.6);
             color: white;
             font-size: 16px;
+        }
+        /* 手动输入区域样式切换 */
+        .date-input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .date-mode-switch {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 6px;
+        }
+        .mode-btn {
+            flex: 1;
+            background: rgba(255,215,0,0.15);
+            border: 1px solid #FFD966;
+            border-radius: 40px;
+            padding: 8px 12px;
+            text-align: center;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.2s;
+            color: #eee;
+        }
+        .mode-btn.active {
+            background: #FFD966;
+            color: #1a1a2e;
+            border-color: #FFD966;
+        }
+        .manual-date-inputs {
+            display: none;
+            gap: 12px;
+        }
+        .manual-date-inputs.active {
+            display: flex;
+            flex-wrap: wrap;
+        }
+        .manual-date-inputs input {
+            flex: 1;
+            min-width: 80px;
+        }
+        .picker-date-input {
+            display: block;
+        }
+        .picker-date-input.hide {
+            display: none;
+        }
+        .date-hint {
+            font-size: 11px;
+            text-align: center;
+            margin-top: 6px;
+            color: #ccc;
         }
         .calendar-type {
             display: flex;
@@ -231,14 +284,33 @@
         <h1>🌟 紫微斗数免费排盘 🌟</h1>
         
         <div class="calendar-type">
-            <label><input type="radio" name="calendarType" value="solar" checked> 阳历</label>
-            <label><input type="radio" name="calendarType" value="lunar"> 农历</label>
+            <label><input type="radio" name="calendarType" value="solar" checked> 阳历（公历）</label>
+            <label><input type="radio" name="calendarType" value="lunar"> 农历（阴历）</label>
         </div>
         
         <div class="form-group">
             <div class="input-field">
                 <label>📅 出生日期</label>
-                <input type="date" id="birthDate" required>
+                <div class="date-input-group">
+                    <!-- 切换按钮组：选择器模式 / 手动输入模式 -->
+                    <div class="date-mode-switch">
+                        <div id="modePickerBtn" class="mode-btn active">📆 日期选择器</div>
+                        <div id="modeManualBtn" class="mode-btn">✍️ 手动输入年份</div>
+                    </div>
+                    
+                    <!-- 日期选择器模式 (原生input date) -->
+                    <div id="pickerMode" class="picker-date-input">
+                        <input type="date" id="birthDatePicker" min="1900-01-01" max="2099-12-31">
+                        <div class="date-hint">✅ 点击日历图标或直接输入，支持1900~2099年</div>
+                    </div>
+                    
+                    <!-- 手动输入模式 (年/月/日 三个独立输入框，方便快速键入任意年份，包括2024年之前) -->
+                    <div id="manualMode" class="manual-date-inputs">
+                        <input type="number" id="manualYear" placeholder="年份 (例: 1985)" value="1990" min="1900" max="2100" step="1">
+                        <input type="number" id="manualMonth" placeholder="月份 (1-12)" value="1" min="1" max="12" step="1">
+                        <input type="number" id="manualDay" placeholder="日期 (1-31)" value="1" min="1" max="31" step="1">
+                    </div>
+                </div>
             </div>
             <div class="input-field">
                 <label>⏰ 出生时间</label>
@@ -268,7 +340,7 @@
         <div style="text-align: center;">
             <button onclick="getAstrolabe()">✨ 排出命盘 ✨</button>
         </div>
-        <div class="info-text">※ 紫微斗数以农历为准，阳历会自动转换</div>
+        <div class="info-text">※ 紫微斗数以农历为准。现已增加「手动输入年份」模式，轻松输入2024年之前任意日期。支持阳历/农历切换。</div>
     </div>
 
     <div class="loading" id="loading">
@@ -322,17 +394,118 @@
     setTimeout(() => {
         if (!iztroReady) {
             clearInterval(checkInterval);
-            document.getElementById('result').innerHTML = '<div class="error-msg">⚠️ 排盘库加载超时，请刷新页面</div>';
-            document.getElementById('result').style.display = 'block';
+            const resultDiv = document.getElementById('result');
+            if (resultDiv) {
+                resultDiv.innerHTML = '<div class="error-msg">⚠️ 排盘库加载超时，请刷新页面或检查网络</div>';
+                resultDiv.style.display = 'block';
+            }
         }
     }, 5000);
 
-    const today = new Date();
-    const yyyy = today.getFullYear();
-    const mm = String(today.getMonth() + 1).padStart(2, '0');
-    const dd = String(today.getDate()).padStart(2, '0');
-    document.getElementById('birthDate').value = `${yyyy}-${mm}-${dd}`;
-
+    // ----- 手动输入 / 选择器 模式切换逻辑 (增强日期输入灵活性) -----
+    const modePickerBtn = document.getElementById('modePickerBtn');
+    const modeManualBtn = document.getElementById('modeManualBtn');
+    const pickerModeDiv = document.getElementById('pickerMode');
+    const manualModeDiv = document.getElementById('manualMode');
+    const birthDatePicker = document.getElementById('birthDatePicker');
+    const manualYear = document.getElementById('manualYear');
+    const manualMonth = document.getElementById('manualMonth');
+    const manualDay = document.getElementById('manualDay');
+    
+    // 默认显示选择器模式，隐藏手动模式
+    manualModeDiv.classList.remove('active');
+    pickerModeDiv.classList.remove('hide');
+    pickerModeDiv.style.display = 'block';
+    manualModeDiv.style.display = 'none';
+    
+    function setDateInputMode(mode) {
+        if (mode === 'picker') {
+            pickerModeDiv.style.display = 'block';
+            manualModeDiv.style.display = 'none';
+            modePickerBtn.classList.add('active');
+            modeManualBtn.classList.remove('active');
+            // 可选：当从手动切换回来时，尝试将手动输入的日期同步到 picker，便于视觉连贯 (如果手动有合理数值)
+            const y = manualYear.value, m = manualMonth.value.padStart(2,'0'), d = manualDay.value.padStart(2,'0');
+            if (y && m && d && y >= 1900 && y <= 2099 && m >=1 && m<=12 && d>=1 && d<=31) {
+                let testDate = new Date(parseInt(y), parseInt(m)-1, parseInt(d));
+                if (testDate.getMonth() === parseInt(m)-1 && testDate.getDate() === parseInt(d)) {
+                    birthDatePicker.value = `${y}-${String(m).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+                }
+            }
+        } else {
+            pickerModeDiv.style.display = 'none';
+            manualModeDiv.style.display = 'flex';
+            modePickerBtn.classList.remove('active');
+            modeManualBtn.classList.add('active');
+            // 如果当前picker有值，同步到手动框，避免混淆
+            if (birthDatePicker.value) {
+                const parts = birthDatePicker.value.split('-');
+                if (parts.length === 3) {
+                    manualYear.value = parseInt(parts[0]);
+                    manualMonth.value = parseInt(parts[1]);
+                    manualDay.value = parseInt(parts[2]);
+                }
+            }
+        }
+    }
+    
+    modePickerBtn.addEventListener('click', () => setDateInputMode('picker'));
+    modeManualBtn.addEventListener('click', () => setDateInputMode('manual'));
+    
+    // 获取最终日期字符串 (统一返回 yyyy-mm-dd)
+    function getBirthDateString() {
+        const isManualActive = manualModeDiv.style.display === 'flex';
+        if (isManualActive) {
+            let year = parseInt(manualYear.value);
+            let month = parseInt(manualMonth.value);
+            let day = parseInt(manualDay.value);
+            if (isNaN(year) || isNaN(month) || isNaN(day)) {
+                throw new Error('请完整填写年月日数值');
+            }
+            if (year < 1900 || year > 2100) throw new Error('年份请在1900-2100之间');
+            if (month < 1 || month > 12) throw new Error('月份必须为1~12');
+            const maxDay = new Date(year, month, 0).getDate();
+            if (day < 1 || day > maxDay) throw new Error(`日期无效，${year}年${month}月只有${maxDay}天`);
+            // 返回标准格式
+            return `${year}-${String(month).padStart(2,'0')}-${String(day).padStart(2,'0')}`;
+        } else {
+            const pickerVal = birthDatePicker.value;
+            if (!pickerVal) throw new Error('请选择出生日期');
+            const parts = pickerVal.split('-');
+            if (parts.length !== 3) throw new Error('日期格式无效');
+            const year = parseInt(parts[0]), month = parseInt(parts[1]), day = parseInt(parts[2]);
+            if (year < 1900 || year > 2099) throw new Error('日期选择器年份范围1900-2099');
+            const maxDay = new Date(year, month, 0).getDate();
+            if (day < 1 || day > maxDay) throw new Error(`选择器中的日期无效`);
+            return pickerVal;
+        }
+    }
+    
+    // 设定默认初始值（方便展示2024年前日期）
+    birthDatePicker.value = "1990-01-01";
+    manualYear.value = 1990;
+    manualMonth.value = 1;
+    manualDay.value = 1;
+    
+    // 监听手动模式输入变化，简单的实时校验提示（可选）
+    function validateManualInputs() {
+        const y = parseInt(manualYear.value);
+        const m = parseInt(manualMonth.value);
+        const d = parseInt(manualDay.value);
+        if (!isNaN(y) && !isNaN(m) && !isNaN(d) && y >= 1900 && y <= 2100 && m >=1 && m<=12) {
+            const maxD = new Date(y, m, 0).getDate();
+            if (d >=1 && d <= maxD) {
+                manualDay.style.borderColor = "#8bc34a";
+            } else {
+                manualDay.style.borderColor = "#ff8888";
+            }
+        }
+    }
+    manualYear.addEventListener('input', validateManualInputs);
+    manualMonth.addEventListener('input', validateManualInputs);
+    manualDay.addEventListener('input', validateManualInputs);
+    
+    // 全局排盘函数
     window.getAstrolabe = async function() {
         const loadingDiv = document.getElementById('loading');
         const resultDiv = document.getElementById('result');
@@ -342,56 +515,57 @@
 
         try {
             if (!iztroReady || !iztroLib) {
-                throw new Error('排盘库加载中，请稍后再试');
+                throw new Error('排盘库加载中，请稍后再试或刷新页面');
             }
             
-            const birthDate = document.getElementById('birthDate').value;
             const hourIndex = parseInt(document.getElementById('birthHour').value);
             const gender = document.getElementById('gender').value;
             const calendarType = document.querySelector('input[name="calendarType"]:checked').value;
-
-            if (!birthDate) throw new Error('请选择出生日期');
-
-            // 将时辰索引转换为小时数
+            
+            // 获取日期 (根据手动/选择器模式)
+            let dateStr;
+            try {
+                dateStr = getBirthDateString();
+            } catch (dateErr) {
+                throw new Error(`日期输入有误: ${dateErr.message}`);
+            }
+            
+            const [year, month, day] = dateStr.split('-').map(Number);
+            
+            // 时辰映射
             const hourToTime = [23, 1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21];
             const hour = hourToTime[hourIndex];
             
-            console.log(`时辰索引: ${hourIndex}, 小时: ${hour}`);
-
-            const [year, month, day] = birthDate.split('-').map(Number);
+            console.log(`排盘模式: ${calendarType}, 日期: ${dateStr}, 时辰: ${hour}, 性别: ${gender}`);
             
             let data;
-            
-            // 使用正确的 API: astrolabeBySolarDate
             if (calendarType === 'solar') {
-                const dateStr = `${year}-${month}-${day}`;
+                // 阳历排盘
                 data = iztroLib.astro.astrolabeBySolarDate(dateStr, hour, 0);
-                console.log('阳历排盘成功', data);
             } else {
-                const dateStr = `${year}-${month}-${day}`;
+                // 农历排盘：注意用户输入的 dateStr 视为农历年月日（比如1990-01-01 表示农历1990年正月初一）
+                // 直接使用，iztro 内部会做校验
                 data = iztroLib.astro.astrolabeByLunarDate(dateStr, hour, 0);
-                console.log('农历排盘成功', data);
             }
             
-            if (!data) throw new Error('排盘失败');
+            if (!data) throw new Error('排盘返回空数据，请尝试其他日期或切换历法');
             
-            displayAstrolabe(data, calendarType, { year, month, day });
+            displayAstrolabe(data, calendarType, { year, month, day }, dateStr);
             
         } catch (err) {
             console.error('排盘错误:', err);
-            resultDiv.innerHTML = `<div class="error-msg">❌ ${err.message}<br><small>请检查日期是否正确</small></div>`;
+            resultDiv.innerHTML = `<div class="error-msg">❌ 排盘失败: ${err.message}<br><small>请检查日期是否正确，手动模式下请确保年/月/日符合规则（1900-2100年）。</small></div>`;
             resultDiv.style.display = 'block';
         } finally {
             loadingDiv.style.display = 'none';
         }
     };
-
-    function displayAstrolabe(data, calendarType, dateInfo) {
+    
+    function displayAstrolabe(data, calendarType, dateInfo, rawDateStr) {
         const resultDiv = document.getElementById('result');
-        
         const palaces = data.palaces || [];
         if (!Array.isArray(palaces) || palaces.length === 0) {
-            resultDiv.innerHTML = '<div class="error-msg">❌ 命盘数据格式错误</div>';
+            resultDiv.innerHTML = '<div class="error-msg">❌ 命盘数据格式异常，未获取到宫位信息。</div>';
             resultDiv.style.display = 'block';
             return;
         }
@@ -402,12 +576,27 @@
             baziText = `${cd.yearly.join('')} ${cd.monthly.join('')} ${cd.daily.join('')} ${cd.hourly.join('')}`;
         }
         
+        let lunarDetail = '';
+        if (data.lunarDate) {
+            lunarDetail = `农历：${data.lunarDate}`;
+        } else if (data.rawDates && data.rawDates.lunarDate) {
+            lunarDetail = `农历：${data.rawDates.lunarDate}`;
+        } else {
+            lunarDetail = '农历日期推算中';
+        }
+        
+        // 额外标识输入模式是手动还是选择器，加强反馈
+        const isManual = manualModeDiv.style.display === 'flex';
+        const inputModeLabel = isManual ? '✍️ 手动输入模式' : '📆 日期选择器模式';
+        
         let html = `
             <div class="card">
-                <h2>📅 输入时间：${calendarType === 'solar' ? '阳历' : '农历'} ${dateInfo.year}年${dateInfo.month}月${dateInfo.day}日</h2>
-                <h3 style="color:#aaa; font-size:14px; margin-top:5px;">
-                    八字：${baziText || '计算中'} ｜ 农历：${data.lunarDate || '计算中'}
-                </h3>
+                <h2>📅 ${calendarType === 'solar' ? '阳历' : '农历'} 日期：${dateInfo.year}年${dateInfo.month}月${dateInfo.day}日</h2>
+                <div style="display: flex; justify-content: space-between; flex-wrap:wrap; gap:8px; margin-top:5px;">
+                    <h3 style="color:#aaa; font-size:14px;">八字：${baziText || '推算中'} ｜ ${lunarDetail}</h3>
+                    <span style="background:#2c3e50; padding:4px 12px; border-radius:20px; font-size:12px;">${inputModeLabel}</span>
+                </div>
+                <div class="info-text" style="margin-top:12px;">✨ 支持灵活输入任意年份（含2024年之前），紫微斗数命盘依据传统历法排定。</div>
             </div>
             <div class="card">
                 <h2>🌟 命盘十二宫 🌟</h2>
@@ -434,7 +623,7 @@
                 <div class="palace-card">
                     <div class="palace-name">${palace.name}</div>
                     <div class="major-star">${majorText}</div>
-                    <div class="minor-star">${minorList.length > 0 ? minorList.slice(0, 8).join(' ') : '无'}</div>
+                    <div class="minor-star">${minorList.length > 0 ? minorList.slice(0, 8).join(' ') : '无辅星'}</div>
                 </div>
             `;
         });
@@ -444,11 +633,11 @@
         resultDiv.innerHTML = html;
         resultDiv.style.display = 'block';
     }
-
+    
     window.showSupportPanel = function() { document.getElementById('supportPanel').style.display = 'flex'; }
     window.hideSupportPanel = function() { document.getElementById('supportPanel').style.display = 'none'; }
     document.getElementById('supportPanel')?.addEventListener('click', function(e) { if (e.target === this) hideSupportPanel(); });
-
+    
     window.switchQR = function(type) {
         const maybankDiv = document.getElementById('maybankQR');
         const tngDiv = document.getElementById('tngQR');
@@ -465,6 +654,21 @@
             tabs[1].classList.add('active');
         }
     }
+    
+    // 根据历法调整提示 (帮助用户注意农历特殊性)
+    const calendarRadios = document.querySelectorAll('input[name="calendarType"]');
+    const infoDiv = document.querySelector('.info-text');
+    calendarRadios.forEach(radio => {
+        radio.addEventListener('change', function() {
+            if (this.value === 'solar') {
+                if (infoDiv) infoDiv.innerHTML = '※ 阳历模式：选择或手动输入公历日期，系统自动转换。已优化2024年之前日期输入。';
+            } else {
+                if (infoDiv) infoDiv.innerHTML = '※ 农历模式：请直接填写农历年月日（例如1990-01-01为农历正月初一）。注意闰月需准确。';
+            }
+        });
+    });
+    // 初始化提示
+    if (infoDiv) infoDiv.innerHTML = '✅ 新增「手动输入年份」功能，轻松键入1985、1972或2024之前任意日期。点击上方按钮切换模式。';
 </script>
 </body>
 </html>
