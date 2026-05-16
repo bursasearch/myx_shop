@@ -21,10 +21,11 @@
         { "imports": { "iztro": "https://esm.sh/iztro" } }
     </script>
     <script type="module">
-        import iztroLib from 'iztro';
+        import * as iztroLib from 'iztro';
         window.iztroLib = iztroLib;
         window.iztroReady = true;
-        console.log('iztro 已加载');
+        console.log('iztro 已加载', iztroLib);
+        console.log('astro 方法:', iztroLib.astro);
     </script>
 </head>
 <body>
@@ -34,7 +35,7 @@
             <label>📅 日期 <input type="date" id="birthDate"></label>
             <label>⏰ 时辰 
                 <select id="birthHour">
-                    <option value="0">子时 (23-01点) [选此]</option>
+                    <option value="0">子时 (23-01点)</option>
                     <option value="1">丑时 (01-03点)</option>
                     <option value="2">寅时 (03-05点)</option>
                     <option value="3">卯时 (05-07点)</option>
@@ -56,11 +57,19 @@
     <div id="result"></div>
 
     <script>
-        let iztroReady = false, iztroLib = null;
+        let iztroReady = false;
+        let iztroLib = null;
+        
         const checkInterval = setInterval(() => {
-            if (window.iztroLib) { iztroLib = window.iztroLib; iztroReady = true; clearInterval(checkInterval); }
+            if (window.iztroLib) {
+                iztroLib = window.iztroLib;
+                iztroReady = true;
+                clearInterval(checkInterval);
+                console.log('iztro 已就绪');
+            }
         }, 100);
         
+        // 设置默认日期
         const today = new Date();
         document.getElementById('birthDate').value = `${today.getFullYear()}-${String(today.getMonth()+1).padStart(2,'0')}-${String(today.getDate()).padStart(2,'0')}`;
         
@@ -74,30 +83,39 @@
             loading.style.display = 'block';
             
             try {
-                if (!iztroReady) throw new Error('排盘库加载中');
+                if (!iztroReady || !iztroLib) {
+                    throw new Error('排盘库加载中，请稍后');
+                }
                 
                 const birthDate = document.getElementById('birthDate').value;
                 const hourIndex = parseInt(document.getElementById('birthHour').value);
                 const gender = document.getElementById('gender').value;
-                const hour = hourMap[hourIndex];
-                
-                console.log(`时辰索引: ${hourIndex}, 小时: ${hour}`);
                 
                 if (!birthDate) throw new Error('请选择日期');
-                if (isNaN(hour)) throw new Error('请选择时辰');
+                if (isNaN(hourIndex)) throw new Error('请选择时辰');
                 
+                const hour = hourMap[hourIndex];
+                console.log(`日期: ${birthDate}, 时辰索引: ${hourIndex}, 小时: ${hour}`);
+                
+                // 解析日期
                 const [year, month, day] = birthDate.split('-').map(Number);
-                const dateStr = `${year}-${month}-${day}`;
                 
-                const data = iztroLib.astro.astrolabeBySolarDate(dateStr, hour, 0);
+                // 方法1: 使用 bySolar (参数: year, month, day, hour, minute, gender)
+                // gender: 0=男, 1=女
+                const genderCode = gender === 'male' ? 0 : 1;
                 
-                if (!data) throw new Error('排盘失败');
+                console.log(`调用 bySolar(${year}, ${month}, ${day}, ${hour}, 0, ${genderCode})`);
+                const data = iztroLib.astro.bySolar(year, month, day, hour, 0, genderCode);
+                
+                console.log('排盘结果:', data);
+                
+                if (!data) throw new Error('排盘失败，无返回数据');
                 
                 displayResult(data, {year, month, day});
                 
             } catch(err) {
-                console.error('错误:', err);
-                result.innerHTML = `<div class="error-msg">❌ ${err.message}</div>`;
+                console.error('详细错误:', err);
+                result.innerHTML = `<div class="error-msg">❌ ${err.message || err}<br><small>请检查控制台</small></div>`;
                 result.style.display = 'block';
             } finally {
                 loading.style.display = 'none';
@@ -106,17 +124,26 @@
         
         function displayResult(data, dateInfo) {
             const result = document.getElementById('result');
+            
+            // 获取宫位数据
             const palaces = data.palaces || [];
             
+            if (palaces.length === 0) {
+                result.innerHTML = '<div class="error-msg">❌ 未获取到宫位数据</div>';
+                result.style.display = 'block';
+                return;
+            }
+            
+            // 获取八字信息
             let bazi = '';
-            if (data.rawDates?.chineseDate) {
+            if (data.rawDates && data.rawDates.chineseDate) {
                 const cd = data.rawDates.chineseDate;
-                bazi = `${cd.yearly.join('')} ${cd.monthly.join('')} ${cd.daily.join('')} ${cd.hourly.join('')}`;
+                bazi = `${cd.yearly ? cd.yearly.join('') : ''} ${cd.monthly ? cd.monthly.join('') : ''} ${cd.daily ? cd.daily.join('') : ''} ${cd.hourly ? cd.hourly.join('') : ''}`;
             }
             
             let html = `<div class="card">
                 <h2>📅 ${dateInfo.year}年${dateInfo.month}月${dateInfo.day}日</h2>
-                <h3>八字：${bazi} | 农历：${data.lunarDate}</h3>
+                <h3>八字：${bazi || '计算中'} | 农历：${data.lunarDate || '计算中'}</h3>
             </div>`;
             
             html += `<div class="card"><h2>十二宫</h2><div class="palace-grid">`;
@@ -124,7 +151,7 @@
             palaces.forEach(p => {
                 let major = (p.majorStars || []).map(s => s.name + (s.mutagen ? `(${s.mutagen})` : '')).join(' · ') || '无主星';
                 let minor = [...(p.minorStars||[]), ...(p.badStars||[]), ...(p.adjectiveStars||[])]
-                    .map(s=>s.name).slice(0,6).join(' ');
+                    .map(s => s.name).slice(0, 6).join(' ');
                 html += `<div class="palace-card">
                     <div class="palace-name">${p.name}</div>
                     <div class="major-star">${major}</div>
