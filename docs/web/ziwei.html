@@ -300,13 +300,14 @@
     // 多 CDN 加载 iztro
     // =========================
     const cdnList = [
-        'https://unpkg.com/iztro@2.4.7/dist/iztro.umd.js',
-        'https://cdn.jsdelivr.net/npm/iztro@2.4.7/dist/iztro.umd.js',
-        'https://cdn.skypack.dev/iztro'
+        'https://cdn.skypack.dev/iztro',
+        'https://esm.sh/iztro',
+        'https://unpkg.com/iztro@2.4.7/dist/iztro.umd.js'
     ];
     
     let currentIndex = 0;
     let iztroReady = false;
+    let iztroLib = null;
     
     function loadIztro() {
         if (currentIndex >= cdnList.length) {
@@ -317,9 +318,21 @@
         
         const script = document.createElement('script');
         script.src = cdnList[currentIndex];
+        script.type = 'module';
         script.onload = function() {
             console.log('iztro 加载成功:', cdnList[currentIndex]);
-            iztroReady = true;
+            // 等待模块加载
+            setTimeout(() => {
+                import(cdnList[currentIndex]).then(module => {
+                    iztroLib = module.default || module;
+                    iztroReady = true;
+                    console.log('iztro 模块已就绪', iztroLib);
+                }).catch(err => {
+                    console.error('模块导入失败:', err);
+                    currentIndex++;
+                    loadIztro();
+                });
+            }, 100);
         };
         script.onerror = function() {
             console.log('iztro 加载失败:', cdnList[currentIndex]);
@@ -351,11 +364,9 @@
         loadingDiv.style.display = 'block';
 
         try {
-            if (!iztroReady && typeof iztro === 'undefined') {
-                throw new Error('排盘库加载中，请稍后再试');
+            if (!iztroReady || !iztroLib) {
+                throw new Error('排盘库加载中，请稍后再试（等待3-5秒）');
             }
-            
-            const iztroLib = window.iztro || iztro;
             
             const birthDate = document.getElementById('birthDate').value;
             const hour = parseInt(document.getElementById('birthHour').value);
@@ -368,6 +379,7 @@
             
             let data;
             
+            // 尝试不同的 API 调用方式
             if (iztroLib.astro && typeof iztroLib.astro.bySolar === 'function') {
                 if (calendarType === 'solar') {
                     data = iztroLib.astro.bySolar(year, month, day, hour, gender === 'male' ? 0 : 1);
@@ -381,7 +393,11 @@
                 } else {
                     data = iztroLib.astrolabe({ lunarDate: [year, month, day], ...config });
                 }
+            } else if (typeof iztroLib === 'function') {
+                // 直接调用
+                data = iztroLib({ solarDate: [year, month, day], hour: hour, gender: gender === 'male' ? 0 : 1 });
             } else {
+                console.log('可用的方法:', Object.keys(iztroLib));
                 throw new Error('不支持的 API 版本');
             }
             
@@ -390,7 +406,8 @@
             displayAstrolabe(data, calendarType, { year, month, day });
             
         } catch (err) {
-            resultDiv.innerHTML = `<div class="error-msg">❌ ${err.message}</div>`;
+            console.error(err);
+            resultDiv.innerHTML = `<div class="error-msg">❌ ${err.message}<br><small>请打开控制台查看详细错误</small></div>`;
             resultDiv.style.display = 'block';
         } finally {
             loadingDiv.style.display = 'none';
