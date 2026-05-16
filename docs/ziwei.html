@@ -239,19 +239,52 @@
     </div>
 </div>
 
-<!-- 加载 iztro CDN -->
-<script src="https://unpkg.com/iztro@2.4.7/dist/iztro.umd.js"></script>
-
+<!-- 使用多个 CDN 备用加载 -->
 <script>
-    // 等待 iztro 加载
+    // CDN 列表（从快到慢）
+    const cdnList = [
+        'https://cdn.jsdelivr.net/npm/iztro@2.4.7/dist/iztro.umd.js',
+        'https://fastly.jsdelivr.net/npm/iztro@2.4.7/dist/iztro.umd.js',
+        'https://unpkg.com/iztro@2.4.7/dist/iztro.umd.js'
+    ];
+    
+    let currentCdn = 0;
     let iztroLoaded = false;
     
-    function waitForIztro(callback) {
-        if (typeof iztro !== 'undefined') {
+    function loadNextCdn() {
+        if (currentCdn >= cdnList.length) {
+            document.getElementById('result').innerHTML = '<div class="error-msg">❌ 排盘库加载失败，请检查网络或刷新重试</div>';
+            document.getElementById('result').style.display = 'block';
+            document.getElementById('loading').style.display = 'none';
+            return;
+        }
+        
+        const script = document.createElement('script');
+        script.src = cdnList[currentCdn];
+        script.onload = function() {
+            console.log('CDN 加载成功:', cdnList[currentCdn]);
             iztroLoaded = true;
+        };
+        script.onerror = function() {
+            console.log('CDN 加载失败:', cdnList[currentCdn]);
+            currentCdn++;
+            loadNextCdn();
+        };
+        document.head.appendChild(script);
+    }
+    
+    loadNextCdn();
+    
+    // 等待加载的函数
+    function waitForIztro(callback, retryCount = 0) {
+        if (typeof iztro !== 'undefined') {
             callback();
+        } else if (retryCount < 50) {
+            setTimeout(() => waitForIztro(callback, retryCount + 1), 100);
         } else {
-            setTimeout(() => waitForIztro(callback), 100);
+            document.getElementById('result').innerHTML = '<div class="error-msg">❌ 排盘库加载超时，请刷新页面重试</div>';
+            document.getElementById('result').style.display = 'block';
+            document.getElementById('loading').style.display = 'none';
         }
     }
     
@@ -279,8 +312,6 @@
                 
                 const [year, month, day] = birthDate.split('-').map(Number);
                 const hour = hourMap[hourIndex];
-                
-                console.log(`排盘: ${year}-${month}-${day} ${hour}:00, 性别: ${gender === 0 ? '男' : '女'}`);
                 
                 const data = iztro.astro.bySolar(year, month, day, hour, 0, gender);
                 
