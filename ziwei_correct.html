@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>紫微斗数 - 正确版本</title>
+    <script type="importmap">
+        {
+            "imports": {
+                "iztro": "https://esm.sh/iztro"
+            }
+        }
+    </script>
+    <script type="module">
+        import iztroLib from 'iztro';
+        window.iztroLib = iztroLib;
+        console.log('iztro 加载完成');
+        console.log('可用方法:', Object.keys(iztroLib));
+        console.log('astro 方法:', iztroLib.astro);
+        
+        window.testAstrolabe = async function() {
+            const output = document.getElementById('output');
+            output.innerHTML = '排盘中...';
+            
+            try {
+                // 尝试不同的参数格式
+                let result;
+                
+                // 格式1: 使用对象参数
+                console.log('尝试格式1: 对象参数');
+                result = iztroLib.astrolabe({
+                    solarDate: '1990-5-10',
+                    hour: 11,
+                    gender: 0
+                });
+                
+                console.log('排盘结果:', result);
+                output.innerHTML = '<pre>排盘成功！\n' + JSON.stringify(result, null, 2) + '</pre>';
+                
+                // 显示宫位
+                if (result && result.houses) {
+                    let html = '<h2>十二宫位</h2><ul>';
+                    result.houses.forEach(house => {
+                        html += `<li>${house.name}: ${house.majorStars?.map(s=>s.name).join(',') || '无主星'}</li>`;
+                    });
+                    html += '</ul>';
+                    output.innerHTML += html;
+                }
+                
+            } catch(e) {
+                console.error('错误:', e);
+                output.innerHTML = '错误: ' + e.message;
+            }
+        };
+        
+        // 自动执行测试
+        setTimeout(() => {
+            if (window.testAstrolabe) {
+                // 延迟执行
+            }
+        }, 1000);
+    </script>
+</head>
+<body>
+    <h1>紫微斗数 - 正确版本</h1>
+    <button onclick="testAstrolabe()">测试排盘</button>
+    <div id="output" style="margin-top:20px; padding:10px; background:#f0f0f0; border-radius:8px;"></div>
+    
+    <h3>调试信息：</h3>
+    <div id="debug"></div>
+    <script>
+        document.getElementById('debug').innerHTML = '等待加载...';
+        setTimeout(() => {
+            if (window.iztroLib) {
+                document.getElementById('debug').innerHTML = `
+                    iztro 已加载<br>
+                    可用顶层方法: ${Object.keys(window.iztroLib).join(', ')}<br>
+                    astro 方法: ${window.iztroLib.astro ? Object.keys(window.iztroLib.astro).join(', ') : '无'}<br>
+                    astrolabe 函数: ${typeof window.iztroLib.astrolabe}
+                `;
+            }
+        }, 2000);
+    </script>
+</body>
+</html>
