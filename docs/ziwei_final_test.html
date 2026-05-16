@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>紫微斗数 - API测试</title>
+    <script type="importmap">
+        {
+            "imports": {
+                "iztro": "https://esm.sh/iztro"
+            }
+        }
+    </script>
+    <script type="module">
+        import iztroLib from 'iztro';
+        window.iztroLib = iztroLib;
+        console.log('iztro 加载完成');
+        
+        window.testAPI = async function() {
+            const output = document.getElementById('output');
+            output.innerHTML = '测试中...<br>';
+            
+            try {
+                // 测试 bySolar
+                output.innerHTML += '测试 iztroLib.astro.bySolar(1990, 5, 10, 11, 0, 0)<br>';
+                const result1 = iztroLib.astro.bySolar(1990, 5, 10, 11, 0, 0);
+                output.innerHTML += '✅ bySolar 成功！<br>';
+                output.innerHTML += '<pre>' + JSON.stringify(result1, null, 2).substring(0, 500) + '</pre><br>';
+            } catch(e) {
+                output.innerHTML += '❌ bySolar 失败: ' + e.message + '<br>';
+            }
+            
+            try {
+                // 测试 astrolabeBySolarDate
+                output.innerHTML += '测试 iztroLib.astro.astrolabeBySolarDate("1990-5-10", 11, 0)<br>';
+                const result2 = iztroLib.astro.astrolabeBySolarDate('1990-5-10', 11, 0);
+                output.innerHTML += '✅ astrolabeBySolarDate 成功！<br>';
+                output.innerHTML += '<pre>' + JSON.stringify(result2, null, 2).substring(0, 500) + '</pre><br>';
+            } catch(e) {
+                output.innerHTML += '❌ astrolabeBySolarDate 失败: ' + e.message + '<br>';
+            }
+        };
+    </script>
+</head>
+<body>
+    <h1>紫微斗数 API 测试</h1>
+    <button onclick="testAPI()">测试所有API</button>
+    <div id="output" style="margin-top:20px; padding:10px; background:#f0f0f0; border-radius:8px; overflow:auto; max-height:600px;"></div>
+</body>
+</html>
