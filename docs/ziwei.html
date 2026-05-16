@@ -212,6 +212,20 @@
         }
         #coffee-fab:hover { transform: scale(1.1); background: #F57C00; }
     </style>
+    <!-- 直接加载已知可用的 CDN -->
+    <script type="importmap">
+        {
+            "imports": {
+                "iztro": "https://esm.sh/iztro"
+            }
+        }
+    </script>
+    <script type="module">
+        import iztroLib from 'iztro';
+        window.iztroLib = iztroLib;
+        window.iztroReady = true;
+        console.log('iztro 加载成功', iztroLib);
+    </script>
 </head>
 <body>
 <div class="container">
@@ -297,52 +311,29 @@
 
 <script>
     // =========================
-    // 多 CDN 加载 iztro
+    // 等待 iztro 加载完成
     // =========================
-    const cdnList = [
-        'https://cdn.skypack.dev/iztro',
-        'https://esm.sh/iztro',
-        'https://unpkg.com/iztro@2.4.7/dist/iztro.umd.js'
-    ];
-    
-    let currentIndex = 0;
     let iztroReady = false;
     let iztroLib = null;
     
-    function loadIztro() {
-        if (currentIndex >= cdnList.length) {
-            document.getElementById('result').innerHTML = '<div class="error-msg">⚠️ 排盘库加载失败，请刷新页面重试</div>';
-            document.getElementById('result').style.display = 'block';
-            return;
+    // 检查模块是否加载
+    const checkInterval = setInterval(() => {
+        if (window.iztroLib) {
+            iztroLib = window.iztroLib;
+            iztroReady = true;
+            clearInterval(checkInterval);
+            console.log('iztro 已就绪');
         }
-        
-        const script = document.createElement('script');
-        script.src = cdnList[currentIndex];
-        script.type = 'module';
-        script.onload = function() {
-            console.log('iztro 加载成功:', cdnList[currentIndex]);
-            // 等待模块加载
-            setTimeout(() => {
-                import(cdnList[currentIndex]).then(module => {
-                    iztroLib = module.default || module;
-                    iztroReady = true;
-                    console.log('iztro 模块已就绪', iztroLib);
-                }).catch(err => {
-                    console.error('模块导入失败:', err);
-                    currentIndex++;
-                    loadIztro();
-                });
-            }, 100);
-        };
-        script.onerror = function() {
-            console.log('iztro 加载失败:', cdnList[currentIndex]);
-            currentIndex++;
-            loadIztro();
-        };
-        document.head.appendChild(script);
-    }
+    }, 100);
     
-    loadIztro();
+    // 5秒后超时
+    setTimeout(() => {
+        if (!iztroReady) {
+            clearInterval(checkInterval);
+            document.getElementById('result').innerHTML = '<div class="error-msg">⚠️ 排盘库加载超时，请刷新页面</div>';
+            document.getElementById('result').style.display = 'block';
+        }
+    }, 5000);
 
     // =========================
     // 默认日期
@@ -356,7 +347,7 @@
     // =========================
     // 排盘
     // =========================
-    async function getAstrolabe() {
+    window.getAstrolabe = async function() {
         const loadingDiv = document.getElementById('loading');
         const resultDiv = document.getElementById('result');
 
@@ -393,12 +384,10 @@
                 } else {
                     data = iztroLib.astrolabe({ lunarDate: [year, month, day], ...config });
                 }
-            } else if (typeof iztroLib === 'function') {
-                // 直接调用
-                data = iztroLib({ solarDate: [year, month, day], hour: hour, gender: gender === 'male' ? 0 : 1 });
             } else {
-                console.log('可用的方法:', Object.keys(iztroLib));
-                throw new Error('不支持的 API 版本');
+                console.log('iztroLib 结构:', iztroLib);
+                console.log('可用方法:', Object.keys(iztroLib));
+                throw new Error('不支持的 API 版本，请查看控制台');
             }
             
             if (!data) throw new Error('排盘失败');
@@ -412,7 +401,7 @@
         } finally {
             loadingDiv.style.display = 'none';
         }
-    }
+    };
 
     function displayAstrolabe(data, calendarType, dateInfo) {
         const resultDiv = document.getElementById('result');
@@ -474,11 +463,11 @@
         resultDiv.style.display = 'block';
     }
 
-    function showSupportPanel() { document.getElementById('supportPanel').style.display = 'flex'; }
-    function hideSupportPanel() { document.getElementById('supportPanel').style.display = 'none'; }
+    window.showSupportPanel = function() { document.getElementById('supportPanel').style.display = 'flex'; }
+    window.hideSupportPanel = function() { document.getElementById('supportPanel').style.display = 'none'; }
     document.getElementById('supportPanel')?.addEventListener('click', function(e) { if (e.target === this) hideSupportPanel(); });
 
-    function switchQR(type) {
+    window.switchQR = function(type) {
         const maybankDiv = document.getElementById('maybankQR');
         const tngDiv = document.getElementById('tngQR');
         const tabs = document.querySelectorAll('.qr-tab');
