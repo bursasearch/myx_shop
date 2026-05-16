@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>紫微斗数 - 最小测试</title>
+    <script type="importmap">
+        {
+            "imports": {
+                "iztro": "https://esm.sh/iztro"
+            }
+        }
+    </script>
+    <script type="module">
+        import iztroLib from 'iztro';
+        window.iztroLib = iztroLib;
+        window.iztroReady = true;
+        
+        // 测试排盘
+        window.testAstrolabe = function() {
+            try {
+                // 测试 1990年5月10日 午时 男
+                const result = iztroLib.astro.bySolar(1990, 5, 10, 11, 0, 0);
+                console.log('排盘成功:', result);
+                document.getElementById('output').innerHTML = '<pre>' + JSON.stringify(result, null, 2) + '</pre>';
+            } catch(e) {
+                console.error('错误:', e);
+                document.getElementById('output').innerHTML = '错误: ' + e.message;
+            }
+        };
+    </script>
+</head>
+<body>
+    <h1>紫微斗数测试</h1>
+    <button onclick="testAstrolabe()">测试排盘</button>
+    <div id="output"></div>
+</body>
+</html>
+
