@@ -225,6 +225,7 @@
         window.iztroLib = iztroLib;
         window.iztroReady = true;
         console.log('iztro 加载成功', iztroLib);
+        console.log('astro 方法:', iztroLib.astro);
     </script>
 </head>
 <body>
@@ -323,6 +324,7 @@
             iztroReady = true;
             clearInterval(checkInterval);
             console.log('iztro 已就绪');
+            console.log('iztroLib.astro:', iztroLib.astro);
         }
     }, 100);
     
@@ -370,19 +372,21 @@
             
             let data;
             
-            // 尝试不同的 API 调用方式
+            // 尝试正确的 API 调用方式
+            // 根据控制台输出，使用 iztroLib.astro.bySolar
             if (iztroLib.astro && typeof iztroLib.astro.bySolar === 'function') {
+                // 正确的参数格式：bySolar(year, month, day, hour, minute, gender)
+                // gender: 0=男, 1=女
+                const genderCode = gender === 'male' ? 0 : 1;
+                
                 if (calendarType === 'solar') {
-                    data = iztroLib.astro.bySolar(year, month, day, hour, gender === 'male' ? 0 : 1);
+                    // 阳历: 使用 bySolar，需要分钟参数
+                    data = iztroLib.astro.bySolar(year, month, day, hour, 0, genderCode);
+                    console.log('调用 bySolar 成功', data);
                 } else {
-                    data = iztroLib.astro.byLunar(year, month, day, hour, gender === 'male' ? 0 : 1);
-                }
-            } else if (typeof iztroLib.astrolabe === 'function') {
-                const config = { hour: hour, gender: gender === 'male' ? 0 : 1, language: 'zh' };
-                if (calendarType === 'solar') {
-                    data = iztroLib.astrolabe({ solarDate: [year, month, day], ...config });
-                } else {
-                    data = iztroLib.astrolabe({ lunarDate: [year, month, day], ...config });
+                    // 农历: 使用 byLunar
+                    data = iztroLib.astro.byLunar(year, month, day, hour, 0, genderCode);
+                    console.log('调用 byLunar 成功', data);
                 }
             } else {
                 console.log('iztroLib 结构:', iztroLib);
@@ -395,7 +399,7 @@
             displayAstrolabe(data, calendarType, { year, month, day });
             
         } catch (err) {
-            console.error(err);
+            console.error('排盘错误:', err);
             resultDiv.innerHTML = `<div class="error-msg">❌ ${err.message}<br><small>请打开控制台查看详细错误</small></div>`;
             resultDiv.style.display = 'block';
         } finally {
