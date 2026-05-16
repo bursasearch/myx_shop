@@ -5,11 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
     <title>紫微斗数免费排盘 | 命盘解析</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
             background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
@@ -17,10 +13,7 @@
             padding: 20px;
             color: #eee;
         }
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
+        .container { max-width: 1200px; margin: 0 auto; }
         .card {
             background: rgba(255,255,255,0.08);
             backdrop-filter: blur(10px);
@@ -29,16 +22,8 @@
             margin-bottom: 20px;
             border: 1px solid rgba(255,215,0,0.2);
         }
-        h1 {
-            text-align: center;
-            color: #FFD966;
-            margin-bottom: 20px;
-            font-size: 1.8rem;
-        }
-        h2, h3 {
-            color: #FFD966;
-            margin-bottom: 15px;
-        }
+        h1 { text-align: center; color: #FFD966; margin-bottom: 20px; font-size: 1.8rem; }
+        h2, h3 { color: #FFD966; margin-bottom: 15px; }
         .form-group {
             display: flex;
             flex-wrap: wrap;
@@ -46,16 +31,8 @@
             margin-bottom: 20px;
             justify-content: center;
         }
-        .input-field {
-            flex: 1;
-            min-width: 150px;
-        }
-        label {
-            display: block;
-            margin-bottom: 5px;
-            color: #FFD966;
-            font-weight: 500;
-        }
+        .input-field { flex: 1; min-width: 150px; }
+        label { display: block; margin-bottom: 5px; color: #FFD966; font-weight: 500; }
         input, select {
             width: 100%;
             padding: 12px;
@@ -71,12 +48,7 @@
             margin-bottom: 15px;
             justify-content: center;
         }
-        .calendar-type label {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            cursor: pointer;
-        }
+        .calendar-type label { display: inline-flex; align-items: center; gap: 6px; cursor: pointer; }
         button {
             background: linear-gradient(135deg, #FFD966, #FFB347);
             border: none;
@@ -88,12 +60,8 @@
             cursor: pointer;
             transition: transform 0.2s;
         }
-        button:hover {
-            transform: scale(1.02);
-        }
-        .result-area {
-            overflow-x: auto;
-        }
+        button:hover { transform: scale(1.02); }
+        .result-area { overflow-x: auto; }
         .palace-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -106,21 +74,9 @@
             padding: 12px;
             border-left: 4px solid #FFD966;
         }
-        .palace-name {
-            font-size: 16px;
-            font-weight: bold;
-            color: #FFD966;
-            margin-bottom: 8px;
-        }
-        .major-star {
-            color: #ff8888;
-            font-weight: bold;
-            font-size: 13px;
-        }
-        .minor-star {
-            color: #88ff88;
-            font-size: 11px;
-        }
+        .palace-name { font-size: 16px; font-weight: bold; color: #FFD966; margin-bottom: 8px; }
+        .major-star { color: #ff8888; font-weight: bold; font-size: 13px; }
+        .minor-star { color: #88ff88; font-size: 11px; }
         .loading {
             text-align: center;
             padding: 40px;
@@ -146,17 +102,8 @@
             background: rgba(255,0,0,0.1);
             border-radius: 16px;
         }
-        .info-text {
-            font-size: 12px;
-            color: #aaa;
-            text-align: center;
-            margin-top: 10px;
-        }
-        @media (max-width: 768px) {
-            .palace-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
+        .info-text { font-size: 12px; color: #aaa; text-align: center; margin-top: 10px; }
+        @media (max-width: 768px) { .palace-grid { grid-template-columns: repeat(2, 1fr); } }
 
         /* 支持面板样式 */
         .support-panel {
@@ -202,9 +149,7 @@
             justify-content: center;
             color: #999;
         }
-        .close-btn:hover {
-            background: #f5f5f5;
-        }
+        .close-btn:hover { background: #f5f5f5; }
         .qr-switch-tabs {
             display: flex;
             gap: 12px;
@@ -222,18 +167,9 @@
             font-weight: 600;
             transition: all 0.2s;
         }
-        .qr-tab.active {
-            background: #2c7a2c;
-            color: white;
-        }
-        .qr-tab:not(.active) {
-            background: transparent;
-            color: #666;
-        }
-        .qr-container {
-            text-align: center;
-            margin: 15px 0;
-        }
+        .qr-tab.active { background: #2c7a2c; color: white; }
+        .qr-tab:not(.active) { background: transparent; color: #666; }
+        .qr-container { text-align: center; margin: 15px 0; }
         .qr-code-img {
             width: 100%;
             max-width: 240px;
@@ -254,12 +190,7 @@
             color: #2e7d32;
             text-align: left;
         }
-        .coffee-icon-lg {
-            text-align: center;
-            font-size: 32px;
-            margin-bottom: 10px;
-            color: #FF9800;
-        }
+        .coffee-icon-lg { text-align: center; font-size: 32px; margin-bottom: 10px; color: #FF9800; }
         #coffee-fab {
             position: fixed;
             bottom: 90px;
@@ -279,49 +210,8 @@
             justify-content: center;
             transition: all 0.3s ease;
         }
-        #coffee-fab:hover {
-            transform: scale(1.1);
-            background: #F57C00;
-        }
+        #coffee-fab:hover { transform: scale(1.1); background: #F57C00; }
     </style>
-    <!-- 尝试多个 CDN 加载 iztro -->
-    <script>
-        // 备用 CDN 列表
-        const cdnList = [
-            'https://unpkg.com/iztro@2.4.7/dist/iztro.umd.js',
-            'https://cdn.jsdelivr.net/npm/iztro@2.4.7/dist/iztro.umd.js',
-            'https://fastly.jsdelivr.net/npm/iztro@2.4.7/dist/iztro.umd.js'
-        ];
-        
-        let currentCdnIndex = 0;
-        
-        function loadIztro() {
-            if (currentCdnIndex >= cdnList.length) {
-                const loadingDiv = document.getElementById('loading');
-                const resultDiv = document.getElementById('result');
-                if (loadingDiv) loadingDiv.style.display = 'none';
-                if (resultDiv) {
-                    resultDiv.innerHTML = '<div class="error-msg">⚠️ 排盘库加载失败，请刷新页面重试<br><small>如果持续失败，请联系管理员</small></div>';
-                    resultDiv.style.display = 'block';
-                }
-                return;
-            }
-            
-            const script = document.createElement('script');
-            script.src = cdnList[currentCdnIndex];
-            script.onload = function() {
-                console.log('iztro 加载成功:', cdnList[currentCdnIndex]);
-            };
-            script.onerror = function() {
-                console.log('iztro 加载失败:', cdnList[currentCdnIndex]);
-                currentCdnIndex++;
-                loadIztro();
-            };
-            document.head.appendChild(script);
-        }
-        
-        loadIztro();
-    </script>
 </head>
 <body>
 <div class="container">
@@ -329,12 +219,8 @@
         <h1>🌟 紫微斗数免费排盘 🌟</h1>
         
         <div class="calendar-type">
-            <label>
-                <input type="radio" name="calendarType" value="solar" checked> 阳历
-            </label>
-            <label>
-                <input type="radio" name="calendarType" value="lunar"> 农历
-            </label>
+            <label><input type="radio" name="calendarType" value="solar" checked> 阳历</label>
+            <label><input type="radio" name="calendarType" value="lunar"> 农历</label>
         </div>
         
         <div class="form-group">
@@ -387,9 +273,7 @@
         <button class="close-btn" onclick="hideSupportPanel()">✕</button>
         <div class="coffee-icon-lg">☕</div>
         <h4 style="text-align:center; margin-bottom:8px;">请我喝杯咖啡</h4>
-        <p style="text-align:center; color:#666; font-size:13px; margin-bottom:20px;">
-            如果紫微斗数服务对您有帮助，欢迎随意支持
-        </p>
+        <p style="text-align:center; color:#666; font-size:13px; margin-bottom:20px;">如果紫微斗数服务对您有帮助，欢迎随意支持</p>
         <div class="qr-switch-tabs">
             <div class="qr-tab active" onclick="switchQR('maybank')">🏦 Maybank</div>
             <div class="qr-tab" onclick="switchQR('tng')">📱 TnG eWallet</div>
@@ -397,28 +281,15 @@
         <div id="maybankQR" class="qr-container">
             <img src="images/maybank-qr.jpg" alt="Maybank QR Pay" class="qr-code-img"
                  onerror="this.style.display='none'; document.getElementById('maybankFallback').style.display='block';">
-            <div id="maybankFallback" style="display:none; background:#fff3cd; padding:15px; border-radius:12px; color:#856404;">
-                ⚠️ Maybank QR码加载失败<br><small>请稍后重试</small>
-            </div>
+            <div id="maybankFallback" style="display:none; background:#fff3cd; padding:15px; border-radius:12px; color:#856404;">⚠️ Maybank QR码加载失败<br><small>请稍后重试</small></div>
         </div>
         <div id="tngQR" class="qr-container" style="display:none;">
             <img src="images/tng-qr.jpg" alt="TnG eWallet QR" class="qr-code-img"
                  onerror="this.style.display='none'; document.getElementById('tngFallback').style.display='block';">
-            <div id="tngFallback" style="display:none; background:#fff3cd; padding:15px; border-radius:12px; color:#856404;">
-                ⚠️ TnG QR码加载失败<br><small>请稍后重试</small>
-            </div>
+            <div id="tngFallback" style="display:none; background:#fff3cd; padding:15px; border-radius:12px; color:#856404;">⚠️ TnG QR码加载失败<br><small>请稍后重试</small></div>
         </div>
-        <div class="qr-note">
-            📖 <strong>使用说明</strong><br>
-            1. 打开 Maybank App 或 TnG eWallet<br>
-            2. 选择 "DuitNow QR" / "扫描付款"<br>
-            3. 扫描上方 QR 码<br>
-            4. 输入您想支持的金额<br>
-            5. 确认转账即可
-        </div>
-        <div style="color:#999; font-size:12px; text-align:center; margin-top:12px;">
-            ❤️ 感谢每一份支持！
-        </div>
+        <div class="qr-note">📖 <strong>使用说明</strong><br>1. 打开 Maybank App 或 TnG eWallet<br>2. 选择 "DuitNow QR" / "扫描付款"<br>3. 扫描上方 QR 码<br>4. 输入您想支持的金额<br>5. 确认转账即可</div>
+        <div style="color:#999; font-size:12px; text-align:center; margin-top:12px;">❤️ 感谢每一份支持！</div>
     </div>
 </div>
 
@@ -426,20 +297,53 @@
 
 <script>
     // =========================
+    // 多 CDN 加载 iztro
+    // =========================
+    const cdnList = [
+        'https://unpkg.com/iztro@2.4.7/dist/iztro.umd.js',
+        'https://cdn.jsdelivr.net/npm/iztro@2.4.7/dist/iztro.umd.js',
+        'https://cdn.skypack.dev/iztro'
+    ];
+    
+    let currentIndex = 0;
+    let iztroReady = false;
+    
+    function loadIztro() {
+        if (currentIndex >= cdnList.length) {
+            document.getElementById('result').innerHTML = '<div class="error-msg">⚠️ 排盘库加载失败，请刷新页面重试</div>';
+            document.getElementById('result').style.display = 'block';
+            return;
+        }
+        
+        const script = document.createElement('script');
+        script.src = cdnList[currentIndex];
+        script.onload = function() {
+            console.log('iztro 加载成功:', cdnList[currentIndex]);
+            iztroReady = true;
+        };
+        script.onerror = function() {
+            console.log('iztro 加载失败:', cdnList[currentIndex]);
+            currentIndex++;
+            loadIztro();
+        };
+        document.head.appendChild(script);
+    }
+    
+    loadIztro();
+
+    // =========================
     // 默认日期
     // =========================
     const today = new Date();
     const yyyy = today.getFullYear();
     const mm = String(today.getMonth() + 1).padStart(2, '0');
     const dd = String(today.getDate()).padStart(2, '0');
-
     document.getElementById('birthDate').value = `${yyyy}-${mm}-${dd}`;
 
     // =========================
     // 排盘
     // =========================
     async function getAstrolabe() {
-
         const loadingDiv = document.getElementById('loading');
         const resultDiv = document.getElementById('result');
 
@@ -447,398 +351,128 @@
         loadingDiv.style.display = 'block';
 
         try {
-
-            // -------------------------
-            // 检查 iztro
-            // -------------------------
-            const iztroLib =
-                window.iztro ||
-                (typeof iztro !== 'undefined' ? iztro : null);
-
-            console.log('iztro =>', iztroLib);
-
-            if (!iztroLib) {
-                throw new Error('iztro 排盘库加载失败');
+            if (!iztroReady && typeof iztro === 'undefined') {
+                throw new Error('排盘库加载中，请稍后再试');
             }
+            
+            const iztroLib = window.iztro || iztro;
+            
+            const birthDate = document.getElementById('birthDate').value;
+            const hour = parseInt(document.getElementById('birthHour').value);
+            const gender = document.getElementById('gender').value;
+            const calendarType = document.querySelector('input[name="calendarType"]:checked').value;
 
-            // -------------------------
-            // 获取输入
-            // -------------------------
-            const birthDate =
-                document.getElementById('birthDate').value;
+            if (!birthDate) throw new Error('请选择出生日期');
 
-            const hour =
-                parseInt(
-                    document.getElementById('birthHour').value
-                );
-
-            const gender =
-                document.getElementById('gender').value;
-
-            const calendarType =
-                document.querySelector(
-                    'input[name="calendarType"]:checked'
-                ).value;
-
-            if (!birthDate) {
-                throw new Error('请选择出生日期');
-            }
-
-            const [year, month, day] =
-                birthDate.split('-').map(Number);
-
-            // -------------------------
-            // 排盘
-            // -------------------------
+            const [year, month, day] = birthDate.split('-').map(Number);
+            
             let data;
-
-            if (
-                iztroLib.astro &&
-                typeof iztroLib.astro.bySolar === 'function'
-            ) {
-
+            
+            if (iztroLib.astro && typeof iztroLib.astro.bySolar === 'function') {
                 if (calendarType === 'solar') {
-
-                    data = iztroLib.astro.bySolar(
-                        year,
-                        month,
-                        day,
-                        hour,
-                        gender === 'male' ? 0 : 1
-                    );
-
+                    data = iztroLib.astro.bySolar(year, month, day, hour, gender === 'male' ? 0 : 1);
                 } else {
-
-                    data = iztroLib.astro.byLunar(
-                        year,
-                        month,
-                        day,
-                        hour,
-                        gender === 'male' ? 0 : 1
-                    );
+                    data = iztroLib.astro.byLunar(year, month, day, hour, gender === 'male' ? 0 : 1);
                 }
-
+            } else if (typeof iztroLib.astrolabe === 'function') {
+                const config = { hour: hour, gender: gender === 'male' ? 0 : 1, language: 'zh' };
+                if (calendarType === 'solar') {
+                    data = iztroLib.astrolabe({ solarDate: [year, month, day], ...config });
+                } else {
+                    data = iztroLib.astrolabe({ lunarDate: [year, month, day], ...config });
+                }
             } else {
-
-                throw new Error(
-                    '当前 iztro 版本不支持 astro.bySolar()'
-                );
+                throw new Error('不支持的 API 版本');
             }
-
-            console.log('排盘数据 =>', data);
-
-            if (!data) {
-                throw new Error('排盘失败');
-            }
-
-            displayAstrolabe(
-                data,
-                calendarType,
-                { year, month, day }
-            );
-
+            
+            if (!data) throw new Error('排盘失败');
+            
+            displayAstrolabe(data, calendarType, { year, month, day });
+            
         } catch (err) {
-
-            console.error(err);
-
-            resultDiv.innerHTML = `
-                <div class="error-msg">
-                    ❌ ${err.message}
-                </div>
-            `;
-
+            resultDiv.innerHTML = `<div class="error-msg">❌ ${err.message}</div>`;
             resultDiv.style.display = 'block';
-
         } finally {
-
             loadingDiv.style.display = 'none';
         }
     }
 
-    // =========================
-    // 显示命盘
-    // =========================
-    function displayAstrolabe(
-        data,
-        calendarType,
-        dateInfo
-    ) {
-
-        const resultDiv =
-            document.getElementById('result');
-
-        // -------------------------
-        // 兼容字段
-        // -------------------------
-        const palaces =
-            data.palaces ||
-            data.houses ||
-            [];
-
+    function displayAstrolabe(data, calendarType, dateInfo) {
+        const resultDiv = document.getElementById('result');
+        
+        const palaces = data.palaces || data.houses || [];
         if (!Array.isArray(palaces)) {
-
-            resultDiv.innerHTML = `
-                <div class="error-msg">
-                    ❌ 命盘数据格式错误
-                </div>
-            `;
-
+            resultDiv.innerHTML = '<div class="error-msg">❌ 命盘数据格式错误</div>';
             resultDiv.style.display = 'block';
-
             return;
         }
-
-        // -------------------------
-        // 八字
-        // -------------------------
-        let baziText = '未知';
-
-        if (Array.isArray(data.bazi)) {
-
-            baziText = data.bazi.join(' ');
-        }
-
-        // -------------------------
-        // HTML
-        // -------------------------
+        
+        let baziText = Array.isArray(data.bazi) ? data.bazi.join(' ') : '未知';
+        
         let html = `
             <div class="card">
-
-                <h2>
-                    📅 输入时间：
-                    ${calendarType === 'solar' ? '阳历' : '农历'}
-                    ${dateInfo.year}年
-                    ${dateInfo.month}月
-                    ${dateInfo.day}日
-                </h2>
-
-                <h3 style="
-                    color:#aaa;
-                    font-size:14px;
-                    margin-top:5px;
-                    line-height:1.6;
-                ">
-
-                    性别：${data.gender || '未知'}
-                    ｜ 八字：${baziText}
-                    ｜ 五行局：${data.fiveElement || '未知'}
-
+                <h2>📅 输入时间：${calendarType === 'solar' ? '阳历' : '农历'} ${dateInfo.year}年${dateInfo.month}月${dateInfo.day}日</h2>
+                <h3 style="color:#aaa; font-size:14px; margin-top:5px;">
+                    性别：${data.gender || '未知'} ｜ 八字：${baziText} ｜ 五行局：${data.fiveElement || '未知'}
                 </h3>
-
             </div>
-
             <div class="card">
-
                 <h2>🌟 命盘十二宫 🌟</h2>
-
                 <div class="palace-grid">
         `;
-
-        // =========================
-        // 十二宫
-        // =========================
+        
         palaces.forEach(palace => {
-
-            // -------------------------
-            // 主星
-            // -------------------------
-            const majorStars =
-                palace.majorStars ||
-                palace.major_star ||
-                [];
-
+            const majorStars = palace.majorStars || palace.major_star || [];
             let majorText = '无主星';
-
-            if (Array.isArray(majorStars)) {
-
-                majorText =
-                    majorStars.map(star => {
-
-                        let name =
-                            star.name || star;
-
-                        if (star.mutagen) {
-                            name += `(${star.mutagen})`;
-                        }
-
-                        return name;
-
-                    }).join(' · ');
+            if (Array.isArray(majorStars) && majorStars.length > 0) {
+                majorText = majorStars.map(star => {
+                    let name = star.name || star;
+                    if (star.mutagen) name += `(${star.mutagen})`;
+                    return name;
+                }).join(' · ');
             }
-
-            // -------------------------
-            // 副星
-            // -------------------------
+            
             let minorList = [];
-
-            const minorStars =
-                palace.minorStars || [];
-
-            const badStars =
-                palace.badStars || [];
-
-            const adjectiveStars =
-                palace.adjectiveStars || [];
-
-            minorStars.forEach(s => {
-                minorList.push(s.name || s);
-            });
-
-            badStars.forEach(s => {
-                minorList.push(s.name || s);
-            });
-
-            adjectiveStars.forEach(s => {
-                minorList.push(s.name || s);
-            });
-
-            // -------------------------
-            // 宫位名称
-            // -------------------------
-            const palaceName =
-                palace.name ||
-                palace.palaceName ||
-                '未知宫';
-
+            (palace.minorStars || []).forEach(s => minorList.push(s.name || s));
+            (palace.badStars || []).forEach(s => minorList.push(s.name || s));
+            (palace.adjectiveStars || []).forEach(s => minorList.push(s.name || s));
+            
+            const palaceName = palace.name || palace.palaceName || '未知宫';
             html += `
                 <div class="palace-card">
-
-                    <div class="palace-name">
-
-                        ${palaceName}
-
-                        <span style="
-                            font-size:12px;
-                            color:#aaa;
-                        ">
-                            (${palace.decadalKey || ''})
-                        </span>
-
-                    </div>
-
-                    <div class="major-star">
-                        ${majorText}
-                    </div>
-
-                    <div class="minor-star"
-                         style="
-                            margin-top:5px;
-                            min-height:30px;
-                            line-height:1.4;
-                         ">
-
-                        ${
-                            minorList.length > 0
-                            ? minorList.slice(0, 8).join(' ')
-                            : '无'
-                        }
-
-                    </div>
-
+                    <div class="palace-name">${palaceName} <span style="font-size:12px; color:#aaa;">(${palace.decadalKey || ''})</span></div>
+                    <div class="major-star">${majorText}</div>
+                    <div class="minor-star">${minorList.length > 0 ? minorList.slice(0, 8).join(' ') : '无'}</div>
                 </div>
             `;
         });
-
-        html += `
-                </div>
-            </div>
-        `;
-
-        // =========================
-        // 命主 身主
-        // =========================
+        
+        html += `</div></div>`;
+        
         if (data.lifeLord || data.bodyLord) {
-
-            html += `
-                <div class="card">
-
-                    <h3>📿 核心星曜</h3>
-
-                    <p style="margin-top:10px;">
-
-                        <span style="
-                            margin-right:20px;
-                            background:rgba(255,215,0,0.1);
-                            padding:6px 12px;
-                            border-radius:10px;
-                        ">
-                            命主：
-                            ${data.lifeLord || '无'}
-                        </span>
-
-                        <span style="
-                            background:rgba(255,215,0,0.1);
-                            padding:6px 12px;
-                            border-radius:10px;
-                        ">
-                            身主：
-                            ${data.bodyLord || '无'}
-                        </span>
-
-                    </p>
-
-                </div>
-            `;
+            html += `<div class="card"><h3>📿 核心星曜</h3><p><span style="margin-right:20px; background:rgba(255,215,0,0.1); padding:6px 12px; border-radius:10px;">命主：${data.lifeLord || '无'}</span><span style="background:rgba(255,215,0,0.1); padding:6px 12px; border-radius:10px;">身主：${data.bodyLord || '无'}</span></p></div>`;
         }
-
-        // =========================
-        // 输出
-        // =========================
+        
         resultDiv.innerHTML = html;
         resultDiv.style.display = 'block';
     }
 
-    // =========================
-    // 支持面板
-    // =========================
-    function showSupportPanel() {
-        document.getElementById(
-            'supportPanel'
-        ).style.display = 'flex';
-    }
+    function showSupportPanel() { document.getElementById('supportPanel').style.display = 'flex'; }
+    function hideSupportPanel() { document.getElementById('supportPanel').style.display = 'none'; }
+    document.getElementById('supportPanel')?.addEventListener('click', function(e) { if (e.target === this) hideSupportPanel(); });
 
-    function hideSupportPanel() {
-        document.getElementById(
-            'supportPanel'
-        ).style.display = 'none';
-    }
-
-    document.getElementById(
-        'supportPanel'
-    )?.addEventListener('click', function(e) {
-
-        if (e.target === this) {
-            hideSupportPanel();
-        }
-    });
-
-    // =========================
-    // QR 切换
-    // =========================
     function switchQR(type) {
-
-        const maybankDiv =
-            document.getElementById('maybankQR');
-
-        const tngDiv =
-            document.getElementById('tngQR');
-
-        const tabs =
-            document.querySelectorAll('.qr-tab');
-
+        const maybankDiv = document.getElementById('maybankQR');
+        const tngDiv = document.getElementById('tngQR');
+        const tabs = document.querySelectorAll('.qr-tab');
         if (type === 'maybank') {
-
             maybankDiv.style.display = 'block';
             tngDiv.style.display = 'none';
-
             tabs[0].classList.add('active');
             tabs[1].classList.remove('active');
-
         } else {
-
             maybankDiv.style.display = 'none';
             tngDiv.style.display = 'block';
-
             tabs[0].classList.remove('active');
             tabs[1].classList.add('active');
         }
