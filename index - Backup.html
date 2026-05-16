@@ -8,6 +8,7 @@
     <!-- Google Analytics 4 (GA4) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-92XTNG247J"></script>
     <script>
+        // 使用 const 聲明，避免污染全局
         const GA_MEASUREMENT_ID = 'G-92XTNG247J';
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
@@ -132,21 +133,6 @@
             transform: translateY(-3px);
         }
         
-        /* 紫微斗数卡片特殊样式 */
-        .nav-card.ziwei {
-            background: linear-gradient(135deg, #2c1a3e 0%, #4a2c6e 100%);
-            color: #FFE6B0;
-            border: 1px solid rgba(255,215,0,0.3);
-        }
-        
-        .nav-card.ziwei:hover {
-            box-shadow: 0 10px 25px rgba(74, 44, 110, 0.4);
-        }
-        
-        .nav-card.ziwei h3 {
-            color: #FFD966;
-        }
-        
         footer {
             background: white;
             padding: 20px;
@@ -222,33 +208,24 @@
         </header>
 
         <div class="nav-grid">
-            <!-- 马六甲回收服務 -->
+            <!-- 修正链接：使用相对路径，确保链接有效 -->
             <a href="docs/bursa.html" class="nav-card">
-                <h3>📰 马六甲回收服務</h3>
-                <p>只限马六甲市區 · 旧报纸回收</p>
+                <h3>马六甲回收服務</h3>
+                <p>只限马六甲市區</p>
             </a>
             
-            <!-- 紫微斗数免费排盘（新增） -->
-            <a href="docs/ziwei.html" class="nav-card ziwei">
-                <h3>🪐 紫微斗数免费排盘</h3>
-                <p>输入生辰 · 一键排盘 · AI解盘</p>
-            </a>
-            
-            <!-- 聯盟商店 -->
             <a href="docs/products.html" class="nav-card">
-                <h3>🛒 聯盟商店</h3>
+                <h3>聯盟商店</h3>
                 <p>熱門產品推薦與優惠</p>
             </a>
             
-            <!-- 二手車輛 -->
             <a href="docs/vehicles.html" class="nav-card">
-                <h3>🚗 二手車輛</h3>
+                <h3>二手車輛</h3>
                 <p>車輛資訊與市場分析</p>
             </a>
             
-            <!-- 房地產代理 -->
             <a href="docs/real-estate.html" class="nav-card">
-                <h3>🏠 房地產代理</h3>
+                <h3>房地產代理</h3>
                 <p>專業房地產服務與物業資訊</p>
             </a>
         </div>
@@ -262,7 +239,12 @@
     </div>
 
     <script>
+    // GA_MEASUREMENT_ID 已经在全局定义（来自 head 中的 const），这里可以直接使用
+    // 无需再次声明，以避免潜在的重复声明错误（尽管在函数内使用是安全的）
+    
     function openGAConsole() {
+        // 修正 GA console URL 格式，標準格式為 /p[property-id]/reports
+        // 使用插值字符串
         const gaURL = `https://analytics.google.com/analytics/web/#/p${GA_MEASUREMENT_ID.replace('G-', '')}/reports/intelligenthome`;
         window.open(gaURL, '_blank');
         alert('正在打開 Google Analytics 控制台');
@@ -275,6 +257,7 @@
             })
             .catch(err => {
                 console.error('复制失败:', err);
+                // 备用复制方法
                 const textArea = document.createElement('textarea');
                 textArea.value = GA_MEASUREMENT_ID;
                 document.body.appendChild(textArea);
@@ -294,6 +277,7 @@
     }
     
     document.addEventListener('DOMContentLoaded', function() {
+        // 基本 GA4 追蹤
         if (typeof gtag === 'function') {
             gtag('event', 'page_view', {
                 page_title: 'Myx Shop - 主頁',
@@ -302,6 +286,7 @@
             });
         }
         
+        // 追蹤導航點擊
         document.querySelectorAll('.nav-card').forEach(card => {
             card.addEventListener('click', function(e) {
                 if (typeof gtag === 'function') {
