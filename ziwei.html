@@ -18,7 +18,7 @@
             color: #eee;
         }
         .container {
-            max-width: 1400px;
+            max-width: 1200px;
             margin: 0 auto;
         }
         .card {
@@ -64,15 +64,6 @@
             background: rgba(0,0,0,0.6);
             color: white;
             font-size: 16px;
-        }
-        .checkbox-group {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-top: 8px;
-        }
-        .checkbox-group label {
-            margin-bottom: 0;
         }
         .calendar-type {
             display: flex;
@@ -120,39 +111,15 @@
             font-weight: bold;
             color: #FFD966;
             margin-bottom: 8px;
-            border-bottom: 1px solid rgba(255,215,0,0.3);
-            padding-bottom: 4px;
-        }
-        .ganzhi {
-            font-size: 12px;
-            color: #aaa;
-            margin-left: 8px;
         }
         .major-star {
             color: #ff8888;
             font-weight: bold;
             font-size: 13px;
-            margin: 5px 0;
         }
         .minor-star {
             color: #88ff88;
             font-size: 11px;
-            margin: 3px 0;
-        }
-        .decade-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 15px;
-        }
-        .decade-table th, .decade-table td {
-            border: 1px solid rgba(255,215,0,0.3);
-            padding: 8px 12px;
-            text-align: center;
-            font-size: 14px;
-        }
-        .decade-table th {
-            background: rgba(255,215,0,0.2);
-            color: #FFD966;
         }
         .loading {
             text-align: center;
@@ -185,21 +152,9 @@
             text-align: center;
             margin-top: 10px;
         }
-        .badge {
-            display: inline-block;
-            background: rgba(255,215,0,0.2);
-            padding: 4px 12px;
-            border-radius: 20px;
-            margin: 4px;
-            font-size: 12px;
-        }
         @media (max-width: 768px) {
             .palace-grid {
                 grid-template-columns: repeat(2, 1fr);
-            }
-            .decade-table th, .decade-table td {
-                padding: 4px 6px;
-                font-size: 11px;
             }
         }
 
@@ -218,7 +173,7 @@
             padding: 20px;
         }
         .support-card {
-            max-width: 400px;
+            max-width: 380px;
             background: white;
             border-radius: 28px;
             padding: 20px;
@@ -275,27 +230,29 @@
             background: transparent;
             color: #666;
         }
-        .pay-info {
-            background: #e8f5e9;
-            padding: 15px;
-            border-radius: 16px;
+        .qr-container {
+            text-align: center;
             margin: 15px 0;
+        }
+        .qr-code-img {
+            width: 100%;
+            max-width: 240px;
+            height: auto;
+            border-radius: 16px;
+            margin: 0 auto;
+            display: block;
+            border: 1px solid #ddd;
+            padding: 8px;
+            background: white;
+        }
+        .qr-note {
+            background: #e8f5e9;
+            padding: 12px;
+            border-radius: 16px;
+            margin-top: 15px;
             font-size: 13px;
-            text-align: left;
             color: #2e7d32;
-        }
-        .pay-info p {
-            margin: 8px 0;
-        }
-        .copy-btn {
-            background: #4caf50;
-            color: white;
-            border: none;
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-size: 12px;
-            cursor: pointer;
-            margin-left: 8px;
+            text-align: left;
         }
         .coffee-icon-lg {
             text-align: center;
@@ -326,48 +283,44 @@
             transform: scale(1.1);
             background: #F57C00;
         }
-        .retry-btn {
-            background: rgba(255,215,0,0.3);
-            margin-top: 10px;
-            padding: 8px 16px;
-            font-size: 14px;
-        }
     </style>
-    <!-- 使用更稳定的 CDN -->
-    <script src="https://cdn.jsdelivr.net/npm/iztro@2.7.0/dist/iztro.umd.js"></script>
+    <!-- 尝试多个 CDN 加载 iztro -->
     <script>
-        // 备用 CDN
-        let iztroLoaded = false;
-        let loadAttempts = 0;
+        // 备用 CDN 列表
+        const cdnList = [
+            'https://unpkg.com/iztro@2.4.7/dist/iztro.umd.js',
+            'https://cdn.jsdelivr.net/npm/iztro@2.4.7/dist/iztro.umd.js',
+            'https://fastly.jsdelivr.net/npm/iztro@2.4.7/dist/iztro.umd.js'
+        ];
         
-        function checkIztro() {
-            if (typeof iztro !== 'undefined') {
-                console.log('✅ iztro 加载成功');
-                iztroLoaded = true;
-                return true;
-            }
-            if (loadAttempts > 50) {
-                console.error('❌ iztro 加载超时');
+        let currentCdnIndex = 0;
+        
+        function loadIztro() {
+            if (currentCdnIndex >= cdnList.length) {
                 document.getElementById('loading').style.display = 'none';
                 const resultDiv = document.getElementById('result');
-                resultDiv.innerHTML = `
-                    <div class="error-msg">
-                        ⚠️ 排盘库加载失败<br>
-                        <small>请检查网络后刷新页面重试</small>
-                        <div><button class="retry-btn" onclick="location.reload()">🔄 刷新重试</button></div>
-                    </div>
-                `;
-                resultDiv.style.display = 'block';
-                return false;
+                if (resultDiv) {
+                    resultDiv.innerHTML = '<div class="error-msg">⚠️ 排盘库加载失败，请刷新页面重试<br><small>如果持续失败，请联系管理员</small></div>';
+                    resultDiv.style.display = 'block';
+                }
+                return;
             }
-            loadAttempts++;
-            setTimeout(checkIztro, 100);
-            return false;
+            
+            const script = document.createElement('script');
+            script.src = cdnList[currentCdnIndex];
+            script.onload = function() {
+                console.log('iztro 加载成功:', cdnList[currentCdnIndex]);
+                window.iztroLoaded = true;
+            };
+            script.onerror = function() {
+                console.log('iztro 加载失败:', cdnList[currentCdnIndex]);
+                currentCdnIndex++;
+                loadIztro();
+            };
+            document.head.appendChild(script);
         }
         
-        window.addEventListener('load', function() {
-            setTimeout(checkIztro, 500);
-        });
+        loadIztro();
     </script>
 </head>
 <body>
@@ -387,7 +340,7 @@
         <div class="form-group">
             <div class="input-field">
                 <label>📅 出生日期</label>
-                <input type="date" id="birthDate" value="1990-01-01" required>
+                <input type="date" id="birthDate" required>
             </div>
             <div class="input-field">
                 <label>⏰ 出生时间</label>
@@ -414,33 +367,15 @@
                 </select>
             </div>
         </div>
-        
-        <div class="form-group">
-            <div class="input-field">
-                <div class="checkbox-group">
-                    <input type="checkbox" id="timezoneAdj">
-                    <label>🌏 启用真太阳时修正</label>
-                </div>
-                <select id="longitude" style="margin-top: 5px; display: none;">
-                    <option value="120">东八区标准 (120°E)</option>
-                    <option value="112">北京/西安 (112°E)</option>
-                    <option value="104">成都/重庆 (104°E)</option>
-                    <option value="100">昆明/乌鲁木齐 (100°E)</option>
-                    <option value="custom">自定义经度</option>
-                </select>
-                <input type="number" id="customLong" placeholder="自定义经度 (东经)" style="margin-top: 5px; display: none;">
-            </div>
-        </div>
-        
         <div style="text-align: center;">
             <button onclick="getAstrolabe()">✨ 排出命盘 ✨</button>
         </div>
-        <div class="info-text">※ 紫微斗数以农历为准，阳历会自动转换 ※ 闰月自动处理</div>
+        <div class="info-text">※ 紫微斗数以农历为准，阳历会自动转换</div>
     </div>
 
     <div class="loading" id="loading">
         <div class="spinner"></div>
-        <p style="margin-top: 15px;">🌟 星曜移位，命盘绘制中...</p>
+        <p style="margin-top: 15px;">星曜移位，命盘绘制中...</p>
     </div>
 
     <div id="result" class="result-area" style="display: none;"></div>
@@ -456,28 +391,33 @@
             如果紫微斗数服务对您有帮助，欢迎随意支持
         </p>
         <div class="qr-switch-tabs">
-            <div class="qr-tab active" onclick="switchPayMethod('maybank')">🏦 Maybank</div>
-            <div class="qr-tab" onclick="switchPayMethod('tng')">📱 TnG eWallet</div>
+            <div class="qr-tab active" onclick="switchQR('maybank')">🏦 Maybank</div>
+            <div class="qr-tab" onclick="switchQR('tng')">📱 TnG eWallet</div>
         </div>
-        <div id="maybankPay" class="pay-info">
-            <p><strong>🏦 Maybank 转账</strong></p>
-            <p>账户名: ZIWEI SUPPORT</p>
-            <p>账户号: 1234 5678 9012</p>
-            <p>参考码: ZW2024</p>
-            <button class="copy-btn" onclick="copyToClipboard('1234 5678 9012')">复制账号</button>
-        </div>
-        <div id="tngPay" class="pay-info" style="display:none;">
-            <p><strong>📱 TnG eWallet</strong></p>
-            <p>手机号: 012-3456789</p>
-            <p>或扫描下方二维码</p>
-            <div style="background:#f0f0f0; padding:15px; text-align:center; border-radius:12px; margin-top:10px;">
-                <div style="font-size:48px;">📱</div>
-                <div>TnG ID: ziwei.support</div>
+        <div id="maybankQR" class="qr-container">
+            <img src="images/maybank-qr.jpg" alt="Maybank QR Pay" class="qr-code-img"
+                 onerror="this.style.display='none'; document.getElementById('maybankFallback').style.display='block';">
+            <div id="maybankFallback" style="display:none; background:#fff3cd; padding:15px; border-radius:12px; color:#856404;">
+                ⚠️ Maybank QR码加载失败<br><small>请稍后重试</small>
             </div>
-            <button class="copy-btn" onclick="copyToClipboard('012-3456789')">复制号码</button>
+        </div>
+        <div id="tngQR" class="qr-container" style="display:none;">
+            <img src="images/tng-qr.jpg" alt="TnG eWallet QR" class="qr-code-img"
+                 onerror="this.style.display='none'; document.getElementById('tngFallback').style.display='block';">
+            <div id="tngFallback" style="display:none; background:#fff3cd; padding:15px; border-radius:12px; color:#856404;">
+                ⚠️ TnG QR码加载失败<br><small>请稍后重试</small>
+            </div>
+        </div>
+        <div class="qr-note">
+            📖 <strong>使用说明</strong><br>
+            1. 打开 Maybank App 或 TnG eWallet<br>
+            2. 选择 "DuitNow QR" / "扫描付款"<br>
+            3. 扫描上方 QR 码<br>
+            4. 输入您想支持的金额<br>
+            5. 确认转账即可
         </div>
         <div style="color:#999; font-size:12px; text-align:center; margin-top:12px;">
-            ❤️ 感谢每一份支持！您的鼓励是我持续更新的动力。
+            ❤️ 感谢每一份支持！
         </div>
     </div>
 </div>
@@ -485,82 +425,40 @@
 <button id="coffee-fab" onclick="showSupportPanel()">☕</button>
 
 <script>
-    // 真太阳时修正
-    const timezoneAdjCheck = document.getElementById('timezoneAdj');
-    const longitudeSelect = document.getElementById('longitude');
-    const customLongInput = document.getElementById('customLong');
-    
-    timezoneAdjCheck.addEventListener('change', function() {
-        if (this.checked) {
-            longitudeSelect.style.display = 'block';
-        } else {
-            longitudeSelect.style.display = 'none';
-            customLongInput.style.display = 'none';
+    // 等待 iztro 加载完成
+    let checkCount = 0;
+    function waitForIztro() {
+        if (window.iztro || (typeof iztro !== 'undefined')) {
+            console.log('iztro 已就绪');
+            return true;
         }
-    });
-    
-    longitudeSelect.addEventListener('change', function() {
-        if (this.value === 'custom') {
-            customLongInput.style.display = 'block';
-        } else {
-            customLongInput.style.display = 'none';
+        if (checkCount > 50) {
+            alert('排盘库加载超时，请刷新页面重试');
+            return false;
         }
-    });
-    
-    function getTrueSolarHour(hour, minute) {
-        const adjChecked = document.getElementById('timezoneAdj').checked;
-        if (!adjChecked) return hour;
-        
-        let longitude = 120;
-        const lonSelect = document.getElementById('longitude');
-        if (lonSelect.value === 'custom') {
-            longitude = parseFloat(document.getElementById('customLong').value);
-        } else if (lonSelect.value) {
-            longitude = parseFloat(lonSelect.value);
-        }
-        
-        if (isNaN(longitude)) longitude = 120;
-        
-        const timeDiff = (longitude - 120) * 4; // 每度4分钟
-        let adjustedHour = hour + Math.floor(timeDiff / 60);
-        let adjustedMinute = minute + (timeDiff % 60);
-        
-        if (adjustedMinute >= 60) {
-            adjustedHour++;
-            adjustedMinute -= 60;
-        }
-        if (adjustedMinute < 0) {
-            adjustedHour--;
-            adjustedMinute += 60;
-        }
-        
-        adjustedHour = Math.max(0, Math.min(23, adjustedHour));
-        
-        // 时辰边界调整
-        if (adjustedHour >= 23 || adjustedHour < 1) return 23;
-        if (adjustedHour >= 1 && adjustedHour < 3) return 1;
-        if (adjustedHour >= 3 && adjustedHour < 5) return 3;
-        if (adjustedHour >= 5 && adjustedHour < 7) return 5;
-        if (adjustedHour >= 7 && adjustedHour < 9) return 7;
-        if (adjustedHour >= 9 && adjustedHour < 11) return 9;
-        if (adjustedHour >= 11 && adjustedHour < 13) return 11;
-        if (adjustedHour >= 13 && adjustedHour < 15) return 13;
-        if (adjustedHour >= 15 && adjustedHour < 17) return 15;
-        if (adjustedHour >= 17 && adjustedHour < 19) return 17;
-        if (adjustedHour >= 19 && adjustedHour < 21) return 19;
-        if (adjustedHour >= 21 && adjustedHour < 23) return 21;
-        
-        return hour;
+        checkCount++;
+        setTimeout(waitForIztro, 100);
+        return false;
     }
+    
+    // 设置默认日期为当天（自动适配 2026 年及以后）
+    const today = new Date();
+    const yyyy = today.getFullYear();
+    const mm = String(today.getMonth() + 1).padStart(2, '0');
+    const dd = String(today.getDate()).padStart(2, '0');
+    document.getElementById('birthDate').value = `${yyyy}-${mm}-${dd}`;
 
     function getAstrolabe() {
-        if (!iztroLoaded && typeof iztro === 'undefined') {
-            alert('排盘库加载中，请稍后再试');
+        const loadingDiv = document.getElementById('loading');
+        const resultDiv = document.getElementById('result');
+        
+        if (typeof iztro === 'undefined' && !window.iztro) {
+            resultDiv.innerHTML = '<div class="error-msg">❌ 排盘库未加载完成，请稍后再试或刷新页面</div>';
+            resultDiv.style.display = 'block';
             return;
         }
         
-        const loadingDiv = document.getElementById('loading');
-        const resultDiv = document.getElementById('result');
+        const iztroLib = iztro || window.iztro;
         
         loadingDiv.style.display = 'block';
         resultDiv.style.display = 'none';
@@ -568,47 +466,40 @@
 
         try {
             const birthDate = document.getElementById('birthDate').value;
-            let hour = parseInt(document.getElementById('birthHour').value);
-            const minute = 0;
+            const hour = parseInt(document.getElementById('birthHour').value);
             const gender = document.getElementById('gender').value;
             const calendarType = document.querySelector('input[name="calendarType"]:checked').value;
 
             if (!birthDate) {
                 throw new Error('请选择出生日期');
             }
-            
-            hour = getTrueSolarHour(hour, minute);
 
             let [year, month, day] = birthDate.split('-').map(Number);
             
             let astrolabeData;
-            const iztroLib = iztro;
+            
+            // 基础配置
+            const config = {
+                hour: hour,
+                gender: gender === 'male' ? 1 : 0,
+                language: 'zh-CN'
+            };
             
             if (calendarType === 'solar') {
-                astrolabeData = iztroLib.astrolabe({
-                    solarDate: [year, month, day],
-                    hour: hour,
-                    gender: gender === 'male' ? 1 : 0,
-                    language: 'zh'
-                });
+                astrolabeData = iztroLib.astrolabe({ solarDate: `${year}-${month}-${day}`, ...config });
             } else {
-                // 正确处理农历（包含闰月判断）
-                astrolabeData = iztroLib.astrolabe({
-                    lunarDate: [year, month, day, false], // [年,月,日,是否闰月]
-                    hour: hour,
-                    gender: gender === 'male' ? 1 : 0,
-                    language: 'zh'
-                });
+                astrolabeData = iztroLib.astrolabe({ lunarDate: `${year}-${month}-${day}`, ...config });
             }
             
-            if (!astrolabeData || !astrolabeData.houses) {
+            if (!astrolabeData) {
                 throw new Error('排盘失败，请检查日期是否正确');
             }
             
             displayAstrolabe(astrolabeData, calendarType, {year, month, day});
             
         } catch (error) {
-            resultDiv.innerHTML = `<div class="error-msg">❌ ${error.message || '排盘出错，请检查输入（年份建议1900-2025）'}</div>`;
+            const currentYear = new Date().getFullYear();
+            resultDiv.innerHTML = `<div class="error-msg">❌ ${error.message || `排盘出错，请检查输入（年份建议1900-${currentYear}）`}</div>`;
             resultDiv.style.display = 'block';
         } finally {
             loadingDiv.style.display = 'none';
@@ -618,78 +509,68 @@
     function displayAstrolabe(data, calendarType, dateInfo) {
         const resultDiv = document.getElementById('result');
         
-        const palaceNames = ['命宫', '兄弟宫', '夫妻宫', '子女宫', '财帛宫', '疾厄宫', '迁移宫', '交友宫', '官禄宫', '田宅宫', '福德宫', '父母宫'];
+        if (!data || !data.houses) {
+            resultDiv.innerHTML = '<div class="error-msg">排盘数据异常，请重试</div>';
+            resultDiv.style.display = 'block';
+            return;
+        }
         
+        // 1. 基本信息卡片（包含八字、干支）
         let html = `
             <div class="card">
-                <h2>📅 ${calendarType === 'solar' ? '阳历' : '农历'}：${dateInfo.year}-${dateInfo.month}-${dateInfo.day}</h2>
+                <h2>📅 输入时间：${calendarType === 'solar' ? '阳历' : '农历'} ${dateInfo.year}年${dateInfo.month}月${dateInfo.day}日</h2>
+                <h3 style="color: #aaa; font-size: 14px; margin-top: 5px;">
+                    乾坤：${data.gender === '男' ? '乾造' : '坤造'} ｜ 
+                    八字：${data.gengzi ? data.gengzi.join(' ') : '计算中'} ｜ 
+                    五行局：${data.fiveElement || '计算中'}
+                </h3>
+            </div>
+            <div class="card">
                 <h2>🌟 命盘十二宫 🌟</h2>
                 <div class="palace-grid">
         `;
         
+        // 2. 遍历宫位（直接使用 iztro 自带的宫位名称和星曜结构）
         const houses = data.houses;
-        for (let i = 0; i < Math.min(houses.length, 12); i++) {
-            const palace = houses[i];
-            const majorStars = palace.majorStars || [];
-            const minorStars = palace.minorStars || [];
-            const ganzhi = palace.ganZhi || palace.ganzhi || '';
-            const location = palace.location || '';
+        houses.forEach(palace => {
+            // 提取主星名字（含四化，如"紫微科"）
+            const majorStarsText = palace.majorStars.map(s => {
+                let name = s.name;
+                if (s.mutagen) name += `(${s.mutagen})`; // 如果主星化禄/权/科/忌
+                return name;
+            });
+
+            // 整合吉星、凶星和杂曜
+            const allMinorStars = [
+                ...(palace.minorStars ? palace.minorStars.map(s => s.name) : []),
+                ...(palace.badStars ? palace.badStars.map(s => s.name) : []),
+                ...(palace.adjectiveStars ? palace.adjectiveStars.map(s => s.name) : [])
+            ];
             
             html += `
                 <div class="palace-card">
-                    <div class="palace-name">
-                        ${palaceNames[i]}
-                        ${ganzhi ? `<span class="ganzhi">${ganzhi}</span>` : ''}
+                    <div class="palace-name">${palace.name} <span style="font-size:12px; color:#aaa;">(${palace.decadalKey})</span></div>
+                    <div class="major-star">${majorStarsText.length > 0 ? majorStarsText.join(' · ') : '无主星'}</div>
+                    <div class="minor-star" style="margin-top: 5px; min-height: 30px;">
+                        ${allMinorStars.length > 0 ? allMinorStars.slice(0, 6).join(' ') : '无'}
                     </div>
-                    <div class="major-star">${majorStars.length > 0 ? majorStars.join(' · ') : '无主星'}</div>
-                    <div class="minor-star">${minorStars.slice(0, 6).join(' ')}</div>
                 </div>
             `;
-        }
+        });
         
         html += `</div></div>`;
         
-        // 四化飞星
-        if (data.transformations && data.transformations.length > 0) {
-            html += `<div class="card"><h3>🌀 四化飞星 🌀</h3><div style="display: flex; flex-wrap: wrap; gap: 10px;">`;
-            data.transformations.forEach(t => {
-                html += `<span class="badge">${t.star} → ${t.type}</span>`;
-            });
-            html += `</div></div>`;
-        }
-        
-        // 命主身主
+        // 3. 核心信息（命主、身主）
         if (data.lifeLord || data.bodyLord) {
-            html += `<div class="card"><h3>📿 命主身主</h3>`;
-            if (data.lifeLord) html += `<span class="badge">命主：${data.lifeLord}</span>`;
-            if (data.bodyLord) html += `<span class="badge">身主：${data.bodyLord}</span>`;
-            html += `</div>`;
-        }
-        
-        // 五行局
-        if (data.fiveElement) {
-            html += `<div class="card"><h3>⚡ 五行局</h3><span class="badge">${data.fiveElement}</span></div>`;
-        }
-        
-        // 大运表格
-        if (data.decades && data.decades.length > 0) {
-            html += `<div class="card"><h3>📊 大运走势</h3>`;
-            html += `<table class="decade-table"><thead><tr><th>年龄</th><th>大运宫位</th><th>大运干支</th><th>主星</th></tr></thead><tbody>`;
-            data.decades.forEach(decade => {
-                const startAge = decade.startAge || '';
-                const endAge = decade.endAge || '';
-                const ageRange = startAge && endAge ? `${startAge}-${endAge}` : startAge || '';
-                const palaceName = decade.palaceName || decade.palace || '';
-                const ganzhi = decade.ganZhi || '';
-                const majorStars = decade.majorStars ? decade.majorStars.slice(0, 2).join(', ') : '';
-                html += `<tr>
-                    <td>${ageRange}岁</td>
-                    <td>${palaceName}</td>
-                    <td>${ganzhi}</td>
-                    <td>${majorStars || '—'}</td>
-                </tr>`;
-            });
-            html += `</tbody></table></div>`;
+            html += `
+                <div class="card">
+                    <h3>📿 核心星曜</h3>
+                    <p>
+                        <span style="margin-right: 20px; background: rgba(255,215,0,0.1); padding: 5px 12px; border-radius: 10px;">命主：${data.lifeLord}</span>
+                        <span style="background: rgba(255,215,0,0.1); padding: 5px 12px; border-radius: 10px;">身主：${data.bodyLord}</span>
+                    </p>
+                </div>
+            `;
         }
         
         resultDiv.innerHTML = html;
@@ -699,7 +580,6 @@
     function showSupportPanel() {
         document.getElementById('supportPanel').style.display = 'flex';
     }
-    
     function hideSupportPanel() {
         document.getElementById('supportPanel').style.display = 'none';
     }
@@ -708,9 +588,9 @@
         if (e.target === this) hideSupportPanel();
     });
 
-    function switchPayMethod(type) {
-        const maybankDiv = document.getElementById('maybankPay');
-        const tngDiv = document.getElementById('tngPay');
+    function switchQR(type) {
+        const maybankDiv = document.getElementById('maybankQR');
+        const tngDiv = document.getElementById('tngQR');
         const tabs = document.querySelectorAll('.qr-tab');
         
         if (type === 'maybank') {
@@ -726,18 +606,14 @@
         }
     }
     
-    function copyToClipboard(text) {
-        navigator.clipboard.writeText(text).then(() => {
-            alert('已复制: ' + text);
-        }).catch(() => {
-            prompt('请手动复制:', text);
-        });
-    }
-    
-    // 初始化检查
-    setTimeout(() => {
-        if (typeof iztro !== 'undefined') iztroLoaded = true;
-    }, 1000);
+    // 页面加载时检查库状态
+    setTimeout(function() {
+        if (typeof iztro !== 'undefined' || window.iztro) {
+            console.log('iztro 已加载');
+        } else {
+            console.log('iztro 仍在加载中...');
+        }
+    }, 2000);
 </script>
 </body>
 </html>
