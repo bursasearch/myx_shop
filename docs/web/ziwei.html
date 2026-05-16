@@ -156,12 +156,9 @@
             .palace-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
-            .container {
-                padding: 0;
-            }
         }
 
-        /* 支持面板样式 (与 bursa.html 一致) */
+        /* 支持面板样式 */
         .support-panel {
             position: fixed;
             top: 0;
@@ -287,8 +284,41 @@
             background: #F57C00;
         }
     </style>
-    <!-- 引入 iztro 库 -->
-    <script src="https://unpkg.com/iztro@2.4.7/dist/iztro.umd.js"></script>
+    <!-- 尝试多个 CDN 加载 iztro -->
+    <script>
+        // 备用 CDN 列表
+        const cdnList = [
+            'https://unpkg.com/iztro@2.4.7/dist/iztro.umd.js',
+            'https://cdn.jsdelivr.net/npm/iztro@2.4.7/dist/iztro.umd.js',
+            'https://fastly.jsdelivr.net/npm/iztro@2.4.7/dist/iztro.umd.js'
+        ];
+        
+        let currentCdnIndex = 0;
+        
+        function loadIztro() {
+            if (currentCdnIndex >= cdnList.length) {
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('result').innerHTML = '<div class="error-msg">⚠️ 排盘库加载失败，请刷新页面重试<br><small>如果持续失败，请联系管理员</small></div>';
+                document.getElementById('result').style.display = 'block';
+                return;
+            }
+            
+            const script = document.createElement('script');
+            script.src = cdnList[currentCdnIndex];
+            script.onload = function() {
+                console.log('iztro 加载成功:', cdnList[currentCdnIndex]);
+                window.iztroLoaded = true;
+            };
+            script.onerror = function() {
+                console.log('iztro 加载失败:', cdnList[currentCdnIndex]);
+                currentCdnIndex++;
+                loadIztro();
+            };
+            document.head.appendChild(script);
+        }
+        
+        loadIztro();
+    </script>
 </head>
 <body>
 <div class="container">
@@ -348,7 +378,7 @@
     <div id="result" class="result-area" style="display: none;"></div>
 </div>
 
-<!-- 支持面板 (Maybank + TnG QR码) -->
+<!-- 支持面板 -->
 <div id="supportPanel" class="support-panel">
     <div class="support-card">
         <button class="close-btn" onclick="hideSupportPanel()">✕</button>
@@ -357,12 +387,10 @@
         <p style="text-align:center; color:#666; font-size:13px; margin-bottom:20px;">
             如果紫微斗数服务对您有帮助，欢迎随意支持
         </p>
-
         <div class="qr-switch-tabs">
             <div class="qr-tab active" onclick="switchQR('maybank')">🏦 Maybank</div>
             <div class="qr-tab" onclick="switchQR('tng')">📱 TnG eWallet</div>
         </div>
-
         <div id="maybankQR" class="qr-container">
             <img src="images/maybank-qr.jpg" alt="Maybank QR Pay" class="qr-code-img"
                  onerror="this.style.display='none'; document.getElementById('maybankFallback').style.display='block';">
@@ -370,7 +398,6 @@
                 ⚠️ Maybank QR码加载失败<br><small>请稍后重试</small>
             </div>
         </div>
-
         <div id="tngQR" class="qr-container" style="display:none;">
             <img src="images/tng-qr.jpg" alt="TnG eWallet QR" class="qr-code-img"
                  onerror="this.style.display='none'; document.getElementById('tngFallback').style.display='block';">
@@ -378,7 +405,6 @@
                 ⚠️ TnG QR码加载失败<br><small>请稍后重试</small>
             </div>
         </div>
-
         <div class="qr-note">
             📖 <strong>使用说明</strong><br>
             1. 打开 Maybank App 或 TnG eWallet<br>
@@ -393,17 +419,40 @@
     </div>
 </div>
 
-<!-- 固定咖啡按钮 -->
 <button id="coffee-fab" onclick="showSupportPanel()">☕</button>
 
 <script>
+    // 等待 iztro 加载完成
+    let checkCount = 0;
+    function waitForIztro() {
+        if (window.iztro || (typeof iztro !== 'undefined')) {
+            console.log('iztro 已就绪');
+            return true;
+        }
+        if (checkCount > 50) { // 等待约5秒
+            alert('排盘库加载超时，请刷新页面重试');
+            return false;
+        }
+        checkCount++;
+        setTimeout(waitForIztro, 100);
+        return false;
+    }
+    
     // 设置默认日期
     document.getElementById('birthDate').value = '1990-01-01';
 
-    // 阳历转农历（简单算法，使用 iztro 内部转换）
     function getAstrolabe() {
         const loadingDiv = document.getElementById('loading');
         const resultDiv = document.getElementById('result');
+        
+        // 检查 iztro 是否可用
+        if (typeof iztro === 'undefined' && !window.iztro) {
+            resultDiv.innerHTML = '<div class="error-msg">❌ 排盘库未加载完成，请稍后再试或刷新页面</div>';
+            resultDiv.style.display = 'block';
+            return;
+        }
+        
+        const iztroLib = iztro || window.iztro;
         
         loadingDiv.style.display = 'block';
         resultDiv.style.display = 'none';
@@ -424,16 +473,14 @@
             let astrolabeData;
             
             if (calendarType === 'solar') {
-                // 使用阳历排盘
-                astrolabeData = iztro.astrolabe({
+                astrolabeData = iztroLib.astrolabe({
                     solarDate: [year, month, day],
                     hour: hour,
                     gender: gender === 'male' ? 1 : 0,
                     language: 'zh'
                 });
             } else {
-                // 使用农历排盘
-                astrolabeData = iztro.astrolabe({
+                astrolabeData = iztroLib.astrolabe({
                     lunarDate: [year, month, day],
                     hour: hour,
                     gender: gender === 'male' ? 1 : 0,
@@ -490,7 +537,6 @@
         
         html += `</div></div>`;
         
-        // 显示四化
         if (data.transformations && data.transformations.length > 0) {
             html += `<div class="card"><h3>🌀 四化飞星 🌀</h3><div style="display: flex; flex-wrap: wrap; gap: 10px;">`;
             data.transformations.forEach(t => {
@@ -499,7 +545,6 @@
             html += `</div></div>`;
         }
         
-        // 显示命主身主
         if (data.lifeLord || data.bodyLord) {
             html += `<div class="card"><h3>📿 命主身主</h3>`;
             if (data.lifeLord) html += `<span style="margin-right: 20px;">命主：${data.lifeLord}</span>`;
@@ -515,7 +560,6 @@
         resultDiv.style.display = 'block';
     }
 
-    // 支持面板控制
     function showSupportPanel() {
         document.getElementById('supportPanel').style.display = 'flex';
     }
@@ -544,6 +588,15 @@
             tabs[1].classList.add('active');
         }
     }
+    
+    // 页面加载时检查库状态
+    setTimeout(function() {
+        if (typeof iztro !== 'undefined' || window.iztro) {
+            console.log('iztro 已加载');
+        } else {
+            console.log('iztro 仍在加载中...');
+        }
+    }, 2000);
 </script>
 </body>
 </html>
