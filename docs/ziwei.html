@@ -5,315 +5,164 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>紫微斗数免费排盘</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-            min-height: 100vh;
-            padding: 20px;
-            color: #eee;
-        }
-        .container { max-width: 1200px; margin: 0 auto; }
-        .card {
-            background: rgba(255,255,255,0.08);
-            backdrop-filter: blur(10px);
-            border-radius: 32px;
-            padding: 24px;
-            margin-bottom: 20px;
-            border: 1px solid rgba(255,215,0,0.2);
-        }
-        h1 { text-align: center; color: #FFD966; margin-bottom: 20px; font-size: 1.8rem; }
-        h2 { color: #FFD966; margin-bottom: 15px; font-size: 1.3rem; }
-        .form-row {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 15px;
-            justify-content: center;
-            align-items: flex-end;
-        }
-        .field { flex: 1; min-width: 140px; }
-        label { display: block; margin-bottom: 5px; color: #FFD966; font-weight: 500; font-size: 14px; }
-        input, select {
-            width: 100%;
-            padding: 12px;
-            border-radius: 16px;
-            border: 1px solid #FFD966;
-            background: rgba(0,0,0,0.6);
-            color: white;
-            font-size: 16px;
-        }
-        button {
-            background: linear-gradient(135deg, #FFD966, #FFB347);
-            border: none;
-            padding: 12px 28px;
-            border-radius: 40px;
-            font-size: 16px;
-            font-weight: bold;
-            color: #1a1a2e;
-            cursor: pointer;
-            transition: transform 0.2s;
-        }
-        button:hover { transform: scale(1.02); }
-        .palace-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 12px;
-            margin-top: 20px;
-        }
-        .palace-card {
-            background: rgba(0,0,0,0.5);
-            border-radius: 16px;
-            padding: 12px;
-            border-left: 4px solid #FFD966;
-        }
-        .palace-name { font-size: 15px; font-weight: bold; color: #FFD966; margin-bottom: 8px; }
-        .major-star { color: #ff8888; font-size: 12px; font-weight: bold; }
-        .minor-star { color: #88ff88; font-size: 11px; margin-top: 5px; }
-        .loading {
-            text-align: center;
-            padding: 40px;
-            display: none;
-        }
-        .spinner {
-            border: 4px solid rgba(255,215,0,0.3);
-            border-top: 4px solid #FFD966;
-            border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            animation: spin 1s linear infinite;
-            margin: 0 auto;
-        }
+        body { font-family: Arial, sans-serif; background: #1a1a2e; color: #eee; padding: 20px; }
+        .card { background: rgba(255,255,255,0.1); border-radius: 16px; padding: 20px; margin-bottom: 20px; }
+        h1, h2 { color: #FFD966; }
+        select, input, button { padding: 10px; margin: 5px; border-radius: 8px; border: none; }
+        button { background: #FFD966; color: #1a1a2e; font-weight: bold; cursor: pointer; }
+        .palace-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 10px; }
+        .palace-card { background: rgba(0,0,0,0.5); padding: 10px; border-left: 3px solid #FFD966; }
+        .loading { text-align: center; padding: 20px; display: none; }
+        .spinner { border: 3px solid #FFD966; border-top-color: transparent; border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite; margin: 0 auto; }
         @keyframes spin { to { transform: rotate(360deg); } }
-        .error-msg {
-            color: #ff8888;
-            text-align: center;
-            padding: 20px;
-            background: rgba(255,0,0,0.1);
-            border-radius: 16px;
-        }
-        .info-text { font-size: 12px; color: #aaa; text-align: center; margin-top: 10px; }
-        @media (max-width: 768px) {
-            .palace-grid { grid-template-columns: repeat(2, 1fr); }
-            .form-row { flex-direction: column; }
-            .field { min-width: auto; }
-        }
-        .coffee-fab {
-            position: fixed;
-            bottom: 80px;
-            right: 20px;
-            background: #FF9800;
-            border: none;
-            border-radius: 50%;
-            width: 56px;
-            height: 56px;
-            font-size: 28px;
-            cursor: pointer;
-            box-shadow: 0 4px 15px rgba(255,152,0,0.4);
-            color: white;
-            z-index: 999;
-        }
-        .support-panel {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.7);
-            z-index: 1000;
-            display: none;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-        }
-        .support-card {
-            max-width: 380px;
-            background: white;
-            border-radius: 28px;
-            padding: 20px;
-            position: relative;
-            color: #333;
-        }
-        .support-card .close {
-            position: absolute;
-            top: 12px;
-            right: 16px;
-            font-size: 24px;
-            cursor: pointer;
-            background: none;
-            border: none;
-        }
-        .qr-tabs {
-            display: flex;
-            gap: 12px;
-            margin: 15px 0;
-        }
-        .qr-tab {
-            flex: 1;
-            text-align: center;
-            padding: 10px;
-            border-radius: 30px;
-            cursor: pointer;
-            background: #f0f0f0;
-        }
-        .qr-tab.active { background: #2c7a2c; color: white; }
-        .qr-img { max-width: 200px; margin: 10px auto; display: block; }
-        .qr-note { font-size: 12px; color: #666; margin-top: 15px; text-align: left; }
+        .error-msg { color: #ff8888; text-align: center; padding: 20px; }
     </style>
+    <script type="importmap">
+        { "imports": { "iztro": "https://esm.sh/iztro" } }
+    </script>
+    <script type="module">
+        import * as iztroLib from 'iztro';
+        window.iztroLib = iztroLib;
+        window.iztroReady = true;
+        console.log('iztro 已加载', iztroLib);
+        console.log('astro 方法:', iztroLib.astro);
+    </script>
 </head>
 <body>
-<div class="container">
     <div class="card">
         <h1>🌟 紫微斗数免费排盘 🌟</h1>
-        <div class="form-row">
-            <div class="field">
-                <label>📅 出生日期</label>
-                <input type="date" id="birthDate">
-            </div>
-            <div class="field">
-                <label>⏰ 时辰</label>
+        <div>
+            <label>📅 日期 <input type="date" id="birthDate"></label>
+            <label>⏰ 时辰 
                 <select id="birthHour">
-                    <option value="0">子时 (23:00-01:00)</option>
-                    <option value="1">丑时 (01:00-03:00)</option>
-                    <option value="2">寅时 (03:00-05:00)</option>
-                    <option value="3">卯时 (05:00-07:00)</option>
-                    <option value="4">辰时 (07:00-09:00)</option>
-                    <option value="5">巳时 (09:00-11:00)</option>
-                    <option value="6">午时 (11:00-13:00)</option>
-                    <option value="7">未时 (13:00-15:00)</option>
-                    <option value="8">申时 (15:00-17:00)</option>
-                    <option value="9">酉时 (17:00-19:00)</option>
-                    <option value="10">戌时 (19:00-21:00)</option>
-                    <option value="11">亥时 (21:00-23:00)</option>
+                    <option value="0">子时 (23-01点)</option>
+                    <option value="1">丑时 (01-03点)</option>
+                    <option value="2">寅时 (03-05点)</option>
+                    <option value="3">卯时 (05-07点)</option>
+                    <option value="4">辰时 (07-09点)</option>
+                    <option value="5">巳时 (09-11点)</option>
+                    <option value="6">午时 (11-13点)</option>
+                    <option value="7">未时 (13-15点)</option>
+                    <option value="8">申时 (15-17点)</option>
+                    <option value="9">酉时 (17-19点)</option>
+                    <option value="10">戌时 (19-21点)</option>
+                    <option value="11">亥时 (21-23点)</option>
                 </select>
-            </div>
-            <div class="field">
-                <label>⚧ 性别</label>
-                <select id="gender">
-                    <option value="0">男</option>
-                    <option value="1">女</option>
-                </select>
-            </div>
-            <div class="field">
-                <button onclick="showDemo()">✨ 查看示例命盘 ✨</button>
-            </div>
+            </label>
+            <label>⚧ 性别 <select id="gender"><option value="male">男</option><option value="female">女</option></select></label>
+            <button onclick="getAstrolabe()">✨ 排出命盘 ✨</button>
         </div>
-        <div class="info-text">※ 由于网络限制，当前显示示例命盘。完整功能正在开发中。</div>
     </div>
+    <div class="loading" id="loading"><div class="spinner"></div><p>排盘中...</p></div>
+    <div id="result"></div>
 
-    <div id="result" style="display: none;"></div>
-</div>
-
-<!-- Buy Me a Coffee 浮动按钮 -->
-<button class="coffee-fab" onclick="showSupport()">☕</button>
-
-<!-- 支持面板 -->
-<div id="supportPanel" class="support-panel">
-    <div class="support-card">
-        <button class="close" onclick="hideSupport()">✕</button>
-        <h3 style="text-align:center">☕ 请我喝杯咖啡</h3>
-        <p style="text-align:center; font-size:13px;">如果服务对您有帮助，欢迎随意支持</p>
-        <div class="qr-tabs">
-            <div class="qr-tab active" onclick="switchQR('maybank')">🏦 Maybank</div>
-            <div class="qr-tab" onclick="switchQR('tng')">📱 TnG eWallet</div>
-        </div>
-        <div id="maybankQR">
-            <img src="images/maybank-qr.jpg" class="qr-img" onerror="this.src='https://placehold.co/200x200?text=Maybank+QR'">
-        </div>
-        <div id="tngQR" style="display:none">
-            <img src="images/tng-qr.jpg" class="qr-img" onerror="this.src='https://placehold.co/200x200?text=TnG+QR'">
-        </div>
-        <div class="qr-note">
-            📖 <strong>使用说明</strong><br>
-            1. 打开 Maybank App 或 TnG eWallet<br>
-            2. 选择 "DuitNow QR" / "扫描付款"<br>
-            3. 扫描上方 QR 码<br>
-            4. 输入您想支持的金额<br>
-            5. 确认转账即可
-        </div>
-        <p style="font-size:12px; text-align:center; margin-top:10px;">❤️ 感谢每一份支持！</p>
-    </div>
-</div>
-
-<script>
-    // 示例命盘数据（展示格式）
-    function showDemo() {
-        const resultDiv = document.getElementById('result');
+    <script>
+        let iztroReady = false;
+        let iztroLib = null;
         
-        const demoData = {
-            palaces: [
-                { name: "命宫", major: "紫微", minor: "文昌 · 天魁" },
-                { name: "兄弟宫", major: "天机", minor: "地空 · 天虚" },
-                { name: "夫妻宫", major: "太阳", minor: "文曲 · 红鸾" },
-                { name: "子女宫", major: "武曲", minor: "天马 · 禄存" },
-                { name: "财帛宫", major: "天同", minor: "擎羊 · 火星" },
-                { name: "疾厄宫", major: "廉贞", minor: "陀罗 · 铃星" },
-                { name: "迁移宫", major: "天府", minor: "左辅 · 右弼" },
-                { name: "交友宫", major: "太阴", minor: "天钺 · 地劫" },
-                { name: "官禄宫", major: "贪狼", minor: "天喜 · 咸池" },
-                { name: "田宅宫", major: "巨门", minor: "天刑 · 天姚" },
-                { name: "福德宫", major: "天相", minor: "天福 · 天寿" },
-                { name: "父母宫", major: "七杀", minor: "龙池 · 凤阁" }
-            ]
+        const checkInterval = setInterval(() => {
+            if (window.iztroLib) {
+                iztroLib = window.iztroLib;
+                iztroReady = true;
+                clearInterval(checkInterval);
+                console.log('iztro 已就绪');
+            }
+        }, 100);
+        
+        // 设置默认日期
+        const today = new Date();
+        document.getElementById('birthDate').value = `${today.getFullYear()}-${String(today.getMonth()+1).padStart(2,'0')}-${String(today.getDate()).padStart(2,'0')}`;
+        
+        // 时辰索引转小时
+        const hourMap = [23, 1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21];
+        
+        window.getAstrolabe = async function() {
+            const loading = document.getElementById('loading');
+            const result = document.getElementById('result');
+            result.style.display = 'none';
+            loading.style.display = 'block';
+            
+            try {
+                if (!iztroReady || !iztroLib) {
+                    throw new Error('排盘库加载中，请稍后');
+                }
+                
+                const birthDate = document.getElementById('birthDate').value;
+                const hourIndex = parseInt(document.getElementById('birthHour').value);
+                const gender = document.getElementById('gender').value;
+                
+                if (!birthDate) throw new Error('请选择日期');
+                if (isNaN(hourIndex)) throw new Error('请选择时辰');
+                
+                const hour = hourMap[hourIndex];
+                console.log(`日期: ${birthDate}, 时辰索引: ${hourIndex}, 小时: ${hour}`);
+                
+                // 解析日期
+                const [year, month, day] = birthDate.split('-').map(Number);
+                
+                // 方法1: 使用 bySolar (参数: year, month, day, hour, minute, gender)
+                // gender: 0=男, 1=女
+                const genderCode = gender === 'male' ? 0 : 1;
+                
+                console.log(`调用 bySolar(${year}, ${month}, ${day}, ${hour}, 0, ${genderCode})`);
+                const data = iztroLib.astro.bySolar(year, month, day, hour, 0, genderCode);
+                
+                console.log('排盘结果:', data);
+                
+                if (!data) throw new Error('排盘失败，无返回数据');
+                
+                displayResult(data, {year, month, day});
+                
+            } catch(err) {
+                console.error('详细错误:', err);
+                result.innerHTML = `<div class="error-msg">❌ ${err.message || err}<br><small>请检查控制台</small></div>`;
+                result.style.display = 'block';
+            } finally {
+                loading.style.display = 'none';
+            }
         };
         
-        let html = `
-            <div class="card">
-                <h2>📅 示例命盘（1990年5月10日 午时 男）</h2>
-                <p style="color:#aaa; font-size:14px;">八字：庚午 辛巳 乙亥 壬午 | 农历：一九九〇年四月十六</p>
-            </div>
-            <div class="card">
-                <h2>🌟 命盘十二宫</h2>
-                <div class="palace-grid">
-        `;
-        
-        demoData.palaces.forEach(p => {
-            html += `
-                <div class="palace-card">
+        function displayResult(data, dateInfo) {
+            const result = document.getElementById('result');
+            
+            // 获取宫位数据
+            const palaces = data.palaces || [];
+            
+            if (palaces.length === 0) {
+                result.innerHTML = '<div class="error-msg">❌ 未获取到宫位数据</div>';
+                result.style.display = 'block';
+                return;
+            }
+            
+            // 获取八字信息
+            let bazi = '';
+            if (data.rawDates && data.rawDates.chineseDate) {
+                const cd = data.rawDates.chineseDate;
+                bazi = `${cd.yearly ? cd.yearly.join('') : ''} ${cd.monthly ? cd.monthly.join('') : ''} ${cd.daily ? cd.daily.join('') : ''} ${cd.hourly ? cd.hourly.join('') : ''}`;
+            }
+            
+            let html = `<div class="card">
+                <h2>📅 ${dateInfo.year}年${dateInfo.month}月${dateInfo.day}日</h2>
+                <h3>八字：${bazi || '计算中'} | 农历：${data.lunarDate || '计算中'}</h3>
+            </div>`;
+            
+            html += `<div class="card"><h2>十二宫</h2><div class="palace-grid">`;
+            
+            palaces.forEach(p => {
+                let major = (p.majorStars || []).map(s => s.name + (s.mutagen ? `(${s.mutagen})` : '')).join(' · ') || '无主星';
+                let minor = [...(p.minorStars||[]), ...(p.badStars||[]), ...(p.adjectiveStars||[])]
+                    .map(s => s.name).slice(0, 6).join(' ');
+                html += `<div class="palace-card">
                     <div class="palace-name">${p.name}</div>
-                    <div class="major-star">${p.major}</div>
-                    <div class="minor-star">${p.minor}</div>
-                </div>
-            `;
-        });
-        
-        html += `</div></div>`;
-        html += `<div class="card"><p style="text-align:center; color:#aaa;">📌 提示：完整排盘功能需要加载网络库<br>由于网络限制，当前显示示例命盘</p></div>`;
-        
-        resultDiv.innerHTML = html;
-        resultDiv.style.display = 'block';
-    }
-    
-    // 自动显示示例
-    setTimeout(() => {
-        showDemo();
-    }, 100);
-    
-    function showSupport() {
-        document.getElementById('supportPanel').style.display = 'flex';
-    }
-    function hideSupport() {
-        document.getElementById('supportPanel').style.display = 'none';
-    }
-    function switchQR(type) {
-        const maybank = document.getElementById('maybankQR');
-        const tng = document.getElementById('tngQR');
-        const tabs = document.querySelectorAll('.qr-tab');
-        if (type === 'maybank') {
-            maybank.style.display = 'block';
-            tng.style.display = 'none';
-            tabs[0].classList.add('active');
-            tabs[1].classList.remove('active');
-        } else {
-            maybank.style.display = 'none';
-            tng.style.display = 'block';
-            tabs[0].classList.remove('active');
-            tabs[1].classList.add('active');
+                    <div class="major-star">${major}</div>
+                    <div class="minor-star">${minor || '无'}</div>
+                </div>`;
+            });
+            
+            html += `</div></div>`;
+            result.innerHTML = html;
+            result.style.display = 'block';
         }
-    }
-    
-    document.getElementById('supportPanel')?.addEventListener('click', function(e) {
-        if (e.target === this) hideSupport();
-    });
-</script>
+    </script>
 </body>
 </html>
