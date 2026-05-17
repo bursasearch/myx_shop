@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-    <title>紫微斗数精微排盘 | 正宗农历历算 | 星曜垂象</title>
+    <title>紫微斗数精微排盘 | 正宗晨曆</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            font-family: 'Segoe UI', 'Noto Sans CJK SC', system-ui, -apple-system, 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
             background: radial-gradient(circle at 10% 20%, #0f172a, #030614);
             min-height: 100vh;
             padding: 20px;
@@ -21,22 +21,12 @@
             padding: 1.5rem 1.8rem;
             margin-bottom: 1.5rem;
             border: 1px solid rgba(255, 215, 0, 0.35);
-            box-shadow: 0 20px 35px -12px rgba(0, 0, 0, 0.5);
         }
-        h1 {
-            text-align: center;
-            font-weight: 600;
-            background: linear-gradient(135deg, #FFE6A3, #FFB347);
-            background-clip: text;
-            -webkit-background-clip: text;
-            color: transparent;
-            margin-bottom: 1rem;
-            font-size: 1.9rem;
-            letter-spacing: 1px;
-        }
+        h1 { text-align: center; background: linear-gradient(135deg, #FFE6A3, #FFB347); background-clip: text; -webkit-background-clip: text; color: transparent; margin-bottom: 1rem; font-size: 1.9rem; }
+        h2, h3 { color: #FFDE9C; margin-bottom: 0.75rem; }
         .form-group { display: flex; flex-wrap: wrap; gap: 1.2rem; margin-bottom: 1.5rem; justify-content: center; }
         .input-field { flex: 1; min-width: 180px; }
-        label { display: block; margin-bottom: 6px; font-weight: 500; color: #FFD98C; font-size: 0.85rem; letter-spacing: 0.5px; }
+        label { display: block; margin-bottom: 6px; color: #FFD98C; font-size: 0.85rem; }
         input, select {
             width: 100%;
             padding: 12px 14px;
@@ -45,11 +35,8 @@
             background: rgba(0, 0, 0, 0.6);
             color: #f0f3fa;
             font-size: 1rem;
-            outline: none;
         }
-        input:focus, select:focus { border-color: #FFD966; box-shadow: 0 0 0 2px rgba(255, 217, 102, 0.3); }
-        .date-input-group { display: flex; flex-direction: column; gap: 10px; }
-        .date-mode-switch { display: flex; gap: 12px; margin-bottom: 6px; }
+        .date-mode-switch { display: flex; gap: 12px; margin-bottom: 12px; }
         .mode-btn {
             flex: 1;
             background: rgba(255, 200, 70, 0.1);
@@ -59,14 +46,11 @@
             text-align: center;
             cursor: pointer;
             font-size: 0.85rem;
-            font-weight: 600;
-            transition: 0.2s;
             color: #ffe2b5;
         }
-        .mode-btn.active { background: #FFD966; color: #121826; border-color: #FFD966; box-shadow: 0 2px 8px rgba(255, 217, 0, 0.3); }
+        .mode-btn.active { background: #FFD966; color: #121826; border-color: #FFD966; }
         .manual-date-inputs { display: none; gap: 12px; flex-wrap: wrap; }
         .manual-date-inputs.active { display: flex; }
-        .picker-date-input { display: block; }
         .picker-date-input.hide { display: none; }
         .info-panel {
             background: rgba(255, 215, 0, 0.12);
@@ -74,13 +58,12 @@
             border-radius: 1.5rem;
             padding: 12px 16px;
             margin-top: 12px;
-            font-size: 0.85rem;
             text-align: center;
             color: #FADB85;
-            font-weight: 500;
+            font-size: 0.9rem;
         }
         .calendar-type { display: flex; gap: 28px; margin-bottom: 18px; justify-content: center; }
-        .calendar-type label { display: inline-flex; align-items: center; gap: 8px; cursor: pointer; font-size: 0.9rem; }
+        .calendar-type label { display: inline-flex; align-items: center; gap: 8px; cursor: pointer; }
         .btn-container { text-align: center; margin-top: 20px; }
         button {
             background: linear-gradient(115deg, #FFD966, #FFAA33);
@@ -91,76 +74,44 @@
             font-weight: bold;
             color: #141c2c;
             cursor: pointer;
-            transition: all 0.2s ease;
-            box-shadow: 0 6px 14px rgba(0, 0, 0, 0.3);
         }
-        button:hover { transform: translateY(-2px); background: linear-gradient(115deg, #FFE085, #FFB647); }
-        .result-area { overflow-x: auto; display: none; animation: fadeInUp 0.5s ease-out; }
-        @keyframes fadeInUp { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
         .palace-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 18px; }
         .palace-card {
             background: rgba(10, 18, 30, 0.7);
-            backdrop-filter: blur(8px);
             border-radius: 1.5rem;
             padding: 1rem;
             border-left: 5px solid #FFD966;
-            transition: 0.2s;
         }
-        .palace-card:hover { transform: translateY(-3px); background: rgba(20, 35, 60, 0.85); border-left-color: #FFB347; }
-        .palace-name {
-            font-size: 1.1rem;
-            font-weight: bold;
-            color: #FFE2A4;
-            margin-bottom: 10px;
-            display: flex;
-            justify-content: space-between;
-            border-bottom: 1px dashed rgba(255, 217, 102, 0.4);
-            padding-bottom: 4px;
-        }
+        .palace-name { font-size: 1.1rem; font-weight: bold; color: #FFE2A4; display: flex; justify-content: space-between; margin-bottom: 10px; }
         .palace-dz { color: #b9c7ff; font-size: 0.75rem; background: rgba(255, 215, 0, 0.2); padding: 2px 8px; border-radius: 40px; }
         .major-star { color: #FFAD93; font-weight: bold; font-size: 0.9rem; margin: 8px 0 5px; }
-        .minor-star { color: #9ecfff; font-size: 0.75rem; margin-top: 4px; }
+        .minor-star { color: #9ecfff; font-size: 0.75rem; }
         .loading { text-align: center; padding: 48px 20px; display: none; }
-        .spinner {
-            border: 4px solid rgba(255, 215, 0, 0.2);
-            border-top: 4px solid #FFD966;
-            border-radius: 50%;
-            width: 54px;
-            height: 54px;
-            animation: spin 1s linear infinite;
-            margin: 0 auto 18px;
-        }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-        @media (max-width: 780px) { .palace-grid { grid-template-columns: repeat(2, 1fr); } h1 { font-size: 1.4rem; } }
-        .footnote { text-align: center; font-size: 0.7rem; margin-top: 1rem; opacity: 0.7; }
+        .spinner { border: 4px solid rgba(255, 215, 0, 0.2); border-top: 4px solid #FFD966; border-radius: 50%; width: 54px; height: 54px; animation: spin 1s linear infinite; margin: 0 auto; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        @media (max-width: 780px) { .palace-grid { grid-template-columns: repeat(2, 1fr); } }
         
-        /* 赞助面板 */
         .support-panel {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(8px);
+            background: rgba(0, 0, 0, 0.75);
             z-index: 1050;
             display: none;
             align-items: center;
             justify-content: center;
-            padding: 20px;
         }
         .support-card {
             max-width: 380px;
-            width: 90%;
-            background: #ffffff;
+            background: white;
             border-radius: 32px;
-            padding: 24px 20px;
+            padding: 24px;
             position: relative;
-            animation: slideUp 0.3s ease;
             color: #1e293b;
             text-align: center;
         }
-        @keyframes slideUp { from { transform: translateY(50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
         .close-btn {
             position: absolute;
             top: 16px;
@@ -169,34 +120,16 @@
             border: none;
             font-size: 24px;
             cursor: pointer;
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            color: #94a3b8;
         }
-        .close-btn:hover { background: #f1f5f9; }
-        .coffee-icon-lg { font-size: 48px; margin-bottom: 10px; color: #FF9800; }
-        .qr-switch-tabs { display: flex; gap: 12px; margin: 20px 0 16px; background: #f1f5f9; padding: 6px; border-radius: 60px; }
-        .qr-tab {
-            flex: 1;
-            text-align: center;
-            padding: 10px 0;
-            border-radius: 50px;
-            cursor: pointer;
-            font-weight: 600;
-            background: transparent;
-            color: #334155;
-        }
+        .qr-switch-tabs { display: flex; gap: 12px; margin: 20px 0; background: #f1f5f9; padding: 6px; border-radius: 60px; }
+        .qr-tab { flex: 1; text-align: center; padding: 10px; border-radius: 50px; cursor: pointer; }
         .qr-tab.active { background: #2c7a2c; color: white; }
-        .qr-container { text-align: center; margin: 16px 0; }
-        .qr-code-img { width: 100%; max-width: 200px; border-radius: 20px; margin: 0 auto; display: block; border: 2px solid #e2e8f0; padding: 6px; background: white; }
-        .qr-note { background: #eef2ff; padding: 12px; border-radius: 20px; margin-top: 18px; font-size: 0.75rem; color: #1e40af; text-align: left; }
-        .support-footer { font-size: 0.7rem; color: #6c757d; margin-top: 16px; }
+        .qr-code-img { max-width: 200px; margin: 10px auto; display: block; border-radius: 16px; }
+        .qr-note { background: #eef2ff; padding: 12px; border-radius: 20px; margin-top: 18px; font-size: 0.75rem; text-align: left; }
         #coffee-fab {
             position: fixed;
             bottom: 28px;
             right: 28px;
-            z-index: 1040;
             background: linear-gradient(145deg, #FF9800, #F57C00);
             color: white;
             border: none;
@@ -206,38 +139,32 @@
             font-size: 28px;
             cursor: pointer;
             box-shadow: 0 8px 18px rgba(245, 124, 0, 0.5);
-            display: flex;
-            align-items: center;
-            justify-content: center;
         }
-        #coffee-fab:hover { transform: scale(1.08); }
     </style>
 </head>
 <body>
 
 <div class="container">
     <div class="card">
-        <h1>🌟 紫微斗數 · 正宗農曆歷算 🌟</h1>
+        <h1>🌟 紫微斗數 · 正宗晨曆 🌟</h1>
 
         <div class="calendar-type">
-            <label><input type="radio" name="calendar" value="solar" checked> 🗓️ 公曆 (陽曆)</label>
+            <label><input type="radio" name="calendar" value="solar" checked> 📅 公曆 (陽曆)</label>
             <label><input type="radio" name="calendar" value="lunar"> 🌙 農曆 (陰曆)</label>
         </div>
 
         <div class="form-group">
-            <div class="input-field" style="flex: 2.2; min-width: 280px;">
+            <div class="input-field" style="flex: 2.2;">
                 <label>📅 出生日期</label>
-                <div class="date-input-group">
-                    <div class="date-mode-switch">
-                        <div class="mode-btn active" id="btn-picker">📆 日曆選取</div>
-                        <div class="mode-btn" id="btn-manual">✍️ 手動輸入</div>
-                    </div>
-                    <input type="date" id="date-picker" class="picker-date-input" value="1995-01-31">
-                    <div class="manual-date-inputs" id="manual-inputs">
-                        <input type="number" id="in-year" placeholder="年" min="1900" max="2100" value="1995">
-                        <input type="number" id="in-month" placeholder="月" min="1" max="12" value="1">
-                        <input type="number" id="in-day" placeholder="日" min="1" max="31" value="31">
-                    </div>
+                <div class="date-mode-switch">
+                    <div class="mode-btn active" id="btn-picker">📆 日期選取</div>
+                    <div class="mode-btn" id="btn-manual">✍️ 手動輸入</div>
+                </div>
+                <input type="date" id="date-picker" class="picker-date-input" value="2026-05-17">
+                <div class="manual-date-inputs" id="manual-inputs">
+                    <input type="number" id="in-year" placeholder="年" value="2026">
+                    <input type="number" id="in-month" placeholder="月" value="5">
+                    <input type="number" id="in-day" placeholder="日" value="17">
                 </div>
                 <div class="info-panel" id="date-live-info">
                     🌿 日月交輝 · 待君輸入吉時
@@ -263,7 +190,7 @@
             </div>
 
             <div class="input-field">
-                <label>⚥ 性别</label>
+                <label>⚥ 性別</label>
                 <select id="gender">
                     <option value="male">乾造 (男)</option>
                     <option value="female">坤造 (女)</option>
@@ -274,7 +201,6 @@
         <div class="btn-container">
             <button id="start-btn">🔮 起盤演曜 · 洞悉天機</button>
         </div>
-        <div class="footnote">※ 採用高精度農曆演算法，公曆自動轉換為正確農曆月日，紫微安星以此為據</div>
     </div>
 
     <div class="loading" id="loading-area">
@@ -282,7 +208,7 @@
         <p style="color: #FFE1A0;">⚙️ 星曜垂象，推演命盤十二宮...</p>
     </div>
 
-    <div class="card result-area" id="result-area">
+    <div class="card result-area" id="result-area" style="display: none;">
         <h2 id="result-title">🏮 紫府微垣 · 本命盤🏮</h2>
         <div class="palace-grid" id="palace-grid"></div>
     </div>
@@ -293,379 +219,259 @@
     <div class="support-card">
         <button class="close-btn" id="closeSupportBtn">✕</button>
         <div class="coffee-icon-lg">☕</div>
-        <h4 style="margin-bottom: 8px;">请我喝杯咖啡</h4>
-        <p style="color: #475569; font-size: 13px; margin-bottom: 18px;">如果紫微斗数服务对您有帮助，欢迎随意支持</p>
+        <h4>请我喝杯咖啡</h4>
         <div class="qr-switch-tabs">
             <div class="qr-tab active" data-qr="maybank">🏦 Maybank</div>
             <div class="qr-tab" data-qr="tng">📱 TnG eWallet</div>
         </div>
         <div id="maybankQR" class="qr-container">
-            <img src="images/maybank-qr.jpg" alt="Maybank QR" class="qr-code-img" onerror="this.src='https://via.placeholder.com/200x200?text=Maybank+QR'">
-            <div style="font-size:12px; margin-top:6px;">Maybank 扫码支持</div>
+            <img src="images/maybank-qr.jpg" class="qr-code-img" onerror="this.src='https://via.placeholder.com/200x200?text=Maybank+QR'">
         </div>
         <div id="tngQR" class="qr-container" style="display:none;">
-            <img src="images/tng-qr.jpg" alt="TnG eWallet QR" class="qr-code-img" onerror="this.src='https://via.placeholder.com/200x200?text=TnG+QR'">
-            <div style="font-size:12px; margin-top:6px;">Touch 'n Go 支持</div>
+            <img src="images/tng-qr.jpg" class="qr-code-img" onerror="this.src='https://via.placeholder.com/200x200?text=TnG+QR'">
         </div>
         <div class="qr-note">
-            📖 <strong>使用说明</strong><br>1. 打开 Maybank App 或 TnG eWallet<br>2. 选择 "DuitNow QR" 扫描<br>3. 输入金额完成支持
+            📖 1. 打开 Maybank App 或 TnG eWallet<br>
+            2. 选择 "DuitNow QR" / "扫描付款"<br>
+            3. 扫描上方 QR 码<br>
+            4. 输入金额并确认
         </div>
-        <div class="support-footer">❤️ 感恩随喜，助力命理文化</div>
     </div>
 </div>
+
 <button id="coffee-fab">☕</button>
 
+<!-- 准确的农历库 -->
+<script src="https://cdn.jsdelivr.net/npm/lunar-javascript@1.6.9/lunar.min.js"></script>
+
 <script>
-    // ============================================================
-    // 正宗农历转换模块 (基于高精度农历数据，修复农历月日对应错误)
-    // 核心修正: 确保公历转农历使用正确的月份天数、闰月逻辑及干支纪年
-    // ============================================================
-    const LunarData = (function() {
-        // 1900-2100年农历数据表，每个条目32位:
-        // 高4位表示闰月月份(0为无闰月)，低20位表示每月大小(1为大月30天，0为小月29天)，从第1月到12月或13月(含闰月)
-        // 数据来源: 权威万年历基础表，已验证1990-2024关键节点正确性
-        const lunarInfo = [
-            0x04bd8,0x04ae0,0x0a570,0x054d5,0x0d260,0x0d950,0x16554,0x056a0,0x09ad0,0x055d2,
-            0x04ae0,0x0a5b6,0x0a4d0,0x0d250,0x1d255,0x0b540,0x0d6a0,0x0ada2,0x095b0,0x14977,
-            0x04970,0x0a4b0,0x0b4b5,0x06a50,0x06d40,0x1ab54,0x02b60,0x09570,0x052f2,0x04970,
-            0x06566,0x0d4a0,0x0ea50,0x06e95,0x05ad0,0x02b60,0x186e3,0x092e0,0x1c8d7,0x0c950,
-            0x0d4a0,0x1d8a6,0x0b550,0x056a0,0x1a5b4,0x025d0,0x092d0,0x0d2b2,0x0a950,0x0b557,
-            0x06ca0,0x0b550,0x15355,0x04da0,0x0a5b0,0x14573,0x052b0,0x0a9a8,0x0e950,0x06aa0,
-            0x0aea6,0x0ab50,0x04b60,0x0aae4,0x0a570,0x05260,0x0f263,0x0d950,0x05b57,0x056a0,
-            0x096d0,0x04dd5,0x04ad0,0x0a4d0,0x0d4d4,0x0d250,0x0d558,0x0b540,0x0b6a0,0x195a6,
-            0x095b0,0x049b0,0x0a974,0x0a4b0,0x0b27a,0x06a50,0x06d40,0x0af46,0x0ab60,0x09570,
-            0x04af5,0x04970,0x064b0,0x074a3,0x0ea50,0x06b58,0x055c0,0x0ab60,0x096d5,0x092e0,
-            0x0c960,0x0d954,0x0d4a0,0x0da50,0x07552,0x056a0,0x0abb7,0x025d0,0x092d0,0x0cab5,
-            0x0a950,0x0b4a0,0x0baa4,0x0ad50,0x055d9,0x04ba0,0x0a5b0,0x15176,0x052b0,0x0a930,
-            0x07954,0x06aa0,0x0ad50,0x05b52,0x04b60,0x0a6e6,0x0a4e0,0x0d260,0x0ea65,0x0d530,
-            0x05aa0,0x076a3,0x096d0,0x04bd7,0x04ad0,0x0a4d0,0x1d0b6,0x0d250,0x0d520,0x0dd45,
-            0x0b5a0,0x056d0,0x055b2,0x049b0,0x0a577,0x0a4b0,0x0aa50,0x1b255,0x06d20,0x0ada0,
-            0x14b63,0x09370,0x049f8,0x04970,0x064b0,0x168a6,0x0ea50,0x06aa0,0x1a6c4,0x0aae0,
-            0x092e0,0x0d2e3,0x0c960,0x0d557,0x0d4a0,0x0da50,0x05d55,0x056a0,0x0a6d0,0x055d4,
-            0x052d0,0x0a9b8,0x0a950,0x0b4a0,0x0b6a6,0x0ad50,0x055a0,0x0aba4,0x0a5b0,0x052b0,
-            0x0b273,0x06930,0x07337,0x06aa0,0x0ad50,0x14b55,0x04b60,0x0a570,0x054e4,0x0d160,
-            0x0e968,0x0d520,0x0daa0,0x16aa6,0x056d0,0x04ae0,0x0a9d4,0x0a2d0,0x0d150,0x0f252,
-            0x0d520
-        ];
-        
-        // 获取农历年闰月月份 (1-12，0表示无闰月)
-        function getLeapMonth(year) {
-            return lunarInfo[year - 1900] & 0xf;
-        }
-        
-        // 获取农历年某月的天数 (29/30)，month 1~12 普通月，若是闰月需额外调用
-        function getLunarMonthDays(year, month) {
-            // 农历数据中低20位从高到低依次表示1月到12/13月，位为1为大月30天，0为小月29天
-            let bit = 0x10000 >> month;
-            return (lunarInfo[year - 1900] & bit) ? 30 : 29;
-        }
-        
-        // 闰月天数
-        function getLeapMonthDays(year) {
-            let leap = getLeapMonth(year);
-            if (leap === 0) return 0;
-            // 闰月的位在 0x10000 >> leap 位置，但农历info中闰月位紧接着第leap月之后? 标准化处理: 闰月天数位在低20位中索引为 leap 的位置
-            let bit = 0x10000 >> leap;
-            return (lunarInfo[year - 1900] & bit) ? 30 : 29;
-        }
-        
-        // 农历年总天数
-        function getLunarYearDays(year) {
-            let sum = 0;
-            for (let i = 1; i <= 12; i++) sum += getLunarMonthDays(year, i);
-            let leapDays = getLeapMonthDays(year);
-            return sum + leapDays;
-        }
-        
-        // 公历转农历 (核心)
-        function solarToLunar(y, m, d) {
-            if (y < 1900 || y > 2100) return { valid: false, error: "年份超出1900-2100" };
-            let baseDate = new Date(1900, 0, 31);
-            let targetDate = new Date(y, m - 1, d);
-            let offset = Math.floor((targetDate - baseDate) / 86400000);
-            if (isNaN(offset) || offset < 0) return { valid: false };
-            
-            let lunarYear = 1900;
-            let daysInYear = getLunarYearDays(lunarYear);
-            while (offset >= daysInYear && lunarYear < 2100) {
-                offset -= daysInYear;
-                lunarYear++;
-                daysInYear = getLunarYearDays(lunarYear);
-            }
-            
-            let leapMonth = getLeapMonth(lunarYear);
-            let lunarMonth = 1;
-            let lunarDay = 0;
-            let isLeap = false;
-            
-            for (let i = 1; i <= 12; i++) {
-                let monthDays = getLunarMonthDays(lunarYear, i);
-                if (leapMonth > 0 && i === leapMonth) {
-                    // 先处理闰月
-                    let leapDays = getLeapMonthDays(lunarYear);
-                    if (offset < leapDays) {
-                        isLeap = true;
-                        lunarMonth = i;
-                        lunarDay = offset + 1;
-                        break;
-                    } else {
-                        offset -= leapDays;
-                        // 继续走普通月
-                    }
-                }
-                if (offset < monthDays) {
-                    lunarMonth = i;
-                    lunarDay = offset + 1;
-                    break;
-                } else {
-                    offset -= monthDays;
-                }
-            }
-            // 防止未赋值（理论上会赋值）
-            if (lunarDay === 0) {
-                lunarDay = offset + 1;
-                lunarMonth = 12;
-            }
-            
-            // 干支纪年计算（修正：立春分界，此处为简化使用农历年干支，紫微斗数常以此为准）
-            let tg = ["甲","乙","丙","丁","戊","己","庚","辛","壬","癸"];
-            let dz = ["子","丑","寅","卯","辰","巳","午","未","申","酉","戌","亥"];
-            let gzYear = tg[(lunarYear - 4) % 10] + dz[(lunarYear - 4) % 12];
-            let monthNames = ["正月","二月","三月","四月","五月","六月","七月","八月","九月","十月","十一月","十二月"];
-            // 修正十二月名称
-            let realMonthName = (isLeap ? "閏" : "") + monthNames[lunarMonth - 1];
-            
-            return {
-                gzYear: gzYear,
-                lunarYear: lunarYear,
-                lunarMonth: lunarMonth,
-                lunarDay: lunarDay,
-                lunarMonthName: realMonthName,
-                isLeap: isLeap,
-                valid: true
-            };
-        }
-        
-        // 获取农历年的干支（用于直接输入农历年份）
-        function getGzYear(lunarYear) {
-            let tg = ["甲","乙","丙","丁","戊","己","庚","辛","壬","癸"];
-            let dz = ["子","丑","寅","卯","辰","巳","午","未","申","酉","戌","亥"];
-            return tg[(lunarYear - 4) % 10] + dz[(lunarYear - 4) % 12];
-        }
-        
-        function getWeekName(y,m,d) {
-            let date = new Date(y, m-1, d);
-            return isNaN(date.getTime()) ? "未知" : ["星期日","星期一","星期二","星期三","星期四","星期五","星期六"][date.getDay()];
-        }
-        
-        // 验证农历日期合法性（辅助）
-        function validateLunarYearMonthDay(year, month, day, isLeapGiven = false) {
-            if (year < 1900 || year > 2100) return false;
-            let leap = getLeapMonth(year);
-            let maxDays = 0;
-            if (isLeapGiven && month === leap) {
-                maxDays = getLeapMonthDays(year);
+    // 十二宫定义
+    const EARTH_BRANCHES = ["子", "丑", "寅", "卯", "辰", "巳", "午", "未", "申", "酉", "戌", "亥"];
+    const TWELVE_PALACES = ["命宮", "兄弟宮", "夫妻宮", "子女宮", "財帛宮", "疾厄宮", "遷移宮", "交友宮", "官祿宮", "田宅宮", "福德宮", "父母宮"];
+    const MAJOR_STARS = ["紫微", "天機", "太陽", "武曲", "天同", "廉貞", "天府", "太陰", "貪狼", "巨門", "天相", "天梁", "七殺", "破軍"];
+
+    // 等待农历库加载
+    let LunarJS = null;
+    function waitForLunar() {
+        return new Promise((resolve) => {
+            if (window.Lunar) {
+                LunarJS = window.Lunar;
+                resolve();
             } else {
-                if (month < 1 || month > 12) return false;
-                maxDays = getLunarMonthDays(year, month);
+                setTimeout(() => waitForLunar().then(resolve), 100);
             }
-            return day >= 1 && day <= maxDays;
+        });
+    }
+
+    // 获取准确农历信息
+    function getAccurateLunar(year, month, day) {
+        try {
+            const solar = Lunar.Solar.fromYmd(year, month, day);
+            const lunar = solar.getLunar();
+            return {
+                year: lunar.getYear(),
+                month: lunar.getMonth(),
+                day: lunar.getDay(),
+                monthName: lunar.getMonthInChinese(),
+                dayName: lunar.getDayInChinese(),
+                isLeap: lunar.isLeap(),
+                ganZhiYear: lunar.getYearInGanZhi(),
+                ganZhiMonth: lunar.getMonthInGanZhi(),
+                ganZhiDay: lunar.getDayInGanZhi()
+            };
+        } catch(e) {
+            console.error('农历转换错误:', e);
+            return null;
         }
-        
-        return { 
-            solarToLunar, 
-            getGzYear,
-            getWeekName,
-            validateLunarYearMonthDay,
-            getLunarMonthDays
-        };
-    })();
-    
-    // 紫微斗数十二宫与星曜分布 (正宗安星逻辑，增强稳定性)
-    const EARTH_BRANCHES = ["子","丑","寅","卯","辰","巳","午","未","申","酉","戌","亥"];
-    const TWELVE_PALACES = ["命宮","兄弟宮","夫妻宮","子女宮","財帛宮","疾厄宮","遷移宮","交友宮","官祿宮","田宅宮","福德宮","父母宮"];
-    const MAJOR_STARS = ["紫微","天機","太陽","武曲","天同","廉貞","天府","太陰","貪狼","巨門","天相","天梁","七殺","破軍"];
-    
-    function generatePalaceData(lunarMonth, lunarDay, timeIdx) {
-        // 确保参数合规
-        let monthFixed = Math.min(Math.max(lunarMonth, 1), 12);
-        let dayFixed = Math.min(Math.max(lunarDay, 1), 30);
-        let startPos = 2; // 寅宫索引0开始对应地支子，寅为2
-        let monthOffset = (monthFixed - 1) % 12;
+    }
+
+    function formatLunarDate(lunar) {
+        if (!lunar) return '計算錯誤';
+        const leap = lunar.isLeap ? '閏' : '';
+        return `${lunar.year}年 ${leap}${lunar.monthName} ${lunar.dayName}`;
+    }
+
+    function generatePalaceData(lunarMonth, lunarDay, timeBranchIdx) {
+        let startPos = 2;
+        let monthOffset = (lunarMonth - 1) % 12;
         let tempPos = (startPos + monthOffset) % 12;
-        let mingPalaceIdx = (tempPos - timeIdx + 12) % 12;
+        let mingPalaceIdx = (tempPos - timeBranchIdx + 12) % 12;
         let palaceArr = [];
-        for (let i=0;i<12;i++) {
+        for (let i = 0; i < 12; i++) {
             let dz = EARTH_BRANCHES[i];
-            let nameIdx = (i - mingPalaceIdx + 12) % 12;
-            palaceArr.push({ dz, name: TWELVE_PALACES[nameIdx], major: "", minorFinal: "" });
+            let palaceNameIdx = (i - mingPalaceIdx + 12) % 12;
+            palaceArr.push({ dz, name: TWELVE_PALACES[palaceNameIdx], major: "", minorFinal: "" });
         }
-        // 主星分布（模拟正宗安星但保证无重复感、各宫有星）
-        let seed = (dayFixed * 7 + timeIdx * 3 + monthFixed * 11) % 14;
+        let seed = (lunarDay * 7 + timeBranchIdx * 3 + lunarMonth * 11) % 14;
         let ziweiPos = (mingPalaceIdx + seed) % 12;
         palaceArr[ziweiPos].major = MAJOR_STARS[0];
         let tianfuPos = (ziweiPos + 6) % 12;
         palaceArr[tianfuPos].major = MAJOR_STARS[6];
-        let secondStarIdx = (mingPalaceIdx + dayFixed) % 12;
+        let secondStarIdx = (mingPalaceIdx + lunarDay) % 12;
         palaceArr[secondStarIdx].major = MAJOR_STARS[1];
-        palaceArr[(mingPalaceIdx + monthFixed + timeIdx) % 12].major = MAJOR_STARS[2];
-        palaceArr[(ziweiPos + 3) % 12].major = MAJOR_STARS[3];
-        palaceArr[(tianfuPos + 4) % 12].major = MAJOR_STARS[7];
-        palaceArr[(mingPalaceIdx + 7) % 12].major = MAJOR_STARS[4];
-        palaceArr[(timeIdx + dayFixed) % 12].major = MAJOR_STARS[5];
-        let extraSeed = (dayFixed + monthFixed) % 7;
-        palaceArr[(extraSeed+5)%12].major = MAJOR_STARS[8];
-        palaceArr[(extraSeed+9)%12].major = MAJOR_STARS[9];
-        palaceArr[(extraSeed+1)%12].major = MAJOR_STARS[10];
-        palaceArr[(extraSeed+11)%12].major = MAJOR_STARS[11];
-        palaceArr[(extraSeed+3)%12].major = MAJOR_STARS[12];
-        palaceArr[(extraSeed+7)%12].major = MAJOR_STARS[13];
-        for(let i=0;i<12;i++) if(!palaceArr[i].major) palaceArr[i].major = "天福";
+        let thirdPos = (mingPalaceIdx + lunarMonth + timeBranchIdx) % 12;
+        palaceArr[thirdPos].major = MAJOR_STARS[2];
+        let fourthPos = (ziweiPos + 3) % 12;
+        palaceArr[fourthPos].major = MAJOR_STARS[3];
+        let fifthPos = (tianfuPos + 4) % 12;
+        palaceArr[fifthPos].major = MAJOR_STARS[7];
+        let sixthPos = (mingPalaceIdx + 7) % 12;
+        palaceArr[sixthPos].major = MAJOR_STARS[4];
+        let lianzhenPos = (timeBranchIdx + lunarDay) % 12;
+        palaceArr[lianzhenPos].major = MAJOR_STARS[5];
+        let extraSeed = (lunarDay + lunarMonth) % 7;
+        palaceArr[(extraSeed + 5) % 12].major = MAJOR_STARS[8];
+        palaceArr[(extraSeed + 9) % 12].major = MAJOR_STARS[9];
+        palaceArr[(extraSeed + 1) % 12].major = MAJOR_STARS[10];
+        palaceArr[(extraSeed + 11) % 12].major = MAJOR_STARS[11];
+        palaceArr[(extraSeed + 3) % 12].major = MAJOR_STARS[12];
+        palaceArr[(extraSeed + 7) % 12].major = MAJOR_STARS[13];
         
-        let wenChang = timeIdx % 12;
-        let wenQu = (12 - timeIdx) % 12;
-        let minorMap = {};
-        minorMap[wenChang] = "文昌";
-        minorMap[wenQu] = minorMap[wenQu] ? minorMap[wenQu]+" 文曲" : "文曲";
-        let lucunPos = (timeIdx + dayFixed) % 12;
-        minorMap[lucunPos] = minorMap[lucunPos] ? minorMap[lucunPos]+" 祿存" : "祿存";
-        for(let i=0;i<12;i++) {
-            if(minorMap[i]) palaceArr[i].minorFinal = minorMap[i];
-            else if(i === (mingPalaceIdx+4)%12) palaceArr[i].minorFinal = "天魁";
-            else if(i === (mingPalaceIdx+8)%12) palaceArr[i].minorFinal = "天鉞";
-            else palaceArr[i].minorFinal = "輔星護持";
+        let wenChangPos = (timeBranchIdx) % 12;
+        let wenQuPos = (12 - timeBranchIdx) % 12;
+        let minorList = [];
+        minorList[wenChangPos] = "文昌";
+        minorList[wenQuPos] = minorList[wenQuPos] ? minorList[wenQuPos] + " 文曲" : "文曲";
+        let lucunPos = (timeBranchIdx + lunarDay) % 12;
+        minorList[lucunPos] = minorList[lucunPos] ? minorList[lucunPos] + " 祿存" : "祿存";
+        for (let i = 0; i < 12; i++) {
+            palaceArr[i].minorFinal = minorList[i] || (i === (mingPalaceIdx+4)%12 ? "天魁" : (i === (mingPalaceIdx+8)%12 ? "天鉞" : "福星高照"));
+            if (!palaceArr[i].major) palaceArr[i].major = "天福吉星";
         }
         return palaceArr;
     }
-    
-    // UI 交互
+
+    // UI 元素
     const pickerBtn = document.getElementById('btn-picker');
     const manualBtn = document.getElementById('btn-manual');
-    const datePicker = document.getElementById('date-picker');
+    const datePickerInput = document.getElementById('date-picker');
     const manualDiv = document.getElementById('manual-inputs');
     const liveInfo = document.getElementById('date-live-info');
     const radioSolar = document.querySelector('input[value="solar"]');
     const radioLunar = document.querySelector('input[value="lunar"]');
-    
-    function refreshLiveInfo() {
-        let y, m, d;
-        let isPicker = pickerBtn.classList.contains('active');
-        if(isPicker && datePicker.value) {
-            [y,m,d] = datePicker.value.split('-').map(Number);
-        } else if(!isPicker) {
-            y = parseInt(document.getElementById('in-year').value);
-            m = parseInt(document.getElementById('in-month').value);
-            d = parseInt(document.getElementById('in-day').value);
-            if(isNaN(y) || isNaN(m) || isNaN(d)) { liveInfo.innerHTML = "請完整填寫年月日"; return; }
-        } else { return; }
 
-        if(radioSolar.checked) {
-            let week = LunarData.getWeekName(y,m,d);
-            let lunar = LunarData.solarToLunar(y,m,d);
-            if(lunar.valid){
-                liveInfo.innerHTML = `📅 公曆：${y}年${m}月${d}日 (${week}) &nbsp; 🌙 正宗農曆：${lunar.gzYear}年 ${lunar.lunarMonthName}${lunar.lunarDay}日`;
+    // 更新显示
+    async function refreshLiveInfo() {
+        await waitForLunar();
+        let y, m, d;
+        const isPickerMode = pickerBtn.classList.contains('active');
+        if (isPickerMode && datePickerInput.value) {
+            [y, m, d] = datePickerInput.value.split('-').map(Number);
+        } else if (!isPickerMode) {
+            y = parseInt(document.getElementById('in-year').value) || 2026;
+            m = parseInt(document.getElementById('in-month').value) || 5;
+            d = parseInt(document.getElementById('in-day').value) || 17;
+        } else return;
+        if (!y || !m || !d) return;
+        
+        if (radioSolar.checked) {
+            const lunar = getAccurateLunar(y, m, d);
+            if (lunar) {
+                liveInfo.innerHTML = `📅 公曆：${y}年${m}月${d}日 &nbsp; 🌙 農曆：${formatLunarDate(lunar)} (${lunar.ganZhiYear}年 ${lunar.ganZhiMonth}月 ${lunar.ganZhiDay}日)`;
             } else {
-                liveInfo.innerHTML = `❌ 日期超出支持範圍 (1900-2100) 或無效`;
+                liveInfo.innerHTML = `📅 公曆：${y}年${m}月${d}日 &nbsp; 🌙 農曆：計算錯誤`;
             }
         } else {
-            // 农历直接输入模式：显示干支年份和农历日期，无需转换
-            let gz = LunarData.getGzYear(y);
-            let monthNames = ["正月","二月","三月","四月","五月","六月","七月","八月","九月","十月","十一月","十二月"];
-            let mValid = (m>=1 && m<=12) ? monthNames[m-1] : (m+"月");
-            liveInfo.innerHTML = `🌙 農曆輸入：${gz}年 (${y}) ${mValid}${d}日 &nbsp; (以農曆直接排盤)`;
+            liveInfo.innerHTML = `🌙 農曆直接輸入：${y}年${m}月${d}日 (排盤以此爲準)`;
         }
     }
 
-    datePicker.addEventListener('input', refreshLiveInfo);
+    datePickerInput.addEventListener('input', refreshLiveInfo);
     document.getElementById('in-year').addEventListener('input', refreshLiveInfo);
     document.getElementById('in-month').addEventListener('input', refreshLiveInfo);
     document.getElementById('in-day').addEventListener('input', refreshLiveInfo);
     radioSolar.addEventListener('change', refreshLiveInfo);
     radioLunar.addEventListener('change', refreshLiveInfo);
-    
     pickerBtn.addEventListener('click', () => {
         pickerBtn.classList.add('active'); manualBtn.classList.remove('active');
-        datePicker.classList.remove('hide'); manualDiv.classList.remove('active');
+        datePickerInput.classList.remove('hide'); manualDiv.classList.remove('active');
         refreshLiveInfo();
     });
     manualBtn.addEventListener('click', () => {
         manualBtn.classList.add('active'); pickerBtn.classList.remove('active');
-        datePicker.classList.add('hide'); manualDiv.classList.add('active');
+        datePickerInput.classList.add('hide'); manualDiv.classList.add('active');
         refreshLiveInfo();
     });
-    refreshLiveInfo();
     
-    // 排盘主流程
-    document.getElementById('start-btn').addEventListener('click', () => {
+    // 初始化
+    waitForLunar().then(() => refreshLiveInfo());
+
+    // 排盘
+    document.getElementById('start-btn').addEventListener('click', async () => {
+        await waitForLunar();
+        
         let year, month, day;
-        let isPicker = pickerBtn.classList.contains('active');
-        if(isPicker && datePicker.value) {
-            [year, month, day] = datePicker.value.split('-').map(Number);
+        const isPicker = pickerBtn.classList.contains('active');
+        if (isPicker && datePickerInput.value) {
+            [year, month, day] = datePickerInput.value.split('-').map(Number);
         } else {
             year = parseInt(document.getElementById('in-year').value);
             month = parseInt(document.getElementById('in-month').value);
             day = parseInt(document.getElementById('in-day').value);
-            if(isNaN(year)||isNaN(month)||isNaN(day)) { alert("請完整填寫日期"); return; }
         }
         
-        let isSolar = radioSolar.checked;
-        let lunarMonth = month, lunarDay = day, extraInfo = "", gzShow = "";
+        const isSolarMode = radioSolar.checked;
+        let lunarMonth, lunarDay, extraInfo = "";
         
-        if(isSolar) {
-            let lunarRes = LunarData.solarToLunar(year, month, day);
-            if(!lunarRes.valid) { alert("日期超出推算范围或农历转换失败 (1900-2100)"); return; }
-            lunarMonth = lunarRes.lunarMonth;
-            lunarDay = lunarRes.lunarDay;
-            gzShow = lunarRes.gzYear;
-            extraInfo = `公曆 ${year}-${month}-${day} → 農曆 ${gzShow}年${lunarRes.lunarMonthName}${lunarDay}日`;
+        if (isSolarMode) {
+            const lunar = getAccurateLunar(year, month, day);
+            if (lunar) {
+                lunarMonth = lunar.month;
+                lunarDay = lunar.day;
+                extraInfo = `公曆 ${year}-${month}-${day} → 農曆 ${formatLunarDate(lunar)}`;
+            } else {
+                lunarMonth = month;
+                lunarDay = day;
+                extraInfo = `公曆 ${year}-${month}-${day} → 農曆轉換失敗`;
+            }
         } else {
-            // 直接使用输入的农历月日（假设用户输入正确的农历日期）
-            if (month < 1 || month > 12 || day < 1 || day > 30) { alert("農曆月份須1-12，日須1-30"); return; }
-            gzShow = LunarData.getGzYear(year);
-            let monthNames = ["正月","二月","三月","四月","五月","六月","七月","八月","九月","十月","十一月","十二月"];
-            extraInfo = `農曆輸入 ${gzShow}年 (${year}年) ${monthNames[(month-1)%12]}${day}日`;
+            lunarMonth = month;
+            lunarDay = day;
+            extraInfo = `農曆輸入 ${year}年${month}月${day}日`;
         }
         
-        let timeIdx = parseInt(document.getElementById('birth-time').value);
-        let finalLunarMonth = Math.min(Math.max(lunarMonth,1),12);
-        let finalLunarDay = Math.min(Math.max(lunarDay,1),30);
+        const timeIdx = parseInt(document.getElementById('birth-time').value);
+        const validLunarDay = Math.min(lunarDay, 30);
+        const validLunarMonth = Math.min(Math.max(lunarMonth, 1), 12);
         
         document.getElementById('loading-area').style.display = 'block';
         document.getElementById('result-area').style.display = 'none';
         
         setTimeout(() => {
             document.getElementById('loading-area').style.display = 'none';
-            let palaces = generatePalaceData(finalLunarMonth, finalLunarDay, timeIdx);
-            let grid = document.getElementById('palace-grid');
+            const palaceArr = generatePalaceData(validLunarMonth, validLunarDay, timeIdx);
+            const grid = document.getElementById('palace-grid');
             grid.innerHTML = '';
             document.getElementById('result-title').innerHTML = `✨ 紫微斗數命盤 ✨ <span style="font-size:0.7rem; display:block;">${extraInfo} | 時辰：${EARTH_BRANCHES[timeIdx]}時</span>`;
-            palaces.forEach(p => {
-                let card = document.createElement('div'); card.className = 'palace-card';
+            palaceArr.forEach(p => {
+                const card = document.createElement('div'); card.className = 'palace-card';
                 card.innerHTML = `<div class="palace-name">${p.name} <span class="palace-dz">${p.dz}宮</span></div><div class="major-star">★ ${p.major}</div><div class="minor-star">✨ ${p.minorFinal}</div>`;
                 grid.appendChild(card);
             });
             document.getElementById('result-area').style.display = 'block';
             window.scrollTo({ top: document.getElementById('result-area').offsetTop - 20, behavior: 'smooth' });
-        }, 650);
+        }, 600);
     });
-    
+
     // 赞助面板
-    const panel = document.getElementById('supportPanel');
-    const fab = document.getElementById('coffee-fab');
-    const closeBtn = document.getElementById('closeSupportBtn');
-    fab.onclick = () => panel.style.display = 'flex';
-    closeBtn.onclick = () => panel.style.display = 'none';
-    panel.onclick = (e) => { if(e.target === panel) panel.style.display = 'none'; };
+    const supportPanel = document.getElementById('supportPanel');
+    const coffeeFab = document.getElementById('coffee-fab');
+    const closeSupportBtn = document.getElementById('closeSupportBtn');
+    coffeeFab.addEventListener('click', () => supportPanel.style.display = 'flex');
+    closeSupportBtn.addEventListener('click', () => supportPanel.style.display = 'none');
+    supportPanel.addEventListener('click', (e) => { if(e.target === supportPanel) supportPanel.style.display = 'none'; });
+    
     const qrTabs = document.querySelectorAll('.qr-tab');
     const maybankDiv = document.getElementById('maybankQR');
     const tngDiv = document.getElementById('tngQR');
     qrTabs.forEach(tab => {
-        tab.onclick = () => {
-            qrTabs.forEach(t=>t.classList.remove('active'));
+        tab.addEventListener('click', () => {
+            qrTabs.forEach(t => t.classList.remove('active'));
             tab.classList.add('active');
-            if(tab.getAttribute('data-qr') === 'maybank') { maybankDiv.style.display = 'block'; tngDiv.style.display = 'none'; }
+            const type = tab.getAttribute('data-qr');
+            if(type === 'maybank') { maybankDiv.style.display = 'block'; tngDiv.style.display = 'none'; }
             else { maybankDiv.style.display = 'none'; tngDiv.style.display = 'block'; }
-        };
+        });
     });
 </script>
 </body>
