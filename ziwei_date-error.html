@@ -7,7 +7,7 @@
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body {
-            font-family: 'Segoe UI', 'Noto Sans CJK SC', system-ui, -apple-system, 'Roboto', sans-serif;
+            font-family: 'Segoe UI', 'Noto Sans CJK SC', system-ui, -apple-system, 'Roboto', 'Helvetica Neue', Arial, sans-serif;
             background: radial-gradient(circle at 10% 20%, #0f172a, #030614);
             min-height: 100vh;
             padding: 20px;
@@ -32,10 +32,11 @@
             color: transparent;
             margin-bottom: 1rem;
             font-size: 1.9rem;
+            letter-spacing: 1px;
         }
         .form-group { display: flex; flex-wrap: wrap; gap: 1.2rem; margin-bottom: 1.5rem; justify-content: center; }
         .input-field { flex: 1; min-width: 180px; }
-        label { display: block; margin-bottom: 6px; font-weight: 500; color: #FFD98C; font-size: 0.85rem; }
+        label { display: block; margin-bottom: 6px; font-weight: 500; color: #FFD98C; font-size: 0.85rem; letter-spacing: 0.5px; }
         input, select {
             width: 100%;
             padding: 12px 14px;
@@ -46,21 +47,23 @@
             font-size: 1rem;
             outline: none;
         }
-        input:focus, select:focus { border-color: #FFD966; }
+        input:focus, select:focus { border-color: #FFD966; box-shadow: 0 0 0 2px rgba(255, 217, 102, 0.3); }
+        .date-input-group { display: flex; flex-direction: column; gap: 10px; }
         .date-mode-switch { display: flex; gap: 12px; margin-bottom: 6px; }
         .mode-btn {
             flex: 1;
             background: rgba(255, 200, 70, 0.1);
             border: 1px solid #f0b849;
             border-radius: 40px;
-            padding: 8px;
+            padding: 8px 12px;
             text-align: center;
             cursor: pointer;
             font-size: 0.85rem;
             font-weight: 600;
+            transition: 0.2s;
             color: #ffe2b5;
         }
-        .mode-btn.active { background: #FFD966; color: #121826; }
+        .mode-btn.active { background: #FFD966; color: #121826; border-color: #FFD966; box-shadow: 0 2px 8px rgba(255, 217, 0, 0.3); }
         .manual-date-inputs { display: none; gap: 12px; flex-wrap: wrap; }
         .manual-date-inputs.active { display: flex; }
         .picker-date-input { display: block; }
@@ -69,13 +72,15 @@
             background: rgba(255, 215, 0, 0.12);
             border: 1px dashed #FFD966;
             border-radius: 1.5rem;
-            padding: 12px;
+            padding: 12px 16px;
             margin-top: 12px;
             font-size: 0.85rem;
             text-align: center;
             color: #FADB85;
+            font-weight: 500;
         }
         .calendar-type { display: flex; gap: 28px; margin-bottom: 18px; justify-content: center; }
+        .calendar-type label { display: inline-flex; align-items: center; gap: 8px; cursor: pointer; font-size: 0.9rem; }
         .btn-container { text-align: center; margin-top: 20px; }
         button {
             background: linear-gradient(115deg, #FFD966, #FFAA33);
@@ -86,10 +91,12 @@
             font-weight: bold;
             color: #141c2c;
             cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 6px 14px rgba(0, 0, 0, 0.3);
         }
-        button:hover { transform: translateY(-2px); }
-        .result-area { display: none; animation: fadeIn 0.4s ease; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+        button:hover { transform: translateY(-2px); background: linear-gradient(115deg, #FFE085, #FFB647); }
+        .result-area { overflow-x: auto; display: none; animation: fadeInUp 0.5s ease-out; }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
         .palace-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 18px; }
         .palace-card {
             background: rgba(10, 18, 30, 0.7);
@@ -97,22 +104,23 @@
             border-radius: 1.5rem;
             padding: 1rem;
             border-left: 5px solid #FFD966;
+            transition: 0.2s;
         }
-        .palace-card:hover { transform: translateY(-3px); background: rgba(20, 35, 60, 0.85); }
+        .palace-card:hover { transform: translateY(-3px); background: rgba(20, 35, 60, 0.85); border-left-color: #FFB347; }
         .palace-name {
             font-size: 1.1rem;
             font-weight: bold;
             color: #FFE2A4;
+            margin-bottom: 10px;
             display: flex;
             justify-content: space-between;
             border-bottom: 1px dashed rgba(255, 217, 102, 0.4);
             padding-bottom: 4px;
-            margin-bottom: 8px;
         }
         .palace-dz { color: #b9c7ff; font-size: 0.75rem; background: rgba(255, 215, 0, 0.2); padding: 2px 8px; border-radius: 40px; }
         .major-star { color: #FFAD93; font-weight: bold; font-size: 0.9rem; margin: 8px 0 5px; }
-        .minor-star { color: #9ecfff; font-size: 0.75rem; }
-        .loading { text-align: center; padding: 48px; display: none; }
+        .minor-star { color: #9ecfff; font-size: 0.75rem; margin-top: 4px; }
+        .loading { text-align: center; padding: 48px 20px; display: none; }
         .spinner {
             border: 4px solid rgba(255, 215, 0, 0.2);
             border-top: 4px solid #FFD966;
@@ -123,23 +131,9 @@
             margin: 0 auto 18px;
         }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-        @media (max-width: 780px) { .palace-grid { grid-template-columns: repeat(2, 1fr); } }
+        @media (max-width: 780px) { .palace-grid { grid-template-columns: repeat(2, 1fr); } h1 { font-size: 1.4rem; } }
         .footnote { text-align: center; font-size: 0.7rem; margin-top: 1rem; opacity: 0.7; }
-        .support-fab {
-            position: fixed;
-            bottom: 25px;
-            right: 25px;
-            background: linear-gradient(145deg, #FF9800, #F57C00);
-            width: 56px;
-            height: 56px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 26px;
-            cursor: pointer;
-            z-index: 1000;
-        }
+        
         .support-panel {
             position: fixed;
             top: 0;
@@ -148,25 +142,76 @@
             height: 100%;
             background: rgba(0, 0, 0, 0.8);
             backdrop-filter: blur(8px);
-            z-index: 1100;
+            z-index: 1050;
             display: none;
             align-items: center;
             justify-content: center;
+            padding: 20px;
         }
         .support-card {
-            background: white;
-            color: #1e293b;
-            max-width: 350px;
+            max-width: 380px;
             width: 90%;
-            border-radius: 28px;
-            padding: 20px;
-            text-align: center;
+            background: #ffffff;
+            border-radius: 32px;
+            padding: 24px 20px;
             position: relative;
+            animation: slideUp 0.3s ease;
+            color: #1e293b;
+            text-align: center;
         }
-        .close-support { position: absolute; top: 12px; right: 16px; font-size: 24px; cursor: pointer; background: none; border: none; }
-        .qr-img { width: 180px; margin: 15px auto; display: block; }
-        .action-buttons { text-align: center; margin-top: 20px; display: flex; gap: 16px; justify-content: center; }
-        .action-btn { background: linear-gradient(135deg, #3b82f6, #6366f1); padding: 10px 20px; border-radius: 48px; color: white; border: none; cursor: pointer; }
+        @keyframes slideUp { from { transform: translateY(50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        .close-btn {
+            position: absolute;
+            top: 16px;
+            right: 18px;
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            color: #94a3b8;
+        }
+        .close-btn:hover { background: #f1f5f9; }
+        .coffee-icon-lg { font-size: 48px; margin-bottom: 10px; color: #FF9800; }
+        .qr-switch-tabs { display: flex; gap: 12px; margin: 20px 0 16px; background: #f1f5f9; padding: 6px; border-radius: 60px; }
+        .qr-tab {
+            flex: 1;
+            text-align: center;
+            padding: 10px 0;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            background: transparent;
+            color: #334155;
+        }
+        .qr-tab.active { background: #2c7a2c; color: white; }
+        .qr-container { text-align: center; margin: 16px 0; }
+        .qr-code-img { width: 100%; max-width: 200px; border-radius: 20px; margin: 0 auto; display: block; border: 2px solid #e2e8f0; padding: 6px; background: white; }
+        .qr-note { background: #eef2ff; padding: 12px; border-radius: 20px; margin-top: 18px; font-size: 0.75rem; color: #1e40af; text-align: left; }
+        .support-footer { font-size: 0.7rem; color: #6c757d; margin-top: 16px; }
+        #coffee-fab {
+            position: fixed;
+            bottom: 28px;
+            right: 28px;
+            z-index: 1040;
+            background: linear-gradient(145deg, #FF9800, #F57C00);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 58px;
+            height: 58px;
+            font-size: 28px;
+            cursor: pointer;
+            box-shadow: 0 8px 18px rgba(245, 124, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        #coffee-fab:hover { transform: scale(1.08); }
+        .action-buttons { text-align: center; margin-top: 20px; display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+        .action-btn { background: linear-gradient(135deg, #3b82f6, #6366f1); padding: 10px 20px; font-size: 0.9rem; border-radius: 48px; cursor: pointer; color: white; border: none; }
         .action-btn.share { background: linear-gradient(135deg, #059669, #10b981); }
     </style>
 </head>
@@ -196,16 +241,26 @@
                         <input type="number" id="in-day" placeholder="日" min="1" max="31" value="17">
                     </div>
                 </div>
-                <div class="info-panel" id="date-live-info">🌿 待輸入日期</div>
+                <div class="info-panel" id="date-live-info">
+                    🌿 日月交輝 · 待君輸入吉時
+                </div>
             </div>
 
             <div class="input-field">
                 <label>⏳ 時辰</label>
                 <select id="birth-time">
-                    <option value="0">子時</option><option value="1">丑時</option><option value="2">寅時</option>
-                    <option value="3">卯時</option><option value="4">辰時</option><option value="5">巳時</option>
-                    <option value="6">午時</option><option value="7">未時</option><option value="8">申時</option>
-                    <option value="9">酉時</option><option value="10">戌時</option><option value="11">亥時</option>
+                    <option value="0">子時 (23:00-01:00)</option>
+                    <option value="1">丑時 (01:00-03:00)</option>
+                    <option value="2">寅時 (03:00-05:00)</option>
+                    <option value="3">卯時 (05:00-07:00)</option>
+                    <option value="4">辰時 (07:00-09:00)</option>
+                    <option value="5">巳時 (09:00-11:00)</option>
+                    <option value="6">午時 (11:00-13:00)</option>
+                    <option value="7">未時 (13:00-15:00)</option>
+                    <option value="8">申時 (15:00-17:00)</option>
+                    <option value="9">酉時 (17:00-19:00)</option>
+                    <option value="10">戌時 (19:00-21:00)</option>
+                    <option value="11">亥時 (21:00-23:00)</option>
                 </select>
             </div>
 
@@ -221,35 +276,52 @@
         <div class="btn-container">
             <button id="start-btn">🔮 起盤演曜 · 洞悉天機</button>
         </div>
-        <div class="footnote">※ 核心数据深度对接大中华标准万年历轴（含2026特定修正）</div>
+        <div class="footnote">※ 修正閏月月份索引偏移 | 2026-05-17 → 丙午年四月初一</div>
     </div>
 
     <div class="loading" id="loading-area">
         <div class="spinner"></div>
-        <p>⚙️ 星曜垂象，推演命盤...</p>
+        <p style="color: #FFE1A0;">⚙️ 星曜垂象，推演命盤十二宮...</p>
     </div>
 
     <div class="card result-area" id="result-area">
-        <h2 id="result-title">🏮 紫微斗數命盤 🏮</h2>
+        <h2 id="result-title">🏮 紫府微垣 · 本命盤🏮</h2>
         <div class="palace-grid" id="palace-grid"></div>
         <div class="action-buttons" id="screenshot-btn-area"></div>
     </div>
 </div>
 
-<div class="support-fab" id="supportFab">☕</div>
-<div class="support-panel" id="supportPanel">
+<div id="supportPanel" class="support-panel">
     <div class="support-card">
-        <button class="close-support" id="closeSupport">✕</button>
-        <h4>☕ 請我喝杯咖啡</h4>
-        <img src="https://via.placeholder.com/180x180?text=QR+Support" class="qr-img">
-        <p style="font-size:12px;">隨喜支持 · 助力命理文化</p>
+        <button class="close-btn" id="closeSupportBtn">✕</button>
+        <div class="coffee-icon-lg">☕</div>
+        <h4 style="margin-bottom: 8px;">请我喝杯咖啡</h4>
+        <p style="color: #475569; font-size: 13px; margin-bottom: 18px;">如果紫微斗数服务对您有帮助，欢迎随意支持</p>
+        <div class="qr-switch-tabs">
+            <div class="qr-tab active" data-qr="maybank">🏦 Maybank</div>
+            <div class="qr-tab" data-qr="tng">📱 TnG eWallet</div>
+        </div>
+        <div id="maybankQR" class="qr-container">
+            <img src="images/maybank-qr.jpg" alt="Maybank QR" class="qr-code-img" onerror="this.src='https://via.placeholder.com/200x200?text=Maybank+QR'">
+            <div style="font-size:12px; margin-top:6px;">Maybank 扫码支持</div>
+        </div>
+        <div id="tngQR" class="qr-container" style="display:none;">
+            <img src="images/tng-qr.jpg" alt="TnG eWallet QR" class="qr-code-img" onerror="this.src='https://via.placeholder.com/200x200?text=TnG+QR'">
+            <div style="font-size:12px; margin-top:6px;">Touch 'n Go 支持</div>
+        </div>
+        <div class="qr-note">
+            📖 <strong>使用说明</strong><br>1. 打开 Maybank App 或 TnG eWallet<br>2. 选择 "DuitNow QR" 扫描<br>3. 输入金额完成支持
+        </div>
+        <div class="support-footer">❤️ 感恩随喜，助力命理文化</div>
     </div>
 </div>
+<button id="coffee-fab">☕</button>
 
 <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 <script>
 // ============================================================
-// 带有对齐线上万年历特殊边界（如2026-05-17）的适配型历算引擎
+// 农历转换核心 - 修正闰月月份索引偏移
+// 2026-05-17 正确显示: 丙午年 四月初一
 // ============================================================
 const LunarData = (function() {
     const lunarInfo = [
@@ -276,9 +348,20 @@ const LunarData = (function() {
         0x0d520
     ];
 
-    function getLeapMonth(year) { return lunarInfo[year - 1900] & 0xf; }
-    function getLunarMonthDays(year, month) { return (lunarInfo[year - 1900] & (0x10000 >> month)) ? 30 : 29; }
-    function getLeapMonthDays(year) { if (getLeapMonth(year) === 0) return 0; return (lunarInfo[year - 1900] & 0x10000) ? 30 : 29; }
+    function getLeapMonth(year) {
+        return lunarInfo[year - 1900] & 0xf;
+    }
+
+    function getLunarMonthDays(year, month) {
+        return (lunarInfo[year - 1900] & (0x10000 >> month)) ? 30 : 29;
+    }
+
+    function getLeapMonthDays(year) {
+        const leap = getLeapMonth(year);
+        if (leap === 0) return 0;
+        return (lunarInfo[year - 1900] & 0x10000) ? 30 : 29;
+    }
+
     function getLunarYearDays(year) {
         let sum = 0;
         for (let i = 1; i <= 12; i++) sum += getLunarMonthDays(year, i);
@@ -286,18 +369,14 @@ const LunarData = (function() {
     }
 
     function solarToLunar(solarYear, solarMonth, solarDay) {
-        // ⭐ 特殊边界强对齐逻辑：针对2026年5月17日万年历显示做完全吻合处理
-        if (solarYear === 2026 && solarMonth === 5 && solarDay === 17) {
-            return {
-                valid: true, lunarYear: 2026, lunarMonth: 4, lunarDay: 1,
-                lunarMonthName: "四月", isLeap: false, gzYear: "丙午"
-            };
+        if (solarYear < 1900 || solarYear > 2100) {
+            return { valid: false };
         }
 
-        if (solarYear < 1900 || solarYear > 2100) return { valid: false };
         const baseDate = new Date(1900, 0, 31);
         const targetDate = new Date(solarYear, solarMonth - 1, solarDay);
         let offset = Math.floor((targetDate - baseDate) / 86400000);
+        
         if (offset < 0) return { valid: false };
 
         let lunarYear = 1900;
@@ -308,57 +387,70 @@ const LunarData = (function() {
             yearDays = getLunarYearDays(lunarYear);
         }
 
-        let leapMonth = getLeapMonth(lunarYear);
-        let isLeap = false;
+        const leapMonth = getLeapMonth(lunarYear);
         let lunarMonth = 1;
-        let lunarMonthName = "正月";
+        let lunarDay = 0;
+        let isLeap = false;
 
         for (let i = 1; i <= 12; i++) {
-            let mDays = getLunarMonthDays(lunarYear, i);
-            if (offset < mDays) {
-                lunarMonth = i;
-                lunarMonthName = ["正月","二月","三月","四月","五月","六月","七月","八月","九月","十月","十一月","十二月"][i-1];
-                isLeap = false;
-                break;
-            }
-            offset -= mDays;
-
-            if (leapMonth > 0 && i === leapMonth) {
-                let lDays = getLeapMonthDays(lunarYear);
-                if (offset < lDays) {
-                    lunarMonth = i;
-                    lunarMonthName = "閏" + ["正月","二月","三月","四月","五月","六月","七月","八月","九月","十月","十一月","十二月"][i-1];
+            // 正确处理闰月：闰月位于当前月份之前
+            if (leapMonth > 0 && i === leapMonth + 1 && !isLeap) {
+                const leapDays = getLeapMonthDays(lunarYear);
+                if (offset < leapDays) {
                     isLeap = true;
+                    lunarMonth = leapMonth;
+                    lunarDay = offset + 1;
                     break;
+                } else {
+                    offset -= leapDays;
                 }
-                offset -= lDays;
+            }
+            
+            const monthDays = getLunarMonthDays(lunarYear, i);
+            if (offset < monthDays) {
+                lunarMonth = i;
+                lunarDay = offset + 1;
+                break;
+            } else {
+                offset -= monthDays;
             }
         }
 
-        let lunarDay = offset + 1;
-        const tg = ["甲", "乙", "丙", "丁", "戊", "己", "庚", "辛", "壬", "癸"];
-        const dz = ["子", "丑", "寅", "卯", "辰", "巳", "午", "未", "申", "酉", "戌", "亥"];
-        const gzYear = tg[(lunarYear - 4) % 10] + dz[(lunarYear - 4) % 12];
+        if (lunarDay === 0) {
+            lunarDay = offset + 1;
+            lunarMonth = 12;
+        }
 
-        return { valid: true, lunarYear, lunarMonth, lunarDay, lunarMonthName, isLeap, gzYear };
+        const tg = ["甲","乙","丙","丁","戊","己","庚","辛","壬","癸"];
+        const dz = ["子","丑","寅","卯","辰","巳","午","未","申","酉","戌","亥"];
+        const gzYear = tg[(lunarYear - 4) % 10] + dz[(lunarYear - 4) % 12];
+        const monthNames = ["正月","二月","三月","四月","五月","六月","七月","八月","九月","十月","十一月","十二月"];
+        const realMonthName = (isLeap ? "閏" : "") + monthNames[lunarMonth - 1];
+
+        return {
+            valid: true,
+            lunarYear, lunarMonth, lunarDay,
+            lunarMonthName: realMonthName,
+            isLeap, gzYear
+        };
     }
 
     function getGzYear(lunarYear) {
-        const tg = ["甲", "乙", "丙", "丁", "戊", "己", "庚", "辛", "壬", "癸"];
-        const dz = ["子", "丑", "寅", "卯", "辰", "巳", "午", "未", "申", "酉", "戌", "亥"];
+        const tg = ["甲","乙","丙","丁","戊","己","庚","辛","壬","癸"];
+        const dz = ["子","丑","寅","卯","辰","巳","午","未","申","酉","戌","亥"];
         return tg[(lunarYear - 4) % 10] + dz[(lunarYear - 4) % 12];
     }
 
     function getWeekName(y, m, d) {
         const date = new Date(y, m - 1, d);
-        return ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"][date.getDay()] || "未知";
+        return ["星期日","星期一","星期二","星期三","星期四","星期五","星期六"][date.getDay()] || "未知";
     }
 
     return { solarToLunar, getGzYear, getWeekName };
 })();
 
 // ============================================================
-// 紫微斗数排盘算法
+// 紫微斗数排盘
 // ============================================================
 const EARTH_BRANCHES = ["子","丑","寅","卯","辰","巳","午","未","申","酉","戌","亥"];
 const TWELVE_PALACES = ["命宮","兄弟宮","夫妻宮","子女宮","財帛宮","疾厄宮","遷移宮","交友宮","官祿宮","田宅宮","福德宮","父母宮"];
@@ -424,7 +516,7 @@ function generatePalaceData(lunarMonth, lunarDay, timeIdx) {
     return palaceArr;
 }
 
-// 交互界面控制
+// UI 交互
 const pickerBtn = document.getElementById('btn-picker');
 const manualBtn = document.getElementById('btn-manual');
 const datePicker = document.getElementById('date-picker');
@@ -452,15 +544,15 @@ function refreshLiveInfo() {
         let week = LunarData.getWeekName(y, m, d);
         let lunar = LunarData.solarToLunar(y, m, d);
         if (lunar.valid) {
-            let dayShow = lunar.lunarDay === 1 ? "初一" : (lunar.lunarDay + "日");
-            liveInfo.innerHTML = `📅 公曆：${y}年${m}月${d}日 (${week}) &nbsp; 🌙 正宗農曆：${lunar.gzYear}年 ${lunar.lunarMonthName}${dayShow}`;
+            liveInfo.innerHTML = `📅 公曆：${y}年${m}月${d}日 (${week}) &nbsp; 🌙 正宗農曆：${lunar.gzYear}年 ${lunar.lunarMonthName}${lunar.lunarDay}日`;
         } else {
             liveInfo.innerHTML = `❌ 日期超出支持範圍 (1900-2100)`;
         }
     } else {
         let gz = LunarData.getGzYear(y);
         let monthNames = ["正月","二月","三月","四月","五月","六月","七月","八月","九月","十月","十一月","十二月"];
-        liveInfo.innerHTML = `🌙 農曆輸入：${gz}年 (${y}) ${monthNames[m-1]}${d}日`;
+        let mValid = (m >= 1 && m <= 12) ? monthNames[m - 1] : (m + "月");
+        liveInfo.innerHTML = `🌙 農曆輸入：${gz}年 (${y}) ${mValid}${d}日 &nbsp; (以農曆直接排盤)`;
     }
 }
 
@@ -471,23 +563,23 @@ document.getElementById('in-day').addEventListener('input', refreshLiveInfo);
 radioSolar.addEventListener('change', refreshLiveInfo);
 radioLunar.addEventListener('change', refreshLiveInfo);
 
-pickerBtn.onclick = () => {
+pickerBtn.addEventListener('click', () => {
     pickerBtn.classList.add('active');
     manualBtn.classList.remove('active');
     datePicker.classList.remove('hide');
     manualDiv.classList.remove('active');
     refreshLiveInfo();
-};
-manualBtn.onclick = () => {
+});
+manualBtn.addEventListener('click', () => {
     manualBtn.classList.add('active');
     pickerBtn.classList.remove('active');
     datePicker.classList.add('hide');
     manualDiv.classList.add('active');
     refreshLiveInfo();
-};
+});
 refreshLiveInfo();
 
-// 触发排盘
+// 排盘
 document.getElementById('start-btn').addEventListener('click', () => {
     let year, month, day;
     let isPicker = pickerBtn.classList.contains('active');
@@ -515,8 +607,7 @@ document.getElementById('start-btn').addEventListener('click', () => {
         lunarMonth = lunarRes.lunarMonth;
         lunarDay = lunarRes.lunarDay;
         gzShow = lunarRes.gzYear;
-        let dayShow = lunarDay === 1 ? "初一" : (lunarDay + "日");
-        extraInfo = `公曆 ${year}-${month}-${day} → 農曆 ${gzShow}年${lunarRes.lunarMonthName}${dayShow}`;
+        extraInfo = `公曆 ${year}-${month}-${day} → 農曆 ${gzShow}年${lunarRes.lunarMonthName}${lunarDay}日`;
     } else {
         if (month < 1 || month > 12 || day < 1 || day > 30) {
             alert("農曆月份須1-12，日須1-30");
@@ -524,16 +615,19 @@ document.getElementById('start-btn').addEventListener('click', () => {
         }
         gzShow = LunarData.getGzYear(year);
         let monthNames = ["正月","二月","三月","四月","五月","六月","七月","八月","九月","十月","十一月","十二月"];
-        extraInfo = `農曆輸入 ${gzShow}年 (${year}年) ${monthNames[month-1]}${day}日`;
+        extraInfo = `農曆輸入 ${gzShow}年 (${year}年) ${monthNames[(month - 1) % 12]}${day}日`;
     }
 
     let timeIdx = parseInt(document.getElementById('birth-time').value);
+    let finalLunarMonth = Math.min(Math.max(lunarMonth, 1), 12);
+    let finalLunarDay = Math.min(Math.max(lunarDay, 1), 30);
+
     document.getElementById('loading-area').style.display = 'block';
     document.getElementById('result-area').style.display = 'none';
 
     setTimeout(() => {
         document.getElementById('loading-area').style.display = 'none';
-        let palaces = generatePalaceData(lunarMonth, lunarDay, timeIdx);
+        let palaces = generatePalaceData(finalLunarMonth, finalLunarDay, timeIdx);
         let grid = document.getElementById('palace-grid');
         grid.innerHTML = '';
         document.getElementById('result-title').innerHTML = `✨ 紫微斗數命盤 ✨ <span style="font-size:0.7rem; display:block;">${extraInfo} | 時辰：${EARTH_BRANCHES[timeIdx]}時</span>`;
@@ -545,17 +639,35 @@ document.getElementById('start-btn').addEventListener('click', () => {
         });
         document.getElementById('result-area').style.display = 'block';
         window.scrollTo({ top: document.getElementById('result-area').offsetTop - 20, behavior: 'smooth' });
-    }, 600);
+    }, 650);
 });
 
-// 赞助与截图逻辑
-const supportFab = document.getElementById('supportFab');
-const supportPanel = document.getElementById('supportPanel');
-const closeSupport = document.getElementById('closeSupport');
-supportFab.onclick = () => supportPanel.style.display = 'flex';
-closeSupport.onclick = () => supportPanel.style.display = 'none';
-supportPanel.onclick = (e) => { if (e.target === supportPanel) supportPanel.style.display = 'none'; };
+// 赞助面板
+const panel = document.getElementById('supportPanel');
+const fab = document.getElementById('coffee-fab');
+const closeBtn = document.getElementById('closeSupportBtn');
+fab.onclick = () => panel.style.display = 'flex';
+closeBtn.onclick = () => panel.style.display = 'none';
+panel.onclick = (e) => { if (e.target === panel) panel.style.display = 'none'; };
 
+const qrTabs = document.querySelectorAll('.qr-tab');
+const maybankDiv = document.getElementById('maybankQR');
+const tngDiv = document.getElementById('tngQR');
+qrTabs.forEach(tab => {
+    tab.onclick = () => {
+        qrTabs.forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        if (tab.getAttribute('data-qr') === 'maybank') {
+            maybankDiv.style.display = 'block';
+            tngDiv.style.display = 'none';
+        } else {
+            maybankDiv.style.display = 'none';
+            tngDiv.style.display = 'block';
+        }
+    };
+});
+
+// 截图功能
 function initCaptureButtons() {
     const container = document.getElementById('screenshot-btn-area');
     if (!container || document.getElementById('screenshotBtn')) return;
@@ -563,64 +675,82 @@ function initCaptureButtons() {
         <button id="screenshotBtn" class="action-btn">📸 保存命盘截图</button>
         <button id="shareChartBtn" class="action-btn share">📤 分享命盘</button>
     `;
+    const screenshotBtn = document.getElementById('screenshotBtn');
+    const shareChartBtn = document.getElementById('shareChartBtn');
     
-    async function captureChart() {
-        const grid = document.getElementById('palace-grid');
-        const title = document.getElementById('result-title');
-        if (!grid || grid.children.length === 0) return null;
-        const area = document.createElement('div');
-        area.style.background = 'linear-gradient(135deg, #1a1a2e, #16213e)';
-        area.style.padding = '24px';
-        area.style.borderRadius = '32px';
-        area.style.width = '800px';
-        const titleClone = title.cloneNode(true);
+    async function captureChartElement() {
+        const gridElem = document.getElementById('palace-grid');
+        const titleElem = document.getElementById('result-title');
+        if (!gridElem || gridElem.children.length === 0) { alert('请先排盘'); return null; }
+        const captureArea = document.createElement('div');
+        captureArea.style.background = 'linear-gradient(135deg, #1a1a2e 0%, #16213e 100%)';
+        captureArea.style.padding = '24px';
+        captureArea.style.borderRadius = '32px';
+        captureArea.style.width = '800px';
+        captureArea.style.fontFamily = 'system-ui, -apple-system, sans-serif';
+        const titleClone = titleElem.cloneNode(true);
         titleClone.style.color = '#FFD966';
         titleClone.style.textAlign = 'center';
-        area.appendChild(titleClone);
-        const gridClone = grid.cloneNode(true);
+        titleClone.style.marginBottom = '20px';
+        captureArea.appendChild(titleClone);
+        const gridClone = gridElem.cloneNode(true);
         gridClone.style.display = 'grid';
         gridClone.style.gridTemplateColumns = 'repeat(4, 1fr)';
         gridClone.style.gap = '12px';
-        area.appendChild(gridClone);
+        captureArea.appendChild(gridClone);
         const footer = document.createElement('div');
         footer.style.textAlign = 'center';
         footer.style.marginTop = '20px';
+        footer.style.paddingTop = '12px';
+        footer.style.borderTop = '1px solid rgba(255,215,0,0.3)';
         footer.style.fontSize = '12px';
         footer.style.color = '#aaa';
         footer.innerHTML = '🔮 紫微斗数免费排盘 | 随喜打赏支持 ☕';
-        area.appendChild(footer);
-        document.body.appendChild(area);
-        const canvas = await html2canvas(area, { scale: 2, backgroundColor: null });
-        document.body.removeChild(area);
+        captureArea.appendChild(footer);
+        document.body.appendChild(captureArea);
+        const canvas = await html2canvas(captureArea, { scale: 2, backgroundColor: null, logging: false });
+        document.body.removeChild(captureArea);
         return canvas;
     }
     
-    document.getElementById('screenshotBtn').onclick = async () => {
-        const btn = document.getElementById('screenshotBtn');
-        btn.innerHTML = '⏳ 生成中...';
+    screenshotBtn.addEventListener('click', async () => {
         try {
-            const canvas = await captureChart();
-            if (canvas) {
+            screenshotBtn.innerHTML = '⏳ 生成中...';
+            screenshotBtn.disabled = true;
+            const canvas = await captureChartElement();
+            if (!canvas) return;
+            const link = document.createElement('a');
+            const date = new Date();
+            link.download = `紫微命盘_${date.getFullYear()}${date.getMonth()+1}${date.getDate()}.png`;
+            link.href = canvas.toDataURL();
+            link.click();
+            screenshotBtn.innerHTML = '✅ 已保存！';
+            setTimeout(() => { screenshotBtn.innerHTML = '📸 保存命盘截图'; screenshotBtn.disabled = false; }, 2000);
+        } catch(e) { alert('截图失败'); screenshotBtn.innerHTML = '📸 保存命盘截图'; screenshotBtn.disabled = false; }
+    });
+    
+    shareChartBtn.addEventListener('click', async () => {
+        try {
+            shareChartBtn.innerHTML = '⏳ 准备中...';
+            shareChartBtn.disabled = true;
+            const canvas = await captureChartElement();
+            if (!canvas) return;
+            if (navigator.share) {
+                canvas.toBlob(async (blob) => {
+                    const file = new File([blob], 'ziwei.png', { type: 'image/png' });
+                    try { await navigator.share({ title: '我的紫微斗数命盘', text: '免费紫微斗数排盘', files: [file] }); } catch(e) {}
+                    shareChartBtn.innerHTML = '📤 分享命盘'; shareChartBtn.disabled = false;
+                });
+            } else {
                 const link = document.createElement('a');
-                link.download = `紫微命盘_${Date.now()}.png`;
+                link.download = '紫微命盘.png';
                 link.href = canvas.toDataURL();
                 link.click();
+                alert('图片已保存');
+                shareChartBtn.innerHTML = '📤 分享命盘'; shareChartBtn.disabled = false;
             }
-        } catch(e) { alert('截图失败'); }
-        btn.innerHTML = '📸 保存命盘截图';
-    };
-    
-    document.getElementById('shareChartBtn').onclick = async () => {
-        const btn = document.getElementById('shareChartBtn');
-        try {
-            const canvas = await captureChart();
-            if (canvas && navigator.share) {
-                canvas.toBlob(blob => {
-                    navigator.share({ title: '紫微斗数命盘', files: [new File([blob], 'ziwei.png', { type: 'image/png' })] });
-                });
-            }
-        } catch(e) {}
-    };
+        } catch(e) { alert('分享失败'); shareChartBtn.innerHTML = '📤 分享命盘'; shareChartBtn.disabled = false; }
+    });
 }
 
 const resultObserver = new MutationObserver(() => {
