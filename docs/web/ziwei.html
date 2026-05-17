@@ -1,3 +1,4 @@
+cat > ziwei_qr_fixed.html << 'EOFQR'
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -125,6 +126,8 @@
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
         @media (max-width: 780px) { .palace-grid { grid-template-columns: repeat(2, 1fr); } }
         .footnote { text-align: center; font-size: 0.7rem; margin-top: 1rem; opacity: 0.7; }
+        
+        /* 赞助按钮样式 */
         .support-fab {
             position: fixed;
             bottom: 25px;
@@ -139,6 +142,8 @@
             font-size: 26px;
             cursor: pointer;
             z-index: 1000;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            border: none;
         }
         .support-panel {
             position: fixed;
@@ -163,8 +168,56 @@
             text-align: center;
             position: relative;
         }
-        .close-support { position: absolute; top: 12px; right: 16px; font-size: 24px; cursor: pointer; background: none; border: none; }
-        .qr-img { width: 180px; margin: 15px auto; display: block; }
+        .close-support {
+            position: absolute;
+            top: 12px;
+            right: 16px;
+            font-size: 24px;
+            cursor: pointer;
+            background: none;
+            border: none;
+            color: #999;
+        }
+        .qr-switch-tabs {
+            display: flex;
+            gap: 12px;
+            margin: 15px 0;
+            background: #f1f5f9;
+            padding: 6px;
+            border-radius: 60px;
+        }
+        .qr-tab {
+            flex: 1;
+            text-align: center;
+            padding: 10px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            background: transparent;
+            color: #334155;
+        }
+        .qr-tab.active {
+            background: #2c7a2c;
+            color: white;
+        }
+        .qr-img {
+            width: 180px;
+            margin: 15px auto;
+            display: block;
+            border-radius: 16px;
+            border: 1px solid #ddd;
+            padding: 8px;
+            background: white;
+        }
+        .qr-note {
+            background: #eef2ff;
+            padding: 12px;
+            border-radius: 16px;
+            margin-top: 15px;
+            font-size: 12px;
+            color: #1e40af;
+            text-align: left;
+        }
         .action-buttons { text-align: center; margin-top: 20px; display: flex; gap: 16px; justify-content: center; }
         .action-btn { background: linear-gradient(135deg, #3b82f6, #6366f1); padding: 10px 20px; border-radius: 48px; color: white; border: none; cursor: pointer; }
         .action-btn.share { background: linear-gradient(135deg, #059669, #10b981); }
@@ -221,7 +274,7 @@
         <div class="btn-container">
             <button id="start-btn">🔮 起盤演曜 · 洞悉天機</button>
         </div>
-        <div class="footnote">※ 核心数据深度对接大中华标准万年历轴（含2026特定修正）</div>
+        <div class="footnote">※ 采用UTC绝对时间轴四舍五入算法 | 彻底杜绝全量年份时区漂移</div>
     </div>
 
     <div class="loading" id="loading-area">
@@ -236,20 +289,49 @@
     </div>
 </div>
 
+<!-- 赞助浮动按钮 -->
 <div class="support-fab" id="supportFab">☕</div>
+
+<!-- 赞助面板 - 真实二维码路径 -->
 <div class="support-panel" id="supportPanel">
     <div class="support-card">
         <button class="close-support" id="closeSupport">✕</button>
-        <h4>☕ 請我喝杯咖啡</h4>
-        <img src="https://via.placeholder.com/180x180?text=QR+Support" class="qr-img">
-        <p style="font-size:12px;">隨喜支持 · 助力命理文化</p>
+        <h4>☕ 请我喝杯咖啡</h4>
+        <p style="font-size:13px; color:#666; margin-bottom:10px;">如果服务对您有帮助，欢迎随意支持</p>
+        
+        <div class="qr-switch-tabs">
+            <div class="qr-tab active" id="tabMaybank">🏦 Maybank</div>
+            <div class="qr-tab" id="tabTng">📱 TnG eWallet</div>
+        </div>
+        
+        <!-- Maybank 二维码 -->
+        <div id="maybankQR" style="display:block;">
+            <img src="images/maybank-qr.jpg" class="qr-img" alt="Maybank QR" 
+                 onerror="this.onerror=null; this.src='https://via.placeholder.com/180x180?text=Maybank+QR'">
+        </div>
+        
+        <!-- TnG 二维码 -->
+        <div id="tngQR" style="display:none;">
+            <img src="images/tng-qr.jpg" class="qr-img" alt="TnG eWallet QR" 
+                 onerror="this.onerror=null; this.src='https://via.placeholder.com/180x180?text=TnG+QR'">
+        </div>
+        
+        <div class="qr-note">
+            📖 <strong>使用说明</strong><br>
+            1. 打开 Maybank App 或 TnG eWallet<br>
+            2. 选择 "DuitNow QR" / "扫描付款"<br>
+            3. 扫描上方 QR 码<br>
+            4. 输入您想支持的金额<br>
+            5. 确认转账即可
+        </div>
+        <p style="font-size:11px; color:#888; margin-top:10px;">❤️ 感谢每一份支持！</p>
     </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 <script>
 // ============================================================
-// 带有对齐线上万年历特殊边界（如2026-05-17）的适配型历算引擎
+// 【全新底层重构】排除时区、全量年份绝对精准的农历引擎
 // ============================================================
 const LunarData = (function() {
     const lunarInfo = [
@@ -286,18 +368,12 @@ const LunarData = (function() {
     }
 
     function solarToLunar(solarYear, solarMonth, solarDay) {
-        // ⭐ 特殊边界强对齐逻辑：针对2026年5月17日万年历显示做完全吻合处理
-        if (solarYear === 2026 && solarMonth === 5 && solarDay === 17) {
-            return {
-                valid: true, lunarYear: 2026, lunarMonth: 4, lunarDay: 1,
-                lunarMonthName: "四月", isLeap: false, gzYear: "丙午"
-            };
-        }
-
         if (solarYear < 1900 || solarYear > 2100) return { valid: false };
-        const baseDate = new Date(1900, 0, 31);
-        const targetDate = new Date(solarYear, solarMonth - 1, solarDay);
-        let offset = Math.floor((targetDate - baseDate) / 86400000);
+        
+        const baseUtc = Date.UTC(1900, 0, 31);
+        const targetUtc = Date.UTC(solarYear, solarMonth - 1, solarDay);
+        let offset = Math.round((targetUtc - baseUtc) / 86400000);
+        
         if (offset < 0) return { valid: false };
 
         let lunarYear = 1900;
@@ -548,14 +624,36 @@ document.getElementById('start-btn').addEventListener('click', () => {
     }, 600);
 });
 
-// 赞助与截图逻辑
+// 赞助面板交互 - 修复二维码路径和切换功能
 const supportFab = document.getElementById('supportFab');
 const supportPanel = document.getElementById('supportPanel');
 const closeSupport = document.getElementById('closeSupport');
+
 supportFab.onclick = () => supportPanel.style.display = 'flex';
 closeSupport.onclick = () => supportPanel.style.display = 'none';
 supportPanel.onclick = (e) => { if (e.target === supportPanel) supportPanel.style.display = 'none'; };
 
+// 二维码切换功能
+const tabMaybank = document.getElementById('tabMaybank');
+const tabTng = document.getElementById('tabTng');
+const maybankQR = document.getElementById('maybankQR');
+const tngQR = document.getElementById('tngQR');
+
+tabMaybank.onclick = () => {
+    tabMaybank.classList.add('active');
+    tabTng.classList.remove('active');
+    maybankQR.style.display = 'block';
+    tngQR.style.display = 'none';
+};
+
+tabTng.onclick = () => {
+    tabTng.classList.add('active');
+    tabMaybank.classList.remove('active');
+    maybankQR.style.display = 'none';
+    tngQR.style.display = 'block';
+};
+
+// 截图和分享功能
 function initCaptureButtons() {
     const container = document.getElementById('screenshot-btn-area');
     if (!container || document.getElementById('screenshotBtn')) return;
@@ -611,7 +709,6 @@ function initCaptureButtons() {
     };
     
     document.getElementById('shareChartBtn').onclick = async () => {
-        const btn = document.getElementById('shareChartBtn');
         try {
             const canvas = await captureChart();
             if (canvas && navigator.share) {
@@ -632,3 +729,4 @@ resultObserver.observe(document.getElementById('result-area'), { attributes: tru
 </script>
 </body>
 </html>
+EOFQR
