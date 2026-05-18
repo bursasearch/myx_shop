@@ -126,7 +126,7 @@
         @media (max-width: 780px) { .palace-grid { grid-template-columns: repeat(2, 1fr); } }
         .footnote { text-align: center; font-size: 0.7rem; margin-top: 1rem; opacity: 0.7; }
         
-        /* 赞助按钮样式 */
+        /* ========== 赞助面板完整样式 ========== */
         .support-fab {
             position: fixed;
             bottom: 25px;
@@ -177,6 +177,7 @@
             border: none;
             color: #999;
         }
+        .close-support:hover { color: #333; }
         .qr-switch-tabs {
             display: flex;
             gap: 12px;
@@ -194,10 +195,12 @@
             font-weight: 600;
             background: transparent;
             color: #334155;
+            transition: all 0.2s;
         }
         .qr-tab.active {
             background: #2c7a2c;
             color: white;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
         }
         .qr-img {
             width: 180px;
@@ -217,6 +220,12 @@
             color: #1e40af;
             text-align: left;
         }
+        .support-footer {
+            font-size: 11px;
+            color: #888;
+            margin-top: 10px;
+        }
+        
         .action-buttons { text-align: center; margin-top: 20px; display: flex; gap: 16px; justify-content: center; }
         .action-btn { background: linear-gradient(135deg, #3b82f6, #6366f1); padding: 10px 20px; border-radius: 48px; color: white; border: none; cursor: pointer; }
         .action-btn.share { background: linear-gradient(135deg, #059669, #10b981); }
@@ -241,11 +250,11 @@
                         <div class="mode-btn active" id="btn-picker">📆 日曆選取</div>
                         <div class="mode-btn" id="btn-manual">✍️ 手動輸入</div>
                     </div>
-                    <input type="date" id="date-picker" class="picker-date-input" value="2026-05-17">
+                    <input type="date" id="date-picker" class="picker-date-input" value="2008-12-12">
                     <div class="manual-date-inputs" id="manual-inputs">
-                        <input type="number" id="in-year" placeholder="年" min="1900" max="2100" value="2026">
-                        <input type="number" id="in-month" placeholder="月" min="1" max="12" value="5">
-                        <input type="number" id="in-day" placeholder="日" min="1" max="31" value="17">
+                        <input type="number" id="in-year" placeholder="年" min="1900" max="2100" value="2008">
+                        <input type="number" id="in-month" placeholder="月" min="1" max="12" value="12">
+                        <input type="number" id="in-day" placeholder="日" min="1" max="31" value="12">
                     </div>
                 </div>
                 <div class="info-panel" id="date-live-info">🌿 待輸入日期</div>
@@ -271,21 +280,10 @@
         </div>
 
         <div class="btn-container">
-    <button id="start-btn">🔮 起盤演曜 · 洞悉天機</button>
-</div>
-
-<!-- 溫馨提醒區塊 -->
-<div class="reminder-box">
-    <div class="reminder-icon">⚠️</div>
-    <div class="reminder-text">
-        <strong>溫馨提醒</strong><br>
-        紫微斗數、AI分析皆為傳統文化與科技輔助<br>
-        <span class="reminder-saying">「凡事信就好，千萬不可迷」</span><br>
-        命運掌握在自己手中，請務必保持理性思考
+            <button id="start-btn">🔮 起盤演曜 · 洞悉天機</button>
+        </div>
+        <div class="footnote">※ 采用UTC绝对时间轴四舍五入算法 | 彻底杜绝全量年份时区漂移</div>
     </div>
-</div>
-
-<div class="footnote">※ 采用UTC绝对时间轴四舍五入算法 | 彻底杜绝全量年份时区漂移</div>
 
     <div class="loading" id="loading-area">
         <div class="spinner"></div>
@@ -302,7 +300,7 @@
 <!-- 赞助浮动按钮 -->
 <div class="support-fab" id="supportFab">☕</div>
 
-<!-- 赞助面板 - 真实二维码路径 -->
+<!-- 赞助面板 - 完整版 Maybank/TnG 切换 -->
 <div class="support-panel" id="supportPanel">
     <div class="support-card">
         <button class="close-support" id="closeSupport">✕</button>
@@ -334,7 +332,7 @@
             4. 输入您想支持的金额<br>
             5. 确认转账即可
         </div>
-        <p style="font-size:11px; color:#888; margin-top:10px;">❤️ 感谢每一份支持！</p>
+        <div class="support-footer">❤️ 感谢每一份支持！</div>
     </div>
 </div>
 
@@ -634,7 +632,7 @@ document.getElementById('start-btn').addEventListener('click', () => {
     }, 600);
 });
 
-// 赞助面板交互 - 修复二维码路径和切换功能
+// ========== 赞助面板交互（完整功能） ==========
 const supportFab = document.getElementById('supportFab');
 const supportPanel = document.getElementById('supportPanel');
 const closeSupport = document.getElementById('closeSupport');
@@ -649,21 +647,22 @@ const tabTng = document.getElementById('tabTng');
 const maybankQR = document.getElementById('maybankQR');
 const tngQR = document.getElementById('tngQR');
 
-tabMaybank.onclick = () => {
-    tabMaybank.classList.add('active');
-    tabTng.classList.remove('active');
-    maybankQR.style.display = 'block';
-    tngQR.style.display = 'none';
-};
+if (tabMaybank && tabTng) {
+    tabMaybank.onclick = () => {
+        tabMaybank.classList.add('active');
+        tabTng.classList.remove('active');
+        maybankQR.style.display = 'block';
+        tngQR.style.display = 'none';
+    };
+    tabTng.onclick = () => {
+        tabTng.classList.add('active');
+        tabMaybank.classList.remove('active');
+        maybankQR.style.display = 'none';
+        tngQR.style.display = 'block';
+    };
+}
 
-tabTng.onclick = () => {
-    tabTng.classList.add('active');
-    tabMaybank.classList.remove('active');
-    maybankQR.style.display = 'none';
-    tngQR.style.display = 'block';
-};
-
-// 截图和分享功能
+// 截图功能
 function initCaptureButtons() {
     const container = document.getElementById('screenshot-btn-area');
     if (!container || document.getElementById('screenshotBtn')) return;
@@ -719,6 +718,7 @@ function initCaptureButtons() {
     };
     
     document.getElementById('shareChartBtn').onclick = async () => {
+        const btn = document.getElementById('shareChartBtn');
         try {
             const canvas = await captureChart();
             if (canvas && navigator.share) {
