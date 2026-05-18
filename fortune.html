@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>每日运势 · Mrv Shon 玄学服务平台</title>
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-92XTNG247J"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-92XTNG247J');
+    </script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Noto Sans', sans-serif;
+            background: #faf7f2;
+            padding: 20px 16px 60px;
+            color: #2c2418;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        /* 头部信息 */
+        .badge {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+            font-size: 13px;
+            color: #7e6b52;
+        }
+        .ssm {
+            background: #e8e0d5;
+            padding: 4px 12px;
+            border-radius: 30px;
+            font-weight: 500;
+        }
+        /* 每日运势主卡片 */
+        .fortune-card {
+            background: linear-gradient(135deg, #1e2a3a 0%, #0f1a24 100%);
+            border-radius: 36px;
+            padding: 28px 24px;
+            color: #f3ede5;
+            margin-bottom: 24px;
+            box-shadow: 0 12px 25px rgba(0,0,0,0.15);
+            transition: 0.2s;
+        }
+        .lunar-date {
+            font-size: 15px;
+            opacity: 0.8;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+        }
+        .star {
+            font-size: 28px;
+            font-weight: 700;
+            margin: 8px 0 12px 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        .star span {
+            background: rgba(255,215,150,0.2);
+            padding: 4px 14px;
+            border-radius: 40px;
+            font-size: 18px;
+        }
+        .advice {
+            font-size: 17px;
+            line-height: 1.4;
+            margin: 16px 0 8px;
+            font-weight: 500;
+        }
+        .detail-btn {
+            background: #d9b48b;
+            border: none;
+            color: #1e2a3a;
+            font-weight: 600;
+            padding: 12px 20px;
+            border-radius: 60px;
+            font-size: 16px;
+            width: 100%;
+            margin-top: 18px;
+            cursor: pointer;
+            transition: 0.2s;
+            font-family: inherit;
+        }
+        .detail-btn:hover {
+            background: #c9a16e;
+            transform: scale(0.98);
+        }
+        /* 模态框背景 */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background-color: rgba(0,0,0,0.7);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            backdrop-filter: blur(3px);
+        }
+        .modal-content {
+            background: #fff9f0;
+            max-width: 340px;
+            width: 85%;
+            margin: 20px;
+            border-radius: 44px;
+            padding: 28px 24px;
+            position: relative;
+            color: #2c2418;
+            max-height: 85vh;
+            overflow-y: auto;
+        }
+        .close-modal {
+            position: absolute;
+            top: 18px;
+            right: 22px;
+            font-size: 28px;
+            cursor: pointer;
+            color: #b87c4f;
+        }
+        .modal h3 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            border-left: 6px solid #b87c4f;
+            padding-left: 14px;
+        }
+        .yi-ji {
+            margin: 18px 0;
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .yi, .ji {
+            flex: 1;
+            background: #f3ede5;
+            padding: 12px;
+            border-radius: 24px;
+        }
+        .yi h4, .ji h4 { margin-bottom: 8px; font-size: 16px; }
+        .yi p, .ji p { font-size: 14px; color: #4a3a28; }
+        .luck-item { margin: 12px 0; font-size: 14px; background: #e8dfd3; padding: 8px 12px; border-radius: 28px; display: inline-block; }
+        .wa-btn {
+            background: #25D366;
+            color: white;
+            border: none;
+            width: 100%;
+            padding: 14px;
+            border-radius: 48px;
+            font-size: 18px;
+            font-weight: bold;
+            margin-top: 24px;
+            cursor: pointer;
+            font-family: inherit;
+        }
+        /* 卡片混排（模仿商務混排） */
+        .section-title {
+            font-weight: 700;
+            margin: 28px 0 12px 0;
+            font-size: 20px;
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+        }
+        .card-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+        .mix-card {
+            background: white;
+            border-radius: 28px;
+            padding: 16px 18px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: 0.1s;
+            border: 1px solid #efe0d0;
+        }
+        .mix-card .info h4 { font-size: 18px; margin-bottom: 6px; }
+        .mix-card .info p { font-size: 13px; color: #7a6852; }
+        .price { font-weight: 800; color: #b45f2b; font-size: 18px; }
+        .ad-tag {
+            background: #ddd0c0;
+            font-size: 10px;
+            padding: 2px 10px;
+            border-radius: 40px;
+            margin-left: 10px;
+        }
+        .nav-buttons {
+            display: flex;
+            gap: 12px;
+            margin: 24px 0 12px;
+        }
+        .nav-btn {
+            background: #e1d5c8;
+            padding: 10px 0;
+            text-align: center;
+            border-radius: 60px;
+            flex: 1;
+            text-decoration: none;
+            color: #2c2418;
+            font-weight: 600;
+            font-size: 14px;
+        }
+        footer {
+            margin-top: 40px;
+            text-align: center;
+            font-size: 12px;
+            color: #9b8a74;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="badge">
+        <span>📍 马六甲 · 线上服务</span>
+        <span class="ssm">✓ SSM注册企业</span>
+    </div>
+
+    <!-- 🌟 每日运势导航按钮 / 主卡片 -->
+    <div class="fortune-card" id="dailyFortuneCard">
+        <div class="lunar-date" id="lunarDateDisplay">🌙 农历四月 · 吉日</div>
+        <div class="star">
+            <span id="starName">太阴化禄</span>
+        </div>
+        <div class="advice" id="shortAdvice">
+            适合处理财务、修复旧关系
+        </div>
+        <button class="detail-btn" id="openModalBtn">📖 查看今日完整运势 →</button>
+    </div>
+
+    <!-- 快捷导航区 -->
+    <div class="nav-buttons">
+        <a href="https://bursasearch.github.io/myx_shop/docs/ziwei.html" class="nav-btn">✨ 紫微斗数排盘</a>
+        <a href="#" class="nav-btn" id="waQuick">💬 命盘解读</a>
+    </div>
+
+    <!-- 业务混排版块 (模仿截图商务感) -->
+    <div class="section-title">
+        <span>📌 精选推荐</span>
+        <span style="font-size:12px;">广告 · 合作</span>
+    </div>
+    <div class="card-grid">
+        <div class="mix-card">
+            <div class="info">
+                <h4>♻️ 马六甲回收服务</h4>
+                <p>日报纸 · 上门回收</p>
+                <p>马六甲市区 · 2km</p>
+            </div>
+            <div class="price">RM50起</div>
+        </div>
+        <div class="mix-card">
+            <div class="info">
+                <h4>🔮 紫微斗数全盘解析</h4>
+                <p>本命 + 流年 · 60分钟</p>
+                <p>线上 / 马六甲面谈</p>
+            </div>
+            <div class="price">RM168</div>
+        </div>
+        <div class="mix-card">
+            <div class="info">
+                <h4>🚗 二手车低息贷款 <span class="ad-tag">广告</span></h4>
+                <p>Fortuner 2018 月供13xx</p>
+                <p>Bukit Baru · 全马可办</p>
+            </div>
+            <div class="price">RM76,800</div>
+        </div>
+        <div class="mix-card">
+            <div class="info">
+                <h4>🏠 房地產代理 · 免费咨询</h4>
+                <p>买卖 / 租凭 · 法律配合</p>
+            </div>
+            <div class="price">专业服务</div>
+        </div>
+    </div>
+
+    <footer>
+        Mrv Shon · 多元服务平台<br>
+        GA4 实时分析 · 数据安全
+    </footer>
+</div>
+
+<!-- 模态框 Modal -->
+<div id="detailModal" class="modal">
+    <div class="modal-content">
+        <span class="close-modal">&times;</span>
+        <h3>📜 完整日运</h3>
+        <div id="modalLunarDate" style="font-weight:500;margin-bottom:10px;"></div>
+        <div><strong>✨ 星曜提示：</strong> <span id="modalStar"></span></div>
+        <div class="yi-ji">
+            <div class="yi"><h4>✅ 宜</h4><p id="yiList"></p></div>
+            <div class="ji"><h4>⚠️ 忌</h4><p id="jiList"></p></div>
+        </div>
+        <div><span class="luck-item" id="luckNumber">🍀 幸运数字：</span>   <span class="luck-item" id="luckColor">🎨 幸运色：</span></div>
+        <div id="encouragement" style="margin: 16px 0; font-style:italic;"></div>
+        <button class="wa-btn" id="modalWaBtn">🔮 预约命盘解读 →</button>
+    </div>
+</div>
+
+<script>
+    // ======================= 预定义30+组日运数据 ========================
+    const dailyLibrary = [
+        { star:"太阴化禄", short:"适合处理财务、修复旧关系", yi:"处理账目,修复人际,捐赠旧物", ji:"高风险投资,争吵,远行", num:"2,7", color:"银白/浅蓝", msg:"温柔待人，福气自来。" },
+        { star:"太阳化权", short:"宜宣传、展现自我、领导事务", yi:"公开演讲,团队协调,签约", ji:"冲动决策,忽视细节,过度承诺", num:"1,9", color:"金色/橙色", msg:"今日你自带光芒，大胆发声。" },
+        { star:"天机化科", short:"宜学习、沟通、计划", yi:"学习新技能,商议合作,短途出行", ji:"投机取巧,泄露秘密,拖延", num:"3,8", color:"翠绿", msg:"智慧流动，善用计谋。" },
+        { star:"廉贞化忌", short:"注意口舌、情绪管理", yi:"静心,整理环境,独处反思", ji:"争执,签订重要合约,远行", num:"4,5", color:"深紫", msg:"少言多行，守护能量。" },
+        { star:"武曲化禄", short:"财运亨通，务实获利", yi:"追讨欠款,采购资产,运动", ji:"借钱给他人,冲动消费", num:"6,8", color:"白/金", msg:"踏实行动带来回报。" },
+        { star:"天同化福", short:"享乐顺利，放松心情", yi:"聚会,短途旅行,艺术活动", ji:"加班,食用生冷,口舌是非", num:"2,6", color:"粉色", msg:"快乐是最好的风水。" },
+        { star:"紫微化权", short:"领导力强，贵人相助", yi:"主持项目,面试,重要决策", ji:"单打独斗,傲慢态度", num:"1,5", color:"紫色/皇家蓝", msg:"展现气度，众人相随。" },
+        { star:"七杀朝斗", short:"果断突破，宜斩断旧事", yi:"改变习惯,健身,搬迁", ji:"拖延,情绪化购物,冒险", num:"3,7", color:"深红", msg:"破而后立，勇往直前。" },
+        { star:"贪狼化禄", short:"社交活跃，偏财机会", yi:"交际,投资,才艺展示", ji:"沉迷娱乐,投机过量", num:"5,9", color:"红色", msg:"桃花带财，适度享用。" },
+        { star:"巨门化暗", short:"谨言慎行，注意沟通", yi:"整理文档,学习神秘学,独处", ji:"争论,签署文件,夜游", num:"4,8", color:"灰色", msg:"沉默是金，守口得安。" },
+        { star:"天相解神", short:"贵人运强，纠纷得解", yi:"求助长辈,法律咨询,美容", ji:"固执己见,参与是非", num:"2,7", color:"米色", msg:"以柔克刚，万事可解。" },
+        { star:"天府守库", short:"稳定积累，宜储蓄", yi:"理财规划,采购家具,家庭聚餐", ji:"高风险博弈,借钱外人", num:"1,6", color:"咖啡色", msg:"稳中求胜，财库渐丰。" }
+    ];
+    // 扩充到30天左右 (复制并微调)
+    while(dailyLibrary.length < 35) {
+        dailyLibrary.push(...dailyLibrary.slice(0,10).map((item,idx)=>({...item, star:item.star+"·吉", short:item.short+"，顺势而为"})));
+    }
+
+    // 根据公历日期取模 (确保每天同一内容)
+    function getTodaysData() {
+        const today = new Date();
+        const seed = today.getFullYear() * 366 + today.getMonth() * 31 + today.getDate();
+        const index = seed % dailyLibrary.length;
+        return dailyLibrary[index];
+    }
+
+    // 简单模拟农历月日（非精确但视觉足够）
+    function getLunarSim() {
+        const d = new Date();
+        const monthMap = ["正","二","三","四","五","六","七","八","九","十","十一","十二"];
+        const dayNum = (d.getDate() % 30) + 1;
+        const lunarMonth = monthMap[(d.getMonth() + 1) % 12];
+        return `🌙 农历${lunarMonth}月${dayNum}日 · 星曜垂象`;
+    }
+
+    // 渲染今日运势卡片 & modal内容
+    function renderDaily() {
+        const data = getTodaysData();
+        const lunarFull = getLunarSim();
+        // 更新卡片
+        document.getElementById("starName").innerHTML = data.star;
+        document.getElementById("shortAdvice").innerHTML = data.short;
+        document.getElementById("lunarDateDisplay").innerHTML = lunarFull;
+        // 保存到全局用于模态框
+        window.currentDaily = { ...data, lunarDate: lunarFull };
+    }
+
+    // 填充模态框详细内容
+    function fillModal(data) {
+        document.getElementById("modalLunarDate").innerHTML = data.lunarDate;
+        document.getElementById("modalStar").innerHTML = data.star;
+        document.getElementById("yiList").innerHTML = data.yi.replace(/,/g, '、');
+        document.getElementById("jiList").innerHTML = data.ji.replace(/,/g, '、');
+        document.getElementById("luckNumber").innerHTML = `🍀 幸运数字：${data.num}`;
+        document.getElementById("luckColor").innerHTML = `🎨 幸运色：${data.color}`;
+        document.getElementById("encouragement").innerHTML = `✨ 「${data.msg}」`;
+    }
+
+    // 获取模态框按钮和显示逻辑
+    const modal = document.getElementById("detailModal");
+    const openBtn = document.getElementById("openModalBtn");
+    const closeSpan = document.querySelector(".close-modal");
+    const modalWa = document.getElementById("modalWaBtn");
+    const waQuick = document.getElementById("waQuick");
+
+    // 打开模态框时填充最新数据
+    openBtn.onclick = () => {
+        if(window.currentDaily) fillModal(window.currentDaily);
+        modal.style.display = "flex";
+    };
+    closeSpan.onclick = () => modal.style.display = "none";
+    window.onclick = (e) => { if(e.target === modal) modal.style.display = "none"; };
+
+    // WhatsApp 跳转 (请将号码替换成你的)
+    const myPhone = "60123456789";   // <--- 替换成你的手机号，例如 "60123456789" (无需+)
+    const waLink = `https://wa.me/${myPhone}?text=`;
+
+    modalWa.onclick = () => {
+        let msg = `我想了解今日运势（${window.currentDaily?.star || "紫微日运"}）与我的命盘解析。`;
+        window.open(waLink + encodeURIComponent(msg), '_blank');
+    };
+    waQuick.onclick = (e) => {
+        e.preventDefault();
+        let msg = `我想预约紫微斗数命盘解读，请给我更多资讯。`;
+        window.open(waLink + encodeURIComponent(msg), '_blank');
+    };
+
+    // 初始化&每天自动更新
+    renderDaily();
+</script>
+</body>
+</html>
