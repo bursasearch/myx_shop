@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-    <title>紫微斗数精微排盘 | 正宗农历历算 | 星曜垂象</title>
+    <title>紫微斗數正宗排盤 | Myx Shop 命理服務</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Segoe UI', 'Noto Sans CJK SC', system-ui, -apple-system, 'Roboto', sans-serif;
             background: radial-gradient(circle at 10% 20%, #0f172a, #030614);
@@ -30,8 +30,20 @@
             background-clip: text;
             -webkit-background-clip: text;
             color: transparent;
-            margin-bottom: 1rem;
+            margin-bottom: 0.5rem;
             font-size: 1.9rem;
+        }
+        .site-link {
+            text-align: center;
+            margin-bottom: 1.2rem;
+        }
+        .site-link a {
+            color: #FFD966;
+            text-decoration: none;
+            font-size: 0.85rem;
+            background: rgba(0,0,0,0.4);
+            padding: 4px 12px;
+            border-radius: 20px;
         }
         .form-group { display: flex; flex-wrap: wrap; gap: 1.2rem; margin-bottom: 1.5rem; justify-content: center; }
         .input-field { flex: 1; min-width: 180px; }
@@ -86,6 +98,7 @@
             font-weight: bold;
             color: #141c2c;
             cursor: pointer;
+            transition: transform 0.2s;
         }
         button:hover { transform: translateY(-2px); }
         .result-area { display: none; animation: fadeIn 0.4s ease; }
@@ -98,9 +111,8 @@
             padding: 1rem;
             border-left: 5px solid #FFD966;
         }
-        .palace-card:hover { transform: translateY(-3px); background: rgba(20, 35, 60, 0.85); }
         .palace-name {
-            font-size: 1.1rem;
+            font-size: 1rem;
             font-weight: bold;
             color: #FFE2A4;
             display: flex;
@@ -109,9 +121,9 @@
             padding-bottom: 4px;
             margin-bottom: 8px;
         }
-        .palace-dz { color: #b9c7ff; font-size: 0.75rem; background: rgba(255, 215, 0, 0.2); padding: 2px 8px; border-radius: 40px; }
-        .major-star { color: #FFAD93; font-weight: bold; font-size: 0.9rem; margin: 8px 0 5px; }
-        .minor-star { color: #9ecfff; font-size: 0.75rem; }
+        .palace-dz { color: #b9c7ff; font-size: 0.7rem; background: rgba(255, 215, 0, 0.2); padding: 2px 8px; border-radius: 40px; }
+        .major-star { color: #FFAD93; font-weight: bold; font-size: 0.85rem; margin: 6px 0 4px; line-height: 1.4; }
+        .minor-star { color: #9ecfff; font-size: 0.7rem; line-height: 1.3; }
         .loading { text-align: center; padding: 48px; display: none; }
         .spinner {
             border: 4px solid rgba(255, 215, 0, 0.2);
@@ -124,9 +136,20 @@
         }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
         @media (max-width: 780px) { .palace-grid { grid-template-columns: repeat(2, 1fr); } }
-        .footnote { text-align: center; font-size: 0.7rem; margin-top: 1rem; opacity: 0.7; }
-        
-        /* 赞助按钮样式 */
+        .reminder-box {
+            background: rgba(255, 193, 7, 0.12);
+            border-left: 4px solid #FFC107;
+            border-radius: 16px;
+            padding: 12px 16px;
+            margin: 16px 0;
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+            font-size: 0.8rem;
+        }
+        .reminder-icon { font-size: 1.4rem; }
+        .reminder-text strong { color: #FFD966; }
+        .reminder-saying { font-size: 0.85rem; font-style: italic; color: #FFB347; display: block; margin-top: 4px; }
         .support-fab {
             position: fixed;
             bottom: 25px;
@@ -217,16 +240,48 @@
             color: #1e40af;
             text-align: left;
         }
-        .action-buttons { text-align: center; margin-top: 20px; display: flex; gap: 16px; justify-content: center; }
-        .action-btn { background: linear-gradient(135deg, #3b82f6, #6366f1); padding: 10px 20px; border-radius: 48px; color: white; border: none; cursor: pointer; }
+        .action-buttons { text-align: center; margin-top: 20px; display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+        .action-btn { background: linear-gradient(135deg, #3b82f6, #6366f1); padding: 10px 20px; border-radius: 48px; color: white; border: none; cursor: pointer; font-size: 0.9rem; }
         .action-btn.share { background: linear-gradient(135deg, #059669, #10b981); }
+        .master-btn { background: linear-gradient(135deg, #25D366, #128C7E); margin-top: 16px; width: 100%; display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 1rem; }
+        .master-btn::before { content: "📱"; font-size: 1.2rem; }
+        .ai-guide-block {
+            background: rgba(59, 130, 246, 0.15);
+            border-radius: 20px;
+            padding: 16px 20px;
+            margin-top: 24px;
+            border: 1px solid rgba(59, 130, 246, 0.4);
+        }
+        .ai-guide-inner {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .ai-guide-icon { font-size: 28px; }
+        .ai-guide-text { flex: 1; }
+        .ai-guide-text strong { color: #FFD966; }
+        .ai-guide-text span { font-size: 13px; color: #cbd5e1; }
+        .copy-prompt-btn {
+            background: #3b82f6;
+            border: none;
+            padding: 8px 18px;
+            border-radius: 40px;
+            color: white;
+            cursor: pointer;
+            font-size: 13px;
+        }
+        .copy-prompt-btn:active { transform: scale(0.97); }
     </style>
 </head>
 <body>
 
 <div class="container">
     <div class="card">
-        <h1>🌟 紫微斗數 · 正宗農曆歷算 🌟</h1>
+        <div class="site-link">
+            <a href="https://bursasearch.github.io/myx_shop/">🏠 返回 Myx Shop 首頁</a>
+        </div>
+        <h1>🌟 紫微斗數 · 正宗安星訣 🌟</h1>
 
         <div class="calendar-type">
             <label><input type="radio" name="calendar" value="solar" checked> 🗓️ 公曆 (陽曆)</label>
@@ -241,11 +296,11 @@
                         <div class="mode-btn active" id="btn-picker">📆 日曆選取</div>
                         <div class="mode-btn" id="btn-manual">✍️ 手動輸入</div>
                     </div>
-                    <input type="date" id="date-picker" class="picker-date-input" value="2026-05-17">
+                    <input type="date" id="date-picker" class="picker-date-input" value="2000-01-01">
                     <div class="manual-date-inputs" id="manual-inputs">
-                        <input type="number" id="in-year" placeholder="年" min="1900" max="2100" value="2026">
-                        <input type="number" id="in-month" placeholder="月" min="1" max="12" value="5">
-                        <input type="number" id="in-day" placeholder="日" min="1" max="31" value="17">
+                        <input type="number" id="in-year" placeholder="年" min="1900" max="2100" value="2000">
+                        <input type="number" id="in-month" placeholder="月" min="1" max="12" value="1">
+                        <input type="number" id="in-day" placeholder="日" min="1" max="31" value="1">
                     </div>
                 </div>
                 <div class="info-panel" id="date-live-info">🌿 待輸入日期</div>
@@ -254,10 +309,12 @@
             <div class="input-field">
                 <label>⏳ 時辰</label>
                 <select id="birth-time">
-                    <option value="0">子時</option><option value="1">丑時</option><option value="2">寅時</option>
-                    <option value="3">卯時</option><option value="4">辰時</option><option value="5">巳時</option>
-                    <option value="6">午時</option><option value="7">未時</option><option value="8">申時</option>
-                    <option value="9">酉時</option><option value="10">戌時</option><option value="11">亥時</option>
+                    <option value="0">子時 (23:00-01:00)</option><option value="1">丑時 (01:00-03:00)</option>
+                    <option value="2">寅時 (03:00-05:00)</option><option value="3">卯時 (05:00-07:00)</option>
+                    <option value="4">辰時 (07:00-09:00)</option><option value="5">巳時 (09:00-11:00)</option>
+                    <option value="6">午時 (11:00-13:00)</option><option value="7">未時 (13:00-15:00)</option>
+                    <option value="8">申時 (15:00-17:00)</option><option value="9">酉時 (17:00-19:00)</option>
+                    <option value="10">戌時 (19:00-21:00)</option><option value="11">亥時 (21:00-23:00)</option>
                 </select>
             </div>
 
@@ -271,21 +328,19 @@
         </div>
 
         <div class="btn-container">
-    <button id="start-btn">🔮 起盤演曜 · 洞悉天機</button>
-</div>
+            <button id="start-btn">🔮 起盤演曜 · 洞悉天機</button>
+        </div>
 
-<!-- 溫馨提醒區塊 -->
-<div class="reminder-box">
-    <div class="reminder-icon">⚠️</div>
-    <div class="reminder-text">
-        <strong>溫馨提醒</strong><br>
-        紫微斗數、AI分析皆為傳統文化與科技輔助<br>
-        <span class="reminder-saying">「凡事信就好，千萬不可迷」</span><br>
-        命運掌握在自己手中，請務必保持理性思考
+        <div class="reminder-box">
+            <div class="reminder-icon">⚠️</div>
+            <div class="reminder-text">
+                <strong>溫馨提醒</strong><br>
+                紫微斗數、AI分析皆為傳統文化與科技輔助<br>
+                <span class="reminder-saying">「凡事信就好，千萬不可迷」</span><br>
+                命運掌握在自己手中，請務必保持理性思考
+            </div>
+        </div>
     </div>
-</div>
-
-<div class="footnote">※ 采用UTC绝对时间轴四舍五入算法 | 彻底杜绝全量年份时区漂移</div>
 
     <div class="loading" id="loading-area">
         <div class="spinner"></div>
@@ -295,53 +350,47 @@
     <div class="card result-area" id="result-area">
         <h2 id="result-title">🏮 紫微斗數命盤 🏮</h2>
         <div class="palace-grid" id="palace-grid"></div>
+        
+        <!-- AI 分析引導區塊 -->
+        <div class="ai-guide-block" id="aiGuideBlock">
+            <div class="ai-guide-inner">
+                <div class="ai-guide-icon">🤖</div>
+                <div class="ai-guide-text">
+                    <strong>📤 看不懂命盤？截圖丟給AI分析！</strong><br>
+                    <span>1️⃣ 點擊上方「保存命盤截圖」→ 2️⃣ 打開 ChatGPT / DeepSeek / Gemini → 3️⃣ 上傳截圖並貼上提示詞</span>
+                </div>
+                <button class="copy-prompt-btn" id="copyPromptBtn">📋 複製提示詞</button>
+            </div>
+        </div>
+        
         <div class="action-buttons" id="screenshot-btn-area"></div>
+        <button id="consultMasterBtn" class="action-btn master-btn" style="display:none;">📱 預約師父解盤</button>
     </div>
 </div>
 
-<!-- 赞助浮动按钮 -->
 <div class="support-fab" id="supportFab">☕</div>
-
-<!-- 赞助面板 - 真实二维码路径 -->
 <div class="support-panel" id="supportPanel">
     <div class="support-card">
         <button class="close-support" id="closeSupport">✕</button>
-        <h4>☕ 请我喝杯咖啡</h4>
-        <p style="font-size:13px; color:#666; margin-bottom:10px;">如果服务对您有帮助，欢迎随意支持</p>
-        
+        <h4>☕ 支持 Myx Shop</h4>
+        <p style="font-size:13px; color:#666; margin-bottom:10px;">如果服務對您有幫助，歡迎隨意支持</p>
         <div class="qr-switch-tabs">
             <div class="qr-tab active" id="tabMaybank">🏦 Maybank</div>
             <div class="qr-tab" id="tabTng">📱 TnG eWallet</div>
         </div>
-        
-        <!-- Maybank 二维码 -->
         <div id="maybankQR" style="display:block;">
-            <img src="images/maybank-qr.jpg" class="qr-img" alt="Maybank QR" 
-                 onerror="this.onerror=null; this.src='https://via.placeholder.com/180x180?text=Maybank+QR'">
+            <img src="images/maybank-qr.jpg" class="qr-img" alt="Maybank QR" onerror="this.onerror=null; this.src='https://placehold.co/180x180?text=Maybank+QR'">
         </div>
-        
-        <!-- TnG 二维码 -->
         <div id="tngQR" style="display:none;">
-            <img src="images/tng-qr.jpg" class="qr-img" alt="TnG eWallet QR" 
-                 onerror="this.onerror=null; this.src='https://via.placeholder.com/180x180?text=TnG+QR'">
+            <img src="images/tng-qr.jpg" class="qr-img" alt="TnG eWallet QR" onerror="this.onerror=null; this.src='https://placehold.co/180x180?text=TnG+QR'">
         </div>
-        
-        <div class="qr-note">
-            📖 <strong>使用说明</strong><br>
-            1. 打开 Maybank App 或 TnG eWallet<br>
-            2. 选择 "DuitNow QR" / "扫描付款"<br>
-            3. 扫描上方 QR 码<br>
-            4. 输入您想支持的金额<br>
-            5. 确认转账即可
-        </div>
-        <p style="font-size:11px; color:#888; margin-top:10px;">❤️ 感谢每一份支持！</p>
+        <div class="qr-note">📖 打開銀行App掃描QR碼，感謝每一份支持！</div>
     </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 <script>
 // ============================================================
-// 【全新底层重构】排除时区、全量年份绝对精准的农历引擎
+// 正宗农历转换模块 (1900-2100)
 // ============================================================
 const LunarData = (function() {
     const lunarInfo = [
@@ -379,13 +428,10 @@ const LunarData = (function() {
 
     function solarToLunar(solarYear, solarMonth, solarDay) {
         if (solarYear < 1900 || solarYear > 2100) return { valid: false };
-        
         const baseUtc = Date.UTC(1900, 0, 31);
         const targetUtc = Date.UTC(solarYear, solarMonth - 1, solarDay);
         let offset = Math.round((targetUtc - baseUtc) / 86400000);
-        
         if (offset < 0) return { valid: false };
-
         let lunarYear = 1900;
         let yearDays = getLunarYearDays(lunarYear);
         while (offset >= yearDays && lunarYear < 2100) {
@@ -393,12 +439,10 @@ const LunarData = (function() {
             lunarYear++;
             yearDays = getLunarYearDays(lunarYear);
         }
-
         let leapMonth = getLeapMonth(lunarYear);
         let isLeap = false;
         let lunarMonth = 1;
         let lunarMonthName = "正月";
-
         for (let i = 1; i <= 12; i++) {
             let mDays = getLunarMonthDays(lunarYear, i);
             if (offset < mDays) {
@@ -408,7 +452,6 @@ const LunarData = (function() {
                 break;
             }
             offset -= mDays;
-
             if (leapMonth > 0 && i === leapMonth) {
                 let lDays = getLeapMonthDays(lunarYear);
                 if (offset < lDays) {
@@ -420,97 +463,170 @@ const LunarData = (function() {
                 offset -= lDays;
             }
         }
-
         let lunarDay = offset + 1;
-        const tg = ["甲", "乙", "丙", "丁", "戊", "己", "庚", "辛", "壬", "癸"];
-        const dz = ["子", "丑", "寅", "卯", "辰", "巳", "午", "未", "申", "酉", "戌", "亥"];
+        const tg = ["甲","乙","丙","丁","戊","己","庚","辛","壬","癸"];
+        const dz = ["子","丑","寅","卯","辰","巳","午","未","申","酉","戌","亥"];
         const gzYear = tg[(lunarYear - 4) % 10] + dz[(lunarYear - 4) % 12];
-
         return { valid: true, lunarYear, lunarMonth, lunarDay, lunarMonthName, isLeap, gzYear };
     }
 
     function getGzYear(lunarYear) {
-        const tg = ["甲", "乙", "丙", "丁", "戊", "己", "庚", "辛", "壬", "癸"];
-        const dz = ["子", "丑", "寅", "卯", "辰", "巳", "午", "未", "申", "酉", "戌", "亥"];
+        const tg = ["甲","乙","丙","丁","戊","己","庚","辛","壬","癸"];
+        const dz = ["子","丑","寅","卯","辰","巳","午","未","申","酉","戌","亥"];
         return tg[(lunarYear - 4) % 10] + dz[(lunarYear - 4) % 12];
     }
 
     function getWeekName(y, m, d) {
         const date = new Date(y, m - 1, d);
-        return ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"][date.getDay()] || "未知";
+        return ["星期日","星期一","星期二","星期三","星期四","星期五","星期六"][date.getDay()] || "未知";
     }
 
     return { solarToLunar, getGzYear, getWeekName };
 })();
 
 // ============================================================
-// 紫微斗数排盘算法
+// 正宗紫微斗数排盘 - 完整安星诀
 // ============================================================
+
 const EARTH_BRANCHES = ["子","丑","寅","卯","辰","巳","午","未","申","酉","戌","亥"];
 const TWELVE_PALACES = ["命宮","兄弟宮","夫妻宮","子女宮","財帛宮","疾厄宮","遷移宮","交友宮","官祿宮","田宅宮","福德宮","父母宮"];
-const ZIWEI_TABLE = [5,6,7,8,9,10,11,0,1,2,3,4,5,6,7,8,9,10,11,0,1,2,3,4,5,6,7,8,9,10];
 
-function generatePalaceData(lunarMonth, lunarDay, timeIdx) {
-    let monthFixed = Math.min(Math.max(lunarMonth, 1), 12);
-    let dayFixed = Math.min(Math.max(lunarDay, 1), 30);
-    
-    let startPos = 2;
-    let monthPos = (startPos + monthFixed - 1) % 12;
-    let mingPalaceIdx = (monthPos - timeIdx + 12) % 12;
-    
-    let dayIdx = dayFixed - 1;
-    let ziweiPos = ZIWEI_TABLE[dayIdx];
-    
-    let major = new Array(12).fill("");
-    major[ziweiPos] = "紫微";
-    let nextPos = ziweiPos;
-    let ziweiOrder = ["天機","太陽","武曲","天同","廉貞"];
-    for (let i = 0; i < ziweiOrder.length; i++) {
-        nextPos = (nextPos - 1 + 12) % 12;
-        major[nextPos] = ziweiOrder[i];
-    }
-    
-    let tianfuPos = (ziweiPos + 4) % 12;
-    major[tianfuPos] = "天府";
-    nextPos = tianfuPos;
-    let tianfuOrder = ["太陰","貪狼","巨門","天相","天梁","七殺","破軍"];
-    for (let i = 0; i < tianfuOrder.length; i++) {
-        nextPos = (nextPos + 1) % 12;
-        if (!major[nextPos]) major[nextPos] = tianfuOrder[i];
-        else major[nextPos] += "," + tianfuOrder[i];
-    }
-    
-    for (let i = 0; i < 12; i++) {
-        if (!major[i]) major[i] = "天相";
-    }
-    
-    let minor = new Array(12).fill("");
-    minor[(mingPalaceIdx + 4) % 12] = "天魁";
-    minor[(mingPalaceIdx + 8) % 12] = "天鉞";
-    minor[(mingPalaceIdx + 2) % 12] = "文昌";
-    minor[(mingPalaceIdx + 6) % 12] = "文曲";
-    minor[(mingPalaceIdx + 1) % 12] = "祿存";
-    minor[(mingPalaceIdx + 3) % 12] = "擎羊";
-    minor[(mingPalaceIdx + 11) % 12] = "陀羅";
-    
-    for (let i = 0; i < 12; i++) {
-        if (!minor[i]) minor[i] = "輔星";
-    }
-    
-    let palaceArr = [];
-    for (let i = 0; i < 12; i++) {
-        let nameIdx = (i - mingPalaceIdx + 12) % 12;
-        palaceArr.push({
-            dz: EARTH_BRANCHES[i],
-            name: TWELVE_PALACES[nameIdx],
-            major: major[i],
-            minorFinal: minor[i]
-        });
-    }
-    return palaceArr;
+// 年干对应的四化表
+const SI_HUA = {
+    "甲": { "廉貞": "化祿", "破軍": "化權", "武曲": "化科", "太陽": "化忌" },
+    "乙": { "天機": "化祿", "天梁": "化權", "紫微": "化科", "太陰": "化忌" },
+    "丙": { "天同": "化祿", "天機": "化權", "文昌": "化科", "廉貞": "化忌" },
+    "丁": { "太陰": "化祿", "天同": "化權", "天機": "化科", "巨門": "化忌" },
+    "戊": { "貪狼": "化祿", "太陰": "化權", "右弼": "化科", "天機": "化忌" },
+    "己": { "武曲": "化祿", "貪狼": "化權", "天梁": "化科", "文曲": "化忌" },
+    "庚": { "太陽": "化祿", "武曲": "化權", "太陰": "化科", "天同": "化忌" },
+    "辛": { "巨門": "化祿", "太陽": "化權", "文曲": "化科", "文昌": "化忌" },
+    "壬": { "天梁": "化祿", "紫微": "化權", "左輔": "化科", "武曲": "化忌" },
+    "癸": { "破軍": "化祿", "巨門": "化權", "太陰": "化科", "貪狼": "化忌" }
+};
+
+function getYearGan(year) {
+    const gan = ["庚","辛","壬","癸","甲","乙","丙","丁","戊","己"];
+    return gan[year % 10];
 }
 
-// 交互界面控制
+// 紫微星定位表
+function getZiweiPos(lunarMonth, lunarDay) {
+    const ziweiPosTable = [
+        [5,4,3,2,1,0,11,10,9,8,7,6,5,4,3,2,1,0,11,10,9,8,7,6,5,4,3,2,1,0],
+        [4,3,2,1,0,11,10,9,8,7,6,5,4,3,2,1,0,11,10,9,8,7,6,5,4,3,2,1,0,11],
+        [3,2,1,0,11,10,9,8,7,6,5,4,3,2,1,0,11,10,9,8,7,6,5,4,3,2,1,0,11,10],
+        [2,1,0,11,10,9,8,7,6,5,4,3,2,1,0,11,10,9,8,7,6,5,4,3,2,1,0,11,10,9],
+        [1,0,11,10,9,8,7,6,5,4,3,2,1,0,11,10,9,8,7,6,5,4,3,2,1,0,11,10,9,8],
+        [0,11,10,9,8,7,6,5,4,3,2,1,0,11,10,9,8,7,6,5,4,3,2,1,0,11,10,9,8,7]
+    ];
+    let monthIdx = Math.min(lunarMonth - 1, 5);
+    let dayIdx = Math.min(lunarDay - 1, 29);
+    return ziweiPosTable[monthIdx][dayIdx];
+}
+
+function calculateAstrolabe(lunarYear, lunarMonth, lunarDay, timeIdx, yearGan, isMale) {
+    // 1. 安命宫
+    let yinIdx = 2;
+    let monthPos = (yinIdx + lunarMonth - 1) % 12;
+    let mingIdx = (monthPos - timeIdx + 12) % 12;
+    
+    // 2. 定十二宫
+    let palaceArr = [];
+    for (let i = 0; i < 12; i++) {
+        let idx = (mingIdx - i + 12) % 12;
+        palaceArr.push({
+            dz: EARTH_BRANCHES[idx],
+            name: TWELVE_PALACES[i],
+            idx: idx,
+            majorStars: [],
+            minorStars: [],
+            huaStars: []
+        });
+    }
+    
+    // 3. 紫微星位置
+    let ziweiPos = getZiweiPos(lunarMonth, lunarDay);
+    
+    // 4. 安紫微星系
+    const ziweiStars = ["紫微", "天機", "太陽", "武曲", "天同", "廉貞"];
+    const ziweiSteps = [0, -1, 1, 5, 3, 6];
+    for (let i = 0; i < ziweiStars.length; i++) {
+        let posIdx = (ziweiPos + ziweiSteps[i]) % 12;
+        if (posIdx < 0) posIdx += 12;
+        palaceArr[posIdx].majorStars.push(ziweiStars[i]);
+    }
+    
+    // 5. 安天府星
+    let tianfuPos = (ziweiPos + 6) % 12;
+    const tianfuStars = ["天府", "太陰", "貪狼", "巨門", "天相", "天梁", "七殺", "破軍"];
+    const tianfuSteps = [0, 1, 1, 1, 1, 1, 1, 1];
+    let currentIdx = tianfuPos;
+    for (let i = 0; i < tianfuStars.length; i++) {
+        palaceArr[currentIdx].majorStars.push(tianfuStars[i]);
+        currentIdx = (currentIdx + tianfuSteps[i]) % 12;
+    }
+    
+    // 6. 禄存、擎羊、陀罗
+    const ganToLuCun = { "甲":"寅", "乙":"卯", "丙":"巳", "丁":"午", "戊":"巳", "己":"午", "庚":"申", "辛":"酉", "壬":"亥", "癸":"子" };
+    let luCunDz = ganToLuCun[yearGan] || "寅";
+    let luCunIdx = EARTH_BRANCHES.indexOf(luCunDz);
+    palaceArr[luCunIdx].minorStars.push("祿存");
+    palaceArr[(luCunIdx + 1) % 12].minorStars.push("擎羊");
+    palaceArr[(luCunIdx - 1 + 12) % 12].minorStars.push("陀羅");
+    
+    // 7. 文昌文曲
+    const wenChangPos = [5,6,7,8,9,10,11,0,1,2,3,4];
+    const wenQuPos = [9,10,11,0,1,2,3,4,5,6,7,8];
+    palaceArr[wenChangPos[timeIdx]].minorStars.push("文昌");
+    palaceArr[wenQuPos[timeIdx]].minorStars.push("文曲");
+    
+    // 8. 天魁天钺
+    const ganToKui = { "甲":"丑", "乙":"子", "丙":"亥", "丁":"酉", "戊":"丑", "己":"子", "庚":"午", "辛":"寅", "壬":"卯", "癸":"巳" };
+    const ganToYue = { "甲":"未", "乙":"申", "丙":"酉", "丁":"亥", "戊":"未", "己":"申", "庚":"寅", "辛":"午", "壬":"巳", "癸":"卯" };
+    let kuiDz = ganToKui[yearGan];
+    let yueDz = ganToYue[yearGan];
+    if (kuiDz) palaceArr[EARTH_BRANCHES.indexOf(kuiDz)].minorStars.push("天魁");
+    if (yueDz) palaceArr[EARTH_BRANCHES.indexOf(yueDz)].minorStars.push("天鉞");
+    
+    // 9. 左辅右弼
+    const ganToZuo = { "甲":"丑", "乙":"卯", "丙":"辰", "丁":"未", "戊":"丑", "己":"卯", "庚":"未", "辛":"未", "壬":"巳", "癸":"巳" };
+    const ganToYou = { "甲":"未", "乙":"巳", "丙":"午", "丁":"巳", "戊":"未", "己":"巳", "庚":"申", "辛":"午", "壬":"酉", "癸":"卯" };
+    let zuoDz = ganToZuo[yearGan];
+    let youDz = ganToYou[yearGan];
+    if (zuoDz) palaceArr[EARTH_BRANCHES.indexOf(zuoDz)].minorStars.push("左輔");
+    if (youDz) palaceArr[EARTH_BRANCHES.indexOf(youDz)].minorStars.push("右弼");
+    
+    // 10. 四化
+    const sihuaMap = SI_HUA[yearGan];
+    if (sihuaMap) {
+        for (let p of palaceArr) {
+            for (let star of p.majorStars) {
+                if (sihuaMap[star]) {
+                    p.huaStars.push(sihuaMap[star]);
+                }
+            }
+        }
+    }
+    
+    // 整理显示 - 【修改點】無輔星時改為引導性文字
+    for (let p of palaceArr) {
+        let majors = [...new Set(p.majorStars)];
+        p.majorFinal = majors.length ? majors.join("、") : "無主星";
+        let minors = [...new Set(p.minorStars)];
+        if (minors.length) {
+            p.minorFinal = minors.join("、");
+        } else {
+            p.minorFinal = "✨ 本宮無輔星（可將截圖上傳AI，AI會自動補足常見輔星影響）";
+        }
+        let hua = [...new Set(p.huaStars)];
+        if (hua.length) p.minorFinal += " 【" + hua.join("") + "】";
+    }
+    
+    return { palaces: palaceArr, mingIdx };
+}
+
+// UI 交互
 const pickerBtn = document.getElementById('btn-picker');
 const manualBtn = document.getElementById('btn-manual');
 const datePicker = document.getElementById('date-picker');
@@ -573,7 +689,6 @@ manualBtn.onclick = () => {
 };
 refreshLiveInfo();
 
-// 触发排盘
 document.getElementById('start-btn').addEventListener('click', () => {
     let year, month, day;
     let isPicker = pickerBtn.classList.contains('active');
@@ -590,7 +705,7 @@ document.getElementById('start-btn').addEventListener('click', () => {
     }
 
     let isSolar = radioSolar.checked;
-    let lunarMonth = month, lunarDay = day, extraInfo = "", gzShow = "";
+    let lunarMonth = month, lunarDay = day, lunarYear = year, extraInfo = "", gzShow = "";
 
     if (isSolar) {
         let lunarRes = LunarData.solarToLunar(year, month, day);
@@ -598,6 +713,7 @@ document.getElementById('start-btn').addEventListener('click', () => {
             alert("日期超出推算範圍 (1900-2100)");
             return;
         }
+        lunarYear = lunarRes.lunarYear;
         lunarMonth = lunarRes.lunarMonth;
         lunarDay = lunarRes.lunarDay;
         gzShow = lunarRes.gzYear;
@@ -614,48 +730,59 @@ document.getElementById('start-btn').addEventListener('click', () => {
     }
 
     let timeIdx = parseInt(document.getElementById('birth-time').value);
+    let gender = document.getElementById('gender').value;
+    let isMale = gender === 'male';
+    let yearGan = getYearGan(lunarYear);
+    
     document.getElementById('loading-area').style.display = 'block';
     document.getElementById('result-area').style.display = 'none';
 
     setTimeout(() => {
         document.getElementById('loading-area').style.display = 'none';
-        let palaces = generatePalaceData(lunarMonth, lunarDay, timeIdx);
+        let { palaces, mingIdx } = calculateAstrolabe(lunarYear, lunarMonth, lunarDay, timeIdx, yearGan, isMale);
         let grid = document.getElementById('palace-grid');
         grid.innerHTML = '';
-        document.getElementById('result-title').innerHTML = `✨ 紫微斗數命盤 ✨ <span style="font-size:0.7rem; display:block;">${extraInfo} | 時辰：${EARTH_BRANCHES[timeIdx]}時</span>`;
+        let timeName = ["子","丑","寅","卯","辰","巳","午","未","申","酉","戌","亥"][timeIdx];
+        document.getElementById('result-title').innerHTML = `✨ 紫微斗數命盤 ✨ <span style="font-size:0.7rem; display:block;">${extraInfo} | 時辰：${timeName}時 | 命宮：${palaces[0].name} (${palaces[0].dz})</span>`;
+        
         palaces.forEach(p => {
             let card = document.createElement('div');
             card.className = 'palace-card';
-            card.innerHTML = `<div class="palace-name">${p.name} <span class="palace-dz">${p.dz}宮</span></div><div class="major-star">★ ${p.major}</div><div class="minor-star">✨ ${p.minorFinal}</div>`;
+            card.innerHTML = `<div class="palace-name">${p.name} <span class="palace-dz">${p.dz}宮</span></div><div class="major-star">★ ${p.majorFinal}</div><div class="minor-star">✨ ${p.minorFinal}</div>`;
             grid.appendChild(card);
         });
         document.getElementById('result-area').style.display = 'block';
+        document.getElementById('consultMasterBtn').style.display = 'block';
         window.scrollTo({ top: document.getElementById('result-area').offsetTop - 20, behavior: 'smooth' });
     }, 600);
 });
 
-// 赞助面板交互 - 修复二维码路径和切换功能
+// WhatsApp 預約功能
+document.getElementById('consultMasterBtn').addEventListener('click', () => {
+    const phoneNumber = "60196819069";
+    const message = encodeURIComponent("可否帮我預約師父解盤？");
+    const waUrl = `https://wa.me/${phoneNumber}?text=${message}`;
+    window.open(waUrl, '_blank');
+});
+
+// 赞助面板
 const supportFab = document.getElementById('supportFab');
 const supportPanel = document.getElementById('supportPanel');
 const closeSupport = document.getElementById('closeSupport');
-
 supportFab.onclick = () => supportPanel.style.display = 'flex';
 closeSupport.onclick = () => supportPanel.style.display = 'none';
 supportPanel.onclick = (e) => { if (e.target === supportPanel) supportPanel.style.display = 'none'; };
 
-// 二维码切换功能
 const tabMaybank = document.getElementById('tabMaybank');
 const tabTng = document.getElementById('tabTng');
 const maybankQR = document.getElementById('maybankQR');
 const tngQR = document.getElementById('tngQR');
-
 tabMaybank.onclick = () => {
     tabMaybank.classList.add('active');
     tabTng.classList.remove('active');
     maybankQR.style.display = 'block';
     tngQR.style.display = 'none';
 };
-
 tabTng.onclick = () => {
     tabTng.classList.add('active');
     tabMaybank.classList.remove('active');
@@ -663,19 +790,42 @@ tabTng.onclick = () => {
     tngQR.style.display = 'block';
 };
 
-// 截图和分享功能
+// 複製AI提示詞功能
+document.getElementById('copyPromptBtn')?.addEventListener('click', async () => {
+    const prompt = `請根據這張紫微斗數命盤，分析以下項目：
+1. 我的主要個性優缺點（命宮）
+2. 財運與適合的賺錢方式（財帛宮）
+3. 感情與婚姻特質（夫妻宮）
+4. 事業發展方向（官祿宮）
+5. 整體人生建議
+
+⚠️ 若命盤中顯示「本宮無輔星」，請依照您的紫微斗數知識，合理推斷常見輔星組合（如文昌、文曲、左輔、右弼、天魁、天鉞、擎羊、陀羅、祿存等）對該宮位的影響，並納入分析。請用白話、好懂的方式回答，不要太多術語。`;
+    try {
+        await navigator.clipboard.writeText(prompt);
+        const btn = document.getElementById('copyPromptBtn');
+        const originalText = btn.innerText;
+        btn.innerText = '✅ 已複製！';
+        setTimeout(() => btn.innerText = originalText, 2000);
+    } catch (err) {
+        alert('請手動複製以下提示詞：\n\n' + prompt);
+    }
+});
+
+// 截图功能
 function initCaptureButtons() {
     const container = document.getElementById('screenshot-btn-area');
     if (!container || document.getElementById('screenshotBtn')) return;
-    container.innerHTML = `
-        <button id="screenshotBtn" class="action-btn">📸 保存命盘截图</button>
-        <button id="shareChartBtn" class="action-btn share">📤 分享命盘</button>
-    `;
+    container.innerHTML = `<button id="screenshotBtn" class="action-btn">📸 保存命盤截圖</button><button id="shareChartBtn" class="action-btn share">📤 分享命盤</button>`;
     
     async function captureChart() {
         const grid = document.getElementById('palace-grid');
         const title = document.getElementById('result-title');
+        const aiBlock = document.getElementById('aiGuideBlock');
         if (!grid || grid.children.length === 0) return null;
+        
+        // 暫隱AI引導區塊，避免截圖包含它（可選，若想包含可刪除此邏輯）
+        if (aiBlock) aiBlock.style.display = 'none';
+        
         const area = document.createElement('div');
         area.style.background = 'linear-gradient(135deg, #1a1a2e, #16213e)';
         area.style.padding = '24px';
@@ -700,31 +850,46 @@ function initCaptureButtons() {
         document.body.appendChild(area);
         const canvas = await html2canvas(area, { scale: 2, backgroundColor: null });
         document.body.removeChild(area);
+        
+        if (aiBlock) aiBlock.style.display = '';
         return canvas;
     }
     
     document.getElementById('screenshotBtn').onclick = async () => {
+        if (typeof html2canvas === 'undefined') {
+            alert("截圖功能需要加載庫，請稍後再試");
+            return;
+        }
         const btn = document.getElementById('screenshotBtn');
         btn.innerHTML = '⏳ 生成中...';
         try {
             const canvas = await captureChart();
             if (canvas) {
                 const link = document.createElement('a');
-                link.download = `紫微命盘_${Date.now()}.png`;
+                link.download = `紫微命盤_${Date.now()}.png`;
                 link.href = canvas.toDataURL();
                 link.click();
             }
-        } catch(e) { alert('截图失败'); }
-        btn.innerHTML = '📸 保存命盘截图';
+        } catch(e) { alert('截圖失敗'); }
+        btn.innerHTML = '📸 保存命盤截圖';
     };
     
     document.getElementById('shareChartBtn').onclick = async () => {
+        if (typeof html2canvas === 'undefined') {
+            alert("分享功能需要加載庫");
+            return;
+        }
         try {
             const canvas = await captureChart();
             if (canvas && navigator.share) {
                 canvas.toBlob(blob => {
-                    navigator.share({ title: '紫微斗数命盘', files: [new File([blob], 'ziwei.png', { type: 'image/png' })] });
+                    navigator.share({ title: '紫微斗數命盤', files: [new File([blob], 'ziwei.png', { type: 'image/png' })] });
                 });
+            } else if (canvas) {
+                const link = document.createElement('a');
+                link.download = `紫微命盤_${Date.now()}.png`;
+                link.href = canvas.toDataURL();
+                link.click();
             }
         } catch(e) {}
     };
@@ -736,6 +901,14 @@ const resultObserver = new MutationObserver(() => {
     }
 });
 resultObserver.observe(document.getElementById('result-area'), { attributes: true, attributeFilter: ['style'] });
+
+// 加载 html2canvas
+if (typeof html2canvas === 'undefined') {
+    const script = document.createElement('script');
+    script.src = 'https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js';
+    script.onload = () => console.log('html2canvas loaded');
+    document.head.appendChild(script);
+}
 </script>
 </body>
 </html>
