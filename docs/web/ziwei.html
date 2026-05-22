@@ -351,7 +351,6 @@
         <h2 id="result-title">🏮 紫微斗數命盤 🏮</h2>
         <div class="palace-grid" id="palace-grid"></div>
         
-        <!-- AI 分析引導區塊 -->
         <div class="ai-guide-block" id="aiGuideBlock">
             <div class="ai-guide-inner">
                 <div class="ai-guide-icon">🤖</div>
@@ -823,7 +822,7 @@ function initCaptureButtons() {
         const aiBlock = document.getElementById('aiGuideBlock');
         if (!grid || grid.children.length === 0) return null;
         
-        // 暫隱AI引導區塊，避免截圖包含它（可選，若想包含可刪除此邏輯）
+        // 暫隱AI引導區塊，避免截圖包含它
         if (aiBlock) aiBlock.style.display = 'none';
         
         const area = document.createElement('div');
@@ -831,22 +830,37 @@ function initCaptureButtons() {
         area.style.padding = '24px';
         area.style.borderRadius = '32px';
         area.style.width = '800px';
+        
+        // 【優化隱私】克隆標題，並自動裁剪掉第一個 "|" 前方的生日日期隱私資訊
         const titleClone = title.cloneNode(true);
+        const subTextSpan = titleClone.querySelector('span');
+        if (subTextSpan) {
+            const originalText = subTextSpan.innerHTML;
+            const pipeIndex = originalText.indexOf('|');
+            if (pipeIndex !== -1) {
+                // 只保留第一個 "|" 之後的內容 (即 時辰、命宮)
+                subTextSpan.innerHTML = originalText.substring(pipeIndex + 1).trim();
+            }
+        }
+        
         titleClone.style.color = '#FFD966';
         titleClone.style.textAlign = 'center';
         area.appendChild(titleClone);
+        
         const gridClone = grid.cloneNode(true);
         gridClone.style.display = 'grid';
         gridClone.style.gridTemplateColumns = 'repeat(4, 1fr)';
         gridClone.style.gap = '12px';
         area.appendChild(gridClone);
+        
         const footer = document.createElement('div');
         footer.style.textAlign = 'center';
         footer.style.marginTop = '20px';
         footer.style.fontSize = '12px';
         footer.style.color = '#aaa';
-        footer.innerHTML = '🔮 紫微斗数免费排盘 | 随喜打赏支持 ☕';
+        footer.innerHTML = '🔮 紫微斗數免費排盤 | 隨喜打賞支持 ☕';
         area.appendChild(footer);
+        
         document.body.appendChild(area);
         const canvas = await html2canvas(area, { scale: 2, backgroundColor: null });
         document.body.removeChild(area);
