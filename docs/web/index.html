@@ -3,30 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Myx Shop - SSM註冊企業</title>
+    <meta name="description" content="Myx Shop - SSM注册企业，提供回收服务、紫微斗数排盘、每日運程、联盟商店、二手车及房地产服务">
+    <meta name="keywords" content="Myx Shop,SSM注册,马六甲回收,紫微斗数,每日運程,马来西亚">
+    <meta name="author" content="Myx Shop">
+    <title>Myx Shop - SSM註冊企業 | 多元化服務平台</title>
     
-    <!-- Google Analytics 4 (GA4) -->
+    <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-92XTNG247J"></script>
     <script>
+        // GA4 配置
         const GA_MEASUREMENT_ID = 'G-92XTNG247J';
+        
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
+        
+        // 设置默认同意模式（符合隐私法规）
+        gtag('consent', 'default', {
+            'ad_storage': 'denied',
+            'analytics_storage': 'granted',
+            'functionality_storage': 'granted',
+            'personalization_storage': 'denied',
+            'security_storage': 'granted'
+        });
+        
         gtag('js', new Date());
         gtag('config', GA_MEASUREMENT_ID, {
             page_title: 'Myx Shop - 主頁',
             page_location: window.location.href,
-            time_zone: 'Asia/Kuala_Lumpur'
+            page_path: '/',
+            time_zone: 'Asia/Kuala_Lumpur',
+            send_page_view: true
         });
     </script>
     
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
+        
         body { 
-            font-family: 'Segoe UI', 'Microsoft JhengHei', sans-serif; 
+            font-family: 'Segoe UI', 'Microsoft JhengHei', -apple-system, BlinkMacSystemFont, sans-serif; 
             background: #f5f5f5;
             min-height: 100vh; 
             color: #333;
+            line-height: 1.6;
         }
+        
         .container { 
             max-width: 1000px; 
             margin: 0 auto; 
@@ -56,6 +76,7 @@
             display: inline-block;
             margin-bottom: 15px;
             font-size: 14px;
+            font-weight: bold;
         }
         
         .ga-status-box {
@@ -103,11 +124,17 @@
             border: none;
             cursor: pointer;
             font-size: 14px;
-            transition: opacity 0.3s;
+            font-weight: 500;
+            transition: transform 0.2s, opacity 0.3s;
         }
         
         .ga-btn:hover {
             opacity: 0.9;
+            transform: translateY(-2px);
+        }
+        
+        .ga-btn:active {
+            transform: translateY(0);
         }
         
         .nav-grid {
@@ -123,16 +150,28 @@
             border-radius: 10px;
             text-decoration: none;
             color: inherit;
-            transition: transform 0.2s;
+            transition: transform 0.2s, box-shadow 0.2s;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
             text-align: center;
+            display: block;
         }
         
         .nav-card:hover {
             transform: translateY(-3px);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
         }
         
-        /* 紫微斗数卡片特殊样式 */
+        .nav-card h3 {
+            margin-bottom: 8px;
+            font-size: 18px;
+        }
+        
+        .nav-card p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+        
+        /* 紫微斗數與每日運程特殊樣式 */
         .nav-card.ziwei {
             background: linear-gradient(135deg, #2c1a3e 0%, #4a2c6e 100%);
             color: #FFE6B0;
@@ -147,6 +186,37 @@
             color: #FFD966;
         }
         
+        /* 每日運程專屬炫彩樣式 */
+        .nav-card.fortune {
+            background: linear-gradient(135deg, #1f2d5a 0%, #364b83 100%);
+            color: #E2ECFF;
+            border: 1px solid rgba(130,180,255,0.3);
+        }
+        
+        .nav-card.fortune:hover {
+            box-shadow: 0 10px 25px rgba(54, 75, 131, 0.4);
+        }
+        
+        .nav-card.fortune h3 {
+            color: #9eccff;
+        }
+        
+        .verify-link {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 8px 20px;
+            border-radius: 20px;
+            margin-top: 15px;
+            text-decoration: none;
+            transition: background 0.3s, transform 0.2s;
+        }
+        
+        .verify-link:hover {
+            background: #5a67d8;
+            transform: translateY(-2px);
+        }
+        
         footer {
             background: white;
             padding: 20px;
@@ -155,6 +225,10 @@
             margin-top: 20px;
             font-size: 14px;
             color: #666;
+        }
+        
+        footer p {
+            margin: 5px 0;
         }
         
         @media (max-width: 768px) {
@@ -175,6 +249,17 @@
             .nav-grid {
                 grid-template-columns: 1fr;
             }
+            
+            h1 {
+                font-size: 20px;
+            }
+        }
+        
+        /* 打印样式 */
+        @media print {
+            .ga-buttons, .ga-status-box, .timezone-box {
+                display: none;
+            }
         }
     </style>
 </head>
@@ -185,69 +270,69 @@
             <p>SSM註冊企業 | 多元化服務平台</p>
             
             <div class="ssm-badge">
-                SSM註冊: 202510210078 (JM1034075-K)
+                ✅ SSM註冊: 202510210078 (JM1034075-K)
             </div>
             
             <div class="ga-status-box">
-                <strong>Google Analytics 4 已設置</strong>
+                <strong>📊 Google Analytics 4 已設置</strong>
                 <div class="ga-id-box">
                     測量ID: G-92XTNG247J
                 </div>
-                <p>正在收集真實分析數據</p>
+                <p>正在收集真實分析數據 | 马来西亚时区 (UTC+8)</p>
             </div>
             
             <div class="timezone-box">
-                <strong>時區設置:</strong> Asia/Kuala_Lumpur (UTC+8)<br>
-                數據以馬來西亞時間記錄
+                <strong>🕐 時區設置:</strong> Asia/Kuala_Lumpur (UTC+8)<br>
+                所有數據以馬來西亞時間記錄
             </div>
             
             <div class="ga-buttons">
-                <button class="ga-btn" style="background:#4285f4;" onclick="openGAConsole()">
-                    查看GA數據
+                <button class="ga-btn" style="background:#4285f4;" onclick="openGAConsole()" aria-label="查看 Google Analytics 数据">
+                    📈 查看GA數據
                 </button>
-                <button class="ga-btn" style="background:#34a853;" onclick="showGASetup()">
-                    GA設置說明
+                <button class="ga-btn" style="background:#34a853;" onclick="showGASetup()" aria-label="查看 GA 设置说明">
+                    ⚙️ GA設置說明
                 </button>
-                <button class="ga-btn" style="background:#fbbc05;" onclick="copyGAID()">
-                    複製GA ID
+                <button class="ga-btn" style="background:#fbbc05; color:#333;" onclick="copyGAID()" aria-label="复制 GA 测量 ID">
+                    📋 複製GA ID
                 </button>
-                <button class="ga-btn" style="background:#ea4335;" onclick="showRealTimeInfo()">
-                    實時報告
+                <button class="ga-btn" style="background:#ea4335;" onclick="showRealTimeInfo()" aria-label="查看实时报告信息">
+                    🔴 實時報告
                 </button>
             </div>
             
-            <a href="verification.html" style="display:inline-block; background:#667eea; color:white; padding:8px 20px; border-radius:20px; margin-top:15px; text-decoration:none;">
-                驗證商業資訊
+            <a href="verification.html" class="verify-link" aria-label="验证商业信息">
+                🔒 驗證商業資訊
             </a>
         </header>
 
         <div class="nav-grid">
-            <!-- 马六甲回收服務 -->
-            <a href="docs/bursa.html" class="nav-card">
+            <a href="docs/bursa.html" class="nav-card" data-section="马六甲回收服務">
                 <h3>📰 马六甲回收服務</h3>
                 <p>只限马六甲市區 · 旧报纸回收</p>
             </a>
             
-            <!-- 紫微斗数免费排盘（新增） -->
-            <a href="docs/ziwei.html" class="nav-card ziwei">
+            <a href="docs/ziwei.html" class="nav-card ziwei" data-section="紫微斗数免费排盘">
                 <h3>🪐 紫微斗数免费排盘</h3>
                 <p>输入生辰 · 一键排盘 · AI解盘</p>
             </a>
+
+            <a href="docs/fortune.html" class="nav-card fortune" data-section="每日運程">
+                <h3>🔮 每日運程</h3>
+                <p>流日推演 · 今日運勢 · 吉凶宜忌</p>
+            </a>
             
-            <!-- 聯盟商店 -->
-            <a href="docs/products.html" class="nav-card">
+            <a href="docs/products.html" class="nav-card" data-section="聯盟商店">
                 <h3>🛒 聯盟商店</h3>
                 <p>熱門產品推薦與優惠</p>
             </a>
             
-            <!-- 二手車輛 -->
-            <a href="docs/vehicles.html" class="nav-card">
+            <a href="docs/vehicles.html" class="nav-card" data-section="二手車輛">
                 <h3>🚗 二手車輛</h3>
                 <p>車輛資訊與市場分析</p>
             </a>
             
-            <!-- 房地產代理 -->
-            <a href="docs/real-estate.html" class="nav-card">
+            <a href="docs/real-estate.html" class="nav-card" data-section="房地產代理">
                 <h3>🏠 房地產代理</h3>
                 <p>專業房地產服務與物業資訊</p>
             </a>
@@ -262,57 +347,149 @@
     </div>
 
     <script>
+    // 修复后的 GA 控制台链接函数
     function openGAConsole() {
-        const gaURL = `https://analytics.google.com/analytics/web/#/p${GA_MEASUREMENT_ID.replace('G-', '')}/reports/intelligenthome`;
+        // 修复：使用反引号模板字符串
+        const propertyId = GA_MEASUREMENT_ID.replace('G-', '');
+        const gaURL = `https://analytics.google.com/analytics/web/#/p${propertyId}/reports/intelligenthome`;
         window.open(gaURL, '_blank');
-        alert('正在打開 Google Analytics 控制台');
+        
+        // 同时记录事件
+        if (typeof gtag === 'function') {
+            gtag('event', 'ga_console_click', {
+                event_category: 'GA_Interaction',
+                event_label: 'open_console'
+            });
+        }
+        
+        alert('正在打開 Google Analytics 控制台\n\n提示：請確保已登入 Google 帳號並擁有該 GA 屬性的訪問權限。');
     }
 
     function copyGAID() {
         navigator.clipboard.writeText(GA_MEASUREMENT_ID)
             .then(() => {
-                alert('已複製 GA4 測量ID: ' + GA_MEASUREMENT_ID);
+                alert('✅ 已複製 GA4 測量ID: ' + GA_MEASUREMENT_ID);
+                if (typeof gtag === 'function') {
+                    gtag('event', 'copy_ga_id', {
+                        event_category: 'GA_Interaction',
+                        event_label: 'copy_id'
+                    });
+                }
             })
             .catch(err => {
                 console.error('复制失败:', err);
+                // 降级方案
                 const textArea = document.createElement('textarea');
                 textArea.value = GA_MEASUREMENT_ID;
                 document.body.appendChild(textArea);
                 textArea.select();
                 document.execCommand('copy');
                 document.body.removeChild(textArea);
-                alert('已複製 GA4 測量ID: ' + GA_MEASUREMENT_ID);
+                alert('✅ 已複製 GA4 測量ID: ' + GA_MEASUREMENT_ID);
             });
     }
 
     function showGASetup() {
-        alert('GA4 測量ID: ' + GA_MEASUREMENT_ID + '\n狀態: 正常運作\n時區: Asia/Kuala_Lumpur');
+        const message = `📊 GA4 配置信息
+━━━━━━━━━━━━━━━━━━━━
+測量ID: ${GA_MEASUREMENT_ID}
+狀態: ✅ 正常運作
+時區: Asia/Kuala_Lumpur (UTC+8)
+同意模式: 已啟用
+頁面追蹤: 已啟用
+━━━━━━━━━━━━━━━━━━━━
+可在 Analytics 控制台查看實時數據`;
+        
+        alert(message);
+        
+        if (typeof gtag === 'function') {
+            gtag('event', 'view_ga_setup', {
+                event_category: 'GA_Interaction',
+                event_label: 'view_setup'
+            });
+        }
     }
     
     function showRealTimeInfo() {
-        alert('實時數據請在 Google Analytics 控制台中查看\n網址: https://analytics.google.com');
+        const propertyId = GA_MEASUREMENT_ID.replace('G-', '');
+        const realtimeURL = `https://analytics.google.com/analytics/web/#/p${propertyId}/realtime/overview`;
+        
+        const message = `🔴 實時數據查看方式：
+━━━━━━━━━━━━━━━━━━━━
+1️⃣ 點擊「確定」後打開控制台
+2️⃣ 左側選單選擇「即時報告」
+3️⃣ 查看當前活躍用戶和事件
+
+📌 提示：實時數據通常有 5-10 秒延遲`;
+        
+        if (confirm(message + '\n\n是否立即打開 Google Analytics 控制台？')) {
+            window.open(realtimeURL, '_blank');
+        }
+        
+        if (typeof gtag === 'function') {
+            gtag('event', 'view_realtime_info', {
+                event_category: 'GA_Interaction',
+                event_label: 'realtime_info'
+            });
+        }
     }
     
+    // 页面加载完成后的初始化
     document.addEventListener('DOMContentLoaded', function() {
+        // 发送自定义事件
         if (typeof gtag === 'function') {
-            gtag('event', 'page_view', {
-                page_title: 'Myx Shop - 主頁',
+            gtag('event', 'page_loaded', {
+                event_category: 'Engagement',
+                event_label: 'homepage',
                 business_name: 'Myx Shop',
                 ssm_number: '202510210078'
             });
         }
         
-        document.querySelectorAll('.nav-card').forEach(card => {
+        // 为所有导航卡片添加点击事件追踪
+        const navCards = document.querySelectorAll('.nav-card');
+        navCards.forEach(card => {
             card.addEventListener('click', function(e) {
                 if (typeof gtag === 'function') {
-                    const section = this.querySelector('h3').textContent;
+                    const section = this.getAttribute('data-section') || 
+                                   (this.querySelector('h3')?.textContent || 'unknown');
+                    const href = this.getAttribute('href');
+                    
                     gtag('event', 'navigation_click', {
                         event_category: 'Navigation',
-                        event_label: section
+                        event_label: section,
+                        destination_url: href,
+                        page_path: window.location.pathname
                     });
                 }
             });
         });
+        
+        // 追踪首次访问时间（使用 localStorage）
+        if (!localStorage.getItem('first_visit_time')) {
+            localStorage.setItem('first_visit_time', new Date().toISOString());
+            if (typeof gtag === 'function') {
+                gtag('event', 'first_visit', {
+                    event_category: 'User',
+                    event_label: 'new_user',
+                    visit_time: new Date().toISOString()
+                });
+            }
+        }
+        
+        // 控制台输出信息（用于调试）
+        console.log('Myx Shop 網站已加載 | GA ID: ' + GA_MEASUREMENT_ID);
+    });
+    
+    // 页面离开前追踪（可选）
+    window.addEventListener('beforeunload', function() {
+        if (typeof gtag === 'function') {
+            gtag('event', 'session_end', {
+                event_category: 'Session',
+                event_label: 'page_exit',
+                page_url: window.location.href
+            });
+        }
     });
     </script>
 </body>
