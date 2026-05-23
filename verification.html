@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>商業資訊驗證 | Myx Shop</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Segoe UI', sans-serif; 
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh; 
+            color: #333;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .container { 
+            max-width: 600px; 
+            margin: 0 auto; 
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .verification-card {
+            background: rgba(255,255,255,0.95);
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        
+        .verification-icon {
+            font-size: 4rem;
+            color: #48bb78;
+            margin-bottom: 1rem;
+        }
+        
+        h1 { 
+            color: #2d3748; 
+            font-size: 2.5rem; 
+            margin-bottom: 1rem; 
+        }
+        
+        .verification-info {
+            background: #f7fafc;
+            padding: 1.5rem;
+            border-radius: 15px;
+            margin: 2rem 0;
+            text-align: left;
+        }
+        
+        .verification-info h3 {
+            color: #2d3748;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+        
+        .info-item {
+            margin-bottom: 0.5rem;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        
+        .info-item:last-child {
+            border-bottom: none;
+        }
+        
+        .label {
+            font-weight: 600;
+            color: #4a5568;
+        }
+        
+        .value {
+            color: #2d3748;
+        }
+        
+        .nav-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+        }
+        
+        .nav-btn {
+            background: #667eea;
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+        
+        .nav-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+        
+        .nav-btn.home-btn {
+            background: #48bb78;
+        }
+        
+        .nav-btn.home-btn:hover {
+            box-shadow: 0 5px 15px rgba(72, 187, 120, 0.4);
+        }
+        
+        .status-badge {
+            background: #48bb78;
+            color: white;
+            padding: 0.5rem 1.5rem;
+            border-radius: 25px;
+            display: inline-block;
+            margin: 1rem 0;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="verification-card">
+            <div class="verification-icon">
+                <i class="fas fa-certificate"></i>
+            </div>
+            
+            <h1>商業資訊驗證</h1>
+            
+            <div class="status-badge">
+                <i class="fas fa-check-circle"></i> 已驗證
+            </div>
+            
+            <div class="verification-info">
+                <h3>Myx Shop</h3>
+                <div class="info-item">
+                    <span class="label">SSM 註冊號碼:</span>
+                    <span class="value">202510210078 (JM1034075-K)</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">企業類型:</span>
+                    <span class="value">在線產品推廣與服務咨詢</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">註冊狀態:</span>
+                    <span class="value">有效營運中</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">申请註冊:</span>
+                    <span class="value">2025年 10月 21日 申请</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">獲得驗证  2025年 10月 22日</span>
+                    <span class="value">2025年更新驗證</span>
+                </div>
+            </div>
+            
+            <div class="message">
+                <p>此企業已通過 SSM (Companies Commission of Malaysia) 正式註冊</p>
+                <p>所有商業活動均符合馬來西亞商業法規</p>
+            </div>
+            
+            <div class="nav-buttons">
+                <a href="./index.html" class="nav-btn home-btn">
+                    <i class="fas fa-home"></i> 返回主頁
+                </a>
+                <a href="./bursa.html" class="nav-btn">
+                    <i class="fas fa-home"></i> AI選股分析
+                </a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
