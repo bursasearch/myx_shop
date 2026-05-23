@@ -59,6 +59,73 @@
         .form-card {
             padding: 28px 28px 20px;
         }
+        
+        /* 手动输入区域样式 */
+        .manual-input-section {
+            background: #faf5ea;
+            border-radius: 24px;
+            padding: 18px;
+            margin-bottom: 20px;
+            border: 1px solid #e8d5bc;
+        }
+        .manual-title {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #b34e2c;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .manual-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+        .manual-group {
+            flex: 1;
+            min-width: 70px;
+        }
+        .manual-group label {
+            display: block;
+            font-size: 0.7rem;
+            color: #8b7355;
+            margin-bottom: 4px;
+        }
+        .manual-group input {
+            width: 100%;
+            padding: 10px 8px;
+            border: 1px solid #e2d4c6;
+            border-radius: 20px;
+            text-align: center;
+            font-size: 0.9rem;
+            background: white;
+        }
+        .manual-group select {
+            width: 100%;
+            padding: 10px 8px;
+            border: 1px solid #e2d4c6;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            background: white;
+        }
+        .btn-manual {
+            background: #b34e2c;
+            color: white;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 40px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 8px;
+            width: 100%;
+            transition: 0.2s;
+        }
+        .btn-manual:hover {
+            background: #9a3f1f;
+        }
+        
         .input-row {
             display: flex;
             flex-wrap: wrap;
@@ -193,7 +260,6 @@
             border-top: 1px solid #eedbc8;
             padding-top: 16px;
         }
-        /* 理性提醒卡片样式 */
         .rational-reminder {
             background: #fef2e0;
             border-left: 5px solid #d98c5f;
@@ -214,7 +280,6 @@
             text-align: center;
             letter-spacing: 1px;
         }
-        /* Buy Me a Coffee 支持区块 */
         .support-section {
             background: #fff3e0;
             border-radius: 24px;
@@ -276,6 +341,17 @@
             margin-top: 16px;
             font-size: 0.85rem;
         }
+        .or-divider {
+            text-align: center;
+            margin: 12px 0;
+            font-size: 0.8rem;
+            color: #bea98c;
+            position: relative;
+        }
+        .or-divider span {
+            background: #fffef7;
+            padding: 0 10px;
+        }
     </style>
 </head>
 <body>
@@ -285,9 +361,63 @@
             <span>八字演算 · 四柱推命</span>
             <span class="badge">⚖️ 阴阳五行</span>
         </h1>
-        <p>输入公历生日及时辰，推算年、月、日、时四柱干支</p>
+        <p>公历生日推算年、月、日、时四柱干支</p>
     </div>
     <div class="form-card">
+        
+        <!-- 手动输入区域 -->
+        <div class="manual-input-section">
+            <div class="manual-title">
+                ✏️ 手动输入（年/月/日/时）
+            </div>
+            <div class="manual-row">
+                <div class="manual-group">
+                    <label>年份 (1900-2099)</label>
+                    <input type="number" id="manualYear" placeholder="1990" value="1990" min="1900" max="2099">
+                </div>
+                <div class="manual-group">
+                    <label>月份 (1-12)</label>
+                    <input type="number" id="manualMonth" placeholder="5" value="5" min="1" max="12">
+                </div>
+                <div class="manual-group">
+                    <label>日期 (1-31)</label>
+                    <input type="number" id="manualDay" placeholder="15" value="15" min="1" max="31">
+                </div>
+                <div class="manual-group">
+                    <label>时辰</label>
+                    <select id="manualHour">
+                        <option value="23">子时 (23:00-01:00)</option>
+                        <option value="0">子时 (23-01) 跨日</option>
+                        <option value="1">丑时 (01-03)</option>
+                        <option value="2">丑时 (01-03)</option>
+                        <option value="3">寅时 (03-05)</option>
+                        <option value="4">寅时 (03-05)</option>
+                        <option value="5">卯时 (05-07)</option>
+                        <option value="6">卯时 (05-07)</option>
+                        <option value="7">辰时 (07-09)</option>
+                        <option value="8">辰时 (07-09)</option>
+                        <option value="9">巳时 (09-11)</option>
+                        <option value="10">巳时 (09-11)</option>
+                        <option value="11">午时 (11-13)</option>
+                        <option value="12">午时 (11-13)</option>
+                        <option value="13">未时 (13-15)</option>
+                        <option value="14">未时 (13-15)</option>
+                        <option value="15">申时 (15-17)</option>
+                        <option value="16">申时 (15-17)</option>
+                        <option value="17">酉时 (17-19)</option>
+                        <option value="18">酉时 (17-19)</option>
+                        <option value="19">戌时 (19-21)</option>
+                        <option value="20">戌时 (19-21)</option>
+                        <option value="21">亥时 (21-23)</option>
+                        <option value="22">亥时 (21-23)</option>
+                    </select>
+                </div>
+            </div>
+            <button class="btn-manual" id="manualBtn">🔮 手动排盘</button>
+        </div>
+        
+        <div class="or-divider"><span>━━ 或使用日期选择器 ━━</span></div>
+        
         <div class="input-row">
             <div class="input-group">
                 <label>📅 出生日期</label>
@@ -338,7 +468,6 @@
         <div class="bazi-grid" id="baziGrid"></div>
         <div id="extraInfo" class="detail-info"></div>
         
-        <!-- 温韾提醒 -->
         <div class="rational-reminder">
             <p class="quote-text">💡 温韾提醒</p>
             <p>命理分析、AI分析皆为传统文化与科技辅助。<br>
@@ -346,7 +475,6 @@
             命运掌握在自己手中，请务必保持理性思考，积极面对人生。</p>
         </div>
         
-        <!-- Buy Me a Coffee 支持区块（干净、透明、不踩红线） -->
         <div class="support-section">
             <h4>☕ 如果这个工具对您有帮助</h4>
             <div class="support-buttons">
@@ -368,7 +496,6 @@
 
 <script>
     (function(){
-        // 天干地支基础表
         const GAN = ["甲", "乙", "丙", "丁", "戊", "己", "庚", "辛", "壬", "癸"];
         const ZHI = ["子", "丑", "寅", "卯", "辰", "巳", "午", "未", "申", "酉", "戌", "亥"];
 
@@ -449,6 +576,7 @@
             let ganIdx = (start + zhiIdx) % 10;
             return { gan: GAN[ganIdx], zhi: ZHI[zhiIdx], ganIndex: ganIdx };
         }
+        
         function computeBazi(birthDateStr, hourVal, gender) {
             let base = new Date(birthDateStr);
             if(isNaN(base)) throw new Error("日期无效");
@@ -459,6 +587,20 @@
             let hour = getHourPillar(day.ganIndex, hourVal);
             return { year, month, day, hour, gender };
         }
+        
+        // 手动输入排盘
+        function computeBaziManual(year, month, day, hourVal, gender) {
+            let dateStr = `${year}-${String(month).padStart(2,'0')}-${String(day).padStart(2,'0')}`;
+            let base = new Date(dateStr);
+            if(isNaN(base)) throw new Error("日期无效");
+            let useDate = (hourVal==23) ? new Date(base.getTime()+86400000) : new Date(base);
+            let yearPillar = getYearPillar(base);
+            let dayPillar = getDayPillar(useDate);
+            let monthPillar = getMonthPillar(yearPillar.ganIndex, useDate);
+            let hourPillar = getHourPillar(dayPillar.ganIndex, hourVal);
+            return { year: yearPillar, month: monthPillar, day: dayPillar, hour: hourPillar, gender };
+        }
+        
         function renderResult(bazi) {
             const grid = document.getElementById('baziGrid');
             grid.innerHTML = `
@@ -474,6 +616,7 @@
             document.getElementById('resultPanel').style.display = 'block';
         }
         
+        // 日期选择器排盘
         const btn = document.getElementById('calcBtn');
         btn.addEventListener('click',()=>{
             try{
@@ -484,14 +627,31 @@
                 renderResult(bazi);
             }catch(e){ alert("排盘出错:"+e.message); }
         });
+        
+        // 手动排盘按钮
+        const manualBtn = document.getElementById('manualBtn');
+        manualBtn.addEventListener('click',()=>{
+            try{
+                let year = parseInt(document.getElementById('manualYear').value,10);
+                let month = parseInt(document.getElementById('manualMonth').value,10);
+                let day = parseInt(document.getElementById('manualDay').value,10);
+                let hour = parseInt(document.getElementById('manualHour').value,10);
+                let gender = document.querySelector('input[name="gender"]:checked').value;
+                
+                if(year < 1900 || year > 2099) throw new Error("年份请填1900-2099");
+                if(month < 1 || month > 12) throw new Error("月份请填1-12");
+                if(day < 1 || day > 31) throw new Error("日期请填1-31");
+                
+                let bazi = computeBaziManual(year, month, day, hour, gender);
+                renderResult(bazi);
+            }catch(e){ alert("手动排盘出错:\n" + e.message); }
+        });
+        
         setTimeout(()=>btn.click(),100);
     })();
     
-    // 支持按钮功能 - 弹出提示（可替换为实际二维码弹窗或跳转）
     function showSupportQR() {
-        alert("☕ 感谢您的支持！\n\n请前往「我的故事」页面查看 Maybank 和 TnG 二维码。\n\n点击确定返回首页，然后点击「我的故事」按钮。");
-        // 可选：跳转到 mystory.html
-        if(confirm("是否现在前往「我的故事」页面？")) {
+        if(confirm("☕ 感谢您的支持！\n\n是否前往「我的故事」页面查看支持方式？")) {
             window.location.href = "mystory.html";
         }
     }
