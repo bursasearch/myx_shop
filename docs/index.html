@@ -4,20 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Myx Shop - SSM注册企业，提供回收服务、紫微斗数排盘、每日運程、联盟商店、二手车及房地产服务">
-    <meta name="keywords" content="Myx Shop,SSM注册,马六甲回收,紫微斗数,每日運程,马来西亚">
+    <meta name="keywords" content="Myx Shop,SSM注册,马六甲回收,紫微斗数,每日運程,八字排盘,马来西亚">
     <meta name="author" content="Myx Shop">
     <title>Myx Shop - SSM註冊企業 | 多元化服務平台</title>
     
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-92XTNG247J"></script>
     <script>
-        // GA4 配置
         const GA_MEASUREMENT_ID = 'G-92XTNG247J';
         
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
         
-        // 设置默认同意模式（符合隐私法规）
         gtag('consent', 'default', {
             'ad_storage': 'denied',
             'analytics_storage': 'granted',
@@ -171,7 +169,6 @@
             opacity: 0.9;
         }
         
-        /* 紫微斗數與每日運程特殊樣式 */
         .nav-card.ziwei {
             background: linear-gradient(135deg, #2c1a3e 0%, #4a2c6e 100%);
             color: #FFE6B0;
@@ -186,7 +183,6 @@
             color: #FFD966;
         }
         
-        /* 每日運程專屬炫彩樣式 */
         .nav-card.fortune {
             background: linear-gradient(135deg, #1f2d5a 0%, #364b83 100%);
             color: #E2ECFF;
@@ -199,6 +195,36 @@
         
         .nav-card.fortune h3 {
             color: #9eccff;
+        }
+        
+        .nav-card.story {
+            background: linear-gradient(135deg, #2c3e50 0%, #1a2a3a 100%);
+            color: #fff5e6;
+            border: 2px solid #e67e22;
+        }
+        
+        .nav-card.story:hover {
+            box-shadow: 0 10px 25px rgba(230, 126, 34, 0.4);
+            border-color: #f39c12;
+        }
+        
+        .nav-card.story h3 {
+            color: #f39c12;
+        }
+        
+        /* 八字排盘卡片样式 */
+        .nav-card.bazi {
+            background: linear-gradient(135deg, #3d2b1a 0%, #5a3e2a 100%);
+            color: #f5e6c8;
+            border: 1px solid #c9a87b;
+        }
+        
+        .nav-card.bazi:hover {
+            box-shadow: 0 10px 25px rgba(90, 62, 42, 0.4);
+        }
+        
+        .nav-card.bazi h3 {
+            color: #e6b87e;
         }
         
         .verify-link {
@@ -255,7 +281,6 @@
             }
         }
         
-        /* 打印样式 */
         @media print {
             .ga-buttons, .ga-status-box, .timezone-box {
                 display: none;
@@ -317,6 +342,12 @@
                 <p>输入生辰 · 一键排盘 · AI解盘</p>
             </a>
 
+            <!-- ✅ 新增：八字排盘按钮 (eight_chr.html) -->
+            <a href="eight_chr.html" class="nav-card bazi" data-section="八字排盘">
+                <h3>八字排盘</h3>
+                <p>生辰八字 · 四柱推算 · 传统文化</p>
+            </a>
+
             <a href="docs/fortune.html" class="nav-card fortune" data-section="每日運程">
                 <h3>🔮 每日運程</h3>
                 <p>流日推演 · 今日運勢 · 吉凶宜忌</p>
@@ -336,6 +367,11 @@
                 <h3>🏠 房地產代理</h3>
                 <p>專業房地產服務與物業資訊</p>
             </a>
+            
+            <a href="mystory.html" class="nav-card story" data-section="我的故事与支持">
+                <h3>📖 我的故事</h3>
+                <p>一位父亲 · 前绘图员 · OKU抗争 · 支持我们</p>
+            </a>
         </div>
 
         <footer>
@@ -347,14 +383,11 @@
     </div>
 
     <script>
-    // 修复后的 GA 控制台链接函数
     function openGAConsole() {
-        // 修复：使用反引号模板字符串
         const propertyId = GA_MEASUREMENT_ID.replace('G-', '');
         const gaURL = `https://analytics.google.com/analytics/web/#/p${propertyId}/reports/intelligenthome`;
         window.open(gaURL, '_blank');
         
-        // 同时记录事件
         if (typeof gtag === 'function') {
             gtag('event', 'ga_console_click', {
                 event_category: 'GA_Interaction',
@@ -377,8 +410,6 @@
                 }
             })
             .catch(err => {
-                console.error('复制失败:', err);
-                // 降级方案
                 const textArea = document.createElement('textarea');
                 textArea.value = GA_MEASUREMENT_ID;
                 document.body.appendChild(textArea);
@@ -434,9 +465,7 @@
         }
     }
     
-    // 页面加载完成后的初始化
     document.addEventListener('DOMContentLoaded', function() {
-        // 发送自定义事件
         if (typeof gtag === 'function') {
             gtag('event', 'page_loaded', {
                 event_category: 'Engagement',
@@ -446,7 +475,6 @@
             });
         }
         
-        // 为所有导航卡片添加点击事件追踪
         const navCards = document.querySelectorAll('.nav-card');
         navCards.forEach(card => {
             card.addEventListener('click', function(e) {
@@ -465,7 +493,6 @@
             });
         });
         
-        // 追踪首次访问时间（使用 localStorage）
         if (!localStorage.getItem('first_visit_time')) {
             localStorage.setItem('first_visit_time', new Date().toISOString());
             if (typeof gtag === 'function') {
@@ -477,11 +504,9 @@
             }
         }
         
-        // 控制台输出信息（用于调试）
         console.log('Myx Shop 網站已加載 | GA ID: ' + GA_MEASUREMENT_ID);
     });
     
-    // 页面离开前追踪（可选）
     window.addEventListener('beforeunload', function() {
         if (typeof gtag === 'function') {
             gtag('event', 'session_end', {
