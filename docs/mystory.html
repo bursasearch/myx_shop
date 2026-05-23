@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <meta name="description" content="一位61岁父亲的故事 · 前绘图员 · OKU抗争 · 家庭与坚持">
+    <title>我的故事 - 一位父亲与前绘图员的坚持</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', 'Microsoft JhengHei', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #f0efe7;
+            color: #2c3e2f;
+            line-height: 1.7;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 28px;
+            box-shadow: 0 10px 35px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .hero {
+            background: linear-gradient(135deg, #2c3e50 0%, #1a2a3a 100%);
+            color: white;
+            padding: 40px 30px;
+            text-align: center;
+        }
+        
+        .hero h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+        
+        .hero p {
+            opacity: 0.85;
+            font-size: 16px;
+        }
+        
+        .content {
+            padding: 30px;
+        }
+        
+        .section {
+            margin-bottom: 35px;
+            border-bottom: 1px solid #e0d6c8;
+            padding-bottom: 25px;
+        }
+        
+        .section:last-child {
+            border-bottom: none;
+        }
+        
+        .section h2 {
+            color: #b34e2c;
+            font-size: 22px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .badge {
+            background: #f0e6d8;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            color: #5a3a2a;
+            display: inline-block;
+            margin-right: 10px;
+        }
+        
+        .highlight {
+            background: #fff1e0;
+            padding: 15px 20px;
+            border-left: 5px solid #e67e22;
+            border-radius: 12px;
+            margin: 15px 0;
+        }
+        
+        .support-module {
+            background: #ffffff;
+            border-radius: 28px;
+            margin: 20px 0 10px;
+            border: 1px solid #eedbc8;
+            overflow: hidden;
+            box-shadow: 0 6px 14px rgba(0,0,0,0.03);
+        }
+        
+        .tab-header {
+            display: flex;
+            border-bottom: 1px solid #eedbc8;
+            background: #fefaf5;
+        }
+        
+        .tab-btn {
+            flex: 1;
+            text-align: center;
+            padding: 14px 12px;
+            font-size: 16px;
+            font-weight: 600;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            color: #6f5a48;
+            transition: all 0.2s ease;
+            font-family: inherit;
+            letter-spacing: 0.5px;
+        }
+        
+        .tab-btn.active {
+            color: #b34e2c;
+            border-bottom: 3px solid #b34e2c;
+            background: #ffffff;
+        }
+        
+        .qr-panel {
+            padding: 30px 20px 25px;
+            background: #fefbf7;
+            text-align: center;
+            transition: 0.2s;
+        }
+        
+        .qr-image-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 15px 0 15px;
+        }
+        
+        .qr-code-img {
+            max-width: 220px;
+            width: 100%;
+            height: auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            padding: 8px;
+            background: #fff;
+            transition: transform 0.2s ease;
+            display: block;  /* 确保图片可见 */
+        }
+        
+        .qr-code-img:hover {
+            transform: scale(1.02);
+        }
+        
+        .qr-caption {
+            font-size: 13px;
+            color: #7f6b58;
+            background: #f2ece3;
+            display: inline-block;
+            padding: 6px 14px;
+            border-radius: 50px;
+            margin-top: 12px;
+        }
+        
+        .support-note {
+            font-size: 13px;
+            color: #b87c4a;
+            margin-top: 10px;
+            font-weight: 500;
+        }
+        
+        .disclaimer {
+            background: #f5f0ea;
+            padding: 18px;
+            border-radius: 18px;
+            font-size: 12px;
+            color: #6f5e4e;
+            text-align: center;
+            margin-top: 25px;
+        }
+        
+        .back-link {
+            display: inline-block;
+            margin-top: 20px;
+            background: #d9b48b;
+            color: #2c2418;
+            padding: 10px 24px;
+            border-radius: 40px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: 0.2s;
+        }
+        
+        .back-link:hover {
+            background: #c9a06e;
+            transform: translateY(-2px);
+        }
+        
+        footer {
+            background: #f9f5ef;
+            text-align: center;
+            padding: 20px;
+            font-size: 12px;
+            color: #8b7a6a;
+            border-top: 1px solid #eedbc8;
+        }
+        
+        .support-fab {
+            position: fixed;
+            bottom: 28px;
+            right: 24px;
+            background-color: #b34e2c;
+            width: 58px;
+            height: 58px;
+            border-radius: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.25);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 1000;
+            transition: all 0.2s ease;
+            border: none;
+            outline: none;
+            color: white;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        
+        .support-fab:hover {
+            background-color: #9a3f1f;
+            transform: scale(1.03);
+        }
+        
+        .support-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.7);
+            backdrop-filter: blur(4px);
+            z-index: 1100;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Segoe UI', system-ui, sans-serif;
+        }
+        
+        .support-modal-card {
+            background: white;
+            max-width: 460px;
+            width: 90%;
+            border-radius: 40px;
+            overflow: hidden;
+            box-shadow: 0 25px 45px rgba(0,0,0,0.3);
+            animation: fadeSlideUp 0.2s ease-out;
+        }
+        
+        @keyframes fadeSlideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 18px 22px;
+            background: #fef5ed;
+            border-bottom: 1px solid #eedbc8;
+        }
+        
+        .modal-header h3 {
+            color: #b34e2c;
+            font-size: 1.4rem;
+            margin: 0;
+        }
+        
+        .close-modal {
+            font-size: 28px;
+            cursor: pointer;
+            background: none;
+            border: none;
+            font-weight: 300;
+            color: #7b5f4a;
+            transition: 0.1s;
+            line-height: 1;
+            padding: 0 6px;
+        }
+        
+        .close-modal:hover {
+            color: #b34e2c;
+        }
+        
+        .modal-body {
+            padding: 12px 20px 20px;
+        }
+        
+        .modal-tabs {
+            display: flex;
+            gap: 12px;
+            background: #f9f3ec;
+            border-radius: 60px;
+            padding: 5px;
+            margin: 10px 0 15px;
+        }
+        
+        .modal-tab {
+            flex: 1;
+            text-align: center;
+            padding: 10px 0;
+            font-weight: 600;
+            border-radius: 40px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            color: #5f4c38;
+            transition: all 0.2s;
+            font-size: 1rem;
+        }
+        
+        .modal-tab.active {
+            background: #b34e2c;
+            color: white;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        }
+        
+        .qr-display-area {
+            text-align: center;
+            margin: 18px 0 12px;
+        }
+        
+        .qr-modal-img {
+            max-width: 260px;
+            width: 100%;
+            border-radius: 24px;
+            background: white;
+            padding: 12px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+            border: 1px solid #eedbc8;
+        }
+        
+        .info-text {
+            font-size: 12px;
+            background: #f3ede6;
+            padding: 12px;
+            border-radius: 24px;
+            color: #4c3a2b;
+            margin-top: 18px;
+            text-align: center;
+        }
+        
+        @media (max-width: 550px) {
+            .qr-modal-img {
+                max-width: 200px;
+            }
+            .support-fab {
+                width: 52px;
+                height: 52px;
+                font-size: 26px;
+                bottom: 20px;
+                right: 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="hero">
+        <h1>📖 我的故事</h1>
+        <p>一位父亲 · 前绘图员 · OKU抗争 · 仍在坚持</p>
+    </div>
+    
+    <div class="content">
+        <!-- 关于我 -->
+        <div class="section">
+            <h2>👤 关于我</h2>
+            <p>我今年61岁，曾是一名专业结构绘图员。拥有 <strong>新加坡 ITE Building Drafting Grade Two</strong>、<strong>Autodesk AutoCAD R13 原厂证书</strong>，也曾在新加坡 <strong>Chiyoda (S) Pte</strong> 操作过 <strong>X-Steel</strong>。</p>
+            <p>如今，因先天性色盲、交替性外斜视及双侧白内障，我已无法回到原来的技术岗位。OKU申请被拒，理由竟是“不影响功能”。</p>
+        </div>
+        
+        <!-- 我的家庭 -->
+        <div class="section">
+            <h2>🏠 我的家庭</h2>
+            <p>我是一位丈夫，也是一位父亲。妻子两年前做了乳腺癌手术，正在康复中。最小的儿子只有11岁，还在上小学。</p>
+            <div class="highlight">
+                <strong>💔 大女儿 · 心脏术后</strong><br>
+                大女儿2018年在IJN做了VSD心脏手术。今年9月将再次到IJN进行CPET检查。今年1月带她去开BSN户口时，因为冷气太冷，她的脚趾甲发蓝 —— 这是心脏功能不足的信号。
+            </div>
+            <p>尽管如此，在没有补习的情况下，她的SPM考获 <strong>4科Kepujian（包括马来文）和 1科Kepujian Tertinggi（英语 B+）</strong>，还会越南语。她曾梦想当空姐，但因身高158cm以下无法实现。我正鼓励她尝试申请公务员。</p>
+        </div>
+        
+        <!-- OKU 抗争 -->
+        <div class="section">
+            <h2>⚖️ OKU 抗争记录</h2>
+            <p><span class="badge">Talian Kasih</span> 已获得 Kes ID 号码</p>
+            <p><span class="badge">被拒理由</span> “Tidak menggangu kefungsian”（不影响功能）</p>
+            <p><span class="badge">上诉状态</span> 等待 Pakar Oftalmologi 重新确认，准备上诉至 JKM / SISPA</p>
+            <p>我的职业史（AutoCAD、X-Steel、 drafting）恰恰证明：色盲 + 斜视 + 白内障已经彻底摧毁了我的技术工作能力。这不是“不影响功能”，而是“摧毁了职业功能”。</p>
+        </div>
+        
+        <!-- 旧报纸回收服务 -->
+        <div class="section">
+            <h2>📰 旧报纸回收服务</h2>
+            <p>因柴油价格高企（RM6/升）及车辆维修中，服务暂时停止。恢复后会再通知。只限马六甲市区及周边，上门秤重。</p>
+            <p>⚠️ 若有旧电脑、汽车电池等，可 WhatsApp 询问（视距离/数量而定）。</p>
+        </div>
+        
+        <!-- 支持区块 - 干净版，没有 onerror -->
+        <div class="section">
+            <h2>☕ 支持我们</h2>
+            <p>如果您愿意，可以通过以下方式给予我们一点鼓励和支持。所有款项将用于：女儿IJN医疗费用、11岁儿子的生活教育、家庭基本开支。</p>
+            <p style="font-size: 14px; color: #a77858;">※ 这不是募捐，是自愿支持。感谢每一位愿意停下来看一看的人。</p>
+            
+            <div class="support-module">
+                <div class="tab-header" id="inlineTabHeader">
+                    <button class="tab-btn active" id="inlineTabMaybank">🏦 Maybank</button>
+                    <button class="tab-btn" id="inlineTabTng">📱 Touch 'n Go</button>
+                </div>
+                <div id="inlineMaybankPanel" class="qr-panel">
+                    <div class="qr-image-wrapper">
+                        <!-- 干净版：没有 onerror，路径正确 -->
+                        <img class="qr-code-img" id="maybankQRImg" src="docs/images/maybank-qr.jpg" alt="Maybank QR Code">
+                    </div>
+                    <div class="qr-caption">扫描二维码支持 | 账户: FATHER STORY AID</div>
+                    <div class="support-note">💳 账户名: Wong Seng Koon</div>
+                </div>
+                <div id="inlineTngPanel" class="qr-panel" style="display: none;">
+                    <div class="qr-image-wrapper">
+                        <!-- 干净版：没有 onerror，路径正确 -->
+                        <img class="qr-code-img" id="tngQRImg" src="docs/images/tng-qr.jpg" alt="TnG QR Code">
+                    </div>
+                    <div class="qr-caption">TnG 电子钱包 | 号码:112089521463</div>
+                    <div class="support-note">📱 支持DuitNow QR / TnG ID: support.father</div>
+                </div>
+            </div>
+            <div class="disclaimer">
+                <strong>📌 免责声明</strong><br>
+                本页面为个人真实经历分享，非慈善机构、非注册NGO、不涉及证券或投资建议。二维码为个人自愿支持通道，所有支持将用于家庭医疗与生活开支。
+            </div>
+        </div>
+        
+        <!-- 返回首页 -->
+        <div style="text-align: center;">
+            <a href="index.html" class="back-link">← 返回 Myx Shop 首页</a>
+        </div>
+    </div>
+    
+    <footer>
+        <p>一位父亲的故事 · 仍在继续</p>
+        <p>© 2026 · 真实记录 · 理性支持</p>
+    </footer>
+</div>
+
+<!-- 固定赞助按钮 + 模态窗面板（弹窗保留原样，路径也统一） -->
+<button class="support-fab" id="supportFab">❤️</button>
+<div id="supportPanel" class="support-modal">
+    <div class="support-modal-card">
+        <div class="modal-header">
+            <h3>💝 给予温暖支持</h3>
+            <button class="close-modal" id="closeSupportBtn">✕</button>
+        </div>
+        <div class="modal-body">
+            <div class="modal-tabs">
+                <button class="modal-tab active" id="modalTabMaybank">Maybank</button>
+                <button class="modal-tab" id="modalTabTng">Touch 'n Go</button>
+            </div>
+            <div class="qr-display-area" id="modalMaybankArea">
+                <img class="qr-modal-img" id="modalMaybankQR" src="docs/images/maybank-qr.jpg" alt="Maybank Support QR">
+                <div class="qr-caption" style="margin-top: 12px;">Maybank 账户: 554062102340</div>
+            </div>
+            <div class="qr-display-area" id="modalTngArea" style="display: none;">
+                <img class="qr-modal-img" id="modalTngQR" src="docs/images/tng-qr.jpg" alt="Touch n Go QR">
+                <div class="qr-caption" style="margin-top: 12px;">TnG 号码: 019-888 1234 / 扫描DuitNow</div>
+            </div>
+            <div class="info-text">
+                🌱 每一份善意都是力量，感谢您愿意停留。所得将用于女儿心脏检查、儿子教育及家庭医药费。
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    (function() {
+        // 赞助悬浮按钮 + 弹窗逻辑
+        const supportFab = document.getElementById('supportFab');
+        const supportPanel = document.getElementById('supportPanel');
+        const closeSupportBtn = document.getElementById('closeSupportBtn');
+        
+        if (supportFab) {
+            supportFab.onclick = function(e) {
+                e.stopPropagation();
+                if (supportPanel) supportPanel.style.display = 'flex';
+            };
+        }
+        if (closeSupportBtn) {
+            closeSupportBtn.onclick = function() {
+                if (supportPanel) supportPanel.style.display = 'none';
+            };
+        }
+        if (supportPanel) {
+            supportPanel.onclick = function(e) {
+                if (e.target === supportPanel) supportPanel.style.display = 'none';
+            };
+        }
+        
+        // 模态窗内部的Tab切换
+        const modalTabMaybank = document.getElementById('modalTabMaybank');
+        const modalTabTng = document.getElementById('modalTabTng');
+        const modalMaybankArea = document.getElementById('modalMaybankArea');
+        const modalTngArea = document.getElementById('modalTngArea');
+        
+        function setModalActiveTab(active) {
+            if (active === 'maybank') {
+                modalTabMaybank.classList.add('active');
+                modalTabTng.classList.remove('active');
+                if (modalMaybankArea) modalMaybankArea.style.display = 'block';
+                if (modalTngArea) modalTngArea.style.display = 'none';
+            } else {
+                modalTabTng.classList.add('active');
+                modalTabMaybank.classList.remove('active');
+                if (modalMaybankArea) modalMaybankArea.style.display = 'none';
+                if (modalTngArea) modalTngArea.style.display = 'block';
+            }
+        }
+        
+        if (modalTabMaybank) {
+            modalTabMaybank.onclick = () => setModalActiveTab('maybank');
+        }
+        if (modalTabTng) {
+            modalTabTng.onclick = () => setModalActiveTab('tng');
+        }
+        
+        // 内嵌页面支持区域的tab切换
+        const inlineTabMaybank = document.getElementById('inlineTabMaybank');
+        const inlineTabTng = document.getElementById('inlineTabTng');
+        const inlineMaybankPanel = document.getElementById('inlineMaybankPanel');
+        const inlineTngPanel = document.getElementById('inlineTngPanel');
+        
+        function setInlineActive(which) {
+            if (which === 'maybank') {
+                inlineTabMaybank.classList.add('active');
+                inlineTabTng.classList.remove('active');
+                if (inlineMaybankPanel) inlineMaybankPanel.style.display = 'block';
+                if (inlineTngPanel) inlineTngPanel.style.display = 'none';
+            } else {
+                inlineTabTng.classList.add('active');
+                inlineTabMaybank.classList.remove('active');
+                if (inlineMaybankPanel) inlineMaybankPanel.style.display = 'none';
+                if (inlineTngPanel) inlineTngPanel.style.display = 'block';
+            }
+        }
+        
+        if (inlineTabMaybank) {
+            inlineTabMaybank.onclick = () => setInlineActive('maybank');
+        }
+        if (inlineTabTng) {
+            inlineTabTng.onclick = () => setInlineActive('tng');
+        }
+        
+        setInlineActive('maybank');
+        setModalActiveTab('maybank');
+        
+        console.log("✅ mystory.html 已加载 | 图片路径: docs/images/");
+    })();
+</script>
+</body>
+</html>
