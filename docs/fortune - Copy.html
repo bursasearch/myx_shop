@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>正宗农历转换 | 公历⇄农历查询 | Myx Shop 择日万年历</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Noto Sans CJK SC', system-ui, -apple-system, 'Roboto', sans-serif;
+            background: linear-gradient(145deg, #fef9e6 0%, #fff4e0 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #2c2418;
+        }
+
+        .container {
+            max-width: 650px;
+            margin: 0 auto;
+        }
+
+        /* 主卡片 */
+        .card {
+            background: rgba(255, 252, 240, 0.96);
+            backdrop-filter: blur(2px);
+            border-radius: 2rem;
+            padding: 1.8rem 1.5rem;
+            margin-bottom: 1.2rem;
+            box-shadow: 0 20px 35px -12px rgba(0, 0, 0, 0.2);
+            border: 1px solid #ffdd99;
+        }
+
+        /* 顶部引流条 */
+        .top-bar {
+            text-align: center;
+            margin-bottom: 1.2rem;
+        }
+
+        .top-bar a {
+            background: #ffeed5;
+            color: #b45f1b;
+            text-decoration: none;
+            padding: 6px 18px;
+            border-radius: 40px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            border: 1px solid #ffd28f;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 1.9rem;
+            margin-bottom: 0.25rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        h1 .main-title {
+            background: linear-gradient(135deg, #c27e2e, #e6a017);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+        }
+
+        .badge {
+            background: #2e7d64;
+            font-size: 0.7rem;
+            padding: 4px 12px;
+            border-radius: 30px;
+            color: white;
+            font-weight: normal;
+        }
+
+        .sub {
+            text-align: center;
+            color: #7f6b4a;
+            margin-bottom: 1.8rem;
+            font-size: 0.85rem;
+            border-bottom: 1px dashed #ffd89a;
+            display: inline-block;
+            width: auto;
+            margin-left: auto;
+            margin-right: auto;
+            padding-bottom: 6px;
+        }
+
+        /* 输入区域 */
+        .input-group {
+            background: #fff8ed;
+            padding: 1.2rem;
+            border-radius: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .mode-switch {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 18px;
+        }
+
+        .mode-btn {
+            flex: 1;
+            background: #f3e9d2;
+            border: 1px solid #e9cf9e;
+            border-radius: 48px;
+            padding: 10px;
+            text-align: center;
+            cursor: pointer;
+            font-weight: 600;
+            color: #8b6946;
+            transition: all 0.2s;
+        }
+
+        .mode-btn.active {
+            background: #e6a017;
+            color: white;
+            border-color: #c47d2b;
+            box-shadow: 0 4px 10px rgba(230, 160, 23, 0.3);
+        }
+
+        .date-panel {
+            margin-top: 6px;
+        }
+
+        .date-picker-input {
+            width: 100%;
+            padding: 14px;
+            font-size: 1.05rem;
+            border-radius: 2rem;
+            border: 1px solid #f0cf8c;
+            background: white;
+            font-weight: 500;
+        }
+
+        .manual-inputs {
+            display: none;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .manual-inputs.active {
+            display: flex;
+        }
+
+        .manual-inputs input {
+            flex: 1;
+            padding: 12px;
+            border-radius: 2rem;
+            border: 1px solid #f0cf8c;
+            background: white;
+            font-size: 1rem;
+            text-align: center;
+        }
+
+        /* ✨ 核心圈起来的展示区（引流精华） */
+        .result-panel {
+            background: linear-gradient(115deg, #fff3e0, #fffae9);
+            border-radius: 2rem;
+            padding: 1.4rem;
+            margin-top: 1rem;
+            border: 1px solid #ffd789;
+            box-shadow: 0 8px 18px rgba(0,0,0,0.05);
+            text-align: center;
+        }
+
+        .solar-block {
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: #b45a1a;
+            margin-bottom: 10px;
+        }
+
+        .lunar-block {
+            font-size: 1.35rem;
+            font-weight: 700;
+            background: #2c2418;
+            display: inline-block;
+            padding: 8px 20px;
+            border-radius: 60px;
+            color: #ffde9c;
+            margin: 8px 0;
+            letter-spacing: 1px;
+        }
+
+        .week-block {
+            font-size: 0.9rem;
+            color: #9b7b54;
+            margin-top: 5px;
+        }
+
+        .extra-info {
+            display: flex;
+            justify-content: center;
+            gap: 28px;
+            margin-top: 18px;
+            flex-wrap: wrap;
+            font-size: 0.85rem;
+            border-top: 1px dashed #ffd59e;
+            padding-top: 14px;
+        }
+
+        .extra-item {
+            background: #fff0df;
+            border-radius: 50px;
+            padding: 5px 15px;
+            font-weight: 500;
+        }
+
+        .share-buttons {
+            display: flex;
+            gap: 12px;
+            margin-top: 20px;
+            justify-content: center;
+        }
+
+        .btn {
+            background: #e6a017;
+            border: none;
+            padding: 10px 22px;
+            border-radius: 48px;
+            font-weight: bold;
+            color: white;
+            cursor: pointer;
+            transition: 0.15s;
+            font-size: 0.9rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid #e6a017;
+            color: #b45f1b;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            background: #c47d2b;
+        }
+
+        .footer-note {
+            text-align: center;
+            font-size: 0.7rem;
+            color: #b6976a;
+            margin-top: 1rem;
+        }
+
+        .guide {
+            background: #f9efdf;
+            border-radius: 1.2rem;
+            padding: 12px;
+            font-size: 0.75rem;
+            text-align: center;
+            margin-top: 16px;
+        }
+
+        .guide a {
+            color: #d48f2b;
+        }
+
+        @media (max-width: 500px) {
+            .lunar-block {
+                font-size: 1.1rem;
+                padding: 5px 12px;
+            }
+            .extra-info {
+                gap: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="top-bar">
+        <a href="https://bursasearch.github.io/myx_shop/">🏠 返回 Myx Shop 主頁</a>
+    </div>
+    <div class="card">
+        <h1>
+            <span class="main-title">📅 正宗農曆轉換</span>
+            <span class="badge">擇日·萬年曆</span>
+        </h1>
+        <div style="text-align: center;">
+            <div class="sub">🌾 公曆 ⇄ 農曆 即時換算 | 生辰·節氣參考</div>
+        </div>
+
+        <!-- 模式切换 公曆/農曆 (默认公历输入转农历) -->
+        <div class="mode-switch">
+            <div class="mode-btn active" id="modeSolarBtn">🗓️ 公曆 → 農曆</div>
+            <div class="mode-btn" id="modeLunarBtn">🌙 農曆 → 公曆 (純學術)</div>
+        </div>
+
+        <div class="input-group">
+            <div id="solarInputArea">
+                <div class="date-mode-switch" style="display:flex; gap:10px; margin-bottom:12px;">
+                    <div class="mode-btn small-mode active" id="pickerSolarBtn">📆 日曆選取</div>
+                    <div class="mode-btn small-mode" id="manualSolarBtn">✍️ 手動輸入</div>
+                </div>
+                <input type="date" id="solarDatePicker" class="date-picker-input" value="2000-01-01">
+                <div class="manual-inputs" id="solarManualInputs">
+                    <input type="number" id="solarYear" placeholder="年" value="2000">
+                    <input type="number" id="solarMonth" placeholder="月" value="1">
+                    <input type="number" id="solarDay" placeholder="日" value="1">
+                </div>
+            </div>
+
+            <div id="lunarInputArea" style="display:none;">
+                <div style="display:flex; gap:12px; flex-wrap:wrap;">
+                    <input type="number" id="lunarYear" placeholder="農曆年" value="2000" style="flex:2; padding:12px; border-radius:2rem;">
+                    <select id="lunarMonthSelect" style="flex:1; padding:12px; border-radius:2rem;">
+                        <option value="1">正月</option><option value="2">二月</option><option value="3">三月</option>
+                        <option value="4">四月</option><option value="5">五月</option><option value="6">六月</option>
+                        <option value="7">七月</option><option value="8">八月</option><option value="9">九月</option>
+                        <option value="10">十月</option><option value="11">十一月</option><option value="12">十二月</option>
+                    </select>
+                    <input type="number" id="lunarDay" placeholder="日" value="1" style="flex:1; padding:12px; border-radius:2rem;">
+                </div>
+                <div style="font-size:0.7rem; margin-top:8px; color:#b45a1a;">⚠️ 農曆轉公曆僅供參考 (1900-2100)</div>
+            </div>
+        </div>
+
+        <!-- 🌟 圈起来的核心展示区：公历+农历+星期+干支（引流精华） -->
+        <div class="result-panel" id="convertResult">
+            <div class="solar-block">
+                📆 公曆：<strong id="displaySolar">2000年1月1日</strong>
+            </div>
+            <div class="lunar-block" id="displayLunar">
+                己卯年 十一月廿五日
+            </div>
+            <div class="week-block" id="displayWeek">
+                🌟 星期六
+            </div>
+            <div class="extra-info">
+                <div class="extra-item">🐉 生肖：<span id="zodiac">龍</span></div>
+                <div class="extra-item">📜 干支：<span id="gzYear">己卯</span></div>
+                <div class="extra-item">🌙 月相參考：<span id="moonPhase">廿五·殘月</span></div>
+            </div>
+        </div>
+
+        <div class="share-buttons">
+            <button class="btn" id="copyResultBtn">📋 複製轉換結果</button>
+            <button class="btn btn-outline" id="shareDateBtn">📤 分享今日吉日</button>
+        </div>
+
+        <div class="guide">
+            💡 小提示：點擊「複製結果」分享給朋友查農曆生日、擇日吉時。<br>
+            🔮 完整紫微命盤 → <a href="#" id="gotoZiweiLink">🌟 紫微斗數排盤(隱私版)</a>
+        </div>
+    </div>
+
+    <div class="footer-note">
+        ✨ 正統農曆推算 (1900-2100) | 歡迎隨喜支持 
+<p><a href="privacy.html" style="color: #8b7a6a; text-decoration: none;">📄 隐私政策</a></p>
+    </div>
+</div>
+
+<script>
+    // --------------------------------------------------------------
+    // 正宗农历转换核心 (1900-2100)
+    // --------------------------------------------------------------
+    const lunarInfo = [
+        0x04bd8,0x04ae0,0x0a570,0x054d5,0x0d260,0x0d950,0x16554,0x056a0,0x09ad0,0x055d2,
+        0x04ae0,0x0a5b6,0x0a4d0,0x0d250,0x1d255,0x0b540,0x0d6a0,0x0ada2,0x095b0,0x14977,
+        0x04970,0x0a4b0,0x0b4b5,0x06a50,0x06d40,0x1ab54,0x02b60,0x09570,0x052f2,0x04970,
+        0x06566,0x0d4a0,0x0ea50,0x06e95,0x05ad0,0x02b60,0x186e3,0x092e0,0x1c8d7,0x0c950,
+        0x0d4a0,0x1d8a6,0x0b550,0x056a0,0x1a5b4,0x025d0,0x092d0,0x0d2b2,0x0a950,0x0b557,
+        0x06ca0,0x0b550,0x15355,0x04da0,0x0a5b0,0x14573,0x052b0,0x0a9a8,0x0e950,0x06aa0,
+        0x0aea6,0x0ab50,0x04b60,0x0aae4,0x0a570,0x05260,0x0f263,0x0d950,0x05b57,0x056a0,
+        0x096d0,0x04dd5,0x04ad0,0x0a4d0,0x0d4d4,0x0d250,0x0d558,0x0b540,0x0b6a0,0x195a6,
+        0x095b0,0x049b0,0x0a974,0x0a4b0,0x0b27a,0x06a50,0x06d40,0x0af46,0x0ab60,0x09570,
+        0x04af5,0x04970,0x064b0,0x074a3,0x0ea50,0x06b58,0x055c0,0x0ab60,0x096d5,0x092e0,
+        0x0c960,0x0d954,0x0d4a0,0x0da50,0x07552,0x056a0,0x0abb7,0x025d0,0x092d0,0x0cab5,
+        0x0a950,0x0b4a0,0x0baa4,0x0ad50,0x055d9,0x04ba0,0x0a5b0,0x15176,0x052b0,0x0a930,
+        0x07954,0x06aa0,0x0ad50,0x05b52,0x04b60,0x0a6e6,0x0a4e0,0x0d260,0x0ea65,0x0d530,
+        0x05aa0,0x076a3,0x096d0,0x04bd7,0x04ad0,0x0a4d0,0x1d0b6,0x0d250,0x0d520,0x0dd45,
+        0x0b5a0,0x056d0,0x055b2,0x049b0,0x0a577,0x0a4b0,0x0aa50,0x1b255,0x06d20,0x0ada0,
+        0x14b63,0x09370,0x049f8,0x04970,0x064b0,0x168a6,0x0ea50,0x06aa0,0x1a6c4,0x0aae0,
+        0x092e0,0x0d2e3,0x0c960,0x0d557,0x0d4a0,0x0da50,0x05d55,0x056a0,0x0a6d0,0x055d4,
+        0x052d0,0x0a9b8,0x0a950,0x0b4a0,0x0b6a6,0x0ad50,0x055a0,0x0aba4,0x0a5b0,0x052b0,
+        0x0b273,0x06930,0x07337,0x06aa0,0x0ad50,0x14b55,0x04b60,0x0a570,0x054e4,0x0d160,
+        0x0e968,0x0d520,0x0daa0,0x16aa6,0x056d0,0x04ae0,0x0a9d4,0x0a2d0,0x0d150,0x0f252,
+        0x0d520
+    ];
+
+    function getLeapMonth(year) { return lunarInfo[year - 1900] & 0xf; }
+    function getLunarMonthDays(year, month) { return (lunarInfo[year - 1900] & (0x10000 >> month)) ? 30 : 29; }
+    function getLeapMonthDays(year) { if (getLeapMonth(year) === 0) return 0; return (lunarInfo[year - 1900] & 0x10000) ? 30 : 29; }
+    function getLunarYearDays(year) { let sum=0; for(let i=1;i<=12;i++) sum+=getLunarMonthDays(year,i); return sum+getLeapMonthDays(year); }
+    
+    function solarToLunar(solarYear, solarMonth, solarDay) {
+        if (solarYear<1900 || solarYear>2100) return null;
+        const baseUtc = Date.UTC(1900,0,31);
+        const targetUtc = Date.UTC(solarYear, solarMonth-1, solarDay);
+        let offset = Math.round((targetUtc - baseUtc)/86400000);
+        if(offset<0) return null;
+        let lunarYear = 1900;
+        let yearDays = getLunarYearDays(lunarYear);
+        while(offset>=yearDays && lunarYear<2100) { offset-=yearDays; lunarYear++; yearDays=getLunarYearDays(lunarYear); }
+        let leapMonth = getLeapMonth(lunarYear);
+        let isLeap=false;
+        let lunarMonth=1, lunarMonthName="", lunarDay=1;
+        const monthNames=["正月","二月","三月","四月","五月","六月","七月","八月","九月","十月","十一月","十二月"];
+        for(let i=1;i<=12;i++) {
+            let mDays = getLunarMonthDays(lunarYear,i);
+            if(offset < mDays) { lunarMonth=i; lunarMonthName=monthNames[i-1]; isLeap=false; break; }
+            offset -= mDays;
+            if(leapMonth>0 && i===leapMonth) {
+                let lDays = getLeapMonthDays(lunarYear);
+                if(offset<lDays) { lunarMonth=i; lunarMonthName="閏"+monthNames[i-1]; isLeap=true; break; }
+                offset -= lDays;
+            }
+        }
+        lunarDay = offset+1;
+        const tg=["甲","乙","丙","丁","戊","己","庚","辛","壬","癸"];
+        const dz=["子","丑","寅","卯","辰","巳","午","未","申","酉","戌","亥"];
+        const gzYear = tg[(lunarYear-4)%10] + dz[(lunarYear-4)%12];
+        return { lunarYear, lunarMonth, lunarDay, lunarMonthName, isLeap, gzYear };
+    }
+    
+    function getWeekday(year,month,day) { const d=new Date(year,month-1,day); return ["星期日","星期一","星期二","星期三","星期四","星期五","星期六"][d.getDay()]; }
+    function getZodiac(year) { const z=["鼠","牛","虎","兔","龍","蛇","馬","羊","猴","雞","狗","豬"]; return z[(year-4)%12]; }
+    function getMoonPhase(lunarDay) { if(lunarDay<8) return "上弦月"; if(lunarDay<15) return "盈凸"; if(lunarDay==15) return "滿月"; if(lunarDay<23) return "下弦月"; return "殘月"; }
+    
+    function updateBySolar(year,month,day) {
+        const lunar = solarToLunar(year,month,day);
+        if(!lunar) { document.getElementById("displayLunar").innerText="日期超出範圍"; return; }
+        const weekday = getWeekday(year,month,day);
+        document.getElementById("displaySolar").innerText=`${year}年${month}月${day}日`;
+        document.getElementById("displayLunar").innerText=`${lunar.gzYear}年 ${lunar.lunarMonthName}${lunar.lunarDay}日`;
+        document.getElementById("displayWeek").innerHTML=`🌟 ${weekday}`;
+        document.getElementById("zodiac").innerText=getZodiac(lunar.lunarYear);
+        document.getElementById("gzYear").innerText=lunar.gzYear;
+        document.getElementById("moonPhase").innerText=`${lunar.lunarDay}日·${getMoonPhase(lunar.lunarDay)}`;
+    }
+    
+    // 获取当前选择的公历日期
+    function getCurrentSolar() {
+        let y,m,d;
+        const isPickerActive = document.getElementById("solarDatePicker").style.display !== "none";
+        if(isPickerActive && document.getElementById("solarDatePicker").value) {
+            let parts = document.getElementById("solarDatePicker").value.split("-");
+            y=parseInt(parts[0]); m=parseInt(parts[1]); d=parseInt(parts[2]);
+        } else {
+            y=parseInt(document.getElementById("solarYear").value) || 2000;
+            m=parseInt(document.getElementById("solarMonth").value) || 1;
+            d=parseInt(document.getElementById("solarDay").value) || 1;
+        }
+        return {year:y, month:m, day:d};
+    }
+    
+    function refreshSolarConvert() {
+        const {year,month,day} = getCurrentSolar();
+        updateBySolar(year,month,day);
+    }
+    
+    // 页面初始化及事件绑定
+    function bindEvents() {
+        document.getElementById("solarDatePicker").addEventListener("change", refreshSolarConvert);
+        document.getElementById("solarYear").addEventListener("input", refreshSolarConvert);
+        document.getElementById("solarMonth").addEventListener("input", refreshSolarConvert);
+        document.getElementById("solarDay").addEventListener("input", refreshSolarConvert);
+        
+        document.getElementById("pickerSolarBtn").addEventListener("click",()=>{
+            document.getElementById("solarDatePicker").style.display="block";
+            document.getElementById("solarManualInputs").classList.remove("active");
+            document.getElementById("pickerSolarBtn").classList.add("active");
+            document.getElementById("manualSolarBtn").classList.remove("active");
+            refreshSolarConvert();
+        });
+        document.getElementById("manualSolarBtn").addEventListener("click",()=>{
+            document.getElementById("solarDatePicker").style.display="none";
+            document.getElementById("solarManualInputs").classList.add("active");
+            document.getElementById("manualSolarBtn").classList.add("active");
+            document.getElementById("pickerSolarBtn").classList.remove("active");
+            refreshSolarConvert();
+        });
+        // 模式切换 公历/农历输入（农历转公历轻量）
+        document.getElementById("modeSolarBtn").addEventListener("click",()=>{
+            document.getElementById("modeSolarBtn").classList.add("active");
+            document.getElementById("modeLunarBtn").classList.remove("active");
+            document.getElementById("solarInputArea").style.display="block";
+            document.getElementById("lunarInputArea").style.display="none";
+            refreshSolarConvert();
+        });
+        document.getElementById("modeLunarBtn").addEventListener("click",()=>{
+            document.getElementById("modeLunarBtn").classList.add("active");
+            document.getElementById("modeSolarBtn").classList.remove("active");
+            document.getElementById("solarInputArea").style.display="none";
+            document.getElementById("lunarInputArea").style.display="block";
+            // 简易提示
+            document.getElementById("displayLunar").innerText="📜 農曆轉公曆(學術參考)";
+            document.getElementById("displaySolar").innerHTML="請輸入農曆日期";
+        });
+        // 复制结果
+        document.getElementById("copyResultBtn").addEventListener("click",()=>{
+            const solarTxt = document.getElementById("displaySolar").innerText;
+            const lunarTxt = document.getElementById("displayLunar").innerText;
+            const weekTxt = document.getElementById("displayWeek").innerText;
+            const copyContent = `${solarTxt}\n${lunarTxt}\n${weekTxt}\n生肖：${document.getElementById("zodiac").innerText}  干支：${document.getElementById("gzYear").innerText}`;
+            navigator.clipboard.writeText(copyContent);
+            alert("✅ 轉換結果已複製，可分享給朋友查農曆！");
+        });
+        document.getElementById("shareDateBtn").addEventListener("click",()=>{
+            if(navigator.share){
+                navigator.share({ title: "農曆吉日查詢", text: `${document.getElementById("displaySolar").innerText} → ${document.getElementById("displayLunar").innerText}` });
+            } else { alert("點擊複製按鈕即可分享結果"); }
+        });
+        document.getElementById("gotoZiweiLink").addEventListener("click",(e)=>{
+            e.preventDefault();
+            window.location.href = "ziwei.html";
+        });
+        // 预设显示
+        document.getElementById("solarManualInputs").classList.remove("active");
+        document.getElementById("solarDatePicker").style.display="block";
+    }
+    
+    bindEvents();
+    refreshSolarConvert();
+</script>
+</body>
+</html>
