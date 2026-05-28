@@ -147,7 +147,7 @@
             padding: 8px;
             background: #fff;
             transition: transform 0.2s ease;
-            display: block;  /* 确保图片可见 */
+            display: block;
         }
         
         .qr-code-img:hover {
@@ -409,11 +409,12 @@
             <p>我的职业史（AutoCAD、X-Steel、 drafting）恰恰证明：色盲 + 斜视 + 白内障已经彻底摧毁了我的技术工作能力。这不是“不影响功能”，而是“摧毁了职业功能”。</p>
         </div>
         
-        <!-- 旧报纸回收服务 -->
+        <!-- 旧报纸回收服务 - 已加入翻垃圾桶描述 -->
         <div class="section">
             <h2>📰 旧报纸回收服务</h2>
             <p>因柴油价格高企（RM6/升）及车辆维修中，服务暂时停止。恢复后会再通知。只限马六甲市区及周边，上门秤重。</p>
             <p>⚠️ 若有旧电脑、汽车电池等，可 WhatsApp 询问（视距离/数量而定）。</p>
+            <p style="background: #fff1e0; padding: 10px; border-radius: 16px; margin-top: 12px;"><strong>⚡ 不只是旧报纸。</strong> 有时候，我还从垃圾桶捡可回收的物品，拿去卖。这是我活下去的方式之一。</p>
         </div>
         
         <!-- 支持区块 - 干净版，没有 onerror -->
@@ -429,7 +430,6 @@
                 </div>
                 <div id="inlineMaybankPanel" class="qr-panel">
                     <div class="qr-image-wrapper">
-                        <!-- 干净版：没有 onerror，路径正确 -->
                         <img class="qr-code-img" id="maybankQRImg" src="docs/images/maybank-qr.jpg" alt="Maybank QR Code">
                     </div>
                     <div class="qr-caption">扫描二维码支持 | 账户: FATHER STORY AID</div>
@@ -437,7 +437,6 @@
                 </div>
                 <div id="inlineTngPanel" class="qr-panel" style="display: none;">
                     <div class="qr-image-wrapper">
-                        <!-- 干净版：没有 onerror，路径正确 -->
                         <img class="qr-code-img" id="tngQRImg" src="docs/images/tng-qr.jpg" alt="TnG QR Code">
                     </div>
                     <div class="qr-caption">TnG 电子钱包 | 号码:112089521463</div>
@@ -459,11 +458,11 @@
     <footer>
         <p>一位父亲的故事 · 仍在继续</p>
         <p>© 2026 · 真实记录 · 理性支持</p>
-<p><a href="privacy.html" style="color: #8b7a6a; text-decoration: none;">📄 隐私政策</a></p>
+        <p><a href="privacy.html" style="color: #8b7a6a; text-decoration: none;">📄 隐私政策</a></p>
     </footer>
 </div>
 
-<!-- 固定赞助按钮 + 模态窗面板（弹窗保留原样，路径也统一） -->
+<!-- 固定赞助按钮 + 模态窗面板 -->
 <button class="support-fab" id="supportFab">❤️</button>
 <div id="supportPanel" class="support-modal">
     <div class="support-modal-card">
@@ -493,7 +492,6 @@
 
 <script>
     (function() {
-        // 赞助悬浮按钮 + 弹窗逻辑
         const supportFab = document.getElementById('supportFab');
         const supportPanel = document.getElementById('supportPanel');
         const closeSupportBtn = document.getElementById('closeSupportBtn');
@@ -515,7 +513,6 @@
             };
         }
         
-        // 模态窗内部的Tab切换
         const modalTabMaybank = document.getElementById('modalTabMaybank');
         const modalTabTng = document.getElementById('modalTabTng');
         const modalMaybankArea = document.getElementById('modalMaybankArea');
@@ -542,7 +539,6 @@
             modalTabTng.onclick = () => setModalActiveTab('tng');
         }
         
-        // 内嵌页面支持区域的tab切换
         const inlineTabMaybank = document.getElementById('inlineTabMaybank');
         const inlineTabTng = document.getElementById('inlineTabTng');
         const inlineMaybankPanel = document.getElementById('inlineMaybankPanel');
