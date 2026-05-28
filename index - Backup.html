@@ -3,12 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="免费八字排盘工具，输入生日时辰自动排四柱。纯传统文化参考，不迷信、不收费。还有一位61岁父亲的真实故事。SSM注册企业：Myx Shop。">
-<meta name="keywords" content="免费八字排盘,八字排盘,传统文化,四柱八字,紫微斗数,每日運程,Myx Shop,马来西亚">
-<meta name="author" content="Myx Shop">
-    <title>Myx Shop - SSM註冊企業 | 多元化服務平台</title>
+    <!-- 优化后的 description，加入 Freelancer Choice 关键词 -->
+    <meta name="description" content="Myx Shop - SSM注册企业。免费八字排盘、紫微斗数、每日運程，以及 Freelancer Choice 精选50个自由职业优势。纯传统文化参考，不收费。">
+    <meta name="keywords" content="免费八字排盘,八字排盘,传统文化,四柱八字,紫微斗数,每日運程,Freelancer Choice, 线上兼职,Myx Shop,马来西亚">
+    <meta name="author" content="Myx Shop">
+    <title>Myx Shop - SSM註冊企業 | 八字排盤 · 紫微斗數 · Freelancer Choice</title>
     
-    <!-- Google tag (gtag.js) -->
+    <!-- Google tag (gtag.js) 保持不变 -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-92XTNG247J"></script>
     <script>
         const GA_MEASUREMENT_ID = 'G-92XTNG247J';
@@ -227,6 +228,21 @@
             color: #e6b87e;
         }
         
+        /* 🆕 Freelancer Choice 卡片专属样式 */
+        .nav-card.freelancer {
+            background: linear-gradient(135deg, #0f4c5c 0%, #1e6f5c 100%);
+            color: #E8F8F5;
+            border: 1px solid #6ab04c;
+        }
+        
+        .nav-card.freelancer:hover {
+            box-shadow: 0 10px 25px rgba(30, 111, 92, 0.4);
+        }
+        
+        .nav-card.freelancer h3 {
+            color: #6ab04c;
+        }
+        
         .verify-link {
             display: inline-block;
             background: #667eea;
@@ -241,6 +257,22 @@
         .verify-link:hover {
             background: #5a67d8;
             transform: translateY(-2px);
+        }
+        
+        /* 🆕 服务分类小标题样式 */
+        .section-label {
+            text-align: center;
+            margin: 30px 0 15px 0;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+        
+        .section-label h2 {
+            font-size: 20px;
+            color: #2d3748;
+            display: inline-block;
+            background: white;
+            padding: 0 20px;
         }
         
         footer {
@@ -331,18 +363,21 @@
             </a>
         </header>
 
-</header>
+        <!-- 引导代码保持不变 -->
+        <div style="background: #e8ddd0; padding: 12px 16px; border-radius: 20px; margin: 15px 20px 0 20px; text-align: center;">
+            <p style="margin: 0; font-size: 14px; font-weight: 500;">📱 <strong>想随时找到这个网站？</strong></p>
+            <p style="margin: 5px 0 0; font-size: 13px;">点浏览器菜单 → <strong>「添加到主屏幕」</strong><br>下次一键打开，不用再搜索。</p>
+        </div>
 
-<!-- 引导代码放在这里 -->
-<div style="background: #e8ddd0; padding: 12px 16px; border-radius: 20px; margin: 15px 20px 0 20px; text-align: center;">
-    <p style="margin: 0; font-size: 14px; font-weight: 500;">📱 <strong>想随时找到这个网站？</strong></p>
-    <p style="margin: 5px 0 0; font-size: 13px;">点浏览器菜单 → <strong>「添加到主屏幕」</strong><br>下次一键打开，不用再搜索。</p>
-</div>
-
-<div class="nav-grid">
-    <a href="docs/bursa.html" class="nav-card" data-section="马六甲回收服務">
-                <h3>📰 马六甲回收服務</h3>
-                <p>只限马六甲市區 · 旧报纸回收</p>
+        <!-- 🆕 ===== 传统服务分类 ===== -->
+        <div class="section-label">
+            <h2>📿 传统国学与命理</h2>
+        </div>
+        
+        <div class="nav-grid">
+            <a href="eight_chr.html" class="nav-card bazi" data-section="八字排盘">
+                <h3>八字排盘</h3>
+                <p>生辰八字 · 四柱推算 · 传统文化</p>
             </a>
             
             <a href="docs/ziwei.html" class="nav-card ziwei" data-section="紫微斗数免费排盘">
@@ -350,15 +385,42 @@
                 <p>输入生辰 · 一键排盘 · AI解盘</p>
             </a>
 
-            <!-- ✅ 新增：八字排盘按钮 (eight_chr.html) -->
-            <a href="eight_chr.html" class="nav-card bazi" data-section="八字排盘">
-                <h3>八字排盘</h3>
-                <p>生辰八字 · 四柱推算 · 传统文化</p>
-            </a>
-
             <a href="docs/fortune.html" class="nav-card fortune" data-section="每日運程">
                 <h3>🔮 每日運程</h3>
                 <p>流日推演 · 今日運勢 · 吉凶宜忌</p>
+            </a>
+        </div>
+
+        <!-- 🆕 ===== 微上兼职/赚钱分类 （ 美元 ) ===== -->
+        <div class="section-label">
+            <h2>💼 綫上兼职 & 赚钱指南</h2>
+        </div>
+        
+        <div class="nav-grid">
+            <!-- ⭐ 重点：Freelancer Choice 页面链接 -->
+            <a href="freelancer.html" class="nav-card freelancer" data-section="Freelancer Choice">
+                <h3>🎯 Freelancer Choice</h3>
+                <p>精选 35 个线上兼职 · 五大分类 · 持续更新</p>
+            </a>
+            
+            <!-- 预留未来自由职业相关页面位置 -->
+            <!-- 
+            <a href="docs/freelance-tips.html" class="nav-card freelancer" data-section="自由职业技巧">
+                <h3>💡 自由职业技巧</h3>
+                <p>接案经验 · 谈判策略 · 客户管理</p>
+            </a>
+            -->
+        </div>
+
+        <!-- 🆕 ===== 商业服务分类 ===== -->
+        <div class="section-label">
+            <h2>🏪 商业与服务</h2>
+        </div>
+        
+        <div class="nav-grid">
+            <a href="docs/bursa.html" class="nav-card" data-section="马六甲回收服務">
+                <h3>📰 马六甲回收服務</h3>
+                <p>只限马六甲市區 · 旧报纸回收</p>
             </a>
             
             <a href="docs/products.html" class="nav-card" data-section="聯盟商店">
@@ -375,7 +437,14 @@
                 <h3>🏠 房地產代理</h3>
                 <p>專業房地產服務與物業資訊</p>
             </a>
-            
+        </div>
+
+        <!-- 🆕 ===== 关于我们分类 ===== -->
+        <div class="section-label">
+            <h2>❤️ 关于我们</h2>
+        </div>
+        
+        <div class="nav-grid">
             <a href="mystory.html" class="nav-card story" data-section="我的故事与支持">
                 <h3>📖 我的故事</h3>
                 <p>一位父亲 · 前绘图员 · OKU抗争 · 支持我们</p>
@@ -387,7 +456,7 @@
             <p>SSM Reg No: 202510210078 (JM1034075-K)</p>
             <p>© 2025 Myx Shop. 保留所有權利。</p>
             <p>網站分析: Google Analytics 4 (ID: G-92XTNG247J)</p>
-<p><a href="privacy.html" style="color: #bea98c; text-decoration: none;">隐私政策</a> | © 2026 Myx Shop</p>
+            <p><a href="privacy.html" style="color: #bea98c; text-decoration: none;">隐私政策</a> | <a href="freelancer.html" style="color: #bea98c; text-decoration: none;">Freelancer Choice</a> | © 2026 Myx Shop</p>
         </footer>
     </div>
 

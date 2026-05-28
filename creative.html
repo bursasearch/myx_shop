@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>设计创意类兼职 | Freelancer Choice | Myx Shop</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', 'Noto Sans CJK SC', system-ui, -apple-system, 'Roboto', sans-serif;
+            background: radial-gradient(circle at 10% 20%, #0f172a, #030614);
+            min-height: 100vh;
+            padding: 20px;
+            color: #e9f1ff;
+        }
+        .container { max-width: 700px; margin: 0 auto; }
+        .card {
+            background: rgba(15, 25, 45, 0.65);
+            backdrop-filter: blur(16px);
+            border-radius: 2rem;
+            padding: 1.8rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid rgba(255, 215, 0, 0.35);
+            box-shadow: 0 20px 35px -12px rgba(0, 0, 0, 0.5);
+        }
+        h1 {
+            text-align: center;
+            font-weight: 600;
+            background: linear-gradient(135deg, #FFE6A3, #FFB347);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+        .site-link {
+            text-align: center;
+            margin-bottom: 1.2rem;
+        }
+        .site-link a {
+            color: #FFD966;
+            text-decoration: none;
+            font-size: 0.85rem;
+            background: rgba(0,0,0,0.4);
+            padding: 4px 12px;
+            border-radius: 20px;
+        }
+        .sub {
+            text-align: center;
+            color: #FFD98C;
+            margin-bottom: 1.8rem;
+            font-size: 0.95rem;
+        }
+        .link-list {
+            list-style: none;
+            margin: 1.8rem 0;
+        }
+        .link-list li {
+            background: rgba(255, 215, 0, 0.08);
+            margin: 12px 0;
+            padding: 14px 18px;
+            border-radius: 60px;
+            border: 1px solid rgba(255, 200, 80, 0.3);
+            transition: all 0.2s;
+        }
+        .link-list li:hover {
+            background: rgba(255, 215, 0, 0.2);
+            border-color: #FFD966;
+            transform: translateX(4px);
+        }
+        .link-list a {
+            text-decoration: none;
+            font-weight: 500;
+            color: #FFE6B0;
+            font-size: 1.05rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .link-list a::before {
+            content: "✨";
+            color: #FFD966;
+            font-size: 1.1rem;
+        }
+        .reminder-box {
+            background: rgba(255, 193, 7, 0.12);
+            border-left: 4px solid #FFC107;
+            border-radius: 16px;
+            padding: 12px 16px;
+            margin: 20px 0;
+            display: flex;
+            gap: 12px;
+            font-size: 0.8rem;
+        }
+        .reminder-icon { font-size: 1.3rem; }
+        .reminder-text strong { color: #FFD966; }
+        .support-fab {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            background: linear-gradient(145deg, #FF9800, #F57C00);
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 26px;
+            cursor: pointer;
+            z-index: 1000;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            border: none;
+        }
+        .support-panel {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(8px);
+            z-index: 1100;
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+        .support-card {
+            background: white;
+            color: #1e293b;
+            max-width: 350px;
+            width: 90%;
+            border-radius: 28px;
+            padding: 24px 20px;
+            text-align: center;
+            position: relative;
+        }
+        .close-support {
+            position: absolute;
+            top: 12px;
+            right: 16px;
+            font-size: 24px;
+            cursor: pointer;
+            background: none;
+            border: none;
+            color: #999;
+        }
+        .qr-switch-tabs {
+            display: flex;
+            gap: 12px;
+            margin: 15px 0;
+            background: #f1f5f9;
+            padding: 6px;
+            border-radius: 60px;
+        }
+        .qr-tab {
+            flex: 1;
+            text-align: center;
+            padding: 10px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            background: transparent;
+            color: #334155;
+        }
+        .qr-tab.active {
+            background: #2c7a2c;
+            color: white;
+        }
+        .qr-img {
+            width: 180px;
+            margin: 15px auto;
+            display: block;
+            border-radius: 16px;
+            border: 1px solid #ddd;
+            padding: 8px;
+            background: white;
+        }
+        .qr-note {
+            background: #eef2ff;
+            padding: 12px;
+            border-radius: 16px;
+            margin-top: 15px;
+            font-size: 12px;
+            color: #1e40af;
+        }
+        footer {
+            text-align: center;
+            font-size: 0.7rem;
+            color: #8ba0c0;
+            margin-top: 1rem;
+        }
+        footer a {
+            color: #FFD966;
+            text-decoration: none;
+        }
+        @media (max-width: 550px) {
+            .card { padding: 1.2rem; }
+            h1 { font-size: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="card">
+        <div class="site-link">
+            <a href="https://bursasearch.github.io/myx_shop/">🏠 返回 Myx Shop 首頁</a>
+        </div>
+        <h1>🎨 设计 · 创意 · 插画</h1>
+        <div class="sub">接案、卖作品、被动收入</div>
+
+        <ul class="link-list">
+            <li><a href="https://99designs.com/" target="_blank" rel="noopener noreferrer">99designs</a></li>
+            <li><a href="https://dribbble.com/" target="_blank" rel="noopener noreferrer">Dribbble</a></li>
+            <li><a href="https://www.redbubble.com/" target="_blank" rel="noopener noreferrer">Redbubble</a></li>
+            <li><a href="https://www.society6.com/" target="_blank" rel="noopener noreferrer">Society6</a></li>
+            <li><a href="https://www.etsy.com/" target="_blank" rel="noopener noreferrer">Etsy</a></li>
+        </ul>
+
+        <div class="reminder-box">
+            <div class="reminder-icon">📌</div>
+            <div class="reminder-text">
+                <strong>本站仅整理公开信息</strong><br>
+                不参与任何交易，不代收费用，不保证收入。<br>
+                请自行判断平台可靠性，风险自负。
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <a href="freelancer.html">← 其他兼职分类</a> &nbsp;|&nbsp;
+        <a href="https://bursasearch.github.io/myx_shop/">首页</a>
+    </footer>
+</div>
+
+<div class="support-fab" id="supportFab">☕</div>
+<div class="support-panel" id="supportPanel">
+    <div class="support-card">
+        <button class="close-support" id="closeSupport">✕</button>
+        <h4>☕ 支持 Myx Shop</h4>
+        <p style="font-size:13px; color:#666; margin-bottom:10px;">如果整理的信息对你有帮助，欢迎随意支持</p>
+        <div class="qr-switch-tabs">
+            <div class="qr-tab active" id="tabMaybank">🏦 Maybank</div>
+            <div class="qr-tab" id="tabTng">📱 TnG eWallet</div>
+        </div>
+        <div id="maybankQR" style="display:block;">
+            <img src="docs/images/maybank-qr.jpg" class="qr-img" alt="Maybank QR" onerror="this.onerror=null; this.src='https://placehold.co/180x180?text=Maybank+QR'">
+        </div>
+        <div id="tngQR" style="display:none;">
+            <img src="docs/images/tng-qr.jpg" class="qr-img" alt="TnG eWallet QR" onerror="this.onerror=null; this.src='https://placehold.co/180x180?text=TnG+QR'">
+        </div>
+        <div class="qr-note">📖 打开银行App扫描QR码，感谢每一份鼓励</div>
+    </div>
+</div>
+
+<script>
+    const supportFab = document.getElementById('supportFab');
+    const supportPanel = document.getElementById('supportPanel');
+    const closeSupport = document.getElementById('closeSupport');
+    if (supportFab) supportFab.onclick = () => supportPanel.style.display = 'flex';
+    if (closeSupport) closeSupport.onclick = () => supportPanel.style.display = 'none';
+    if (supportPanel) supportPanel.onclick = (e) => { if (e.target === supportPanel) supportPanel.style.display = 'none'; };
+    
+    const tabMaybank = document.getElementById('tabMaybank');
+    const tabTng = document.getElementById('tabTng');
+    const maybankQR = document.getElementById('maybankQR');
+    const tngQR = document.getElementById('tngQR');
+    if (tabMaybank) tabMaybank.onclick = () => {
+        tabMaybank.classList.add('active');
+        tabTng.classList.remove('active');
+        maybankQR.style.display = 'block';
+        tngQR.style.display = 'none';
+    };
+    if (tabTng) tabTng.onclick = () => {
+        tabTng.classList.add('active');
+        tabMaybank.classList.remove('active');
+        maybankQR.style.display = 'none';
+        tngQR.style.display = 'block';
+    };
+</script>
+</body>
+</html>

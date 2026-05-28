@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Freelancer Choice - 即将上线 | myx_shop</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            color: white;
+        }
+        .container {
+            text-align: center;
+            padding: 2rem;
+            background: rgba(255,255,255,0.1);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            max-width: 600px;
+            margin: 20px;
+        }
+        h1 { font-size: 3rem; margin-bottom: 0.5rem; }
+        .progress-bar {
+            width: 80%;
+            height: 20px;
+            background: rgba(255,255,255,0.3);
+            border-radius: 10px;
+            margin: 30px auto;
+            overflow: hidden;
+        }
+        .progress-fill {
+            width: 60%;
+            height: 100%;
+            background: #ffd700;
+            border-radius: 10px;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% { opacity: 0.6; width: 60%; }
+            50% { opacity: 1; width: 70%; }
+            100% { opacity: 0.6; width: 60%; }
+        }
+        .category-list {
+            text-align: left;
+            display: inline-block;
+            margin: 20px auto;
+            font-size: 1.2rem;
+        }
+        .category-list li {
+            margin: 10px 0;
+            list-style: none;
+            padding-left: 25px;
+            position: relative;
+        }
+        .category-list li:before {
+            content: "🚧";
+            position: absolute;
+            left: 0;
+        }
+        a {
+            color: #ffd700;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 8px;
+        }
+        a:hover { background: rgba(255,255,255,0.3); }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>✨ Freelancer Choice ✨</h1>
+        <p><strong>精选35个线上兼职</strong> — 正在精心整理中</p>
+        
+        <div class="progress-bar">
+            <div class="progress-fill"></div>
+        </div>
+        
+        <p>预计完成时间：<strong>3-5天</strong></p>
+        
+        <ul class="category-list">
+            <li>📝 写作/翻译类 (首选约 5 个)</li>
+            <li>🎨 设计/创意类 (首选約 5个)</li>
+            <li>💻 技术开发类 (首选約 5个)</li>
+            <li>📊 Ai 和数据类 (首选约 5个)</li>
+            <li>🎬 其它技能类 (道选約 10个)</li>
+        </ul>
+        
+        <p>👈 返回 <a href="https://bursasearch.github.io/myx_shop/">首页</a></p>
+        <p style="font-size: 0.9rem; margin-top: 30px;">📧 想提前拿到完整清单？欢迎留言建议</p>
+    </div>
+</body>
+</html>
