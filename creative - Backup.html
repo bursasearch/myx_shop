@@ -3,76 +3,84 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-    <title>Freelancer Choice – 精选兼职导航 | Myx Shop</title>
-    <meta name="description" content="Freelancer Choice：整理50+可靠线上兼职，按类别导航。写作、设计、开发、AI、其他技能。">
+    <title>设计创意类兼职 | Freelancer Choice | Myx Shop</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Segoe UI', 'Noto Sans CJK SC', system-ui, -apple-system, 'Roboto', sans-serif;
             background: radial-gradient(circle at 10% 20%, #0f172a, #030614);
             min-height: 100vh;
-            padding: 30px 20px;
+            padding: 20px;
             color: #e9f1ff;
         }
-        .container { max-width: 1000px; margin: 0 auto; }
+        .container { max-width: 700px; margin: 0 auto; }
         .card {
             background: rgba(15, 25, 45, 0.65);
             backdrop-filter: blur(16px);
             border-radius: 2rem;
-            padding: 2rem;
+            padding: 1.8rem;
             margin-bottom: 1.5rem;
             border: 1px solid rgba(255, 215, 0, 0.35);
             box-shadow: 0 20px 35px -12px rgba(0, 0, 0, 0.5);
-            text-align: center;
         }
         h1 {
-            font-size: 2rem;
-            margin-bottom: 8px;
+            text-align: center;
+            font-weight: 600;
             background: linear-gradient(135deg, #FFE6A3, #FFB347);
             background-clip: text;
             -webkit-background-clip: text;
             color: transparent;
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
         }
-        .sub {
-            color: #FFD98C;
-            margin-bottom: 32px;
-            font-size: 1rem;
-        }
-        .category-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 20px;
-            margin: 30px 0;
-        }
-        .cat-card {
-            background: rgba(255, 215, 0, 0.08);
-            border-radius: 28px;
-            padding: 24px 12px;
+        .site-link {
             text-align: center;
-            text-decoration: none;
-            transition: all 0.2s;
-            border: 1px solid rgba(255, 200, 80, 0.3);
+            margin-bottom: 1.2rem;
         }
-        .cat-card:hover {
-            transform: translateY(-5px);
-            background: rgba(255, 215, 0, 0.2);
-            border-color: #FFD966;
-        }
-        .cat-card h3 {
-            font-size: 1.5rem;
-            margin-bottom: 12px;
-            color: #FFE6B0;
-        }
-        .cat-card p {
-            font-size: 0.8rem;
-            color: #c9b68b;
-        }
-        .back-link {
-            display: inline-block;
-            margin-top: 20px;
+        .site-link a {
             color: #FFD966;
             text-decoration: none;
-            border-bottom: 1px solid rgba(255, 217, 102, 0.5);
+            font-size: 0.85rem;
+            background: rgba(0,0,0,0.4);
+            padding: 4px 12px;
+            border-radius: 20px;
+        }
+        .sub {
+            text-align: center;
+            color: #FFD98C;
+            margin-bottom: 1.8rem;
+            font-size: 0.95rem;
+        }
+        .link-list {
+            list-style: none;
+            margin: 1.8rem 0;
+        }
+        .link-list li {
+            background: rgba(255, 215, 0, 0.08);
+            margin: 12px 0;
+            padding: 14px 18px;
+            border-radius: 60px;
+            border: 1px solid rgba(255, 200, 80, 0.3);
+            transition: all 0.2s;
+        }
+        .link-list li:hover {
+            background: rgba(255, 215, 0, 0.2);
+            border-color: #FFD966;
+            transform: translateX(4px);
+        }
+        .link-list a {
+            text-decoration: none;
+            font-weight: 500;
+            color: #FFE6B0;
+            font-size: 1.05rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .link-list a::before {
+            content: "✨";
+            color: #FFD966;
+            font-size: 1.1rem;
         }
         .reminder-box {
             background: rgba(255, 193, 7, 0.12);
@@ -83,7 +91,6 @@
             display: flex;
             gap: 12px;
             font-size: 0.8rem;
-            text-align: left;
         }
         .reminder-icon { font-size: 1.3rem; }
         .reminder-text strong { color: #FFD966; }
@@ -189,9 +196,6 @@
         @media (max-width: 550px) {
             .card { padding: 1.2rem; }
             h1 { font-size: 1.5rem; }
-            .category-grid { gap: 12px; }
-            .cat-card { padding: 16px 8px; }
-            .cat-card h3 { font-size: 1.2rem; }
         }
     </style>
 </head>
@@ -199,35 +203,20 @@
 
 <div class="container">
     <div class="card">
-        <h1>🎯 Freelancer Choice</h1>
-        <div class="sub">可靠线上兼职 · 按类别导航</div>
-
-        <div class="category-grid">
-            <a href="translator.html" class="cat-card">
-                <h3>📝 翻译 · 写作</h3>
-                <p>Upwork / Fiverr / Rev / Gengo / Contently</p>
-            </a>
-            <a href="creative.html" class="cat-card">
-                <h3>🎨 设计 · 创意</h3>
-                <p>99designs / Dribbble / Redbubble / Society6 / Etsy</p>
-            </a>
-            <a href="developer.html" class="cat-card">
-                <h3>💻 开发 · 技术</h3>
-                <p>Toptal / GitHub / Codementor / Freelancer / Topmate</p>
-            </a>
-            <a href="ai-data.html" class="cat-card">
-                <h3>🤖 AI · 数据</h3>
-                <p>Scale AI / Appen / Lionbridge / Remotasks / Clickworker</p>
-            </a>
-            <a href="other-skill.html" class="cat-card">
-                <h3>🎯 其他技能</h3>
-                <p>UserTesting / Prolific / Preply / MTurk / PlayTest Cloud</p>
-            </a>
+        <div class="site-link">
+            <a href="https://bursasearch.github.io/myx_shop/">🏠 返回 Myx Shop 首頁</a>
         </div>
+        <h1>🎨 设计 · 创意 · 插画</h1>
+        <div class="sub">接案、卖作品、被动收入</div>
 
-        <a href="https://bursasearch.github.io/myx_shop/" class="back-link">← 返回 Myx Shop 首页</a>
+        <ul class="link-list">
+            <li><a href="https://99designs.com/" target="_blank" rel="noopener noreferrer">99designs</a></li>
+            <li><a href="https://dribbble.com/" target="_blank" rel="noopener noreferrer">Dribbble</a></li>
+            <li><a href="https://www.redbubble.com/" target="_blank" rel="noopener noreferrer">Redbubble</a></li>
+            <li><a href="https://www.society6.com/" target="_blank" rel="noopener noreferrer">Society6</a></li>
+            <li><a href="https://www.etsy.com/" target="_blank" rel="noopener noreferrer">Etsy</a></li>
+        </ul>
 
-        <!-- 免责声明 -->
         <div class="reminder-box">
             <div class="reminder-icon">📌</div>
             <div class="reminder-text">
@@ -236,31 +225,14 @@
                 请自行判断平台可靠性，风险自负。
             </div>
         </div>
-
-        <!-- 收款工具信息（仅供参考） -->
-        <div class="reminder-box" style="border-left-color: #FF9800; margin-top: 10px;">
-            <div class="reminder-icon">💰</div>
-            <div class="reminder-text">
-                <strong>💳 收款工具链接（仅供参考）</strong><br>
-                本站仅提供 PayPal 和 Wise 的官方网站链接，供用户自行了解。<br>
-                ⚠️ <strong>本站不参与、不推荐、不担保任何资金往来。</strong><br>
-                注册、使用、提现等所有操作均由用户自行决定并承担全部风险。<br>
-                🔗 <a href="https://www.paypal.com/" target="_blank" style="color:#FFD966;">PayPal 官网</a> &nbsp;|&nbsp;
-                🔗 <a href="https://wise.com/" target="_blank" style="color:#FFD966;">Wise 官网</a>
-            </div>
-        </div>
     </div>
 
     <footer>
-        <a href="translator.html">📝 翻译写作</a> &nbsp;|&nbsp;
-        <a href="creative.html">🎨 设计创意</a> &nbsp;|&nbsp;
-        <a href="developer.html">💻 技术开发</a> &nbsp;|&nbsp;
-        <a href="ai-data.html">🤖 AI数据</a> &nbsp;|&nbsp;
-        <a href="other-skill.html">🎯 其他技能</a>
+        <a href="freelancer.html">← 其他兼职分类</a> &nbsp;|&nbsp;
+        <a href="https://bursasearch.github.io/myx_shop/">首页</a>
     </footer>
 </div>
 
-<!-- 赞助面板 -->
 <div class="support-fab" id="supportFab">☕</div>
 <div class="support-panel" id="supportPanel">
     <div class="support-card">
