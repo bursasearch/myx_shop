@@ -23,6 +23,32 @@
             border: 1px solid rgba(255, 215, 0, 0.35);
             box-shadow: 0 20px 35px -12px rgba(0, 0, 0, 0.5);
         }
+        /* 新增：导航按钮容器 */
+        .nav-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+        .nav-btn {
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 215, 0, 0.4);
+            color: #FFD966;
+            padding: 0.4rem 1rem;
+            border-radius: 40px;
+            text-decoration: none;
+            font-size: 0.85rem;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .nav-btn:hover {
+            background: rgba(255, 215, 0, 0.15);
+            border-color: #FFD966;
+            transform: translateY(-1px);
+        }
         h1 {
             text-align: center;
             font-weight: 600;
@@ -35,15 +61,7 @@
         }
         .site-link {
             text-align: center;
-            margin-bottom: 1.2rem;
-        }
-        .site-link a {
-            color: #FFD966;
-            text-decoration: none;
-            font-size: 0.85rem;
-            background: rgba(0,0,0,0.4);
-            padding: 4px 12px;
-            border-radius: 20px;
+            margin-bottom: 0.5rem;
         }
         .sub {
             text-align: center;
@@ -203,9 +221,12 @@
 
 <div class="container">
     <div class="card">
-        <div class="site-link">
-            <a href="https://bursasearch.github.io/myx_shop/">🏠 返回 Myx Shop 首頁</a>
+        <!-- 修改区域：导航按钮组 -->
+        <div class="nav-buttons">
+            <a href="https://bursasearch.github.io/myx_shop/" class="nav-btn">🏠 返回首页</a>
+            <a href="os-platforms.html" class="nav-btn">📋 实测记录表</a>
         </div>
+        
         <h1>🎯 其他技能 · 测试 · 教学 · 众包</h1>
         <div class="sub">用户测试 · 在线教学 · 微任务 · 游戏测试</div>
 
@@ -232,8 +253,8 @@
             </div>
         </div>
 
-        <!-- 收款工具信息（仅供参考） -->
-        <div class="reminder-box" style="border-left-color: #FF9800; margin-top: 10px;">
+        <!-- 收款工具信息 -->
+        <div class="reminder-box" style="border-left-color: #FF9800;">
             <div class="reminder-icon">💰</div>
             <div class="reminder-text">
                 <strong>💳 收款工具链接（仅供参考）</strong><br>
