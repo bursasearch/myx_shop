@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
     <title>其他技能实测记录 | Freelancer Choice | Myx Shop</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -13,7 +13,7 @@
             padding: 20px;
             color: #e9f1ff;
         }
-        .container { max-width: 1000px; margin: 0 auto; }
+        .container { max-width: 1200px; margin: 0 auto; }
         .card {
             background: rgba(15, 25, 45, 0.65);
             backdrop-filter: blur(16px);
@@ -33,17 +33,29 @@
             font-size: 1.8rem;
             margin-bottom: 0.5rem;
         }
-        .site-link {
-            text-align: center;
-            margin-bottom: 1.2rem;
+        .nav-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
         }
-        .site-link a {
+        .nav-btn {
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 215, 0, 0.4);
             color: #FFD966;
+            padding: 0.4rem 1rem;
+            border-radius: 40px;
             text-decoration: none;
             font-size: 0.85rem;
-            background: rgba(0,0,0,0.4);
-            padding: 4px 12px;
-            border-radius: 20px;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .nav-btn:hover {
+            background: rgba(255, 215, 0, 0.15);
+            border-color: #FFD966;
         }
         .sub {
             text-align: center;
@@ -52,32 +64,35 @@
             font-size: 0.95rem;
         }
         
-        /* 表格样式 */
+        /* 表格样式 - 优化手机阅读 */
         .table-wrapper {
             overflow-x: auto;
             margin: 1.5rem 0;
             border-radius: 1rem;
             background: rgba(0,0,0,0.2);
+            -webkit-overflow-scrolling: touch;
         }
         table {
             width: 100%;
             border-collapse: collapse;
-            font-size: 0.8rem;
-            min-width: 750px;
+            font-size: 0.85rem;
+            min-width: 900px;
         }
         th {
             background: rgba(255, 215, 0, 0.15);
-            padding: 0.8rem 0.6rem;
+            padding: 0.9rem 0.7rem;
             font-weight: 600;
             color: #FFD966;
             border-bottom: 1px solid rgba(255, 215, 0, 0.3);
             text-align: left;
+            font-size: 0.8rem;
         }
         td {
-            padding: 0.7rem 0.6rem;
+            padding: 0.8rem 0.7rem;
             border-bottom: 1px solid rgba(255,255,255,0.08);
             vertical-align: top;
             color: #e2e8f0;
+            line-height: 1.4;
         }
         tr:hover td {
             background: rgba(255, 215, 0, 0.05);
@@ -88,8 +103,9 @@
             border-bottom: 1px dashed rgba(255, 217, 102, 0.5);
         }
         a:hover { color: #FFB347; }
-        .pay-yes { color: #4ade80; }
+        .pay-yes { color: #4ade80; font-weight: 500; }
         .pay-no { color: #f87171; }
+        .pay-alt { color: #60a5fa; }
         .badge-warn {
             background: rgba(255, 193, 7, 0.2);
             padding: 0.15rem 0.4rem;
@@ -97,6 +113,13 @@
             font-size: 0.7rem;
             display: inline-block;
             margin-left: 0.25rem;
+        }
+        .badge-alt {
+            background: rgba(96, 165, 250, 0.2);
+            padding: 0.15rem 0.4rem;
+            border-radius: 8px;
+            font-size: 0.7rem;
+            display: inline-block;
         }
         
         .reminder-box {
@@ -209,6 +232,12 @@
             font-size: 0.7rem;
             color: #FFD966;
             margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .paypal-warning {
+            background: rgba(248, 113, 113, 0.15);
+            border-left: 4px solid #f87171;
+            margin-top: 1rem;
         }
         footer {
             text-align: center;
@@ -220,7 +249,7 @@
         @media (max-width: 550px) {
             .card { padding: 1.2rem; }
             h1 { font-size: 1.5rem; }
-            th, td { padding: 0.5rem 0.4rem; font-size: 0.7rem; }
+            th, td { padding: 0.5rem 0.4rem; font-size: 0.75rem; }
         }
     </style>
 </head>
@@ -228,8 +257,9 @@
 
 <div class="container">
     <div class="card">
-        <div class="site-link">
-            <a href="https://bursasearch.github.io/myx_shop/">🏠 返回 Myx Shop 首頁</a>
+        <div class="nav-buttons">
+            <a href="https://bursasearch.github.io/myx_shop/" class="nav-btn">🏠 返回首页</a>
+            <a href="other-skill.html" class="nav-btn">🎯 其他技能导航</a>
         </div>
         <h1>📋 其他技能 · 实测记录表</h1>
         <div class="sub">用户测试 · 在线教学 · 微任务 · 游戏测试 — 亲自实测，真实记录</div>
@@ -238,6 +268,17 @@
             <span class="update-badge">✅ 持续更新中</span>
             <span class="update-badge">🧪 本人实测</span>
             <span class="update-badge">💳 提现方式为重点</span>
+            <span class="update-badge">⚠️ PayPal 受限中</span>
+        </div>
+
+        <!-- PayPal 受限提醒 -->
+        <div class="reminder-box paypal-warning">
+            <div class="reminder-icon">⚠️</div>
+            <div class="reminder-text">
+                <strong>PayPal 账户暂时无法使用</strong><br>
+                本人正在解决中。表格内已标注各平台是否有替代收款方式（Payoneer / 银行转账）。<br>
+                建议优先选择 <span class="pay-alt">支持替代收款</span> 的平台进行测试。
+            </div>
         </div>
 
         <!-- 实测数据表格 -->
@@ -248,13 +289,14 @@
                         <th>平台名称</th>
                         <th>主类别</th>
                         <th>注册难度</th>
-                        <th>任务类型样例</th>
+                        <th>任务类型</th>
                         <th>收费/抽成</th>
                         <th>最低提现</th>
-                        <th>官网链接</th>
                         <th>PayPal</th>
                         <th>Wise</th>
+                        <th>替代收款</th>
                         <th>酬劳分发</th>
+                        <th>官网</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -265,10 +307,11 @@
                         <td>录屏反馈网站/App</td>
                         <td>无费，平台付你 $10/测试</td>
                         <td>$10</td>
-                        <td><a href="https://www.usertesting.com/get-paid-to-test" target="_blank">usertesting.com/...</a></td>
                         <td class="pay-yes">✅ 是</td>
-                        <td class="pay-no">❌ 否<br><span class="badge-warn">仅PayPal</span></td>
+                        <td class="pay-no">❌ 否</td>
+                        <td class="pay-no">❌ 无<br><span class="badge-warn">仅PayPal</span></td>
                         <td>14 天后</td>
+                        <td><a href="https://www.usertesting.com/get-paid-to-test" target="_blank">链接</a></td>
                     </tr>
                     <!-- 后续新增平台请在这里继续添加，复制上面 <tr>...</tr> 整段修改即可 -->
                 </tbody>
@@ -278,15 +321,14 @@
         <div class="reminder-box">
             <div class="reminder-icon">📌</div>
             <div class="reminder-text">
-                <strong>本站仅整理公开信息</strong><br>
-                不参与任何交易，不代收费用，不保证收入。<br>
-                请自行判断平台可靠性，风险自负。<br>
-                <span style="font-size:0.75rem; color:#aaa;">📝 本条 UserTesting 数据基于个人实测。“酬劳分发时间”指完成测试后到金额可提现的预计天数。</span>
+                <strong>本站仅整理公开信息 + 个人实测</strong><br>
+                不参与任何交易，不代收费用，不保证收入。请自行判断平台可靠性。<br>
+                <span style="font-size:0.75rem; color:#aaa;">📝 “酬劳分发时间”指完成测试后到金额可提现的预计天数。“替代收款”指 PayPal 之外的选项（Payoneer/银行转账等）。</span>
             </div>
         </div>
 
         <!-- 收款工具信息 -->
-        <div class="reminder-box" style="border-left-color: #FF9800; margin-top: 10px;">
+        <div class="reminder-box" style="border-left-color: #FF9800;">
             <div class="reminder-icon">💰</div>
             <div class="reminder-text">
                 <strong>💳 收款工具链接（仅供参考）</strong><br>
@@ -294,7 +336,8 @@
                 ⚠️ <strong>本站不参与、不推荐、不担保任何资金往来。</strong><br>
                 注册、使用、提现等所有操作均由用户自行决定并承担全部风险。<br>
                 🔗 <a href="https://www.paypal.com/" target="_blank">PayPal 官网</a> &nbsp;|&nbsp;
-                🔗 <a href="https://wise.com/" target="_blank">Wise 官网</a>
+                🔗 <a href="https://wise.com/" target="_blank">Wise 官网</a> &nbsp;|&nbsp;
+                🔗 <a href="https://www.payoneer.com/" target="_blank">Payoneer 官网</a>
             </div>
         </div>
     </div>
@@ -305,7 +348,7 @@
     </footer>
 </div>
 
-<!-- 赞助面板 Buy Me a Coffee -->
+<!-- 赞助面板 -->
 <div class="support-fab" id="supportFab">☕</div>
 <div class="support-panel" id="supportPanel">
     <div class="support-card">

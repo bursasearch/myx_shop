@@ -23,7 +23,7 @@
             border: 1px solid rgba(255, 215, 0, 0.35);
             box-shadow: 0 20px 35px -12px rgba(0, 0, 0, 0.5);
         }
-        /* 新增：导航按钮容器 */
+        /* 导航按钮 */
         .nav-buttons {
             display: flex;
             justify-content: center;
@@ -59,24 +59,31 @@
             font-size: 1.8rem;
             margin-bottom: 0.5rem;
         }
-        .site-link {
-            text-align: center;
-            margin-bottom: 0.5rem;
-        }
         .sub {
             text-align: center;
             color: #FFD98C;
-            margin-bottom: 1.8rem;
-            font-size: 0.95rem;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+        }
+        .section-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #FFD966;
+            margin: 1.5rem 0 0.8rem 0;
+            padding-bottom: 0.3rem;
+            border-bottom: 2px solid rgba(255, 215, 0, 0.3);
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
         .link-list {
             list-style: none;
-            margin: 1.8rem 0;
+            margin: 0.8rem 0 1.2rem 0;
         }
         .link-list li {
             background: rgba(255, 215, 0, 0.08);
-            margin: 12px 0;
-            padding: 14px 18px;
+            margin: 10px 0;
+            padding: 12px 18px;
             border-radius: 60px;
             border: 1px solid rgba(255, 200, 80, 0.3);
             transition: all 0.2s;
@@ -90,15 +97,34 @@
             text-decoration: none;
             font-weight: 500;
             color: #FFE6B0;
-            font-size: 1.05rem;
+            font-size: 1rem;
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
+            flex-wrap: wrap;
         }
         .link-list a::before {
             content: "🎯";
             color: #FFD966;
-            font-size: 1.1rem;
+            font-size: 1rem;
+        }
+        .badge-text {
+            background: rgba(74, 222, 128, 0.2);
+            color: #4ade80;
+            padding: 0.2rem 0.6rem;
+            border-radius: 20px;
+            font-size: 0.65rem;
+            margin-left: auto;
+            white-space: nowrap;
+        }
+        .badge-warning {
+            background: rgba(248, 113, 113, 0.2);
+            color: #f87171;
+            padding: 0.2rem 0.6rem;
+            border-radius: 20px;
+            font-size: 0.65rem;
+            margin-left: auto;
+            white-space: nowrap;
         }
         .reminder-box {
             background: rgba(255, 193, 7, 0.12);
@@ -207,13 +233,12 @@
             color: #8ba0c0;
             margin-top: 1rem;
         }
-        footer a {
-            color: #FFD966;
-            text-decoration: none;
-        }
+        footer a { color: #FFD966; text-decoration: none; }
         @media (max-width: 550px) {
             .card { padding: 1.2rem; }
             h1 { font-size: 1.5rem; }
+            .link-list a { font-size: 0.9rem; }
+            .badge-text, .badge-warning { font-size: 0.55rem; margin-left: 0; margin-top: 4px; }
         }
     </style>
 </head>
@@ -221,7 +246,7 @@
 
 <div class="container">
     <div class="card">
-        <!-- 修改区域：导航按钮组 -->
+        <!-- 导航按钮 -->
         <div class="nav-buttons">
             <a href="https://bursasearch.github.io/myx_shop/" class="nav-btn">🏠 返回首页</a>
             <a href="os-platforms.html" class="nav-btn">📋 实测记录表</a>
@@ -230,17 +255,38 @@
         <h1>🎯 其他技能 · 测试 · 教学 · 众包</h1>
         <div class="sub">用户测试 · 在线教学 · 微任务 · 游戏测试</div>
 
+        <!-- 🧑‍🎓 新增：适合学生/新手 · 纯文字任务 板块 -->
+        <div class="section-title">
+            <span>🧑‍🎓 适合学生/新手 · 纯文字任务</span>
+        </div>
+        <div class="reminder-box" style="margin-top: 0; padding: 8px 12px;">
+            <div class="reminder-icon">📝</div>
+            <div class="reminder-text" style="font-size: 0.75rem;">
+                ✅ 以下平台<strong>无需麦克风、无需露脸</strong>，主要靠文字/点选完成任务。<br>
+                ⚠️ 跨境收款（PayPal/Wise）存在风险，建议由家长协助管理。
+            </div>
+        </div>
         <ul class="link-list">
-            <li><a href="https://www.usertesting.com/" target="_blank" rel="noopener noreferrer">User Testing</a></li>
-            <li><a href="https://www.trymyui.com/" target="_blank" rel="noopener noreferrer">TryMyUI</a></li>
-            <li><a href="https://www.respondent.io/" target="_blank" rel="noopener noreferrer">Respondent</a></li>
-            <li><a href="https://www.prolific.com/" target="_blank" rel="noopener noreferrer">Prolific</a></li>
-            <li><a href="https://techable.com/" target="_blank" rel="noopener noreferrer">Techable</a></li>
-            <li><a href="https://www.cambly.com/" target="_blank" rel="noopener noreferrer">Cambly</a></li>
-            <li><a href="https://preply.com/" target="_blank" rel="noopener noreferrer">Preply</a></li>
-            <li><a href="https://vipkid.com/" target="_blank" rel="noopener noreferrer">VIPKid</a></li>
-            <li><a href="https://www.mturk.com/" target="_blank" rel="noopener noreferrer">Amazon Mechanical Turk</a></li>
-            <li><a href="https://playtestcloud.com/" target="_blank" rel="noopener noreferrer">Play Test Cloud</a></li>
+            <li><a href="https://toloka.ai/" target="_blank" rel="noopener noreferrer">Toloka <span class="badge-text">🔤 纯点选/短评 · 有中文</span></a></li>
+            <li><a href="https://www.clickworker.com/" target="_blank" rel="noopener noreferrer">Clickworker <span class="badge-text">📋 数据分类/UHRS · 需英语基础</span></a></li>
+            <li><a href="https://www.appen.com/" target="_blank" rel="noopener noreferrer">Appen <span class="badge-text">🔍 搜索评估/微任务 · 需英语</span></a></li>
+            <li><a href="https://www.upwork.com/" target="_blank" rel="noopener noreferrer">Upwork <span class="badge-text">✍️ 翻译/数据录入/虚拟助理 · 纯文字</span></a></li>
+            <li><a href="https://www.fiverr.com/" target="_blank" rel="noopener noreferrer">Fiverr <span class="badge-text">📄 文字服务 · 按件收费</span></a></li>
+        </ul>
+
+        <!-- 原有平台列表 -->
+        <div class="section-title">
+            <span>🎙️ 含语音/视频 · 进阶挑战</span>
+        </div>
+        <ul class="link-list">
+            <li><a href="https://www.usertesting.com/" target="_blank" rel="noopener noreferrer">User Testing <span class="badge-warning">🎤 需麦克风+录屏</span></a></li>
+            <li><a href="https://www.trymyui.com/" target="_blank" rel="noopener noreferrer">TryMyUI <span class="badge-warning">🎤 需麦克风</span></a></li>
+            <li><a href="https://www.respondent.io/" target="_blank" rel="noopener noreferrer">Respondent <span class="badge-warning">🎤 需访谈/视频</span></a></li>
+            <li><a href="https://www.prolific.com/" target="_blank" rel="noopener noreferrer">Prolific <span class="badge-text">📋 学术问卷为主</span></a></li>
+            <li><a href="https://www.cambly.com/" target="_blank" rel="noopener noreferrer">Cambly <span class="badge-warning">🎤 需英语口说</span></a></li>
+            <li><a href="https://preply.com/" target="_blank" rel="noopener noreferrer">Preply <span class="badge-warning">🎤 需视频教学</span></a></li>
+            <li><a href="https://www.mturk.com/" target="_blank" rel="noopener noreferrer">Amazon Mechanical Turk <span class="badge-text">📋 微任务/需PayPal</span></a></li>
+            <li><a href="https://playtestcloud.com/" target="_blank" rel="noopener noreferrer">Play Test Cloud <span class="badge-warning">🎮 需录屏+语音</span></a></li>
         </ul>
 
         <!-- 免责声明 -->
@@ -249,7 +295,8 @@
             <div class="reminder-text">
                 <strong>本站仅整理公开信息</strong><br>
                 不参与任何交易，不代收费用，不保证收入。<br>
-                请自行判断平台可靠性，风险自负。
+                请自行判断平台可靠性，风险自负。<br>
+                🧑‍🎓 <strong>学生/新手建议</strong>：从上方“纯文字任务”板块开始，无需绑定支付工具即可体验流程。
             </div>
         </div>
 
@@ -259,8 +306,7 @@
             <div class="reminder-text">
                 <strong>💳 收款工具链接（仅供参考）</strong><br>
                 本站仅提供 PayPal 和 Wise 的官方网站链接，供用户自行了解。<br>
-                ⚠️ <strong>本站不参与、不推荐、不担保任何资金往来。</strong><br>
-                注册、使用、提现等所有操作均由用户自行决定并承担全部风险。<br>
+                ⚠️ <strong>国际收款存在账户冻结、汇率损失等风险，请谨慎决定。</strong><br>
                 🔗 <a href="https://www.paypal.com/" target="_blank" style="color:#FFD966;">PayPal 官网</a> &nbsp;|&nbsp;
                 🔗 <a href="https://wise.com/" target="_blank" style="color:#FFD966;">Wise 官网</a>
             </div>
