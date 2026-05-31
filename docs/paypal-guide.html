@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>PayPal 安全使用指南 | 给新手/年轻人的避坑手册 | Freelancer Choice</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: system-ui, -apple-system, 'Segoe UI', 'Noto Sans CJK SC', 'Roboto', sans-serif;
+            background: radial-gradient(circle at 10% 20%, #0f172a, #030614);
+            min-height: 100vh;
+            padding: 20px;
+            color: #e9f1ff;
+        }
+        .container { max-width: 800px; margin: 0 auto; }
+        .card {
+            background: rgba(15, 25, 45, 0.65);
+            backdrop-filter: blur(16px);
+            border-radius: 2rem;
+            padding: 1.8rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid rgba(255, 215, 0, 0.35);
+        }
+        h1 {
+            font-size: 1.6rem;
+            background: linear-gradient(135deg, #FFE6A3, #FFB347);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            margin-bottom: 0.5rem;
+            text-align: center;
+        }
+        .sub {
+            text-align: center;
+            color: #FFD98C;
+            font-size: 0.85rem;
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid rgba(255,215,0,0.2);
+            padding-bottom: 1rem;
+        }
+        .warning-box {
+            background: rgba(248, 113, 113, 0.15);
+            border-left: 4px solid #f87171;
+            border-radius: 16px;
+            padding: 1rem;
+            margin: 1.5rem 0;
+        }
+        .tip-box {
+            background: rgba(74, 222, 128, 0.1);
+            border-left: 4px solid #4ade80;
+            border-radius: 16px;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+        .info-box {
+            background: rgba(96, 165, 250, 0.1);
+            border-left: 4px solid #60a5fa;
+            border-radius: 16px;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+        h2 {
+            color: #FFD966;
+            font-size: 1.2rem;
+            margin: 1.2rem 0 0.5rem 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        h3 {
+            color: #FFB347;
+            font-size: 1rem;
+            margin: 1rem 0 0.3rem 0;
+        }
+        ul, ol {
+            padding-left: 1.5rem;
+            margin: 0.5rem 0;
+        }
+        li {
+            margin: 0.3rem 0;
+            line-height: 1.4;
+        }
+        .do { color: #4ade80; }
+        .dont { color: #f87171; }
+        .badge {
+            display: inline-block;
+            background: rgba(255,215,0,0.2);
+            padding: 0.2rem 0.5rem;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            color: #FFD966;
+            margin-right: 0.5rem;
+        }
+        hr {
+            border-color: rgba(255,215,0,0.2);
+            margin: 1rem 0;
+        }
+        .nav-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+        .nav-btn {
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 215, 0, 0.4);
+            color: #FFD966;
+            padding: 0.4rem 1rem;
+            border-radius: 40px;
+            text-decoration: none;
+            font-size: 0.85rem;
+        }
+        footer {
+            text-align: center;
+            font-size: 0.7rem;
+            color: #8ba0c0;
+            margin-top: 1rem;
+        }
+        @media (max-width: 550px) {
+            .card { padding: 1.2rem; }
+            h1 { font-size: 1.3rem; }
+            h2 { font-size: 1rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="card">
+        <div class="nav-buttons">
+            <a href="https://bursasearch.github.io/myx_shop/" class="nav-btn">🏠 返回首页</a>
+            <a href="other-skill.html" class="nav-btn">🎯 其他技能导航</a>
+        </div>
+
+        <h1>⚠️ PayPal 安全使用指南</h1>
+        <div class="sub">给新手 / 年轻人的避坑手册 · 真人经验，实话实说</div>
+
+        <!-- 核心警示 -->
+        <div class="warning-box">
+            <strong>📌 写在前面：一个真实案例</strong><br>
+            本站管理员亲身经历：PayPal 账户被永久限制，余额被冻结 180 天。<br>
+            <strong>原因推测：</strong>账户长期未验证 + 突然接收多笔小额跨境款项 + 使用 VPN 登录。<br>
+            <span style="color:#f87171;">⚠️ 这不是要吓你，而是希望你从一开始就避开这些坑。</span>
+        </div>
+
+        <h2>✅ 你应该做的事（Do's）</h2>
+        <div class="tip-box">
+            <ul>
+                <li><span class="do">✅</span> <strong>用真实身份注册</strong>：姓名、地址、身份证（大马卡）全部如实填写。假的永远不如真的好。</li>
+                <li><span class="do">✅</span> <strong>完成全部验证</strong>：绑定银行卡、确认邮箱、确认手机。验证越完整，风控越低。</li>
+                <li><span class="do">✅</span> <strong>收款后立刻提现</strong>：不要把 PayPal 当钱包。收到钱就转去你的银行账户（马来西亚本地银行即可）。</li>
+                <li><span class="do">✅</span> <strong>从小额开始</strong>：头 3 个月，每月收款不超过 200 美元，只从 1-2 个熟悉的平台收。</li>
+                <li><span class="do">✅</span> <strong>固定网络环境</strong>：尽量用家里 WiFi 登录，不要频繁切换 IP 地址。</li>
+                <li><span class="do">✅</span> <strong>保留交易记录</strong>：截图保留你在自由职业平台上的任务完成记录，万一被封可以申诉。</li>
+            </ul>
+        </div>
+
+        <h2>❌ 千万不要做的事（Don'ts）</h2>
+        <div class="warning-box">
+            <ul>
+                <li><span class="dont">❌</span> <strong>不要挂 VPN 登录</strong>：PayPal 对 IP 突变极其敏感，容易触发“可疑活动”锁定。</li>
+                <li><span class="dont">❌</span> <strong>不要接收来自陌生人的直接转账</strong>：只收正规平台（如 Upwork, Fiverr）或认识的人的钱。</li>
+                <li><span class="dont">❌</span> <strong>不要频繁更换设备登录</strong>：固定用一台手机或电脑。</li>
+                <li><span class="dont">❌</span> <strong>不要在账户里留余额</strong>：你的钱在 PayPal 里就不完全属于你（参考 180 天冻结规则）。</li>
+                <li><span class="dont">❌</span> <strong>不要试图创建多个账户</strong>：一个人只能有一个个人账户。被发现会全部限制。</li>
+                <li><span class="dont">❌</span> <strong>不要参与任何“代收代付”</strong>：帮别人收钱再转出去，100% 被封。</li>
+            </ul>
+        </div>
+
+        <h2>🔐 被限制了怎么办？</h2>
+        <div class="info-box">
+            <ul>
+                <li><strong>第一步：</strong>登录查看具体原因（通常会发邮件通知）。</li>
+                <li><strong>第二步：</strong>按照要求提交材料（身份证、地址证明、交易记录）。</li>
+                <li><strong>第三步：</strong>致电 PayPal 客服（马来西亚有中文客服，号码在官网找）。态度诚恳，说明情况。</li>
+                <li><strong>第四步：</strong>如果最终无法解封，180 天后余额会通知你转出（通常会扣除一笔手续费）。</li>
+            </ul>
+        </div>
+
+        <h2>💡 给年轻人的特别建议</h2>
+        <div class="tip-box">
+            <ul>
+                <li><span class="badge">📝</span> <strong>未满 18 岁？</strong> 不要尝试注册。等成年后用自己真实信息注册。让家长代收不划算，也不合规。</li>
+                <li><span class="badge">🎓</span> <strong>新手先练手，不碰钱</strong>：从 Toloka、Clickworker 开始，先体验任务流程，不急着绑 PayPal。</li>
+                <li><span class="badge">💰</span> <strong>备用方案</strong>：研究 Payoneer 作为第二收款渠道。不要把鸡蛋放一个篮子里。</li>
+                <li><span class="badge">📖</span> <strong>把 PayPal 的《User Agreement》读一遍</strong>：虽然长，但读完后你就不容易踩红线。</li>
+            </ul>
+        </div>
+
+        <hr>
+
+        <div class="info-box">
+            <strong>📌 最重要的一句话：</strong><br>
+            PayPal 只是一个工具，不是你的银行。规范使用、不留余额、固定环境，被限制的概率极低。<br>
+            你父母遇到的事，是给你们的“预习资料”——提前知道坑在哪里，就可以绕着走。
+        </div>
+
+        <div class="info-box" style="margin-top: 1rem;">
+            <strong>🔗 官方链接</strong><br>
+            <a href="https://www.paypal.com/" target="_blank" style="color:#FFD966;">PayPal 官网</a> &nbsp;|&nbsp;
+            <a href="https://www.paypal.com/my/cshelp/help-for-customers" target="_blank" style="color:#FFD966;">客服帮助中心</a> &nbsp;|&nbsp;
+            <a href="https://www.paypal.com/my/legalhub/useragreement-full" target="_blank" style="color:#FFD966;">用户协议（User Agreement）</a>
+        </div>
+    </div>
+
+    <footer>
+        <a href="freelancer.html">← 其他兼职分类</a> &nbsp;|&nbsp;
+        <a href="https://bursasearch.github.io/myx_shop/">首页</a><br>
+        📌 本指南基于真实个人经历整理，仅供参考。平台规则可能随时变更，请以官网最新公告为准。
+    </footer>
+</div>
+</body>
+</html>
