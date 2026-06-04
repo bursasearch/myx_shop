@@ -63,8 +63,6 @@
             margin-bottom: 1.8rem;
             font-size: 0.95rem;
         }
-        
-        /* 表格样式 - 优化手机阅读 */
         .table-wrapper {
             overflow-x: auto;
             margin: 1.5rem 0;
@@ -76,7 +74,7 @@
             width: 100%;
             border-collapse: collapse;
             font-size: 0.85rem;
-            min-width: 900px;
+            min-width: 1100px;
         }
         th {
             background: rgba(255, 215, 0, 0.15);
@@ -121,7 +119,6 @@
             font-size: 0.7rem;
             display: inline-block;
         }
-        
         .reminder-box {
             background: rgba(255, 193, 7, 0.12);
             border-left: 4px solid #FFC107;
@@ -134,7 +131,6 @@
         }
         .reminder-icon { font-size: 1.3rem; }
         .reminder-text strong { color: #FFD966; }
-        
         .support-fab {
             position: fixed;
             bottom: 25px;
@@ -234,11 +230,6 @@
             margin-right: 0.5rem;
             margin-bottom: 0.5rem;
         }
-        .paypal-warning {
-            background: rgba(248, 113, 113, 0.15);
-            border-left: 4px solid #f87171;
-            margin-top: 1rem;
-        }
         footer {
             text-align: center;
             font-size: 0.7rem;
@@ -249,7 +240,7 @@
         @media (max-width: 550px) {
             .card { padding: 1.2rem; }
             h1 { font-size: 1.5rem; }
-            th, td { padding: 0.5rem 0.4rem; font-size: 0.75rem; }
+            th, td { padding: 0.5rem 0.4rem; font-size: 0.7rem; }
         }
     </style>
 </head>
@@ -271,16 +262,6 @@
             <span class="update-badge">⚠️ PayPal 受限中</span>
         </div>
 
-        <!-- PayPal 受限提醒 -->
-        <div class="reminder-box paypal-warning">
-            <div class="reminder-icon">⚠️</div>
-            <div class="reminder-text">
-                <strong>PayPal 账户暂时无法使用</strong><br>
-                本人正在解决中。表格内已标注各平台是否有替代收款方式（Payoneer / 银行转账）。<br>
-                建议优先选择 <span class="pay-alt">支持替代收款</span> 的平台进行测试。
-            </div>
-        </div>
-
         <!-- 实测数据表格 -->
         <div class="table-wrapper">
             <table>
@@ -300,6 +281,7 @@
                     </tr>
                 </thead>
                 <tbody>
+                    <!-- UserTesting 记录 -->
                     <tr>
                         <td><strong>UserTesting</strong></td>
                         <td>用户测试</td>
@@ -313,7 +295,36 @@
                         <td>14 天后</td>
                         <td><a href="https://www.usertesting.com/get-paid-to-test" target="_blank">链接</a></td>
                     </tr>
-                    <!-- 后续新增平台请在这里继续添加，复制上面 <tr>...</tr> 整段修改即可 -->
+                    
+                    <!-- Clickworker + UHRS 记录 -->
+                    <tr>
+                        <td><strong>Clickworker<br><span style="font-size:0.7rem;">(含 UHRS)</span></strong></td>
+                        <td>微任务 / 众包</td>
+                        <td>简单 (需完善资料)<br><span class="badge-warn">评估机制</span></td>
+                        <td>数据分类 / UHRS任务 / 问卷调查</td>
+                        <td>平台抽成<br>UHRS 任务 €0.05-€10</td>
+                        <td><strong>€10</strong></td>
+                        <td class="pay-yes">✅ 是</td>
+                        <td class="pay-no">❌ 否</td>
+                        <td class="pay-alt">✅ 银行转账<br><span class="badge-alt">推荐大马用户</span></td>
+                        <td>约 14-21 天</td>
+                        <td><a href="https://www.clickworker.com" target="_blank">链接</a></td>
+                    </tr>
+
+                    <!-- Appen / Crowdgen 记录 -->
+                    <tr>
+                        <td><strong>Appen<br><span style="font-size:0.7rem;">(Crowdgen)</span></strong></td>
+                        <td>微任务 / 众包</td>
+                        <td>简单 (需注册)</td>
+                        <td>搜索评估 / 社交媒体评估 / 语音采集</td>
+                        <td>项目制，按小时或按件</td>
+                        <td>$5 - $10 (视项目)</td>
+                        <td class="pay-yes">✅ 是</td>
+                        <td class="pay-no">❌ 否</td>
+                        <td class="pay-alt">✅ 银行转账<br><span class="badge-alt">主要方式</span></td>
+                        <td>按月结算</td>
+                        <td><a href="https://app.crowdgen.com" target="_blank">链接</a></td>
+                    </tr>
                 </tbody>
             </table>
         </div>
@@ -338,6 +349,18 @@
                 🔗 <a href="https://www.paypal.com/" target="_blank">PayPal 官网</a> &nbsp;|&nbsp;
                 🔗 <a href="https://wise.com/" target="_blank">Wise 官网</a> &nbsp;|&nbsp;
                 🔗 <a href="https://www.payoneer.com/" target="_blank">Payoneer 官网</a>
+            </div>
+        </div>
+        
+        <!-- 实测备注（更新：新增 Crowdgen MFA 提醒） -->
+        <div class="reminder-box" style="border-left-color: #4ade80;">
+            <div class="reminder-icon">🧪</div>
+            <div class="reminder-text">
+                <strong>实测备注（2024-06-04 更新）</strong><br>
+                • <strong>Clickworker</strong>：结算货币为 <strong>欧元 (€)</strong>，最低提现 €10。支持银行转账（推荐大马用户）。需先完善资料，通过评估后可见 UHRS 任务。<br>
+                • <strong>Appen (Crowdgen)</strong>：已迁移至 crowdgen.com 统一平台。<strong>安全设置要求：</strong>需在手机安装 Google Authenticator，并使用平台提供的 <strong>"Setup Key"</strong> 绑定账户。请务必备份保存此密钥，否则更换手机后将无法登录账户。<br>
+                • 注意：部分用户注册时地址可能错误显示为 "Antarctica"，需联系客服更正。<br>
+                • 两个平台均不依赖 PayPal，适合 PayPal 受限用户。
             </div>
         </div>
     </div>
