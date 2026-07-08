@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- 优化后的 description，加入 Freelancer Choice 关键词 -->
     <meta name="description" content="Myx Shop - SSM注册企业。免费八字排盘、紫微斗数、每日運程，以及 Freelancer Choice 精选50个自由职业优势。纯传统文化参考，不收费。">
-    <meta name="keywords" content="免费八字排盘,八字排盘,传统文化,四柱八字,紫微斗数,每日運程,Freelancer Choice, 线上兼职,Myx Shop,马来西亚">
+    <meta name="keywords" content="免费八字排盘,八字排盘,传统文化,四柱八字,紫微斗数,每日運程,Freelancer Choice, 线上兼职,Myx Shop,马来西亚,B40,SejaTi MADANI">
     <meta name="author" content="Myx Shop">
     <title>Myx Shop - SSM註冊企業 | 八字排盤 · 紫微斗數 · Freelancer Choice</title>
     
@@ -136,6 +136,239 @@
             transform: translateY(0);
         }
         
+        /* SejaTi MADANI 状态卡片 - 新增样式 */
+        .sejati-card {
+            background: linear-gradient(135deg, #1a365d 0%, #2a4a7f 100%);
+            border-radius: 12px;
+            padding: 20px 24px;
+            margin: 15px 0 25px 0;
+            color: #fff;
+            box-shadow: 0 4px 15px rgba(26, 54, 93, 0.3);
+            border-left: 5px solid #f6c23e;
+        }
+        
+        .sejati-card h3 {
+            color: #f6c23e;
+            font-size: 18px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .sejati-card .status-badge {
+            display: inline-block;
+            background: #f6c23e;
+            color: #1a365d;
+            padding: 3px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+        
+        .sejati-card .status-text {
+            background: rgba(255,255,255,0.08);
+            border-radius: 8px;
+            padding: 12px 16px;
+            margin: 10px 0;
+            font-size: 14px;
+            border: 1px solid rgba(255,255,255,0.06);
+        }
+        
+        .sejati-card .status-text strong {
+            color: #f6c23e;
+        }
+        
+        .sejati-card .status-detail {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 10px;
+            font-size: 13px;
+            opacity: 0.9;
+        }
+        
+        .sejati-card .status-detail span {
+            background: rgba(255,255,255,0.06);
+            padding: 4px 12px;
+            border-radius: 20px;
+        }
+        
+        .sejati-card .sejati-link {
+            display: inline-block;
+            color: #f6c23e;
+            text-decoration: none;
+            font-weight: 600;
+            margin-top: 8px;
+            font-size: 14px;
+            border-bottom: 2px solid transparent;
+            transition: border-color 0.3s;
+        }
+        
+        .sejati-card .sejati-link:hover {
+            border-bottom-color: #f6c23e;
+        }
+        
+        .sejati-card .note {
+            font-size: 12px;
+            opacity: 0.7;
+            margin-top: 12px;
+            border-top: 1px solid rgba(255,255,255,0.08);
+            padding-top: 10px;
+        }
+        
+        /* ===== B40 导航卡片 - 新增样式 ===== */
+        .b40-section {
+            margin: 10px 0 25px 0;
+        }
+        
+        .b40-section .section-label {
+            margin-bottom: 10px;
+        }
+        
+        /* 20K 机会横幅 */
+        .opportunity-banner {
+            background: linear-gradient(135deg, #f7971e 0%, #ffd200 100%);
+            border-radius: 12px;
+            padding: 14px 20px;
+            margin: 5px 0 18px 0;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(247, 151, 30, 0.3);
+            animation: pulse-glow 2s ease-in-out infinite;
+        }
+        
+        @keyframes pulse-glow {
+            0%, 100% {
+                box-shadow: 0 4px 20px rgba(247, 151, 30, 0.3);
+            }
+            50% {
+                box-shadow: 0 4px 35px rgba(247, 151, 30, 0.55);
+            }
+        }
+        
+        .opportunity-banner .big-number {
+            font-size: 28px;
+            font-weight: 900;
+            color: #1a1a2e;
+            letter-spacing: 2px;
+        }
+        
+        .opportunity-banner .big-number span {
+            background: #1a1a2e;
+            color: #ffd200;
+            padding: 2px 14px;
+            border-radius: 30px;
+            font-size: 30px;
+            margin: 0 4px;
+        }
+        
+        .opportunity-banner .tagline {
+            font-size: 14px;
+            font-weight: 600;
+            color: #1a1a2e;
+            margin-top: 2px;
+        }
+        
+        .opportunity-banner .tagline .emoji-big {
+            font-size: 18px;
+        }
+        
+        .b40-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin: 15px 0;
+        }
+        
+        .b40-card {
+            padding: 24px 20px;
+            border-radius: 12px;
+            text-decoration: none;
+            color: #fff;
+            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            min-height: 160px;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .b40-card:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+        }
+        
+        .b40-card .icon {
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+        
+        .b40-card h3 {
+            font-size: 18px;
+            margin-bottom: 6px;
+            color: #fff;
+        }
+        
+        .b40-card p {
+            font-size: 13px;
+            opacity: 0.9;
+            margin: 0;
+            line-height: 1.5;
+        }
+        
+        .b40-card .badge {
+            display: inline-block;
+            background: rgba(255,255,255,0.2);
+            padding: 2px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+            margin-top: 8px;
+            letter-spacing: 0.5px;
+        }
+        
+        .b40-card .hot-badge {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            background: #ff0040;
+            color: white;
+            font-size: 10px;
+            font-weight: 700;
+            padding: 2px 10px;
+            border-radius: 20px;
+            animation: blink 1.2s ease-in-out infinite;
+        }
+        
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
+        }
+        
+        .b40-card.lead {
+            background: linear-gradient(135deg, #e67e22 0%, #d35400 100%);
+            border-bottom: 4px solid #f39c12;
+        }
+        
+        .b40-card.lead:hover {
+            box-shadow: 0 8px 30px rgba(211, 84, 0, 0.4);
+        }
+        
+        .b40-card.join {
+            background: linear-gradient(135deg, #27ae60 0%, #1e8449 100%);
+            border-bottom: 4px solid #2ecc71;
+        }
+        
+        .b40-card.join:hover {
+            box-shadow: 0 8px 30px rgba(30, 132, 73, 0.4);
+        }
+        
+        /* 旧版 nav-grid 保留 */
         .nav-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -272,6 +505,14 @@
             padding: 0 20px;
         }
         
+        .section-label .sub {
+            display: block;
+            font-size: 13px;
+            font-weight: 400;
+            color: #666;
+            margin-top: 4px;
+        }
+        
         /* 小入口样式 */
         .sub-links {
             display: flex;
@@ -319,16 +560,36 @@
                 width: 100%;
                 max-width: 300px;
             }
+            .b40-grid {
+                grid-template-columns: 1fr;
+            }
+            .b40-card {
+                min-height: 130px;
+                padding: 20px;
+            }
+            .opportunity-banner .big-number {
+                font-size: 22px;
+            }
+            .opportunity-banner .big-number span {
+                font-size: 24px;
+            }
             .nav-grid {
                 grid-template-columns: 1fr;
             }
             h1 {
                 font-size: 20px;
             }
+            .sejati-card {
+                padding: 16px;
+            }
+            .sejati-card .status-detail {
+                flex-direction: column;
+                gap: 8px;
+            }
         }
         
         @media print {
-            .ga-buttons, .ga-status-box, .timezone-box {
+            .ga-buttons, .ga-status-box, .timezone-box, .sejati-card, .b40-section {
                 display: none;
             }
         }
@@ -380,6 +641,67 @@
         <div style="background: #e8ddd0; padding: 12px 16px; border-radius: 20px; margin: 15px 20px 0 20px; text-align: center;">
             <p style="margin: 0; font-size: 14px; font-weight: 500;">📱 <strong>想随时找到这个网站？</strong></p>
             <p style="margin: 5px 0 0; font-size: 13px;">点浏览器菜单 → <strong>「添加到主屏幕」</strong><br>下次一键打开，不用再搜索。</p>
+        </div>
+
+        <!-- ===== SejaTi MADANI 状态卡片 ===== -->
+        <div class="sejati-card">
+            <h3>
+                🇲🇾 SejaTi MADANI 申请状态
+                <span class="status-badge">⏳ 待审核</span>
+            </h3>
+            <div class="status-text">
+                <strong>📩 已提交询问：</strong> 已向 ICU JPM (Unit Penyelarasan Pelaksanaan) 提交关于 SejaTi MADANI 的询问/反馈。<br>
+                <span style="font-size:13px; opacity:0.8;">📅 提交日期：2026年7月8日</span>
+            </div>
+            <div class="status-text" style="margin-top:6px;">
+                <strong>📋 官方回复：</strong> ICU JPM 已确认收到询问，并正在处理中。任何进展将适时通知。
+            </div>
+            <div class="status-detail">
+                <span>📌 状态：筛选审核中</span>
+                <span>🏛 机构：ICU JPM</span>
+                <span>🆓 费用：全免（无需中介费）</span>
+            </div>
+            <a href="https://www.icu.gov.my" target="_blank" class="sejati-link" rel="noopener">
+                🔗 查看官方指南 → www.icu.gov.my
+            </a>
+            <div class="note">
+                ⚠️ 此页面仅用于记录申请进度。ICU JPM 不收取任何费用，请警惕诈骗。
+            </div>
+        </div>
+
+        <!-- ===== 新增：B40 导航部分 ===== -->
+        <div class="b40-section">
+            <div class="section-label">
+                <h2>👥 B40 社区 · 互助计划</h2>
+            </div>
+            
+            <!-- ===== 20K 机会横幅 ===== -->
+            <div class="opportunity-banner">
+                <div class="big-number">
+                    🎯 高达 <span>20,000+</span> 机会等着你！
+                </div>
+                <div class="tagline">
+                    <span class="emoji-big">🔥</span> 简单计算 · 机会超多 · 先到先得 <span class="emoji-big">🔥</span>
+                </div>
+            </div>
+            
+            <div class="b40-grid">
+                <!-- 选项 1: 自己带领小组 -->
+                <a href="docs/b40-lead.html" class="b40-card lead" data-section="B40 自己带领小组">
+                    <span class="hot-badge">🔥 HOT</span>
+                    <div class="icon">🚀</div>
+                    <h3>自己带领小组</h3>
+                    <p>有信心带领 5 位或以上 B40 成员<br>共同申请 SejaTi MADANI 资助</p>
+                    <span class="badge">👤 组长 · 5人以上</span>
+                </a>
+                <!-- 选项 2: 加入高潜力小组 -->
+                <a href="docs/b40-join.html" class="b40-card join" data-section="B40 加入高潜力小组">
+                    <div class="icon">🤝</div>
+                    <h3>加入高潜力小组</h3>
+                    <p>寻找由经验丰富的组长带领的<br>高潜力 B40 小组</p>
+                    <span class="badge">👥 组员 · 高潜力</span>
+                </a>
+            </div>
         </div>
 
         <!-- 传统服务分类 -->
@@ -569,6 +891,23 @@
                 }
             });
         });
+        
+        // B40 卡片点击跟踪
+        const b40Cards = document.querySelectorAll('.b40-card');
+        b40Cards.forEach(card => {
+            card.addEventListener('click', function(e) {
+                if (typeof gtag === 'function') {
+                    const section = this.getAttribute('data-section') || 'B40 unknown';
+                    const href = this.getAttribute('href');
+                    gtag('event', 'b40_navigation', {
+                        event_category: 'B40_Community',
+                        event_label: section,
+                        destination_url: href
+                    });
+                }
+            });
+        });
+        
         if (!localStorage.getItem('first_visit_time')) {
             localStorage.setItem('first_visit_time', new Date().toISOString());
             if (typeof gtag === 'function') {
