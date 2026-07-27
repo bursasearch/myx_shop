@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-    <title>马六甲市区回收 · 旧报纸换现金</title>
+    <title>个人电脑互助 · 马六甲</title>
     <style>
         * {
             margin: 0;
@@ -119,16 +119,42 @@
             box-shadow: 0 10px 18px rgba(30, 58, 46, 0.4);
         }
 
-        /* 油价通知 */
+        /* ===== 个人声明 ===== */
+        .personal-statement {
+            background: #f0f7f0;
+            border-radius: 18px;
+            padding: 16px 18px;
+            margin-bottom: 22px;
+            border: 2px solid #8fb88f;
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+        }
+
+        .personal-icon {
+            font-size: 2.4rem;
+            line-height: 1;
+        }
+
+        .personal-text {
+            font-size: 0.95rem;
+            color: #1e3a1e;
+        }
+
+        .personal-text strong {
+            color: #1f5f1f;
+        }
+
+        /* 油价通知 - 改为Menyeru Jasa Baik */
         .notice-box {
-            background: #fff8e7;
-            border-left: 6px solid #e6a422;
+            background: #e8f4f8;
+            border-left: 6px solid #2c7a9e;
             border-radius: 18px;
             padding: 14px 18px;
             margin-bottom: 20px;
             font-size: 0.98rem;
-            border: 1px solid #ffe6b3;
-            color: #4a3b1c;
+            border: 1px solid #b0d4e0;
+            color: #1a3a4a;
             display: flex;
             align-items: flex-start;
             gap: 12px;
@@ -158,8 +184,8 @@
 
         /* 服务区域 */
         .area-highlight {
-            background: linear-gradient(105deg, #fef9e7 0%, #fff6d5 100%);
-            border-left: 6px solid #e6b422;
+            background: linear-gradient(105deg, #e8f4f8 0%, #d4eaf0 100%);
+            border-left: 6px solid #2c7a9e;
             border-radius: 20px;
             padding: 16px 18px;
             margin-bottom: 22px;
@@ -187,7 +213,7 @@
         }
 
         .area-badge {
-            background: #2c7a2c;
+            background: #2c7a9e;
             color: white;
             padding: 6px 16px;
             border-radius: 40px;
@@ -196,7 +222,6 @@
             white-space: nowrap;
         }
 
-        /* 回收品类 */
         .section-title {
             font-size: 1.2rem;
             font-weight: 700;
@@ -249,14 +274,13 @@
             font-size: 0.9rem;
         }
 
-        /* 联络方式 */
         .contact-block {
-            background: linear-gradient(135deg, #1e4a1e 0%, #2c7a2c 100%);
+            background: linear-gradient(135deg, #1e4a6e 0%, #2c7a9e 100%);
             border-radius: 28px;
             padding: 20px 22px;
             margin: 28px 0 22px;
             color: white;
-            box-shadow: 0 12px 18px -8px rgba(28, 70, 28, 0.3);
+            box-shadow: 0 12px 18px -8px rgba(28, 70, 110, 0.3);
         }
 
         .contact-header {
@@ -290,16 +314,16 @@
             padding: 8px 16px 8px 20px;
             border-radius: 60px;
             text-decoration: none;
-            color: #1f4f1f;
+            color: #1f4f6e;
             font-weight: 700;
             font-size: 1.4rem;
             transition: 0.15s;
-            border: 2px solid #c3e0c3;
+            border: 2px solid #c3dce0;
             margin-bottom: 10px;
         }
 
         .wa-button:hover {
-            background: #e4ffe4;
+            background: #e4f4f8;
         }
 
         .wa-button span {
@@ -321,7 +345,6 @@
             padding-top: 12px;
         }
 
-        /* 价格板块 */
         .price-box {
             background: #ffffff;
             border-radius: 20px;
@@ -365,7 +388,6 @@
             margin-top: 6px;
         }
 
-        /* 页脚 */
         .footer-service {
             display: flex;
             align-items: center;
@@ -401,7 +423,30 @@
             color: #5f735f;
         }
 
-        /* 支持面板样式 (QR码弹窗) */
+        /* 返回主页按钮 */
+        .back-home {
+            text-align: center;
+            margin: 20px 0 10px 0;
+        }
+
+        .back-home a {
+            color: #2c7a2c;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            border: 2px solid #2c7a2c;
+            padding: 6px 24px;
+            border-radius: 40px;
+            display: inline-block;
+            transition: background 0.2s, color 0.2s;
+        }
+
+        .back-home a:hover {
+            background: #2c7a2c;
+            color: white;
+        }
+
+        /* 支持面板 */
         .support-panel {
             position: fixed;
             top: 0;
@@ -448,7 +493,6 @@
         }
         .close-btn:hover {
             background: #f5f5f5;
-            color: var(--danger);
         }
         .qr-switch-tabs {
             display: flex;
@@ -511,7 +555,6 @@
             color: #FF9800;
         }
 
-        /* 固定咖啡按钮 */
         #coffee-fab {
             position: fixed;
             bottom: 90px;
@@ -558,12 +601,12 @@
     <div class="recycle-card">
         <!-- 头部品牌 -->
         <div class="brand">
-            <div class="brand-icon">📰♻️</div>
-            <h1>把舊報紙變成現金</h1>
+            <div class="brand-icon">🖥️♻️</div>
+            <h1>个人电脑互助</h1>
         </div>
         <div class="subhead">
-            只收报纸 · 省油轻便
-            <span>马六甲专线</span>
+            旧配件 · 升级 · 学习用途
+            <span>马六甲</span>
         </div>
 
         <!-- 导航按钮 -->
@@ -572,26 +615,46 @@
                 🤖 AI 选股参考
             </a>
             <a href="https://maps.google.com/?q=Melaka+Bandaraya" class="nav-btn map-btn" target="_blank">
-                📍 導航到回收点
+                📍 导航到社区
             </a>
+        </div>
+
+        <!-- 个人声明 -->
+        <div class="personal-statement">
+            <div class="personal-icon">🧑‍🌾</div>
+            <div class="personal-text">
+                <strong>Saya kutip barang yang boleh dikitar-semula dari tong sampah untuk menyara keluarga.</strong><br>
+                <span style="font-size:0.9rem;">
+                    Saya bukan menjalankan perniagaan. Saya hanya kumpulkan bahan kitar semula secara kecil-kecilan. 
+                    Dua komputer lama yang saya guna sekarang — Acer Aspire Q8300 dan OEM E5300 — saya dapat dengan harga besi. 
+                    Anak-anak saya guna untuk main ROBLOX dan belajar.
+                </span>
+            </div>
+        </div>
+
+        <!-- Menyeru Jasa Baik -->
+        <div class="notice-box">
+            <div class="notice-icon">🤝</div>
+            <div>
+                <strong>Menyeru Jasa Baik</strong><br>
+                <span style="font-size:0.9rem;">
+                    Jika anda ada <strong>PC terpakai / aksesori usang</strong> (RAM, hard disk, power supply, monitor) 
+                    yang masih berfungsi dan ingin didermakan, saya sangat berterima kasih.<br><br>
+                    Saya akan gunakan untuk <strong>menaik-taraf PC sedia ada</strong> bagi kegunaan anak-anak belajar dan main ROBLOX, 
+                    serta urusan harian keluarga.<br><br>
+                    <span style="background: #fff3cd; padding: 4px 12px; border-radius: 20px; display: inline-block; margin-top: 4px;">
+                        ⚠️ Sila padam data peribadi anda sebelum derma. Saya tidak bertanggungjawab atas data yang tertinggal.
+                    </span>
+                </span>
+            </div>
         </div>
 
         <!-- 免责声明 -->
         <div class="disclaimer-box">
             <i class="fas fa-exclamation-triangle"></i>
-            <strong>免责声明：</strong>本页面为个人旧报纸回收服务，非注册公司，与任何证券或投资业务无关。
-        </div>
-
-        <!-- 暂停服务通知 -->
-        <div class="notice-box">
-            <div class="notice-icon">⛽🚛</div>
-            <div>
-                <strong>暫停服務通知</strong><br>
-                <span style="font-size:0.9rem;">
-                    因柴油價格高企 (RM6/升) 及車輛維修中，<br>
-                    回收服務暫時停止，敬請見諒。
-                </span>
-            </div>
+            <strong>Perhatian / 注意：</strong> 
+            Ini adalah usaha peribadi, bukan perniagaan berdaftar. Saya tidak membeli atau menjual PC. Saya hanya menerima derma untuk kegunaan sendiri dan keluarga.
+            <br><span style="font-size:0.8rem;">个人互助，非商业回收业务。</span>
         </div>
 
         <!-- 服务区域 -->
@@ -599,32 +662,40 @@
             <div class="area-icon">🗺️</div>
             <div class="area-text">
                 <strong style="font-size:1.3rem;">马六甲市区</strong><br>
-                <span style="font-weight:400; font-size:0.9rem;">Bandaraya Melaka 及周边</span>
+                <span style="font-weight:400; font-size:0.9rem;">Bandaraya Melaka 及周边 · 仅限WhatsApp预约</span>
             </div>
-            <div class="area-badge">✓ 只限此区</div>
+            <div class="area-badge">✓ 互助区</div>
         </div>
 
-        <!-- 回收品类 -->
+        <!-- 接受捐赠 -->
         <div class="section-title">
-            📋 我们只回收指定物品
+            📋 接受捐赠的物品
         </div>
         <div class="single-item-highlight">
-            <div class="single-icon">📰</div>
+            <div class="single-icon">🖥️</div>
             <div class="single-desc">
-                <h3>旧报纸</h3>
-                <div style="font-weight:500;">大量/少量皆可 · 上门秤重</div>
+                <h3>PC / Laptop</h3>
+                <div style="font-weight:500;">二手/旧 · 能开机能用最佳</div>
+            </div>
+        </div>
+        <div class="single-item-highlight" style="border-color: #b8c9d9;">
+            <div class="single-icon">🔧</div>
+            <div class="single-desc">
+                <h3>配件 (RAM / HDD / PSU / Monitor)</h3>
+                <div style="font-weight:500;">任何可用的旧零件</div>
             </div>
         </div>
         
         <div class="extra-note">
-            💬 若有旧电脑、汽车电池等，可WhatsApp询问（视距离/数量而定）
+            💬 若不确定是否可用，可先WhatsApp询问<br>
+            <span style="font-size:0.8rem; color:#5a6a3a;">* 仅用于家庭学习与日常用途，不转售</span>
         </div>
 
         <!-- 联络方式 -->
         <div class="contact-block">
             <div class="contact-header">
                 <div class="phone-icon">📞</div>
-                <h3>马上预约</h3>
+                <h3>联系咨询</h3>
             </div>
             <a href="https://wa.me/60196819069" class="wa-button" target="_blank" rel="noopener">
                 <span style="display:flex; align-items:center; gap:6px;">
@@ -634,43 +705,48 @@
                 <span>WhatsApp</span>
             </a>
             <div class="appointment-note">
-                <span>⏱️</span> 点击上方WhatsApp直接预约 · 我们会尽快回复
+                <span>⏱️</span> 可WhatsApp询问 · 我会尽快回复
             </div>
             <div style="display: flex; gap: 16px; margin-top: 8px; font-size:0.9rem; opacity:0.9; flex-wrap: wrap;">
                 <span>📲 支持语音 / 信息</span>
-                <span>📅 预约上门时间</span>
+                <span>📅 可协调时间</span>
             </div>
         </div>
 
-        <!-- 回收价格 -->
+        <!-- 捐赠说明 -->
         <div class="price-box">
-            <div class="price-icon">💰</div>
+            <div class="price-icon">🎁</div>
             <div class="price-content">
-                <div class="price-title">回收价格 · 透明</div>
-                <div class="price-desc">按市价计算 · 上门秤重</div>
-                <span class="cash-badge">📱 TnG / 扫码支付</span>
-                <div style="font-size:0.8rem; margin-top:6px; color:#3b4f2d;">少量现金亦可，首选电子钱包</div>
+                <div class="price-title">关于捐赠</div>
+                <div class="price-desc">所有捐赠均为自愿 · 无金钱交易</div>
+                <span class="cash-badge">🙏 感恩每一份善意</span>
+                <div style="font-size:0.8rem; margin-top:6px; color:#3b4f2d;">若需协助搬运，可提前说明</div>
             </div>
         </div>
 
         <!-- 页脚 -->
         <div class="footer-service">
             <div class="truck">
-                <span style="font-size:1.8rem;">🚛</span> 
-                <span>我们亲自上门回收</span>
+                <span style="font-size:1.8rem;">🤝</span> 
+                <span>互助 · 环保 · 教育</span>
             </div>
             <div class="hours">
-                🕘 星期一至六 · 9am – 5pm
+                🕘 视情况而定
             </div>
+        </div>
+
+        <!-- ===== 新增：返回主页按钮 ===== -->
+        <div class="back-home">
+            <a href="index.html">🏠 返回 Myx Shop 主页</a>
         </div>
         
         <div class="tiny-note">
             ♻️ 珍惜资源 · 减轻负担 · 感恩支持 ♻️<br>
-            <span style="opacity:0.7;">* 个人回收服务，非公司形式</span>
+            <span style="opacity:0.7;">* 个人互助，非注册公司或商业回收业务</span>
         </div>
     </div>
 
-    <!-- ========== 支持面板 (Maybank + TnG QR码) ========== -->
+    <!-- ========== 支持面板 ========== -->
     <div id="supportPanel" class="support-panel">
         <div class="support-card">
             <button class="close-btn" onclick="hideSupportPanel()">
@@ -682,10 +758,9 @@
             </div>
             <h4 style="text-align:center; margin-bottom:8px;">请我喝杯咖啡 ☕</h4>
             <p style="text-align:center; color:#666; font-size:13px; margin-bottom:20px;">
-                如果回收服务对您有帮助，欢迎随意支持
+                如果我的环保行动对您有帮助，欢迎随意支持
             </p>
 
-            <!-- 切换选项卡 -->
             <div class="qr-switch-tabs">
                 <div class="qr-tab active" id="tabMaybank" onclick="switchQR('maybank')">
                     <i class="fas fa-university"></i> Maybank
@@ -695,7 +770,6 @@
                 </div>
             </div>
 
-            <!-- Maybank QR 容器 -->
             <div id="maybankQR" class="qr-container">
                 <img src="images/maybank-qr.jpg" 
                      alt="Maybank QR Pay" 
@@ -707,7 +781,6 @@
                 </div>
             </div>
 
-            <!-- TnG QR 容器 (初始隐藏) -->
             <div id="tngQR" class="qr-container" style="display:none;">
                 <img src="images/tng-qr.jpg" 
                      alt="TnG eWallet QR" 
@@ -719,7 +792,6 @@
                 </div>
             </div>
 
-            <!-- 使用说明 -->
             <div class="qr-note">
                 <i class="fas fa-info-circle"></i> <strong>使用说明</strong><br>
                 <span style="font-size:12px;">
@@ -742,11 +814,9 @@
         <i class="fas fa-mug-hot"></i>
     </button>
 
-    <!-- Font Awesome 图标库 -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
     
     <script>
-        // ========== 支持面板控制 ==========
         function showSupportPanel() {
             document.getElementById('supportPanel').style.display = 'flex';
         }
@@ -754,7 +824,6 @@
             document.getElementById('supportPanel').style.display = 'none';
         }
         
-        // 点击背景关闭
         document.addEventListener('DOMContentLoaded', function() {
             const panel = document.getElementById('supportPanel');
             if (panel) {
@@ -766,7 +835,6 @@
             }
         });
 
-        // ========== 切换 QR 码 ==========
         function switchQR(type) {
             const maybankDiv = document.getElementById('maybankQR');
             const tngDiv = document.getElementById('tngQR');
