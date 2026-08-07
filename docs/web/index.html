@@ -78,6 +78,39 @@
         .nav-card:hover { transform: translateY(-3px); box-shadow: 0 4px 20px rgba(0,0,0,0.15); }
         .nav-card h3 { margin-bottom: 8px; font-size: 18px; }
         .nav-card p { font-size: 14px; opacity: 0.9; }
+
+        /* 捐赠卡片闪烁动画 (整合) */
+        @keyframes blink-glow {
+            0% { box-shadow: 0 0 0 0 rgba(184, 134, 11, 0.3); transform: scale(1); }
+            50% { box-shadow: 0 0 30px 10px rgba(184, 134, 11, 0.5); transform: scale(1.03); }
+            100% { box-shadow: 0 0 0 0 rgba(184, 134, 11, 0.3); transform: scale(1); }
+        }
+        .nav-card[data-section="电脑翻新与捐赠"] {
+            animation: blink-glow 2s ease-in-out infinite;
+            border: 3px solid #b8860b !important;
+            position: relative;
+            z-index: 2;
+        }
+        /* 右上角 "🔥 急需" 标签 */
+        .nav-card[data-section="电脑翻新与捐赠"]::after {
+            content: "🔥 急需";
+            position: absolute;
+            top: -12px;
+            right: -12px;
+            background: #e74c3c;
+            color: white;
+            font-size: 13px;
+            font-weight: 800;
+            padding: 4px 14px;
+            border-radius: 30px;
+            box-shadow: 0 2px 10px rgba(231, 76, 60, 0.5);
+            animation: blink-badge 1.2s ease-in-out infinite;
+        }
+        @keyframes blink-badge {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.4; transform: scale(0.95); }
+        }
+
         .nav-card.ziwei { background: linear-gradient(135deg, #2c1a3e 0%, #4a2c6e 100%); color: #FFE6B0; border: 1px solid rgba(255,215,0,0.3); }
         .nav-card.ziwei:hover { box-shadow: 0 10px 25px rgba(74, 44, 110, 0.4); }
         .nav-card.ziwei h3 { color: #FFD966; }
@@ -93,6 +126,7 @@
         .nav-card.freelancer { background: linear-gradient(135deg, #0f4c5c 0%, #1e6f5c 100%); color: #E8F8F5; border: 1px solid #6ab04c; }
         .nav-card.freelancer:hover { box-shadow: 0 10px 25px rgba(30, 111, 92, 0.4); }
         .nav-card.freelancer h3 { color: #6ab04c; }
+
         .oil-recycle-card { background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); border-radius: 12px; padding: 22px; margin: 25px 0; color: #ffffff; box-shadow: 0 4px 15px rgba(56, 239, 125, 0.3); border-left: 6px solid #f1c40f; }
         .oil-recycle-card .header { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
         .oil-recycle-card .header .icon { font-size: 28px; }
@@ -235,12 +269,14 @@
         <a href="docs/products.html" class="nav-card" data-section="聯盟商店"><h3>🛒 聯盟商店</h3><p>熱門產品推薦與優惠</p></a>
         <a href="docs/vehicles.html" class="nav-card" data-section="二手車輛"><h3>🚗 二手車輛</h3><p>車輛資訊與市場分析</p></a>
         <a href="docs/real-estate.html" class="nav-card" data-section="房地產代理"><h3>🏠 房地產代理</h3><p>專業房地產服務與物業資訊</p></a>
+        <!-- ★★★ 电脑翻新与捐赠 (整合动画&标签) ★★★ -->
+        <a href="docs/refurbished.html" class="nav-card" data-section="电脑翻新与捐赠"><h3>🖥️ 电脑翻新与捐赠</h3><p>回收旧电脑 · 翻新转赠 · 帮助社区</p></a>
     </div>
 
     <!-- ========== 关于我们 ========== -->
     <div class="section-label"><h2>❤️ 关于我们</h2></div>
 
-    <!-- ★★★ 新增：一位父亲的声明 ★★★ -->
+    <!-- 一位父亲的声明 -->
     <div style="margin: 25px 0; background: #f8f4f0; border-radius: 12px; padding: 24px; border-left: 6px solid #b8860b; box-shadow: 0 2px 10px rgba(0,0,0,0.06);">
         <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
             <span style="font-size: 28px;">🧑‍🧒</span>
@@ -249,9 +285,7 @@
         <div style="font-size: 15px; line-height: 1.8; color: #3d3d3d; background: white; padding: 18px 20px; border-radius: 8px; box-shadow: inset 0 1px 4px rgba(0,0,0,0.04);">
             <p style="margin: 0 0 10px 0; font-style: italic; color: #5a4a3a;">
                 “Saya pernah memegang Lesen Barang Lusuh, tetapi saya pilih untuk tidak menggunakannya.”
- 
- “Hidup dengan maruah ada harganya. 
-  Saya sanggup bayar.”
+                “Hidup dengan maruah ada harganya. Saya sanggup bayar.”
                 <strong>Tidak kira Dunia ataupun Akhirat. — Wong Seng Koon, 2026</strong>
             </p>
             <hr style="border: none; border-top: 1px dashed #ddd; margin: 14px 0;">
@@ -262,7 +296,7 @@
         </div>
     </div>
 
-    <!-- 原有的 我的故事 卡片 -->
+    <!-- 我的故事 卡片 -->
     <div class="nav-grid">
         <a href="mystory.html" class="nav-card story" data-section="我的故事与支持"><h3>📖 我的故事</h3><p>一位父亲 · 前绘图员 · OKU抗争 · 支持我们</p></a>
     </div>
