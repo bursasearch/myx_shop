@@ -31,7 +31,6 @@
     <!-- ===== 🔒 END ===== -->
     
     <style>
-        /* ... 所有原有样式保持不变 ... */
         * {
             margin: 0;
             padding: 0;
@@ -82,6 +81,49 @@
             font-weight: 600;
             display: inline-block;
             margin-top: 8px;
+        }
+
+        /* ===== FLOW CHART ===== */
+        .flow-chart {
+            background: white;
+            border-radius: 12px;
+            padding: 16px 18px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            text-align: center;
+        }
+
+        .flow-chart .flow-steps {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 6px 10px;
+            font-size: 13px;
+        }
+
+        .flow-chart .step {
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 12px;
+        }
+
+        .flow-chart .step.perhatian { background: #fff3cd; color: #856404; }
+        .flow-chart .step.siasatan { background: #ffe0b2; color: #bf360c; }
+        .flow-chart .step.selesai { background: #c8e6c9; color: #1b5e20; }
+        .flow-chart .step.baru { background: #e3f2fd; color: #0d47a1; }
+
+        .flow-chart .arrow {
+            color: #6d6d8a;
+            font-size: 18px;
+            font-weight: 300;
+        }
+
+        .flow-chart .flow-label {
+            font-size: 11px;
+            color: #8888aa;
+            margin-top: 6px;
         }
 
         /* ===== TAB / JENIS ADUAN ===== */
@@ -292,6 +334,14 @@
             color: #8888aa;
         }
 
+        .case-item .case-meta .case-remark {
+            color: #5a6a7a;
+            font-style: italic;
+            background: #f5f5f5;
+            padding: 0 10px;
+            border-radius: 12px;
+        }
+
         .stars {
             color: #f9a825;
             font-size: 14px;
@@ -306,6 +356,37 @@
             font-size: 11px;
             font-weight: 600;
         }
+
+        /* ===== LEGEND ===== */
+        .legend {
+            background: white;
+            border-radius: 12px;
+            padding: 12px 16px;
+            margin-top: 16px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px 20px;
+            justify-content: center;
+            font-size: 12px;
+            color: #5a5a7a;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .legend-item .dot {
+            width: 14px;
+            height: 14px;
+            border-radius: 4px;
+        }
+
+        .legend-item .dot.perhatian { background: #f9a825; }
+        .legend-item .dot.siasatan { background: #e65100; }
+        .legend-item .dot.selesai { background: #2e7d32; }
 
         /* ===== RATING SECTION ===== */
         .rating-section {
@@ -324,7 +405,7 @@
         }
 
         .rating-section .rating-stars {
-            font-size: 28px;
+            font-size: 32px;
             color: #f9a825;
             margin: 6px 0;
             cursor: pointer;
@@ -337,6 +418,31 @@
         .rating-section .rating-stars span:hover {
             transform: scale(1.2);
             display: inline-block;
+        }
+
+        .rating-section .rating-result {
+            font-size: 13px;
+            color: #6d6d8a;
+            margin-top: 4px;
+        }
+
+        /* ===== BACK TO MYSTORY ===== */
+        .back-link {
+            display: inline-block;
+            margin-top: 16px;
+            background: #6c757d;
+            color: white;
+            padding: 8px 20px;
+            border-radius: 40px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 14px;
+            transition: 0.2s;
+        }
+
+        .back-link:hover {
+            background: #5a6268;
+            transform: translateY(-2px);
         }
 
         /* ===== FOOTER ===== */
@@ -356,6 +462,8 @@
             .case-item { padding: 14px; }
             .case-item .case-header { flex-direction: column; align-items: stretch; }
             .tab-btn { font-size: 12px; padding: 6px 12px; }
+            .flow-chart .flow-steps { font-size: 11px; }
+            .flow-chart .step { font-size: 10px; padding: 4px 10px; }
         }
 
         @media (max-width: 400px) {
@@ -375,6 +483,24 @@
         <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 8px; align-items: center;">
             <span class="badge-unread">🔴 6 Mesej belum dibaca</span>
             <span style="font-size: 13px; opacity: 0.8;">| Kemas kini: 06/09/2026</span>
+        </div>
+    </div>
+
+    <!-- ===== FLOW CHART ===== -->
+    <div class="flow-chart">
+        <div class="flow-steps">
+            <span class="step baru">📩 BARU</span>
+            <span class="arrow">→</span>
+            <span class="step perhatian">🔵 DALAM PERHATIAN</span>
+            <span class="arrow">→</span>
+            <span class="step siasatan">🟠 DALAM SIASATAN</span>
+            <span class="arrow">→</span>
+            <span class="step selesai">🟢 SELESAI</span>
+            <span class="arrow">→</span>
+            <span style="font-weight:600;color:#f9a825;">⭐ PENILAIAN</span>
+        </div>
+        <div class="flow-label">
+            ⭐⭐⭐⭐⭐ Puas Hati · ⭐⭐/⭐ Tidak Puas → 📩 Aduan Baharu
         </div>
     </div>
 
@@ -419,147 +545,129 @@
     <!-- ===== SENARAI KES ===== -->
     <div class="case-list" id="caseList">
 
-        <!-- 1. ICU - Dalam Perhatian -->
+        <!-- 1. JKM - Dalam Perhatian -->
         <div class="case-item" style="border-left-color: #f9a825;">
             <div class="case-header">
-                <span class="case-agency">🏛️ Unit Penyelarasan Pelaksanaan, JPM (ICU)</span>
+                <span class="case-agency">👩‍👧 JKM Ibu Pejabat</span>
                 <span class="case-status perhatian">DALAM PERHATIAN</span>
             </div>
-            <div class="case-title">BANTAHAN TERHADAP E-MEL PPN MELAKA 05 OGOS 2026 DAN IMPLIKASI</div>
+            <div class="case-title">Rayuan status OKU - warna buta &amp;斜视</div>
             <div class="case-meta">
-                <span class="case-id">ICU.900003</span>
-                <span class="case-date">📅 06/08/2026 8:55 AM</span>
-                <span class="sispaa-badge">🔁 2 tindakan</span>
+                <span class="case-id">JKM.900001</span>
+                <span class="case-date">📅 06/09/2026</span>
+                <span class="case-remark">💬 Menunggu pakar oftalmologi</span>
+                <span class="sispaa-badge">🆕 Baharu</span>
             </div>
         </div>
 
-        <!-- 2. ICU - Dalam Perhatian -->
-        <div class="case-item" style="border-left-color: #f9a825;">
-            <div class="case-header">
-                <span class="case-agency">🏛️ Unit Penyelarasan Pelaksanaan, JPM (ICU)</span>
-                <span class="case-status perhatian">DALAM PERHATIAN</span>
-            </div>
-            <div class="case-title">ADUAN KETIDAKPUASHATI KIRAAN PGK</div>
-            <div class="case-meta">
-                <span class="case-id">ICU.900002</span>
-                <span class="case-date">📅 03/08/2026 4:11 PM</span>
-                <span class="sispaa-badge">📎 lampiran</span>
-            </div>
-        </div>
-
-        <!-- 3. ICU - Dalam Perhatian -->
-        <div class="case-item" style="border-left-color: #f9a825;">
-            <div class="case-header">
-                <span class="case-agency">🏛️ PEJABAT PEMBANGUNAN NEGERI (ICU JPM)</span>
-                <span class="case-status perhatian">DALAM PERHATIAN</span>
-            </div>
-            <div class="case-title">PENGHARGAAN ATAS TINDAKAN PANTAS DAN PROFESIONAL PEGAWAI PEJABAT...</div>
-            <div class="case-meta">
-                <span class="case-id">JPA.095702</span>
-                <span class="case-date">📅 23/06/2026 8:33 AM</span>
-                <span class="stars">⭐⭐⭐⭐⭐</span>
-            </div>
-        </div>
-
-        <!-- 4. MOF - Dalam Siasatan -->
+        <!-- 2. MOF - Dalam Siasatan -->
         <div class="case-item" style="border-left-color: #e65100;">
             <div class="case-header">
                 <span class="case-agency">🏦 Kementerian Kewangan (MOF)</span>
                 <span class="case-status siasatan">DALAM SIASATAN</span>
             </div>
-            <div class="case-title">ADUAN TUNGGAKAN BAKI MYSARA 2026 — KETIDAKSAMAAN KADAR BAYARAN</div>
+            <div class="case-title">Bantahan kadar bayaran MySara 2026 - Ketidaksamaan kadar</div>
             <div class="case-meta">
                 <span class="case-id">MOF.900136</span>
-                <span class="case-date">📅 02/09/2026 9:17 AM</span>
-                <span class="sispaa-badge">⚡ tindakan segera</span>
+                <span class="case-date">📅 02/09/2026</span>
+                <span class="case-remark">💬 Dalam siasatan oleh unit kewangan</span>
+                <span class="sispaa-badge">⚡ Tindakan</span>
             </div>
         </div>
 
-        <!-- 5. MOH - Dalam Siasatan -->
+        <!-- 3. MOH - Dalam Siasatan -->
         <div class="case-item" style="border-left-color: #e65100;">
             <div class="case-header">
                 <span class="case-agency">🏥 Kementerian Kesihatan Malaysia (MOH)</span>
                 <span class="case-status siasatan">DALAM SIASATAN</span>
             </div>
-            <div class="case-title">ADUAN TERHADAP JABATAN OFTALMOLOGI HOSPITAL BESAR MELAKA</div>
+            <div class="case-title">Aduan Jabatan Oftalmologi Hospital Besar Melaka</div>
             <div class="case-meta">
                 <span class="case-id">MOH.900532</span>
-                <span class="case-date">📅 30/08/2026 9:36 AM</span>
-                <span class="sispaa-badge">🏥 OKU berkaitan</span>
+                <span class="case-date">📅 30/08/2026</span>
+                <span class="case-remark">💬 OKU berkaitan - warna buta</span>
+                <span class="sispaa-badge">🏥 OKU</span>
             </div>
         </div>
 
-        <!-- 6. KPWKM - Dalam Siasatan -->
+        <!-- 4. KPWKM - Dalam Siasatan -->
         <div class="case-item" style="border-left-color: #e65100;">
             <div class="case-header">
-                <span class="case-agency">👩‍👧 Kementerian Pembangunan Wanita, Keluarga dan Masyarakat (KPWKM)</span>
+                <span class="case-agency">👩‍👧 KPWKM</span>
                 <span class="case-status siasatan">DALAM SIASATAN</span>
             </div>
-            <div class="case-title">SANGGAHAN RASMI TERHADAP MAKLUM BALAS JKM_JPA.100199</div>
+            <div class="case-title">Sanggahan rasmi terhadap maklum balas JKM_JPA.100199</div>
             <div class="case-meta">
                 <span class="case-id">PCB.363501</span>
-                <span class="case-date">📅 15/08/2026 3:08 PM</span>
-                <span class="sispaa-badge">📤 diserahkan ke JKM</span>
+                <span class="case-date">📅 15/08/2026</span>
+                <span class="case-remark">💬 Diserahkan ke JKM</span>
+                <span class="sispaa-badge">📤 Diproses</span>
             </div>
         </div>
 
-        <!-- 7. MOT - Dalam Siasatan -->
-        <div class="case-item" style="border-left-color: #e65100;">
-            <div class="case-header">
-                <span class="case-agency">🚗 Kementerian Pengangkutan (MOT)</span>
-                <span class="case-status siasatan">DALAM SIASATAN</span>
-            </div>
-            <div class="case-title">PERMOHONAN PENJELASAN DASAR PEMILIKAN KENDERAAN DISEL-CBG9761</div>
-            <div class="case-meta">
-                <span class="case-id">MOT.900167</span>
-                <span class="case-date">📅 10/08/2026 7:45 AM</span>
-                <span class="sispaa-badge">🚛 kenderaan</span>
-            </div>
-        </div>
-
-        <!-- 8. JPJ - Selesai -->
+        <!-- 5. JPJ - Selesai -->
         <div class="case-item" style="border-left-color: #2e7d32;">
             <div class="case-header">
                 <span class="case-agency">🚦 JABATAN PENGANGKUTAN JALAN (JPJ)</span>
                 <span class="case-status selesai">SELESAI ⭐</span>
             </div>
-            <div class="case-title">PERTANYAAN KEPUTUSAN RASMI REBAT LKM DIESEL HIJAU (PIKAP PERIBADI)</div>
+            <div class="case-title">Pertanyaan keputusan rasmi rebat LKM diesel hijau (PIKAP peribadi)</div>
             <div class="case-meta">
                 <span class="case-id">JPA.100556</span>
-                <span class="case-date">📅 24/07/2026 7:49 AM</span>
+                <span class="case-date">📅 24/07/2026</span>
                 <span class="stars">⭐⭐⭐⭐⭐</span>
+                <span class="case-remark">💬 Puas hati dengan maklum balas</span>
             </div>
         </div>
 
-        <!-- 9. JKM - Selesai -->
+        <!-- 6. JKM - Selesai (Tidak Puas Hati) -->
         <div class="case-item" style="border-left-color: #2e7d32;">
             <div class="case-header">
                 <span class="case-agency">👩‍👧 JKM Ibu Pejabat</span>
                 <span class="case-status selesai">SELESAI ⭐</span>
             </div>
-            <div class="case-title">ADUAN TERHADAP KEGAGALAN PENTADBIRAN JKM MELAKA, MAKLUMAT...</div>
+            <div class="case-title">Aduan kegagalan pentadbiran JKM Melaka</div>
             <div class="case-meta">
                 <span class="case-id">JPA.100199</span>
-                <span class="case-date">📅 22/07/2026 10:23 AM</span>
-                <span class="stars">⭐⭐⭐⭐⭐</span>
-                <span class="sispaa-badge">✅ OKU</span>
+                <span class="case-date">📅 22/07/2026</span>
+                <span class="stars">⭐⭐</span>
+                <span class="case-remark">💬 Tidak puas hati - akan buat aduan baharu</span>
+                <span class="sispaa-badge">⚠️ Rayuan</span>
             </div>
         </div>
 
-        <!-- 10. JPJ - Selesai -->
+        <!-- 7. JPJ - Selesai (Tidak Puas Hati) -->
         <div class="case-item" style="border-left-color: #2e7d32;">
             <div class="case-header">
                 <span class="case-agency">🚦 JABATAN PENGANGKUTAN JALAN (JPJ)</span>
                 <span class="case-status selesai">SELESAI ⭐</span>
             </div>
-            <div class="case-title">JPJ SENGAJA MENUKAR STATUS KES (TICKET NO. JPA.098623) KEPADA "SELESAI"</div>
+            <div class="case-title">JPJ sengaja tukar status kes (JPA.098623) kepada "SELESAI"</div>
             <div class="case-meta">
                 <span class="case-id">JPA.099369</span>
-                <span class="case-date">📅 16/07/2026 9:46 PM</span>
-                <span class="stars">⭐⭐⭐⭐⭐</span>
+                <span class="case-date">📅 16/07/2026</span>
+                <span class="stars">⭐</span>
+                <span class="case-remark">💬 Sangat tidak puas hati - perlu aduan semula</span>
+                <span class="sispaa-badge">⚠️ Rayuan</span>
             </div>
         </div>
 
+    </div>
+
+    <!-- ===== LEGEND ===== -->
+    <div class="legend">
+        <span class="legend-item">
+            <span class="dot perhatian"></span> Dalam Perhatian
+        </span>
+        <span class="legend-item">
+            <span class="dot siasatan"></span> Dalam Siasatan
+        </span>
+        <span class="legend-item">
+            <span class="dot selesai"></span> Selesai
+        </span>
+        <span style="color:#8888aa;">|</span>
+        <span>⭐ 1-2 = Tidak Puas → Aduan Baharu</span>
+        <span>⭐ 3-5 = Puas Hati → Tutup</span>
     </div>
 
     <!-- ===== PENILAIAN ===== -->
@@ -572,7 +680,12 @@
             <span data-value="4">☆</span>
             <span data-value="5">☆</span>
         </div>
-        <div style="font-size: 13px; color: #8888aa; margin-top: 4px;">Klik untuk memberi rating</div>
+        <div class="rating-result" id="ratingResult">Klik bintang untuk memberi rating</div>
+    </div>
+
+    <!-- ===== BACK TO MYSTORY ===== -->
+    <div style="text-align: center; margin-top: 8px;">
+        <a href="mystory.html" class="back-link">← Kembali ke MyStory</a>
     </div>
 
     <!-- ===== FOOTER ===== -->
@@ -615,14 +728,29 @@
 
         // ---- Rating Bintang ----
         const stars = document.querySelectorAll('#ratingStars span');
+        const ratingResult = document.getElementById('ratingResult');
         let currentRating = 0;
+
+        const ratingMessages = {
+            1: '⭐ Sangat Tidak Puas Hati → Sila buat aduan baharu',
+            2: '⭐⭐ Tidak Puas Hati → Sila buat aduan baharu',
+            3: '⭐⭐⭐ Sederhana - Terima kasih atas maklum balas',
+            4: '⭐⭐⭐⭐ Puas Hati - Terima kasih',
+            5: '⭐⭐⭐⭐⭐ Sangat Puas Hati - Terima kasih!'
+        };
 
         stars.forEach(star => {
             star.addEventListener('click', function() {
                 const value = parseInt(this.dataset.value);
                 currentRating = value;
                 updateStars(value);
+                ratingResult.textContent = ratingMessages[value] || 'Terima kasih!';
                 console.log('⭐ Rating diberikan:', value, 'bintang');
+                
+                // 如果 rating 1-2，提示再次投诉
+                if (value <= 2) {
+                    ratingResult.textContent += ' 🔄 Sila buat aduan baharu';
+                }
             });
 
             star.addEventListener('mouseenter', function() {
@@ -648,6 +776,33 @@
         }
 
         updateStars(0);
+
+        // ---- Klik pada stat card (filter) ----
+        document.querySelectorAll('.stat-card').forEach(card => {
+            card.addEventListener('click', function() {
+                const label = this.querySelector('.stat-label')?.textContent || '';
+                const keyword = label.replace('Dalam ', '').trim();
+                console.log('🔍 Tapis mengikut status:', keyword);
+                
+                // Filter cases
+                caseItems.forEach(item => {
+                    const statusEl = item.querySelector('.case-status');
+                    if (statusEl) {
+                        const statusText = statusEl.textContent.trim();
+                        if (keyword === '' || statusText.includes(keyword.toUpperCase())) {
+                            item.style.display = 'block';
+                        } else {
+                            item.style.display = 'none';
+                        }
+                    }
+                });
+                
+                // Reset search input
+                searchInput.value = '';
+            });
+        });
+
+        console.log('📋 SISPAA sedia!');
     })();
 </script>
 
