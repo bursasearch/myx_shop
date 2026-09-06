@@ -26,110 +26,12 @@
         .btn-whatsapp:hover { background: #1ebc57; transform: translateY(-2px); }
         .btn-back { display: inline-block; background: #b8860b; color: white; text-decoration: none; padding: 10px 24px; border-radius: 30px; font-weight: 600; margin-top: 25px; transition: background 0.3s; }
         .btn-back:hover { background: #9a7209; }
-
-        /* ===== BUTANG BLINKING ===== */
-        .btn-blink {
-            display: inline-block;
-            background: #2a7a3b;
-            color: white;
-            text-decoration: none;
-            padding: 14px 32px;
-            border-radius: 60px;
-            font-weight: 700;
-            font-size: 17px;
-            box-shadow: 0 4px 15px rgba(42, 122, 59, 0.4);
-            transition: all 0.3s;
-            animation: blinkPulse 1.8s ease-in-out infinite;
-            border: 2px solid #ffffff;
-            letter-spacing: 0.5px;
-            margin: 5px 0;
-        }
-
-        .btn-blink i {
-            margin-right: 12px;
-            font-size: 20px;
-        }
-
-        .btn-blink:hover {
-            background: #1e5e2d;
-            transform: scale(1.06);
-            animation: none;
-            box-shadow: 0 4px 25px rgba(42, 122, 59, 0.6);
-        }
-
-        @keyframes blinkPulse {
-            0% { opacity: 1; transform: scale(1); box-shadow: 0 4px 15px rgba(42, 122, 59, 0.4); }
-            45% { opacity: 1; transform: scale(1); box-shadow: 0 4px 15px rgba(42, 122, 59, 0.4); }
-            50% { opacity: 0.65; transform: scale(1.03); box-shadow: 0 4px 30px rgba(42, 122, 59, 0.8); }
-            55% { opacity: 1; transform: scale(1); box-shadow: 0 4px 15px rgba(42, 122, 59, 0.4); }
-            100% { opacity: 1; transform: scale(1); box-shadow: 0 4px 15px rgba(42, 122, 59, 0.4); }
-        }
-
-        .clear-link-box { 
-            background: #f0f7f2; 
-            border: 2px solid #2a7a3b; 
-            border-radius: 14px; 
-            padding: 18px 24px; 
-            margin: 20px 0; 
-            display: flex; 
-            align-items: center; 
-            flex-wrap: wrap; 
-            gap: 15px; 
-        }
-        .clear-link-box span { 
-            font-size: 15px; 
-            font-weight: 500; 
-            color: #1a4b2e; 
-            flex: 1;
-        }
-        .clear-link-box .btn-blink { 
-            margin: 0; 
-            flex-shrink: 0;
-        }
-
-        .nav-shortcut {
-            margin: 20px 0 15px 0; 
-            padding: 14px 20px; 
-            background: #f8fafc; 
-            border-radius: 12px; 
-            border: 1px solid #dce4ec; 
-            display: flex; 
-            align-items: center; 
-            flex-wrap: wrap; 
-            gap: 12px 20px;
-        }
-        .nav-shortcut .label {
-            font-size: 14px; 
-            color: #2d3748; 
-            font-weight: 500;
-        }
-        .nav-shortcut a {
-            color: #b8860b; 
-            text-decoration: none; 
-            font-weight: 500;
-        }
-        .nav-shortcut a:hover { text-decoration: underline; }
-
-        .footer-links { 
-            display: flex; 
-            flex-wrap: wrap; 
-            gap: 12px 20px; 
-            justify-content: center; 
-            margin-top: 20px; 
-        }
-        .footer-links a { 
-            color: #b8860b; 
-            text-decoration: none; 
-            font-weight: 500; 
-            font-size: 14px; 
-        }
-        .footer-links a:hover { text-decoration: underline; }
-        .footer-note { margin-top: 25px; padding-top: 18px; border-top: 1px solid #e0e0e0; font-size: 13px; color: #888; text-align: center; }
+        .footer-note { margin-top: 30px; padding-top: 20px; border-top: 1px solid #e0e0e0; font-size: 13px; color: #888; text-align: center; }
         .highlight { background: #fff3cd; padding: 2px 8px; border-radius: 4px; font-weight: 600; }
         .story-box { background: #f0f4f8; border-radius: 12px; padding: 20px 24px; margin: 15px 0 25px 0; border: 1px solid #d0dce8; }
         .story-box p { font-size: 15px; color: #2d3748; margin-bottom: 8px; }
         .story-box .highlight-gold { color: #b8860b; font-weight: 700; }
-        @media (max-width: 600px) { .container { padding: 20px; } h1 { font-size: 20px; } .clear-link-box { flex-direction: column; align-items: stretch; } .clear-link-box .btn-blink { text-align: center; } }
+        @media (max-width: 600px) { .container { padding: 20px; } h1 { font-size: 20px; } }
     </style>
 </head>
 <body>
@@ -137,7 +39,7 @@
 
     <h1><span>🖥️</span> 电脑翻新与捐赠说明</h1>
 
-    <!-- ====== 故事 ====== -->
+    <!-- ====== 为什么需要你的电脑（新增开场白） ====== -->
     <div class="story-box">
         <p style="font-size: 16px; margin-bottom: 8px; color: #1a365d;">
             <strong>🧑‍🧒 我是一位 61 岁的父亲，住在马六甲。</strong>
@@ -148,14 +50,14 @@
         </p>
         <p>
             一台能用的旧电脑，可以让我做线上兼职、帮孩子学习、陪他玩 Roblox。
-            <strong class="highlight-gold">你的"垃圾"电脑，可能就是我的"救命"工具。</strong>
+            <strong class="highlight-gold">你的“垃圾”电脑，可能就是我的“救命”工具。</strong>
         </p>
         <p style="font-size: 14px; color: #4a5568; margin-top: 8px; background: white; padding: 8px 14px; border-radius: 8px; border: 1px solid #e2e8f0;">
             💡 <strong>如果你不放心，我也愿意以合理的二手价购买</strong> — 一切可以商量。
         </p>
     </div>
 
-    <!-- ====== 数据安全警示 ====== -->
+    <!-- ====== 数据安全警示（重点） ====== -->
     <div class="warning-box">
         <span class="big-icon">🛡️⚠️</span>
         <strong style="font-size: 18px;">捐赠前，请务必自行清除所有数据！</strong>
@@ -170,20 +72,12 @@
     <!-- ====== 数据清除方法 ====== -->
     <h2>🧹 数据清除方法（三选一）</h2>
 
-    <!-- ===== SHORTCUT 1: BUTANG BLINKING ===== -->
-    <div class="clear-link-box">
-        <span>📘 <strong>📘 需要更详细的教学？</strong> 这里有一份 <strong>完整的硬碟数据清除图文指南</strong>，一步一步带您做，包括物理摧毁、软件擦除、磁铁消磁等方法。</span>
-        <a href="clear_data.html" class="btn-blink">
-            <i>📖</i> 查看完整指南 →
-        </a>
-    </div>
-
     <div class="step-box">
         <p><span class="step-num">1</span> <strong>软件擦除（推荐，适合还能开机的电脑）</strong></p>
         <ul>
-            <li>使用 <strong>DBAN (Darik's Boot and Nuke)</strong> 或 <strong>HD Tune</strong> 对硬盘进行"全盘写零"或"覆写"操作。</li>
+            <li>使用 <strong>DBAN (Darik's Boot and Nuke)</strong> 或 <strong>HD Tune</strong> 对硬盘进行“全盘写零”或“覆写”操作。</li>
             <li>至少覆写 <strong>1~2 遍</strong>，即可彻底清除数据，硬盘仍可继续使用。</li>
-            <li>⚠️ 注意：此操作会抹除操作系统，电脑将变成"空机"，需重装系统才能使用。</li>
+            <li>⚠️ 注意：此操作会抹除操作系统，电脑将变成“空机”，需重装系统才能使用。</li>
         </ul>
     </div>
 
@@ -199,7 +93,7 @@
     <div class="step-box">
         <p><span class="step-num">3</span> <strong>简单删除（不推荐，仅限完全不涉及隐私的旧机）</strong></p>
         <ul>
-            <li>普通"删除文件"或"快速格式化" <strong>不能</strong> 真正清除数据，专业软件可轻松恢复。</li>
+            <li>普通“删除文件”或“快速格式化” <strong>不能</strong> 真正清除数据，专业软件可轻松恢复。</li>
             <li>若您确认电脑内 <strong>没有任何</strong> 个人或公司资料，可以选择此方式，但风险自担。</li>
         </ul>
     </div>
@@ -229,33 +123,13 @@
     <h2>📞 联系我</h2>
     <p style="margin-bottom: 15px;">如果有废置电脑或零件想捐赠，欢迎点击下方按钮直接发讯息给我：</p>
 
-    <a href="https://wa.me/60196819069?text=%E4%BD%A0%E5%A5%BD%EF%BC%8C%E6%88%91%E6%9C%89%E5%BA%9F%E7%BD%AE%E7%94%B5%E8%84%91%E6%83%B3%E6%8D%90%E8%B5%A0%2F%E5%9B%9E%E6%94%B6%EF%BC%8C%E6%83%B3%E4%BA%86%E8%A7%A3%E4%BA%A4%E6%8E%A5%E8%AF%A6%E6%83%85%E3%80%82" 
+    <a href="https://wa.me/60196819069?text=%E4%BD%A0%E5%A5%BD%EF%BC%8C%E6%88%91%E6%9C%89%E5%BA%9F%E7%BD%AE%E7%94%B5%E8%85%A1%E6%83%B3%E6%8D%90%E8%B5%A0%2F%E5%9B%9E%E6%94%B6%EF%BC%8C%E6%83%B3%E4%BA%86%E8%A7%A3%E4%BA%A4%E6%8E%A5%E8%AF%A6%E6%83%85%E3%80%82" 
        class="btn-whatsapp" target="_blank">
         💬 一键发送 WhatsApp 讯息 (+6019-681 9069)
     </a>
 
     <br>
-
-    <!-- ===== SHORTCUT 2: BUTANG BLINKING DI NAVIGASI ===== -->
-    <div class="nav-shortcut">
-        <span class="label">🔗 <strong>快速导航：</strong></span>
-        <a href="../index.html">🏠 主页</a>
-        <span style="color: #ccc;">|</span>
-        <a href="clear_data.html" class="btn-blink" style="padding: 8px 20px; font-size: 14px;">
-            📖 硬碟数据清除完整指南
-        </a>
-    </div>
-
-    <a href="../index.html" class="btn-back" onclick="gtag('event', 'back_to_home_from_join');">⬅️ 返回 Myx Shop 主頁</a>
-
-    <!-- ===== SHORTCUT 3: DI FOOTER ===== -->
-    <div class="footer-links">
-        <a href="../index.html">🏠 主页</a>
-        <a href="clear_data.html" style="background: #e6f0ea; padding: 4px 16px; border-radius: 30px; color: #2a7a3b; font-weight: 600;">
-            📖 硬碟数据清除指南
-        </a>
-        <a href="https://wa.me/60196819069">💬 WhatsApp</a>
-    </div>
+   <a href="../index.html" class="btn-back" onclick="gtag('event', 'back_to_home_from_join');">⬅️ 返回 Myx Shop 主頁</a>
 
     <div class="footer-note">
         © 2026 Myx Shop · 电脑翻新与捐赠说明
