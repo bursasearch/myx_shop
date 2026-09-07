@@ -2,172 +2,32 @@
 <html lang="ms">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SISPAA - Sistem Pengurusan Aduan Awam</title>
-    
-    <!-- ===== 🔒 PASSWORD PROTECTION ===== -->
-    <script>
-        // 设置密码（您可以修改这里）
-        var CORRECT_PASSWORD = "admin123";
-        
-        // 检查是否已经验证过（sessionStorage 保存状态）
-        if (sessionStorage.getItem('sispaa_authenticated') !== 'true') {
-            var userPassword = prompt("🔒 请输入密码以访问 SISPAA 系统：");
-            
-            if (userPassword === CORRECT_PASSWORD) {
-                sessionStorage.setItem('sispaa_authenticated', 'true');
-            } else {
-                document.body.innerHTML = `
-                    <div style="text-align:center; padding:60px 20px; font-family: Arial, sans-serif;">
-                        <h1 style="color:#c62828; font-size:32px;">⛔ 密码错误</h1>
-                        <p style="color:#666; font-size:16px; margin-top:10px;">您输入的密码不正确，无法访问此页面。</p>
-                        <p style="color:#999; font-size:14px; margin-top:20px;">请按 <kbd>F5</kbd> 或 <kbd>Ctrl+R</kbd> 重新尝试</p>
-                    </div>
-                `;
-                throw new Error("Authentication failed");
-            }
-        }
-    </script>
-    <!-- ===== 🔒 END ===== -->
-    
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        * { margin:0; padding:0; box-sizing:border-box; }
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            font-family: -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
             background: #f0f2f5;
-            color: #1a1a2e;
             padding: 16px;
-            min-height: 100vh;
         }
-
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-        }
-
-        /* ===== HEADER ===== */
+        .container { max-width: 1000px; margin: 0 auto; }
         .header {
-            background: linear-gradient(135deg, #0d47a1 0%, #1565c0 100%);
+            background: linear-gradient(135deg, #0d47a1, #1565c0);
             color: white;
             border-radius: 16px;
             padding: 20px 24px;
             margin-bottom: 20px;
-            box-shadow: 0 4px 12px rgba(13, 71, 161, 0.3);
         }
-
-        .header h1 {
-            font-size: 22px;
-            font-weight: 700;
-            letter-spacing: 0.5px;
-        }
-
-        .header p {
-            font-size: 14px;
-            opacity: 0.85;
-            margin-top: 4px;
-        }
-
-        .header .badge-unread {
-            background: #ff6f00;
-            color: white;
-            padding: 4px 14px;
-            border-radius: 20px;
-            font-size: 13px;
-            font-weight: 600;
-            display: inline-block;
-            margin-top: 8px;
-        }
-
-        /* ===== FLOW CHART ===== */
-        .flow-chart {
-            background: white;
-            border-radius: 12px;
-            padding: 16px 18px;
-            margin-bottom: 20px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-            text-align: center;
-        }
-
-        .flow-chart .flow-steps {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            align-items: center;
-            gap: 6px 10px;
-            font-size: 13px;
-        }
-
-        .flow-chart .step {
-            padding: 6px 14px;
-            border-radius: 20px;
-            font-weight: 600;
-            font-size: 12px;
-        }
-
-        .flow-chart .step.perhatian { background: #fff3cd; color: #856404; }
-        .flow-chart .step.siasatan { background: #ffe0b2; color: #bf360c; }
-        .flow-chart .step.selesai { background: #c8e6c9; color: #1b5e20; }
-        .flow-chart .step.baru { background: #e3f2fd; color: #0d47a1; }
-
-        .flow-chart .arrow {
-            color: #6d6d8a;
-            font-size: 18px;
-            font-weight: 300;
-        }
-
-        .flow-chart .flow-label {
-            font-size: 11px;
-            color: #8888aa;
-            margin-top: 6px;
-        }
-
-        /* ===== TAB / JENIS ADUAN ===== */
-        .tab-row {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 6px;
-            margin-bottom: 16px;
-            background: white;
-            padding: 8px 12px;
-            border-radius: 12px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-        }
-
-        .tab-btn {
-            padding: 8px 18px;
-            border-radius: 24px;
-            border: none;
-            background: transparent;
-            font-size: 14px;
-            font-weight: 600;
-            color: #5a5a7a;
-            cursor: pointer;
-            transition: 0.2s;
-            font-family: inherit;
-        }
-
-        .tab-btn:hover {
-            background: #e8ecf1;
-        }
-
-        .tab-btn.active {
-            background: #0d47a1;
-            color: white;
-        }
-
-        /* ===== STATS CARDS ===== */
+        .header h1 { font-size: 22px; }
+        .header p { opacity: 0.85; font-size: 14px; }
+        
         .stats-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
             gap: 10px;
             margin-bottom: 20px;
         }
-
         .stat-card {
             background: white;
             border-radius: 12px;
@@ -175,258 +35,75 @@
             text-align: center;
             box-shadow: 0 2px 8px rgba(0,0,0,0.06);
             border-left: 4px solid #0d47a1;
-            transition: 0.2s;
-            cursor: pointer;
         }
-
-        .stat-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 16px rgba(0,0,0,0.08);
-        }
-
-        .stat-card .stat-number {
-            font-size: 28px;
-            font-weight: 700;
-            color: #0d47a1;
-        }
-
-        .stat-card .stat-label {
-            font-size: 12px;
-            color: #5a5a7a;
-            font-weight: 500;
-            margin-top: 2px;
-        }
-
-        .stat-card .stat-arrow {
-            font-size: 12px;
-            color: #0d47a1;
-            margin-left: 4px;
-        }
-
+        .stat-card .num { font-size: 28px; font-weight: 700; color: #0d47a1; }
+        .stat-card .label { font-size: 12px; color: #5a5a7a; }
         .stat-card.perhatian { border-left-color: #f9a825; }
-        .stat-card.perhatian .stat-number { color: #f9a825; }
+        .stat-card.perhatian .num { color: #f9a825; }
         .stat-card.siasatan { border-left-color: #e65100; }
-        .stat-card.siasatan .stat-number { color: #e65100; }
+        .stat-card.siasatan .num { color: #e65100; }
         .stat-card.selesai { border-left-color: #2e7d32; }
-        .stat-card.selesai .stat-number { color: #2e7d32; }
-        .stat-card.tolak { border-left-color: #c62828; }
-        .stat-card.tolak .stat-number { color: #c62828; }
-        .stat-card.batal { border-left-color: #6d6d8a; }
-        .stat-card.batal .stat-number { color: #6d6d8a; }
-
-        /* ===== CARIAN ===== */
+        .stat-card.selesai .num { color: #2e7d32; }
+        
         .search-bar {
             background: white;
             border-radius: 12px;
             padding: 12px 16px;
             margin-bottom: 16px;
             box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-            display: flex;
-            align-items: center;
-            gap: 10px;
         }
-
         .search-bar input {
-            flex: 1;
+            width: 100%;
             border: none;
             outline: none;
             font-size: 14px;
-            padding: 8px 0;
-            background: transparent;
             font-family: inherit;
         }
-
-        .search-bar .search-icon {
-            color: #8888aa;
-            font-size: 18px;
-        }
-
-        /* ===== LIST KES ===== */
-        .case-list {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
+        
+        .case-list { display: flex; flex-direction: column; gap: 12px; }
         .case-item {
             background: white;
             border-radius: 12px;
             padding: 16px 18px;
             box-shadow: 0 2px 8px rgba(0,0,0,0.06);
             border-left: 5px solid #0d47a1;
-            transition: 0.2s;
         }
-
-        .case-item:hover {
-            box-shadow: 0 4px 16px rgba(0,0,0,0.08);
-        }
-
-        .case-item .case-header {
+        .case-header {
             display: flex;
             flex-wrap: wrap;
             justify-content: space-between;
-            align-items: flex-start;
+            align-items: center;
             gap: 8px;
-            margin-bottom: 6px;
         }
-
-        .case-item .case-agency {
-            font-size: 15px;
-            font-weight: 700;
-            color: #0d47a1;
-        }
-
-        .case-item .case-status {
-            font-size: 12px;
+        .case-agency { font-weight: 700; color: #0d47a1; font-size: 15px; }
+        .case-status {
+            font-size: 11px;
             font-weight: 600;
             padding: 3px 14px;
             border-radius: 20px;
-            white-space: nowrap;
         }
-
-        .case-status.perhatian {
-            background: #fff3cd;
-            color: #856404;
-        }
-
-        .case-status.siasatan {
-            background: #ffe0b2;
-            color: #bf360c;
-        }
-
-        .case-status.selesai {
-            background: #c8e6c9;
-            color: #1b5e20;
-        }
-
-        .case-status.tolak {
-            background: #ffcdd2;
-            color: #b71c1c;
-        }
-
-        .case-status.batal {
-            background: #e0e0e0;
-            color: #4a4a5a;
-        }
-
-        .case-item .case-title {
-            font-size: 15px;
-            font-weight: 600;
-            color: #1a1a2e;
-            margin: 4px 0 2px;
-        }
-
-        .case-item .case-meta {
+        .case-status.perhatian { background: #fff3cd; color: #856404; }
+        .case-status.siasatan { background: #ffe0b2; color: #bf360c; }
+        .case-status.selesai { background: #c8e6c9; color: #1b5e20; }
+        
+        .case-title { font-size: 15px; font-weight: 600; margin: 4px 0; }
+        .case-meta {
             font-size: 13px;
             color: #6d6d8a;
             display: flex;
             flex-wrap: wrap;
             gap: 12px;
-            margin-top: 4px;
         }
-
-        .case-item .case-meta .case-id {
-            font-weight: 600;
-            color: #0d47a1;
-        }
-
-        .case-item .case-meta .case-date {
-            color: #8888aa;
-        }
-
-        .case-item .case-meta .case-remark {
-            color: #5a6a7a;
-            font-style: italic;
-            background: #f5f5f5;
-            padding: 0 10px;
-            border-radius: 12px;
-        }
-
-        .stars {
-            color: #f9a825;
-            font-size: 14px;
-            letter-spacing: 2px;
-        }
-
-        .sispaa-badge {
-            background: #e3f2fd;
-            color: #0d47a1;
-            padding: 2px 12px;
-            border-radius: 12px;
-            font-size: 11px;
-            font-weight: 600;
-        }
-
-        /* ===== LEGEND ===== */
-        .legend {
-            background: white;
-            border-radius: 12px;
-            padding: 12px 16px;
-            margin-top: 16px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-            display: flex;
-            flex-wrap: wrap;
-            gap: 12px 20px;
-            justify-content: center;
-            font-size: 12px;
-            color: #5a5a7a;
-        }
-
-        .legend-item {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .legend-item .dot {
-            width: 14px;
-            height: 14px;
-            border-radius: 4px;
-        }
-
-        .legend-item .dot.perhatian { background: #f9a825; }
-        .legend-item .dot.siasatan { background: #e65100; }
-        .legend-item .dot.selesai { background: #2e7d32; }
-
-        /* ===== RATING SECTION ===== */
-        .rating-section {
-            background: white;
-            border-radius: 12px;
-            padding: 16px 18px;
-            margin-top: 20px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        .case-id { font-weight: 600; color: #0d47a1; }
+        .case-remark { background: #f5f5f5; padding: 0 10px; border-radius: 12px; }
+        
+        .footer {
             text-align: center;
+            font-size: 12px;
+            color: #8888aa;
+            margin-top: 24px;
+            padding: 12px;
         }
-
-        .rating-section .rating-label {
-            font-size: 14px;
-            color: #1a1a2e;
-            font-weight: 500;
-        }
-
-        .rating-section .rating-stars {
-            font-size: 32px;
-            color: #f9a825;
-            margin: 6px 0;
-            cursor: pointer;
-        }
-
-        .rating-section .rating-stars span {
-            transition: 0.2s;
-        }
-
-        .rating-section .rating-stars span:hover {
-            transform: scale(1.2);
-            display: inline-block;
-        }
-
-        .rating-section .rating-result {
-            font-size: 13px;
-            color: #6d6d8a;
-            margin-top: 4px;
-        }
-
-        /* ===== BACK TO MYSTORY ===== */
         .back-link {
             display: inline-block;
             margin-top: 16px;
@@ -437,374 +114,188 @@
             text-decoration: none;
             font-weight: bold;
             font-size: 14px;
-            transition: 0.2s;
         }
-
-        .back-link:hover {
-            background: #5a6268;
-            transform: translateY(-2px);
-        }
-
-        /* ===== FOOTER ===== */
-        .footer {
-            text-align: center;
-            font-size: 12px;
-            color: #8888aa;
-            margin-top: 24px;
-            padding: 12px;
-        }
-
-        /* ===== RESPONSIVE ===== */
+        .back-link:hover { background: #5a6268; }
+        
         @media (max-width: 600px) {
-            .header h1 { font-size: 18px; }
             .stats-grid { grid-template-columns: repeat(3, 1fr); }
-            .stat-card .stat-number { font-size: 22px; }
-            .case-item { padding: 14px; }
-            .case-item .case-header { flex-direction: column; align-items: stretch; }
-            .tab-btn { font-size: 12px; padding: 6px 12px; }
-            .flow-chart .flow-steps { font-size: 11px; }
-            .flow-chart .step { font-size: 10px; padding: 4px 10px; }
-        }
-
-        @media (max-width: 400px) {
-            .stats-grid { grid-template-columns: repeat(2, 1fr); }
-            .header { padding: 14px 16px; }
+            .stat-card .num { font-size: 22px; }
         }
     </style>
 </head>
 <body>
-
 <div class="container">
-
-    <!-- ===== HEADER ===== -->
     <div class="header">
         <h1>📋 ADUAN / MAKLUM BALAS BAHARU</h1>
-        <p>Sistem Pengurusan Aduan Awam (SISPAA)</p>
-        <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 8px; align-items: center;">
-            <span class="badge-unread">🔴 6 Mesej belum dibaca</span>
-            <span style="font-size: 13px; opacity: 0.8;">| Kemas kini: 06/09/2026</span>
-        </div>
+        <p>Sistem Pengurusan Aduan Awam (SISPAA) · 07/09/2026</p>
     </div>
-
-    <!-- ===== FLOW CHART ===== -->
-    <div class="flow-chart">
-        <div class="flow-steps">
-            <span class="step baru">📩 BARU</span>
-            <span class="arrow">→</span>
-            <span class="step perhatian">🔵 DALAM PERHATIAN</span>
-            <span class="arrow">→</span>
-            <span class="step siasatan">🟠 DALAM SIASATAN</span>
-            <span class="arrow">→</span>
-            <span class="step selesai">🟢 SELESAI</span>
-            <span class="arrow">→</span>
-            <span style="font-weight:600;color:#f9a825;">⭐ PENILAIAN</span>
-        </div>
-        <div class="flow-label">
-            ⭐⭐⭐⭐⭐ Puas Hati · ⭐⭐/⭐ Tidak Puas → 📩 Aduan Baharu
-        </div>
-    </div>
-
-    <!-- ===== TAB JENIS ADUAN ===== -->
-    <div class="tab-row">
-        <button class="tab-btn active">📢 Aduan</button>
-        <button class="tab-btn">❓ Pertanyaan</button>
-        <button class="tab-btn">💡 Cadangan</button>
-        <button class="tab-btn">⭐ Penghargaan</button>
-    </div>
-
-    <!-- ===== STATUS STATISTIK ===== -->
+    
     <div class="stats-grid">
         <div class="stat-card perhatian">
-            <div class="stat-number">3 <span class="stat-arrow">›</span></div>
-            <div class="stat-label">Dalam Perhatian</div>
+            <div class="num">1</div>
+            <div class="label">Dalam Perhatian</div>
         </div>
         <div class="stat-card siasatan">
-            <div class="stat-number">8 <span class="stat-arrow">›</span></div>
-            <div class="stat-label">Dalam Siasatan</div>
+            <div class="num">9</div>
+            <div class="label">Dalam Siasatan</div>
         </div>
         <div class="stat-card selesai">
-            <div class="stat-number">7 <span class="stat-arrow">›</span></div>
-            <div class="stat-label">Selesai</div>
-        </div>
-        <div class="stat-card tolak">
-            <div class="stat-number">3 <span class="stat-arrow">›</span></div>
-            <div class="stat-label">Tolak</div>
-        </div>
-        <div class="stat-card batal">
-            <div class="stat-number">0 <span class="stat-arrow">›</span></div>
-            <div class="stat-label">Batal</div>
+            <div class="num">0</div>
+            <div class="label">Selesai</div>
         </div>
     </div>
-
-    <!-- ===== CARIAN ===== -->
+    
     <div class="search-bar">
-        <span class="search-icon">🔍</span>
-        <input type="text" placeholder="Cari Maklum Balas..." id="searchInput">
+        <input type="text" placeholder="🔍 Cari Maklum Balas..." id="searchInput">
     </div>
-
-    <!-- ===== SENARAI KES ===== -->
+    
     <div class="case-list" id="caseList">
-
-        <!-- 1. JKM - Dalam Perhatian -->
-        <div class="case-item" style="border-left-color: #f9a825;">
-            <div class="case-header">
-                <span class="case-agency">👩‍👧 JKM Ibu Pejabat</span>
-                <span class="case-status perhatian">DALAM PERHATIAN</span>
-            </div>
-            <div class="case-title">Rayuan status OKU - warna buta &amp;斜视</div>
-            <div class="case-meta">
-                <span class="case-id">JKM.900001</span>
-                <span class="case-date">📅 06/09/2026</span>
-                <span class="case-remark">💬 Menunggu pakar oftalmologi</span>
-                <span class="sispaa-badge">🆕 Baharu</span>
-            </div>
-        </div>
-
-        <!-- 2. MOF - Dalam Siasatan -->
+        
         <div class="case-item" style="border-left-color: #e65100;">
             <div class="case-header">
-                <span class="case-agency">🏦 Kementerian Kewangan (MOF)</span>
+                <span class="case-agency">JKM</span>
                 <span class="case-status siasatan">DALAM SIASATAN</span>
             </div>
-            <div class="case-title">Bantahan kadar bayaran MySara 2026 - Ketidaksamaan kadar</div>
+            <div class="case-title">Test from phone 2</div>
+            <div class="case-meta">
+                <span class="case-id">SISPAA-TEST</span>
+                <span class="case-date">📅 2026-09-07</span>
+                <span class="case-remark">-</span>
+            </div>
+        </div>
+        
+        <div class="case-item" style="border-left-color: #e65100;">
+            <div class="case-header">
+                <span class="case-agency">DKP</span>
+                <span class="case-status siasatan">DALAM SIASATAN</span>
+            </div>
+            <div class="case-title">Aduan rumah rosak</div>
+            <div class="case-meta">
+                <span class="case-id">SISPAA-007</span>
+                <span class="case-date">📅 2026-09-06</span>
+                <span class="case-remark">Menunggu tindakan</span>
+            </div>
+        </div>
+        
+        <div class="case-item" style="border-left-color: #e65100;">
+            <div class="case-header">
+                <span class="case-agency">MOF</span>
+                <span class="case-status siasatan">DALAM SIASATAN</span>
+            </div>
+            <div class="case-title">AMAAN KADAR BAYARAN</div>
             <div class="case-meta">
                 <span class="case-id">MOF.900136</span>
-                <span class="case-date">📅 02/09/2026</span>
-                <span class="case-remark">💬 Dalam siasatan oleh unit kewangan</span>
-                <span class="sispaa-badge">⚡ Tindakan</span>
+                <span class="case-date">📅 2026-09-02</span>
+                <span class="case-remark">Imported from SISPAA</span>
             </div>
         </div>
-
-        <!-- 3. MOH - Dalam Siasatan -->
+        
         <div class="case-item" style="border-left-color: #e65100;">
             <div class="case-header">
-                <span class="case-agency">🏥 Kementerian Kesihatan Malaysia (MOH)</span>
+                <span class="case-agency">MOH</span>
                 <span class="case-status siasatan">DALAM SIASATAN</span>
             </div>
-            <div class="case-title">Aduan Jabatan Oftalmologi Hospital Besar Melaka</div>
+            <div class="case-title">TAL BESAR MELAKA</div>
             <div class="case-meta">
                 <span class="case-id">MOH.900532</span>
-                <span class="case-date">📅 30/08/2026</span>
-                <span class="case-remark">💬 OKU berkaitan - warna buta</span>
-                <span class="sispaa-badge">🏥 OKU</span>
+                <span class="case-date">📅 2026-08-30</span>
+                <span class="case-remark">Imported from SISPAA</span>
             </div>
         </div>
-
-        <!-- 4. KPWKM - Dalam Siasatan -->
+        
         <div class="case-item" style="border-left-color: #e65100;">
             <div class="case-header">
-                <span class="case-agency">👩‍👧 KPWKM</span>
+                <span class="case-agency">PCB</span>
                 <span class="case-status siasatan">DALAM SIASATAN</span>
             </div>
-            <div class="case-title">Sanggahan rasmi terhadap maklum balas JKM_JPA.100199</div>
+            <div class="case-title">KM_JPA.100199</div>
             <div class="case-meta">
                 <span class="case-id">PCB.363501</span>
-                <span class="case-date">📅 15/08/2026</span>
-                <span class="case-remark">💬 Diserahkan ke JKM</span>
-                <span class="sispaa-badge">📤 Diproses</span>
+                <span class="case-date">📅 2026-08-15</span>
+                <span class="case-remark">Imported from SISPAA</span>
             </div>
         </div>
-
-        <!-- 5. JPJ - Selesai -->
-        <div class="case-item" style="border-left-color: #2e7d32;">
+        
+        <div class="case-item" style="border-left-color: #e65100;">
             <div class="case-header">
-                <span class="case-agency">🚦 JABATAN PENGANGKUTAN JALAN (JPJ)</span>
-                <span class="case-status selesai">SELESAI ⭐</span>
+                <span class="case-agency">MOT</span>
+                <span class="case-status siasatan">DALAM SIASATAN</span>
             </div>
-            <div class="case-title">Pertanyaan keputusan rasmi rebat LKM diesel hijau (PIKAP peribadi)</div>
+            <div class="case-title">ERAAN DISEL-CBG9761</div>
             <div class="case-meta">
-                <span class="case-id">JPA.100556</span>
-                <span class="case-date">📅 24/07/2026</span>
-                <span class="stars">⭐⭐⭐⭐⭐</span>
-                <span class="case-remark">💬 Puas hati dengan maklum balas</span>
+                <span class="case-id">MOT.900167</span>
+                <span class="case-date">📅 2026-08-10</span>
+                <span class="case-remark">Imported from SISPAA</span>
             </div>
         </div>
-
-        <!-- 6. JKM - Selesai (Tidak Puas Hati) -->
-        <div class="case-item" style="border-left-color: #2e7d32;">
+        
+        <div class="case-item" style="border-left-color: #e65100;">
             <div class="case-header">
-                <span class="case-agency">👩‍👧 JKM Ibu Pejabat</span>
-                <span class="case-status selesai">SELESAI ⭐</span>
+                <span class="case-agency">MOF</span>
+                <span class="case-status siasatan">DALAM SIASATAN</span>
             </div>
-            <div class="case-title">Aduan kegagalan pentadbiran JKM Melaka</div>
+            <div class="case-title">ADUAN BANTUAN SARA BULANAN</div>
             <div class="case-meta">
-                <span class="case-id">JPA.100199</span>
-                <span class="case-date">📅 22/07/2026</span>
-                <span class="stars">⭐⭐</span>
-                <span class="case-remark">💬 Tidak puas hati - akan buat aduan baharu</span>
-                <span class="sispaa-badge">⚠️ Rayuan</span>
+                <span class="case-id">MOF.900118</span>
+                <span class="case-date">📅 2026-08-01</span>
+                <span class="case-remark">Imported from SISPAA</span>
             </div>
         </div>
-
-        <!-- 7. JPJ - Selesai (Tidak Puas Hati) -->
-        <div class="case-item" style="border-left-color: #2e7d32;">
+        
+        <div class="case-item" style="border-left-color: #e65100;">
             <div class="case-header">
-                <span class="case-agency">🚦 JABATAN PENGANGKUTAN JALAN (JPJ)</span>
-                <span class="case-status selesai">SELESAI ⭐</span>
+                <span class="case-agency">MOF</span>
+                <span class="case-status siasatan">DALAM SIASATAN</span>
             </div>
-            <div class="case-title">JPJ sengaja tukar status kes (JPA.098623) kepada "SELESAI"</div>
+            <div class="case-title">HB JULAI, 2026</div>
             <div class="case-meta">
-                <span class="case-id">JPA.099369</span>
-                <span class="case-date">📅 16/07/2026</span>
-                <span class="stars">⭐</span>
-                <span class="case-remark">💬 Sangat tidak puas hati - perlu aduan semula</span>
-                <span class="sispaa-badge">⚠️ Rayuan</span>
+                <span class="case-id">MOF.900113</span>
+                <span class="case-date">📅 2026-07-29</span>
+                <span class="case-remark">Imported from SISPAA</span>
             </div>
         </div>
-
-    </div>
-
-    <!-- ===== LEGEND ===== -->
-    <div class="legend">
-        <span class="legend-item">
-            <span class="dot perhatian"></span> Dalam Perhatian
-        </span>
-        <span class="legend-item">
-            <span class="dot siasatan"></span> Dalam Siasatan
-        </span>
-        <span class="legend-item">
-            <span class="dot selesai"></span> Selesai
-        </span>
-        <span style="color:#8888aa;">|</span>
-        <span>⭐ 1-2 = Tidak Puas → Aduan Baharu</span>
-        <span>⭐ 3-5 = Puas Hati → Tutup</span>
-    </div>
-
-    <!-- ===== PENILAIAN ===== -->
-    <div class="rating-section">
-        <div class="rating-label">⭐ Sila beri penilaian anda di sini.</div>
-        <div class="rating-stars" id="ratingStars">
-            <span data-value="1">☆</span>
-            <span data-value="2">☆</span>
-            <span data-value="3">☆</span>
-            <span data-value="4">☆</span>
-            <span data-value="5">☆</span>
+        
+        <div class="case-item" style="border-left-color: #e65100;">
+            <div class="case-header">
+                <span class="case-agency">JPA</span>
+                <span class="case-status siasatan">DALAM SIASATAN</span>
+            </div>
+            <div class="case-title">UDI MADANI & MYSARA SERTA KETIDAKSELARASA</div>
+            <div class="case-meta">
+                <span class="case-id">JPA.097439</span>
+                <span class="case-date">📅 2026-07-06</span>
+                <span class="case-remark">Imported from SISPAA</span>
+            </div>
         </div>
-        <div class="rating-result" id="ratingResult">Klik bintang untuk memberi rating</div>
+        
+        <div class="case-item" style="border-left-color: #f9a825;">
+            <div class="case-header">
+                <span class="case-agency">JPA</span>
+                <span class="case-status perhatian">DALAM PERHATIAN</span>
+            </div>
+            <div class="case-title">ERI, MELAKA BERKENAAN PENGESAHAN DATA EKA</div>
+            <div class="case-meta">
+                <span class="case-id">JPA.095702</span>
+                <span class="case-date">📅 2026-06-23</span>
+                <span class="case-remark">Imported from SISPAA</span>
+            </div>
+        </div>
+        
     </div>
-
-    <!-- ===== BACK TO MYSTORY ===== -->
-    <div style="text-align: center; margin-top: 8px;">
+    
+    <div style="text-align:center;">
         <a href="mystory.html" class="back-link">← Kembali ke MyStory</a>
     </div>
-
-    <!-- ===== FOOTER ===== -->
-    <div class="footer">
-        SISPAA · Sistem Pengurusan Aduan Awam<br>
-        © 2026 · Semua hak cipta terpelihara
-    </div>
-
+    <div class="footer">SISPAA · © 2026</div>
 </div>
 
-<!-- ===== JAVASCRIPT ===== -->
 <script>
-    (function() {
-        console.log("✅ SISPAA HTML 加载成功");
-
-        // ---- Tab切换 ----
-        const tabBtns = document.querySelectorAll('.tab-btn');
-        tabBtns.forEach(btn => {
-            btn.addEventListener('click', function() {
-                tabBtns.forEach(b => b.classList.remove('active'));
-                this.classList.add('active');
-            });
+    document.getElementById('searchInput').addEventListener('input', function() {
+        const keyword = this.value.toLowerCase().trim();
+        document.querySelectorAll('.case-item').forEach(item => {
+            item.style.display = item.textContent.toLowerCase().includes(keyword) ? 'block' : 'none';
         });
-
-        // ---- Carian ----
-        const searchInput = document.getElementById('searchInput');
-        const caseItems = document.querySelectorAll('.case-item');
-
-        searchInput.addEventListener('input', function() {
-            const keyword = this.value.toLowerCase().trim();
-            caseItems.forEach(item => {
-                const text = item.textContent.toLowerCase();
-                if (keyword === '' || text.includes(keyword)) {
-                    item.style.display = 'block';
-                } else {
-                    item.style.display = 'none';
-                }
-            });
-        });
-
-        // ---- Rating Bintang ----
-        const stars = document.querySelectorAll('#ratingStars span');
-        const ratingResult = document.getElementById('ratingResult');
-        let currentRating = 0;
-
-        const ratingMessages = {
-            1: '⭐ Sangat Tidak Puas Hati → Sila buat aduan baharu',
-            2: '⭐⭐ Tidak Puas Hati → Sila buat aduan baharu',
-            3: '⭐⭐⭐ Sederhana - Terima kasih atas maklum balas',
-            4: '⭐⭐⭐⭐ Puas Hati - Terima kasih',
-            5: '⭐⭐⭐⭐⭐ Sangat Puas Hati - Terima kasih!'
-        };
-
-        stars.forEach(star => {
-            star.addEventListener('click', function() {
-                const value = parseInt(this.dataset.value);
-                currentRating = value;
-                updateStars(value);
-                ratingResult.textContent = ratingMessages[value] || 'Terima kasih!';
-                console.log('⭐ Rating diberikan:', value, 'bintang');
-                
-                // 如果 rating 1-2，提示再次投诉
-                if (value <= 2) {
-                    ratingResult.textContent += ' 🔄 Sila buat aduan baharu';
-                }
-            });
-
-            star.addEventListener('mouseenter', function() {
-                const value = parseInt(this.dataset.value);
-                updateStars(value, true);
-            });
-
-            star.addEventListener('mouseleave', function() {
-                updateStars(currentRating, false);
-            });
-        });
-
-        function updateStars(value, hover = false) {
-            stars.forEach((star, index) => {
-                if (index < value) {
-                    star.textContent = '★';
-                    star.style.color = '#f9a825';
-                } else {
-                    star.textContent = '☆';
-                    star.style.color = hover ? '#ffcc80' : '#ddd';
-                }
-            });
-        }
-
-        updateStars(0);
-
-        // ---- Klik pada stat card (filter) ----
-        document.querySelectorAll('.stat-card').forEach(card => {
-            card.addEventListener('click', function() {
-                const label = this.querySelector('.stat-label')?.textContent || '';
-                const keyword = label.replace('Dalam ', '').trim();
-                console.log('🔍 Tapis mengikut status:', keyword);
-                
-                // Filter cases
-                caseItems.forEach(item => {
-                    const statusEl = item.querySelector('.case-status');
-                    if (statusEl) {
-                        const statusText = statusEl.textContent.trim();
-                        if (keyword === '' || statusText.includes(keyword.toUpperCase())) {
-                            item.style.display = 'block';
-                        } else {
-                            item.style.display = 'none';
-                        }
-                    }
-                });
-                
-                // Reset search input
-                searchInput.value = '';
-            });
-        });
-
-        console.log('📋 SISPAA sedia!');
-    })();
+    });
 </script>
-
 </body>
 </html>
