@@ -94,11 +94,6 @@
             border-radius: 16px;
             border-left: 5px solid #0d47a1;
             margin: 15px 0 5px;
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            justify-content: space-between;
-            gap: 12px;
         }
         
         .sispaa-link-box .sispaa-text {
@@ -110,9 +105,15 @@
             color: #0d47a1;
         }
         
+        .sispaa-link-box .btn-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 8px;
+        }
+        
         .sispaa-link-box .sispaa-btn {
             display: inline-block;
-            background: #0d47a1;
             color: white;
             padding: 10px 24px;
             border-radius: 40px;
@@ -124,15 +125,29 @@
         }
         
         .sispaa-link-box .sispaa-btn:hover {
-            background: #0a3578;
             transform: scale(1.02);
+        }
+        
+        .sispaa-link-box .sispaa-btn.official {
+            background: #0d47a1;
+        }
+        
+        .sispaa-link-box .sispaa-btn.official:hover {
+            background: #0a3578;
+        }
+        
+        .sispaa-link-box .sispaa-btn.private {
+            background: #28a745;
+        }
+        
+        .sispaa-link-box .sispaa-btn.private:hover {
+            background: #1e7e34;
         }
         
         .sispaa-link-box .sispaa-note {
             font-size: 12px;
             color: #5a6a7a;
-            width: 100%;
-            margin-top: 2px;
+            margin-top: 6px;
         }
         /* ===== SISPAA 结束 ===== */
         
@@ -419,10 +434,9 @@
                 bottom: 20px;
                 right: 18px;
             }
-            .sispaa-link-box {
+            .sispaa-link-box .btn-group {
                 flex-direction: column;
                 align-items: stretch;
-                text-align: center;
             }
             .sispaa-link-box .sispaa-btn {
                 text-align: center;
@@ -465,20 +479,29 @@
             <p><span class="badge">上诉状态</span> 等待 Pakar Oftalmologi 重新确认，准备上诉至 JKM / SISPA</p>
             <p>我的职业史（AutoCAD、X-Steel、 drafting）恰恰证明：色盲 + 斜视 + 白内障已经彻底摧毁了我的技术工作能力。这不是“不影响功能”，而是“摧毁了职业功能”。</p>
             
-            <!-- ===== SISPAA 官方链接 ===== -->
+            <!-- ===== SISPAA 链接 ===== -->
             <div class="sispaa-link-box">
                 <div class="sispaa-text">
                     <strong>📋 SISPAA 投诉追踪系统</strong><br>
-                    追踪您在 JPA / BPA 的所有投诉进度
+                    追踪您在 JPA / BPA 的所有投诉进度 · 记录每一次沟通
                 </div>
-                <a href="https://pcb.spab.gov.my/eApps/sdmscasepool/SdmsCasePool/publicLogin.do" 
-                   class="sispaa-btn" 
-                   target="_blank"
-                   rel="noopener noreferrer">
-                   🏛️ SISPAA Rasmi (JPA/BPA) →
-                </a>
+                <div class="btn-group">
+                    <!-- 官方 SPAB 链接 -->
+                    <a href="https://pcb.spab.gov.my/eApps/sdmscasepool/SdmsCasePool/publicLogin.do" 
+                       class="sispaa-btn official" 
+                       target="_blank"
+                       rel="noopener noreferrer">
+                       🏛️ SISPAA Rasmi (JPA/BPA) →
+                    </a>
+                    
+                    <!-- 您的私人记录 (Rekod Saya) -->
+                    <a href="sispaa.html" 
+                       class="sispaa-btn private">
+                       📊 Rekod Saya →
+                    </a>
+                </div>
                 <div class="sispaa-note">
-                    🔒 需登录 SPAB 系统查看所有投诉
+                    🔒 官方系统需登录 SPAB · 📝 Rekod Saya 私人记录
                 </div>
             </div>
             <!-- ===== SISPAA 链接结束 ===== -->
