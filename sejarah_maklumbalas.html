@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>📜 Sejarah Maklumbalas - SISPAA</title>
+    <style>
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body {
+            font-family: -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
+            background: #f0f2f5;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        /* ===== LOGIN PAGE ===== */
+        #loginPage {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #1a237e, #0d47a1);
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 9999;
+        }
+        .login-box {
+            background: white;
+            border-radius: 20px;
+            padding: 40px 35px;
+            max-width: 400px;
+            width: 100%;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            text-align: center;
+        }
+        .login-box .icon { font-size: 48px; margin-bottom: 10px; }
+        .login-box h1 { color: #1a237e; font-size: 24px; }
+        .login-box p { color: #6d6d8a; font-size: 14px; margin-bottom: 25px; }
+        .login-box input {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            font-size: 16px;
+            margin-bottom: 12px;
+            outline: none;
+            transition: border 0.3s;
+        }
+        .login-box input:focus { border-color: #1a237e; }
+        .login-box button {
+            width: 100%;
+            padding: 14px;
+            background: #1a237e;
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .login-box button:hover { background: #0d1445; }
+        .login-box .error { color: #c62828; font-size: 13px; margin-top: 10px; display: none; }
+        .login-box .error.show { display: block; }
+        .login-box .hint { color: #999; font-size: 12px; margin-top: 15px; }
+        .login-box .hint span { background: #f0f2f5; padding: 2px 10px; border-radius: 6px; font-family: monospace; color: #1a237e; }
+
+        /* ===== MAIN CONTENT ===== */
+        #mainContent { display: none; width: 100%; max-width: 900px; margin: 0 auto; }
+        .header {
+            background: linear-gradient(135deg, #1a237e, #0d47a1);
+            color: white;
+            border-radius: 16px;
+            padding: 20px 24px;
+            margin-bottom: 20px;
+        }
+        .header h1 { font-size: 22px; }
+        .header p { opacity: 0.85; font-size: 14px; }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .stat-card {
+            background: white;
+            border-radius: 12px;
+            padding: 12px;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            border-left: 4px solid #1a237e;
+        }
+        .stat-card .num { font-size: 24px; font-weight: 700; color: #1a237e; }
+        .stat-card .label { font-size: 11px; color: #5a5a7a; }
+        .stat-card.selesai { border-left-color: #2e7d32; }
+        .stat-card.selesai .num { color: #2e7d32; }
+        .stat-card.perhatian { border-left-color: #f9a825; }
+        .stat-card.perhatian .num { color: #f9a825; }
+        .stat-card.siasatan { border-left-color: #e65100; }
+        .stat-card.siasatan .num { color: #e65100; }
+        .stat-card.ditolak { border-left-color: #c62828; }
+        .stat-card.ditolak .num { color: #c62828; }
+        
+        .search-bar {
+            background: white;
+            border-radius: 12px;
+            padding: 12px 16px;
+            margin-bottom: 16px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        }
+        .search-bar input { width: 100%; border: none; outline: none; font-size: 14px; font-family: inherit; }
+        
+        .response-list { display: flex; flex-direction: column; gap: 12px; }
+        .response-item {
+            background: white;
+            border-radius: 12px;
+            padding: 16px 18px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            border-left: 5px solid #1a237e;
+            transition: all 0.2s;
+        }
+        .response-item:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.12); }
+        .response-header {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 8px;
+        }
+        .response-agency { font-weight: 700; color: #1a237e; font-size: 15px; }
+        .response-status {
+            font-size: 11px;
+            font-weight: 600;
+            padding: 3px 14px;
+            border-radius: 20px;
+        }
+        .response-status.selesai { background: #c8e6c9; color: #1b5e20; }
+        .response-status.perhatian { background: #fff3cd; color: #856404; }
+        .response-status.siasatan { background: #ffe0b2; color: #bf360c; }
+        .response-status.ditolak { background: #ffcdd2; color: #c62828; }
+        
+        .response-title { font-size: 15px; font-weight: 600; margin: 4px 0; }
+        .response-meta {
+            font-size: 13px;
+            color: #6d6d8a;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            align-items: center;
+        }
+        .response-id { font-weight: 600; color: #1a237e; }
+        .response-date { color: #6d6d8a; }
+        
+        .response-link a {
+            color: #0d47a1;
+            text-decoration: none;
+            font-weight: 600;
+            padding: 4px 14px;
+            background: #e3f2fd;
+            border-radius: 20px;
+            font-size: 12px;
+            display: inline-block;
+            transition: background 0.2s;
+        }
+        .response-link a:hover { background: #bbdefb; }
+        
+        .footer { text-align: center; font-size: 12px; color: #8888aa; margin-top: 24px; padding: 12px; }
+        .back-link {
+            display: inline-block;
+            margin-top: 16px;
+            background: #6c757d;
+            color: white;
+            padding: 8px 20px;
+            border-radius: 40px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 14px;
+        }
+        .back-link:hover { background: #5a6268; }
+        .refresh-btn {
+            display: inline-block;
+            margin: 8px;
+            background: #1a237e;
+            color: white;
+            padding: 6px 16px;
+            border-radius: 40px;
+            text-decoration: none;
+            font-size: 12px;
+        }
+        .refresh-btn:hover { background: #0d1445; }
+        
+        @media (max-width: 600px) {
+            .stats-grid { grid-template-columns: repeat(3, 1fr); }
+            .stat-card .num { font-size: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ===== LOGIN PAGE ===== -->
+<div id="loginPage">
+    <div class="login-box">
+        <div class="icon">📜</div>
+        <h1>Sejarah Maklumbalas</h1>
+        <p>🔒 Hanya untuk pemilik rekod</p>
+        <input type="password" id="passwordInput" placeholder="Masukkan kata laluan..." autofocus>
+        <button onclick="checkPassword()">🔓 Masuk</button>
+        <div class="error" id="errorMessage">❌ Kata laluan salah. Cuba lagi.</div>
+        <div class="hint">🔑 <span>admin456</span></div>
+    </div>
+</div>
+
+<!-- ===== MAIN CONTENT ===== -->
+<div id="mainContent">
+    <div class="container">
+        <div class="header">
+            <h1>📜 Sejarah Maklumbalas Saya</h1>
+            <p>Semua maklum balas dari agensi kerajaan · <span id="dateDisplay"></span></p>
+            <p style="font-size:12px; opacity:0.7; margin-top:4px;">
+                Total: <span id="totalResponses">0</span> kes
+                <a href="javascript:location.reload()" class="refresh-btn" style="margin-left:12px;">🔄 Refresh</a>
+            </p>
+        </div>
+        
+        <div class="stats-grid" id="statsGrid">
+            <div class="stat-card perhatian">
+                <div class="num" id="statPerhatian">0</div>
+                <div class="label">Dalam Perhatian</div>
+            </div>
+            <div class="stat-card siasatan">
+                <div class="num" id="statSiasatan">0</div>
+                <div class="label">Dalam Siasatan</div>
+            </div>
+            <div class="stat-card selesai">
+                <div class="num" id="statSelesai">0</div>
+                <div class="label">Selesai</div>
+            </div>
+            <div class="stat-card ditolak">
+                <div class="num" id="statDitolak">0</div>
+                <div class="label">Ditolak</div>
+            </div>
+        </div>
+        
+        <div class="search-bar">
+            <input type="text" placeholder="🔍 Cari maklum balas..." id="searchInput">
+        </div>
+        
+        <div class="response-list" id="responseList">
+            <!-- Data akan dimuat di sini -->
+        </div>
+        
+        <div style="text-align:center; margin-top:16px;">
+            <a href="mystory.html" class="back-link">← Kembali ke MyStory</a>
+        </div>
+        <div class="footer">SISPAA · © 2026</div>
+    </div>
+</div>
+
+<script>
+// =============================================
+// LOGIN - PASSWORD
+// =============================================
+const CORRECT_PASSWORD = '978543';
+
+function checkPassword() {
+    const password = document.getElementById('passwordInput').value;
+    const error = document.getElementById('errorMessage');
+    
+    if (password === CORRECT_PASSWORD) {
+        document.getElementById('loginPage').style.display = 'none';
+        document.getElementById('mainContent').style.display = 'block';
+        loadResponses();
+    } else {
+        error.classList.add('show');
+        document.getElementById('passwordInput').value = '';
+        document.getElementById('passwordInput').focus();
+    }
+}
+
+document.getElementById('passwordInput').addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') { checkPassword(); }
+});
+
+// =============================================
+// GOOGLE SHEETS - FILE ID
+// =============================================
+// Ganti dengan FILE_ID Google Sheets anda
+const SHEETS_FILE_ID = '1TtTa2mEZd_-WLUS7RFUIhALBYhVZ1IIIhZKTvmdoni4';
+
+// =============================================
+// DATA MAKLUM BALAS
+// =============================================
+function loadResponses() {
+    // =============================================
+    // 📝 UPDATE DATA DI SINI
+    // =============================================
+    // Ganti 'sheet_gid' dengan GID dari Google Sheets
+    // 
+    // Cara dapatkan GID:
+    // 1. Buka sheet (contoh: JPA_090672)
+    // 2. Tengok URL: ...edit#gid=1234567890
+    // 3. Copy nombor selepas #gid=
+    // =============================================
+    
+    const responses = [
+        { id: 'JPA_090672', agency: 'JPA', subject: 'JKM MELAKA SEMINAR AWARDS', date: '2026-05-01', status: 'Selesai', sheet_gid: '0' },
+        { id: 'JPA_094306', agency: 'JPA', subject: 'COMPLAINT AGAINST DEPARTMENT', date: '2026-06-09', status: 'Selesai', sheet_gid: '0' },
+        { id: 'JPA_095702', agency: 'JPA', subject: 'APPRECIATION FOR PROMPT ACTION', date: '2026-06-23', status: 'Dalam Perhatian', sheet_gid: '0' },
+        { id: 'JPA_097313', agency: 'JPA', subject: 'GREEN DIESEL PERSONAL VEHICLE', date: '2026-07-06', status: 'Selesai', sheet_gid: '0' },
+        { id: 'JPA_097439', agency: 'JPA', subject: 'COMPLAINT FAILURE OF CIVIL MYSARA', date: '2026-07-06', status: 'Selesai', sheet_gid: '0' },
+        { id: 'JPA_098623', agency: 'JPA', subject: 'COMPLAINT OF DISSATISFACTION', date: '2026-07-13', status: 'Selesai', sheet_gid: '0' },
+        { id: 'JPA_099369', agency: 'JPA', subject: 'JPJ INTENTIONALLY CHANGED STATUS', date: '2026-07-16', status: 'Selesai', sheet_gid: '0' },
+        { id: 'JPA_100199', agency: 'JPA', subject: 'COMPLAINTS AGAINST MELAKA JK M', date: '2026-07-22', status: 'Selesai', sheet_gid: '0' },
+        { id: 'JPA_100222', agency: 'JPA', subject: 'COMPLAINT TICKET MISSING', date: '2026-07-22', status: 'Ditolak', sheet_gid: '0' },
+        { id: 'JPA_100556', agency: 'JPA', subject: 'QUESTION ON OFFICIAL DECISION', date: '2026-07-24', status: 'Selesai', sheet_gid: '0' },
+        { id: 'JPA_101059', agency: 'JPA', subject: 'PLEASE EXPLAIN FROM SISPAA', date: '2026-07-27', status: 'Ditolak', sheet_gid: '0' },
+        { id: 'JPA_101124', agency: 'JPA', subject: 'PLEASE REPLY TO JPA TICKET', date: '2026-07-28', status: 'Dalam Siasatan', sheet_gid: '0' },
+        { id: 'MOF_900113', agency: 'MOF', subject: 'COMPLAINTS REGARDING DIESEL', date: '2026-07-29', status: 'Selesai', sheet_gid: '0' },
+        { id: 'MOF_900118', agency: 'MOF', subject: 'MONTHLY SARA ASSISTANCE', date: '2026-08-01', status: 'Selesai', sheet_gid: '0' },
+        { id: 'ICU_900002', agency: 'ICU', subject: 'COMPLAINTS ABOUT PGK CALCULATION', date: '2026-08-03', status: 'Dalam Perhatian', sheet_gid: '0' },
+        { id: 'ICU_900003', agency: 'ICU', subject: 'OBJECTION TO MELAKA VAT EMAIL', date: '2026-08-06', status: 'Dalam Perhatian', sheet_gid: '0' },
+        { id: 'MOT_900167', agency: 'MOT', subject: 'REQUEST FOR EXPLANATION DIESEL', date: '2026-08-10', status: 'Dalam Siasatan', sheet_gid: '0' },
+        { id: 'MOH_900460', agency: 'MOH', subject: 'PLEASE HELP QUICKLY IJN', date: '2026-08-13', status: 'Ditolak', sheet_gid: '0' },
+        { id: 'PCB_363501', agency: 'PCB', subject: 'OFFICIAL OBJECTION TO J RESPONSE', date: '2026-08-15', status: 'Selesai', sheet_gid: '0' },
+        { id: 'MOH_900532', agency: 'MOH', subject: 'COMPLAINT AGAINST OPHTHALMOLOGY', date: '2026-08-30', status: 'Dalam Siasatan', sheet_gid: '0' }
+    ];
+    
+    // =============================================
+    // JANGAN UBAH DI BAWAH INI
+    // =============================================
+    
+    // Kira stats
+    let selesai = 0, perhatian = 0, siasatan = 0, ditolak = 0;
+    responses.forEach(r => {
+        if (r.status === 'Selesai') selesai++;
+        else if (r.status === 'Dalam Perhatian') perhatian++;
+        else if (r.status === 'Dalam Siasatan') siasatan++;
+        else if (r.status === 'Ditolak') ditolak++;
+    });
+    
+    document.getElementById('statSelesai').textContent = selesai;
+    document.getElementById('statPerhatian').textContent = perhatian;
+    document.getElementById('statSiasatan').textContent = siasatan;
+    document.getElementById('statDitolak').textContent = ditolak;
+    document.getElementById('totalResponses').textContent = responses.length;
+    document.getElementById('dateDisplay').textContent = new Date().toLocaleDateString('ms-MY');
+    
+    // Generate list
+    const list = document.getElementById('responseList');
+    let html = '';
+    
+    responses.forEach(r => {
+        let statusClass = 'perhatian';
+        let color = '#f9a825';
+        
+        if (r.status === 'Selesai') { statusClass = 'selesai'; color = '#2e7d32'; }
+        else if (r.status === 'Dalam Siasatan') { statusClass = 'siasatan'; color = '#e65100'; }
+        else if (r.status === 'Ditolak') { statusClass = 'ditolak'; color = '#c62828'; }
+        
+        // Google Sheets link with specific tab
+        let sheetsLink = `https://docs.google.com/spreadsheets/d/${SHEETS_FILE_ID}/edit#gid=${r.sheet_gid}`;
+        
+        html += `
+        <div class="response-item" style="border-left-color: ${color};">
+            <div class="response-header">
+                <span class="response-agency">${r.agency}</span>
+                <span class="response-status ${statusClass}">${r.status}</span>
+            </div>
+            <div class="response-title">${r.subject}</div>
+            <div class="response-meta">
+                <span class="response-id">${r.id}</span>
+                <span class="response-date">📅 ${r.date}</span>
+                <span class="response-link">
+                    <a href="${sheetsLink}" target="_blank">
+                        📊 Buka Sheet
+                    </a>
+                </span>
+            </div>
+        </div>
+        `;
+    });
+    
+    list.innerHTML = html;
+    
+    // Search
+    document.getElementById('searchInput').addEventListener('input', function() {
+        const keyword = this.value.toLowerCase().trim();
+        document.querySelectorAll('.response-item').forEach(item => {
+            item.style.display = item.textContent.toLowerCase().includes(keyword) ? 'block' : 'none';
+        });
+    });
+}
+</script>
+</body>
+</html>
