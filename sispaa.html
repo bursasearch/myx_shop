@@ -9,89 +9,9 @@
         body {
             font-family: -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
             background: #f0f2f5;
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
+            padding: 16px;
         }
-        
-        /* ===== LOGIN PAGE ===== */
-        #loginPage {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            width: 100%;
-            min-height: 100vh;
-            background: linear-gradient(135deg, #0d47a1, #1565c0);
-            position: fixed;
-            top: 0;
-            left: 0;
-            z-index: 9999;
-        }
-        .login-box {
-            background: white;
-            border-radius: 20px;
-            padding: 40px 35px;
-            max-width: 400px;
-            width: 100%;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-            text-align: center;
-        }
-        .login-box .icon { font-size: 48px; margin-bottom: 10px; }
-        .login-box h1 { color: #0d47a1; font-size: 24px; }
-        .login-box p { color: #6d6d8a; font-size: 14px; margin-bottom: 25px; }
-        .login-box input {
-            width: 100%;
-            padding: 14px 16px;
-            border: 2px solid #e0e0e0;
-            border-radius: 12px;
-            font-size: 16px;
-            margin-bottom: 12px;
-            outline: none;
-            transition: border 0.3s;
-        }
-        .login-box input:focus { border-color: #0d47a1; }
-        .login-box button {
-            width: 100%;
-            padding: 14px;
-            background: #0d47a1;
-            color: white;
-            border: none;
-            border-radius: 12px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background 0.3s;
-        }
-        .login-box button:hover { background: #0a3578; }
-        .login-box .error {
-            color: #c62828;
-            font-size: 13px;
-            margin-top: 10px;
-            display: none;
-        }
-        .login-box .error.show { display: block; }
-        .login-box .hint {
-            color: #999;
-            font-size: 12px;
-            margin-top: 15px;
-        }
-        .login-box .hint span {
-            background: #f0f2f5;
-            padding: 2px 10px;
-            border-radius: 6px;
-            font-family: monospace;
-            color: #0d47a1;
-        }
-
-        /* ===== MAIN CONTENT ===== */
-        #mainContent {
-            display: none;
-            width: 100%;
-            max-width: 1000px;
-            margin: 0 auto;
-        }
+        .container { max-width: 1000px; margin: 0 auto; }
         .header {
             background: linear-gradient(135deg, #0d47a1, #1565c0);
             color: white;
@@ -147,9 +67,7 @@
             padding: 16px 18px;
             box-shadow: 0 2px 8px rgba(0,0,0,0.06);
             border-left: 5px solid #0d47a1;
-            transition: all 0.2s;
         }
-        .case-item:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.12); }
         .case-header {
             display: flex;
             flex-wrap: wrap;
@@ -167,7 +85,6 @@
         .case-status.perhatian { background: #fff3cd; color: #856404; }
         .case-status.siasatan { background: #ffe0b2; color: #bf360c; }
         .case-status.selesai { background: #c8e6c9; color: #1b5e20; }
-        .case-status.ditolak { background: #ffcdd2; color: #c62828; }
         
         .case-title { font-size: 15px; font-weight: 600; margin: 4px 0; }
         .case-meta {
@@ -200,18 +117,6 @@
         }
         .back-link:hover { background: #5a6268; }
         
-        .refresh-btn {
-            display: inline-block;
-            margin: 8px;
-            background: #0d47a1;
-            color: white;
-            padding: 6px 16px;
-            border-radius: 40px;
-            text-decoration: none;
-            font-size: 12px;
-        }
-        .refresh-btn:hover { background: #0d3b8a; }
-        
         @media (max-width: 600px) {
             .stats-grid { grid-template-columns: repeat(3, 1fr); }
             .stat-card .num { font-size: 22px; }
@@ -219,176 +124,347 @@
     </style>
 </head>
 <body>
-
-<!-- ===== LOGIN PAGE ===== -->
-<div id="loginPage">
-    <div class="login-box">
-        <div class="icon">🔐</div>
-        <h1>SISPAA</h1>
-        <p>Sistem Pengurusan Aduan Awam</p>
-        <input type="password" id="passwordInput" placeholder="Masukkan kata laluan..." autofocus>
-        <button onclick="checkPassword()">🔓 Masuk</button>
-        <div class="error" id="errorMessage">❌ Kata laluan salah. Cuba lagi.</div>
-        <div class="hint">🔑 <span>admin123</span></div>
+<div class="container">
+    <div class="header">
+        <h1>📋 ADUAN / MAKLUM BALAS BAHARU</h1>
+        <p>Sistem Pengurusan Aduan Awam (SISPAA) · 08/09/2026</p>
     </div>
-</div>
-
-<!-- ===== MAIN CONTENT ===== -->
-<div id="mainContent">
-    <div class="container">
-        <div class="header">
-            <h1>📋 ADUAN / MAKLUM BALAS BAHARU</h1>
-            <p>Sistem Pengurusan Aduan Awam (SISPAA) · <span id="dateDisplay"></span></p>
-            <p style="font-size:12px; opacity:0.7; margin-top:4px;">
-                Total: <span id="totalCases">0</span> cases
-                <a href="javascript:location.reload()" class="refresh-btn" style="margin-left:12px;">🔄 Refresh</a>
-            </p>
+    
+    <div class="stats-grid">
+        <div class="stat-card perhatian">
+            <div class="num">13</div>
+            <div class="label">Dalam Perhatian</div>
         </div>
-        
-        <div class="stats-grid" id="statsGrid">
-            <div class="stat-card perhatian">
-                <div class="num" id="statPerhatian">0</div>
-                <div class="label">Dalam Perhatian</div>
-            </div>
-            <div class="stat-card siasatan">
-                <div class="num" id="statSiasatan">0</div>
-                <div class="label">Dalam Siasatan</div>
-            </div>
-            <div class="stat-card selesai">
-                <div class="num" id="statSelesai">0</div>
-                <div class="label">Selesai / Ditolak</div>
-            </div>
+        <div class="stat-card siasatan">
+            <div class="num">10</div>
+            <div class="label">Dalam Siasatan</div>
         </div>
-        
-        <div class="search-bar">
-            <input type="text" placeholder="🔍 Cari Maklum Balas..." id="searchInput">
+        <div class="stat-card selesai">
+            <div class="num">0</div>
+            <div class="label">Selesai</div>
         </div>
-        
-        <div class="case-list" id="caseList">
-            <!-- Cases will be loaded here -->
-        </div>
-        
-        <div style="text-align:center;">
-            <a href="mystory.html" class="back-link">← Kembali ke MyStory</a>
-        </div>
-        <div class="footer">SISPAA · © 2026</div>
     </div>
+    
+    <div class="search-bar">
+        <input type="text" placeholder="🔍 Cari Maklum Balas..." id="searchInput">
+    </div>
+    
+    <div class="case-list" id="caseList">
+        
+        <div class="case-item" style="border-left-color: #e65100;">
+            <div class="case-header">
+                <span class="case-agency">JKM</span>
+                <span class="case-status siasatan">DALAM SIASATAN</span>
+            </div>
+            <div class="case-title">Test from phone 2</div>
+            <div class="case-meta">
+                <span class="case-id">SISPAA-TEST</span>
+                <span class="case-date">📅 2026-09-07</span>
+                <span class="case-remark">-</span>
+            </div>
+        </div>
+        
+        <div class="case-item" style="border-left-color: #e65100;">
+            <div class="case-header">
+                <span class="case-agency">DKP</span>
+                <span class="case-status siasatan">DALAM SIASATAN</span>
+            </div>
+            <div class="case-title">Aduan rumah rosak</div>
+            <div class="case-meta">
+                <span class="case-id">SISPAA-007</span>
+                <span class="case-date">📅 2026-09-06</span>
+                <span class="case-remark">Menunggu tindakan</span>
+            </div>
+        </div>
+        
+        <div class="case-item" style="border-left-color: #e65100;">
+            <div class="case-header">
+                <span class="case-agency">MOF</span>
+                <span class="case-status siasatan">DALAM SIASATAN</span>
+            </div>
+            <div class="case-title">AMAAN KADAR BAYARAN</div>
+            <div class="case-meta">
+                <span class="case-id">MOF.900136</span>
+                <span class="case-date">📅 2026-09-02</span>
+                <span class="case-remark">Imported from SISPAA</span>
+            </div>
+        </div>
+        
+        <div class="case-item" style="border-left-color: #e65100;">
+            <div class="case-header">
+                <span class="case-agency">MOH</span>
+                <span class="case-status siasatan">DALAM SIASATAN</span>
+            </div>
+            <div class="case-title">TAL BESAR MELAKA</div>
+            <div class="case-meta">
+                <span class="case-id">MOH.900532</span>
+                <span class="case-date">📅 2026-08-30</span>
+                <span class="case-remark">Imported from SISPAA</span>
+            </div>
+        </div>
+        
+        <div class="case-item" style="border-left-color: #e65100;">
+            <div class="case-header">
+                <span class="case-agency">PCB</span>
+                <span class="case-status siasatan">DALAM SIASATAN</span>
+            </div>
+            <div class="case-title">KM_JPA.100199</div>
+            <div class="case-meta">
+                <span class="case-id">PCB.363501</span>
+                <span class="case-date">📅 2026-08-15</span>
+                <span class="case-remark">Imported from SISPAA</span>
+            </div>
+        </div>
+        
+        <div class="case-item" style="border-left-color: #f9a825;">
+            <div class="case-header">
+                <span class="case-agency">MOH</span>
+                <span class="case-status perhatian">DALAM PERHATIAN</span>
+            </div>
+            <div class="case-title">MOHON BANTUAN CPET</div>
+            <div class="case-meta">
+                <span class="case-id">MOH.900460</span>
+                <span class="case-date">📅 2026-08-13</span>
+                <span class="case-remark">Ditolak</span>
+            </div>
+        </div>
+        
+        <div class="case-item" style="border-left-color: #e65100;">
+            <div class="case-header">
+                <span class="case-agency">MOT</span>
+                <span class="case-status siasatan">DALAM SIASATAN</span>
+            </div>
+            <div class="case-title">ERAAN DISEL-CBG9761</div>
+            <div class="case-meta">
+                <span class="case-id">MOT.900167</span>
+                <span class="case-date">📅 2026-08-10</span>
+                <span class="case-remark">Imported from SISPAA</span>
+            </div>
+        </div>
+        
+        <div class="case-item" style="border-left-color: #f9a825;">
+            <div class="case-header">
+                <span class="case-agency">ICU</span>
+                <span class="case-status perhatian">DALAM PERHATIAN</span>
+            </div>
+            <div class="case-title">BANTAHAN E-MEL PPN MELAKA</div>
+            <div class="case-meta">
+                <span class="case-id">ICU.900003</span>
+                <span class="case-date">📅 2026-08-06</span>
+                <span class="case-remark">Dalam Perhatian</span>
+            </div>
+        </div>
+        
+        <div class="case-item" style="border-left-color: #f9a825;">
+            <div class="case-header">
+                <span class="case-agency">ICU</span>
+                <span class="case-status perhatian">DALAM PERHATIAN</span>
+            </div>
+            <div class="case-title">ADUAN KETIDAKPUASHATI KIRAAN PGK</div>
+            <div class="case-meta">
+                <span class="case-id">ICU.900002</span>
+                <span class="case-date">📅 2026-08-03</span>
+                <span class="case-remark">Dalam Perhatian</span>
+            </div>
+        </div>
+        
+        <div class="case-item" style="border-left-color: #e65100;">
+            <div class="case-header">
+                <span class="case-agency">MOF</span>
+                <span class="case-status siasatan">DALAM SIASATAN</span>
+            </div>
+            <div class="case-title">ADUAN BANTUAN SARA BULANAN</div>
+            <div class="case-meta">
+                <span class="case-id">MOF.900118</span>
+                <span class="case-date">📅 2026-08-01</span>
+                <span class="case-remark">Imported from SISPAA</span>
+            </div>
+        </div>
+        
+        <div class="case-item" style="border-left-color: #e65100;">
+            <div class="case-header">
+                <span class="case-agency">MOF</span>
+                <span class="case-status siasatan">DALAM SIASATAN</span>
+            </div>
+            <div class="case-title">HB JULAI, 2026</div>
+            <div class="case-meta">
+                <span class="case-id">MOF.900113</span>
+                <span class="case-date">📅 2026-07-29</span>
+                <span class="case-remark">Imported from SISPAA</span>
+            </div>
+        </div>
+        
+        <div class="case-item" style="border-left-color: #e65100;">
+            <div class="case-header">
+                <span class="case-agency">JPA</span>
+                <span class="case-status siasatan">DALAM SIASATAN</span>
+            </div>
+            <div class="case-title">AN SISTEM MOF (URL ERROR)</div>
+            <div class="case-meta">
+                <span class="case-id">JPA.101124</span>
+                <span class="case-date">📅 2026-07-28</span>
+                <span class="case-remark">Imported from SISPAA</span>
+            </div>
+        </div>
+        
+        <div class="case-item" style="border-left-color: #f9a825;">
+            <div class="case-header">
+                <span class="case-agency">JPA</span>
+                <span class="case-status perhatian">DALAM PERHATIAN</span>
+            </div>
+            <div class="case-title">MOHON PENJELASAN DARI SISPAA</div>
+            <div class="case-meta">
+                <span class="case-id">JPA.101059</span>
+                <span class="case-date">📅 2026-07-27</span>
+                <span class="case-remark">Ditolak</span>
+            </div>
+        </div>
+        
+        <div class="case-item" style="border-left-color: #f9a825;">
+            <div class="case-header">
+                <span class="case-agency">JPA</span>
+                <span class="case-status perhatian">DALAM PERHATIAN</span>
+            </div>
+            <div class="case-title">PERTANYAAN REBAT LKM DIESEL HIJAU</div>
+            <div class="case-meta">
+                <span class="case-id">JPA.100556</span>
+                <span class="case-date">📅 2026-07-24</span>
+                <span class="case-remark">Selesai</span>
+            </div>
+        </div>
+        
+        <div class="case-item" style="border-left-color: #f9a825;">
+            <div class="case-header">
+                <span class="case-agency">JPA</span>
+                <span class="case-status perhatian">DALAM PERHATIAN</span>
+            </div>
+            <div class="case-title">ADUAN KEGAGALAN PENTADBIRAN JKM MELAKA</div>
+            <div class="case-meta">
+                <span class="case-id">JPA.100199</span>
+                <span class="case-date">📅 2026-07-22</span>
+                <span class="case-remark">Selesai</span>
+            </div>
+        </div>
+        
+        <div class="case-item" style="border-left-color: #f9a825;">
+            <div class="case-header">
+                <span class="case-agency">JPA</span>
+                <span class="case-status perhatian">DALAM PERHATIAN</span>
+            </div>
+            <div class="case-title">ADUAN TICKET NO. JPA.099346 HILANG</div>
+            <div class="case-meta">
+                <span class="case-id">JPA.100222</span>
+                <span class="case-date">📅 2026-07-22</span>
+                <span class="case-remark">Ditolak</span>
+            </div>
+        </div>
+        
+        <div class="case-item" style="border-left-color: #f9a825;">
+            <div class="case-header">
+                <span class="case-agency">JPA</span>
+                <span class="case-status perhatian">DALAM PERHATIAN</span>
+            </div>
+            <div class="case-title">JPJ SENGAJA MENUKAR STATUS KES</div>
+            <div class="case-meta">
+                <span class="case-id">JPA.099369</span>
+                <span class="case-date">📅 2026-07-16</span>
+                <span class="case-remark">Selesai</span>
+            </div>
+        </div>
+        
+        <div class="case-item" style="border-left-color: #f9a825;">
+            <div class="case-header">
+                <span class="case-agency">JPA</span>
+                <span class="case-status perhatian">DALAM PERHATIAN</span>
+            </div>
+            <div class="case-title">ADUAN KETIDAKPUASHATI PENYELESAIAN KES</div>
+            <div class="case-meta">
+                <span class="case-id">JPA.098623</span>
+                <span class="case-date">📅 2026-07-13</span>
+                <span class="case-remark">Selesai</span>
+            </div>
+        </div>
+        
+        <div class="case-item" style="border-left-color: #e65100;">
+            <div class="case-header">
+                <span class="case-agency">JPA</span>
+                <span class="case-status siasatan">DALAM SIASATAN</span>
+            </div>
+            <div class="case-title">UDI MADANI & MYSARA SERTA KETIDAKSELARASA</div>
+            <div class="case-meta">
+                <span class="case-id">JPA.097439</span>
+                <span class="case-date">📅 2026-07-06</span>
+                <span class="case-remark">Imported from SISPAA</span>
+            </div>
+        </div>
+        
+        <div class="case-item" style="border-left-color: #f9a825;">
+            <div class="case-header">
+                <span class="case-agency">JPA</span>
+                <span class="case-status perhatian">DALAM PERHATIAN</span>
+            </div>
+            <div class="case-title">KENDERAAN PERIBADI DISEL HIJAU</div>
+            <div class="case-meta">
+                <span class="case-id">JPA.097313</span>
+                <span class="case-date">📅 2026-07-06</span>
+                <span class="case-remark">Selesai</span>
+            </div>
+        </div>
+        
+        <div class="case-item" style="border-left-color: #f9a825;">
+            <div class="case-header">
+                <span class="case-agency">JPA</span>
+                <span class="case-status perhatian">DALAM PERHATIAN</span>
+            </div>
+            <div class="case-title">ERI, MELAKA BERKENAAN PENGESAHAN DATA EKA</div>
+            <div class="case-meta">
+                <span class="case-id">JPA.095702</span>
+                <span class="case-date">📅 2026-06-23</span>
+                <span class="case-remark">Imported from SISPAA</span>
+            </div>
+        </div>
+        
+        <div class="case-item" style="border-left-color: #f9a825;">
+            <div class="case-header">
+                <span class="case-agency">JPA</span>
+                <span class="case-status perhatian">DALAM PERHATIAN</span>
+            </div>
+            <div class="case-title">ADUAN TERHADAP JABATAN PEMBANGUNAN NEGERI MELAKA</div>
+            <div class="case-meta">
+                <span class="case-id">JPA.094306</span>
+                <span class="case-date">📅 2026-06-09</span>
+                <span class="case-remark">Selesai</span>
+            </div>
+        </div>
+        
+        <div class="case-item" style="border-left-color: #f9a825;">
+            <div class="case-header">
+                <span class="case-agency">JPA</span>
+                <span class="case-status perhatian">DALAM PERHATIAN</span>
+            </div>
+            <div class="case-title">PENGHARGAAN SEMINAR JKM MELAKA</div>
+            <div class="case-meta">
+                <span class="case-id">JPA.090672</span>
+                <span class="case-date">📅 2026-05-01</span>
+                <span class="case-remark">Selesai</span>
+            </div>
+        </div>
+        
+    </div>
+    
+    <div style="text-align:center;">
+        <a href="mystory.html" class="back-link">← Kembali ke MyStory</a>
+    </div>
+    <div class="footer">SISPAA · © 2026</div>
 </div>
 
 <script>
-// =============================================
-// LOGIN FUNCTION
-// =============================================
-const CORRECT_PASSWORD = '859761';
-
-function checkPassword() {
-    const password = document.getElementById('passwordInput').value;
-    const error = document.getElementById('errorMessage');
-    
-    if (password === CORRECT_PASSWORD) {
-        document.getElementById('loginPage').style.display = 'none';
-        document.getElementById('mainContent').style.display = 'block';
-        loadCases();
-    } else {
-        error.classList.add('show');
-        document.getElementById('passwordInput').value = '';
-        document.getElementById('passwordInput').focus();
-    }
-}
-
-// Enter key untuk login
-document.getElementById('passwordInput').addEventListener('keypress', function(e) {
-    if (e.key === 'Enter') {
-        checkPassword();
-    }
-});
-
-// =============================================
-// LOAD CASES FROM DATABASE (via sispaa.html data)
-// =============================================
-// Data akan diisi secara manual atau dari database
-// Untuk sekarang, kita guna data statik sebagai contoh
-
-function loadCases() {
-    // Data dari database anda
-    const cases = [
-        { id: 'SISPAA-001', agency: 'JKM', subject: 'Rayuan OKU - warna buta & 斜视', date: '2026-09-01', status: 'DALAM PERHATIAN', remark: 'Menunggu pakar oftalmologi' },
-        { id: 'SISPAA-002', agency: 'MOF', subject: 'Bantahan kadar MySara', date: '2026-09-05', status: 'DALAM PERHATIAN', remark: 'Dalam siasatan' },
-        { id: 'SISPAA-003', agency: 'MOH', subject: 'Aduan Jabatan Oftalmologi Hospital Melaka', date: '2026-08-30', status: 'DALAM PERHATIAN', remark: 'OKU berkaitan' },
-        { id: 'SISPAA-004', agency: 'KPWKM', subject: 'Sanggahan rasmi JKM', date: '2026-08-15', status: 'DALAM PERHATIAN', remark: 'Dalam siasatan' },
-        { id: 'JPA_090672', agency: 'JPA', subject: 'PENGHARGAAN SEMINAR JKM MELAKA', date: '2026-05-01', status: 'SELESAI', remark: 'Google Lens: 2026-09-08' },
-        { id: 'JPA_094306', agency: 'JPA', subject: 'ADUAN TERHADAP JABATAN PEMEBANGNAN NEG ERI MELAKA', date: '2026-06-09', status: 'SELESAI', remark: 'Google Lens: 2026-09-08' },
-        { id: 'JPA_095702', agency: 'JPA', subject: 'PENGHARGAAN ATAS TINDAKAN PANTAS DAN PRO FESIONAL', date: '2026-06-23', status: 'DALAM PERHATIAN', remark: 'Google Lens: 2026-09-08' },
-        { id: 'JPA_097313', agency: 'JPA', subject: 'KENDERAAN PERIBADI DISEL HIJAU', date: '2026-07-06', status: 'SELESAI', remark: 'Google Lens: 2026-09-08' },
-        { id: 'JPA_097439', agency: 'JPA', subject: 'ADUAN: KEGAGALAN SISTEM PROSES BANTUAN', date: '2026-07-06', status: 'DALAM SIASATAN', remark: 'Google Lens: 2026-09-08' },
-        { id: 'JPA_098623', agency: 'JPA', subject: 'ADUAN KETIDAKPUASHATI PENYELESAIAN KES', date: '2026-07-13', status: 'SELESAI', remark: 'Google Lens: 2026-09-08' },
-        { id: 'JPA_099369', agency: 'JPA', subject: 'JPJ SENGAJA MENUKAR STATUS KES', date: '2026-07-16', status: 'SELESAI', remark: 'Google Lens: 2026-09-08' },
-        { id: 'JPA_100222', agency: 'JPA', subject: 'ADUAN TICKET NO. JPA.099346 HILANG', date: '2026-07-22', status: 'DITOLAK', remark: 'Google Lens: 2026-09-08' },
-        { id: 'JPA_100556', agency: 'JPA', subject: 'PERTANYAAN KEPUTUSAN RASMI REBAT LKM', date: '2026-07-24', status: 'SELESAI', remark: 'Google Lens: 2026-09-08' },
-        { id: 'JPA_101059', agency: 'JPA', subject: 'MOHON PENJELASAN DARI SISPAA', date: '2026-07-27', status: 'DITOLAK', remark: 'Google Lens: 2026-09-08' },
-        { id: 'MOF_900113', agency: 'MOF', subject: 'ADUAN BERKENAAN TUKAR BUDI DIESEL', date: '2026-07-29', status: 'DALAM SIASATAN', remark: 'Google Lens: 2026-09-08' },
-        { id: 'MOF_900118', agency: 'MOF', subject: 'ADUAN BANTUAN SARA BULANAN', date: '2026-08-01', status: 'DALAM SIASATAN', remark: 'Google Lens: 2026-09-08' },
-        { id: 'ICU_900002', agency: 'ICU', subject: 'ADUAN KETIDAKPUASHATI KIRAAN PGK', date: '2026-08-03', status: 'DALAM PERHATIAN', remark: 'Google Lens: 2026-09-08' },
-        { id: 'ICU_900003', agency: 'ICU', subject: 'BANTAHAN TERHADAP E-MEL PPN MELAKA', date: '2026-08-06', status: 'DALAM PERHATIAN', remark: 'Google Lens: 2026-09-08' },
-        { id: 'MOT_900167', agency: 'MOT', subject: 'PERMOHONAN PENJELASAN DASPEMILIKAN KENDERAAN', date: '2026-08-10', status: 'DALAM SIASATAN', remark: 'Google Lens: 2026-09-08' },
-        { id: 'MOH_900460', agency: 'MOH', subject: 'MOHON BANTUAN CPET, IJN (03 SEP 2026)', date: '2026-08-13', status: 'DITOLAK', remark: 'Google Lens: 2026-09-08' },
-        { id: 'PCB_363501', agency: 'PCB', subject: 'SANGGAHAN RASMI TERHADAP MAKLUM BALAS', date: '2026-08-15', status: 'DALAM SIASATAN', remark: 'Google Lens: 2026-09-08' },
-        { id: 'MOH_900532', agency: 'MOH', subject: 'ADUAN TERHADAP JABATAN OFTALMOLOGI HOSPITAL', date: '2026-08-30', status: 'DALAM SIASATAN', remark: 'Google Lens: 2026-09-08' }
-    ];
-    
-    // Update stats
-    let perhatian = 0, siasatan = 0, selesai = 0;
-    cases.forEach(c => {
-        if (c.status === 'DALAM PERHATIAN') perhatian++;
-        else if (c.status === 'DALAM SIASATAN') siasatan++;
-        else if (c.status === 'SELESAI' || c.status === 'DITOLAK') selesai++;
-    });
-    
-    document.getElementById('statPerhatian').textContent = perhatian;
-    document.getElementById('statSiasatan').textContent = siasatan;
-    document.getElementById('statSelesai').textContent = selesai;
-    document.getElementById('totalCases').textContent = cases.length;
-    document.getElementById('dateDisplay').textContent = new Date().toLocaleDateString('ms-MY');
-    
-    // Generate case list
-    const caseList = document.getElementById('caseList');
-    let html = '';
-    
-    cases.forEach(c => {
-        let statusClass = 'perhatian';
-        let color = '#f9a825';
-        
-        if (c.status === 'DALAM PERHATIAN') { statusClass = 'perhatian'; color = '#f9a825'; }
-        else if (c.status === 'DALAM SIASATAN') { statusClass = 'siasatan'; color = '#e65100'; }
-        else if (c.status === 'SELESAI') { statusClass = 'selesai'; color = '#2e7d32'; }
-        else if (c.status === 'DITOLAK') { statusClass = 'ditolak'; color = '#c62828'; }
-        
-        html += `
-        <div class="case-item" style="border-left-color: ${color};">
-            <div class="case-header">
-                <span class="case-agency">${c.agency}</span>
-                <span class="case-status ${statusClass}">${c.status}</span>
-            </div>
-            <div class="case-title">${c.subject}</div>
-            <div class="case-meta">
-                <span class="case-id">${c.id}</span>
-                <span class="case-date">📅 ${c.date}</span>
-                <span class="case-remark">${c.remark || '-'}</span>
-            </div>
-        </div>
-        `;
-    });
-    
-    caseList.innerHTML = html;
-    
-    // Search function
     document.getElementById('searchInput').addEventListener('input', function() {
         const keyword = this.value.toLowerCase().trim();
         document.querySelectorAll('.case-item').forEach(item => {
             item.style.display = item.textContent.toLowerCase().includes(keyword) ? 'block' : 'none';
         });
     });
-}
 </script>
 </body>
 </html>
