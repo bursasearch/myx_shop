@@ -1,21 +1,15 @@
 #!/usr/bin/env python3
-"""
-Tambah login page ke sispaa.html SELEPAS generate
-Guna script ini selepas run sispaa_html_mgr.py html
-"""
+"""Tambah login page ke sispaa.html SELEPAS generate"""
 
 HTML_FILE = "../sispaa.html"
 
-# Baca fail
 with open(HTML_FILE, 'r', encoding='utf-8') as f:
     content = f.read()
 
-# Check kalau dah ada
 if 'loginPage' in content:
     print("✅ Login page dah ada")
     exit(0)
 
-# Login block - Python triple-quoted string (tak guna f-string)
 login_block = '''<div id="loginPage" style="display:flex;justify-content:center;align-items:center;width:100vw;height:100vh;background:linear-gradient(135deg,#0d47a1,#1565c0);position:fixed;top:0;left:0;z-index:99999;font-family:Arial,sans-serif;">
 <div style="background:white;border-radius:20px;padding:40px 35px;max-width:400px;width:90%;box-shadow:0 20px 60px rgba(0,0,0,0.3);text-align:center;">
 <div style="font-size:48px;">🔐</div>
@@ -44,11 +38,11 @@ document.getElementById("pwInput").value="";}};
 })();
 </script>'''
 
-# Tambah selepas <body>
 if '<body>' in content:
     content = content.replace('<body>', '<body>\n' + login_block, 1)
     with open(HTML_FILE, 'w', encoding='utf-8') as f:
         f.write(content)
     print("✅ Login page ditambah!")
+    print("🔑 Password: admin123")
 else:
     print("❌ Tak jumpa <body>")

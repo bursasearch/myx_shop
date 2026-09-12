@@ -1,6 +1,3 @@
-cd /storage/emulated/0/bursasearch/myx_shop/sispaa_app/
-
-cat > import_lens_file.py << 'PYEOF'
 #!/usr/bin/env python3
 import sqlite3
 import re
@@ -33,12 +30,11 @@ def extract_agency(ticket_id):
     return parts[0] if parts else "Lain-lain"
 
 def parse_date(date_str):
-    """Parse pelbagai format tarikh."""
     formats = [
-        '%d/%m/%Y %H:%M:%S',  # 01/05/2026 06:55:40
-        '%d/%m/%Y %H:%M',     # 01/05/2026 06:55
-        '%d/%m/%Y',           # 01/05/2026
-        '%Y-%m-%d',           # 2026-05-01
+        '%d/%m/%Y %H:%M:%S',
+        '%d/%m/%Y %H:%M',
+        '%d/%m/%Y',
+        '%Y-%m-%d',
     ]
     for fmt in formats:
         try:
@@ -48,30 +44,20 @@ def parse_date(date_str):
     return datetime.now().strftime('%Y-%m-%d')
 
 def parse_text_file(filepath):
-    """Parse teks dari output.txt (format Google Lens)."""
     with open(filepath, 'r', encoding='utf-8') as f:
         content = f.read()
     
-    # Split by lines
     lines = [l.strip() for l in content.split('\n') if l.strip()]
-    
-    # Format baru: 1 kes = 4 baris
-    # [0] = Ticket ID
-    # [1] = Subject
-    # [2] = Status
-    # [3] = Tarikh
     
     cases = []
     i = 0
     while i < len(lines) - 3:
-        # Check kalau baris ni ticket ID
         if re.match(r'^[A-Z]+[\.\s]?\d+', lines[i]):
             ticket_id = lines[i]
             subject = lines[i+1]
             status = lines[i+2]
             date_str = lines[i+3]
             
-            # Check kalau baris i+2 adalah status yang sah
             if status in ['Selesai', 'Dalam Perhatian', 'Dalam Siasatan', 'Ditolak']:
                 cases.append({
                     'ticket_id': ticket_id,
@@ -86,18 +72,17 @@ def parse_text_file(filepath):
     return cases
 
 def import_data(filepath):
-    print(f" Reading: {filepath}")
+    print(f"📥 Reading: {filepath}")
     print("="*50)
     
     if not os.path.exists(filepath):
-        print(f" File not found: {filepath}")
+        print(f"❌ File not found: {filepath}")
         return
     
-    # Parse text file
     cases = parse_text_file(filepath)
     
     if not cases:
-        print(" Tiada kes dijumpai dalam file.")
+        print("⚠️ Tiada kes dijumpai dalam file.")
         print("   Pastikan format: Ticket ID, Subject, Status, Tarikh")
         return
     
@@ -113,7 +98,6 @@ def import_data(filepath):
             agency = extract_agency(ticket_id)
             date_formatted = parse_date(case['date'])
             
-            # Check kalau wujud
             c.execute("SELECT ticket_id FROM cases WHERE ticket_id=?", (ticket_id,))
             exists = c.fetchone()
             
@@ -126,35 +110,31 @@ def import_data(filepath):
                           datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
                           f'Updated: {datetime.now().strftime("%Y-%m-%d %H:%M")}',
                           ticket_id))
-                print(f" Updated: {ticket_id} | {agency} | {subject[:30]}... | {status}")
+                print(f"🔄 Updated: {ticket_id} | {agency} | {subject[:30]}... | {status}")
             else:
                 c.execute('''INSERT INTO cases 
                             VALUES (?, ?, ?, ?, ?, ?, ?)''',
                          (ticket_id, agency, subject, date_formatted, status,
                           datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
                           f'From file: {datetime.now().strftime("%Y-%m-%d %H:%M")}'))
-                print(f" Added: {ticket_id} | {agency} | {subject[:30]}... | {status}")
+                print(f"✅ Added: {ticket_id} | {agency} | {subject[:30]}... | {status}")
             
             total += 1
             
         except Exception as e:
-            print(f" Error: {case['ticket_id']}  {e}")
+            print(f"❌ Error: {case['ticket_id']} → {e}")
             continue
     
     conn.commit()
     conn.close()
     
     print("="*50)
-    print(f" Total: {total} cases processed")
-    print("\n Import selesai!")
-    print(f" Total: {total} cases")
-    print("\n Seterusnya:")
+    print(f"📊 Total: {total} cases processed")
+    print("\n✅ Import selesai!")
+    print(f"📊 Total: {total} cases")
+    print("\n📝 Seterusnya:")
     print("   python3 sispaa_html_mgr.py html ../sispaa.html")
 
 if __name__ == "__main__":
-    # Guna argumen kalau ada, kalau tak guna default
     filepath = sys.argv[1] if len(sys.argv) > 1 else DEFAULT_FILE
     import_data(filepath)
-PYEOF
-
-echo " import_lens_file.py siap!"
