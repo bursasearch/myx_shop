@@ -136,10 +136,10 @@ def import_data():
         for err in errors[:3]:
             print(f"   - {err}")
     
-    print("\n Import selesai!")
-    print(f" Total: {total} cases")
-    print("\n Seterusnya:")
-    print("   python3 sispaa_html_mgr.py html ../sispaa.html")
+    if total > 0:
+        print("\n🔄 Generating HTML...")
+        import subprocess
+        subprocess.run(["python3", "sispaa_html_mgr.py", "html", "../sispaa.html"])
 
 if __name__ == "__main__":
     import_data()

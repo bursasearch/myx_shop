@@ -140,83 +140,38 @@
         }
     </style>
 </head>
-<!-- LOGIN STYLE -->
-<style id="loginHideStyle">
-  body > *:not(#loginPage):not(style):not(script) { display: none !important; }
-  #loginPage { display: flex !important; }
-</style>
-<!-- END LOGIN STYLE -->
-
 <body>
-
-<div id="loginPage" style="
-    display: flex !important;
-    justify-content: center;
-    align-items: center;
-    width: 100vw;
-    height: 100vh;
-    background: linear-gradient(135deg, #0d47a1, #1565c0);
-    position: fixed;
-    top: 0; left: 0;
-    z-index: 99999;
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-">
-  <div style="
-    background: white;
-    border-radius: 20px;
-    padding: 40px 35px;
-    max-width: 400px;
-    width: 90%;
-    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-    text-align: center;
-  ">
-    <div style="font-size:48px;margin-bottom:10px;">🔐</div>
-    <h1 style="color:#0d47a1;font-size:24px;margin-bottom:5px;">SISPAA</h1>
-    <p style="color:#6d6d8a;font-size:14px;margin-bottom:25px;">Sistem Pengurusan Aduan Awam</p>
-    <input type="password" id="pwInput" placeholder="Masukkan kata laluan..." style="
-      width:100%;padding:14px;border:2px solid #e0e0e0;border-radius:12px;
-      font-size:16px;margin-bottom:12px;box-sizing:border-box;outline:none;
-    ">
-    <button onclick="doLogin()" style="
-      width:100%;padding:14px;background:#0d47a1;color:white;
-      border:none;border-radius:12px;font-size:16px;font-weight:600;cursor:pointer;
-    ">🔓 Masuk</button>
-    <div id="errMsg" style="color:#c62828;font-size:13px;margin-top:10px;display:none;">❌ Kata laluan salah</div>
-    <div style="color:#999;font-size:12px;margin-top:15px;">🔑 admin123</div>
-  </div>
+<div id="loginPage" style="display:flex;justify-content:center;align-items:center;width:100vw;height:100vh;background:linear-gradient(135deg,#0d47a1,#1565c0);position:fixed;top:0;left:0;z-index:99999;font-family:Arial,sans-serif;">
+<div style="background:white;border-radius:20px;padding:40px 35px;max-width:400px;width:90%;box-shadow:0 20px 60px rgba(0,0,0,0.3);text-align:center;">
+<div style="font-size:48px;">🔐</div>
+<h1 style="color:#0d47a1;font-size:24px;">SISPAA</h1>
+<p style="color:#6d6d8a;font-size:14px;margin-bottom:25px;">Sistem Pengurusan Aduan Awam</p>
+<input type="password" id="pwInput" placeholder="Masukkan kata laluan..." style="width:100%;padding:14px;border:2px solid #e0e0e0;border-radius:12px;font-size:16px;margin-bottom:12px;box-sizing:border-box;">
+<button onclick="doLogin()" style="width:100%;padding:14px;background:#0d47a1;color:white;border:none;border-radius:12px;font-size:16px;font-weight:600;">🔓 Masuk</button>
+<div id="errMsg" style="color:#c62828;font-size:13px;margin-top:10px;display:none;">❌ Salah</div>
 </div>
-
+</div>
 <script>
-function doLogin(){
-  var pw = document.getElementById('pwInput').value;
-  if(pw === '859761'){
-    document.getElementById('loginHideStyle').remove();
-    document.getElementById('loginPage').remove();
-  } else {
-    document.getElementById('errMsg').style.display = 'block';
-    document.getElementById('pwInput').value = '';
-  }
-}
-window.addEventListener('load', function(){
-  var input = document.getElementById('pwInput');
-  if(input){
-    input.focus();
-    input.addEventListener('keypress', function(e){
-      if(e.key === 'Enter') doLogin();
-    });
-  }
-});
+(function(){
+document.addEventListener("DOMContentLoaded",function(){
+var c=document.body.children;
+for(var i=0;i<c.length;i++){
+if(c[i].id!=="loginPage"&&c[i].tagName!=="SCRIPT")
+c[i].style.display="none";}});
+window.doLogin=function(){
+if(document.getElementById("pwInput").value==="859761"){
+document.getElementById("loginPage").style.display="none";
+var c=document.body.children;
+for(var i=0;i<c.length;i++){
+if(c[i].id!=="loginPage")c[i].style.display="";}}
+else{document.getElementById("errMsg").style.display="block";
+document.getElementById("pwInput").value="";}};
+})();
 </script>
-
-
-
-
 <div class="container">
     <div class="header">
         <h1>📋 ADUAN / MAKLUM BALAS BAHARU</h1>
-        <p>Sistem Pengurusan Aduan Awam (SISPAA) · 10/09/2026</p>
+        <p>Sistem Pengurusan Aduan Awam (SISPAA) · 12/09/2026</p>
         <p style="font-size:12px; opacity:0.7; margin-top:4px;">
             Total: 20 cases
             <a href="javascript:location.reload()" class="refresh-btn" style="margin-left:12px;">🔄 Refresh</a>
@@ -253,7 +208,7 @@ window.addEventListener('load', function(){
             <div class="case-meta">
                 <span class="case-id">MOH_900532</span>
                 <span class="case-date">📅 2026-08-30</span>
-                <span class="case-remark">Google Lens: 2026-09-10 16:34</span>
+                <span class="case-remark">Updated: 2026-09-12 11:27</span>
             </div>
         </div>
         
@@ -266,7 +221,7 @@ window.addEventListener('load', function(){
             <div class="case-meta">
                 <span class="case-id">PCB_363501</span>
                 <span class="case-date">📅 2026-08-15</span>
-                <span class="case-remark">Google Lens: 2026-09-10 16:34</span>
+                <span class="case-remark">Updated: 2026-09-12 11:27</span>
             </div>
         </div>
         
@@ -279,7 +234,7 @@ window.addEventListener('load', function(){
             <div class="case-meta">
                 <span class="case-id">MOH_900460</span>
                 <span class="case-date">📅 2026-08-13</span>
-                <span class="case-remark">Google Lens: 2026-09-10 16:34</span>
+                <span class="case-remark">Updated: 2026-09-12 11:27</span>
             </div>
         </div>
         
@@ -292,7 +247,7 @@ window.addEventListener('load', function(){
             <div class="case-meta">
                 <span class="case-id">MOT_900167</span>
                 <span class="case-date">📅 2026-08-10</span>
-                <span class="case-remark">Google Lens: 2026-09-10 16:34</span>
+                <span class="case-remark">Updated: 2026-09-12 11:27</span>
             </div>
         </div>
         
@@ -305,7 +260,7 @@ window.addEventListener('load', function(){
             <div class="case-meta">
                 <span class="case-id">ICU_900003</span>
                 <span class="case-date">📅 2026-08-06</span>
-                <span class="case-remark">Google Lens: 2026-09-10 16:34</span>
+                <span class="case-remark">Updated: 2026-09-12 11:27</span>
             </div>
         </div>
         
@@ -318,7 +273,7 @@ window.addEventListener('load', function(){
             <div class="case-meta">
                 <span class="case-id">ICU_900002</span>
                 <span class="case-date">📅 2026-08-03</span>
-                <span class="case-remark">Google Lens: 2026-09-10 16:34</span>
+                <span class="case-remark">Updated: 2026-09-12 11:27</span>
             </div>
         </div>
         
@@ -331,7 +286,7 @@ window.addEventListener('load', function(){
             <div class="case-meta">
                 <span class="case-id">MOF_900118</span>
                 <span class="case-date">📅 2026-08-01</span>
-                <span class="case-remark">Google Lens: 2026-09-10 16:34</span>
+                <span class="case-remark">Updated: 2026-09-12 11:27</span>
             </div>
         </div>
         
@@ -344,7 +299,7 @@ window.addEventListener('load', function(){
             <div class="case-meta">
                 <span class="case-id">MOF_900113</span>
                 <span class="case-date">📅 2026-07-29</span>
-                <span class="case-remark">Google Lens: 2026-09-10 16:34</span>
+                <span class="case-remark">Updated: 2026-09-12 11:27</span>
             </div>
         </div>
         
@@ -357,7 +312,7 @@ window.addEventListener('load', function(){
             <div class="case-meta">
                 <span class="case-id">JPA_101124</span>
                 <span class="case-date">📅 2026-07-28</span>
-                <span class="case-remark">Google Lens: 2026-09-10 16:34</span>
+                <span class="case-remark">Updated: 2026-09-12 11:27</span>
             </div>
         </div>
         
@@ -370,7 +325,7 @@ window.addEventListener('load', function(){
             <div class="case-meta">
                 <span class="case-id">JPA_101059</span>
                 <span class="case-date">📅 2026-07-27</span>
-                <span class="case-remark">Google Lens: 2026-09-10 16:34</span>
+                <span class="case-remark">Updated: 2026-09-12 11:27</span>
             </div>
         </div>
         
@@ -383,7 +338,7 @@ window.addEventListener('load', function(){
             <div class="case-meta">
                 <span class="case-id">JPA_100556</span>
                 <span class="case-date">📅 2026-07-24</span>
-                <span class="case-remark">Google Lens: 2026-09-10 16:34</span>
+                <span class="case-remark">Updated: 2026-09-12 11:27</span>
             </div>
         </div>
         
@@ -396,7 +351,7 @@ window.addEventListener('load', function(){
             <div class="case-meta">
                 <span class="case-id">JPA_100199</span>
                 <span class="case-date">📅 2026-07-22</span>
-                <span class="case-remark">Google Lens: 2026-09-10 16:34</span>
+                <span class="case-remark">Updated: 2026-09-12 11:27</span>
             </div>
         </div>
         
@@ -409,7 +364,7 @@ window.addEventListener('load', function(){
             <div class="case-meta">
                 <span class="case-id">JPA_100222</span>
                 <span class="case-date">📅 2026-07-22</span>
-                <span class="case-remark">Google Lens: 2026-09-10 16:34</span>
+                <span class="case-remark">Updated: 2026-09-12 11:27</span>
             </div>
         </div>
         
@@ -422,7 +377,7 @@ window.addEventListener('load', function(){
             <div class="case-meta">
                 <span class="case-id">JPA_099369</span>
                 <span class="case-date">📅 2026-07-16</span>
-                <span class="case-remark">Google Lens: 2026-09-10 16:34</span>
+                <span class="case-remark">Updated: 2026-09-12 11:27</span>
             </div>
         </div>
         
@@ -435,7 +390,7 @@ window.addEventListener('load', function(){
             <div class="case-meta">
                 <span class="case-id">JPA_098623</span>
                 <span class="case-date">📅 2026-07-13</span>
-                <span class="case-remark">Google Lens: 2026-09-10 16:34</span>
+                <span class="case-remark">Updated: 2026-09-12 11:27</span>
             </div>
         </div>
         
@@ -448,7 +403,7 @@ window.addEventListener('load', function(){
             <div class="case-meta">
                 <span class="case-id">JPA_097313</span>
                 <span class="case-date">📅 2026-07-06</span>
-                <span class="case-remark">Google Lens: 2026-09-10 16:34</span>
+                <span class="case-remark">Updated: 2026-09-12 11:27</span>
             </div>
         </div>
         
@@ -461,7 +416,7 @@ window.addEventListener('load', function(){
             <div class="case-meta">
                 <span class="case-id">JPA_097439</span>
                 <span class="case-date">📅 2026-07-06</span>
-                <span class="case-remark">Google Lens: 2026-09-10 16:34</span>
+                <span class="case-remark">Updated: 2026-09-12 11:27</span>
             </div>
         </div>
         
@@ -474,7 +429,7 @@ window.addEventListener('load', function(){
             <div class="case-meta">
                 <span class="case-id">JPA_095702</span>
                 <span class="case-date">📅 2026-06-23</span>
-                <span class="case-remark">Google Lens: 2026-09-10 16:34</span>
+                <span class="case-remark">Updated: 2026-09-12 11:27</span>
             </div>
         </div>
         
@@ -487,7 +442,7 @@ window.addEventListener('load', function(){
             <div class="case-meta">
                 <span class="case-id">JPA_094306</span>
                 <span class="case-date">📅 2026-06-09</span>
-                <span class="case-remark">Google Lens: 2026-09-10 16:34</span>
+                <span class="case-remark">Updated: 2026-09-12 11:27</span>
             </div>
         </div>
         
@@ -500,7 +455,7 @@ window.addEventListener('load', function(){
             <div class="case-meta">
                 <span class="case-id">JPA_090672</span>
                 <span class="case-date">📅 2026-05-01</span>
-                <span class="case-remark">Google Lens: 2026-09-10 16:34</span>
+                <span class="case-remark">Updated: 2026-09-12 11:27</span>
             </div>
         </div>
         
