@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SISPAA - Sistem Pengurusan Aduan Awam</title>
+    <style>
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body {
+            font-family: -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
+            background: #f0f2f5;
+            padding: 16px;
+        }
+        .container { max-width: 1000px; margin: 0 auto; }
+        .header {
+            background: linear-gradient(135deg, #0d47a1, #1565c0);
+            color: white;
+            border-radius: 16px;
+            padding: 20px 24px;
+            margin-bottom: 20px;
+        }
+        .header h1 { font-size: 22px; }
+        .header p { opacity: 0.85; font-size: 14px; }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .stat-card {
+            background: white;
+            border-radius: 12px;
+            padding: 14px 12px;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            border-left: 4px solid #0d47a1;
+        }
+        .stat-card .num { font-size: 28px; font-weight: 700; color: #0d47a1; }
+        .stat-card .label { font-size: 12px; color: #5a5a7a; }
+        .stat-card.perhatian { border-left-color: #f9a825; }
+        .stat-card.perhatian .num { color: #f9a825; }
+        .stat-card.siasatan { border-left-color: #e65100; }
+        .stat-card.siasatan .num { color: #e65100; }
+        .stat-card.selesai { border-left-color: #2e7d32; }
+        .stat-card.selesai .num { color: #2e7d32; }
+        
+        .search-bar {
+            background: white;
+            border-radius: 12px;
+            padding: 12px 16px;
+            margin-bottom: 16px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        }
+        .search-bar input {
+            width: 100%;
+            border: none;
+            outline: none;
+            font-size: 14px;
+            font-family: inherit;
+        }
+        
+        .case-list { display: flex; flex-direction: column; gap: 12px; }
+        .case-item {
+            background: white;
+            border-radius: 12px;
+            padding: 16px 18px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            border-left: 5px solid #0d47a1;
+            transition: all 0.2s;
+        }
+        .case-item:hover {
+            box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+        }
+        .case-header {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 8px;
+        }
+        .case-agency { font-weight: 700; color: #0d47a1; font-size: 15px; }
+        .case-status {
+            font-size: 11px;
+            font-weight: 600;
+            padding: 3px 14px;
+            border-radius: 20px;
+        }
+        .case-status.perhatian { background: #fff3cd; color: #856404; }
+        .case-status.siasatan { background: #ffe0b2; color: #bf360c; }
+        .case-status.selesai { background: #c8e6c9; color: #1b5e20; }
+        .case-status.ditolak { background: #ffcdd2; color: #c62828; }
+        
+        .case-title { font-size: 15px; font-weight: 600; margin: 4px 0; }
+        .case-meta {
+            font-size: 13px;
+            color: #6d6d8a;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+        .case-id { font-weight: 600; color: #0d47a1; }
+        .case-remark { background: #f5f5f5; padding: 0 10px; border-radius: 12px; }
+        
+        .footer {
+            text-align: center;
+            font-size: 12px;
+            color: #8888aa;
+            margin-top: 24px;
+            padding: 12px;
+        }
+        .back-link {
+            display: inline-block;
+            margin-top: 16px;
+            background: #6c757d;
+            color: white;
+            padding: 8px 20px;
+            border-radius: 40px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 14px;
+        }
+        .back-link:hover { background: #5a6268; }
+        
+        .refresh-btn {
+            display: inline-block;
+            margin: 8px;
+            background: #0d47a1;
+            color: white;
+            padding: 6px 16px;
+            border-radius: 40px;
+            text-decoration: none;
+            font-size: 12px;
+        }
+        .refresh-btn:hover { background: #0d3b8a; }
+        
+        @media (max-width: 600px) {
+            .stats-grid { grid-template-columns: repeat(3, 1fr); }
+            .stat-card .num { font-size: 22px; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- LOGIN PAGE -->
+<div id="loginPage" style="display:flex;justify-content:center;align-items:center;width:100%;min-height:100vh;background:linear-gradient(135deg,#0d47a1,#1565c0);position:fixed;top:0;left:0;z-index:9999;font-family:-apple-system,'Segoe UI',Roboto,Arial,sans-serif;">
+<div style="background:white;border-radius:20px;padding:40px 35px;max-width:400px;width:90%;box-shadow:0 20px 60px rgba(0,0,0,0.3);text-align:center;">
+<div style="font-size:48px;margin-bottom:10px;">🔐</div>
+<h1 style="color:#0d47a1;font-size:24px;margin-bottom:5px;">SISPAA</h1>
+<p style="color:#6d6d8a;font-size:14px;margin-bottom:25px;">Sistem Pengurusan Aduan Awam</p>
+<input type="password" id="pwInput" placeholder="Masukkan kata laluan..." style="width:100%;padding:14px 16px;border:2px solid #e0e0e0;border-radius:12px;font-size:16px;margin-bottom:12px;outline:none;box-sizing:border-box;">
+<button onclick="doLogin()" style="width:100%;padding:14px;background:#0d47a1;color:white;border:none;border-radius:12px;font-size:16px;font-weight:600;cursor:pointer;">🔓 Masuk</button>
+<div id="errMsg" style="color:#c62828;font-size:13px;margin-top:10px;display:none;">❌ Kata laluan salah.</div>
+<div style="color:#999;font-size:12px;margin-top:15px;">🔑 <span style="background:#f0f2f5;padding:2px 10px;border-radius:6px;font-family:monospace;color:#0d47a1;">admin123</span></div>
+</div>
+</div>
+<script>
+(function(){
+var loginPage=document.getElementById('loginPage');
+document.addEventListener('DOMContentLoaded',function(){
+  var children=document.body.children;
+  for(var i=0;i<children.length;i++){
+    if(children[i].id!=='loginPage'&&children[i].tagName!=='SCRIPT'){
+      children[i].style.display='none';
+    }
+  }
+});
+window.doLogin=function(){
+  var pw=document.getElementById('pwInput').value;
+  if(pw==='admin123'){
+    loginPage.style.display='none';
+    var children=document.body.children;
+    for(var i=0;i<children.length;i++){
+      if(children[i].id!=='loginPage'){
+        children[i].style.display='';
+      }
+    }
+  }else{
+    document.getElementById('errMsg').style.display='block';
+    document.getElementById('pwInput').value='';
+  }
+};
+document.addEventListener('DOMContentLoaded',function(){
+  var input=document.getElementById('pwInput');
+  if(input){input.addEventListener('keypress',function(e){if(e.key==='Enter')doLogin();});}
+});
+})();
+</script>
+<!-- END LOGIN -->
+
+<div class="container">
+    <div class="header">
+        <h1>📋 ADUAN / MAKLUM BALAS BAHARU</h1>
+        <p>Sistem Pengurusan Aduan Awam (SISPAA) · 10/09/2026</p>
+        <p style="font-size:12px; opacity:0.7; margin-top:4px;">
+            Total: 20 cases
+            <a href="javascript:location.reload()" class="refresh-btn" style="margin-left:12px;">🔄 Refresh</a>
+        </p>
+    </div>
+    
+    <div class="stats-grid">
+        <div class="stat-card perhatian">
+            <div class="num">3</div>
+            <div class="label">Dalam Perhatian</div>
+        </div>
+        <div class="stat-card siasatan">
+            <div class="num">3</div>
+            <div class="label">Dalam Siasatan</div>
+        </div>
+        <div class="stat-card selesai">
+            <div class="num">14</div>
+            <div class="label">Selesai / Ditolak</div>
+        </div>
+    </div>
+    
+    <div class="search-bar">
+        <input type="text" placeholder="🔍 Cari Maklum Balas..." id="searchInput">
+    </div>
+    
+    <div class="case-list" id="caseList">
+        
+        <div class="case-item" style="border-left-color: #e65100;">
+            <div class="case-header">
+                <span class="case-agency">MOH</span>
+                <span class="case-status siasatan">DALAM SIASATAN</span>
+            </div>
+            <div class="case-title">COMPLAINT AGAINST OPHTHALMOLOGY</div>
+            <div class="case-meta">
+                <span class="case-id">MOH_900532</span>
+                <span class="case-date">📅 2026-08-30</span>
+                <span class="case-remark">Google Lens: 2026-09-10 16:34</span>
+            </div>
+        </div>
+        
+        <div class="case-item" style="border-left-color: #2e7d32;">
+            <div class="case-header">
+                <span class="case-agency">PCB</span>
+                <span class="case-status selesai">SELESAI</span>
+            </div>
+            <div class="case-title">OFFICIAL OBJECTION TO J RESPONSE</div>
+            <div class="case-meta">
+                <span class="case-id">PCB_363501</span>
+                <span class="case-date">📅 2026-08-15</span>
+                <span class="case-remark">Google Lens: 2026-09-10 16:34</span>
+            </div>
+        </div>
+        
+        <div class="case-item" style="border-left-color: #c62828;">
+            <div class="case-header">
+                <span class="case-agency">MOH</span>
+                <span class="case-status selesai">DITOLAK</span>
+            </div>
+            <div class="case-title">PLEASE HELP QUICKLY IJN</div>
+            <div class="case-meta">
+                <span class="case-id">MOH_900460</span>
+                <span class="case-date">📅 2026-08-13</span>
+                <span class="case-remark">Google Lens: 2026-09-10 16:34</span>
+            </div>
+        </div>
+        
+        <div class="case-item" style="border-left-color: #e65100;">
+            <div class="case-header">
+                <span class="case-agency">MOT</span>
+                <span class="case-status siasatan">DALAM SIASATAN</span>
+            </div>
+            <div class="case-title">REQUEST FOR EXPLANATION DIESEL</div>
+            <div class="case-meta">
+                <span class="case-id">MOT_900167</span>
+                <span class="case-date">📅 2026-08-10</span>
+                <span class="case-remark">Google Lens: 2026-09-10 16:34</span>
+            </div>
+        </div>
+        
+        <div class="case-item" style="border-left-color: #f9a825;">
+            <div class="case-header">
+                <span class="case-agency">ICU</span>
+                <span class="case-status perhatian">DALAM PERHATIAN</span>
+            </div>
+            <div class="case-title">OBJECTION TO MELAKA VAT EMAIL</div>
+            <div class="case-meta">
+                <span class="case-id">ICU_900003</span>
+                <span class="case-date">📅 2026-08-06</span>
+                <span class="case-remark">Google Lens: 2026-09-10 16:34</span>
+            </div>
+        </div>
+        
+        <div class="case-item" style="border-left-color: #f9a825;">
+            <div class="case-header">
+                <span class="case-agency">ICU</span>
+                <span class="case-status perhatian">DALAM PERHATIAN</span>
+            </div>
+            <div class="case-title">COMPLAINTS ABOUT PGK CALCULATION</div>
+            <div class="case-meta">
+                <span class="case-id">ICU_900002</span>
+                <span class="case-date">📅 2026-08-03</span>
+                <span class="case-remark">Google Lens: 2026-09-10 16:34</span>
+            </div>
+        </div>
+        
+        <div class="case-item" style="border-left-color: #2e7d32;">
+            <div class="case-header">
+                <span class="case-agency">MOF</span>
+                <span class="case-status selesai">SELESAI</span>
+            </div>
+            <div class="case-title">MONTHLY SARA ASSISTANCE</div>
+            <div class="case-meta">
+                <span class="case-id">MOF_900118</span>
+                <span class="case-date">📅 2026-08-01</span>
+                <span class="case-remark">Google Lens: 2026-09-10 16:34</span>
+            </div>
+        </div>
+        
+        <div class="case-item" style="border-left-color: #2e7d32;">
+            <div class="case-header">
+                <span class="case-agency">MOF</span>
+                <span class="case-status selesai">SELESAI</span>
+            </div>
+            <div class="case-title">COMPLAINTS REGARDING DIESEL</div>
+            <div class="case-meta">
+                <span class="case-id">MOF_900113</span>
+                <span class="case-date">📅 2026-07-29</span>
+                <span class="case-remark">Google Lens: 2026-09-10 16:34</span>
+            </div>
+        </div>
+        
+        <div class="case-item" style="border-left-color: #e65100;">
+            <div class="case-header">
+                <span class="case-agency">JPA</span>
+                <span class="case-status siasatan">DALAM SIASATAN</span>
+            </div>
+            <div class="case-title">PLEASE REPLY TO JPA TICKET</div>
+            <div class="case-meta">
+                <span class="case-id">JPA_101124</span>
+                <span class="case-date">📅 2026-07-28</span>
+                <span class="case-remark">Google Lens: 2026-09-10 16:34</span>
+            </div>
+        </div>
+        
+        <div class="case-item" style="border-left-color: #c62828;">
+            <div class="case-header">
+                <span class="case-agency">JPA</span>
+                <span class="case-status selesai">DITOLAK</span>
+            </div>
+            <div class="case-title">PLEASE EXPLAIN FROM SISPAA</div>
+            <div class="case-meta">
+                <span class="case-id">JPA_101059</span>
+                <span class="case-date">📅 2026-07-27</span>
+                <span class="case-remark">Google Lens: 2026-09-10 16:34</span>
+            </div>
+        </div>
+        
+        <div class="case-item" style="border-left-color: #2e7d32;">
+            <div class="case-header">
+                <span class="case-agency">JPA</span>
+                <span class="case-status selesai">SELESAI</span>
+            </div>
+            <div class="case-title">QUESTION ON OFFICIAL DECISION</div>
+            <div class="case-meta">
+                <span class="case-id">JPA_100556</span>
+                <span class="case-date">📅 2026-07-24</span>
+                <span class="case-remark">Google Lens: 2026-09-10 16:34</span>
+            </div>
+        </div>
+        
+        <div class="case-item" style="border-left-color: #2e7d32;">
+            <div class="case-header">
+                <span class="case-agency">JPA</span>
+                <span class="case-status selesai">SELESAI</span>
+            </div>
+            <div class="case-title">COMPLAINTS AGAINST MELAKA JK M</div>
+            <div class="case-meta">
+                <span class="case-id">JPA_100199</span>
+                <span class="case-date">📅 2026-07-22</span>
+                <span class="case-remark">Google Lens: 2026-09-10 16:34</span>
+            </div>
+        </div>
+        
+        <div class="case-item" style="border-left-color: #c62828;">
+            <div class="case-header">
+                <span class="case-agency">JPA</span>
+                <span class="case-status selesai">DITOLAK</span>
+            </div>
+            <div class="case-title">COMPLAINT TICKET MISSING</div>
+            <div class="case-meta">
+                <span class="case-id">JPA_100222</span>
+                <span class="case-date">📅 2026-07-22</span>
+                <span class="case-remark">Google Lens: 2026-09-10 16:34</span>
+            </div>
+        </div>
+        
+        <div class="case-item" style="border-left-color: #2e7d32;">
+            <div class="case-header">
+                <span class="case-agency">JPA</span>
+                <span class="case-status selesai">SELESAI</span>
+            </div>
+            <div class="case-title">JPJ INTENTIONALLY CHANGED STATUS</div>
+            <div class="case-meta">
+                <span class="case-id">JPA_099369</span>
+                <span class="case-date">📅 2026-07-16</span>
+                <span class="case-remark">Google Lens: 2026-09-10 16:34</span>
+            </div>
+        </div>
+        
+        <div class="case-item" style="border-left-color: #2e7d32;">
+            <div class="case-header">
+                <span class="case-agency">JPA</span>
+                <span class="case-status selesai">SELESAI</span>
+            </div>
+            <div class="case-title">COMPLAINT OF DISSATISFACTION</div>
+            <div class="case-meta">
+                <span class="case-id">JPA_098623</span>
+                <span class="case-date">📅 2026-07-13</span>
+                <span class="case-remark">Google Lens: 2026-09-10 16:34</span>
+            </div>
+        </div>
+        
+        <div class="case-item" style="border-left-color: #2e7d32;">
+            <div class="case-header">
+                <span class="case-agency">JPA</span>
+                <span class="case-status selesai">SELESAI</span>
+            </div>
+            <div class="case-title">GREEN DIESEL PERSONAL VEHICLE</div>
+            <div class="case-meta">
+                <span class="case-id">JPA_097313</span>
+                <span class="case-date">📅 2026-07-06</span>
+                <span class="case-remark">Google Lens: 2026-09-10 16:34</span>
+            </div>
+        </div>
+        
+        <div class="case-item" style="border-left-color: #2e7d32;">
+            <div class="case-header">
+                <span class="case-agency">JPA</span>
+                <span class="case-status selesai">SELESAI</span>
+            </div>
+            <div class="case-title">COMPLAINT FAILURE OF CIVIL MYSARA</div>
+            <div class="case-meta">
+                <span class="case-id">JPA_097439</span>
+                <span class="case-date">📅 2026-07-06</span>
+                <span class="case-remark">Google Lens: 2026-09-10 16:34</span>
+            </div>
+        </div>
+        
+        <div class="case-item" style="border-left-color: #f9a825;">
+            <div class="case-header">
+                <span class="case-agency">JPA</span>
+                <span class="case-status perhatian">DALAM PERHATIAN</span>
+            </div>
+            <div class="case-title">APPRECIATION FOR PROMPT ACTION</div>
+            <div class="case-meta">
+                <span class="case-id">JPA_095702</span>
+                <span class="case-date">📅 2026-06-23</span>
+                <span class="case-remark">Google Lens: 2026-09-10 16:34</span>
+            </div>
+        </div>
+        
+        <div class="case-item" style="border-left-color: #2e7d32;">
+            <div class="case-header">
+                <span class="case-agency">JPA</span>
+                <span class="case-status selesai">SELESAI</span>
+            </div>
+            <div class="case-title">COMPLAINT AGAINST DEPARTMENT</div>
+            <div class="case-meta">
+                <span class="case-id">JPA_094306</span>
+                <span class="case-date">📅 2026-06-09</span>
+                <span class="case-remark">Google Lens: 2026-09-10 16:34</span>
+            </div>
+        </div>
+        
+        <div class="case-item" style="border-left-color: #2e7d32;">
+            <div class="case-header">
+                <span class="case-agency">JPA</span>
+                <span class="case-status selesai">SELESAI</span>
+            </div>
+            <div class="case-title">JKM MELAKA SEMINAR AWARDS</div>
+            <div class="case-meta">
+                <span class="case-id">JPA_090672</span>
+                <span class="case-date">📅 2026-05-01</span>
+                <span class="case-remark">Google Lens: 2026-09-10 16:34</span>
+            </div>
+        </div>
+        
+    </div>
+    
+    <div style="text-align:center;">
+        <a href="mystory.html" class="back-link">← Kembali ke MyStory</a>
+    </div>
+    <div class="footer">SISPAA · © 2026</div>
+</div>
+
+<script>
+    document.getElementById('searchInput').addEventListener('input', function() {
+        const keyword = this.value.toLowerCase().trim();
+        document.querySelectorAll('.case-item').forEach(item => {
+            item.style.display = item.textContent.toLowerCase().includes(keyword) ? 'block' : 'none';
+        });
+    });
+</script>
+</body>
+</html>
