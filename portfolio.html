@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Portfolio Income</title>
+<style>
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body {
+        font-family:'Segoe UI', system-ui, -apple-system, sans-serif;
+        background:#4b0e8c;
+        min-height:100vh;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        padding:20px;
+    }
+    .card {
+        background:white;
+        max-width:420px;
+        width:100%;
+        border-radius:28px;
+        padding:36px 26px 30px;
+        box-shadow:0 20px 50px rgba(0,0,0,0.3);
+        text-align:center;
+        animation:pop 0.25s ease-out;
+    }
+    @keyframes pop {
+        from { opacity:0; transform:translateY(15px); }
+        to   { opacity:1; transform:translateY(0); }
+    }
+    .emoji { font-size:64px; line-height:1; margin-bottom:10px; }
+    h1 {
+        font-size:26px;
+        color:#4b0e8c;
+        margin-bottom:6px;
+        font-weight:800;
+    }
+    .sub {
+        font-size:14px;
+        color:#8a6aa8;
+        margin-bottom:24px;
+    }
+    input {
+        width:100%;
+        padding:15px 18px;
+        font-size:16px;
+        border:2px solid #4b0e8c;
+        border-radius:14px;
+        outline:none;
+        color:#333;
+        margin-bottom:14px;
+        font-family:inherit;
+        text-align:center;
+        letter-spacing:1px;
+    }
+    input:focus { box-shadow:0 0 0 4px rgba(75,14,140,0.15); }
+    button {
+        width:100%;
+        padding:15px;
+        font-size:17px;
+        font-weight:700;
+        background:#4b0e8c;
+        color:white;
+        border:none;
+        border-radius:14px;
+        cursor:pointer;
+        font-family:inherit;
+        transition:background 0.15s;
+    }
+    button:hover { background:#3a0a6c; }
+    .hint {
+        margin-top:16px;
+        font-size:13px;
+        color:#a890c0;
+    }
+    .hint code {
+        background:#f0eaf7;
+        padding:3px 10px;
+        border-radius:20px;
+        color:#4b0e8c;
+        font-weight:600;
+        letter-spacing:1px;
+    }
+    .err {
+        color:#c62828;
+        font-size:13px;
+        margin-top:10px;
+        min-height:18px;
+    }
+</style>
+</head>
+<body>
+<div class="card">
+    <div class="emoji">💰</div>
+    <h1>Portfolio Income</h1>
+    <div class="sub">🔒 Hanya untuk pemilik rekod</div>
+
+    <input type="password" id="pw" placeholder="Masukkan kata laluan..." autocomplete="off">
+    <button onclick="unlock()">🔓 Masuk</button>
+    <div class="err" id="err"></div>
+
+    <div class="hint">🔑 <code>admin789</code></div>
+</div>
+
+<script>
+    const PASS = "admin789";
+    const TARGET = "portfolio_ori.html";
+
+    function unlock() {
+        const v = document.getElementById('pw').value;
+        if (v === PASS) {
+            location.href = TARGET;
+        } else {
+            document.getElementById('err').textContent = "❌ Kata laluan salah";
+        }
+    }
+    document.getElementById('pw').addEventListener('keydown', e => {
+        if (e.key === 'Enter') unlock();
+    });
+</script>
+</body>
+</html>

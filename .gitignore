@@ -1,14 +1,15 @@
-# 備份 .gitignore
-cp .gitignore .gitignore.bak
+# 忽略真正的数据（放在私人仓库）
+sispaa_ori.html
+portfolio_ori.html
+sejarah_maklumbalas_ori.html
 
-# 編輯 .gitignore，註解掉或刪除相關規則
-nano .gitignore
-# 允許 JSON 數據文件
-portfolio.html
-sispaa.html
-sejarah_maklumbalas.html
+# 忽略敏感数据
 sispaa_app/
-portfolio.html
-sispaa.html
-sejarah_maklumbalas.html
-sispaa_app/
+*.db
+*.sql
+csv/
+jpg/
+processed/
+backup.sql
+structure.txt
+*.bak4
