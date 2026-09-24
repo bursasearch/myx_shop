@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VSD in Failure — 女儿医疗档案 | Myx Shop</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+    background: #f5f7fa; color: #1f2937; line-height: 1.8;
+    padding: 16px; max-width: 900px; margin: 0 auto;
+    font-size: 15px;
+  }
+  header {
+    background: linear-gradient(135deg, #1e3a8a, #3b82f6);
+    color: #fff; padding: 32px 24px; border-radius: 14px;
+    margin-bottom: 20px;
+  }
+  header h1 { font-size: 22px; margin-bottom: 8px; }
+  header p { font-size: 13px; opacity: .9; margin-top: 4px; }
+  section {
+    background: #fff; border-radius: 12px; padding: 20px 22px;
+    margin-bottom: 16px; box-shadow: 0 1px 4px rgba(0,0,0,.06);
+  }
+  section h2 {
+    font-size: 16px; color: #1e3a8a; margin-bottom: 12px;
+    padding-bottom: 8px; border-bottom: 2px solid #e0e7ff;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .row { display: flex; padding: 7px 0; border-bottom: 1px dashed #e5e7eb; }
+  .row:last-child { border-bottom: none; }
+  .row .k { flex: 0 0 130px; color: #6b7280; font-size: 14px; }
+  .row .v { flex: 1; color: #111827; font-size: 14px; }
+  .todo { color: #dc2626; font-style: italic; font-size: 13px; }
+  .highlight { background: #fef3c7; padding: 14px 16px; border-radius: 8px;
+    border-left: 4px solid #f59e0b; margin: 10px 0; font-size: 14px; }
+  .urgent { background: #fee2e2; border-left-color: #dc2626; }
+  .info { background: #dbeafe; border-left-color: #2563eb; }
+  .success { background: #dcfce7; border-left-color: #16a34a; }
+  .timeline { position: relative; padding-left: 22px; }
+  .timeline::before {
+    content: ''; position: absolute; left: 6px; top: 6px; bottom: 6px;
+    width: 2px; background: #bfdbfe;
+  }
+  .timeline-item { position: relative; padding: 8px 0 14px 0; font-size: 14px; }
+  .timeline-item::before {
+    content: ''; position: absolute; left: -22px; top: 14px;
+    width: 10px; height: 10px; border-radius: 50%;
+    background: #3b82f6; border: 2px solid #fff;
+    box-shadow: 0 0 0 2px #3b82f6;
+  }
+  .timeline-item .d { font-weight: 700; color: #1e3a8a; display: block; margin-bottom: 4px; }
+  .tag {
+    display: inline-block; background: #e0e7ff; color: #3730a3;
+    font-size: 11px; padding: 2px 8px; border-radius: 4px;
+    margin-left: 6px; font-weight: 600;
+  }
+  .tag.red { background: #fee2e2; color: #991b1b; }
+  .tag.green { background: #dcfce7; color: #166534; }
+  .tag.amber { background: #fef3c7; color: #92400e; }
+  .ref { font-size: 13px; color: #6b7280; background: #f9fafb;
+    padding: 10px 12px; border-radius: 6px; margin-top: 8px; }
+  footer {
+    text-align: center; font-size: 12px; color: #9ca3af;
+    padding: 24px 0; line-height: 1.8;
+  }
+  .disclaimer {
+    background: #f3f4f6; border-radius: 8px; padding: 14px 16px;
+    font-size: 12px; color: #6b7280; line-height: 1.7; text-align: left;
+  }
+  .quote {
+    background: #fef9c3; border-left: 4px solid #ca8a04;
+    padding: 12px 16px; border-radius: 6px; margin: 10px 0;
+    font-style: italic; font-size: 14px;
+  }
+  @media print {
+    body { background: #fff; padding: 0; font-size: 12pt; }
+    section { box-shadow: none; border: 1px solid #e5e7eb; page-break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>VSD in Failure — 女儿医疗档案</h1>
+<p style="margin-top: 10px;">
+    <a href="mystory.html" style="color: #fff; background: rgba(255,255,255,0.2); padding: 6px 16px; border-radius: 20px; text-decoration: none; font-size: 13px;">← 返回我的故事</a>
+</p>
+  <p>家庭医疗记录 · 用于向 IJN / JKM / MOH / ADUN / 慈善机构申请援助</p>
+  <p style="margin-top:8px;font-size:12px;opacity:.85;">建档：2026 年 9 月 24 日 · 最后更新：（待补）</p>
+</header>
+
+<!-- ========== 1. 患者基本资料 ========== -->
+<section>
+  <h2>👤 患者基本资料</h2>
+  <div class="row"><span class="k">姓名</span><span class="v todo">（待补）</span></div>
+  <div class="row"><span class="k">出生年份</span><span class="v todo">（待补）</span></div>
+  <div class="row"><span class="k">现年</span><span class="v">18 岁（2025 年 SPM 毕业）</span></div>
+  <div class="row"><span class="k">性别</span><span class="v">女</span></div>
+  <div class="row"><span class="k">国籍</span><span class="v">马来西亚</span></div>
+  <div class="row"><span class="k">居住地</span><span class="v">马六甲 Melaka</span></div>
+  <div class="row"><span class="k">IJN 病号</span><span class="v todo">（待补）</span></div>
+  <div class="row"><span class="k">主诊医院</span><span class="v">Institut Jantung Negara (IJN), 吉隆坡</span></div>
+  <div class="row"><span class="k">地方医院</span><span class="v">Hospital Besar Melaka (HSP Melaka) · Pediatrik Klinik</span></div>
+</section>
+
+<!-- ========== 2. 诊断 ========== -->
+<section>
+  <h2>🩺 诊断</h2>
+  <div class="row"><span class="k">主诊断</span><span class="v">Ventricular Septal Defect (VSD) — 心室中隔缺损</span></div>
+  <div class="row"><span class="k">当前状态</span><span class="v"><strong>VSD in failure</strong>（心脏功能不全）</span></div>
+  <div class="row"><span class="k">其他诊断</span><span class="v todo">（待补，如医生有说明）</span></div>
+  <div class="highlight urgent">
+    ⚠️ <strong>关键症状：Sianosis（紫绀）</strong><br>
+    • 2026 年 1 月 20 日，在 BSN 银行因冷气过冷，出现脚趾甲变蓝<br>
+    • <strong>这是 2018 年手术以来，8 年内的第一次</strong><br>
+    • 紫绀 = 血液缺氧，对 VSD in failure 患者是重要警讯
+  </div>
+</section>
+
+<!-- ========== 3. 手术史 ========== -->
+<section>
+  <h2>🏥 手术史</h2>
+  <div class="timeline">
+    <div class="timeline-item">
+      <span class="d">2018 年</span>
+      在 IJN 进行 VSD 修补手术（VSD Repair）
+      <span class="tag green">已完成</span>
+    </div>
+    <div class="timeline-item">
+      <span class="d todo">（待补）</span>
+      <span class="todo">（如有后续手术、导管介入、药物调整，写在这里）</span>
+    </div>
+  </div>
+</section>
+
+<!-- ========== 4. 核心诉求：CPET ========== -->
+<section>
+  <h2>📋 核心诉求：CPET（心肺运动试验）</h2>
+  <div class="row"><span class="k">检查名称</span><span class="v">CPET — Cardiopulmonary Exercise Testing</span></div>
+  <div class="row"><span class="k">搭配检查</span><span class="v">Bubble Echocardiogram（气泡心脏超声）</span></div>
+  <div class="row"><span class="k">目的</span><span class="v">评估心脏在运动负荷下的功能、氧气摄取量、心输出能力</span></div>
+  <div class="row"><span class="k">预定日期</span><span class="v"><strong>2026 年 12 月 10 日</strong>（因 8 月 20 日改期）</span></div>
+  <div class="row"><span class="k">地点</span><span class="v">IJN, 吉隆坡</span></div>
+  <div class="row"><span class="k">为什么重要</span><span class="v">决定后续治疗、职场适应、生育安全</span></div>
+</section>
+
+<!-- ========== 5. 为什么必须做 CPET（两个理由）========== -->
+<section>
+  <h2>🎯 为什么必须做 CPET（两个理由）</h2>
+
+  <div class="highlight info">
+    <strong>理由一：她即将进入职场</strong><br>
+    • 2025 年考完 SPM<br>
+    • 即将进入职场<br>
+    • 没有雇主知道她心脏有问题<br>
+    • 万一被安排重体力、熬夜、长时间站立，心脏可能承受不住<br>
+    • CPET 能测出她能承受的工作强度，让她有医疗证据保护自己
+  </div>
+
+  <div class="highlight info">
+    <strong>理由二：她未来可能结婚生育</strong><br>
+    • 怀孕对心脏负荷极大（血容量增加 40~50%）<br>
+    • VSD in failure 患者怀孕，有心衰、心律失常、母婴死亡风险<br>
+    • CPET 能评估她能否安全怀孕<br>
+    • 这关乎她和未来孩子的生命安全
+  </div>
+</section>
+
+<!-- ========== 6. 就医时间线 ========== -->
+<section>
+  <h2>🗓️ 完整就医时间线</h2>
+  <div class="timeline">
+
+    <div class="timeline-item">
+      <span class="d">2018 年</span>
+      IJN 进行 VSD 修补手术
+      <span class="tag green">完成</span>
+    </div>
+
+    <div class="timeline-item">
+      <span class="d">2025 年</span>
+      大女儿考完 SPM
+    </div>
+
+    <div class="timeline-item">
+      <span class="d">2026-01-20</span>
+      带女儿到 BSN 银行开户（为她即将进入职场）<br>
+      BSN 冷气过冷 → 脚趾甲变蓝（<strong>8 年来首次 sianosis</strong>）
+      <span class="tag red">警讯</span>
+    </div>
+
+    <div class="timeline-item">
+      <span class="d">2026-03-18</span>
+      Hospital Besar Melaka · Pediatrik Klinik 复诊<br>
+      家属要求转介 IJN 做 CPET<br>
+      医生称需征求上级决定，讨论约 10 分钟<br>
+      <strong>结果：不用 CPET，明年才做 Echo</strong>
+      <span class="tag red">拒绝</span>
+    </div>
+
+    <div class="timeline-item">
+      <span class="d">2026-04-09</span>
+      IJN 复诊（2018 年主刀医生）<br>
+      家属问：若 CPET 不合格，医生可否出支持信申请 OKU？<br>
+      <strong>医生答：不会。OKU 只给身体缺陷者（缺手脚、坐轮椅者）</strong><br>
+      医生另指示：3~6 个月内自行运动（跑步、跳绳、游泳）<br>
+      家属问：无医生监督安全吗？<br>
+      <strong>医生答："难道有人骑脚车被撞死，就要怪别人吗？"</strong>
+      <span class="tag red">拒绝 + 矛盾</span>
+    </div>
+
+    <div class="timeline-item">
+      <span class="d">2026-08-20</span>
+      IJN 的 En. Kamarudin 致电：9 月 3 日预约改期（医生有 Conference）<br>
+      家属 5 分钟内回电，询问是否可改 9 月 2 日<br>
+      答：不行，星期三的门诊没有 CPET<br>
+      因下一次学校假期为 12 月，为不影响另两个孩子上学<br>
+      <strong>被迫改到 12 月 10 日</strong>
+      <span class="tag amber">被逼延期</span>
+    </div>
+
+    <div class="timeline-item">
+      <span class="d">2026-08-27</span>
+      光明日报报道：先天心脏病女童在持医疗豁免下被要求试跑，数月后离世
+      <span class="tag red">参照案例</span>
+    </div>
+
+    <div class="timeline-item">
+      <span class="d">2026-09-02</span>
+      MOH.900532 正式回复：Hospital Melaka 正在进一步调查
+      <span class="tag amber">调查中</span>
+    </div>
+
+    <div class="timeline-item">
+      <span class="d">2026-09-14</span>
+      向卫生部提交 MOH.900581：要求转介 IJN 做 Bubble Echo + CPET
+      <span class="tag">已提交</span>
+    </div>
+
+    <div class="timeline-item">
+      <span class="d">2026-12-10</span>
+      <strong>CPET 预定日（待赴）</strong>
+      <span class="tag red">即将</span>
+    </div>
+
+  </div>
+</section>
+
+<!-- ========== 7. 关键对话记录 ========== -->
+<section>
+  <h2>💬 关键对话记录（原话）</h2>
+
+  <div class="quote">
+    <strong>2026-04-09 · IJN 专科医生：</strong><br>
+    "难道有位小女孩骑脚车时不小心被撞死，然后要去怪别人吗？"
+    <div class="ref">出处：家属现场记录。此比喻被用于回应家属对"女儿自行运动无监督"的安全担忧。</div>
+  </div>
+
+  <div class="quote">
+    <strong>2026-04-09 · IJN 专科医生：</strong><br>
+    "OKU 只给身体有缺陷的人申请。比如：没有手/脚、坐轮椅那种。"
+    <div class="ref">事实：根据 OKU Act 2008，OKU 分为 7 类，心脏属第 7 类「内脏器官障碍（Organ）」。医生说法与官方分类不符。</div>
+  </div>
+
+  <div class="quote">
+    <strong>2026-03-18 · Hospital Melaka 儿科医生：</strong><br>
+    讨论约 10 分钟后，回复"不用 CPET，明年才做 Echo。"
+    <div class="ref">出处：家属现场记录。</div>
+  </div>
+
+  <div class="quote">
+    <strong>2026-08-20 · IJN En. Kamarudin：</strong><br>
+    "9 月 3 日需改期，医生有 Conference。星期三有门诊，但星期三没有 CPET。"
+    <div class="ref">出处：家属电话记录（5 分钟内回电）。</div>
+  </div>
+</section>
+
+<!-- ========== 8. 官方投诉档案 ========== -->
+<section>
+  <h2>📎 官方投诉档案（编号 + 日期）</h2>
+  <div class="row"><span class="k">MOH.900581</span><span class="v">2026-09-14 卫生部投诉（CPET / 转介 IJN）</span></div>
+  <div class="row"><span class="k">MOH.900532</span><span class="v">2026-09-02 卫生部投诉（Hospital Melaka 调查中）</span></div>
+  <div class="row"><span class="k">ICU.900003</span><span class="v">2026-08-06 ICU JPM 投诉（PPN Melaka 推算租金算法）</span></div>
+  <div class="row"><span class="k">ICU.900002</span><span class="v">（更早）前次 ICU 投诉</span></div>
+  <div class="row"><span class="k">JPA.100206</span><span class="v">（更早）JPA 投诉</span></div>
+  <div class="row"><span class="k">SISPAA 案件</span><span class="v">共 20 条投诉（含 PPN 推算租金 RM 800 一案）</span></div>
+  <div class="row"><span class="k">JKM Kes ID</span><span class="v todo">（待补）</span></div>
+</section>
+
+<!-- ========== 9. PPN 推算租金争议（核心不公）========== -->
+<section>
+  <h2>⚖️ PPN 推算租金争议（核心不公）</h2>
+  <div class="highlight urgent">
+    <strong>PPN Melaka 的算法：</strong><br>
+    • 将家属所住的<strong>廉价屋推算租金 RM 800</strong>，计入家庭收入<br>
+    • 导致家庭收入被算为 RM 1,223（现金收入 RM 423 + 推算 RM 800）<br>
+    • 因此家属<strong>无法获得 Miskin Tegar 资格</strong>
+  </div>
+  <div class="highlight">
+    <strong>家属反论（已提交 ICU JPM）：</strong><br>
+    • 廉价屋根据地方法令<strong>不得出租</strong>（否则将被充公）<br>
+    • RM 800 是<strong>不可能实现的收入（Non-Disposable Income）</strong><br>
+    • 不能实现的收入，不能作为 PGK 计算依据<br>
+    • 请求：重新评估家庭收入，给予 Miskin Tegar 资格
+  </div>
+  <div class="ref">
+    相关官员：Puan Nasuha Binti Hashim（Seksyen Pengurusan, PPN Melaka, ICU JPM）<br>
+    相关电邮：2026-08-05
+  </div>
+</section>
+
+<!-- ========== 10. 家庭情况 ========== -->
+<section>
+  <h2>🏠 家庭情况（申请援助时用）</h2>
+  <div class="row"><span class="k">父亲</span><span class="v">Wong Seng Koon，61 岁，前结构绘图员</span></div>
+  <div class="row"><span class="k">父亲健康</span><span class="v">先天性色盲、交替性外斜视、双侧白内障；OKU 申请被拒，已上诉</span></div>
+  <div class="row"><span class="k">母亲</span><span class="v">乳腺癌康复中</span></div>
+  <div class="row"><span class="k">患者（大女儿）</span><span class="v">18 岁，VSD in failure，即将做 CPET</span></div>
+  <div class="row"><span class="k">弟弟</span><span class="v">11 岁，在学</span></div>
+  <div class="row"><span class="k">家庭现金收入</span><span class="v">约 RM 423/月（BKK RM 600 → 12 月起 RM 400）</span></div>
+  <div class="row"><span class="k">居住</span><span class="v">马六甲廉价屋</span></div>
+  <div class="row"><span class="k">SSM 注册</span><span class="v">Myx Shop（202510210078 / JM1034075-K）</span></div>
+  <div class="row"><span class="k">父亲健康</span><span class="v">先天性色盲、交替性外斜视、双侧白内障；OKU 申请被拒</span></div>
+</section>
+
+<!-- ========== 11. CPET 求助需求 ========== -->
+<section>
+  <h2>🆘 本次 CPET 求助需求</h2>
+  <div class="row"><span class="k">交通</span><span class="v">Melaka → KL 来回，5 人</span></div>
+  <div class="row"><span class="k">住宿</span><span class="v">IJN 附近，1~2 晚</span></div>
+  <div class="row"><span class="k">医疗费</span><span class="v">CPET 检查费 + 复诊费</span></div>
+  <div class="row"><span class="k">估计总额</span><span class="v todo">（待补）</span></div>
+  <div class="highlight success">
+    📞 联络：Wong Seng Koon<br>
+    WhatsApp：<span class="todo">（待补）</span>
+  </div>
+</section>
+
+<!-- ========== 12. 家属声明 ========== -->
+<section>
+  <h2>📢 家属声明</h2>
+  <div class="highlight urgent">
+    <strong>2026 年 9 月 24 日，家属郑重声明：</strong><br>
+    "我大女儿有什么三长两短，我肯定追究。"
+  </div>
+  <div class="ref">
+    本声明为家属的个人立场记录，作为后续申诉、法律、媒体的原始依据。<br>
+    家属 Wong Seng Koon 已穷尽所有正式渠道：JKM、SISPAA、ICU JPM、MOH、IJN 社工，均未获得有效协助。
+  </div>
+</section>
+
+<!-- ========== 13. 参照案例 ========== -->
+<section>
+  <h2>📰 参照案例</h2>
+  <div class="ref">
+    <strong>2026-08-27 · 光明日报</strong><br>
+    标题：《疑持医疗豁免仍被要求试跑 先天心脏病女童数月后离世》<br>
+    关键：先天心脏病童在已持有医疗豁免的情况下，仍被要求试跑，数月后不幸离世。<br>
+    意义：证明"医生判断失误"可能导致致命后果。
+  </div>
+</section>
+
+<!-- ========== 14. 免责声明 ========== -->
+<section>
+  <h2>⚠️ 免责声明</h2>
+  <div class="disclaimer">
+    1. 本页为家庭医疗记录，用于向 IJN 社工、JKM、MOH、ADUN、慈善机构、律师申请援助。<br>
+    2. 所有医疗信息以 IJN / Hospital Melaka 官方报告为准，本页仅供参考，不作为医学诊断依据。<br>
+    3. 个人资料受 PDPA（个人资料保护法）保护，未经家属同意不得公开传播。<br>
+    4. 本页不含身份证号、完整地址、病号等敏感信息，仅用于正式渠道提交。<br>
+    5. 建档人：Wong Seng Koon · Myx Shop (SSM 202510210078)
+  </div>
+</section>
+
+<footer>
+  © 2026 Wong Seng Koon · Myx Shop (SSM 202510210078 / JM1034075-K)<br>
+  建档：2026 年 9 月 24 日
+</footer>
+
+</body>
+</html>
