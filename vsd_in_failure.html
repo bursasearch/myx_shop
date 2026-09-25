@@ -38,6 +38,18 @@
   .urgent { background: #fee2e2; border-left-color: #dc2626; }
   .info { background: #dbeafe; border-left-color: #2563eb; }
   .success { background: #dcfce7; border-left-color: #16a34a; }
+  
+  /* 三秒摘要专属高亮框 */
+  .exec-summary { 
+    background: #fff; border: 2px solid #dc2626; border-radius: 12px; 
+    padding: 20px; margin-bottom: 20px; box-shadow: 0 4px 6px rgba(220, 38, 38, 0.1);
+  }
+  .exec-summary h3 { color: #dc2626; font-size: 16px; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;}
+  .exec-summary ul { padding-left: 20px; font-size: 14px; }
+  .exec-summary li { margin-bottom: 8px; }
+  .exec-summary strong { color: #1f2937; }
+
+  /* 时间轴优化 */
   .timeline { position: relative; padding-left: 22px; }
   .timeline::before {
     content: ''; position: absolute; left: 6px; top: 6px; bottom: 6px;
@@ -59,6 +71,13 @@
   .tag.red { background: #fee2e2; color: #991b1b; }
   .tag.green { background: #dcfce7; color: #166534; }
   .tag.amber { background: #fef3c7; color: #92400e; }
+  
+  /* 表格样式（行政追踪用） */
+  .audit-table { width: 100%; border-collapse: collapse; font-size: 13px; margin-top: 10px; }
+  .audit-table th { background: #f3f4f6; color: #374151; font-weight: 600; text-align: left; padding: 10px; border-bottom: 2px solid #e5e7eb; }
+  .audit-table td { padding: 10px; border-bottom: 1px solid #e5e7eb; vertical-align: top; }
+  .audit-table tr:last-child td { border-bottom: none; }
+
   .ref { font-size: 13px; color: #6b7280; background: #f9fafb;
     padding: 10px 12px; border-radius: 6px; margin-top: 8px; }
   footer {
@@ -77,6 +96,7 @@
   @media print {
     body { background: #fff; padding: 0; font-size: 12pt; }
     section { box-shadow: none; border: 1px solid #e5e7eb; page-break-inside: avoid; }
+    .exec-summary { border: 2px solid #000; page-break-inside: avoid; }
   }
 </style>
 </head>
@@ -91,7 +111,17 @@
   <p style="margin-top:8px;font-size:12px;opacity:.85;">建档：2026 年 9 月 24 日 · 最后更新：（待补）</p>
 </header>
 
-<!-- ========== 1. 患者基本资料 ========== -->
+<!-- ========== 1. 三秒目击摘要区 (Executive Summary) ========== -->
+<div class="exec-summary">
+  <h3>🚨 三秒目击摘要 (Executive Summary)</h3>
+  <ul>
+    <li><strong>核心诊断：</strong>VSD Closure (IJN, 2018) + <strong>Presenting Symptoms (Cyanosis / Bluing Toenails)</strong></li>
+    <li><strong>关键诉求：</strong>Urgent Referral to IJN for <strong>CPET (Cardiopulmonary Exercise Test) & Bubble Echocardiogram</strong></li>
+    <li><strong>当前行政进度：</strong>SisPAA Ticket <strong>MOH.900532 / MOH.900581</strong> / JKN Directives</li>
+  </ul>
+</div>
+
+<!-- ========== 2. 患者基本资料 ========== -->
 <section>
   <h2>👤 患者基本资料</h2>
   <div class="row"><span class="k">姓名</span><span class="v todo">（待补）</span></div>
@@ -105,21 +135,21 @@
   <div class="row"><span class="k">地方医院</span><span class="v">Hospital Besar Melaka (HSP Melaka) · Pediatrik Klinik</span></div>
 </section>
 
-<!-- ========== 2. 诊断 ========== -->
+<!-- ========== 3. 诊断 ========== -->
 <section>
   <h2>🩺 诊断</h2>
   <div class="row"><span class="k">主诊断</span><span class="v">Ventricular Septal Defect (VSD) — 心室中隔缺损</span></div>
   <div class="row"><span class="k">当前状态</span><span class="v"><strong>VSD in failure</strong>（心脏功能不全）</span></div>
   <div class="row"><span class="k">其他诊断</span><span class="v todo">（待补，如医生有说明）</span></div>
   <div class="highlight urgent">
-    ⚠️ <strong>关键症状：Sianosis（紫绀）</strong><br>
-    • 2026 年 1 月 20 日，在 BSN 银行因冷气过冷，出现脚趾甲变蓝<br>
+    ⚠️ <strong>关键症状：Cyanosis (Peripheral/Central) — 紫绀</strong><br>
+    • 2026 年 1 月 20 日，在 BSN 银行因冷气过冷，出现脚趾甲变蓝（<strong>Bluing Toenails</strong>）<br>
     • <strong>这是 2018 年手术以来，8 年内的第一次</strong><br>
-    • 紫绀 = 血液缺氧，对 VSD in failure 患者是重要警讯
+    • 紫绀 = 血液缺氧，对 VSD in failure 患者是重要警讯，需高度怀疑 <strong>Right-to-Left Shunt 或 肺高压风险</strong>
   </div>
 </section>
 
-<!-- ========== 3. 手术史 ========== -->
+<!-- ========== 4. 手术史 ========== -->
 <section>
   <h2>🏥 手术史</h2>
   <div class="timeline">
@@ -127,6 +157,7 @@
       <span class="d">2018 年</span>
       在 IJN 进行 VSD 修补手术（VSD Repair）
       <span class="tag green">已完成</span>
+      <div class="ref" style="margin-top:6px;">（备注：此处可附上当年 Discharge Summary 的关键字，如：S/P VSD Closure, no residual shunt, etc.）</div>
     </div>
     <div class="timeline-item">
       <span class="d todo">（待补）</span>
@@ -135,18 +166,18 @@
   </div>
 </section>
 
-<!-- ========== 4. 核心诉求：CPET ========== -->
+<!-- ========== 5. 核心诉求：CPET & Bubble Echo ========== -->
 <section>
-  <h2>📋 核心诉求：CPET（心肺运动试验）</h2>
-  <div class="row"><span class="k">检查名称</span><span class="v">CPET — Cardiopulmonary Exercise Testing</span></div>
-  <div class="row"><span class="k">搭配检查</span><span class="v">Bubble Echocardiogram（气泡心脏超声）</span></div>
-  <div class="row"><span class="k">目的</span><span class="v">评估心脏在运动负荷下的功能、氧气摄取量、心输出能力</span></div>
+  <h2>📋 核心诉求：CPET & Bubble Echo</h2>
+  <div class="row"><span class="k">检查名称</span><span class="v"><strong>CPET</strong> — Cardiopulmonary Exercise Testing</span></div>
+  <div class="row"><span class="k">搭配检查</span><span class="v"><strong>Bubble Echocardiogram</strong>（气泡心脏超声）— 用于检测 Right-to-Left Shunt</span></div>
+  <div class="row"><span class="k">目的</span><span class="v">评估心脏在运动负荷下的功能、氧气摄取量、心输出能力，排除 Eisenmenger 倾向</span></div>
   <div class="row"><span class="k">预定日期</span><span class="v"><strong>2026 年 12 月 10 日</strong>（因 8 月 20 日改期）</span></div>
   <div class="row"><span class="k">地点</span><span class="v">IJN, 吉隆坡</span></div>
   <div class="row"><span class="k">为什么重要</span><span class="v">决定后续治疗、职场适应、生育安全</span></div>
 </section>
 
-<!-- ========== 5. 为什么必须做 CPET（两个理由）========== -->
+<!-- ========== 6. 为什么必须做 CPET ========== -->
 <section>
   <h2>🎯 为什么必须做 CPET（两个理由）</h2>
 
@@ -168,9 +199,9 @@
   </div>
 </section>
 
-<!-- ========== 6. 就医时间线 ========== -->
+<!-- ========== 7. 结构化时间轴 (Chronological Timeline) ========== -->
 <section>
-  <h2>🗓️ 完整就医时间线</h2>
+  <h2>🗓️ 结构化就医时间轴</h2>
   <div class="timeline">
 
     <div class="timeline-item">
@@ -187,7 +218,7 @@
     <div class="timeline-item">
       <span class="d">2026-01-20</span>
       带女儿到 BSN 银行开户（为她即将进入职场）<br>
-      BSN 冷气过冷 → 脚趾甲变蓝（<strong>8 年来首次 sianosis</strong>）
+      BSN 冷气过冷 → 脚趾甲变蓝（<strong>8 年来首次 Cyanosis</strong>）
       <span class="tag red">警讯</span>
     </div>
 
@@ -248,7 +279,7 @@
   </div>
 </section>
 
-<!-- ========== 7. 关键对话记录 ========== -->
+<!-- ========== 8. 关键对话记录 ========== -->
 <section>
   <h2>💬 关键对话记录（原话）</h2>
 
@@ -277,19 +308,73 @@
   </div>
 </section>
 
-<!-- ========== 8. 官方投诉档案 ========== -->
+<!-- ========== 9. 行政证据备份区 (Audit Trail) ========== -->
 <section>
-  <h2>📎 官方投诉档案（编号 + 日期）</h2>
-  <div class="row"><span class="k">MOH.900581</span><span class="v">2026-09-14 卫生部投诉（CPET / 转介 IJN）</span></div>
-  <div class="row"><span class="k">MOH.900532</span><span class="v">2026-09-02 卫生部投诉（Hospital Melaka 调查中）</span></div>
-  <div class="row"><span class="k">ICU.900003</span><span class="v">2026-08-06 ICU JPM 投诉（PPN Melaka 推算租金算法）</span></div>
-  <div class="row"><span class="k">ICU.900002</span><span class="v">（更早）前次 ICU 投诉</span></div>
-  <div class="row"><span class="k">JPA.100206</span><span class="v">（更早）JPA 投诉</span></div>
-  <div class="row"><span class="k">SISPAA 案件</span><span class="v">共 20 条投诉（含 PPN 推算租金 RM 800 一案）</span></div>
-  <div class="row"><span class="k">JKM Kes ID</span><span class="v todo">（待补）</span></div>
+  <h2>📎 行政证据 / 公文追踪表 (Audit Trail)</h2>
+  <div class="ref" style="margin-bottom: 10px;">
+    记录所有与政府部门、医院、慈善机构的往来公文编号与日期。在需要追究责任或加速处理时，此表将作为行政审计轨迹，白纸黑字，无可推脱。
+  </div>
+  <table class="audit-table">
+    <thead>
+      <tr>
+        <th>日期</th>
+        <th>机构 / 部门</th>
+        <th>公文编号 / 方式</th>
+        <th>关键内容 / 诉求</th>
+        <th>状态</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>2026-08-06</td>
+        <td>ICU JPM</td>
+        <td>ICU.900003</td>
+        <td>投诉 PPN Melaka 推算租金算法</td>
+        <td><span class="tag amber">待回复</span></td>
+      </tr>
+      <tr>
+        <td>2026-09-02</td>
+        <td>MOH (KPK)</td>
+        <td>MOH.900532</td>
+        <td>投诉 Hospital Melaka 处理不当</td>
+        <td><span class="tag amber">调查中</span></td>
+      </tr>
+      <tr>
+        <td>2026-09-14</td>
+        <td>MOH (KPK)</td>
+        <td>MOH.900581</td>
+        <td>要求转介 IJN 进行 CPET + Bubble Echo</td>
+        <td><span class="tag">已提交</span></td>
+      </tr>
+      <tr>
+        <td>待补</td>
+        <td>JKM</td>
+        <td>Kes ID: 待补</td>
+        <td>申请援助 / 福利金</td>
+        <td><span class="tag red">待办</span></td>
+      </tr>
+      <tr>
+        <td>待补</td>
+        <td>IJN 社工</td>
+        <td>待补</td>
+        <td>申请医疗费用减免 / 交通住宿援助</td>
+        <td><span class="tag red">待办</span></td>
+      </tr>
+      <tr>
+        <td>待补</td>
+        <td>ADUN / 慈善机构</td>
+        <td>待补</td>
+        <td>申请紧急援助金</td>
+        <td><span class="tag red">待办</span></td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="ref" style="margin-top:10px;">
+    <strong>其他相关编号：</strong> JPA.100206, ICU.900002, SISPAA 案件（共 20 条投诉）
+  </div>
 </section>
 
-<!-- ========== 9. PPN 推算租金争议（核心不公）========== -->
+<!-- ========== 10. PPN 推算租金争议 ========== -->
 <section>
   <h2>⚖️ PPN 推算租金争议（核心不公）</h2>
   <div class="highlight urgent">
@@ -311,7 +396,7 @@
   </div>
 </section>
 
-<!-- ========== 10. 家庭情况 ========== -->
+<!-- ========== 11. 家庭情况 ========== -->
 <section>
   <h2>🏠 家庭情况（申请援助时用）</h2>
   <div class="row"><span class="k">父亲</span><span class="v">Wong Seng Koon，61 岁，前结构绘图员</span></div>
@@ -322,10 +407,9 @@
   <div class="row"><span class="k">家庭现金收入</span><span class="v">约 RM 423/月（BKK RM 600 → 12 月起 RM 400）</span></div>
   <div class="row"><span class="k">居住</span><span class="v">马六甲廉价屋</span></div>
   <div class="row"><span class="k">SSM 注册</span><span class="v">Myx Shop（202510210078 / JM1034075-K）</span></div>
-  <div class="row"><span class="k">父亲健康</span><span class="v">先天性色盲、交替性外斜视、双侧白内障；OKU 申请被拒</span></div>
 </section>
 
-<!-- ========== 11. CPET 求助需求 ========== -->
+<!-- ========== 12. CPET 求助需求 ========== -->
 <section>
   <h2>🆘 本次 CPET 求助需求</h2>
   <div class="row"><span class="k">交通</span><span class="v">Melaka → KL 来回，5 人</span></div>
@@ -338,7 +422,7 @@
   </div>
 </section>
 
-<!-- ========== 12. 家属声明 ========== -->
+<!-- ========== 13. 家属声明 ========== -->
 <section>
   <h2>📢 家属声明</h2>
   <div class="highlight urgent">
@@ -351,7 +435,7 @@
   </div>
 </section>
 
-<!-- ========== 13. 参照案例 ========== -->
+<!-- ========== 14. 参照案例 ========== -->
 <section>
   <h2>📰 参照案例</h2>
   <div class="ref">
@@ -362,7 +446,7 @@
   </div>
 </section>
 
-<!-- ========== 14. 免责声明 ========== -->
+<!-- ========== 15. 免责声明 ========== -->
 <section>
   <h2>⚠️ 免责声明</h2>
   <div class="disclaimer">
