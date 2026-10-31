@@ -78,6 +78,13 @@
   .audit-table td { padding: 10px; border-bottom: 1px solid #e5e7eb; vertical-align: top; }
   .audit-table tr:last-child td { border-bottom: none; }
 
+  /* 双栏对比框 */
+  .compare-container { display: flex; gap: 10px; margin: 15px 0; flex-wrap: wrap; }
+  .compare-box { flex: 1; min-width: 250px; padding: 15px; border-radius: 8px; font-size: 14px; }
+  .compare-box.doctor { background: #fef2f2; border: 1px solid #fecaca; }
+  .compare-box.machine { background: #f0fdf4; border: 1px solid #bbf7d0; }
+  .compare-box h4 { margin-bottom: 8px; font-size: 15px; }
+
   .ref { font-size: 13px; color: #6b7280; background: #f9fafb;
     padding: 10px 12px; border-radius: 6px; margin-top: 8px; }
   footer {
@@ -108,18 +115,18 @@
     <a href="mystory.html" style="color: #fff; background: rgba(255,255,255,0.2); padding: 6px 16px; border-radius: 20px; text-decoration: none; font-size: 13px;">← 返回我的故事</a>
 </p>
   <p>家庭医疗记录 · 用于向 IJN / JKM / MOH / ADUN / 慈善机构申请援助</p>
-  <p style="margin-top:8px;font-size:12px;opacity:.85;">建档：2026 年 9 月 24 日 · 最后更新：2026 年 10 月 1 日</p>
+  <p style="margin-top:8px;font-size:12px;opacity:.85;">建档：2026 年 9 月 24 日 · <strong>最后更新：2026 年 10 月 30 日（已加入 CPET 报告）</strong></p>
 </header>
 
 <!-- ========== 1. 三秒目击摘要区 (Executive Summary) ========== -->
 <div class="exec-summary">
   <h3>🚨 三秒目击摘要 (Executive Summary)</h3>
   <ul>
-    <li><strong>核心诊断：</strong>VSD Closure (IJN, 2018) + <strong>Presenting Symptoms (Cyanosis / Bluing Toenails)</strong></li>
-    <li><strong>关键诉求：</strong>Urgent Referral to IJN for <strong>CPET (Cardiopulmonary Exercise Test) & Bubble Echocardiogram</strong></li>
-    <li><strong>死线：</strong>CPET 预约已成功提前至 <strong>2026 年 10 月 28 日</strong>，但 Hospital Melaka 拒绝出信，面临预约失效风险。</li>
-    <li><strong>当前行政进度：</strong>SisPAA Ticket <strong>MOH.900532 / MOH.900581 / MOH.900638</strong> / JKN Directives</li>
-    <li><strong>法律/政策依据：</strong>首相安华（PMX）于 2024 年 10 月 18 日通过 Bernama 宣布：<strong>IJN 现有病患（Existing Patients）可以继续在 IJN 接受治疗</strong>。</li>
+    <li><strong>核心诊断：</strong>VSD Closure (IJN, 2018) + <strong>VSD in failure（心脏功能不全）</strong></li>
+    <li><strong>最新铁证（2026-10-28）：</strong>CPET 测试显示运动时血氧暴跌至 <strong>85%</strong>，心肺功能仅剩 <strong>37.28%</strong>，因缺氧被迫终止测试。</li>
+    <li><strong>荒谬的医疗建议：</strong>尽管报告证明严重缺氧，主治医生仍口头指示可以“照常跑步、踏脚车甚至游泳”。</li>
+    <li><strong>关键诉求：</strong>要求 IJN 正视 CPET 数据、进行 <strong>Bubble Echocardiogram</strong> 排查分流，并协助申请 <strong>OKU (内脏器官障碍)</strong> 以保护其职场与生命安全。</li>
+    <li><strong>死线：</strong>CPET 已于 2026 年 10 月 28 日完成，等待复诊与医生白纸黑字的医疗限制令。</li>
   </ul>
 </div>
 
@@ -151,7 +158,41 @@
   </div>
 </section>
 
-<!-- ========== 4. 手术史 ========== -->
+<!-- ========== 4. [新增] 10月28日 CPET 铁证报告 ========== -->
+<section style="border: 2px solid #dc2626;">
+  <h2>📊 2026-10-28 CPET 报告核心数据（铁证）</h2>
+  <div class="ref" style="margin-bottom: 10px;">
+    以下数据由 IJN 仪器打印，Verified by Dr. Marhisham Che Mood（主治医生签名核实）。
+  </div>
+  <div class="row"><span class="k">终止原因</span><span class="v"><strong>LEG FATIGUE DUE TO INCREASING IN OXYGEN UNSATISFACTION</strong><br>（因氧气饱和度不断下降导致双腿疲劳，被迫终止）</span></div>
+  <div class="row"><span class="k">血氧饱和度</span><span class="v">基础：99% ➡️ 运动峰值：<strong style="color:#dc2626; font-size:16px;">85%</strong>（严重缺氧）</span></div>
+  <div class="row"><span class="k">运动血压</span><span class="v">基础：129/81 ➡️ 峰值：<strong>159/119</strong>（舒张压极高，心脏负荷极大）</span></div>
+  <div class="row"><span class="k">心肺功能</span><span class="v">VO2 Peak: 14 ml/kg/min<br>% Predicted VO2: <strong>37.28%</strong>（仅剩正常人的三分之一）</span></div>
+  <div class="row"><span class="k">活动耐力</span><span class="v">METS: <strong>4.4</strong>（无法承受中等强度体力劳动）</span></div>
+  <div class="row"><span class="k">测试结论</span><span class="v">未能达到目标心率（THR）和无氧阈值（AT）。</span></div>
+</section>
+
+<!-- ========== 5. [新增] 医疗指令矛盾对比 ========== -->
+<section>
+  <h2>⚔️ 医疗指令的极度矛盾</h2>
+  <div class="compare-container">
+    <div class="compare-box doctor">
+      <h4>👨‍⚕️ 医生的口头指示 (2026-10-28)</h4>
+      <p>“您女儿可照样跑步、踏脚车甚至游泳！”</p>
+      <p style="margin-top:8px; font-size:12px; color:#991b1b;">*家属现场录音/记录。此建议与 4 月份“骑脚车被撞死不要怪人”的言论如出一辙，极度推卸责任。</p>
+    </div>
+    <div class="compare-box machine">
+      <h4>🏥 仪器的客观数据 (2026-10-28)</h4>
+      <p>运动导致血氧暴跌至 <strong>85%</strong>，心肺功能仅剩 <strong>37.28%</strong>。</p>
+      <p style="margin-top:8px; font-size:12px; color:#166534;">*如果她在游泳时缺氧昏厥，将有溺水死亡风险；骑脚车时缺氧将面临车祸风险。</p>
+    </div>
+  </div>
+  <div class="highlight urgent">
+    <strong>家属立场：</strong>在未进行 Bubble Echo 排查心脏分流，且医生拒绝将“运动许可”白纸黑字写进病历的情况下，家属将严格限制患者进行高风险运动，以保性命。
+  </div>
+</section>
+
+<!-- ========== 6. 手术史 ========== -->
 <section>
   <h2>🏥 手术史</h2>
   <div class="timeline">
@@ -168,40 +209,25 @@
   </div>
 </section>
 
-<!-- ========== 5. 核心诉求：CPET & Bubble Echo ========== -->
+<!-- ========== 7. 为什么必须做 CPET (已更新) ========== -->
 <section>
-  <h2>📋 核心诉求：CPET & Bubble Echo</h2>
-  <div class="row"><span class="k">检查名称</span><span class="v"><strong>CPET</strong> — Cardiopulmonary Exercise Testing</span></div>
-  <div class="row"><span class="k">搭配检查</span><span class="v"><strong>Bubble Echocardiogram</strong>（气泡心脏超声）— 用于检测 Right-to-Left Shunt</span></div>
-  <div class="row"><span class="k">目的</span><span class="v">评估心脏在运动负荷下的功能、氧气摄取量、心输出能力，排除 Eisenmenger 倾向</span></div>
-  <div class="row"><span class="k">预定日期</span><span class="v"><strong>2026 年 10 月 28 日</strong>（9:00 AM CPET Room 918，10:30 AM 见 Dr. Marhisham Che Mood）</span></div>
-  <div class="row"><span class="k">地点</span><span class="v">IJN, 吉隆坡</span></div>
-  <div class="row"><span class="k">为什么重要</span><span class="v">决定后续治疗、职场适应、生育安全</span></div>
-</section>
-
-<!-- ========== 6. 为什么必须做 CPET ========== -->
-<section>
-  <h2>🎯 为什么必须做 CPET（两个理由）</h2>
+  <h2>🎯 为什么当初必须做 CPET</h2>
 
   <div class="highlight info">
-    <strong>理由一：她即将进入职场</strong><br>
-    • 2025 年考完 SPM<br>
-    • 即将进入职场<br>
-    • 没有雇主知道她心脏有问题<br>
-    • 万一被安排重体力、熬夜、长时间站立，心脏可能承受不住<br>
-    • CPET 能测出她能承受的工作强度，让她有医疗证据保护自己
+    <strong>理由一：她即将进入职场（已证实危险）</strong><br>
+    • 2025 年考完 SPM，即将进入职场。<br>
+    • <strong>CPET 结果证实：</strong>运动血氧跌至 85%，METS 仅 4.4。如果没有这份报告，她若被雇主安排重体力、熬夜、长时间站立，心脏随时可能承受不住导致猝死。
   </div>
 
   <div class="highlight info">
     <strong>理由二：她未来可能结婚生育</strong><br>
     • 怀孕对心脏负荷极大（血容量增加 40~50%）<br>
     • VSD in failure 患者怀孕，有心衰、心律失常、母婴死亡风险<br>
-    • CPET 能评估她能否安全怀孕<br>
-    • 这关乎她和未来孩子的生命安全
+    • 必须由医生根据 CPET 评估她能否安全怀孕
   </div>
 </section>
 
-<!-- ========== 7. 结构化时间轴 (Chronological Timeline) ========== -->
+<!-- ========== 8. 结构化时间轴 (Chronological Timeline) ========== -->
 <section>
   <h2>🗓️ 结构化就医时间轴</h2>
   <div class="timeline">
@@ -228,7 +254,6 @@
       <span class="d">2026-03-18</span>
       Hospital Besar Melaka · Pediatrik Klinik 复诊<br>
       家属要求转介 IJN 做 CPET<br>
-      医生称需征求上级决定，讨论约 10 分钟<br>
       <strong>结果：不用 CPET，明年才做 Echo</strong>
       <span class="tag red">拒绝</span>
     </div>
@@ -237,21 +262,11 @@
       <span class="d">2026-04-09</span>
       IJN 复诊（2018 年主刀医生）<br>
       家属问：若 CPET 不合格，医生可否出支持信申请 OKU？<br>
-      <strong>医生答：不会。OKU 只给身体缺陷者（缺手脚、坐轮椅者）</strong><br>
-      医生另指示：3~6 个月内自行运动（跑步、跳绳、游泳）<br>
+      <strong>医生答：不会。OKU 只给缺手脚、坐轮椅者</strong><br>
+      医生另指示：自行运动（跑步、跳绳、游泳）<br>
       家属问：无医生监督安全吗？<br>
       <strong>医生答："难道有人骑脚车被撞死，就要怪别人吗？"</strong>
       <span class="tag red">拒绝 + 矛盾</span>
-    </div>
-
-    <div class="timeline-item">
-      <span class="d">2026-08-20</span>
-      IJN 的 En. Kamarudin 致电：9 月 3 日预约改期（医生有 Conference）<br>
-      家属 5 分钟内回电，询问是否可改 9 月 2 日<br>
-      答：不行，星期三的门诊没有 CPET<br>
-      因下一次学校假期为 12 月，为不影响另两个孩子上学<br>
-      <strong>被迫改到 12 月 10 日</strong>
-      <span class="tag amber">被逼延期</span>
     </div>
 
     <div class="timeline-item">
@@ -261,41 +276,33 @@
     </div>
 
     <div class="timeline-item">
-      <span class="d">2026-09-02</span>
-      MOH.900532 正式回复：Hospital Melaka 正在进一步调查
-      <span class="tag amber">调查中</span>
-    </div>
-
-    <div class="timeline-item">
-      <span class="d">2026-09-14</span>
-      向卫生部提交 MOH.900581：要求转介 IJN 做 Bubble Echo + CPET
-      <span class="tag">已提交</span>
-    </div>
-
-    <div class="timeline-item">
       <span class="d">2026-09-28</span>
       向 IJN 要求将预约提前，成功从 12 月 10 日提前至 <strong>10 月 28 日</strong>
       <span class="tag green">已确认</span>
     </div>
 
     <div class="timeline-item">
-      <span class="d">2026-10-01</span>
-      向卫生部提交 MOH.900638：投诉 Hospital Melaka 剥夺 IJN 连续照护权（违反 PMX 指示）
-      <span class="tag red">处理中</span>
-    </div>
-
-    <div class="timeline-item">
       <span class="d">2026-10-28</span>
-      <strong>CPET 预定日（死线，待赴）</strong>
-      <span class="tag red">即将</span>
+      <strong>【已完成】IJN CPET 测试（Dr. Marhisham Che Mood）</strong><br>
+      • 报告证实：血氧跌至 85%，因缺氧导致双腿疲劳被迫终止。<br>
+      • 心肺功能仅 37.28%。<br>
+      • <strong>医生口头指示可以照常游泳、踏脚车。</strong>
+      <span class="tag green">已获铁证</span>
+      <span class="tag red">极度荒谬的建议</span>
     </div>
 
   </div>
 </section>
 
-<!-- ========== 8. 关键对话记录 ========== -->
+<!-- ========== 9. 关键对话记录 ========== -->
 <section>
   <h2>💬 关键对话记录（原话）</h2>
+
+  <div class="quote" style="border-left-color: #dc2626; background-color: #fee2e2;">
+    <strong>2026-10-28 · IJN 主治医生 (Dr. Marhisham) 看着 CPET 报告说：</strong><br>
+    "您女儿可照样跑步、踏脚车甚至游泳！"
+    <div class="ref">出处：家属现场记录。事实：报告显示 SPO2 跌至 85%。</div>
+  </div>
 
   <div class="quote">
     <strong>2026-04-09 · IJN 专科医生：</strong><br>
@@ -312,27 +319,15 @@
   <div class="quote">
     <strong>2026-03-18 · Hospital Melaka 儿科医生：</strong><br>
     讨论约 10 分钟后，回复"不用 CPET，明年才做 Echo。"
-    <div class="ref">出处：家属现场记录。</div>
-  </div>
-
-<div class="quote">
-    <strong>2026-08-20 · IJN En. Kamarudin：</strong><br>
-    "9 月 3 日需改期，医生有 Conference。星期三有门诊，但星期三不是由主冶医生處理 CPET。"
-    <div class="ref">出处：家属电话记录（5 分钟内回电）。</div>
-  </div>
-
-  <div class="quote" style="border-left-color: #2196F3; background-color: #eef7fe;">
-    <strong>2026-09-28 · 預約提前進展：</strong><br>
-    確定另外兩位兒女的 Term exam 日程後，已向院方要求將 IJN 預約從 12 月 10 日成功提前至 <strong>10 月 28 日</strong>。
-    <div class="ref">出处：家属跟进记录。</div>
+    <div class="ref">出处：家属现场记录。事实证明若等明年，患者可能已在不知情下因运动猝死。</div>
   </div>
 </section>
 
-<!-- ========== 9. 行政证据备份区 (Audit Trail) ========== -->
+<!-- ========== 10. 行政证据备份区 (Audit Trail) ========== -->
 <section>
   <h2>📎 行政证据 / 公文追踪表 (Audit Trail)</h2>
   <div class="ref" style="margin-bottom: 10px;">
-    记录所有与政府部门、医院、慈善机构的往来公文编号与日期。在需要追究责任或加速处理时，此表将作为行政审计轨迹，白纸黑字，无可推脱。
+    记录所有与政府部门、医院、慈善机构的往来公文编号与日期。
   </div>
   <table class="audit-table">
     <thead>
@@ -360,55 +355,38 @@
         <td><span class="tag amber">调查中</span></td>
       </tr>
       <tr>
-        <td>2026-09-14</td>
-        <td>MOH (KPK)</td>
-        <td>MOH.900581</td>
-        <td>要求转介 IJN 进行 CPET + Bubble Echo</td>
-        <td><span class="tag">已提交</span></td>
-      </tr>
-      <tr>
-        <td>2026-09-28</td>
-        <td>IJN (En. Kamarudin)</td>
-        <td>电话跟进记录</td>
-        <td>成功将 CPET 预约从 12/10 提前至 28/10</td>
-        <td><span class="tag green">已确认</span></td>
-      </tr>
-      <tr>
         <td>2026-10-01</td>
         <td>MOH (KPK)</td>
         <td>MOH.900638</td>
-        <td>投诉 HSP Melaka 剥夺 IJN 连续照护权（违反 PMX 指示）</td>
-        <td><span class="tag red">处理中 (Dalam Perhatian)</span></td>
+        <td>投诉 HSP Melaka 剥夺 IJN 连续照护权</td>
+        <td><span class="tag red">处理中</span></td>
       </tr>
       <tr>
-        <td>待补</td>
-        <td>JKM</td>
-        <td>Kes ID: 待补</td>
-        <td>申请援助 / 福利金</td>
+        <td>2026-10-28</td>
+        <td>IJN</td>
+        <td>CPET 报告</td>
+        <td>顺利拿到报告，血氧 85%、心肺功能 37.28%</td>
+        <td><span class="tag green">已获取证据</span></td>
+      </tr>
+      <tr>
+        <td>待执行</td>
+        <td>MOH / IJN</td>
+        <td>新公文 / 投诉</td>
+        <td><strong>附上 CPET 报告，要求重新审核 OKU、要求 Bubble Echo、投诉医生乱给口头运动建议</strong></td>
         <td><span class="tag red">待办</span></td>
       </tr>
       <tr>
         <td>待补</td>
-        <td>IJN 社工</td>
-        <td>待补</td>
-        <td>申请医疗费用减免 / 交通住宿援助</td>
-        <td><span class="tag red">待办</span></td>
-      </tr>
-      <tr>
-        <td>待补</td>
-        <td>ADUN / 慈善机构</td>
-        <td>待补</td>
-        <td>申请紧急援助金</td>
-        <td><span class="tag red">待办</span></td>
+        <td>JKM (En. Hamzar)</td>
+        <td>WhatsApp 沟通</td>
+        <td>已发新闻截图与报告，申请 OKU / 福利金</td>
+        <td><span class="tag amber">等待回复</span></td>
       </tr>
     </tbody>
   </table>
-  <div class="ref" style="margin-top:10px;">
-    <strong>其他相关编号：</strong> JPA.100206, ICU.900002, SISPAA 案件（共 20 条投诉）
-  </div>
 </section>
 
-<!-- ========== 10. PPN 推算租金争议 ========== -->
+<!-- ========== 11. PPN 推算租金争议 ========== -->
 <section>
   <h2>⚖️ PPN 推算租金争议（核心不公）</h2>
   <div class="highlight urgent">
@@ -424,48 +402,29 @@
     • 不能实现的收入，不能作为 PGK 计算依据<br>
     • 请求：重新评估家庭收入，给予 Miskin Tegar 资格
   </div>
-  <div class="ref">
-    相关官员：Puan Nasuha Binti Hashim（Seksyen Pengurusan, PPN Melaka, ICU JPM）<br>
-    相关电邮：2026-08-05
-  </div>
 </section>
 
-<!-- ========== 11. 家庭情况 ========== -->
+<!-- ========== 12. 家庭情况 ========== -->
 <section>
   <h2>🏠 家庭情况（申请援助时用）</h2>
   <div class="row"><span class="k">父亲</span><span class="v">Wong Seng Koon，61 岁，前结构绘图员</span></div>
   <div class="row"><span class="k">父亲健康</span><span class="v">先天性色盲、交替性外斜视、双侧白内障；OKU 申请被拒，已上诉</span></div>
   <div class="row"><span class="k">母亲</span><span class="v">乳腺癌康复中</span></div>
-  <div class="row"><span class="k">患者（大女儿）</span><span class="v">18 岁，VSD in failure，即将做 CPET</span></div>
+  <div class="row"><span class="k">患者（大女儿）</span><span class="v">18 岁，VSD in failure，CPET 血氧仅 85%</span></div>
   <div class="row"><span class="k">弟弟</span><span class="v">11 岁，在学</span></div>
   <div class="row"><span class="k">家庭现金收入</span><span class="v">约 RM 423/月（BKK RM 600 → 12 月起 RM 400）</span></div>
   <div class="row"><span class="k">居住</span><span class="v">马六甲廉价屋</span></div>
-  <div class="row"><span class="k">SSM 注册</span><span class="v">Myx Shop（202510210078 / JM1034075-K）</span></div>
-</section>
-
-<!-- ========== 12. CPET 求助需求 ========== -->
-<section>
-  <h2>🆘 本次 CPET 求助需求</h2>
-  <div class="row"><span class="k">交通</span><span class="v">Melaka → KL 来回，5 人</span></div>
-  <div class="row"><span class="k">住宿</span><span class="v">IJN 附近，1~2 晚</span></div>
-  <div class="row"><span class="k">医疗费</span><span class="v">CPET 检查费 + 复诊费</span></div>
-  <div class="row"><span class="k">估计总额</span><span class="v todo">（待补）</span></div>
-  <div class="highlight success">
-    📞 联络：Wong Seng Koon<br>
-    WhatsApp：<span class="todo">（待补）</span>
-  </div>
 </section>
 
 <!-- ========== 13. 家属声明 ========== -->
 <section>
   <h2>📢 家属声明</h2>
   <div class="highlight urgent">
-    <strong>2026 年 9 月 24 日，家属郑重声明：</strong><br>
-    "我大女儿有什么三长两短，我肯定追究。"
+    <strong>家属郑重声明：</strong><br>
+    "我大女儿有什么三长两短，我肯定追究。即使医生口头说可以游泳跑步，一旦发生意外，这份白纸黑字的 85% 血氧报告，就是追究到底的铁证。"
   </div>
   <div class="ref">
-    本声明为家属的个人立场记录，作为后续申诉、法律、媒体的原始依据。<br>
-    家属 Wong Seng Koon 已穷尽所有正式渠道：JKM、SISPAA、ICU JPM、MOH、IJN 社工，均未获得有效协助。
+    本声明为家属的个人立场记录，作为后续申诉、法律、媒体的原始依据。
   </div>
 </section>
 
@@ -485,16 +444,15 @@
   <h2>⚠️ 免责声明</h2>
   <div class="disclaimer">
     1. 本页为家庭医疗记录，用于向 IJN 社工、JKM、MOH、ADUN、慈善机构、律师申请援助。<br>
-    2. 所有医疗信息以 IJN / Hospital Melaka 官方报告为准，本页仅供参考，不作为医学诊断依据。<br>
+    2. 所有医疗信息以 IJN / Hospital Melaka 官方报告为准，本页仅供参考。<br>
     3. 个人资料受 PDPA（个人资料保护法）保护，未经家属同意不得公开传播。<br>
-    4. 本页不含身份证号、完整地址、病号等敏感信息，仅用于正式渠道提交。<br>
-    5. 建档人：Wong Seng Koon · Myx Shop (SSM 202510210078)
+    4. 建档人：Wong Seng Koon · Myx Shop (SSM 202510210078)
   </div>
 </section>
 
 <footer>
   © 2026 Wong Seng Koon · Myx Shop (SSM 202510210078 / JM1034075-K)<br>
-  建档：2026 年 9 月 24 日
+  建档：2026 年 9 月 24 日 · <strong>最后更新：2026 年 10 月 30 日</strong>
 </footer>
 
 </body>
