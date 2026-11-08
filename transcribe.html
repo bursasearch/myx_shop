@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI 語音轉寫免費試用 | Myx Shop</title>
+<style>
+  /* 沿用之前的深色樣式 */
+  :root { --bg: #0f1115; --panel: #171a21; --panel-2: #1e222b; --border: #2a2f3a; --text: #e6e9ef; --muted: #8b93a7; --accent: #4f8cff; --accent-2: #22c55e; --warn: #f59e0b; --err: #ef4444; --radius: 12px; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; padding-bottom: 40px; }
+  .container { max-width: 800px; margin: 0 auto; padding: 15px; }
+  
+  header { text-align: center; margin-bottom: 20px; position: relative; }
+  header h1 { color: var(--accent); font-size: 1.4rem; margin-bottom: 8px; }
+  header p { color: var(--muted); font-size: 0.9rem; }
+  
+  /* 隱藏的設定按鈕 */
+  .admin-btn { position: absolute; top: 0; right: 0; background: none; border: none; color: var(--border); font-size: 1.5rem; cursor: pointer; padding: 10px; opacity: 0.3; }
+  .admin-btn:hover { opacity: 1; color: var(--accent); }
+
+  .card { background: var(--panel); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; margin-bottom: 20px; }
+  .card h2 { font-size: 1.1rem; margin-bottom: 15px; border-left: 4px solid var(--accent); padding-left: 10px; }
+  label { display: block; font-size: 0.85rem; color: var(--muted); margin-bottom: 6px; margin-top: 12px; }
+  input[type="file"] { width: 100%; padding: 10px 12px; border-radius: 8px; border: 1px solid var(--border); background: var(--panel-2); color: var(--text); font-size: 0.9rem; }
+  .btn { display: block; width: 100%; padding: 12px; border-radius: 8px; border: none; background: var(--accent); color: #fff; font-size: 1rem; font-weight: bold; cursor: pointer; margin-top: 15px; }
+  .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+  .hint { font-size: 0.8rem; color: var(--warn); margin-top: 5px; }
+  .result-box { margin-top: 15px; padding: 15px; background: #0b0d12; border: 1px solid var(--border); border-radius: 8px; font-family: monospace; font-size: 0.9rem; color: var(--accent-2); min-height: 80px; white-space: pre-wrap; display: none; }
+  
+  /* 收費表樣式 */
+  .pricing-table { display: flex; flex-direction: column; gap: 15px; }
+  .price-card { background: var(--panel-2); border: 1px solid var(--border); border-radius: 8px; padding: 15px; position: relative; }
+  .price-card.popular { border-color: var(--accent); }
+  .price-card.popular::before { content: "🔥 最受歡迎"; position: absolute; top: -12px; right: 15px; background: var(--accent); color: #fff; font-size: 0.75rem; padding: 2px 8px; border-radius: 99px; }
+  .price-card h3 { color: #fff; font-size: 1rem; margin-bottom: 5px; }
+  .price-card .price { color: var(--accent-2); font-size: 1.2rem; font-weight: bold; margin-bottom: 10px; }
+  .price-card ul { list-style: none; padding-left: 0; font-size: 0.85rem; color: var(--muted); }
+  .price-card ul li { margin-bottom: 5px; }
+  .price-card ul li::before { content: "✓ "; color: var(--accent-2); }
+  .whatsapp-btn { background: #25D366; color: #fff; text-decoration: none; text-align: center; padding: 12px; border-radius: 8px; font-weight: bold; display: block; margin-top: 20px; }
+
+  /* 隱藏的管理員設定面板 */
+  .admin-panel { display: none; background: #1e1e24; border: 1px solid var(--warn); border-radius: 8px; padding: 15px; margin-bottom: 20px; }
+  .admin-panel input { width: 100%; padding: 8px; margin-bottom: 10px; border-radius: 4px; border: 1px solid #444; background: #000; color: #fff; }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <header>
+    <h1>🎙️ AI 語音轉寫 · 免費試用</h1>
+    <p>想知道效果好不好？先免費試轉 10 秒鐘！</p>
+    <button class="admin-btn" id="admin-toggle" title="管理員設定">⚙️</button>
+  </header>
+
+  <!-- 管理員隱藏面板 (預設隱藏) -->
+  <div class="admin-panel" id="admin-panel">
+    <h3 style="color: var(--warn); margin-bottom: 10px; font-size: 0.9rem;">⚙️ 管理員設定 (更新 API)</h3>
+    <label>1. 輸入管理員密碼：</label>
+    <input type="password" id="admin-pass" placeholder="預設為 uncle888">
+    <label>2. 貼上最新的 Colab API 網址：</label>
+    <input type="url" id="admin-api" placeholder="https://xxxx.ngrok-free.dev/v1/audio/transcriptions">
+    <button class="btn" style="background: var(--accent-2); color: #000; margin-top: 5px;" onclick="saveAPI()">儲存網址</button>
+  </div>
+
+  <div class="card" style="text-align: center; border-color: var(--accent-2);">
+    <h2>🎙️ 免費測試 10 秒鐘</h2>
+    <p style="margin-bottom: 15px;">想聽聽看 AI 的準確度？請點擊下方按鈕加入我的 Telegram 機器人，直接發送語音即可測試！</p>
+    <a href="https://t.me/yxAudioToText_bot" target="_blank" class="btn" style="background: #0088cc; text-decoration: none; font-size: 1.1rem;">
+        ✈️ 點我前往 Telegram 免費測試
+    </a>
+</div>
+  </div>
+
+  <div class="card" style="border-color: var(--warn);">
+    <h2>💡 覺得好用？看看我的收費方案</h2>
+    <div class="pricing-table">
+      <div class="price-card">
+        <h3>🥉 基礎純淨版</h3>
+        <div class="price">RM 10 / 小時音檔</div>
+        <ul><li>AI 自動生成的原始逐字稿 (TXT)</li><li>極速交件，保留原汁原味</li></ul>
+      </div>
+      <div class="price-card popular">
+        <h3>🥈 標準實用版</h3>
+        <div class="price">RM 25 / 小時音檔</div>
+        <ul><li>人工修正錯別字 (如：積善之家)</li><li>刪除廢話，加入段落排版</li></ul>
+      </div>
+      <div class="price-card">
+        <h3>🥇 專業精華版</h3>
+        <div class="price">RM 40 / 小時音檔</div>
+        <ul><li>包含標準版所有服務</li><li>附贈 300-500 字核心重點摘要</li></ul>
+      </div>
+    </div>
+    <a href="https://wa.me/60196819069?text=Uncle%20Wong%20你好，我想詢問AI轉寫服務..." class="whatsapp-btn" target="_blank">
+      📱 透過 WhatsApp 聯絡我下單
+    </a>
+    <p style="font-size:0.75rem; color:var(--muted); text-align:center; margin-top:10px;">
+      * 請把上方按鈕的電話號碼換成您真實的號碼 *
+    </p>
+  </div>
+</div>
+
+<script>
+  // 預設密碼，您可以自己改
+  const ADMIN_PASSWORD = "uncle434343"; 
+
+  const btn = document.getElementById('btn-transcribe');
+  const statusEl = document.getElementById('status');
+  const resultEl = document.getElementById('result');
+  const fileInput = document.getElementById('audio-file');
+  
+  // 管理員介面元素
+  const adminToggle = document.getElementById('admin-toggle');
+  const adminPanel = document.getElementById('admin-panel');
+  const adminPass = document.getElementById('admin-pass');
+  const adminApi = document.getElementById('admin-api');
+
+  // 1. 點擊齒輪顯示/隱藏設定面板
+  adminToggle.addEventListener('click', () => {
+    if (adminPanel.style.display === 'block') {
+      adminPanel.style.display = 'none';
+    } else {
+      adminPanel.style.display = 'block';
+      // 自動填入目前儲存的網址
+      adminApi.value = localStorage.getItem('whisper_api_url') || "";
+    }
+  });
+
+  // 2. 儲存 API 網址
+  window.saveAPI = function() {
+    if (adminPass.value !== ADMIN_PASSWORD) {
+      alert("❌ 密碼錯誤！請重新輸入。");
+      return;
+    }
+    const newUrl = adminApi.value.trim();
+    if (!newUrl.startsWith("http")) {
+      alert("⚠️ 網址格式不對，必須是 http 或 https 開頭");
+      return;
+    }
+    localStorage.setItem('whisper_api_url', newUrl);
+    alert("✅ API 網址已成功儲存！\n\n下次開啟網頁會自動記住。");
+    adminPanel.style.display = 'none';
+    adminPass.value = ""; // 清除密碼
+  };
+
+  // 3. 檢查音檔長度
+  function getAudioDuration(file) {
+    return new Promise((resolve, reject) => {
+      const audio = document.createElement('audio');
+      audio.preload = 'metadata';
+      audio.onloadedmetadata = () => { window.URL.revokeObjectURL(audio.src); resolve(audio.duration); };
+      audio.onerror = () => reject(new Error('無法讀取音檔格式'));
+      audio.src = window.URL.createObjectURL(file);
+    });
+  }
+
+  // 4. 轉寫按鈕邏輯
+  btn.addEventListener('click', async () => {
+    const file = fileInput.files[0];
+    // 從瀏覽器記憶中讀取網址
+    const currentAPI = localStorage.getItem('whisper_api_url');
+
+    if (!file) { statusEl.textContent = "⚠️ 請先選擇一個音檔！"; statusEl.style.color = "var(--err)"; return; }
+    if (!currentAPI) { 
+      statusEl.innerHTML = "⚠️ 系統尚未設定 API 網址。<br>請點擊右上角 ⚙️ 進行設定。"; 
+      statusEl.style.color = "var(--err)"; 
+      return; 
+    }
+
+    statusEl.textContent = "正在檢查音檔長度...";
+    statusEl.style.color = "var(--accent)";
+    resultEl.style.display = "none";
+
+    try {
+      const duration = await getAudioDuration(file);
+      if (duration > 12) {
+        statusEl.innerHTML = `❌ 音檔太長了！您上傳的是 <strong>${duration.toFixed(1)} 秒</strong>。<br>免費試用僅限 10 秒。`;
+        statusEl.style.color = "var(--err)";
+        return;
+      }
+
+      statusEl.textContent = "🎙️ 正在上傳並轉寫，請稍候...";
+      btn.disabled = true;
+
+      const formData = new FormData();
+      formData.append("file", file, file.name);
+      formData.append("model", "whisper-large-v3");
+
+      const response = await fetch(currentAPI, { method: "POST", body: formData });
+
+      if (!response.ok) throw new Error(`伺服器錯誤: ${response.status}`);
+
+      const data = await response.json();
+      statusEl.textContent = "✅ 轉寫成功！";
+      statusEl.style.color = "var(--accent-2)";
+      resultEl.style.display = "block";
+      resultEl.textContent = data.text || "無文字結果";
+      
+    } catch (error) {
+      statusEl.textContent = "❌ 發生錯誤：" + error.message + " (請確認 Colab 端點是否開啟)";
+      statusEl.style.color = "var(--err)";
+    } finally {
+      btn.disabled = false;
+    }
+  });
+</script>
+</body>
+</html>
