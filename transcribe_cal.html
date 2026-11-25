@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI 語音轉寫 - 費用試算器 | Myx Shop</title>
+    <style>
+        :root {
+            --bg-color: #121212;
+            --card-bg: #1e1e1e;
+            --text-main: #ffffff;
+            --text-muted: #a0a0a0;
+            --primary-color: #00a8ff;
+            --success-color: #2ecc71;
+            --border-color: #333333;
+            --gold: #f1c40f;
+            --silver: #bdc3c7;
+            --bronze: #cd7f32;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 28px;
+            width: 100%;
+            max-width: 520px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            border: 1px solid var(--border-color);
+        }
+
+        .top-nav {
+            margin-bottom: 15px;
+        }
+
+        .top-nav a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        .top-nav a:hover {
+            color: var(--primary-color);
+        }
+
+        h2 {
+            text-align: center;
+            color: var(--text-main);
+            margin-top: 0;
+            margin-bottom: 20px;
+            font-size: 1.45rem;
+        }
+
+        .upload-box {
+            border: 2px dashed var(--primary-color);
+            background-color: rgba(0, 168, 255, 0.06);
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            margin-bottom: 20px;
+            transition: background-color 0.2s, border-color 0.2s;
+        }
+
+        .upload-box:hover, .upload-box.dragover {
+            background-color: rgba(0, 168, 255, 0.15);
+            border-color: var(--success-color);
+        }
+
+        .upload-icon {
+            font-size: 2rem;
+            margin-bottom: 8px;
+        }
+
+        .upload-title {
+            font-weight: bold;
+            font-size: 1rem;
+            margin-bottom: 5px;
+        }
+
+        .upload-hint {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            line-height: 1.4;
+        }
+
+        #file-input {
+            display: none;
+        }
+
+        .file-status {
+            display: none;
+            background-color: #252525;
+            border-left: 4px solid var(--success-color);
+            padding: 12px 15px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .file-status.error {
+            border-left-color: #e74c3c;
+            color: #ff7675;
+        }
+
+        .manual-time-group {
+            margin-bottom: 22px;
+        }
+
+        .manual-label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .time-inputs {
+            display: flex;
+            gap: 10px;
+        }
+
+        .time-field {
+            flex: 1;
+        }
+
+        .time-field span {
+            display: block;
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            margin-bottom: 4px;
+        }
+
+        input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            background-color: #2a2a2a;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-main);
+            font-size: 1rem;
+            box-sizing: border-box;
+            outline: none;
+        }
+
+        input[type="number"]:focus {
+            border-color: var(--primary-color);
+        }
+
+        .results {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .plan-card {
+            background-color: #252525;
+            border-radius: 10px;
+            padding: 14px 18px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 2px solid var(--border-color);
+            cursor: pointer;
+            transition: transform 0.15s, border-color 0.2s, background-color 0.2s;
+        }
+
+        .plan-card:hover {
+            transform: translateY(-2px);
+        }
+
+        .plan-card.selected {
+            border-color: var(--success-color);
+            background-color: rgba(46, 204, 113, 0.08);
+        }
+
+        .plan-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .plan-name {
+            font-weight: bold;
+            font-size: 1rem;
+        }
+
+        .medal {
+            font-size: 1.25rem;
+        }
+
+        .price-tag {
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            margin-top: 3px;
+        }
+
+        .total-price {
+            font-size: 1.35rem;
+            font-weight: bold;
+            color: var(--success-color);
+            white-space: nowrap;
+        }
+
+        .popular-badge {
+            background-color: var(--primary-color);
+            color: white;
+            font-size: 0.68rem;
+            padding: 2px 7px;
+            border-radius: 10px;
+            margin-left: 6px;
+            vertical-align: middle;
+        }
+
+        .note-box {
+            margin-top: 18px;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            background-color: #181818;
+            padding: 10px 12px;
+            border-radius: 8px;
+            line-height: 1.5;
+        }
+
+        .btn-contact {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            margin-top: 20px;
+            background-color: var(--success-color);
+            color: #000;
+            text-align: center;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 8px;
+            font-size: 1.05rem;
+            box-sizing: border-box;
+            transition: opacity 0.3s;
+        }
+
+        .btn-contact:hover {
+            opacity: 0.9;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="top-nav">
+        <a href="transcribe.html">← 返回 AI 語音轉寫服務主頁</a>
+    </div>
+
+    <h2>🎙️ 音檔轉寫費用精準試算</h2>
+
+    <div class="upload-box" id="drop-zone">
+        <div class="upload-icon">📂</div>
+        <div class="upload-title">點擊選擇或拖放音/視訊檔自動計算</div>
+        <div class="upload-hint">
+            支援 .MP3, .MP4, .AAC, .M4A, .WAV, .OGG 等格式<br>
+            🔒 檔案僅在您的瀏覽器本地讀取時長，不會上傳至任何伺服器
+        </div>
+        <input type="file" id="file-input" accept="audio/*,video/*,.mp3,.mp4,.aac,.m4a,.wav,.ogg">
+    </div>
+
+    <div class="file-status" id="file-status"></div>
+
+    <div class="manual-time-group">
+        <span class="manual-label">音檔精準時長（自動讀取，亦可手動輸入）：</span>
+        <div class="time-inputs">
+            <div class="time-field">
+                <span>小時 (Hr)</span>
+                <input type="number" id="input-hr" min="0" value="1">
+            </div>
+            <div class="time-field">
+                <span>分鐘 (Min)</span>
+                <input type="number" id="input-min" min="0" max="59" value="0">
+            </div>
+            <div class="time-field">
+                <span>秒數 (Sec)</span>
+                <input type="number" id="input-sec" min="0" max="59" value="0">
+            </div>
+        </div>
+    </div>
+
+    <div class="results">
+        <div class="plan-card" data-plan="basic" onclick="selectPlan('basic')">
+            <div class="plan-info">
+                <span class="medal">🥉</span>
+                <div>
+                    <div class="plan-name">基礎純淨版</div>
+                    <div class="price-tag">RM 10 / 小時 · AI 原始逐字稿</div>
+                </div>
+            </div>
+            <div class="total-price">RM <span id="total-basic">10.00</span></div>
+        </div>
+
+        <div class="plan-card selected" data-plan="standard" onclick="selectPlan('standard')">
+            <div class="plan-info">
+                <span class="medal">🥈</span>
+                <div>
+                    <div class="plan-name">標準實用版 <span class="popular-badge">🔥 推薦</span></div>
+                    <div class="price-tag">RM 25 / 小時 · 人工校對排版</div>
+                </div>
+            </div>
+            <div class="total-price">RM <span id="total-standard">25.00</span></div>
+        </div>
+
+        <div class="plan-card" data-plan="pro" onclick="selectPlan('pro')">
+            <div class="plan-info">
+                <span class="medal">🥇</span>
+                <div>
+                    <div class="plan-name">專業精華版</div>
+                    <div class="price-tag">RM 40 / 小時 · 校對 + 重點摘要</div>
+                </div>
+            </div>
+            <div class="total-price">RM <span id="total-pro">40.00</span></div>
+        </div>
+    </div>
+
+    <div class="note-box">
+        💡 <strong>計費與傳檔說明：</strong><br>
+        • 不足 1 小時按實際秒數比例精準計算（最低消費 RM 5.00，可依需求調整）。<br>
+        • 試算完成後點擊下方按鈕，將自動把明細帶入 WhatsApp；大檔案可直接透過 WhatsApp 文件模式或 Google Drive 傳送給我。
+    </div>
+
+    <a href="#" id="whatsapp-btn" class="btn-contact" target="_blank">💬 帶入試算明細，透過 WhatsApp 下單</a>
+</div>
+
+<script>
+    // ===== 設定區 =====
+    const WHATSAPP_NUMBER = "60196819069"; // 請替換為你的號碼
+    const MIN_CHARGE = 5.00;
+
+    const rates = {
+        basic:    { name: "🥉 基礎純淨版 (RM 10/hr)", rate: 10 },
+        standard: { name: "🥈 標準實用版 (RM 25/hr)", rate: 25 },
+        pro:      { name: "🥇 專業精華版 (RM 40/hr)", rate: 40 }
+    };
+
+    let currentPlan = 'standard';
+
+    // ===== 工具函式 =====
+    function getTotalHours() {
+        const h = parseFloat(document.getElementById('input-hr').value) || 0;
+        const m = parseFloat(document.getElementById('input-min').value) || 0;
+        const s = parseFloat(document.getElementById('input-sec').value) || 0;
+        return h + m / 60 + s / 3600;
+    }
+
+    function formatDuration(hours) {
+        const totalSeconds = Math.round(hours * 3600);
+        const h = Math.floor(totalSeconds / 3600);
+        const m = Math.floor((totalSeconds % 3600) / 60);
+        const s = totalSeconds % 60;
+        return `${h} 小時 ${m} 分 ${s} 秒`;
+    }
+
+    // ===== 計算與更新 =====
+    function calculate() {
+        const hours = getTotalHours();
+
+        Object.keys(rates).forEach(key => {
+            let total = hours * rates[key].rate;
+            if (hours > 0 && total < MIN_CHARGE) total = MIN_CHARGE;
+            const el = document.getElementById('total-' + key);
+            if (el) el.textContent = total.toFixed(2);
+        });
+
+        updateWhatsAppLink();
+    }
+
+    function selectPlan(plan) {
+        if (!rates[plan]) return;
+        currentPlan = plan;
+        document.querySelectorAll('.plan-card').forEach(card => {
+            card.classList.toggle('selected', card.dataset.plan === plan);
+        });
+        updateWhatsAppLink();
+    }
+
+    function updateWhatsAppLink() {
+        const hours = getTotalHours();
+        const totalText = document.getElementById('total-' + currentPlan).textContent;
+        const plan = rates[currentPlan];
+
+        const msg =
+            `你好，我想使用 AI 語音轉寫服務。\n\n` +
+            `📌 選擇方案：${plan.name}\n` +
+            `⏱️ 音檔時長：${formatDuration(hours)}\n` +
+            `💰 預估費用：RM ${totalText}\n\n` +
+            `（我會在對話中附上音檔 / Google Drive 連結）`;
+
+        document.getElementById('whatsapp-btn').href =
+            `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`;
+    }
+
+    // ===== 手動輸入監聽 =====
+    ['input-hr', 'input-min', 'input-sec'].forEach(id => {
+        const el = document.getElementById(id);
+        el.addEventListener('input', () => {
+            // 分鐘/秒數值上限保護
+            if (el.max) {
+                const max = parseInt(el.max, 10);
+                if (parseFloat(el.value) > max) el.value = max;
+            }
+            if (parseFloat(el.value) < 0) el.value = 0;
+            calculate();
+        });
+    });
+
+    // ===== 檔案上傳處理 =====
+    const dropZone = document.getElementById('drop-zone');
+    const fileInput = document.getElementById('file-input');
+    const fileStatus = document.getElementById('file-status');
+
+    dropZone.addEventListener('click', () => fileInput.click());
+
+    ['dragover', 'dragenter'].forEach(evt => {
+        dropZone.addEventListener(evt, e => {
+            e.preventDefault();
+            dropZone.classList.add('dragover');
+        });
+    });
+
+    ['dragleave', 'dragend'].forEach(evt => {
+        dropZone.addEventListener(evt, e => {
+            e.preventDefault();
+            dropZone.classList.remove('dragover');
+        });
+    });
+
+    dropZone.addEventListener('drop', e => {
+        e.preventDefault();
+        dropZone.classList.remove('dragover');
+        if (e.dataTransfer.files && e.dataTransfer.files.length) {
+            handleFile(e.dataTransfer.files[0]);
+        }
+    });
+
+    fileInput.addEventListener('change', e => {
+        if (e.target.files && e.target.files.length) {
+            handleFile(e.target.files[0]);
+        }
+        // 允許同一檔案再次選擇
+        e.target.value = '';
+    });
+
+    function handleFile(file) {
+        fileStatus.style.display = 'block';
+        fileStatus.classList.remove('error');
+        fileStatus.textContent = `⏳ 正在讀取「${file.name}」時長...`;
+
+        const isVideo = file.type.startsWith('video');
+        const url = URL.createObjectURL(file);
+        const media = document.createElement(isVideo ? 'video' : 'audio');
+        media.preload = 'metadata';
+
+        let done = false;
+
+        const cleanup = () => {
+            if (done) return;
+            done = true;
+            URL.revokeObjectURL(url);
+            media.removeAttribute('src');
+            media.load();
+        };
+
+        media.onloadedmetadata = () => {
+            const duration = media.duration;
+            cleanup();
+
+            if (!isFinite(duration) || duration <= 0) {
+                fileStatus.classList.add('error');
+                fileStatus.textContent = '❌ 無法讀取時長，請手動輸入或換一個檔案。';
+                return;
+            }
+
+            const totalSeconds = Math.round(duration);
+            const h = Math.floor(totalSeconds / 3600);
+            const m = Math.floor((totalSeconds % 3600) / 60);
+            const s = totalSeconds % 60;
+
+            document.getElementById('input-hr').value = h;
+            document.getElementById('input-min').value = m;
+            document.getElementById('input-sec').value = s;
+
+            fileStatus.innerHTML =
+                `✅ 已讀取「${file.name}」<br>時長：${h} 小時 ${m} 分 ${s} 秒`;
+            calculate();
+        };
+
+        media.onerror = () => {
+            cleanup();
+            fileStatus.classList.add('error');
+            fileStatus.textContent = '❌ 此格式無法在瀏覽器讀取時長，請手動輸入或轉檔後再試。';
+        };
+
+        // 某些瀏覽器需要 durationchange
+        media.ondurationchange = () => {
+            if (isFinite(media.duration) && media.duration > 0 && media.onloadedmetadata) {
+                // 交給 onloadedmetadata 處理
+            }
+        };
+
+        media.src = url;
+    }
+
+    // ===== 初始化 =====
+    calculate();
+</script>
+</body>
+</html>
